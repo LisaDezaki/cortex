@@ -1,0 +1,168 @@
+{
+	"uptown": {
+		"name": "Tableton Uptown",
+		"desc": "The adventuring school in Tableton, where aspiring adventurers learn the basics of combat, magic, and survival. The school is run by a retired adventurer named Master Eldrin.",
+		"locations": {
+			"school": {
+				"name": "Uma's Adventuring Academy",
+				"desc": "The adventuring school in Tableton, where aspiring adventurers learn the basics of combat, magic, and survival. The school is run by a retired adventurer named Master Eldrin.",
+				"coordinates": { "x": "25%", "y": "75%" }
+			},
+			"council": {
+				"name": "City Council",
+				"desc": "The government building of Tableton, where the town council meets to discuss local issues and make decisions. The council is made up of elected officials from various districts of the town.",
+				"coordinates": { "x": "10%", "y": "15%" }
+			},
+			"construction-site": {
+				"name": "Construction Site",
+				"desc": "A new tower being built in the center of Tableton. The construction workers are a bit rowdy, but they are friendly enough. What the citizens and even the workers don't know is that it's hiding an Ancient Draconic Burial Ground.",
+				"coordinates": { "x": "55%", "y": "70%" }
+			},
+			"shopping-mall": {
+				"name": "Tableton Mall",
+				"desc": "A mall in the center of Tableton, with a variety of shops and restaurants. A large section of it has been \"closed for renovation\" for a few years now, but it's functionally abandoned.",
+				"coordinates": { "x": "65%", "y": "10%" }
+			},
+			"highrise": {
+				"name": "Clocktower Apartments",
+				"desc": "This highrise is home to most of the wealthier citizens of Tableton, including a Wizard's Penthouse.",
+				"coordinates": { "x": "75%", "y": "15%" }
+			}
+		}
+	},
+	"downtown": {
+		"name": "Tableton Downtown",
+		"desc": "The government building of Tableton, where the town council meets to discuss local issues and make decisions. The council is made up of elected officials from various districts of the town.",
+		"locations": {
+			"docks": {
+				"name": "The Docks",
+				"desc": "The town docks are used for shipping goods in and out of Tableton. The Scallywags have been docked here for a while now, causing some to speculate. Are they pirates or smugglers?",
+				"coordinates": { "x": "25%", "y": "75%" }
+			},
+			"alley": {
+				"name": "Graffiti Alley",
+				"desc": "A dark alley that's always covered in magical moving graffiti. The culprit is still at large.",
+				"coordinates": { "x": "20%", "y": "10%" }
+			},
+			"precinct": {
+				"name": "Police Precinct",
+				"desc": "The police station of Tableton, where the local law enforcement operates. The precinct is small and slow, with few officers on duty at any time.",
+				"coordinates": { "x": "45%", "y": "25%" }
+			},
+			"tavern": {
+				"name": "Tavern (\"The Lucky Die\")",
+				"desc": "The local tavern in Tableton owned by Grenn, where many of the town's residents gather to drink and socialize.",
+				"coordinates": { "x": "15%", "y": "45%" }
+			},
+			"pirate-ship": {
+				"name": "Pirate Ship (\"The Random Encounter\")",
+				"desc": "A pirate ship docked at the Tableton docks, owned by the Scallywags. The ship is known for its rowdy crew and wild parties.",
+				"coordinates": { "x": "65%", "y": "85%" }
+			}
+		}
+	},
+	"outskirts": {
+		"name": "Outskirts",
+		"desc": "The government building of Tableton, where the town council meets to discuss local issues and make decisions. The council is made up of elected officials from various districts of the town.",
+		"locations": {
+			"junkyard": {
+				"name": "Junkyard",
+				"desc": "Run by a sentient construct (scrap golem).",
+				"coordinates": { "x": "15%", "y": "45%" }
+			},
+			"gas-station": {
+				"name": "Gas Station",
+				"desc": "An old dilapidated gas station right outside of town.",
+				"coordinates": { "x": "85%", "y": "75%" }
+			},
+			"motel": {
+				"name": "Shady Motel (\"The Loaded Dice\")",
+				"desc": "Great for a cheap room for the night. Not Room 13 though. Room 13 is a pocket dimension. Keep out.",
+				"coordinates": { "x": "75%", "y": "65%" }
+			},
+			"trailer-park": {
+				"name": "Trailer Park",
+				"desc": "A trailer park outside of town, near the Red Mountains, mostly occupied by the Rednecks. The park is known for its barbeque parties and rowdy gatherings.",
+				"coordinates": { "x": "55%", "y": "15%" }
+			}
+		}
+	},
+	"forest": {
+		"name": "Cursed Forest",
+		"desc": "The dark forest on the edge of town is said to be cursed. A recent proposal has passed to begin deforestation.",
+		"locations": {
+			"cabin": {
+				"name": "Abandoned Cabin",
+				"desc": "The dark forest on the edge of town is said to be cursed. A recent proposal has passed to begin deforestation.",
+				"coordinates": { "x": "5%", "y": "65%" }
+			},
+			"grotto": {
+				"name": "Fungal Grotto",
+				"desc": "A deep thicket of forest with all kinds of spores.",
+				"coordinates": { "x": "25%", "y": "25%" }
+			},
+			"lake": {
+				"name": "Black Lake",
+				"desc": "The dark forest on the edge of town is said to be cursed. A recent proposal has passed to begin deforestation.",
+				"coordinates": { "x": "65%", "y": "25%" }
+			},
+			"protest-site": {
+				"name": "Protest Site",
+				"desc": "A small group of protestors are opposing the ongoing deforestation effort.",
+				"coordinates": { "x": "70%", "y": "30%" }
+			}
+		}
+	},
+	"mountains": {
+		"name": "Red Mountains",
+		"desc": "A hiking route outside of town, leading to the Red Mountains. The mountains are known for their red rocks and beautiful views, but recently have been the site of strange occurrences.",
+		"locations": {
+			"mine": {
+				"name": "Abandoned Mine",
+				"desc": "An old abandoned crystal mine that closed after The Accident.",
+				"coordinates": { "x": "20%", "y": "70%" }
+			},
+			"hikers-camp": {
+				"name": "Hiker's Camp",
+				"desc": "An empty camp with evidence of the missing hikers",
+				"coordinates": { "x": "15%", "y": "25%" }
+			},
+			"goblin-camp": {
+				"name": "Goblin Camp",
+				"desc": "A large goblin camp filled with goblins.",
+				"coordinates": { "x": "35%", "y": "75%" }
+			},
+			"summit": {
+				"name": "Thunderpeak Summit",
+				"desc": "Where a dragon once slumbered.",
+				"coordinates": { "x": "75%", "y": "15%" }
+			}
+		}
+	},
+	"island": {
+		"name": "Mysterious Island",
+		"desc": "A hiking route outside of town, leading to the Red Mountains. The mountains are known for their red rocks and beautiful views, but recently have been the site of strange occurrences.",
+		"locations": {
+			"lighthouse": {
+				"name": "The Lighthouse",
+				"desc": "An old lighthouse, but the keeper is nowhere to be found.",
+				"coordinates": { "x": "40%", "y": "75%" }
+			},
+			"ruins": {
+				"name": "Jungle Ruins",
+				"desc": "Mysterious ruins belonging to an ancient civilization.",
+				"coordinates": { "x": "25%", "y": "25%" }
+			},
+			"shipwreck": {
+				"name": "Shipwreck Cove",
+				"desc": "Ghost pirates guard a long lost treasure map.",
+				"coordinates": { "x": "55%", "y": "15%" }
+			},
+			"volcano": {
+				"name": "Volcanic Crater",
+				"desc": "Portal to an elemental plane of fire.",
+				"coordinates": { "x": "95%", "y": "55%" }
+			}
+		}
+	}
+}

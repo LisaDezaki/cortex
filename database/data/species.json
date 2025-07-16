@@ -1,0 +1,118 @@
+{
+	"bearfolk": {
+		"name": "Bearfolk",
+		"desc": "The hulking bearfolk make up an intimidating visage. Brutish and powerful, they combine features of a bipedal humanoid with the raw strength of a mighty bear. Their heads appear to be entirely ursine, and their muscled bodies are covered in thick fur. They are most often seen in Keefe, but can also be found in northern Velea."
+	},
+	"bugbear": {
+		"name": "Bugbear",
+		"desc": "Bugbears are hairy goblinoids born for battle and mayhem. They survive by raiding and hunting, but are fond of setting ambushes and fleeing when outmatched."
+	},
+	"caoraa": {
+		"name": "Caoraa",
+		"desc": "The caoraa are humanoid sheep, standing on a pair of hoofed feet and sheep-like hind legs. They have 4 groups of people in their species, the first called sheepkin have heads like human females except with slightly animalistic facial features and sheep-like ears. They are smaller then their male counterparts, they have very fluffy puffy hair on their heads like sheep wool, that tends to get matted if not brushed often. Their lower and upper bodies resemble that of human females, although with most of their body covered in wool-like curly and puffy hair. Except for their upper arms, a bit of their stomach, their inner thighs having no hair, they also have a pair of small horns and a tail."
+	},
+	"dragonborn": {
+		"name": "Dragonborn",
+		"desc": "The ancestors of dragonborn hatched from the eggs of chromatic and metallic dragons. One story holds that these eggs were blessed by the dragon gods Bahamut and Tiamat, who wanted to populate the multiverse with people created in their image. Another story claims that dragons created the first dragonborn without the gods’ blessings. Whatever their origin, dragonborn have made homes for themselves on the Material Plane."
+	},
+	"dwarf": {
+		"name": "Dwarf",
+		"desc": "Dwarves were raised from the earth in the elder days by a deity of the forge. Called by various names on different worlds—Moradin, Reorx, and others—that god gave dwarves an affinity for stone and metal and for living underground. The god also made them resilient like the mountains, with a life span of about 350 years."
+	},
+	"elf": {
+		"name": "Elf",
+		"desc": "Elves are a magical people of otherworldly grace, living in the world but not entirely part of it. They live in places of ethereal beauty, in the midst of ancient forests or in silvery spires glittering with faerie light, where soft music drifts through the air and gentle fragrances waft on the breeze. Elves love nature and magic, art and artistry, music and poetry, and the good things of the world."
+	},
+	"gnoll": {
+		"name": "Gnoll",
+		"desc": "Gnolls were a humanoid race that most closely resembled human-hyena hybrids within Faerûn. They were carnivorous humanoids, known for their savage culture and warlike ways."
+	},
+	"gnome": {
+		"name": "Gnome",
+		"desc": "Gnomes are magical folk created by gods of invention, illusions, and life underground. The earliest gnomes were seldom seen by other folk due to the gnomes’ secretive nature and their propensity for living in forests and burrows. What they lacked in size, they made up for in cleverness. They confounded predators with traps and labyrinthine tunnels. They also learned magic from gods like Garl Glittergold, Baervan Wildwanderer, and Baravar Cloakshadow, who visited them in disguise. That magic eventually created the lineages of forest gnomes and rock gnomes."
+	},
+	"goblin": {
+		"name": "Goblin",
+		"desc": "Goblins are small, black-hearted humanoids that lair in despoiled dungeons and other dismal settings. Individually weak, they gather in large numbers to torment other creatures."
+	},
+	"goliath": {
+		"name": "Goliath",
+		"desc": "Towering over most folk, goliaths are distant descendants of giants. Each goliath bears the favors of the first giants—favors that manifest in various supernatural boons, including the ability to quickly grow and temporarily approach the height of goliaths’ gigantic kin."
+	},
+	"halfling": {
+		"name": "Halfling",
+		"desc": "Cherished and guided by gods who value life, home, and hearth, halflings gravitate toward bucolic havens where family and community help shape their lives. That said, many halflings possess a brave and adventurous spirit that leads them on journeys of discovery, affording them the chance to explore a bigger world and make new friends along the way. Their size—similar to that of a human child—helps them pass through crowds unnoticed and slip through tight spaces."
+	},
+	"halfelf": {
+		"name": "Half-elf",
+		"desc": "The Dragon Council is a recent addition to the city. While a few people have connected the dots, most people haven't realized yet that the dragons are siphoning resources from the city."
+	},
+	"harengon": {
+		"name": "Harengon",
+		"desc": "Harengons are bipedal, with the characteristic long feet of the rabbits they resemble and fur in a variety of colors. They share the keen senses and powerful legs of leporine creatures and are full of energy, like a wound-up spring. Harengons are blessed with a little fey luck, and they often find themselves a few fortunate feet away from dangers during adventures."
+	},
+	"human": {
+		"name": "Human",
+		"desc": "A group of hikers who like to go hiking in the nearby Red Mountains."
+	},
+	"insectoid": {
+		"name": "Insectoid",
+		"desc": "A thri-kreen resembled a giant praying mantis, bipedal and standing 4.5–7 feet (1.4–2.1 meters) high and weighing 100–375 pounds (45–170 kilograms); a full-grown adult averaged at 6 feet (1.8 meters) and 200 pounds (90 kilograms). They had exoskeletons over their entire bodies."
+	},
+	"kenku": {
+		"name": "Kenku",
+		"desc": "Kenku are avian humanoids with a strong connection to the skies. They are known for their mimicry and ability to imitate sounds and voices. Kenku often live in urban areas, where they use their skills to survive and thrive."
+	},
+	"kobold": {
+		"name": "Kobold",
+		"desc": "Some of the smallest draconic creatures in the multiverse, kobolds display their draconic ancestry in the glint of their scales and in their roars. Legends tell of the first kobolds emerging from the Underdark near the lairs of the earliest dragons. In some lands, kobolds serve chromatic or metallic dragons — even worshiping them as divine beings. In other places, kobolds know too well how dangerous those dragons can be and help others defend against draconic destruction."
+	},
+	"lizardfolk": {
+		"name": "Lizardfolk",
+		"desc": "The saurian lizardfolk are thought by some sages to be distant cousins of dragonborn and kobolds. Despite their resemblance to those other scaled folk, however, lizardfolk are their own people and have lived on the worlds of the Material Plane since the worlds’ creation. Gifted by the gods with remarkable physical defenses and a mystical connection to the natural world, lizardfolk can survive with just their wits in situations that would be deadly for other folk. Because of that fact, many lizardfolk myths state that their people were placed by the gods in the Material Plane to guard its natural wonders."
+	},
+	"loxodon": {
+		"name": "Loxodon",
+		"desc": "Loxodons are often oasis of calm in Ravnica. They hum or chant in sonorous tones and move slowly or sit in perfect stillness. As they say, \"There are three things all wise men fear: the sea in storm, a night with no moon, and the anger of a gentle man.\""
+	},
+	"minotaur": {
+		"name": "Minotaur",
+		"desc": "Their fur stained with the blood of fallen foes, minotaurs are massive, bull-headed humanoids whose roar is a savage battle cry that all civilized creatures fear."
+	},
+	"orc": {
+		"name": "Orc",
+		"desc": "Orcs trace their creation to Gruumsh, a powerful god who roamed the wide open spaces of the Material Plane. Gruumsh equipped his children with gifts to help them wander great plains, vast caverns, and churning seas and to face the monsters that lurk there. Even when they turn their devotion to other gods, orcs retain Gruumsh’s gifts: endurance, determination, and the ability to see in darkness."
+	},
+	"owlin": {
+		"name": "Owlin",
+		"desc": "Owlin are avian humanoids with a strong connection to the skies. They are known for their keen senses and ability to fly. Owlin often live in forested areas, where they use their skills to navigate the treetops and protect their homes."
+	},
+	"satyr": {
+		"name": "Satyr",
+		"desc": "Satyrs are humanoids with the lower bodies of goats and the upper bodies of humans. They are known for their love of music, revelry, and nature. Satyrs often live in forested areas, where they celebrate life and enjoy the pleasures of the natural world."
+	},
+	"tiefling": {
+		"name": "Tiefling",
+		"desc": "Tieflings are either born in the Lower Planes or have fiendish ancestors who originated there. A tiefling (pronounced TEE-fling) is linked by blood to a devil, a demon, or some other Fiend. This connection to the Lower Planes is the tiefling’s fiendish legacy, which comes with the promise of power yet has no effect on the tiefling’s moral outlook."
+	},
+	"tortle": {
+		"name": "Tortle",
+		"desc": "Tortles have a saying: “We wear our homes on our backs.” These turtle folk live on many worlds, most often journeying up and down coasts, along waterways, and across the sea. Tortles don’t have a unified story of how they were created, but they all have a sense of being mystically connected to the natural world. Carrying their shelter on their backs gives tortles a special feeling of security wherever they go, for even if they visit a far, unknown country, they have a place to lay their heads."
+	},
+	"triton": {
+		"name": "Triton",
+		"desc": "Tritons are humanoids with a strong connection to the sea. They are often found in coastal areas, where they protect the oceans and their inhabitants from threats. Tritons have a regal bearing and are known for their wisdom and bravery."
+	},
+	"troll": {
+		"name": "Troll",
+		"desc": "Fearsome green-skinned giants, trolls eat anything they can catch and devour. Only acid and fire can arrest the regenerative properties of a troll’s flesh."
+	},
+	"verdan": {
+		"name": "Verdan",
+		"desc": "Young verdan were similar to small half-elves with jade-green skin and about as tall as goblins. However, as they aged, they underwent dramatic and somewhat random changes to size, skin color, and physical characteristics. The most noticeable change, and the only one that seemed to be common to all verdan, was in stature. Over a period of days, at a certain point in their adult lives, verdan painfully grew to the size of hobgoblins."
+	},
+	"wolfkind": {
+		"name": "Wolfkind",
+		"desc": "Big, strong, fast and wise, wolfkind are wolf-like humanoids; with wolfen ancestors. Their feet and hands are similar to those of the paws of their wolf ancestors, but their hands have evolved to be able to hold items. They are covered in fur like their lesser kin."
+	}
+}

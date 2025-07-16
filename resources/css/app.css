@@ -1,3 +1,240 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@theme {
+	--font-sans: Switzer, ui-sans-serif, system-ui, sans-serif;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@layer base {
+	[data-theme="light"] {
+
+		--background: 			theme(colors.slate.200);
+		--background-alt: 		theme(colors.slate.300);
+		--surface:				theme(colors.slate.100);
+
+		--bg-accent:			theme(colors.emerald.500);
+		--bg-disabled:			theme(colors.slate.200);
+		--bg-input:				theme(colors.slate.200);
+		--bg-input-hover:		theme(colors.slate.200);
+		--bg-nav:				theme(colors.emerald.800);
+		--bg-nav-link:			theme(colors.emerald.800);
+		--bg-nav-link-hover: 	theme(colors.emerald.700);
+		--bg-white:				theme(colors.white);
+
+		--border-accent: 		theme(colors.emerald.500);
+		--border-danger: 		theme(colors.rose.700);
+		--border-disabled: 		theme(colors.slate.200);
+		--border-divider: 		theme(colors.slate.200);
+		--border-input: 		theme(colors.slate.200);
+		--border-input-hover: 	theme(colors.slate.300);
+		--border-focus: 		theme(colors.emerald.500);
+		--border-nav:			theme(colors.emerald.900);
+		--border-primary:		theme(colors.emerald.700);
+		--border-secondary: 	theme(colors.slate.300);
+		--border-soft:			theme(colors.slate.200);
+
+		--text-accent: 			theme(colors.emerald.500);
+		--text-body: 			theme(colors.slate.500);
+		--text-body-alt: 		theme(colors.slate.600);
+		--text-danger: 			theme(colors.rose.500);
+		--text-disabled:		rgba(0,0,0, 0.2);
+		--text-input: 			theme(colors.slate.800);
+		--text-input-hover: 	theme(colors.slate.800);
+		--text-input-focus: 	theme(colors.emerald.500);
+		--text-input-disabled: 	theme(colors.slate.300);
+		--text-label: 			theme(colors.slate.500);
+		--text-label-alt: 		theme(colors.slate.600);
+		--text-link: 			theme(colors.emerald.500);
+		--text-link-hover: 		theme(colors.emerald.600);
+		--text-link-active: 	theme(colors.emerald.700);
+		--text-link-disabled: 	theme(colors.slate.400);
+		--text-nav-link: 		theme(colors.emerald.400);
+		--text-nav-link-hover: 	theme(colors.white);
+		--text-placeholder:		theme(colors.slate.400);
+		--text-subtle:			theme(colors.slate.200);
+		--text-white:			theme(colors.white);
+
+		--shadow-highlight: 	rgba(255, 255, 255, 0.4);
+		--shadow-lowlight: 		rgba(0, 0, 0, 0.1);
+
+		--gradient-primary:		linear-gradient(
+									theme(colors.emerald.500),
+									theme(colors.emerald.600)
+								);
+		--gradient-primary-alt: linear-gradient(
+									theme(colors.emerald.600),
+									theme(colors.emerald.700)
+								);
+		--gradient-secondary:	linear-gradient(
+									theme(colors.slate.100),
+									theme(colors.slate.200)
+								);
+		--gradient-secondary-alt: linear-gradient(
+									theme(colors.slate.200),
+									theme(colors.slate.300)
+								);
+		--gradient-danger:		linear-gradient(
+									theme(colors.rose.500),
+									theme(colors.rose.600)
+								);
+		--gradient-danger-alt:	linear-gradient(
+									theme(colors.rose.600),
+									theme(colors.rose.700)
+								);
+	}
+
+	[data-theme="dark"] {
+		--background: 			theme(colors.slate.950);
+		--background-alt: 		theme(colors.slate.900);
+		--surface:				theme(colors.slate.900);
+
+		--bg-accent:			theme(colors.emerald.500);
+		--bg-danger: 			theme(colors.rose.200);
+		--bg-disabled:			theme(colors.slate.800);
+		--bg-input:				theme(colors.slate.800);
+		--bg-nav:				theme(colors.slate.900);
+		--bg-nav-link:			theme(colors.slate.900);
+		--bg-nav-link-hover: 	theme(colors.slate.800);
+		--bg-white:				theme(colors.white);
+
+		--border-accent: 		theme(colors.emerald.400);
+		--border-danger: 		theme(colors.rose.500);
+		--border-disabled: 		theme(colors.slate.700);
+		--border-divider: 		theme(colors.slate.700);
+		--border-input: 		theme(colors.slate.800);
+		--border-input-hover: 	theme(colors.slate.700);
+		--border-focus: 		theme(colors.emerald.400);
+		--border-nav:			theme(colors.slate.800);
+		--border-primary:		theme(colors.emerald.950);
+		--border-secondary: 	theme(colors.slate.950);
+		--border-soft:			theme(colors.slate.800);
+
+		--text-accent: 			theme(colors.emerald.500);
+		--text-body: 			theme(colors.slate.300);
+		--text-body-alt: 		theme(colors.slate.400);
+		--text-danger: 			theme(colors.rose.400);
+		--text-disabled:		rgba(255,255,255, 0.2);
+		--text-input: 			theme(colors.slate.300);
+		--text-input-hover: 	theme(colors.slate.200);
+		--text-input-focus: 	theme(colors.emerald.400);
+		--text-input-disabled: 	theme(colors.slate.700);
+		--text-label: 			theme(colors.slate.500);
+		--text-label-alt: 		theme(colors.slate.600);
+		--text-link: 			theme(colors.emerald.400);
+		--text-link-hover: 		theme(colors.emerald.500);
+		--text-link-active: 	theme(colors.emerald.600);
+		--text-link-disabled: 	theme(colors.slate.700);
+		--text-nav-link: 		theme(colors.emerald.400);
+		--text-nav-link-hover: 	theme(colors.white);
+		--text-placeholder:		rgba(255,255,255, 0.4);
+		--text-subtle:			theme(colors.slate.700);
+		--text-white:			theme(colors.white);
+
+		--shadow-highlight: 	rgba(255, 255, 255, 0.1);
+		--shadow-lowlight: 		rgba(0, 0, 0, 0.4);
+
+		--gradient-primary:		linear-gradient(
+									theme(colors.emerald.500),
+									theme(colors.emerald.600)
+								);
+		--gradient-primary-alt: linear-gradient(
+									theme(colors.emerald.400),
+									theme(colors.emerald.500)
+								);
+		--gradient-secondary:	linear-gradient(
+									theme(colors.slate.700),
+									theme(colors.slate.800)
+								);
+		--gradient-secondary-alt: linear-gradient(
+									theme(colors.slate.600),
+									theme(colors.slate.700)
+								);
+		--gradient-danger:		linear-gradient(
+									theme(colors.rose.500),
+									theme(colors.rose.600)
+								);
+		--gradient-danger-alt:	linear-gradient(
+									theme(colors.rose.400),
+									theme(colors.rose.500)
+								);
+	}
+}
+
+@layer utilities {
+
+	.font-style-h1 {
+		@apply font-semibold text-8xl tracking-tighter;
+	}
+	.font-style-h2 {
+		@apply font-semibold text-7xl tracking-tighter;
+	}
+	.font-style-h3 {
+		@apply font-semibold text-5xl tracking-tighter;
+	}
+	.font-style-h4 {
+		@apply font-semibold text-3xl tracking-tighter;
+	}
+	.font-style-h5 {
+		@apply font-semibold text-2xl tracking-tighter;
+	}
+	.font-style-h6 {
+		@apply font-semibold text-xl tracking-tighter;
+	}
+	
+	.font-style-large {
+		@apply text-lg;
+	}
+	.font-style-regular {
+		@apply text-base;
+	}
+	.font-style-small {
+		@apply text-sm;
+	}
+	.font-style-tiny {
+		@apply text-xs;
+	}
+
+	.font-style-button {
+		@apply font-semibold text-xs uppercase tracking-wider;
+	}
+	.font-style-label {
+		@apply text-xs leading-3;
+	}
+	.font-style-input {
+		@apply text-base;
+	}
+	.font-style-placeholder {
+		@apply text-base italic;
+	}
+
+	.style-input {
+		@apply border;
+		background-color: var(--bg-input);
+		border-color: var(--border-input);
+		color: var(--text-input);
+		&:hover {
+			background-color: var(--bg-input-hover);
+			border-color: var(--border-input-hover);
+			color: var(--text-input-hover);
+		}
+	}
+
+
+	
+	/* Color utilities */
+	
+	.bg-input           { background-color: var(--bg-input);           }
+	.border-input       { border-color:     var(--border-input);       }
+	.text-input         { color:            var(--text-input);         }
+	.bg-input:hover     { background-color: var(--bg-input-hover);     }
+	.border-input:hover { border-color:     var(--border-input-hover); }
+	.text-input:hover   { color:            var(--text-input-hover);   }
+
+	.bg-danger          { background-color: var(--bg-danger);          }
+	.border-danger      { border-color:     var(--border-danger);      }
+	.text-danger        { color:            var(--text-danger);        }
+
+}

@@ -1,15 +1,8 @@
-<script lang="ts">
+<script>
     import { inertia, page } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
-    interface PageProps {
-        canLogin?: boolean
-        canRegister?: boolean
-        laravelVersion: string
-        phpVersion: string
-    }
-
-    let { canLogin, canRegister, laravelVersion, phpVersion }: PageProps = $props()
+    let { canLogin, canRegister, laravelVersion, phpVersion } = $props()
 
     function handleImageError() {
         document.getElementById('screenshot-container')?.classList.add('!hidden')
@@ -94,7 +87,7 @@
                                 src="https://laravel.com/assets/img/welcome/docs-light.svg"
                                 alt="Laravel documentation screenshot"
                                 class="aspect-video h-full w-full flex-1 rounded-[10px] object-cover object-top drop-shadow-[0px_4px_34px_rgba(0,0,0,0.06)] dark:hidden"
-                                on:error={handleImageError}
+                                onerror={handleImageError}
                             />
                             <img
                                 src="https://laravel.com/assets/img/welcome/docs-dark.svg"

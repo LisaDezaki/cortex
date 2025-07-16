@@ -1,15 +1,15 @@
-<script lang="ts">
+<script>
     import { inertia, useForm } from '@inertiajs/svelte'
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
-    import PrimaryButton from '@/Components/PrimaryButton.svelte'
+    import Button from '@/Components/Button.svelte'
     import { route } from 'momentum-trail'
 
-    let { status }: { status?: string } = $props()
+    let { status } = $props()
 
     let verificationLinkSent = $derived(status === 'verification-link-sent')
     const form = useForm({})
 
-    function submit(e: SubmitEvent) {
+    function submit(e) {
         e.preventDefault()
 
         $form.post(route('verification.send'))
@@ -34,9 +34,9 @@
 
     <form onsubmit={submit}>
         <div class="mt-4 flex items-center justify-between">
-            <PrimaryButton class={$form.processing && 'opacity-25'} disabled={$form.processing}>
+            <Button primary class={$form.processing && 'opacity-25'} disabled={$form.processing}>
                 Resend Verification Email
-            </PrimaryButton>
+            </Button>
 
             <button
                 use:inertia={{ href: route('logout'), method: 'post' }}

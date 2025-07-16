@@ -8,7 +8,7 @@ test('password can be updated', function () {
 
     $response = $this
         ->actingAs($user)
-        ->from('/profile')
+        ->from('/user/profile')
         ->put('/password', [
             'current_password' => 'password',
             'password' => 'new-password',
@@ -27,7 +27,7 @@ test('correct password must be provided to update password', function () {
 
     $response = $this
         ->actingAs($user)
-        ->from('/profile')
+        ->from('/user/profile')
         ->put('/password', [
             'current_password' => 'wrong-password',
             'password' => 'new-password',

@@ -1,9 +1,7 @@
-<script lang="ts">
+<script>
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
-    import InputError from '@/Components/InputError.svelte'
-    import InputLabel from '@/Components/InputLabel.svelte'
-    import PrimaryButton from '@/Components/PrimaryButton.svelte'
-    import TextInput from '@/Components/TextInput.svelte'
+    import Button from '@/Components/Button.svelte'
+	import Form from '@/Components/Form'
     import { inertia, useForm } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
@@ -14,7 +12,7 @@
         password_confirmation: '',
     })
 
-    function submit(e: SubmitEvent) {
+    function submit(e) {
         e.preventDefault()
 
         $form.post(route('register'), {
@@ -28,67 +26,52 @@
 </svelte:head>
 
 <GuestLayout>
-    <form onsubmit={submit}>
-        <div>
-            <InputLabel for="name" value="Name" />
+    <Form title="Register" onsubmit={submit}>
 
-            <TextInput
-                id="name"
-                type="text"
-                class="mt-1 block w-full"
-                bind:value={$form.name}
-                required
-                autofocus
-                autocomplete="name"
-            />
+		<Form.Field
+			id="name"
+			type="text"
+			class="mt-1 block w-full"
+			bind:value={$form.name}
+			errors={$form.errors.name}
+			label="Name"
+			required
+			autofocus
+			autocomplete="name"
+		/>
 
-            <InputError class="mt-2" message={$form.errors.name} />
-        </div>
+		<Form.Field
+			id="email"
+			type="email"
+			class="mt-1 block w-full"
+			bind:value={$form.email}
+			errors={$form.errors.email}
+			label="Email"
+			required
+			autocomplete="username"
+		/>
 
-        <div class="mt-4">
-            <InputLabel for="email" value="Email" />
+		<Form.Field
+			id="password"
+			type="password"
+			class="mt-1 block w-full"
+			bind:value={$form.password}
+			errors={$form.errors.password}
+			label="Password"
+			required
+			autocomplete="current-password"
+		/>
 
-            <TextInput
-                id="email"
-                type="email"
-                class="mt-1 block w-full"
-                bind:value={$form.email}
-                required
-                autocomplete="username"
-            />
-
-            <InputError class="mt-2" message={$form.errors.email} />
-        </div>
-
-        <div class="mt-4">
-            <InputLabel for="password" value="Password" />
-
-            <TextInput
-                id="password"
-                type="password"
-                class="mt-1 block w-full"
-                bind:value={$form.password}
-                required
-                autocomplete="new-password"
-            />
-
-            <InputError class="mt-2" message={$form.errors.password} />
-        </div>
-
-        <div class="mt-4">
-            <InputLabel for="password_confirmation" value="Confirm Password" />
-
-            <TextInput
-                id="password_confirmation"
-                type="password"
-                class="mt-1 block w-full"
-                bind:value={$form.password_confirmation}
-                required
-                autocomplete="new-password"
-            />
-
-            <InputError class="mt-2" message={$form.errors.password_confirmation} />
-        </div>
+		<Form.Field
+			id="password_confirmation"
+			type="password"
+			class="mt-1 block w-full"
+			bind:value={$form.password_confirmation}
+			errors={$form.errors.password_confirmation}
+			label="Confirm password"
+			required
+			autocomplete="new-password"
+		/>
 
         <div class="mt-4 flex items-center justify-end">
             <a
@@ -99,9 +82,9 @@
                 Already registered?
             </a>
 
-            <PrimaryButton class="ms-4 {$form.processing && 'opacity-25'}" disabled={$form.processing}>
+            <Button primary class="ms-4" loading={$form.processing} disabled={$form.processing}>
                 Register
-            </PrimaryButton>
+            </Button>
         </div>
-    </form>
+    </Form>
 </GuestLayout>

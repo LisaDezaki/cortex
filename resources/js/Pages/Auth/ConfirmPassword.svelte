@@ -1,9 +1,7 @@
-<script lang="ts">
+<script>
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
-    import InputError from '@/Components/InputError.svelte'
-    import InputLabel from '@/Components/InputLabel.svelte'
-    import PrimaryButton from '@/Components/PrimaryButton.svelte'
-    import TextInput from '@/Components/TextInput.svelte'
+    import Button from '@/Components/Button.svelte'
+    import Form from '@/Components/Form'
     import { route } from 'momentum-trail'
     import { useForm } from '@inertiajs/svelte'
 
@@ -11,7 +9,7 @@
         password: '',
     })
 
-    function submit(e: SubmitEvent) {
+    function submit(e) {
         e.preventDefault()
 
         $form.post(route('password.confirm'), {
@@ -31,8 +29,8 @@
 
     <form onsubmit={submit}>
         <div>
-            <InputLabel for="password" value="Password" />
-            <TextInput
+            <Form.Label for="password" value="Password" />
+            <Form.Input
                 id="password"
                 type="password"
                 class="mt-1 block w-full"
@@ -41,12 +39,12 @@
                 autocomplete="current-password"
                 autofocus
             />
-            <InputError class="mt-2" message={$form.errors.password} />
+            <Form.Error message={$form.errors.password} />
         </div>
 
         <div class="mt-4 flex justify-end">
-            <PrimaryButton class="ms-4 {$form.processing && 'opacity-25'}" disabled={$form.processing}
-                >Confirm</PrimaryButton
+            <Button primary class="ms-4 {$form.processing && 'opacity-25'}" disabled={$form.processing}
+                >Confirm</Button
             >
         </div>
     </form>

@@ -1,13 +1,10 @@
-<script lang="ts">
+<script>
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
-    import InputError from '@/Components/InputError.svelte'
-    import InputLabel from '@/Components/InputLabel.svelte'
-    import PrimaryButton from '@/Components/PrimaryButton.svelte'
-    import TextInput from '@/Components/TextInput.svelte'
+    import Button from '@/Components/Button.svelte'
     import { route } from 'momentum-trail'
     import { useForm } from '@inertiajs/svelte'
 
-    let { email, token }: { email: string; token: string } = $props()
+    let { email, token } = $props()
 
     const form = useForm({
         token: token,
@@ -16,7 +13,7 @@
         password_confirmation: '',
     })
 
-    function submit(e: SubmitEvent) {
+    function submit(e) {
         e.preventDefault()
 
         $form.post(route('password.store'), {
@@ -32,9 +29,8 @@
 <GuestLayout>
     <form onsubmit={submit}>
         <div>
-            <InputLabel for="email" value="Email" />
-
-            <TextInput
+            <Form.Label for="email" value="Email" />
+            <Form.Input
                 id="email"
                 type="email"
                 class="mt-1 block w-full"
@@ -43,14 +39,12 @@
                 autofocus
                 autocomplete="username"
             />
-
-            <InputError class="mt-2" message={$form.errors.email} />
+            <Form.Error class="mt-2" message={$form.errors.email} />
         </div>
 
         <div class="mt-4">
-            <InputLabel for="password" value="Password" />
-
-            <TextInput
+            <Form.Label for="password" value="Password" />
+            <Form.Input
                 id="password"
                 type="password"
                 class="mt-1 block w-full"
@@ -58,14 +52,13 @@
                 required
                 autocomplete="new-password"
             />
-
-            <InputError class="mt-2" message={$form.errors.password} />
+            <Form.Error class="mt-2" message={$form.errors.password} />
         </div>
 
         <div class="mt-4">
-            <InputLabel for="password_confirmation" value="Confirm Password" />
+            <Form.Label for="password_confirmation" value="Confirm Password" />
 
-            <TextInput
+            <Form.Input
                 id="password_confirmation"
                 type="password"
                 class="mt-1 block w-full"
@@ -74,12 +67,12 @@
                 autocomplete="new-password"
             />
 
-            <InputError class="mt-2" message={$form.errors.password_confirmation} />
+            <Form.Error class="mt-2" message={$form.errors.password_confirmation} />
         </div>
 
         <div class="mt-4 flex items-center justify-end">
-            <PrimaryButton class={$form.processing && 'opacity-25'} disabled={$form.processing}
-                >Reset Password</PrimaryButton
+            <Button primary class={$form.processing && 'opacity-25'} disabled={$form.processing}
+                >Reset Password</Button
             >
         </div>
     </form>

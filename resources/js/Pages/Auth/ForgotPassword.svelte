@@ -1,19 +1,17 @@
-<script lang="ts">
+<script>
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
-    import InputError from '@/Components/InputError.svelte'
-    import InputLabel from '@/Components/InputLabel.svelte'
-    import PrimaryButton from '@/Components/PrimaryButton.svelte'
-    import TextInput from '@/Components/TextInput.svelte'
+    import Button from '@/Components/Button.svelte'
+	import Form from '@/Components/Form'
     import { route } from 'momentum-trail'
     import { useForm } from '@inertiajs/svelte'
 
-    let { status }: { status?: string } = $props()
+    let { status } = $props()
 
     const form = useForm({
         email: '',
     })
 
-    function submit(e: SubmitEvent) {
+    function submit(e) {
         e.preventDefault()
 
         $form.post(route('password.email'))
@@ -38,9 +36,9 @@
 
     <form onsubmit={submit}>
         <div>
-            <InputLabel for="email" value="Email" />
+            <Form.Label for="email" value="Email" />
 
-            <TextInput
+            <Form.Input
                 id="email"
                 type="email"
                 class="mt-1 block w-full"
@@ -50,13 +48,13 @@
                 autocomplete="username"
             />
 
-            <InputError class="mt-2" message={$form.errors.email} />
+            <Form.Error class="mt-2" message={$form.errors.email} />
         </div>
 
         <div class="mt-4 flex items-center justify-end">
-            <PrimaryButton class={$form.processing && 'opacity-25'} disabled={$form.processing}>
+            <Button primary class={$form.processing && 'opacity-25'} disabled={$form.processing}>
                 Email Password Reset Link
-            </PrimaryButton>
+            </Button>
         </div>
     </form>
 </GuestLayout>

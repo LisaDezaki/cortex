@@ -1,16 +1,19 @@
-<script lang="ts">
+<script>
     import { inertia } from '@inertiajs/svelte'
-    import ApplicationLogo from '@/Components/ApplicationLogo.svelte'
+
+    import Logo from '@/Components/Logo.svelte'
+	import Main from '../Components/Main.svelte'
+    import Page from '../Components/Page.svelte'
 </script>
 
-<div class="flex min-h-screen flex-col items-center bg-gray-100 pt-6 sm:justify-center sm:pt-0 dark:bg-gray-900">
+<Page class="flex flex-col items-center justify-center bg-emerald-700">
     <div>
         <a use:inertia href="/">
-            <ApplicationLogo class="h-20 w-20 fill-current text-gray-500" />
+            <Logo class="h-16 w-16 fill-emerald-400" />
         </a>
     </div>
 
-    <div class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg dark:bg-gray-800">
+    <div class="mt-6 w-full overflow-hidden bg-slate-50 px-6 py-4 shadow-md max-w-md rounded-lg">
         <slot />
     </div>
-</div>
+</Page>

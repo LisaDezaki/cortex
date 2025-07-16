@@ -1,0 +1,104 @@
+[
+	{
+		"character": "bugbeard",
+		"related_character": "abigail",
+		"character_role": "Captain",
+		"related_character_role": "Navigator"
+	},
+	{
+		"character": "bugbeard",
+		"related_character": "duggan",
+		"character_role": "Captain",
+		"related_character_role": "Muscle"
+	},
+	{
+		"character": "abigail",
+		"related_character": "duggan",
+		"character_role": "Crewmate",
+		"related_character_role": "Crewmate"
+	},
+	{
+		"character": "barry",
+		"related_character": "hamfast",
+		"character_role": "Supplier",
+		"related_character_role": "Customer"
+	},
+	{
+		"character": "grenn",
+		"related_character": "bogdan",
+		"character_role": "Boss",
+		"related_character_role": "Enforcer"
+	},
+	{
+		"character": "grenn",
+		"related_character": "hamfast",
+		"character_role": "Employer",
+		"related_character_role": "Cook"
+	},
+	{
+		"character": "grenn",
+		"related_character": "rodrik",
+		"character_role": "Employer",
+		"related_character_role": "Bartender"
+	},
+	{
+		"character": "grenn",
+		"related_character": "willow",
+		"character_role": "Employer",
+		"related_character_role": "Barmaid"
+	},
+	{
+		"character": "ferman",
+		"related_character": "kass",
+		"character_role": "Employer",
+		"related_character_role": "Apprentice"
+	},
+	{
+		"character": "bhezox",
+		"related_character": "murhdox",
+		"character_role": "Co-conspirator",
+		"related_character_role": "Co-conspirator"
+	},
+	{
+		"character": "murhdox",
+		"related_character": "rhaegan",
+		"character_role": "Co-conspirator",
+		"related_character_role": "Co-conspirator"
+	},
+	{
+		"character": "rhaegan",
+		"related_character": "bhezox",
+		"character_role": "Co-conspirator",
+		"related_character_role": "Co-conspirator"
+	},
+	{
+		"character": "uma",
+		"related_character": "binksy",
+		"character_role": "Headmistress",
+		"related_character_role": "Student"
+	},
+	{
+		"character": "uma",
+		"related_character": "kem",
+		"character_role": "Headmistress",
+		"related_character_role": "Teacher"
+	},
+	{
+		"character": "perd",
+		"related_character": "ovina",
+		"character_role": "Tour Guide",
+		"related_character_role": "Tourist"
+	},
+	{
+		"character": "dirk",
+		"related_character": "laggard",
+		"character_role": "Pain in the ass",
+		"related_character_role": "Pain in the ass"
+	},
+	{
+		"character": "hugo",
+		"related_character": "duggan",
+		"character_role": "Older brother",
+		"related_character_role": "Younger brother"
+	}
+]

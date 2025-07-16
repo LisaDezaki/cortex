@@ -1,15 +1,14 @@
-<script lang="ts">
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+<script>
+	import UserLayout from '@/Layouts/UserLayout.svelte'
     import DeleteUserForm from './Partials/DeleteUserForm.svelte'
     import UpdatePasswordForm from './Partials/UpdatePasswordForm.svelte'
     import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.svelte'
+	import Article from '@/Components/Article.svelte';
+	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
 
     let {
         mustVerifyEmail,
         status,
-    }: {
-        mustVerifyEmail?: boolean
-        status?: string
     } = $props()
 </script>
 
@@ -17,24 +16,42 @@
     <title>Profile</title>
 </svelte:head>
 
-<AuthenticatedLayout>
+<UserLayout>
     {#snippet header()}
-        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">Profile</h2>
-    {/snippet}
+		<Breadcrumbs data={[
+			{ title: "User", href: "/user" },
+			{ title: "Profile"}
+		]} />
+	{/snippet}
 
-    <div class="py-12">
-        <div class="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-            <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-                <UpdateProfileInformationForm {mustVerifyEmail} {status} class="max-w-xl" />
-            </div>
+    <section class="grid grid-cols-5 gap-12 px-12 py-6">
 
-            <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-                <UpdatePasswordForm class="max-w-xl" />
-            </div>
+		<div class="col-span-3 space-y-6">
+			<Article
+				title="Profile Information"
+				subtitle="Update your account's profile information and email address."
+				bodyclass="px-6"
+			>
+				<UpdateProfileInformationForm {mustVerifyEmail} {status} class="max-w-xl" />
+			</Article>
+	
+			<Article
+				title="Update Password"
+				subtitle="Ensure your account is using a long, random password to stay secure."
+				bodyclass="px-6"
+			>
+				<UpdatePasswordForm class="max-w-xl" />
+			</Article>
+	
+			<Article
+				title="Delete Account"
+				subtitle="Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
+				your account, please download any data or information that you wish to retain."
+				bodyclass="px-6"
+			>
+				<DeleteUserForm class="max-w-xl" />
+			</Article>
+		</div>
 
-            <div class="bg-white p-4 shadow sm:rounded-lg sm:p-8 dark:bg-gray-800">
-                <DeleteUserForm class="max-w-xl" />
-            </div>
-        </div>
-    </div>
-</AuthenticatedLayout>
+    </section>
+</UserLayout>

@@ -1,0 +1,115 @@
+{
+	"blackthorns": {
+		"name": "The Blackthorn Pact",
+		"desc": "A secretive coven of forest inhabitants who protect the forest's dark secrets.",
+		"hq": "lake",
+		"ranks": [ "Elder", "Guardian", "Hunter" ],
+		"members": {}
+	},
+	"cold-bloods": {
+		"name": "Cold-Bloods",
+		"desc": "The Cold Bloods are an organized crime syndicate operating in town, primarily through the tavern.",
+		"hq": "tavern",
+		"ranks": [ "Boss", "Muscle", "Grunt" ],
+		"members": {
+			"grenn": "Boss",
+			"bogdan": "Muscle"
+		}
+	},
+	"cult": {
+		"name": "No Purpose Cult",
+		"desc": "A small group of radical conspiracy theorists who are obsessed with the idea that they have no free will or agency, and are all being secretly controlled by a being known as The Game Master.",
+		"hq": "ruins",
+		"ranks": [ "Cult Leader", "Cultist", "Recruit" ],
+		"members": {}
+	},
+	"dragon-council": {
+		"name": "Dragon Council",
+		"desc": "The Dragon Council is a recent addition to the city. While a few people have connected the dots, most people haven't realized yet that the dragons are siphoning resources from the city.",
+		"hq": "council",
+		"ranks": [ "Co-conspirator", "Councilor" ], 
+		"members": {
+			"bhezox": "Co-conspirator",
+			"rhaegan": "Co-conspirator",
+			"murhdox": "Co-conspirator"
+		}
+	},
+	"goblins": {
+		"name": "Red Goblins",
+		"desc": "A bunch of goblins who live in a camp in the Red Mountains",
+		"hq": "goblin-camp",
+		"ranks": [ "Chieftan", "Hunter", "Scavenger" ],
+		"members": {}
+	},
+	"hikers": {
+		"name": "Hikers",
+		"desc": "A group of hikers who like to go hiking in the nearby Red Mountains.",
+		"hq": "hikers-camp",
+		"ranks": [ "Tour Guide", "Tourist" ],
+		"members": {
+			"ovina": "Tour Guide",
+			"perd": "Tourist"
+		}
+	},
+	"swarm": {
+		"name": "The Swarm",
+		"desc": "The Insectoids are a newer gang in town, starting to cause problems late at night. They're experiencing a parasitic pandemic amongst themselves back in their home realm.",
+		"hq": null,
+		"ranks": [ "Queen", "Soldier" ],
+		"members": {
+			"mawloq": "Queen",
+			"brundle": "Soldier",
+			"manto": "Soldier",
+			"wikus": "Soldier"
+		}
+	},
+	"rednecks": {
+		"name": "Rednecks",
+		"desc": "A group of kobolds who live in the trailer park near The Red Mountains. They are known for their love of ale and barbequed meats.",
+		"hq": "trailer-park",
+		"ranks": [ "Trash" ],
+		"members": {
+			"gack": "Trash"
+		}
+	},
+	"pirates": {
+		"name": "Pirates",
+		"desc": "The pirates have been harbored in Tableton Dock for a few weeks now.",
+		"hq": "pirate-ship",
+		"ranks": [ "Captain", "First Mate", "Deckhand" ],
+		"members": {
+			"bugbeard": "Captain",
+			"abigail": "First Mate",
+			"duggan": "Deckhand"
+		}
+	},
+	"school": {
+		"name": "School",
+		"desc": "All attendees of Tableton Academy, student or staff.",
+		"hq": "school",
+		"ranks": [ "Headmistress", "Teacher", "Student" ],
+		"members": {
+			"uma": "Headmistress",
+			"kem": "Teacher",
+			"torva": "Teacher",
+			"binksy": "Student",
+			"mae": "Student",
+			"nocturna": "Student",
+			"stark": "Student",
+			"thalassa": "Student"
+		}
+	},
+	"tavern-workers": {
+		"name": "Tavern Workers",
+		"desc": "A lot of people in the town make their money through the town's tavern.",
+		"hq": "tavern",
+		"ranks": [ "Landlord", "Bouncer", "Cook", "Bartender", "Server"],
+		"members": {
+			"grenn": "Landlord",
+			"bogdan": "Bouncer",
+			"hamfast": "Cook",
+			"rodrik": "Bartender",
+			"willow": "Server"
+		}
+	}
+}

@@ -1,0 +1,275 @@
+{
+	"abigail": {
+		"name": "Abigail",
+		"subtitle": "The Navigator",
+		"species": "satyr",
+		"desc": "Abigail is a skilled navigator working under Captain Bugbeard on his ship.",
+		"location": "pirate-ship"
+	},
+	"barry": {
+		"name": "Barry",
+		"subtitle": "The Butcher",
+		"species": "bearfolk",
+		"desc": "Barry is the local butcher",
+		"location": "docks"
+	},
+	"bhezox": {
+		"name": "Bhezox",
+		"subtitle": "The Executive",
+		"species": "dragonborn",
+		"desc": "Bezox is a tech CEO who manipulates markets and investments to help the Dragonborns.",
+		"location": "council"
+	},
+	"binksy": {
+		"name": "Binksy",
+		"subtitle": "The Vandal",
+		"species": "gnome",
+		"desc": "Binksy uses magical spray paint with various effects.",
+		"location": "alley"
+	},
+	"bogdan": {
+		"name": "Bogdan",
+		"subtitle": "The Enforcer",
+		"species": "lizardfolk",
+		"desc": "Bogdan is the primary muscle of his boss, Grenn.",
+		"location": "tavern"
+	},
+	"brundle": {
+		"name": "Brundle",
+		"subtitle": "The Fly",
+		"species": "insectoid",
+		"desc": "Brundle uses its compound eyes and many limbs to shoot in every direction simultaneously with ease.",
+		"location": null
+	},
+	"bugbeard": {
+		"name": "Bugbeard",
+		"subtitle": "The Pirate Captain",
+		"species": "bugbear",
+		"desc": "Captain Bugbeard used to be the most fearsome pirate, but a long battle with alcoholism has left him without his sea legs.",
+		"location": "pirate-ship"
+	},
+	"dirk": {
+		"name": "Dirk",
+		"subtitle": "The Private Investigator",
+		"species": "orc",
+		"desc": "Dirk is a private investigator.",
+		"location": "shopping-mall"
+	},
+	"duggan": {
+		"name": "Duggan",
+		"subtitle": "The Heavy",
+		"species": "troll",
+		"desc": "Duggan not know much, but he know point cannon and boom.",
+		"location": "pirate-ship"
+	},
+	"ferman": {
+		"name": "Ferman",
+		"subtitle": "The Construction Worker",
+		"species": "dwarf",
+		"desc": "Ferman is a construction worker",
+		"location": "construction-site"
+	},
+	"gack": {
+		"name": "Gack",
+		"subtitle": "The Redneck",
+		"species": "kobold",
+		"desc": "Gack is a kobold redneck being evicted from his trailer. He blames immigrants, even though the Dragon Council is responsible for his rent doubling.",
+		"location": "trailer-park"
+	},
+	"grenn": {
+		"name": "Grenn",
+		"subtitle": "The Slumlord",
+		"species": "lizardfolk",
+		"desc": "Grenn owns almost all of the low income housing, thanks to a deal with the Dragons.",
+		"location": "tavern"
+	},
+	"hamfast": {
+		"name": "Hamfast",
+		"subtitle": "The Cook",
+		"species": "halfling",
+		"desc": "Hamfast works hard to keep the tavern's patrons well fed. As a halfling managing an entire tavern kitchen alone, he probably works harder than most. But his boss Grenn probably isn't going to hire any more help any time soon.",
+		"location": "tavern"
+	},
+	"hugo": {
+		"name": "Hugo",
+		"subtitle": "The Lumberjack",
+		"species": "troll",
+		"desc": "Hugo is a troll lumberjack who is hired to begin deforestation of the Cursed Forest.",
+		"location": "protest-site"
+	},
+	"kass": {
+		"name": "Kass",
+		"subtitle": "The Mechanic",
+		"species": "human",
+		"desc": "Kass is a human mechanic.",
+		"location": "construction-site"
+	},
+	"kem": {
+		"name": "Kem",
+		"subtitle": "The Professor",
+		"species": "goblin",
+		"desc": "Kem is a goblin science professor at the academy. He works with Torva.",
+		"location": "school"
+	},
+	"lafferty": {
+		"name": "Lafferty",
+		"subtitle": "The Comedian",
+		"species": "gnoll",
+		"desc": "Lafferty is a Scottish comedian who performs at the tavern every tuesday and thursday night. His routine has begun to get a little stale, so he's thinking about punching up his material a little by making satirical jokes about the Dragon Council.",
+		"location": "tavern"
+	},
+	"laggard": {
+		"name": "Laggard",
+		"subtitle": "The Police Officer",
+		"species": "tortle",
+		"desc": "Laggard is a police officer trying to uncover corruption in his own precinct, but he's too meticulous and slow to get anything done.",
+		"location": "precinct"
+	},
+	"mae": {
+		"name": "Mae",
+		"subtitle": "The Virtuosa",
+		"species": "harengon",
+		"desc": "Mae is a bard student at the school, and performs violin music in the tavern every Saturday night.",
+		"location": "school"
+	},
+	"makk": {
+		"name": "Makk",
+		"subtitle": "The Podcaster",
+		"species": "orc",
+		"desc": "A very popular podcaster who peddles misogyny to thousands of young men.",
+		"location": null
+	},
+	"manto": {
+		"name": "Manto",
+		"subtitle": "The Mantis",
+		"species": "insectoid",
+		"desc": "Manto uses its two scythes to slice down anything in its path.",
+		"location": null
+	},
+	"mawloq": {
+		"name": "Mawloq",
+		"subtitle": "The Beast",
+		"species": "insectoid",
+		"desc": "Mawloq is a monster.",
+		"location": null
+	},
+	"montag": {
+		"name": "Montag",
+		"subtitle": "The Firefighter",
+		"species": "loxodon",
+		"desc": "Montag is a loxodon firefighter.",
+		"location": null
+	},
+	"murhdox": {
+		"name": "Murhdox",
+		"subtitle": "The Mogul",
+		"species": "dragonborn",
+		"desc": "Murhdox is a media mogul who manipulates public perceptions to help the Dragonborns.",
+		"location": "council"
+	},
+	"naomi": {
+		"name": "Naomi",
+		"subtitle": "The Dancer",
+		"species": "human",
+		"desc": "Naomi dances in the tavern on friday nights.",
+		"location": null
+	},
+	"nocturna": {
+		"name": "Nocturna",
+		"subtitle": "The Barista",
+		"species": "tiefling",
+		"desc": "Nocturna is a tiefling barista working the night shift at the local coffee house.",
+		"location": "shopping-mall"
+	},
+	"ovina": {
+		"name": "Ovina",
+		"subtitle": "The Sherpa",
+		"species": "caoraa",
+		"desc": "Ovina gives guided tours of the nearby Red Mountains.",
+		"location": "hikers-camp"
+	},
+	"perd": {
+		"name": "Perd",
+		"subtitle": "The Tourist",
+		"species": "verdan",
+		"desc": "Perd is a verdan tourist.",
+		"location": "hikers-camp"
+	},
+	"pockets": {
+		"name": "Pockets",
+		"subtitle": "The Hoarder",
+		"species": "gnome",
+		"desc": "Pockets always wears clothing with dozens of pockets.",
+		"location": null
+	},
+	"rhaegan": {
+		"name": "Rhaegan",
+		"subtitle": "The Senator",
+		"species": "dragonborn",
+		"desc": "Rhaegan is the head of the Dragon Council and the major of the town. He has implemented new legislation to make it easier for Dragonkind to siphon all of the town's gold.",
+		"location": "council"
+	},
+	"rodrik": {
+		"name": "Rodrik",
+		"subtitle": "The Bartender",
+		"species": "orc",
+		"desc": "As the bartender of the local tavern, Rodrik knows most of the folks in town. If he wants to find out some secret information, he simply stops watering down the target's drinks.",
+		"location": "tavern"
+	},
+	"scratch": {
+		"name": "Scratch",
+		"subtitle": "The DJ",
+		"species": "satyr",
+		"desc": "DJ Scratch is a DJ and electronic musician who performs in the tavern on Wednesday nights.",
+		"location": "tavern"
+	},
+	"stark": {
+		"name": "Stark",
+		"subtitle": "The Quarterback",
+		"species": "wolfkind",
+		"desc": "Stark is a werewolf athlete at the academy.",
+		"location": "school"
+	},
+	"taurus": {
+		"name": "Taurus",
+		"subtitle": "The Surgeon",
+		"species": "minotaur",
+		"desc": "Doc Taurus is a minotaur doctor.",
+		"location": null
+	},
+	"thalassa": {
+		"name": "Thalassa",
+		"subtitle": "The Valedictorian",
+		"species": "triton",
+		"desc": "Thalassa is a triton student at the academy and also student body president.",
+		"location": "school"
+	},
+	"torva": {
+		"name": "Torva",
+		"subtitle": "The Alchemist",
+		"species": "kenku",
+		"desc": "Torva is a kenku alchemist at the academy who works with Kem. He also works part-time as a pharmacist.",
+		"location": "school"
+	},
+	"uma": {
+		"name": "Uma",
+		"subtitle": "The Headmistress",
+		"species": "owlin",
+		"desc": "Uma is the owlin headmistress of the school. She is always incredibly tired and just wants to read her news scroll with a coffee.",
+		"location": "school"
+	},
+	"wikus": {
+		"name": "Wikus",
+		"subtitle": "The Prawn",
+		"species": "insectoid",
+		"desc": "Wikus is a relentless stabbing machine.",
+		"location": null
+	},
+	"willow": {
+		"name": "Willow",
+		"subtitle": "The Barmaid",
+		"species": "human",
+		"desc": "Willow is a half-elf working in the tavern.",
+		"location": "tavern"
+	}
+}
