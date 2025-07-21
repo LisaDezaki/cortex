@@ -36,6 +36,7 @@ class DatabaseSeeder extends Seeder
 		$tableton = Project::factory()->create([
 			'user_id' => $user->id,
 			'name' => 'Tableton',
+			'image' => "admin@example.com/Tableton/tableton.png",
 			'description' => 'A sprawling coastal diorama town with a rich history and a vibrant community.
 							The town has recently been revitalized, attracting new residents and businesses.
 							The tavern is a common gathering place, where locals and travelers share stories and laughter.'
@@ -43,6 +44,7 @@ class DatabaseSeeder extends Seeder
 		$deadworld = Project::factory()->create([
 			'user_id' => $user->id,
 			'name' => 'Deadworld',
+			'image' => "admin@example.com/Deadworld/deadworld.png",
 			'description' => 'A post-apocalyptic world where survivors struggle to survive.
 							The remnants of civilization are scattered across the land, with small pockets of humanity clinging to life.
 							The world is filled with danger, from mutated creatures to hostile factions.'
@@ -54,7 +56,7 @@ class DatabaseSeeder extends Seeder
 
 		$species_field = CustomField::create([
 			'project_id' => $tableton->id,
-			'entity_type' => 'character',
+			'customfieldable_type' => 'character',
 			'type' => 'select',
 			'name' => 'species',
 			'label' => 'Species',
@@ -88,6 +90,7 @@ class DatabaseSeeder extends Seeder
 				'project_id'  => $tableton->id,
 				'name'        => $region['name'],
 				'slug'        => $slug,
+				'map'       => "admin@example.com/Tableton/regions/".$slug."-map.png",
 				'description' => $region['desc']
 			]);
 			$regions[$slug] = $regionModel;
@@ -96,7 +99,7 @@ class DatabaseSeeder extends Seeder
 					'name'        => $location['name'],
 					'slug'        => $locationslug,
 					'description' => $location['desc'],
-					'image'       => "admin@example.com/Tableton/locations/".$locationslug.".png",
+					'banner'       => "admin@example.com/Tableton/locations/".$locationslug.".png",
 					'coordinates_x' => $location['coordinates']['x'],
 					'coordinates_y' => $location['coordinates']['y']
 				]);
@@ -131,7 +134,7 @@ class DatabaseSeeder extends Seeder
 				'location_id' => isset($character['location']) ? $locations[$character['location']]->id : null,
 			]);
 			CustomFieldValue::create([
-				'entity_id'       => $characters[$slug]->id,
+				'customfieldable_id' => $characters[$slug]->id,
 				'custom_field_id' => $species_field->id,
 				'value'           => $character['species'],
 			]);

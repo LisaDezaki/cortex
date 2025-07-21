@@ -19,17 +19,17 @@
 
 <div class="relative flex gap-2 w-full">
 
-	<div class="map relative flex-grow bg-slate-100 border border-slate-200 aspect-video rounded-lg">
+	<div class="map relative flex-grow bg-slate-100 border border-slate-200 rounded-lg overflow-hidden max-w-[50%]">
 		<img
-			src={region.image}
+			src={region.map_path}
 			alt={region.name}
 		/>
 		{#each region.locations as location}
 			<Thumbnail
-				class="map-pin absolute"
-				style="left: {location.coordinates.x}; top: {location.coordinates.y}"
+				class="map-pin absolute w-8 border border-white"
+				style="left: {location.coordinates.x}; top: {location.coordinates.y};"
 				icon="MapPin"
-				src={location.image}
+				src={location.banner_path}
 				alt={location.name}
 			/>
 		{/each}

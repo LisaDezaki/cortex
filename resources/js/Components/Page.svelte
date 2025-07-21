@@ -18,7 +18,7 @@
 <style lang="postcss">
 	
 	.page {
-		@apply h-screen overflow-hidden selection:bg-emerald-500;
+		@apply h-screen flex items-stretch overflow-hidden selection:bg-emerald-500;
 	}
 	.page:not([class*="bg-"]) {
 		background-color: var(--background);

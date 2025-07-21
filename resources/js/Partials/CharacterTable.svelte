@@ -3,10 +3,8 @@
 	import { Link } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import Avatar from '@/Components/Avatar.svelte'
 	import Button from '@/Components/Button.svelte'
 	import CharacterIcon from '@/Components/CharacterIcon.svelte'
-	import DataCell from '@/Components/DataCell.svelte'
 	import Form from '@/Components/Form'
 	import Table from '@/Components/Table'
 	import Thumbnail from '@/Components/Thumbnail.svelte'
@@ -37,8 +35,6 @@
 
 </script>
 
-<!-- <pre>{JSON.stringify(characters, null, 4)}</pre> -->
-
 {#snippet headRow()}
 	{#if selectionMode}
 		<Table.Head shrink><Form.Checkbox onclick={selectAll} /></Table.Head>
@@ -63,8 +59,8 @@
 				icon="User"
 			/>
 			<div class="-space-y-0.5">
-				<div class="font-style-regular">{character.name}</div>
-				<div class="font-style-tiny opacity-65 line-clamp-1">{character.subtitle}</div>
+				<div class="font-style-regular line-clamp-1">{character.name}</div>
+				<div class="font-style-tiny line-clamp-1 opacity-65">{character.subtitle}</div>
 			</div>
 		</Link>
 	</Table.Cell>
@@ -77,8 +73,8 @@
 					icon="FlagBannerFold"
 				/>
 				<div class="-space-y-0.5">
-					<div class="font-style-regular">{character?.factions[0]?.name}</div>
-					<div class="font-style-tiny opacity-65 line-clamp-1">{character?.factions[0]?.members?.length} member{character?.factions[0]?.members?.length !== 1 ? 's' : ''}</div>
+					<div class="font-style-regular line-clamp-1">{character?.factions[0]?.name}</div>
+					<div class="font-style-tiny line-clamp-1 opacity-65">{character?.factions[0]?.members?.length} member{character?.factions[0]?.members?.length !== 1 ? 's' : ''}</div>
 				</div>
 			</Link>
 		{:else}
@@ -115,7 +111,7 @@
 				/>
 				<div class="-space-y-0.5">
 					<div class="font-style-regular line-clamp-1">{character?.location.name}</div>
-					<div class="font-style-tiny opacity-65 line-clamp-1">{character?.location.region?.name}</div>
+					<div class="font-style-tiny line-clamp-1 opacity-65">{character?.location.region?.name}</div>
 				</div>
 			</Link>
 		{:else}

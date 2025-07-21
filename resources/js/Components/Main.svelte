@@ -14,6 +14,6 @@
 
 <style lang="postcss">
 	.main {
-		@apply flex items-stretch flex-1 overflow-hidden;
+		@apply flex items-stretch flex-1 overflow-hidden h-full;
 	}
 </style>

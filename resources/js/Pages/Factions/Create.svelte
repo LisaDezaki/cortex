@@ -1,8 +1,12 @@
 <script>
 	import { page } from '@inertiajs/svelte'
+	import { route } from 'momentum-trail'
 
-    import FactionsLayout from '@/Layouts/FactionsLayout.svelte'
-	import FactionForm from './Partials/FactionForm.svelte'
+    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import FactionsPanel from '@/Partials/FactionsPanel.svelte'
+	import FactionForm from '@/Forms/FactionForm.svelte'
+
+	import Back from '@/Components/Back.svelte';
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
 
 	let project = $page.props.active_project
@@ -13,7 +17,8 @@
     <title>{project.name} / New Faction</title>
 </svelte:head>
 
-<FactionsLayout>
+<AuthenticatedLayout>
+	
 	{#snippet header()}
 		<Breadcrumbs data={[
 			{ title: "Project",    href: "/" },
@@ -22,8 +27,13 @@
 		]} />
 	{/snippet}
 
-	<section class="grid grid-cols-5 gap-12 px-12 py-6">
-		<FactionForm />
-	</section>
+	{#snippet panel()}
+		<FactionsPanel />
+	{/snippet}
 
-</FactionsLayout>
+	{#snippet article()}
+		<Back href={route('factions')} />
+		<FactionForm />
+	{/snippet}
+
+</AuthenticatedLayout>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CharacterResource;
+use App\Http\Resources\CustomFieldResource;
 use App\Models\Character;
+use App\Models\CustomField;
 use App\Models\CustomFieldValue;
 use App\Models\Location;
 use App\Services\FileUploadService;
@@ -36,13 +38,30 @@ class CharacterController extends Controller
 		'custom_fields' => 'sometimes|array',
         // 'custom_fields.*.name' => 'required|string',  // Field name
         'custom_fields.*' => 'present',        // Field value (can be null)
+		'custom_fields.*.id' => 'required|distinct|exists:custom_fields,id',
+
+		
+		'custom_fields.*.value' => 'nullable|string'
 	];
 
 	/* VIEWS */
 
 	public function index(): Response
 	{
-		return Inertia::render('Characters/Index');
+		$active_project = Auth::user()->active_project;
+
+		// if (!active_project) {
+		// 	return Redirect::route("/");
+		// }
+
+		$custom_fields = CustomField::where([
+			'project_id' => $active_project,
+			'customfieldable_type' => 'character'
+		])->with('options')->get();
+
+		return Inertia::render('Characters/Index', [
+			'custom_fields' => CustomFieldResource::collection($custom_fields)
+		]);
 	}
 
 	public function create(): Response
@@ -61,7 +80,7 @@ class CharacterController extends Controller
 		]);
 
 		return Inertia::render('Characters/Show', [
-			'character'  => new CharacterResource($character)
+			'character'  => new CharacterResource($character),
 		]);
 	}
 
@@ -103,11 +122,11 @@ class CharacterController extends Controller
 			//  Create the new custom field
 			CustomFieldValue::updateOrCreate(
 				[
-					'entity_id' => $character->id,
+					'customfieldable_id' => $character->id,
 					'custom_field_id' => $field['id']
 				],
 				[
-					'value' => $field['value']
+					'value' => $field['value'],
 				]
 			);
 		}
@@ -149,10 +168,7 @@ class CharacterController extends Controller
 		// Validate user request
 		$validatedData = $request->validate($this->validationRules);
 
-		// dd($request->image, $character->image);
-
 		//  Handle image upload
-
 		if ( $character->image == $request->image ) {
 			// No change to image, skip
 			$character->fill($validatedData);
@@ -172,16 +188,12 @@ class CharacterController extends Controller
 		}
 
 		//  Handle custom fields
-
-		//  TODO: Check to see why this is not working.
-		// dd($validatedData['custom_fields']);
-
 		foreach ($validatedData['custom_fields'] as $field) {
 			if (empty($field['value'])) {
 
 				//  Delete custom field value
 				CustomFieldValue::where([
-					'entity_id' => $character->id,
+					'customfieldable_id' => $character->id,
 					'custom_field_id' => $field['id']
 				])->delete();
 
@@ -190,7 +202,7 @@ class CharacterController extends Controller
 				//  Create the new custom field
 				CustomFieldValue::updateOrCreate(
 					[
-						'entity_id' => $character->id,
+						'customfieldable_id' => $character->id,
 						'custom_field_id' => $field['id']
 					],
 					[
@@ -202,7 +214,6 @@ class CharacterController extends Controller
 		}
 
 		// Redirect user to new character page.
-		
 		$character->update();
 		return Redirect::route("characters.show", [
 			'character' => $character->slug
@@ -244,7 +255,14 @@ class CharacterController extends Controller
 
 	public function settings(Request $request): Response
 	{
-		return Inertia::render('Characters/Settings');
+		$custom_fields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'customfieldable_type' => 'character'
+		])->with('options')->get();
+
+		return Inertia::render('Characters/Settings', [
+			'custom_fields' => CustomFieldResource::collection($custom_fields)
+		]);
 	}
 
 

@@ -50,18 +50,18 @@
 	input {
 		@apply block min-h-10 rounded-lg w-full;
 		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
-		/* box-shadow: inset 0 1px 3px var(--shadow-lowlight), inset 0 -1px 2px var(--shadow-highlight); */
 
-		&::placeholder {
+		/* &::placeholder {
 			color: var(--text-placeholder);
 			font-style: italic;
 			opacity: 75%;
-		}
+		} */
 
 		&[aria-disabled] {
-			background-color: var(--bg-disabled);
+			/* background-color: var(--bg-disabled);
 			border-color: var(--border-disabled);
-			color: var(--text-disabled);
+			color: var(--text-disabled); */
+			opacity: 50%;
 			cursor: not-allowed;
 		}
 	}

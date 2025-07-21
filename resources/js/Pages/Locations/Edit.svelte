@@ -2,12 +2,14 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-    import LocationsLayout from '@/Layouts/LocationsLayout.svelte'
-	import LocationForm from './Partials/LocationForm.svelte'
-	// import DeleteLocationForm from './Partials/DeleteLocationForm.svelte'
-	import Article from '@/Components/Article.svelte';
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
-	import Button from '@/Components/Button.svelte';
+    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import LocationsPanel from '@/Partials/LocationsPanel.svelte'
+	import DeleteLocationForm from '@/Forms/DeleteLocationForm.svelte'
+	import LocationForm from '@/Forms/LocationForm.svelte'
+
+	import Back from '@/Components/Back.svelte'
+	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
+	import Button from '@/Components/Button.svelte'
 	import Modal from '@/Components/Modal.svelte'
 
 	let project = $page.props.active_project.data
@@ -15,9 +17,9 @@
 
 	let deletingLocation = $state(false)
 
-	// function deleteLocation() {
-    //     deletingLocation = true
-    // }
+	function deleteLocation() {
+        deletingLocation = true
+    }
 	function closeModal() {
 		deletingLocation = false
     }
@@ -28,7 +30,7 @@
     <title>{project.name} / {location.name}</title>
 </svelte:head>
 
-<LocationsLayout>
+<AuthenticatedLayout>
 	{#snippet header()}
 		<Breadcrumbs data={[
 			{ title: "Project",    href: "/" },
@@ -36,15 +38,20 @@
 			{ title: location.name, href: route('locations.show', {location: location.slug}) },
 			{ title: "Edit" }
 		]} />
-		<!-- <Button plain icon="Trash" iconSize={24} onclick={deleteLocation} class="border-l w-14 hover:bg-rose-500/20 hover:text-rose-500" /> -->
+		<Button plain icon="Trash" iconSize={24} onclick={deleteLocation} class="border-l w-14 hover:bg-rose-500/20 hover:text-rose-500" />
 	{/snippet}
 
-	<section class="grid grid-cols-5 gap-12 p-12">
-		<LocationForm location={location} />
-	</section>
+	{#snippet panel()}
+		<LocationsPanel />
+	{/snippet}
 
-	<!-- <Modal show={deletingLocation} onclose={closeModal}>
-		<DeleteLocationForm {location} oncancel={closeModal} />
-	</Modal> -->
+	{#snippet article()}
+		<Back href={route('locations.show', {location: location.slug})} />
+		<LocationForm {location} />
+	{/snippet}
+	
+</AuthenticatedLayout>
 
-</LocationsLayout>
+<Modal show={deletingLocation} onclose={closeModal}>
+	<DeleteLocationForm {location} oncancel={closeModal} />
+</Modal>

@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 // use App\Models\RegionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
 
 class RegionResource extends JsonResource
 {
@@ -20,7 +21,11 @@ class RegionResource extends JsonResource
 			'slug'        => $this->slug,
 			'name'        => $this->name,
 			'description' => $this->description,
-			'image'       => $this->image,
+
+			'banner'      => $this->banner,
+			'banner_path' => $this->banner ? Storage::url($this->banner) : null,
+			'map'         => $this->map,
+			'map_path'    => $this->map ? Storage::url($this->map) : null,
 
 			'locations'      => LocationResource::collection($this->whenLoaded('locations')),
 

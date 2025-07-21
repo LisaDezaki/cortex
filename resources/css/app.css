@@ -11,22 +11,58 @@
 @layer base {
 	[data-theme="light"] {
 
+		/* Surfaces */
+
 		--background: 			theme(colors.slate.200);
 		--background-alt: 		theme(colors.slate.300);
 		--surface:				theme(colors.slate.100);
 
-		--bg-accent:			theme(colors.emerald.500);
-		--bg-disabled:			theme(colors.slate.200);
-		--bg-input:				theme(colors.slate.200);
-		--bg-input-hover:		theme(colors.slate.200);
+		/*	Background colors */
+
+		--bg-accent:				theme(colors.emerald.500);
+		--bg-accent-soft:       	rgb(from var(--bg-accent) r g b / 10%);
+		--bg-accent-soft-hover: 	rgb(from var(--bg-accent) r g b / 25%);
+		--bg-accent-gradient:		linear-gradient(
+										theme(colors.emerald.500),
+										theme(colors.emerald.600)
+									);
+		--bg-accent-gradient-alt: 	linear-gradient(
+										theme(colors.emerald.600),
+										theme(colors.emerald.700)
+									);
+
+		--bg-neutral:				theme(colors.slate.400);
+		--bg-neutral-soft:      	rgb(from var(--bg-neutral) r g b / 10%);
+		--bg-neutral-soft-hover:	rgb(from var(--bg-neutral) r g b / 25%);
+
+		--bg-danger:            theme(colors.rose.500);
+		--bg-danger-soft:		rgb(from var(--bg-danger) r g b / 10%);
+		--bg-danger-soft-hover: rgb(from var(--bg-danger) r g b / 25%);
+
+		/* --bg-input:				theme(colors.slate.200); */
+		--bg-input:				oklch(from var(--bg-neutral) l c h / 10%);
+		/* --bg-input-hover:		theme(colors.slate.200); */
+		--bg-input-hover:		oklch(from var(--bg-neutral) l c h / 25%);
+
 		--bg-nav:				theme(colors.emerald.800);
 		--bg-nav-link:			theme(colors.emerald.800);
 		--bg-nav-link-hover: 	theme(colors.emerald.700);
 		--bg-white:				theme(colors.white);
 
-		--border-accent: 		theme(colors.emerald.500);
-		--border-danger: 		theme(colors.rose.700);
-		--border-disabled: 		theme(colors.slate.200);
+		/*	Border colors */
+
+		--border-accent:			theme(colors.emerald.700);
+		--border-accent-soft:		rgb(from theme(colors.emerald.500) r g b / 30%);
+		--border-accent-soft-hover: rgb(from theme(colors.emerald.500) r g b / 45%);
+
+		--border-neutral:			 theme(colors.slate.500);
+		--border-neutral-soft:       rgb(from var(--border-neutral) r g b / 30%);
+		--border-neutral-soft-hover: rgb(from var(--border-neutral) r g b / 45%);
+
+		--border-danger: 			theme(colors.rose.500);
+		--border-danger-soft:		rgb(from var(--border-danger) r g b / 30%);
+		--border-danger-soft-hover: rgb(from var(--border-danger) r g b / 45%);
+
 		--border-divider: 		theme(colors.slate.200);
 		--border-input: 		theme(colors.slate.200);
 		--border-input-hover: 	theme(colors.slate.300);
@@ -35,6 +71,9 @@
 		--border-primary:		theme(colors.emerald.700);
 		--border-secondary: 	theme(colors.slate.300);
 		--border-soft:			theme(colors.slate.200);
+		--border-white:			theme(colors.white);
+
+		/* Text colors */
 
 		--text-accent: 			theme(colors.emerald.500);
 		--text-body: 			theme(colors.slate.500);
@@ -198,11 +237,11 @@
 	}
 
 	.font-style-button {
-		@apply font-semibold text-xs uppercase tracking-wider;
+		@apply font-medium text-xs uppercase tracking-wider;
 	}
-	.font-style-label {
+	/* .font-style-label {
 		@apply text-xs leading-3;
-	}
+	} */
 	.font-style-input {
 		@apply text-base;
 	}
@@ -212,13 +251,26 @@
 
 	.style-input {
 		@apply border;
-		background-color: var(--bg-input);
-		border-color: var(--border-input);
+		background-color: var(--bg-neutral-soft);
+		border-color: var(--border-neutral-soft);
 		color: var(--text-input);
 		&:hover {
-			background-color: var(--bg-input-hover);
-			border-color: var(--border-input-hover);
+			background-color: var(--bg-neutral-soft-hover);
+			border-color: var(--border-neutral-soft-hover);
 			color: var(--text-input-hover);
+		}
+		&::placeholder {
+			color: var(--text-placeholder);
+			font-style: italic;
+			opacity: 75%;
+		}
+	}
+
+	p > a {
+		color: var(--text-accent);
+		&:hover {
+			text-decoration: underline;
+			text-underline-offset: 3px;
 		}
 	}
 
@@ -237,4 +289,19 @@
 	.border-danger      { border-color:     var(--border-danger);      }
 	.text-danger        { color:            var(--text-danger);        }
 
+}
+
+.default-theme.splitpanes--vertical > .splitpanes__splitter {
+	width: 0!important;
+	&::before,
+	&::after {
+		background-color: transparent!important;
+		display: inline-block;
+		position: absolute;
+		top: 0; bottom: 0;
+		height: 100%!important;
+		width: 4px!important;
+		transform: translateXY(-50%, 0%)!important;
+		z-index: 10!important;
+	}
 }

@@ -20,7 +20,7 @@
 <li class="panel-item">
 	<Link class="panel-link {className}" {...attrs} preserveScroll>
 		
-		<Thumbnail class="h-9" src={image} alt={label} icon={icon} />
+		<Thumbnail class="h-8" src={image} alt={label} icon={icon} />
 
 		<div class="flex-shrink truncate">
 			{#if label}
@@ -47,13 +47,13 @@
 	}
 
 	:global(.panel-link) {
-		@apply flex items-center justify-start gap-2 p-1 pl-3 min-h-9 w-full truncate;
+		@apply flex items-center justify-start gap-2 p-1 px-2 min-h-8 w-full truncate;
 		&[active="true"] {
 			color: var(--text-accent);
-			@apply bg-emerald-500/10;
+			background-color: var(--bg-accent-soft);
 		}
 		&:not([active="true"]):hover {
-			background-color: var(--background);
+			background-color: var(--bg-neutral-soft);
 		}
 	}
 

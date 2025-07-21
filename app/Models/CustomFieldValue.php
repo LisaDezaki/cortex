@@ -23,12 +23,9 @@ class CustomFieldValue extends Model
 	 */
 
 	 protected $fillable = [
-		'value',
-	];
-
-	protected $guarded = [
 		'custom_field_id',
-		'entity_id',
+		'customfieldable_id',
+		'value',
 	];
 
 
@@ -46,8 +43,8 @@ class CustomFieldValue extends Model
 
 	public function entity()
 	{
-		$entity = $this->customField->entity_type;
-		return $this->belongsTo($entity, 'entity_id', 'uuid');
+		$entity = $this->customField->customfieldable_type;
+		return $this->belongsTo($entity, 'customfieldable_id', 'uuid');
 	}
 
 

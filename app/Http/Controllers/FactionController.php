@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Resources\FactionResource;
 use App\Http\Requests\StoreFactionRequest;
 use App\Http\Requests\UpdateFactionRequest;
+use App\Models\CustomField;
 use App\Models\Faction;
 use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class FactionController extends Controller
 {
@@ -35,7 +37,14 @@ class FactionController extends Controller
 
     public function index()
     {
-		return Inertia::render('Factions/Index');
+		$custom_fields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'customfieldable_type' => 'faction'
+		])->with('options')->get();
+
+		return Inertia::render('Factions/Index', [
+			'custom_fields' => $custom_fields
+		]);
     }
 
     public function create()
@@ -43,7 +52,7 @@ class FactionController extends Controller
         return Inertia::render('Factions/Create');
     }
 
-	public function settings(StoreFactionRequest $request)
+	public function settings(Request $request): Response
     {
     	return Inertia::render('Factions/Settings');
     }
@@ -57,7 +66,8 @@ class FactionController extends Controller
     {
 		$faction->load([
 			'members',
-			'ranks'
+			'ranks',
+			'headquarters'
 		]);
         return Inertia::render('Factions/Show', [
 			'faction' => new FactionResource($faction),

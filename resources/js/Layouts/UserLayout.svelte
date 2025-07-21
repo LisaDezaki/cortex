@@ -1,11 +1,13 @@
-<script>
+<!-- <script>
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
+	import { Pane, Splitpanes } from 'svelte-splitpanes';
 	
-	import Navigation from './Partials/Navigation.svelte'
+	import Navigation from '@/Partials/Navigation.svelte'
     import Main from '@/Components/Main.svelte'
     import Page from '@/Components/Page.svelte'
 	import Panel from '@/Components/Panel'
+	import StickyHeader from '@/Components/StickyHeader.svelte'
 
     let { children, header } = $props()
 
@@ -33,9 +35,11 @@
 		{/if}
 		{#if children}
 			<Main>
-				{@render children()}
+				<Splitpanes>
+					{@render children()}
+				</Splitpanes>
 			</Main>
 		{/if}
 	</div>
 	
-</Page>
+</Page> -->

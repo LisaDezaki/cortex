@@ -1,11 +1,12 @@
 <script>
-	import { Link, page, useForm } from '@inertiajs/svelte'
+	import { page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
 	import Form from '@/Components/Form'
 	import Heading from '@/Components/Heading.svelte'
+	import Section from '@/Components/Section.svelte'
 
 	//  Props
 
@@ -26,7 +27,6 @@
 	//  populated correctly if the character is being edited
 	project?.custom_fields?.forEach((field) => {
 
-		//  Generate a field name that is safe for use in JavaScript
 		let characterData = character?.custom_field_values.find(f => f.custom_field_id === field.id)?.value
 		let value = characterData || (field.type === 'checkbox' ? false : '')
 
@@ -76,11 +76,12 @@
 </script>
 
 
-<Form class="space-y-6">
+<Form>
 	
 	<!-- MAIN INFORMATION-->
 	
-	<section class="space-y-6">
+	<Section class="space-y-6">
+
 		<Heading is="h2" as="h5"
 			heading={character ? "Edit Character" : "New Character"}
 			subheading={character ? "Edit your character's details." : "Build a new character to add to your " + project.name + " project."}
@@ -120,14 +121,13 @@
 			label="Description"
 			rows={8}
 		/>
-	</section>
+	</Section>
 
 	<!-- RELATIONSHIPS -->
 
-	<section
+	<Section
 		title="Relationships"
 		subtitle="Other characters that this character has a relationship with."
-		bodyclass="grid grid-cols-6 gap-3 px-6"
 	>
 		{#each character?.relationships as relationship, i}
 			<Card
@@ -137,14 +137,13 @@
 				href={route('characters.show', {character: relationship.slug})}
 			/>
 		{/each}
-	</section>
+	</Section>
 
 	<!-- CUSTOM FIELDS -->
 
-	<section
+	<Section
 		title="Custom Fields"
 		subtitle="Custom fields for this character."
-		bodyclass="px-6 space-y-6"
 	>
 		{#each project.custom_fields as field, i}
 			<Form.Field
@@ -160,24 +159,22 @@
 				bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
 			/>
 		{/each}
-	</section>
+	</Section>
 	
 	<!-- FORM.BUTTONS -->
 
-	<div class="flex justify-center gap-3 w-full pl-[50%]">
-		<Button
-			type="submit"
-			primary={$form.isDirty}
-			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
-			label="{character ? "Update" : "Create"} Character"
-			onclick={submit}
-		/>
-		<Button
+	<Section class="flex justify-center gap-3 w-full">
+		<Button style="hard" theme="neutral"
 			type="button"
-			secondary
 			label="Cancel"
 			onclick={() => history.back()}
 		/>
-	</div>
+		<Button style="hard" theme="accent"
+			type="submit"
+			label="{character ? "Update" : "Create"} Character"
+			onclick={submit}
+			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
+		/>
+	</Section>
 	
 </Form>

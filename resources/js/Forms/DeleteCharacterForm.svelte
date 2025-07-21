@@ -48,8 +48,16 @@
 	</Form.Field>
 
 	{#snippet actions()}
-		<Button secondary label="Cancel"                     type="button" onclick={oncancel} />
-		<Button danger    label="Yes, Delete this character" type="submit" onclick={deleteCharacter}  />
+		<Button style="hard" theme="neutral"
+			type="button"
+			label="Cancel"
+			onclick={oncancel}
+		/>
+		<Button style="hard" theme="danger"
+			type="submit"
+			label="Yes, Delete this character"
+			onclick={deleteCharacter}
+		/>
 	{/snippet}
 
 </Form>

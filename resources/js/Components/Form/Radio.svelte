@@ -17,7 +17,7 @@
 <RadioGroup.Root class="form-radio" value={checked} onValueChange={valueChange} {...attrs}>
 	{#each options as option}
 		<div class="radio-option" class:disabled={option.disabled}>
-			<RadioGroup.Item id={option.value} value={option.value} class="radio" disabled={option.disabled}><div class="dot"></div></RadioGroup.Item>
+			<RadioGroup.Item id={option.value} value={option.value} class="radio style-input" disabled={option.disabled}><div class="dot"></div></RadioGroup.Item>
 			<Label inline for={option.value} class="inline-label cursor-pointer" disabled={option.disabled}>{option.label || option.value}</Label>
 		</div>
 	{/each}
@@ -31,7 +31,6 @@
 
 	.radio-option {
 		@apply flex items-center gap-3 bg-transparent min-h-11 px-2 w-full;
-		@apply border;
 		@apply rounded-none;
 		border-color: var(--border-soft);
 		color: var(--text-input);
@@ -49,26 +48,25 @@
 		}
 		&.disabled {
 			@apply cursor-not-allowed;
-			color: var(--text-disabled);
+			opacity: 50%;
 		}
 	}
 
 	:global(.radio) {
-		@apply appearance-none min-h-6 min-w-6 border inline-flex items-center justify-center rounded-full flex-shrink-0;
+		@apply appearance-none min-h-7 min-w-7 border inline-flex items-center justify-center rounded-full flex-shrink-0;
 		&:not([data-state="checked"]) {
-			background-color: var(--bg-input);
+			/* background-color: var(--bg-input);
 			border-color: var(--border-input);
-			color: var(--text-input);
+			color: var(--text-input); */
 		}
 		&[data-state="checked"] {
-			background: var(--gradient-primary);
-			border-color: var(--border-primary);
+			background: var(--bg-accent-gradient);
+			border-color: var(--border-accent);
 			color: var(--text-white);
 		}
 		&[data-disabled] {
-			background-color: var(--bg-disabled);
-			border-color: var(--border-disabled);
-			color: var(--text-disabled);
+			pointer-events: none;
+			/* opacity: 50%; */
 		}
 	}
 
@@ -82,7 +80,7 @@
 	}
 
 	:global(.radio[data-state="checked"] .dot) {
-		@apply bg-white h-2 w-2;
+		@apply bg-white h-3.5 w-3.5;
 	}
 
 </style>

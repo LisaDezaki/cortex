@@ -2,8 +2,13 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-    import CharactersLayout from '@/Layouts/CharactersLayout.svelte'
+    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
+	import Back from '@/Components/Back.svelte';
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
+	import Button from '@/Components/Button.svelte';
+	import Form from '@/Components/Form'
+	import Section from '@/Components/Section.svelte'
 
 	let project = $page.props.active_project.data
 
@@ -13,17 +18,37 @@
     <title>{project.name} / Faction Settings</title>
 </svelte:head>
 
-<CharactersLayout>
+<AuthenticatedLayout>
+	
 	{#snippet header()}
 		<Breadcrumbs data={[
-			{ title: "Project",      href: "/" },
-			{ title: "Characters",   href: route('characters') },
+			{ title: "Project",  href: "/" },
+			{ title: "Factions", href: route('factions') },
 			{ title: "Settings" }
 		]} />
+		<Button style="plain" theme="accent" class="border-l"
+			icon="Plus" iconSize={24} iconWeight="light"
+			href={route('factions.create')}
+		/>
 	{/snippet}
 
-	<section class="grid grid-cols-5 gap-12 px-12 py-6">
-		Settings
-	</section>
+	{#snippet article()}
+		<Back href={route('factions')} />
+		<Section
+			title="Faction Settings"
+			subtitle="Manage your faction settings and preferences for this project."
+		>
+			<Form>
+				<Form.Field
+					type="switch"
+					label="Enable Factions"
+				/>
+			</Form>
+		</Section>
+	{/snippet}
 
-</CharactersLayout>
+	{#snippet sidebar()}
+		<CustomFieldsPanel />
+	{/snippet}
+
+</AuthenticatedLayout>

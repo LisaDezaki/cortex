@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Http\Resources\LocationResource;
 use App\Http\Requests\StoreLocationRequest;
 use App\Http\Requests\UpdateLocationRequest;
+use App\Models\CustomField;
 use App\Models\Location;
+use App\Models\Region;
 use App\Services\FileUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class LocationController extends Controller
 {
@@ -25,7 +28,8 @@ class LocationController extends Controller
 		// Standard fields
 		'name' => ['string', 'required'],
 		'description' => ['string', 'nullable'],
-		'image' => ['string', 'nullable'],
+		'banner' => ['string', 'nullable'],
+		'map' => ['string', 'nullable'],
 		// Dynamic custom fields
 		'custom_fields' => 'sometimes|array',
         // 'custom_fields.*.name' => 'required|string',  // Field name
@@ -37,7 +41,19 @@ class LocationController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Locations/Index');
+		$custom_fields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'customfieldable_type' => 'location'
+		])->with('options')->get();
+
+		// $regions = Region::where([
+		// 	'project_id' => Auth::user()->active_project
+		// ])->get();
+
+        return Inertia::render('Locations/Index', [
+			'custom_fields' => $custom_fields,
+			// 'regions' => $regions
+		]);
     }
 
     /**
@@ -46,6 +62,11 @@ class LocationController extends Controller
     public function create()
     {
 		return Inertia::render('Locations/Create');
+    }
+
+	public function settings(Request $request): Response
+    {
+    	return Inertia::render('Locations/Settings');
     }
 
     /**

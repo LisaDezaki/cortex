@@ -19,6 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 			// $table->foreignIdFor(Project::class, 'active_project')->nullable();
+            $table->string('avatar')->nullable();
 			$table->foreignUuid('active_project')->nullable()->constrained('projects');
             $table->rememberToken();
             $table->timestamps();

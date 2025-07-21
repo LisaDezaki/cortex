@@ -1,12 +1,12 @@
 <script>
-	import { Link, page, useForm } from '@inertiajs/svelte'
+	import { page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import Article from '@/Components/Article.svelte'
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
-	// import FactionCard from '@/Components/FactionCard.svelte'
 	import Form from '@/Components/Form'
+	import Heading from '@/Components/Heading.svelte'
+	import Section from '@/Components/Section.svelte'
 
 	//  Props
 
@@ -26,7 +26,6 @@
 	//  populated correctly if the faction is being edited
 	// project?.custom_fields?.forEach((field) => {
 
-	// 	//  Generate a field name that is safe for use in JavaScript
 	// 	let factionData = faction.custom_field_values.find(f => f.custom_field_id === field.id)?.value
 	// 	let value = factionData || (field.type === 'checkbox' ? false : '')
 	// 	console.log('value:', value)
@@ -76,18 +75,17 @@
 	
 </script>
 
-<!-- <pre>{JSON.stringify(faction, null, 4)}</pre> -->
-
 <Form class="col-span-3 space-y-6">
 
 	<!-- MAIN INFORMATION-->
 
-	<Article
-		title={faction ? "Edit Faction" : "New Faction"}
-		subtitle={faction ? "Edit this faction's details." : "Build a new faction to add to the " + project.name + " project."}
-		bodyclass="space-y-6 px-6"
-	>
-		<!-- FORM.MAIN -->
+	<Section class="space-y-6">
+
+		<Heading is="h2" as="h5"
+			heading={faction ? "Edit Faction" : "New Faction"}
+			subheading={faction ? "Edit this faction's details." : "Build a new faction to add to the " + project.name + " project."}
+			class="mb-12"
+		/>
 
 		<Form.Field
 			type="file"
@@ -123,29 +121,32 @@
 			label="Description"
 			rows={8}
 		/>
-	</Article>
+	</Section>
 
 	<!-- Members -->
 
-	<Article
-		title="Members"
-		subtitle="Characters that are members of this faction."
-		bodyclass="grid grid-cols-6 gap-2 px-6"
-	>
-		{#each faction?.members as member, i}
-			<Card
-				class="aspect-[3/4]"
-				title={member.name}
-				subtitle={member.role}
-				image={member.image_path}
-				href={route('characters.show', {character: member.slug})}
-			/>
-		{/each}
-	</Article>
+	<Section>
+		<Heading is="h2" as="h5"
+			heading="Members"
+			subheading="Characters that are members of this faction."
+			class="mb-3"
+		/>
+		<div class="flex flex-wrap gap-1.5 px-3">
+			{#each faction?.members as member, i}
+				<Card
+					class="aspect-[3/4]"
+					title={member.name}
+					subtitle={member.role}
+					image={member.image_path}
+					href={route('characters.show', {character: member.slug})}
+				/>
+			{/each}
+		</div>
+	</Section>
 
 	<!-- CUSTOM FIELDS -->
 
-	<Article
+	<Section
 		title="Custom Fields"
 		subtitle="To edit these Custom Fields, visit your Project Settings."
 		bodyclass="px-6 space-y-6"
@@ -187,25 +188,21 @@
 			/>
 		{/each} -->
 		
-	</Article>
+	</Section>
 	
-</Form>
-
-<div class="col-span-2">
-	<div class="flex gap-3 w-full">
-		<Button
-			class="w-full"
-			type="submit"
-			primary={$form.isDirty}
-			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
-			label="{faction ? "Update" : "Create"} Faction"
-			onclick={submit}
-		/>
-		<Button
+	<Section class="flex justify-center gap-3 w-full">
+		<Button style="hard" theme="neutral"
 			type="button"
 			secondary
 			label="Cancel"
 			onclick={() => history.back()}
 		/>
-	</div>
-</div>
+		<Button style="hard" theme="accent"
+			type="submit"
+			label="{faction ? "Update" : "Create"} Faction"
+			onclick={submit}
+			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
+		/>
+	</Section>
+
+</Form>

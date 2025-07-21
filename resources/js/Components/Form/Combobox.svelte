@@ -41,7 +41,6 @@
 	);
 
 	function removeItem(index) {
-		console.log(index)
 		value = value.filter((_, i) => i !== index)
 	}
 
@@ -103,7 +102,7 @@
 	}}
 	bind:value={value}
 >
-	<div class="combobox">
+	<div class="combobox style-input">
 		<Combobox.Input class="combobox-input" />
 		<div class="combobox-selection">
 			{#each sortedValues as item,i}
@@ -171,12 +170,12 @@
 	:global(.combobox) {
 		@apply relative flex w-full;
 		@apply border rounded-lg;
-		background-color: var(--bg-input);
+		/* background-color: var(--bg-input);
 		border-color: var(--border-soft);
 		color: var(--text-input);
 		&:hover {
 			border-color: var(--border-input);
-		}
+		} */
 	}
 
 	:global(.combobox-input) {

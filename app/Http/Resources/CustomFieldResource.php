@@ -24,7 +24,7 @@ class CustomFieldResource extends JsonResource
 			'description' => $this->description,
 			'placeholder' => $this->placeholder,
 			'required'	  => $this->required,
-			'entity'      => $this->entity_type,
+			'customfieldable'      => $this->customfieldable_type,
 
 			'options'     => CustomFieldOptionResource::collection($this->whenLoaded('options')),
 		];

@@ -4,14 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Services\FileUploadService;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
-use Inertia\Inertia;
-use Inertia\Response;
 
 class ImageController extends Controller
 {

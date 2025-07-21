@@ -2,7 +2,7 @@
 	
 	import { page } from '@inertiajs/svelte'
     import UserLayout from '@/Layouts/UserLayout.svelte'
-	import UpdateProjectForm from './Partials/UpdateProjectForm.svelte'
+	import UpdateProjectForm from '@/Forms/UpdateProjectForm.svelte'
 
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
 

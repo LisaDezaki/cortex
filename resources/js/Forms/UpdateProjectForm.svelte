@@ -38,42 +38,41 @@
 	processing={$updateForm.processing}
 	recentlySuccessful={$updateForm.recentlySuccessful}
 >
-	<Form.Field>
-		<Form.Label for="image" value="Image" />
-		<Form.Upload
-			id="image"
-			bind:value={$updateForm.image}
-			class="aspect-[5/2]"
-		/>
-		<Form.Error message={$updateForm.errors.image} />
-	</Form.Field>
+	<Form.Field
+		id="image"
+		type="file"
+		label="Image"
+		bind:value={$updateForm.image}
+		errors={$updateForm.errors.image}
+	/>
 
-	<Form.Field>
-		<Form.Label for="name" value="Name" />
-		<Form.Input
-			id="name"
-			type="text"
-			bind:value={$updateForm.name}
-			required
-			autofocus
-			autocomplete="name"
-		/>
-		<Form.Error message={$updateForm.errors.name} />
-	</Form.Field>
+	<Form.Field required autofocus
+		id="name"
+		type="text"
+		label="Name"
+		bind:value={$updateForm.name}
+		errors={$updateForm.errors.name}
+	/>
 
-	<Form.Field>
-		<Form.Label for="description" value="Description" />
-		<Form.Textarea
-			id="description"
-			bind:value={$updateForm.description}
-			rows={5}
-		/>
-		<Form.Error message={$updateForm.errors.description} />
-	</Form.Field>
+	<Form.Field rows={5}
+		id="description"
+		type="textarea"
+		label="Description"
+		bind:value={$updateForm.description}
+		errors={$updateForm.errors.description}
+	/>
 
 	{#snippet actions()}
-		<Button secondary label="Cancel"       type="button" onclick={oncancel} />
-		<Button primary   label="Update project" type="submit" onclick={submit} />
+		<Button style="hard" theme="neutral"
+			label="Cancel"
+			type="button"
+			onclick={oncancel}
+		/>
+		<Button style="hard" theme="accent"
+			label="Update project"
+			type="submit"
+			onclick={submit}
+		/>
 	{/snippet}
 
 </Form>

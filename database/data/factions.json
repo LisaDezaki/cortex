@@ -7,8 +7,8 @@
 		"members": {}
 	},
 	"cold-bloods": {
-		"name": "Cold-Bloods",
-		"desc": "The Cold Bloods are an organized crime syndicate operating in town, primarily through the tavern.",
+		"name": "The Cold-Blood Syndicate",
+		"desc": "The Cold-Blood Syndicate is an organized crime syndicate operating in town, primarily through the tavern and the docks.",
 		"hq": "tavern",
 		"ranks": [ "Boss", "Muscle", "Grunt" ],
 		"members": {

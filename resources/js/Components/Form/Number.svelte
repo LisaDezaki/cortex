@@ -59,14 +59,14 @@
 		bind:this={input}
 	/>
 
-	<Button
+	<Button style="plain" theme={value - step < attrs.min ? "neutral" : "accent"}
 		class="form-number-button left-1"
 		disabled={value - step < attrs.min}
 		icon="Minus"
 		onclick={decrement}
 	/>
 
-	<Button
+	<Button style="plain" theme={value + step > attrs.max ? "neutral" : "accent"}
 		class="form-number-button right-1"
 		disabled={value + step > attrs.max}
 		icon="Plus"
@@ -86,7 +86,7 @@
 
 		:global(.form-number-button) {
 			@apply absolute border flex-shrink-0 rounded-md w-8;
-			@apply bg-slate-100 hover:bg-slate-300 border-slate-200 text-emerald-500;
+			/* @apply bg-slate-100 hover:bg-slate-300 border-slate-200 text-emerald-500; */
 
 			&.disabled {
 				background-color: var(--bg-disabled);
@@ -97,7 +97,7 @@
 		}
 
 		input {
-			@apply bg-inherit border-none;
+			@apply bg-transparent border-none;
 			@apply px-11 rounded-lg w-full;
 			@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
 

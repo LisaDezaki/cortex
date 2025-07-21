@@ -56,7 +56,7 @@
 	function resetData() {
 		let freshData = {
 			id: null,
-			entity_type: $form.entity_type,
+			customfieldable_type: $form.customfieldable_type,
 			...blankData
 		}
 		for (const [key, value] of Object.entries(freshData)) {
@@ -95,14 +95,12 @@
 		if (data.id) {
 			$form.post( route('customfields.update', { field: data.id }, {
 				onSuccess: () => {
-					console.log('field updated')
 					oncancel()
 				}
 			}) )
 		} else {
 			$form.post( route('customfields.store'), {
 				onSuccess: (a,b) => {
-					console.log('field created', a, b)
 					oncancel()
 				}
 			} )
@@ -329,10 +327,17 @@
 					bind:checked={$form.required}
 				/>
 			{/if} -->
-			<div class="flex-shrink-0">
+			<div class="mt-auto flex-shrink-0">
 				<div class="flex items-center justify-center gap-3 pt-2">
-					<Button secondary type="button" label="Cancel" onclick={oncancel}  />
-					<Button primary   type="submit" label="Save Custom Field" />
+					<Button style="hard" theme="neutral"
+						type="button"
+						label="Cancel"
+						onclick={oncancel}
+					/>
+					<Button style="hard" theme="accent"
+						type="submit"
+						label="Save Custom Field"
+					/>
 				</div>
 			</div>
 		</div>

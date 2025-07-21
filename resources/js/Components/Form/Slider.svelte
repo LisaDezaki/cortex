@@ -20,7 +20,7 @@
 	{min} {max} {step}
 >
 	{#snippet children({ ticks, thumbs })}
-		<span class="slider-track">
+		<span class="slider-track style-input">
 			<Slider.Range class="slider-range" />
 		</span>
 
@@ -55,8 +55,6 @@
 	.slider-track {
 		@apply relative h-4 w-full grow cursor-pointer overflow-hidden;
 		@apply border rounded-full;
-		background-color: var(--bg-input);
-		border-color: var(--border-soft);
 	}
 
 	:global(.slider-range) {
@@ -71,11 +69,11 @@
 		@apply cursor-pointer shadow-sm active:scale-[0.98];
 		@apply text-sm;
 		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
-		background: var(--bg-input);
-		border-color: var(--border-soft);
-		color: var(--text-input);
+		background: var(--bg-accent-gradient);
+		border-color: var(--border-accent);
+		color: var(--text-white);
 		&:hover {
-			border-color: var(--border-input);
+			background: var(--bg-accent-gradient-alt);
 		}
 	}
 

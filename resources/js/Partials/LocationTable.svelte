@@ -5,7 +5,6 @@
 
 	import Button from '@/Components/Button.svelte'
 	import CharacterIcon from '@/Components/CharacterIcon.svelte'
-	import DataCell from '@/Components/DataCell.svelte'
 	import Form from '@/Components/Form'
 	import Table from '@/Components/Table'
 	import Thumbnail from '@/Components/Thumbnail.svelte'
@@ -46,18 +45,20 @@
 
 {#snippet bodyRow(location)}
 	{#if selectionMode}
-		<Table.Cell shrink><Form.Checkbox checked={selected.includes(location.id)} onclick={() => selectRow(location.id)} /></Table.Cell>
+		<Table.Cell shrink>
+			<Form.Checkbox checked={selected.includes(location.id)} onclick={() => selectRow(location.id)} />
+		</Table.Cell>
 	{/if}
 	<Table.Cell>
 		<Link href={route('locations.show', {location: location.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
-				class="h-9 w-9 rounded-full"
+				class="h-8 w-12 rounded"
 				icon="MapPin"
-				src={location.image_path}
+				src={location.banner_path}
 			/>
 			<div class="-space-y-0.5">
-				<div class="font-style-regular">{location.name}</div>
-				<div class="font-style-tiny opacity-65 line-clamp-1">{location.region?.name}</div>
+				<div class="font-style-regular line-clamp-1">{location.name}</div>
+				<div class="font-style-tiny line-clamp-1 opacity-65">{location.region?.name}</div>
 			</div>
 		</Link>
 	</Table.Cell>

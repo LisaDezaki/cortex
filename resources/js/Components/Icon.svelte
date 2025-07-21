@@ -2,12 +2,14 @@
 
 	import ArrowLeft from "phosphor-svelte/lib/ArrowLeft"
 	import ArrowRight from "phosphor-svelte/lib/ArrowRight"
+	import ArrowsLeftRight from "phosphor-svelte/lib/ArrowsLeftRight"
 	import Backpack from "phosphor-svelte/lib/Backpack"
 	import Books from "phosphor-svelte/lib/Books"
 	import Butterfly from "phosphor-svelte/lib/Butterfly"
 	import CalendarDots from "phosphor-svelte/lib/CalendarDots"
 	import CaretDoubleDown from "phosphor-svelte/lib/CaretDoubleDown"
 	import CaretDoubleUp from "phosphor-svelte/lib/CaretDoubleUp"
+	import CaretRight from "phosphor-svelte/lib/CaretRight"
 	import CaretUpDown from "phosphor-svelte/lib/CaretUpDown"
 	import Chats from "phosphor-svelte/lib/Chats"
 	import Check from "phosphor-svelte/lib/Check"
@@ -62,12 +64,14 @@
 	const icons = {
 		'ArrowLeft': ArrowLeft,
 		'ArrowRight': ArrowRight,
+		'ArrowsLeftRight': ArrowsLeftRight,
 		'Backpack': Backpack,
 		'Books': Books,
 		'Butterfly': Butterfly,
 		'CalendarDots': CalendarDots,
 		'CaretDoubleDown': CaretDoubleDown,
 		'CaretDoubleUp': CaretDoubleUp,
+		'CaretRight': CaretRight,
 		'CaretUpDown': CaretUpDown,
 		'Chats': Chats,
 		'Check': Check,

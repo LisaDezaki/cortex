@@ -1,9 +1,11 @@
 <script>
 	import { page } from '@inertiajs/svelte'
+	import { route } from 'momentum-trail'
 
-    import LocationsLayout from '@/Layouts/LocationsLayout.svelte'
-	import LocationForm from './Partials/LocationForm.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
+    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import LocationForm from '@/Forms/LocationForm.svelte'
+	import Back from '@/Components/Back.svelte'
+	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
 
 	let project = $page.props.active_project
 
@@ -13,7 +15,7 @@
     <title>{project.name} / New Location</title>
 </svelte:head>
 
-<LocationsLayout>
+<AuthenticatedLayout>
 	{#snippet header()}
 		<Breadcrumbs data={[
 			{ title: "Project",    href: "/" },
@@ -22,8 +24,9 @@
 		]} />
 	{/snippet}
 
-	<section class="p-12 space-y-12">
+	{#snippet article()}
+		<Back href={route('locations')} />
 		<LocationForm />
-	</section>
+	{/snippet}
 
-</LocationsLayout>
+</AuthenticatedLayout>

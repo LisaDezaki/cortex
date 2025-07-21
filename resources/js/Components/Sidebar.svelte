@@ -1,5 +1,4 @@
 <script>
-
 	let {
 		children,
 		class: className,
@@ -8,6 +7,7 @@
 
 </script>
 
+
 <aside class="sidebar {className}" {...attrs}>
 	{@render children?.()}
 </aside>
@@ -15,7 +15,7 @@
 <style lang="postcss">
 
 	.sidebar {
-		@apply h-full overflow-y-auto p-6 w-[38.2%];
+		@apply overflow-y-auto p-6 h-full;
 		background-color: var(--surface);
 		border-color: var(--border-soft);
 		box-shadow: inset  1px  1px  0 var(--shadow-highlight),

@@ -30,7 +30,7 @@
 	<div class="card-details">
 		<span class="font-style-small font-semibold line-clamp-1 text-center w-full">{title}</span>
 		{#if subtitle}
-			<span class="font-style-label line-clamp-1 text-center w-full">{subtitle}</span>
+			<span class="font-style-tiny line-clamp-1 text-center w-full">{subtitle}</span>
 		{/if}
 	</div>
 
@@ -60,7 +60,7 @@
 	}
 
 	.card-details {
-		@apply flex flex-col items-start justify-end absolute bottom-1 left-1 right-1 px-2 pb-1.5;
+		@apply flex flex-col items-start justify-end absolute bottom-1 left-1 right-1 px-1 pb-1.5;
 		@apply backdrop-blur-sm text-white rounded-md;
 	}
 

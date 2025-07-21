@@ -22,7 +22,7 @@ class CustomFieldController extends Controller
 
 
 	protected $validationRules = [
-		'entity_type' => ['required', 'in:character'],
+		'customfieldable_type' => ['required', 'in:character'],
 		'type'        => ['string', 'required', 'in:text,number,range,switch,select,entity,upload'],
 		'name'        => ['string', 'required'],
 		'label'       => ['string', 'nullable'],

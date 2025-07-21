@@ -1,14 +1,17 @@
 <script>
-	import { page, useForm } from '@inertiajs/svelte'
+	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 	
-    import UserLayout from '@/Layouts/UserLayout.svelte'
-	import CreateProjectForm from './Partials/CreateProjectForm.svelte'
-	import Article from '@/Components/Article.svelte'
+    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import CreateProjectForm from '@/Forms/CreateProjectForm.svelte'
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
+	import CardGrid from '@/Components/CardGrid.svelte'
+	import Heading from '@/Components/Heading.svelte'
 	import Modal from '@/Components/Modal.svelte'
+	import Panel from '@/Components/Panel'
+	import Section from '@/Components/Section.svelte'
 
 	let projects = $page.props.projects.data
 	let active   = $page.props.active_project.data
@@ -29,24 +32,38 @@
     <title>Projects</title>
 </svelte:head>
 
-<UserLayout>
+<AuthenticatedLayout>
+
 	{#snippet header()}
 		<Breadcrumbs data={[
 			{ title: "User", href: "/user" },
 			{ title: "Projects"}
 		]} />
+		<Button style="plain" theme="accent" class="border-l"
+			iconSize={24} iconWeight="light" icon="Plus"
+			onclick={createProject}
+		/>
 	{/snippet}
 
-	<section class="grid grid-cols-5 gap-12 px-12 py-6">
-		<div class="col-span-3 space-y-6">
+	{#snippet panel()}
+		<Panel>
+			<Panel.Item icon="UserList"   label="Profile"       href={route('profile.edit')} active={$page.url.startsWith('/user/profile')} />
+			<Panel.Item icon="GlobeStand" label="Projects"      href={route('projects')}     active={$page.url.startsWith('/user/projects')} />
+			<Panel.Item icon="GearFine"   label="Settings"      href={route('settings')}     active={$page.url.startsWith('/user/settings')} />
+			<Panel.Item icon="SignOut"    label="Log Out"       href={route('logout')}       as="button" method="post" class="text-rose-500" />
+		</Panel>
+	{/snippet}
 
-			<Article
-				title="Projects"
-				subtitle="Manage your projects and their details here."
-				bodyclass="grid xl:grid-cols-2 md:grid-cols-1 gap-3 mt-6 px-6"
-			>
-				{#if projects}
-					{#each projects as project}
+	{#snippet article()}
+		<Section>
+			<Heading is="h2" as="h4" class="mb-12"
+				heading="Projects"
+				subheading="Manage your projects and their details here."
+			/>
+
+			{#if projects}
+				<CardGrid class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1" items={projects}>
+					{#snippet card(project)}
 						<Card
 							class="aspect-video"
 							title={project.name}
@@ -55,29 +72,16 @@
 							active={project.id == active?.id}
 							href={route('projects.show', {project: project.id})}
 						/>
-					{/each}
-				{:else}
-					No projects
-				{/if}
-			</Article>
+					{/snippet}
+				</CardGrid>
+			{:else}
+				No projects
+			{/if}
+		</Section>
+	{/snippet}
+	
+	<Modal class="p-8" show={creatingProject} onclose={closeModal}>
+		<CreateProjectForm oncancel={closeModal} />
+	</Modal>
 
-		</div>
-		<div class="col-span-2 space-y-6">
-
-			<Button
-				primary
-				class="w-full"
-				icon="Plus"
-				label="Start a new project"
-				onclick={createProject}
-			/>
-
-		</div>
-
-		<Modal class="p-8" show={creatingProject} onclose={closeModal}>
-			<CreateProjectForm oncancel={closeModal} />
-		</Modal>
-
-	</section>
-    
-</UserLayout>
+</AuthenticatedLayout>

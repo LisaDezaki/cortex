@@ -18,30 +18,34 @@
 </script>
 
 <Form
+	class="space-y-3"
 	title="Delete Project?"
 	enctype="multipart/form-data"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
-	<p class="mb-4">This process will also delete all data associated with the project. Are you absolutely sure you want to delete the entire project? </p>
-
+	<p>This process will also delete all data associated with the project. Are you absolutely sure you want to delete the entire project? </p>
 	<p>Please type the name of the project to confirm deletion.</p>
 
-	<Form.Field>
-		<Form.Label for="confirm_name" value="Project name" />
-		<Form.Input
-			id="confirm_name"
-			type="text"
-			bind:value={$form.confirm_name}
-			required
-			autofocus
-		/>
-		<Form.Error message={$form.errors.confirm_name} />
-	</Form.Field>
+	<Form.Field required autofocus
+		id="confirm_name"
+		type="text"
+		label="Project name"
+		bind:value={$form.confirm_name}
+		errors={$form.errors.confirm_name}
+	/>
 
 	{#snippet actions()}
-		<Button secondary label="Cancel"      type="button" onclick={oncancel} />
-		<Button danger    label="Yes, Delete this project" type="button" onclick={deleteProject}  />
+		<Button style="hard" theme="neutral"
+			type="button"
+			label="Cancel"
+			onclick={oncancel}
+		/>
+		<Button style="hard" theme="danger"
+			type="submit"
+			label="Yes, Delete this project"
+			onclick={deleteProject}
+		/>
 	{/snippet}
 
 </Form>

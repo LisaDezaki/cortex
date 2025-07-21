@@ -49,6 +49,7 @@
 			label="Email"
 			required
 			autocomplete="username"
+			autofocus
 		/>
 
 		<Form.Field
@@ -82,7 +83,12 @@
                 </a>
             {/if}
 
-            <Button primary class="ms-4" loading={$form.processing} disabled={$form.processing} type="submit">Log in</Button>
+            <Button class="ml-4"
+				type="submit" style="hard" theme="accent"
+				label="Log in"
+				loading={$form.processing}
+				disabled={$form.processing}
+			/>
         </div>
     </Form>
 </GuestLayout>

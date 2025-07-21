@@ -68,15 +68,14 @@ class Character extends Model
     	return $this->relationships->merge($this->inverseRelationships);
 	}
 
-	// public function customFields(): HasMany
-	// {
-	// 	return $this->hasMany(CustomField::class, 'project_id')
-	// 		->where('entity_type', 'character');
-	// }
+	public function customFields()
+	{
+		return $this->morphMany(CustomField::class, 'customfieldable');
+	}
 
 	public function customFieldValues(): HasMany
 	{
-		return $this->hasMany(CustomFieldValue::class, 'entity_id');
+		return $this->hasMany(CustomFieldValue::class, 'customfieldable_id');
 	}
 
 	public function factions(): BelongsToMany

@@ -8,15 +8,13 @@
 		children,
 		class: className,
 		icon,
-		size,
 		src,
-		style,
 		...attrs
 	} = $props()
 
 </script>
 
-<Avatar.Root class="thumbnail thumbnail-{size} {style} {className}" {...attrs}>
+<Avatar.Root class="thumbnail {className}" {...attrs}>
 	<Avatar.Image class="thumbnail-image" src={src} alt={alt}></Avatar.Image>
 	<Avatar.Fallback class="thumbnail-fallback">
 		<Icon size={24} name={icon || "ImageSquare"} class="thumbnail-icon" />

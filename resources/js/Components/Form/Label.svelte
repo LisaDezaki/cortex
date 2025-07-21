@@ -19,7 +19,7 @@
 <label
 	for={labelFor}
 	{...attrs}
-	class="label font-style-label {className}"
+	class="label {className}"
 	class:disabled={attrs.disabled}
 	class:inline={inline}
 >

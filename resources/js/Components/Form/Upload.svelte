@@ -82,7 +82,7 @@
 
 <!-- STRUCTURE -->
 
-<label for={id} class="form-upload {className}" class:disabled>
+<label for={id} class="form-upload style-input {className}" class:disabled>
 
 	<!-- Preview or Icon -->
 
@@ -100,7 +100,7 @@
 				<button class="image-replace" type="button" onclick={handleReplaceClick} disabled={disabled}>
 					<span>Replace</span>
 				</button>
-				<Button danger class="image-remove" icon="Trash" onclick={handleRemoveClick} disabled={disabled}>
+				<Button style="hard" theme="danger" class="image-remove" icon="Trash" onclick={handleRemoveClick} disabled={disabled}>
 					<span class="sr-only">Remove</span>
 				</Button>
 			</div>
@@ -133,9 +133,9 @@
 	.form-upload {
 		@apply relative flex flex-col items-center justify-center min-h-20;
 		@apply border rounded-lg cursor-pointer overflow-hidden;
-		background-color: var(--bg-input);
+		/* background-color: var(--bg-input);
 		border-color: var(--border-input);
-		color: var(--text-input);
+		color: var(--text-input); */
 		&.disabled {
 			@apply cursor-not-allowed;
 			background-color: var(--bg-disabled);
@@ -143,9 +143,9 @@
 			color: var(--text-disabled);
 		}
 		&:hover {
-			background-color: var(--bg-input-hover);
+			/* background-color: var(--bg-input-hover);
 			border-color: var(--border-input-hover);
-			color: var(--text-input-hover);
+			color: var(--text-input-hover); */
 			
 			.image-controls {
 				opacity: 1;

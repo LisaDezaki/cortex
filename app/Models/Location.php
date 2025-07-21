@@ -66,6 +66,11 @@ class Location extends Model
 		return $this->hasMany(Faction::class, 'headquarters_id');
 	}
 
+	public function customFields()
+	{
+		return $this->morphMany(CustomField::class, 'customfieldable');
+	}
+
 
 
 	/**

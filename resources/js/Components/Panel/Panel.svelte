@@ -57,8 +57,7 @@
 <style lang="postcss">
 
 	.panel {
-		@apply flex flex-col w-60 shadow-lg;
-		/* @apply overflow-hidden; */
+		@apply flex flex-col h-full min-w-12 w-52 max-w-64 shadow-lg;
 		background-color: var(--surface);
 		box-shadow: inset  1px  1px  0 var(--shadow-highlight),
 					inset -1px -1px  0 var(--shadow-lowlight);

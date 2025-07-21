@@ -74,8 +74,7 @@
 
 	.form-styles {
 		@apply border p-6 rounded-lg;
-		background-color: var(--background-alt);
-		border-color:     var(--border-soft);
+		background-color: var(--bg-white);
 	}
 
 	.form-highlight {

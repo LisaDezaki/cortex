@@ -2,23 +2,17 @@
 	import { page } from '@inertiajs/svelte'
 
 	import CustomFieldForm from '@/Forms/CustomFieldForm.svelte'
-	import Article from '@/Components/Article.svelte'
 	import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
 	import Heading from '@/Components/Heading.svelte'
 	import Icon from '@/Components/Icon.svelte'
 	import Modal from '@/Components/Modal.svelte'
 
-	let project = $page.props.active_project.data
-	let characters = project?.characters
-	let custom_fields = project?.custom_fields.filter(f => f.entity === 'character')
+	// let project = $page.props.active_project?.data
+	let custom_fields = $page.props.custom_fields?.data
 
-	let creatingCharacter = $state(false)
-	let query             = $state('')
-	let filteredCharacters = $state(characters)
 	let showCustomFieldModal = $state(false)
 	let activeCustomFieldIndex = $state(null)
-	let activeCustomField = $derived(custom_fields[activeCustomFieldIndex] || null)
+	let activeCustomField = $derived(custom_fields?.[activeCustomFieldIndex] || null)
 
 	let iconForType = {
 		text: 'TextAa',
@@ -30,10 +24,6 @@
 		upload: 'ImageSquare'
 	}
 
-	function createCharacter() {
-		activeCustomFieldIndex = null
-        creatingCharacter = true
-    }
 	function createCustomField() {
 		activeCustomFieldIndex = null
 		showCustomFieldModal = true
@@ -44,43 +34,31 @@
 	}
 	function closeModal() {
 		activeCustomFieldIndex = null
-		creatingCharacter = false
 		showCustomFieldModal = false
     }
 
-	function filterCharacters(e) {
-		filteredCharacters = query.length == 0
-			? characters
-			: characters.filter(c => {
-				let string = `${c.name} ${c.alias}`;
-				return string.toLowerCase().includes(e.target.value.toLowerCase());
-			})
-	}
-
 </script>
 
-<Heading is="h4" as="h6"
+<Heading is="h4" as="h6" class="mb-6"
 	heading="Custom Fields"
 	subheading="Manage your custom fields here."
 />
 
 <div class="flex flex-col items-center">
 	{#each custom_fields as field, i}
-		<div class="flex items-center gap-3 w-full border-b p-1">
-			<div class="flex-shrink-0 flex items-center aspect-ratio bg-slate-500/10 rounded-lg p-1">
-				<Icon name={iconForType[field.type] || 'Question'} size={24} class="text-slate-500" />
+		<div class="flex items-stretch gap-1.5 w-full p-1">
+			<div class="border border-slate-500/15 flex items-center gap-1.5 px-2 w-full rounded-md">
+				<Icon name={iconForType[field.type] || 'Question'} size={20} weight="light" class="text-emerald-500" />
+				<span class="line-clamp-1 pb-0.5">{field.label}</span>
 			</div>
-			<div class="w-full">{field.name}</div>
 			<div class="col-span-1 flex justify-end gap-0.5">
 				<Button
-					plain
-					class="bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-500 rounded"
+					style="soft" theme="accent"
 					icon="Pen"
 					onclick={() => editCustomField(i)}
 				/>
 				<Button
-					plain
-					class="bg-rose-500/15 hover:bg-rose-500/25 text-rose-500 rounded"
+					style="soft" theme="danger"
 					icon="Trash"
 					onclick={createCustomField}
 				/>
@@ -88,7 +66,7 @@
 		</div>
 	{/each}
 	<Button
-		plain
+		style="soft" theme="accent"
 		class="bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-500 rounded-lg font-style-button mt-1.5"
 		icon="Plus"
 		label="Add a custom field"

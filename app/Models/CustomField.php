@@ -5,6 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\DB;
 
 class CustomField extends Model
@@ -23,7 +27,7 @@ class CustomField extends Model
 	 */
 
 	 protected $fillable = [
-		'entity_type',
+		'customfieldable_type',
 		'type',
 		'name',
 		'description',
@@ -44,16 +48,20 @@ class CustomField extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
 
-	 public function project()
-	 {
-		 return $this->belongsTo(Project::class);
-	 }
+	public function project(): BelongsTo
+	{
+		return $this->belongsTo(Project::class);
+	}
 
-	 public function options()
-	 {
+	public function customfieldable(): MorphTo
+	{
+		return $this->morphTo();
+	}
+
+	public function options(): HasMany
+	{
 		return $this->hasMany(CustomFieldOption::class);
-	 }
-
+	}
 
 
 }

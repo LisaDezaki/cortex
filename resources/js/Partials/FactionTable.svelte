@@ -4,10 +4,7 @@
 	import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
-	import CardGrid from '@/Components/CardGrid.svelte'
 	import CharacterIcon from '@/Components/CharacterIcon.svelte'
-	import FactionIcon from '@/Components/FactionIcon.svelte'
-	import DataCell from '@/Components/DataCell.svelte'
 	import Form from '@/Components/Form'
 	import Table from '@/Components/Table'
 	import Thumbnail from '@/Components/Thumbnail.svelte'
@@ -52,7 +49,9 @@
 {#snippet bodyRow(faction)}
 
 	{#if selectionMode}
-		<Table.Cell shrink><Form.Checkbox checked={selected.includes(faction.id)} onclick={() => selectRow(faction.id)} /></Table.Cell>
+		<Table.Cell shrink>
+			<Form.Checkbox checked={selected.includes(faction.id)} onclick={() => selectRow(faction.id)} />
+		</Table.Cell>
 	{/if}
 	<Table.Cell>
 		<Link href={route('factions.show', {faction: faction.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
@@ -63,7 +62,7 @@
 			/>
 			<div class="-space-y-0.5">
 				<div class="font-style-regular">{faction.name}</div>
-				<div class="font-style-tiny opacity-65 line-clamp-1">{faction.members.length} member{faction.members.length != 1 ? 's' : ''}</div>
+				<div class="font-style-tiny line-clamp-1 opacity-65">{faction.members.length} member{faction.members.length != 1 ? 's' : ''}</div>
 			</div>
 		</Link>
 	</Table.Cell>
@@ -94,7 +93,7 @@
 				/>
 				<div class="-space-y-0.5">
 					<div class="font-style-regular">{faction.headquarters.name}</div>
-					<div class="font-style-tiny opacity-65 line-clamp-1">{faction?.headquarters?.region?.name}</div>
+					<div class="font-style-tiny line-clamp-1 opacity-65">{faction?.headquarters?.region?.name}</div>
 				</div>
 			</Link>
 		{:else}

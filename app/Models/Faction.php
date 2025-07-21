@@ -63,7 +63,6 @@ class Faction extends Model
 		return $this->belongsToMany(Character::class, 'faction_members')
 			->using(FactionMember::class)
 			->withPivot(['rank_id']);
-			// ->with(['rank']);
 	}
 
 // 	public function members()
@@ -75,7 +74,12 @@ class Faction extends Model
 
 	public function ranks(): HasMany
 	{
-		return $this->hasMany(FactionRank::class)->orderBy('order');
+		return $this->hasMany(FactionRank::class);
+	}
+
+		public function customFields()
+	{
+		return $this->morphMany(CustomField::class, 'customfieldable');
 	}
 
 

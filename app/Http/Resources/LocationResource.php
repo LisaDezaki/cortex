@@ -17,14 +17,17 @@ class LocationResource extends JsonResource
     public function toArray(Request $request): array
     {
 		return [
-			'id'           => $this->id,
-			'slug'         => $this->slug,
-			'name'         => $this->name,
-			'description'  => $this->description,
-			'image'       => $this->image,
-			'image_path'   => $this->image ? Storage::url($this->image) : null,
+			'id'          => $this->id,
+			'slug'        => $this->slug,
+			'name'        => $this->name,
+			'description' => $this->description,
 
-			'coordinates'  => [
+			'banner'      => $this->banner,
+			'banner_path' => $this->banner ? Storage::url($this->banner) : null,
+			'map'         => $this->map,
+			'map_path'    => $this->map ? Storage::url($this->map) : null,
+
+			'coordinates' => [
 				'x' => $this->coordinates_x,
 				'y' => $this->coordinates_y
 			],

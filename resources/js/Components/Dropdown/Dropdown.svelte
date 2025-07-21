@@ -38,10 +38,6 @@
 <style lang="postcss">
 
 	:global(.dropdown-content) {
-		/* @apply flex flex-col items-stretch justify-start p-1 w-56 z-50 border rounded-md shadow-lg; */
-		/* background-color: var(--bg-input); */
-		/* border-color: var(--border-input); */
-		/* color: var(--text-input); */
 		@apply block max-h-72 p-1 w-56 ;
 		@apply border rounded-lg shadow-2xl z-10;
 		background-color: var(--bg-white);

@@ -146,22 +146,22 @@
 			"lighthouse": {
 				"name": "The Lighthouse",
 				"desc": "An old lighthouse, but the keeper is nowhere to be found.",
-				"coordinates": { "x": "40%", "y": "75%" }
+				"coordinates": { "x": "38%", "y": "78%" }
 			},
 			"ruins": {
 				"name": "Jungle Ruins",
 				"desc": "Mysterious ruins belonging to an ancient civilization.",
-				"coordinates": { "x": "25%", "y": "25%" }
+				"coordinates": { "x": "80%", "y": "20%" }
 			},
 			"shipwreck": {
 				"name": "Shipwreck Cove",
 				"desc": "Ghost pirates guard a long lost treasure map.",
-				"coordinates": { "x": "55%", "y": "15%" }
+				"coordinates": { "x": "10%", "y": "50%" }
 			},
 			"volcano": {
 				"name": "Volcanic Crater",
 				"desc": "Portal to an elemental plane of fire.",
-				"coordinates": { "x": "95%", "y": "55%" }
+				"coordinates": { "x": "28%", "y": "10%" }
 			}
 		}
 	}

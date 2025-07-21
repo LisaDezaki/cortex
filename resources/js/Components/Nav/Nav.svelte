@@ -35,7 +35,7 @@
 <style lang="postcss">
 
 	.nav {
-		@apply flex flex-col items-center min-w-40 w-48 max-w-64 border-r flex-shrink-0;
+		@apply flex flex-col items-center h-full min-w-12 w-48 max-w-64 border-r flex-shrink-0;
 		background-color: var(--bg-nav);
 		border-color: var(--border-nav);
 		color: var(--text-nav-link);
