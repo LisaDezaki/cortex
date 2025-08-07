@@ -1,61 +1,36 @@
-<!-- SCRIPT -->
-
 <script>
 
-	//	Import onDestroy from Svelte to handle component lifecycle
-	import { onDestroy } from 'svelte';
-
-	//  Import useForm to handle form submission
+	import { onMount, onDestroy } from 'svelte';
 	import { useForm } from '@inertiajs/svelte';
-
-	//  Import route from Momentum Trail to handle routing
 	import { route } from 'momentum-trail';
 
-	//  Import Components to use within this component
 	import Button from '@/Components/Button.svelte';
 	import Icon from '@/Components/Icon.svelte';
 
-	//	Define the component properties using $props
 	let {
 		class: className,
 		altText = '',
 		accept = 'image/*',
 		handleUpload,
+		icon,
 		id,
 		maxSizeMB = null,
+		placeholder,
 		disabled = false,
-		previewPath = null,
+		preview = null,
 		value = $bindable(),
-		...attrs
+		...restProps
 	} = $props();
 
-	//	Declare a variable to hold the input element reference
-	let input = null;
-
-	//	Use $state to create a reactive state for the preview URL
-	let previewUrl = $state(previewPath || null);
-
-	//	Create a form instance to handle file uploads
-	const uploadForm = useForm({
-		file: null
+	let uploadForm = useForm({
+		value: value
 	});
 
-	//	Handle the file change event
-	async function handleFileChange(e) {
-		const selectedFile = e.target.files?.[0];
-		if (!selectedFile) return;
-		$uploadForm.file = selectedFile;
-		previewUrl = URL.createObjectURL(selectedFile);
-		await axios.post(
-			route('image.upload'),
-			$uploadForm,
-			{ headers: { 'Content-Type': 'multipart/form-data' } }
-		).then(response => {
-			// console.log(response);
-			value = response.data.filePath;
-			previewUrl = response.data.fileUrl;
-			// console.log(value);
-		});
+	let input
+	let hasFocus = $state(false)
+
+	function checkFocus() {
+		hasFocus = document.activeElement === input;
 	}
 
 	function handleReplaceClick() {
@@ -63,16 +38,46 @@
 	}
 
 	function handleRemoveClick() {
-		previewUrl = null;
 		if (input) {
 			input.value = null;
 			value = null;
+			preview = null;
+			$uploadForm.file = null;
+			$uploadForm.blob = null;
 		}
 	}
 
+	async function handleFileChange(e) {
+		const selectedFile = e.target.files?.[0];
+		if (!selectedFile) return;
+		$uploadForm = { ...$uploadForm,
+			file: selectedFile,
+			files: e.target.files,
+			blob: URL.createObjectURL(selectedFile),
+		}
+		await axios.post(
+			route('upload.temp'),
+			$uploadForm,
+			{ headers: { 'Content-Type': 'multipart/form-data' } }
+		).then(response => {
+			$uploadForm = { ...$uploadForm,
+				...response.data.file
+			}
+			value = response.data.file.temp_path;
+			if (input) input.value = '';
+		});
+	}
+
+	onMount(() => {
+        if (restProps.autofocus && input) {
+			hasFocus = true
+            input.focus()
+        }
+    })
+
 	onDestroy(() => {
-		if (previewUrl) {
-			URL.revokeObjectURL(previewUrl);
+		if ($uploadForm.blob) {
+			URL.revokeObjectURL($uploadForm.blob);
 		}
 	});
 
@@ -80,94 +85,73 @@
 
 
 
-<!-- STRUCTURE -->
+<label for={id} class="input-upload {className}" class:disabled class:focus={hasFocus}>
+	<div class="input-upload-preview">
 
-<label for={id} class="form-upload style-input {className}" class:disabled>
-
-	<!-- Preview or Icon -->
-
-	{#if previewUrl}
-
+		{#if $uploadForm.path || $uploadForm.blob || preview}
 			<img
-				src={previewUrl}
+				src={$uploadForm.path || $uploadForm.blob || preview}
 				alt={altText}
 				class="preview-image"
 			/>
+			<button class="image-replace" type="button" onclick={handleReplaceClick} disabled={disabled}>
+				<span>Replace</span>
+			</button>
+		{:else}
+			<Icon name="UploadSimple" size="md" />
+		{/if}
 
-			<!-- <div class="preview-blur backdrop-blur-sm {value ? 'w-0' : 'w-full'}"></div> -->
-			
-			<div class="image-controls">
-				<button class="image-replace" type="button" onclick={handleReplaceClick} disabled={disabled}>
-					<span>Replace</span>
-				</button>
-				<Button style="hard" theme="danger" class="image-remove" icon="Trash" onclick={handleRemoveClick} disabled={disabled}>
-					<span class="sr-only">Remove</span>
-				</Button>
-			</div>
+	</div>
+	<div class="input-value {icon ? "pl-icon" : ""}">
 
-	{:else}
-		<Icon name="UploadSimple" size={24} />
-	{/if}
+		<Icon class="input-icon" name={icon} size="md" />
 
-	<!-- Hidden input -->
+		{#if value}
+			<span class="inline-flex items-center h-8 line-clamp-1 truncate">{value}</span>
+			<Button class="input-action ml-auto" icon="X" iconSize="sm" theme="danger" onclick={handleRemoveClick} disabled={disabled} />
+		{:else}
+			<span class="input-placeholder inline-flex items-center h-8 line-clamp-1 truncate">{placeholder}</span>
+		{/if}
 
-	<input
-		{...attrs}
-		type="file"
-		id={id}
-		accept={accept}
-		class="invisible hidden"
-		onchange={handleFileChange}
+	</div>
+	<input id={id} class="absolute opacity-0 pointer-events-none"
 		bind:this={input}
+		accept={accept}
 		disabled={disabled}
-	/>
-
+		onchange={handleFileChange}
+		onfocus={checkFocus}
+		onblur={checkFocus}
+		type="file"
+	{...restProps} />
 </label>
 
 
 
-<!-- STYLE -->
-
 <style lang="postcss">
 
-	.form-upload {
-		@apply relative flex flex-col items-center justify-center min-h-20;
+	.input-upload {
+		@apply relative flex flex-col items-center justify-center gap-1 h-48 min-w-28 p-1;
 		@apply border rounded-lg cursor-pointer overflow-hidden;
-		/* background-color: var(--bg-input);
-		border-color: var(--border-input);
-		color: var(--text-input); */
 		&.disabled {
 			@apply cursor-not-allowed;
 			background-color: var(--bg-disabled);
 			border-color: var(--border-disabled);
 			color: var(--text-disabled);
 		}
-		&:hover {
-			/* background-color: var(--bg-input-hover);
-			border-color: var(--border-input-hover);
-			color: var(--text-input-hover); */
-			
-			.image-controls {
+		&:hover {		
+			.image-replace {
 				opacity: 1;
 			}
 		}
 
-		.preview-image {
-			@apply block h-auto object-cover rounded w-full;
+		.input-upload-preview {
+			@apply relative flex items-center justify-center h-full min-w-full max-w-none max-h-none object-cover overflow-hidden rounded;
+			background-color: var(--bg-neutral-softest);
 		}
-
-		.image-controls {
-			@apply absolute top-0 left-0 h-full w-full;
+		.image-replace {
+			@apply absolute inset-0 h-full rounded w-full text-white;
 			@apply backdrop-blur-sm transition-all;
 			opacity: 0;
-
-			.image-replace {
-				@apply absolute top-0 left-0 h-full w-full text-white;
-			}
-
-			:global(.image-remove) {
-				@apply absolute top-1 right-1 h-8 w-8 z-10;
-			}
 		}
 	}
 

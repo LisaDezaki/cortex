@@ -22,13 +22,19 @@ class CharacterRelationshipResource extends JsonResource
 			'slug'        => $this->slug,
 			'name'        => $this->name,
 			'description' => $this->description,
-			'image'       => $this->image,
-			'image_path'  => $this->image ? Storage::url($this->image) : null,
+			
+			'portrait'    => new MediaResource($this->whenLoaded('portrait')),
 
 			'role'		  => $this->whenLoaded('pivot', function() {
 				return $this->id === $this->pivot->character_id
 					? $this->pivot->character_role
 					: $this->pivot->related_character_role;
+			}),
+
+			'parentRole' => $this->whenLoaded('pivot', function() {
+				return $this->id === $this->pivot->character_id
+					? $this->pivot->related_character_role
+					: $this->pivot->character_role;
 			}),
 		];
     }

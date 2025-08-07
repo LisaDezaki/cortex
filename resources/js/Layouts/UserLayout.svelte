@@ -11,13 +11,13 @@
 
     let { children, header } = $props()
 
-	let project = $page.props.active_project.data;
+	let activeProject = $page.props.activeProject.data;
 
 </script>
 
 <Page class="flex items-stretch">
 
-	<Navigation {project} />
+	<Navigation project={activeProject} />
 
 	<Panel class="border-r pt-12">
 		<Panel.Item icon="UserList"   label="Profile"       href={route('profile.edit')} active={$page.url.startsWith('/user/profile')} />

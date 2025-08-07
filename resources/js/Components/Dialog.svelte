@@ -8,12 +8,12 @@
 		title,
 		description,
 		contentProps,
-		...attrs
+		...restProps
   } = $props();
 
 </script>
  
-<Dialog.Root bind:open {...attrs}>
+<Dialog.Root bind:open {...restProps}>
 	<Dialog.Trigger>
 		{@render children?.()}
 	</Dialog.Trigger>

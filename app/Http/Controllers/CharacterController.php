@@ -6,67 +6,93 @@ use App\Http\Resources\CharacterResource;
 use App\Http\Resources\CustomFieldResource;
 use App\Models\Character;
 use App\Models\CustomField;
-use App\Models\CustomFieldValue;
-use App\Models\Location;
-use App\Services\FileUploadService;
+use App\Services\MediaService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
-use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class CharacterController extends Controller
 {
-	protected $uploadService;
+	protected $mediaService;
 
-	public function __construct(FileUploadService $uploadService)
+	public function __construct(MediaService $mediaService)
 	{
-		$this->uploadService = $uploadService;
+		$this->mediaService = $mediaService;
 	}
 
 	protected $validationRules = [
-		// Standard fields
-		'name' => ['string', 'required'],
-		'alias' => ['string', 'nullable'],
-		'description' => ['string', 'nullable'],
-		'image' => ['string', 'nullable'],
-		// Dynamic custom fields
-		'custom_fields' => 'sometimes|array',
-        // 'custom_fields.*.name' => 'required|string',  // Field name
-        'custom_fields.*' => 'present',        // Field value (can be null)
-		'custom_fields.*.id' => 'required|distinct|exists:custom_fields,id',
+		'name'                  => ['required',  'string'],
+		'description'           => ['nullable',  'string'],
+		'portrait'              => ['nullable',  'string'],
 
-		
-		'custom_fields.*.value' => 'nullable|string'
+		'faction_id'            => ['nullable',  'exists:factions,id'],
+		'location_id'           => ['nullable',  'exists:locations,id'],
+		'relationships'         => ['sometimes',  'array'],
+		'relationships.*'		=> ['present'],
+		'relationships.id'      => ['required',  'distinct', 'exists:characters,id'],
+		'relationships.role'    => ['required', 'string'],
+		'relationships.related_role' => ['required', 'string'],
+
+		'custom_fields'			=> ['sometimes', 'array'],
+        'custom_fields.*'       => ['present'],
+		'custom_fields.*.id'    => ['required', 'distinct', 'exists:custom_fields,id'],
+		'custom_fields.*.value' => ['nullable', 'string']
 	];
 
-	/* VIEWS */
-
-	public function index(): Response
+	public function index()
 	{
 		$active_project = Auth::user()->active_project;
+		if (!$active_project) {
+			return Redirect::route('projects');
+		}
 
-		// if (!active_project) {
-		// 	return Redirect::route("/");
-		// }
-
-		$custom_fields = CustomField::where([
-			'project_id' => $active_project,
-			'customfieldable_type' => 'character'
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'character'
 		])->with('options')->get();
 
 		return Inertia::render('Characters/Index', [
-			'custom_fields' => CustomFieldResource::collection($custom_fields)
+			'customFields' => CustomFieldResource::collection($customFields)
 		]);
 	}
 
-	public function create(): Response
+	public function create()
 	{
+		$activeProject = Auth::user()->active_project;
+		if (!$activeProject) {
+			return Redirect::route('projects');
+		}
 		return Inertia::render('Characters/Create');
+	}
+
+	public function store(Request $request): RedirectResponse
+	{
+		$validatedData = $request->validate($this->validationRules);
+		$character = Auth::user()->activeProject()->characters()->create($validatedData);
+		$this->handlePortrait($request, $character);
+		$this->handleCustomFields($validatedData['custom_fields'], $character);
+
+		if ($request->has('faction_id')) {
+			$character->faction()->associate($validatedData['faction_id']);
+		}
+
+		if ($request->has('location_id')) {
+			$character->location()->associate($validatedData['location_id']);
+		}
+
+		if ($request->has('relationships')) {
+			$character->relationships()->sync($validatedData['relationships']);
+		}
+
+		$character->save();
+
+		return Redirect::route("characters.show", [
+			'character' => $character->slug
+		]);
 	}
 
 	public function show(Character $character): Response
@@ -74,8 +100,9 @@ class CharacterController extends Controller
 		$character->load([
 			'location',
 			'factions',
-			'relationships',
-			'inverseRelationships',
+			'portrait',
+			'relationships.portrait',
+			'inverseRelationships.portrait',
 			'customFieldValues.customField'
 		]);
 
@@ -89,8 +116,9 @@ class CharacterController extends Controller
 		$character->load([
 			'location',
 			'factions',
-			'relationships',
-			'inverseRelationships',
+			'portrait',
+			'relationships.portrait',
+			'inverseRelationships.portrait',
 			'customFieldValues.customField'
 		]);
 
@@ -99,135 +127,34 @@ class CharacterController extends Controller
 		]);
 	}
 
-	/* REQUESTS */
-
-	public function store(Request $request): RedirectResponse
-	{
-
-		// Validate user request.
-		$validatedData = $request->validate($this->validationRules);
-
-		//	Create the new character.
-		$character = new Character($validatedData);
-		$character->project_id = Auth::user()->active_project;
-
-		$userEmail = Auth::user()->email;
-
-		$character->save();
-
-		//  Handle custom fields
-		foreach ($validatedData['custom_fields'] as $field) {
-			if (empty($field['value'])) { continue; }
-
-			//  Create the new custom field
-			CustomFieldValue::updateOrCreate(
-				[
-					'customfieldable_id' => $character->id,
-					'custom_field_id' => $field['id']
-				],
-				[
-					'value' => $field['value'],
-				]
-			);
-		}
-
-		//	Move temporary image to permanent location.
-		if ($request->image) {
-			$character->image = $this->uploadService->moveToPermanent(
-				$request->image,
-				"characters",
-				$character->slug ?: strtolower(str_replace(' ', '-', $request->name))
-			);
-		}
-		
-		// Redirect user to new character page.
-		$character->save();
-		return Redirect::route("characters.show", [
-			'character' => $character->slug
-		]);
-	}
-
-
-
-
-
-
-
-
-
-	/**
-	 * Handle an incoming update character request.
-	 *
-	 * @param  \Illuminate\Http\Request  $request
-	 * @param  \App\Models\Character  $character
-	 * @return \Illuminate\Http\RedirectResponse
-	 */
 	public function update(Request $request, Character $character): RedirectResponse
 	{
-
-		// Validate user request
 		$validatedData = $request->validate($this->validationRules);
+		$character->fill($validatedData);
+		$this->handlePortrait($request, $character);
+		$this->handleCustomFields($validatedData['custom_fields'], $character);
 
-		//  Handle image upload
-		if ( $character->image == $request->image ) {
-			// No change to image, skip
-			$character->fill($validatedData);
-		} else if ($request->image) {
-			// Image provided, move to permanent location
-			$character->fill($validatedData);
-			$character->image = $this->uploadService->moveToPermanent(
-				$request->image,
-				"characters",
-				$character->slug ?: strtolower(str_replace(' ', '-', $request->name))
-			);
-		} else {
-			// No image provided, delete existing image and set to null
-			Storage::delete($character->image);
-			$character->fill($validatedData);
-			$character->image = null;
+		if ($request->has('faction_id')) {
+			$character->faction()->associate($validatedData['faction_id']);
 		}
 
-		//  Handle custom fields
-		foreach ($validatedData['custom_fields'] as $field) {
-			if (empty($field['value'])) {
-
-				//  Delete custom field value
-				CustomFieldValue::where([
-					'customfieldable_id' => $character->id,
-					'custom_field_id' => $field['id']
-				])->delete();
-
-			} else {
-
-				//  Create the new custom field
-				CustomFieldValue::updateOrCreate(
-					[
-						'customfieldable_id' => $character->id,
-						'custom_field_id' => $field['id']
-					],
-					[
-						'value' => $field['value']
-					]
-				);
-				
-			}
+		if ($request->has('location_id')) {
+			$character->location()->associate($validatedData['location_id']);
 		}
 
-		// Redirect user to new character page.
+		if ($request->has('relationships')) {
+			$character->relationships()->sync($validatedData['relationships']);
+		}
+
 		$character->update();
+		
 		return Redirect::route("characters.show", [
 			'character' => $character->slug
 		]);
 	}
 
-	/**
-	 * Handle an incoming delete character request.
-	 *
-	 * @return \Illuminate\Http\RedirectResponse
-	 */
-
-	 public function destroy(Request $request, Character $character)
-	 {
+	public function destroy(Request $request, Character $character)
+	{
 		$request->validate([
 			'confirm_name' => 'required|string'
 		]);
@@ -244,52 +171,78 @@ class CharacterController extends Controller
 		return Redirect::route("characters");
 	}
 
-
-
-
-
-	public function customfields(Request $request): Response
-	{
-		return Inertia::render('CustomFields/Index');
-	}
-
 	public function settings(Request $request): Response
 	{
-		$custom_fields = CustomField::where([
+		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
-			'customfieldable_type' => 'character'
+			'fieldable_type' => 'character'
 		])->with('options')->get();
 
 		return Inertia::render('Characters/Settings', [
-			'custom_fields' => CustomFieldResource::collection($custom_fields)
+			'customFields' => CustomFieldResource::collection($customFields)
 		]);
 	}
 
+	public function handlePortrait(Request $request, Character $character)
+	{
+		$request->validate([
+			'portrait' => 'string|nullable',
+		]);
 
-	// public function storeFile(Request $request, Character $character): string|null
-	// {
-	// 	if (!$request->input('image')) { return null; }
+		$user = Auth::user();
+		$userDir    = "user_"   .substr($user->id, 0, 8);
+		$projectDir = "project_".substr($user->active_project, 0, 8);
 
-	// 	$userId = Auth::user()->id;
-	// 	$projectId = Auth::user()->active_project;
-		
-	// 	$tempPath = $request->input('image');
-	// 	$tempPath = str_replace('/storage/', '', $tempPath);
+		$this->mediaService->updateImage(
+			$character,
+			$character->portrait(),
+			$request->portrait,
+			"$userDir/$projectDir/characters"
+		);
+	}
 
-	// 	$newPath = str_replace(
-	// 		"temp/",
-	// 		"users/$userId/projects/$projectId/characters/$character->id/",
-	// 		$tempPath
-	// 	);
+	public function handleCustomFields(array $custom_fields)
+	{
+		// foreach ($custom_fields as $field) {
+		// 	if (empty($field['value'])) { continue; }
 
-	// 	Storage::disk('public')->move($tempPath, $newPath);
-	// 	return Storage::url($newPath);
-	// }
+		// 	//  Create the new custom field
+		// 	CustomFieldValue::updateOrCreate(
+		// 		[
+		// 			'fieldable_id' => $character->id,
+		// 			'custom_field_id' => $field['id']
+		// 		],
+		// 		[
+		// 			'value' => $field['value'],
+		// 		]
+		// 	);
+		// }
 
+		// //  Handle custom fields
+		// foreach ($validatedData['custom_fields'] as $field) {
+		// 	if (empty($field['value'])) {
 
+		// 		//  Delete custom field value
+		// 		CustomFieldValue::where([
+		// 			'fieldable_id' => $character->id,
+		// 			'custom_field_id' => $field['id']
+		// 		])->delete();
 
+		// 	} else {
 
-
-
+		// 		//  Create the new custom field
+		// 		CustomFieldValue::updateOrCreate(
+		// 			[
+		// 				'fieldable_id' => $character->id,
+		// 				'custom_field_id' => $field['id']
+		// 			],
+		// 			[
+		// 				'value' => $field['value']
+		// 			]
+		// 		);
+				
+		// 	}
+		// }
+	}
 
 }

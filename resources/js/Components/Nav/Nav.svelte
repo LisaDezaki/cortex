@@ -7,12 +7,12 @@
         class: className,
 		header,
 		footer,
-        ...attrs
+        ...restProps
     } = $props()
 
 </script>
 
-<nav class="nav {className}" {...attrs}>
+<nav class="nav {className}" {...restProps}>
 
 	{#if header}
 		{@render header()}

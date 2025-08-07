@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Character;
+use App\Models\Faction;
 use App\Models\Location;
 use App\Models\Project;
 use App\Models\User;
@@ -29,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
 			'user' => User::class,
 			'project' => Project::class,
 			'character' => Character::class,
-			// 'faction' => Faction::class,
+			'faction' => Faction::class,
 			'location' => Location::class,
 		]);
     }

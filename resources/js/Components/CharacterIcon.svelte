@@ -11,15 +11,17 @@
 		href,
 		size,
 		src,
-		...attrs
+		...restProps
 	} = $props()
 
 </script>
 
 <Link href={href} class="character_icon {className}">
-	<Avatar.Root class="charactericon" {...attrs}>
+	<Avatar.Root class="charactericon" {...restProps}>
 		<Avatar.Image class="charactericon-image" src={src} alt={alt}></Avatar.Image>
-		<Avatar.Fallback class="charactericon-fallback"><Icon size={24} name="User" class="charactericon-icon" /></Avatar.Fallback>
+		<Avatar.Fallback class="charactericon-fallback">
+			<Icon size={20} name="User" class="charactericon-icon" />
+		</Avatar.Fallback>
 	</Avatar.Root>
 </Link>
 
@@ -27,22 +29,21 @@
 
 	:global(.character_icon) {
 		@apply inline-flex items-center justify-center h-9 w-9 rounded-full overflow-hidden;
-		@apply border border-white;
-		background-color: var(--background);
+		/* @apply border; */
+		background-color: var(--bg-neutral-softest);
+		/* border-color: var(--border-neutral-softest); */
 		&:hover {
 			@apply z-10;
 		}
 	}
 
-	/* :global(.charactericon),
 	:global(.charactericon-icon) {
-		@apply relative inline-flex items-center justify-center h-9 w-9 rounded-full overflow-hidden flex-shrink-0 border-2;
-		background-color: var(--bg-input-hover);
-		border-color: var(--surface);
+		@apply relative inline-flex items-center justify-center h-9 w-9 rounded-full overflow-hidden flex-shrink-0;
+		color: var(--text-neutral-softest);
 		&:hover {
 			@apply z-10;
 		}
-	} */
+	}
 
 	/* :global(.thumbnail) {
 		@apply relative inline-flex items-center justify-center aspect-square overflow-hidden flex-shrink-0;

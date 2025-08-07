@@ -4,11 +4,11 @@
 		children,
         class: className,
 		shrink = false,
-        ...attrs
+        ...restProps
     } = $props()
 </script>
 
-<td class="{className} {shrink ? 'shrink' : ''}" {...attrs}>
+<td class="{className} {shrink ? 'shrink' : ''}" {...restProps}>
 	<div class="cell">
 		{@render children()}
 	</div>

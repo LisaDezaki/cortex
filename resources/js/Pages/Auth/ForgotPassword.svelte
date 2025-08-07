@@ -1,9 +1,11 @@
 <script>
+	import { route } from 'momentum-trail'
+    import { useForm } from '@inertiajs/svelte'
+
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
     import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
-    import { route } from 'momentum-trail'
-    import { useForm } from '@inertiajs/svelte'
+	import Form from '@/Components/Form.svelte'
+    import Field from '@/Components/Field.svelte'
 
     let { status } = $props()
 
@@ -23,10 +25,10 @@
 </svelte:head>
 
 <GuestLayout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+    <!-- <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
         Forgot your password? No problem. Just let us know your email address and we will email you a password reset
         link that will allow you to choose a new one.
-    </div>
+    </div> -->
 
     {#if status}
         <div class="mb-4 text-sm font-medium text-green-600 dark:text-green-400">
@@ -34,27 +36,23 @@
         </div>
     {/if}
 
-    <form onsubmit={submit}>
-        <div>
-            <Form.Label for="email" value="Email" />
+    <Form title="Forgot Password" onsubmit={submit} class="form-styles w-96">
 
-            <Form.Input
-                id="email"
-                type="email"
-                class="mt-1 block w-full"
-                bind:value={$form.email}
-                required
-                autofocus
-                autocomplete="username"
-            />
+		<Field
+			id="email"
+			type="email"
+			label="Email"
+			icon="At"
+			bind:value={$form.email}
+			errors={$form.errors.email}
+			required
+			autocomplete="username"
+		/>
 
-            <Form.Error class="mt-2" message={$form.errors.email} />
-        </div>
-
-        <div class="mt-4 flex items-center justify-end">
-            <Button primary class={$form.processing && 'opacity-25'} disabled={$form.processing}>
-                Email Password Reset Link
-            </Button>
-        </div>
-    </form>
+		<Button style="hard" theme="accent"
+			class="w-full {$form.processing && 'opacity-25'}"
+			disabled={$form.processing}
+			label="Email Password Reset Link"
+		/>
+    </Form>
 </GuestLayout>

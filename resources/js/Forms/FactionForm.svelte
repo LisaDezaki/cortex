@@ -4,19 +4,19 @@
 
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 	import Heading from '@/Components/Heading.svelte'
 	import Section from '@/Components/Section.svelte'
 
 	//  Props
 
-	let project = $page.props.active_project.data
+	const activeProject = $page.props.activeProject.data
 	let { faction } = $props()
 
 	//  Form
 
 	let startData = {
-		image: faction?.image || null,
+		emblem: faction?.emblem || null,
         name: faction?.name || null,
         description: faction?.description || null,
 		custom_fields: faction?.custom_fields || []
@@ -24,7 +24,7 @@
 
 	//  Process the custom fields and make sure they are
 	//  populated correctly if the faction is being edited
-	// project?.custom_fields?.forEach((field) => {
+	// activeProject?.custom_fields?.forEach((field) => {
 
 	// 	let factionData = faction.custom_field_values.find(f => f.custom_field_id === field.id)?.value
 	// 	let value = factionData || (field.type === 'checkbox' ? false : '')
@@ -83,17 +83,17 @@
 
 		<Heading is="h2" as="h5"
 			heading={faction ? "Edit Faction" : "New Faction"}
-			subheading={faction ? "Edit this faction's details." : "Build a new faction to add to the " + project.name + " project."}
+			subheading={faction ? "Edit this faction's details." : "Build a new faction to add to the " + activeProject.name + " project."}
 			class="mb-12"
 		/>
 
 		<Form.Field
 			type="file"
-			id="image"
+			id="emblem"
 			layout="block"
 			class="w-full"
-			bind:value={$form.image}
-			previewPath={faction?.image_path}
+			bind:value={$form.emblem}
+			previewPath={faction?.emblem?.url}
 			description="Upload a logo, icon, or sigil for this faction."
 			errors={$form.errors.image}
 			label="Image"
@@ -137,7 +137,7 @@
 					class="aspect-[3/4]"
 					title={member.name}
 					subtitle={member.role}
-					image={member.image_path}
+					image={member.portrait?.url}
 					href={route('characters.show', {character: member.slug})}
 				/>
 			{/each}

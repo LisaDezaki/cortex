@@ -9,15 +9,15 @@
 		class: className,
 		icon,
 		src,
-		...attrs
+		...restProps
 	} = $props()
 
 </script>
 
-<Avatar.Root class="thumbnail {className}" {...attrs}>
+<Avatar.Root class="thumbnail {className}" {...restProps}>
 	<Avatar.Image class="thumbnail-image" src={src} alt={alt}></Avatar.Image>
 	<Avatar.Fallback class="thumbnail-fallback">
-		<Icon size={24} name={icon || "ImageSquare"} class="thumbnail-icon" />
+		<Icon class="thumbnail-icon" name={icon || "ImageSquare"} size={20} weight="light" />
 	</Avatar.Fallback>
 </Avatar.Root>
 
@@ -25,6 +25,9 @@
 
 	:global(.thumbnail) {
 		@apply relative inline-flex items-center justify-center aspect-square overflow-hidden flex-shrink-0;
+		background-color: var(--bg-neutral-softest);
+		border-color: var(--border-neutral-softest);
+		
 	}
 
 	:global(.thumbnail:not([class*="rounded"])) {
@@ -37,11 +40,12 @@
 
 	:global(.thumbnail-fallback) {
 		@apply flex items-center justify-center w-full h-full;
-		@apply text-slate-900 font-black text-5xl tracking-tighter;
+		@apply font-black text-5xl tracking-tighter;
 		@apply rounded-md;
+		color: var(--text-neutral-softer);
 	}
 
-	:global([data-theme="light"] .thumbnail:not([class*="border-"])) {
+	/* :global([data-theme="light"] .thumbnail:not([class*="border-"])) {
 		@apply border-slate-300;
 	}
 	:global([data-theme="light"] .thumbnail-fallback) {
@@ -59,6 +63,6 @@
 	}
 	:global([data-theme="dark"] .thumbnail-icon) {
 		@apply text-slate-600;
-	}
+	} */
 	
 </style>

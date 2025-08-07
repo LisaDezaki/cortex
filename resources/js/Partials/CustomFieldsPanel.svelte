@@ -3,21 +3,22 @@
 
 	import CustomFieldForm from '@/Forms/CustomFieldForm.svelte'
 	import Button from '@/Components/Button.svelte'
+	import DragHandle from '@/Components/DragHandle.svelte'
 	import Heading from '@/Components/Heading.svelte'
 	import Icon from '@/Components/Icon.svelte'
 	import Modal from '@/Components/Modal.svelte'
+	import ReorderableList from '@/Components/ReorderableList.svelte'
 
-	// let project = $page.props.active_project?.data
-	let custom_fields = $page.props.custom_fields?.data
+	const customFields = $page.props.customFields?.data
 
 	let showCustomFieldModal = $state(false)
 	let activeCustomFieldIndex = $state(null)
-	let activeCustomField = $derived(custom_fields?.[activeCustomFieldIndex] || null)
+	let activeCustomField = $derived(customFields?.[activeCustomFieldIndex] || null)
 
 	let iconForType = {
-		text: 'TextAa',
+		text:   'TextAa',
 		number: 'Hash',
-		link: 'Link',
+		link:   'Link',
 		switch: 'ToggleRight',
 		select: 'RowsPlusBottom',
 		entity: 'Table',
@@ -32,6 +33,10 @@
 		activeCustomFieldIndex = index;
 		showCustomFieldModal = true;
 	}
+	function deleteCustomField(index) {
+		activeCustomFieldIndex = index;
+		// showCustomFieldModal = true;
+	}
 	function closeModal() {
 		activeCustomFieldIndex = null
 		showCustomFieldModal = false
@@ -44,9 +49,12 @@
 	subheading="Manage your custom fields here."
 />
 
-<div class="flex flex-col items-center">
-	{#each custom_fields as field, i}
-		<div class="flex items-stretch gap-1.5 w-full p-1">
+<ReorderableList items={customFields}>
+	{#snippet itemTemplate(field)}
+		<div class="flex gap-1.5 w-full p-1">
+			<div class="flex items-center">
+				<DragHandle item={field} />
+			</div>
 			<div class="border border-slate-500/15 flex items-center gap-1.5 px-2 w-full rounded-md">
 				<Icon name={iconForType[field.type] || 'Question'} size={20} weight="light" class="text-emerald-500" />
 				<span class="line-clamp-1 pb-0.5">{field.label}</span>
@@ -60,11 +68,14 @@
 				<Button
 					style="soft" theme="danger"
 					icon="Trash"
-					onclick={createCustomField}
+					onclick={deleteCustomField}
 				/>
 			</div>
 		</div>
-	{/each}
+	{/snippet}
+</ReorderableList>
+
+<div class="flex flex-col items-center">
 	<Button
 		style="soft" theme="accent"
 		class="bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-500 rounded-lg font-style-button mt-1.5"

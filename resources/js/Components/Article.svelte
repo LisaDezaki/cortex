@@ -45,8 +45,6 @@
 	.article {
 		@apply relative h-full w-full overflow-y-auto space-y-3;
 		background-color: var(--surface);
-		box-shadow: inset  1px  1px  0 var(--shadow-highlight),
-					inset -1px -1px  0 var(--shadow-lowlight);
 	}
 
 </style>

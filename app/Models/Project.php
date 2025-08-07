@@ -22,7 +22,6 @@ class Project extends Model
 	 */
 	protected $fillable = [
 		'name',
-		'image',
 		'description',
 	];
 
@@ -57,6 +56,9 @@ class Project extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
+
+
+
 	public function user(): BelongsTo
 	{
 		return $this->belongsTo(User::class);
@@ -97,5 +99,17 @@ class Project extends Model
 			'id',           // Local key on projects table
 			'id'      // Local key on regions table
 		)->orderBy('locations.slug', 'ASC');
+	}
+
+	public function banner()
+    {
+        return $this->morphOne(Media::class, 'mediable')
+			->where('type', 'project_banner');
+    }
+	
+	public function gallery()
+	{
+		return $this->morphMany(Media::class, 'mediable')
+			->where('type', 'project_gallery');
 	}
 }

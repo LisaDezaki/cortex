@@ -17,9 +17,9 @@
 
 	.sticky-header {
 		/* @apply sticky top-0 left-0 right-0 flex z-10; */
-		@apply flex h-12;
+		@apply border-b flex h-12;
 		background-color: var(--surface);
-		box-shadow: inset 0 1px 0 var(--shadow-highlight), inset 0 -1px 0 var(--shadow-lowlight);
+		border-color: var(--border-neutral-softest);
 	}
 
 </style>

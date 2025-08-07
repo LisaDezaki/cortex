@@ -8,28 +8,25 @@
 	import Back from '@/Components/Back.svelte'
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
 	import Button from '@/Components/Button.svelte'
+	import HeaderButton from '@/Components/HeaderButton.svelte'
 	import Section from '@/Components/Section.svelte'
 
-	let project = $page.props.active_project.data
+	const activeProject = $page.props.activeProject.data
 
 </script>
 
 <svelte:head>
-    <title>{project.name} / Character Settings</title>
+    <title>{activeProject.name} / Character Settings</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 
 	{#snippet header()}
 		<Breadcrumbs data={[
-			{ title: "Project",      href: "/" },
-			{ title: "Characters",   href: route('characters') },
+			{ title: "Characters", href: route('characters') },
 			{ title: "Settings" }
 		]} />
-		<Button style="plain" theme="accent" class="border-l"
-			icon="Plus" iconSize={24} iconWeight="light"
-			href={route('characters.create')}
-		/>
+		<HeaderButton icon="Plus" theme="accent" href={route('characters.create')} />
 	{/snippet}
 
 	{#snippet article()}

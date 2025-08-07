@@ -15,12 +15,11 @@ return new class extends Migration
         Schema::create('factions', function (Blueprint $table) {
             $table->uuid('id')->primary()->index();
 			$table->foreignUuid('project_id')->constrained('projects')->cascadeOnUpdate()->cascadeOnDelete();
-			$table->string('name');
 			$table->string('slug')->nullable();
-			$table->string('image')->nullable();
+			$table->string('name');
+			$table->string('type')->nullable();
 			$table->text('description')->nullable();
 			$table->foreignUuid('headquarters_id')->nullable()->constrained('locations')->cascadeOnUpdate()->nullOnDelete();
-
 			$table->timestamps();
 			$table->softDeletes();
         });
@@ -31,7 +30,6 @@ return new class extends Migration
 			$table->integer('order')->default(0);
 			$table->string('name')->nullable();
 			$table->text('description')->nullable();
-
 			$table->index('faction_id');
 			$table->index(['faction_id', 'order']);
 		});
@@ -40,7 +38,6 @@ return new class extends Migration
 			$table->foreignUuid('faction_id')->constrained('factions')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignUuid('character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('rank_id')->nullable();
-
 			$table->primary(['faction_id', 'character_id']);
 			$table->index('rank_id');
 		});

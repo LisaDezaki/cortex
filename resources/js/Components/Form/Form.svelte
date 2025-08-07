@@ -1,30 +1,38 @@
-<script>
+<!-- <script>
 	import { inertia, page } from '@inertiajs/svelte'
 
+	import Heading from '@/Components/Heading.svelte';
+
 	const user = $page.props.auth.user
+
     let {
 		actions,
 		children,
 		class: className,
 		mustVerifyEmail,
         onsubmit,
+		oncancel,
 		processing,
 		recentlySuccessful,
 		status,
 		submitLabel,
 		title,
-        ...attrs
+		subtitle,
+        ...restProps
     } = $props()
 
 </script>
 
-<form class="form {className}" {onsubmit} {...attrs}>
+<form class="form {className}" {onsubmit} {...restProps}>
 
 	{#if title}
-		<span class="form-title font-style-h5">{title}</span>
+		<Heading is="h4" as="h5"
+			heading={title}
+			subheading={subtitle}
+		/>
 	{/if}
 
-	{@render children()}
+	{@render children?.()}
 
 	{#if mustVerifyEmail && user.email_verified_at === null}
 		<p class="mt-2 text-sm text-gray-800 dark:text-gray-200">
@@ -50,31 +58,16 @@
 		</div>
 	{/if}
 
-	<!-- <div class="flex items-center gap-4">
-		<Button type="submit" primary disabled={processing}>{submitLabel || "Submit"}</Button>
-
-		<Transition
-			show={recentlySuccessful}
-			enter="transition ease-in-out"
-			enterFrom="opacity-0"
-			leave="transition ease-in-out"
-			leaveFrom="opacity-0"
-		>
-			<p class="text-sm text-gray-600 transition ease-in-out dark:text-gray-400">Saved.</p>
-		</Transition>
-	</div> -->
-
 </form>
 
 <style lang="postcss">
 
 	.form {
-		@apply w-full;
+		background-color: var(--surface);
 	}
 
 	.form-styles {
 		@apply border p-6 rounded-lg;
-		background-color: var(--bg-white);
 	}
 
 	.form-highlight {
@@ -92,4 +85,4 @@
 		@apply text-slate-400 mb-2 col-span-full w-full;
 	}
 
-</style>
+</style> -->

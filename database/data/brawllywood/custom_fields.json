@@ -1,0 +1,29 @@
+{
+	"from": {
+		"fieldable_type": "character",
+		"type": "text",
+		"name": "from",
+		"label": "From",
+		"description": "What movie is this character known for?",
+		"placeholder": "Movie name",
+		"required": false
+	},
+	"actor": {
+		"fieldable_type": "character",
+		"type": "text",
+		"name": "actor",
+		"label": "Actor",
+		"description": "Who is this character portrayed by?",
+		"placeholder": "Actor name",
+		"required": false
+	},
+	"language": {
+		"fieldable_type": "character",
+		"type": "text",
+		"name": "language",
+		"label": "Language",
+		"description": "What language does this character speak (primarily)?",
+		"placeholder": "Language",
+		"required": false
+	}
+}

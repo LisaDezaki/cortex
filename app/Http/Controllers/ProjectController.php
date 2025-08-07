@@ -3,137 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ProjectResource;
+use App\Models\Media;
 use App\Models\Project;
-use App\Services\FileUploadService;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Services\MediaService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class ProjectController extends Controller
 {
-	protected $uploadService;
+	protected $mediaService;
 
-	public function __construct(FileUploadService $uploadService)
+	public function __construct(MediaService $mediaService)
 	{
-		$this->uploadService = $uploadService;
+		$this->mediaService = $mediaService;
 	}
 
-    /**
-     * Display the user's list of projects.
-     */
 	public function index(): Response
     {
         return Inertia::render('Projects/Index');
     }
 
+	public function create()
+	{
+		//
+	}
 
-	/**
-     * Display a specific project's details.
-     */
-	public function show(Request $request, Project $project): Response
+	public function store(Request $request): RedirectResponse
+    {
+        $validatedData = $this->validate($request);
+		$project = Auth::user()->projects()->create($validatedData);
+		$this->handleBanner($request, $project);
+		$project->save();
+		return Redirect::route("dashboard");
+    }
+
+	public function show(Request $request, Project $project)
 	{
 		$project->load([
 			'characters',
-			'characters.location',
-			'characters.factions',
-			'characters.relationships',
-			'characters.inverseRelationships',
-			// 'characters.customFields',
-			// 'characters.customFieldValues',
-			// 'characters.customFieldOptions',
-			'factions',
-			'factions.members',
 			'locations',
-			'customFields',
-			'customFields.options',
+			'factions'
 		]);
 
 		return Inertia::render('Projects/Show', [
-			'project' => new ProjectResource($project)
+			"project" => new ProjectResource($project)
 		]);
 	}
 
+	public function edit()
+	{
+		//
+	}
 
-	/**
-     * Display a specific project's update form.
-     */
-	// public function edit(Request $request, Project $project): Response
-	// {
-	// 	return Inertia::render('Projects/Edit', [
-	// 		'project' => $project
-	// 	]);
-	// }
-
-
-	/**
-     * Display the Create New Project view.
-     */
-	// public function create(Request $request): RedirectResponse
-    // {
-	// 	$project = Auth::user()->projects()->create();
-	// 	$project->save();
-	// 	return Redirect::route("projects.edit", [
-	// 		'project' => $project->id
-	// 	]);
-    // }
-
-
-	/**
-     * Store a new project in the database.
-     */
-    public function store(Request $request): RedirectResponse
+    public function update(Request $request, Project $project)
     {
-		//	Validate form data and create the project.
         $validatedData = $this->validate($request);
-		$project = Auth::user()->projects()->create($validatedData);
-
-		//	Move temporary image to permanent location.
-		if ($request->image) {
-			$project->image = $this->uploadService->moveToPermanent(
-				$request->image,
-				null,
-				strtolower(str_replace(' ', '-', $project->name))
-			);
-		}
-		
-		//	Save project and redirect to new project page.
-		$project->save();
-		return Redirect::route("projects.show", [
-			'project' => $project->id
-		]);
-    }
-
-
-	/**
-     * Update an existing project in the database.
-     */
-    public function update(Request $request, Project $project): RedirectResponse
-    {
-		//	Validate form data
-        $validatedData = $this->validate($request, $project);
 		$project->fill($validatedData);
-
-		//	Move temporary image to permanent location
-		// $project->image = $this->storeFile($request, $project);
-		if ($request->image) {
-			$project->image = $this->uploadService->moveToPermanent(
-				$request->image,
-				null,
-				strtolower(str_replace(' ', '-', $project->name))
-			);
-		}
-		//	Update project and return to project page
+		$this->handleBanner($request, $project);
 		$project->update();
-        return Redirect::route("projects.show", [
-			'project' => $project->id
-		]);
+        return Redirect::route("dashboard");
     }
-
 
 	public function destroy(Request $request, Project $project): RedirectResponse
     {
@@ -142,15 +77,22 @@ class ProjectController extends Controller
 		// 	abort(403, 'Unauthorized to delete this project.');
 		// }
 
-		$request->validate([
-			'confirm_name' => 'required|string'
+		$validator = Validator::make($request->all(), [
+			'confirm_name' => ['required', 'string', 'in:'.$project->name],
+		], [
+			'confirm_name.required' => 'For security reasons, you must type the name of the project in order to delete it.',
+			'confirm_name.in' => 'The entered name does not match the project you\'re trying to delete. Are you having second thoughts?',
 		]);
-	
-		if ($request->confirm_name !== $project->name) {
-			return Redirect::back()->withErrors([
-				'confirm_name' => 'The entered name does not match the project you\'re trying to delete.'
-			]);
+
+		if ($validator->fails()) {
+			return Redirect::back()->withErrors($validator)->withInput();
 		}
+	
+		// if ($request->confirm_name !== $project->name) {
+		// 	return Redirect::back()->withErrors([
+		// 		'confirm_name' => 'The entered name does not match the project you\'re trying to delete.'
+		// 	]);
+		// }
 
 		//	Remove image
 		// $this->deleteImage($project);
@@ -161,76 +103,84 @@ class ProjectController extends Controller
         return Redirect::route('projects');
     }
 
-	public function activate(Project $project, Request $request)
+	public function settings()
+	{
+		return Inertia::render('Projects/Settings');
+	}
+
+	public function handleBanner(Request $request, Project $project)
+	{
+
+		$request->validate([
+			'banner' => 'string|nullable',
+		]);
+
+		$user = Auth::user();
+		$userFolder    = "user_"   .substr($user->id, 0, 8);
+		$projectFolder = "project_".substr($user->active_project, 0, 8);
+
+		$this->mediaService->updateImage(
+			$project,
+			$project->banner(),
+			$request->banner,
+			"$userFolder/$projectFolder"
+		);
+	}
+
+	public function activate(Project $project)
 	{
 		$user = Auth::user();
 		if ($project->user_id = $user->id) {
 			$user->active_project = $project->id;
 			$user->update();
 		}
-		return Inertia::location(url()->previous());
-	}
 
+		return redirect()->back()->with([
+        	'test' => new ProjectResource($project)
+    	]);
+	}
 	
-	public function deactivate(Request $request)
+	public function deactivate()
 	{
 		$user = Auth::user();
 		$user->active_project = null;
 		$user->update();
-		return Inertia::location(url()->previous());
+		// return Redirect::route("dashboard");
+		return redirect()->back();
 	}
 
-	public function validate(Request $request, Project $project = null) {
+	public function validate(Request $request)
+	{
 
 		$rules = [
-            'name' => ['nullable', 'max:255'],
+            'name' 		  => ['nullable', 'max:255'],
             'description' => ['nullable'],
-            'image' => ['nullable', 'string'],
+            'banner'      => ['nullable',
+				function ($attribute, $value, $fail) {
+
+					if (Media::where('id', $value)->exists()) {
+						$fail('The ID belongs to existing media.');
+						return;
+					}
+					
+					if ($value) {
+						if (!Storage::disk('public')->exists($value)) {
+							$fail('The temporary file was lost.');
+						}
+						return;
+					}
+					
+					$fail('The banner must be either a valid Media ID or an image file.');
+            	}
+			],
         ];
 
 		return $request->validate($rules);
 
 	}
 
-	// public function storeFile(Request $request, Project $project): string|null
-	// {
-	// 	if (!$request->input('image')) { return null; }
-
-	// 	$userId = Auth::user()->id;
-		
-	// 	$tempPath = $request->input('image');
-	// 	$tempPath = str_replace('/storage/', '', $tempPath);
-
-	// 	$newPath = str_replace(
-	// 		"temp/",
-	// 		"users/$userId/projects/$project->id/",
-	// 		$tempPath
-	// 	);
-
-	// 	Storage::disk('public')->move($tempPath, $newPath);
-	// 	return Storage::url($newPath);
-	// }
-
-	// public function storeFile(Request $request, Project $project, bool $replace = false): string {
-
-	// 	if ($replace) {
-    //         $this->deleteImage($project);
-    //     }
-
-    //     $path = $request->file('file')->store('projects', 'public');
-    //     // $project->update(['image' => "/storage/{$path}"]);
-	// 	return $path;
-	// }
-
-	// public function deleteImage(Project $project): void {
-
-	// 	// If the project has an image path stored...
-	// 	if ($project->image) {
-	// 		// Remove the /storage/ prefix to get the relative path on the disk
-	// 		$imagePath = str_replace('/storage/', '', $project->image);
-	// 		// Specify the disk and delete the file
-	// 		Storage::disk('public')->delete($imagePath);
-	// 	}
-
-	// }
+	public function dashboard(): Response
+    {
+        return Inertia::render('Dashboard');
+    }
 }

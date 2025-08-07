@@ -9,11 +9,11 @@
 
 	import Back from '@/Components/Back.svelte'
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
-	import Button from '@/Components/Button.svelte'
+	import HeaderButton from '@/Components/HeaderButton.svelte'
 	import Modal from '@/Components/Modal.svelte'
 
-	let project = $page.props.active_project.data
-	let location = $page.props.location.data
+	const activeProject = $page.props.activeProject.data
+	const location = $page.props.location.data
 
 	let deletingLocation = $state(false)
 
@@ -27,18 +27,17 @@
 </script>
 
 <svelte:head>
-    <title>{project.name} / {location.name}</title>
+    <title>{activeProject.name} / {location.name}</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 	{#snippet header()}
 		<Breadcrumbs data={[
-			{ title: "Project",    href: "/" },
 			{ title: "Locations",   href: route('locations') },
 			{ title: location.name, href: route('locations.show', {location: location.slug}) },
 			{ title: "Edit" }
 		]} />
-		<Button plain icon="Trash" iconSize={24} onclick={deleteLocation} class="border-l w-14 hover:bg-rose-500/20 hover:text-rose-500" />
+		<HeaderButton icon="Trash" theme="danger" onclick={deleteLocation} />
 	{/snippet}
 
 	{#snippet panel()}

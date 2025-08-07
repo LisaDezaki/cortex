@@ -1,0 +1,22 @@
+{
+	"captain-marvel": {
+		"name": "Carol Danvers",
+		"hero_name": "Captain Marvel",
+		"team": "Avengers"
+	},
+	"iron-man": {
+		"name": "Tony Stark",
+		"hero_name": "Iron Man",
+		"team": "Avengers"
+	},
+	"mantis": {
+		"name": "Mantis",
+		"hero_name": "Mantis",
+		"team": "Guardians of the Galaxy"
+	},
+	"spider-woman": {
+		"name": "Gwen Stacy",
+		"hero_name": "Spider-Woman",
+		"team": "Spiderverse"
+	}
+}

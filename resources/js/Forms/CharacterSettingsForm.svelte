@@ -3,14 +3,15 @@
     import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
+
+	const customFields = $page.props.customFields?.data
+	const settings = $page.props.settings?.characters?.data
 
 	let {
 		class: className,
-        oncancel
+        oncancel = () => {}
     } = $props()
-
-	let settings = $page.props.settings?.characters?.data
 
 	const form = useForm({
         subheading: ''
@@ -20,10 +21,7 @@
 		console.log('update settings');
 	}
 
-	
 </script>
-
-<!-- <pre>{JSON.stringify($form,null,4)}</pre> -->
 
 <Form
 	class="mt-6 space-y-2 {className}"
@@ -36,11 +34,9 @@
 		layout="block"
 		label="Character subheading"
 		description="Which field would you like to show under the character's name when viewing them?"
-		options={[
-			{ value: '1', label: 'Species'},
-			{ value: '2', label: 'Language'},
-			{ value: '3', label: 'Origin'}
-		]}
+		options={customFields.map((field) => {
+			return { value: field.name, label: field.label }
+		})}
 		bind:value={$form.subheading}
 		errors={$form.errors.subheading}
 	/>

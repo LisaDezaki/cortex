@@ -12,14 +12,14 @@
 		icon,
 		size,
 		src,
-		...attrs
+		...restProps
 	} = $props()
 
 </script>
 
 <Link href={href} class={className}>
 	{#if src}
-		<Avatar.Root class="factionicon" {...attrs}>
+		<Avatar.Root class="factionicon" {...restProps}>
 			<Avatar.Image class="factionicon-image" src={src} alt={alt}></Avatar.Image>
 			<Avatar.Fallback class="factionicon-fallback"><Icon size={24} name={icon || "User"} class="factionicon-icon" /></Avatar.Fallback>
 		</Avatar.Root>
@@ -35,8 +35,8 @@
 	:global(.factionicon),
 	:global(.factionicon-icon) {
 		@apply relative inline-flex items-center justify-center h-9 w-9 aspect-square rounded-lg overflow-hidden flex-shrink-0 border-2;
-		background-color: var(--bg-input-hover);
-		border-color: var(--surface);
+		background-color: var(--bg-neutral-softest);
+		border-color: var(--border-neutral-softest);
 		&:hover {
 			@apply z-10;
 		}

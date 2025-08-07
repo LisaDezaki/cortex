@@ -11,7 +11,7 @@
         class: className,
 		label,
 		labelText,
-        ...attrs
+        ...restProps
     } = $props()
 	
 </script>
@@ -21,19 +21,20 @@
 <!-- STRUCTURE -->
 
 <Label
-	id="{attrs.id}-label"
-	for={attrs.id}
-	class="form-checkbox {className}"
-	description={attrs.description}
-	disabled={attrs.disabled}
-	required={attrs.required}
+	id="{restProps.id}-label"
+	for={restProps.id}
+	class="checkbox-label {className}"
+	description={restProps.description}
+	disabled={restProps.disabled}
+	required={restProps.required}
 >
 	<Checkbox.Root
-		aria-labelledby="{attrs.id}-label"
+		aria-labelledby="{restProps.id}-label"
+		id={restProps.id}
 		class="checkbox"
 		bind:checked
-		{...attrs}
-	>
+		disabled={restProps.disabled}
+	{...restProps}>
 		{#snippet children({ checked, indeterminate })}
 			{#if indeterminate}
 				<Icon name="Minus" size={20} weight="bold" />
@@ -41,11 +42,9 @@
 				<Icon name="Check" size={20} weight="bold" />
 			{/if}
 		{/snippet}
-
 	</Checkbox.Root>
 
-	<span class="checkbox-label">{labelText}</span>
-
+	<span class="font-style-regular">{labelText}</span>
 </Label>
 
 
@@ -54,48 +53,29 @@
 
 <style lang="postcss">
 
-	:global(.form-checkbox) {
-		@apply border-none flex items-center gap-3 min-h-11 p-2 w-full;
-		/* @apply border-inherit; */
-		@apply rounded-lg;
-		background-color: transparent;
-		/* border-color: var(--border-neutral-soft); */
-		color: var(--text-input);
-		/* &:hover {
-			border-color: var(--border-input);
-		} */
-	}
-
-	:global(.form-checkbox.disabled) {
-		@apply cursor-not-allowed;
-		color: var(--text-disabled);
-	}
-
-	:global(.checkbox) {
-		@apply flex items-center justify-center min-h-7 min-w-7;
-		@apply border rounded-lg;
-		background-color: var(--bg-neutral-soft);
-		border-color: var(--border-neutral-soft);
-		color: var(--text-input);
-		&:hover {
-			background-color: var(--bg-neutral-soft-hover);
-			border-color: var(--border-neutral-soft-hover);
+	:global(.checkbox-label) {
+		/* outline: 1px solid red;
+		outline-offset: -1px; */
+		@apply flex items-start gap-3 min-h-10 py-2 cursor-pointer;
+		&[disabled="true"] {
+			cursor: not-allowed;
+			opacity: 50%;
+			pointer-events: none;
 		}
-	}
-	:global(.checkbox[data-state="checked"]),
-	:global(.checkbox[data-state="indeterminate"]) {
-		background: var(--bg-accent-gradient);
-		border-color: var(--border-accent);
-		color: var(--text-white);
-	}
 
-	:global(.checkbox[data-disabled]) {
-		opacity: 50%;
-		pointer-events: none;
-	}
+		:global(.checkbox) {
+			@apply appearance-none min-h-6 min-w-6 rounded-md flex-shrink-0;
+			@apply inline-flex items-center justify-center;
+			background-color: var(--bg-input);
+			box-shadow: 0 1px 0 var(--shadow-lowlight);
 
-	.checkbox-label {
-		@apply text-base w-full;
+			&[data-state="checked"],
+			&[data-state="indeterminate"] {
+				background: var(--bg-accent-gradient);
+				border: 1px solid var(--border-accent-strong);
+				color: var(--text-white);
+			}
+		}
 	}
 
 </style>

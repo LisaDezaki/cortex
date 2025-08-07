@@ -5,7 +5,7 @@
 
 	import Button from '@/Components/Button.svelte'
 	import CharacterIcon from '@/Components/CharacterIcon.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 	import Table from '@/Components/Table'
 	import Thumbnail from '@/Components/Thumbnail.svelte'
 
@@ -54,7 +54,7 @@
 			<Thumbnail
 				class="h-8 w-12 rounded"
 				icon="MapPin"
-				src={location.banner_path}
+				src={location.banner?.url}
 			/>
 			<div class="-space-y-0.5">
 				<div class="font-style-regular line-clamp-1">{location.name}</div>
@@ -68,7 +68,7 @@
 				{#each location.characters as character, i}
 					<CharacterIcon
 						href={route('characters.show', {character: character.slug})}
-						src={character.image_path}
+						src={character.portrait?.url}
 					/>
 				{/each}
 			</div>

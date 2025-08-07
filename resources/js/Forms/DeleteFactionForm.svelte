@@ -3,10 +3,10 @@
     import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 
     let {
-		oncancel,
+		oncancel = () => {},
 		faction
 	} = $props()
 

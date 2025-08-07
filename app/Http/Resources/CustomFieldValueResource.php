@@ -14,14 +14,10 @@ class CustomFieldValueResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        // return parent::toArray($request);
-
 		return [
-			'custom_field_id' => $this->custom_field_id,
-			'custom_field_label' => $this->whenLoaded('customField', function() {
-				return $this->customField->label;
-			}),
-			'value' => $this->value,
+			'customFieldId' => $this->custom_field_id,
+			'value' => $this->getDisplayValue(),
+			'field' => new CustomFieldResource($this->whenLoaded('customField'))
 		];
     }
 }

@@ -1,9 +1,11 @@
 <script>
+	import { inertia, useForm } from '@inertiajs/svelte'
+    import { route } from 'momentum-trail'
+
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
     import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
-    import { inertia, useForm } from '@inertiajs/svelte'
-    import { route } from 'momentum-trail'
+	import Form from '@/Components/Form.svelte'
+	import Field from '@/Components/Field.svelte'
 
     const form = useForm({
         name: '',
@@ -26,49 +28,50 @@
 </svelte:head>
 
 <GuestLayout>
-    <Form title="Register" onsubmit={submit}>
 
-		<Form.Field
+    <Form title="Register" onsubmit={submit} class="form-styles w-96">
+
+		<Field
 			id="name"
 			type="text"
-			class="mt-1 block w-full"
+			label="Name"
+			icon="TextAa"
 			bind:value={$form.name}
 			errors={$form.errors.name}
-			label="Name"
 			required
 			autofocus
 			autocomplete="name"
 		/>
 
-		<Form.Field
+		<Field
 			id="email"
 			type="email"
-			class="mt-1 block w-full"
+			label="Email"
+			icon="At"
 			bind:value={$form.email}
 			errors={$form.errors.email}
-			label="Email"
 			required
 			autocomplete="username"
 		/>
 
-		<Form.Field
+		<Field
 			id="password"
 			type="password"
-			class="mt-1 block w-full"
+			label="Password"
+			icon="Password"
 			bind:value={$form.password}
 			errors={$form.errors.password}
-			label="Password"
 			required
 			autocomplete="current-password"
 		/>
 
-		<Form.Field
+		<Field
 			id="password_confirmation"
 			type="password"
-			class="mt-1 block w-full"
+			label="Confirm password"
+			icon="Password"
 			bind:value={$form.password_confirmation}
 			errors={$form.errors.password_confirmation}
-			label="Confirm password"
 			required
 			autocomplete="new-password"
 		/>
@@ -82,9 +85,7 @@
                 Already registered?
             </a>
 
-            <Button primary class="ms-4" loading={$form.processing} disabled={$form.processing}>
-                Register
-            </Button>
+            <Button style="hard" theme="accent" class="ms-4" loading={$form.processing} disabled={$form.processing} label="Register" />
         </div>
     </Form>
 </GuestLayout>

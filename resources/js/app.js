@@ -8,6 +8,11 @@ import { defineRoutes } from 'momentum-trail'
 import { hydrate, mount } from 'svelte'
 import routes from './routes.json'
 
+const ICON_XS = 12
+const ICON_SM = 16
+const ICON_MD = 20
+const ICON_LG = 24
+
 let darkMode = localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
 
 setDarkMode(darkMode);

@@ -1,12 +1,12 @@
-<script>
-    import { useForm } from '@inertiajs/svelte'
+<!-- <script>
+    import { page, useForm } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
 	import Form from '@/Components/Form'
 
     let {
-        oncancel
+        oncancel = () => {}
     } = $props()
 
     const form = useForm({
@@ -22,6 +22,13 @@
             onFinish: () => $form.reset(),
         })
     }
+
+	function createProject() {
+		$form.post(route('projects.store'))
+	}
+	function updateProject(slug) {
+		$form.patch(route('projects.update', {project: slug}))
+	}
 
 </script>
 
@@ -71,4 +78,4 @@
 		<Button primary   type="submit" label="Start project" />
 	{/snippet}
 
-</Form>
+</Form> -->

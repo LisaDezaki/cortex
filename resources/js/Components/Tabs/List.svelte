@@ -3,11 +3,11 @@
 	let {
 		children,
 		class: className,
-		...attrs
+		...restProps
 	} = $props()
 </script>
 
-<Tabs.List class="tabs-list {className}" {...attrs}>
+<Tabs.List class="tabs-list {className}" {...restProps}>
 	{@render children()}
 </Tabs.List>
 
@@ -15,8 +15,8 @@
 
 	:global(.tabs-list) {
 		@apply flex gap-0.5 p-0.5 rounded-lg mb-4 border;
-		background-color: var(--bg-neutral-soft);
-		border-color: var(--border-neutral-soft);
+		background-color: var(--bg-neutral-softest);
+		border-color: var(--border-neutral-softest);
 	}
 
 </style>

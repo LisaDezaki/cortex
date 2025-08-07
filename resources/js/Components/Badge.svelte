@@ -2,16 +2,16 @@
     let {
         class: className,
 		label,
-        ...attrs
+        ...restProps
     } = $props()
 </script>
 
-<span {...attrs}
+<span {...restProps}
 	class="badge {className}"
-	class:plain={attrs.plain}
-	class:primary={attrs.primary}
-	class:secondary={attrs.secondary}
-	class:disabled={attrs.disabled}
+	class:plain={restProps.plain}
+	class:primary={restProps.primary}
+	class:secondary={restProps.secondary}
+	class:disabled={restProps.disabled}
 >
     {#if label}
 		<span class="label">{label}</span>
@@ -25,20 +25,20 @@
 		@apply border-none;
 		@apply font-normal text-xs;
 		&:not(.plain) {
-			background: var(--bg-accent);
+			background-color: var(--bg-accent);
 			@apply rounded-full;
 		}
 		&.primary {
-			background: var(--gradient-primary);
+			background: var(--bg-accent-gradient);
 			color: var(--text-white);
 		}
 		&.secondary {
-			@apply bg-emerald-500/10;
+			background-color: var(--bg-accent-softer);
 			color: var(--text-accent);
 		}
 		&.disabled {
-			background: var(--bg-disabled);
-			color: var(--text-disabled);
+			background-color: var(--bg-neutral-softer);
+			color: var(--text-neutral-softer);
 		}
 	}
 

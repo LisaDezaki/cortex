@@ -4,48 +4,34 @@
     let {
         children,
         class: className,
-		icon,
-		iconSize = 16,
+		icon = null,
+		iconSize = 20,
 		iconWeight = 'regular',
 		label,
 		loading,
 		style = 'plain',
 		theme = 'neutral',
-        ...attrs
+        ...restProps
     } = $props()
 
+	let thisIcon = $derived(icon)
+
 	let styles = {
-		button: `button inline-flex items-center justify-center gap-1 flex-shrink-0 p-2.5 ${className}`,
-		label:  'button-label font-style-button leading-6 px-1',
-		hard:   'button-hard border rounded-md',
-		soft:   'button-soft border rounded-md',
+		button: "button",
+		label:  'button-label font-style-button',
+		hard:   'button-hard border',
+		soft:   'button-soft border',
 		plain:  'button-plain',
 	}
 </script>
 
-<!-- <svelte:element this={attrs.href ? Link : 'button'}
-	aria-disabled={attrs.disabled ? 'true' : undefined}
-	class="{styles.button} button-{theme} {styles[style]}"
-	type={attrs.type || 'button'}
-{...attrs}>
+{#if restProps.href}
+	<Link aria-disabled={restProps.disabled ? 'true' : undefined}
+		class="{styles.button} button-{theme} {styles[style]} {className}"
+	{...restProps}>
 
-	{#if icon}
-		<Icon name={icon} size={iconSize} weight={iconWeight} />
-	{/if}
-
-	{#if label}
-		<span class={styles.label}>{label}{@render children?.()}</span>
-	{/if}
-
-</svelte:element> -->
-
-{#if attrs.href}
-	<Link aria-disabled={attrs.disabled ? 'true' : undefined}
-		class="{styles.button} button-{theme} {styles[style]}"
-	{...attrs}>
-
-		{#if icon}
-			<Icon name={icon} size={iconSize} weight={iconWeight} />
+		{#if thisIcon}
+			<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
 		{/if}
 
 		{#if label}
@@ -56,14 +42,13 @@
 
 	</Link>
 {:else}
-	<button 
-		aria-disabled={attrs.disabled ? 'true' : undefined}
-		type={attrs.type || 'button'}
-		class="{styles.button} button-{theme} {styles[style]}"
-	{...attrs}>
+	<button aria-disabled={restProps.disabled ? 'true' : undefined}
+		type={restProps.type || 'button'}
+		class="{styles.button} button-{theme} {styles[style]} {className}"
+	{...restProps}>
 
-		{#if icon}
-			<Icon name={icon} size={iconSize} weight={iconWeight} />
+		{#if thisIcon}
+			<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
 		{/if}
 
 		{#if label}
@@ -78,126 +63,92 @@
 <style lang="postcss">
 
 	:global(.button) {
+		@apply inline-flex items-center justify-center gap-1 flex-shrink-0 p-2;
 		@apply transition duration-300 ease-in-out flex-shrink-0;
-		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+		&:focus {
+			outline: 1px solid var(--border-accent);
+			outline-offset: 1px;
+		}
+		/* @apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2; */
+
+		&:not([class*="rounded-"]) {
+			@apply rounded-md;
+		}
 
 		&.button-hard.button-accent {
-			background: var(--gradient-primary);
-			border-color: var(--border-primary);
+			background: var(--bg-accent-gradient);
+			border-color: var(--border-accent-strong);
 			color: var(--text-white);
 			&:hover {
-				background: var(--gradient-primary-alt);
+				background: var(--bg-accent-gradient-alt);
 			}
 		}
 		&.button-hard.button-neutral {
-			background: var(--gradient-secondary);
-			border-color: var(--border-secondary);
-			color: var(--text-body);
+			background: var(--bg-neutral-gradient);
+			border-color: var(--border-neutral-soft);
+			color: var(--text-neutral);
 			&:hover {
-				background: var(--gradient-secondary-alt);
+				background: var(--bg-neutral-gradient-alt);
 			}
 		}
 		&.button-hard.button-danger {
-			background: var(--gradient-danger);
-			border-color: var(--border-danger);
+			background: var(--bg-danger-gradient);
+			border-color: var(--border-danger-strong);
 			color: var(--text-white);
 			&:hover {
-				background: var(--gradient-danger-alt);
+				background: var(--bg-danger-gradient-alt);
 			}
 		}
 
 		&.button-soft.button-accent {
-			background-color: var(--bg-accent-soft);
-			border-color: var(--border-accent-soft);
+			background-color: var(--bg-accent-softest);
+			border-color: var(--border-accent-softest);
 			color: var(--text-accent);
 			&:hover {
-				background-color: var(--bg-accent-soft-hover);
+				background-color: var(--bg-accent-softer);
 			}
 		}
 		&.button-soft.button-neutral {
-			background-color: var(--bg-neutral-soft);
-			border-color: var(--border-neutral-soft);
+			background-color: var(--bg-neutral-softest);
+			border-color: var(--border-neutral-softest);
 			&:hover {
-				background-color: var(--bg-neutral-soft-hover);
+				background-color: var(--bg-neutral-softer);
 			}
 		}
 		&.button-soft.button-danger {
-			background-color: var(--bg-danger-soft);
-			border-color: var(--border-danger-soft);
+			background-color: var(--bg-danger-softest);
+			border-color: var(--border-danger-softest);
 			color: var(--text-danger);
 			&:hover {
-				background-color: var(--bg-danger-soft-hover);
+				background-color: var(--bg-danger-softer);
 			}
 		}
 
 		&.button-plain.button-accent {
 			color: var(--text-accent);
 			&:hover {
-				background-color: var(--bg-accent-soft);
+				background-color: var(--bg-accent-softest);
 			}
 		}
 		&.button-plain.button-neutral {
 			&:hover {
-				background-color: var(--bg-neutral-soft);
+				background-color: var(--bg-neutral-softest);
 			}
 		}
 		&.button-plain.button-danger {
 			color: var(--text-danger);
 			&:hover {
-				background-color: var(--bg-danger-soft);
+				background-color: var(--bg-danger-softest);
 			}
 		}
-
-		/* &.primary {
-			background: var(--gradient-primary);
-			border-color: var(--border-primary);
-			color: var(--text-white);
-			&:hover {
-				background: var(--gradient-primary-alt);
-			}
-		} */
-		/* &.secondary {
-			background: var(--gradient-secondary);
-			border-color: var(--border-secondary);
-			color: var(--text-body);
-			&:hover {
-				background: var(--gradient-secondary-alt);
-			}
-		}
-		&.special {
-			background: repeating-linear-gradient(
-							-45deg,
-							rgba(16, 185, 129, 0.15),
-							rgba(16, 185, 129, 0.15) 10px,
-							rgba(16, 185, 129, 0.1) 10px,
-							rgba(16, 185, 129, 0.1) 20px
-						);
-			color: var(--text-accent);
-			&:hover {
-				background: repeating-linear-gradient(
-							-45deg,
-							rgba(16, 185, 129, 0.2),
-							rgba(16, 185, 129, 0.2) 10px,
-							rgba(16, 185, 129, 0.1) 10px,
-							rgba(16, 185, 129, 0.1) 20px
-						);
-			}
-		} */
-
-		/* &.danger {
-			background: var(--gradient-danger);
-			border-color: var(--border-danger);
-			color: var(--text-white);
-			&:hover {
-				background: var(--gradient-danger-alt);
-			}
-		} */
+		
 		&[aria-disabled] {
 			cursor: not-allowed;
 			opacity: 50%;
-			/* background: var(--bg-disabled);
-			border-color: var(--border-disabled);
-			color: var(--text-disabled); */
+		}
+
+		.button-label {
+			@apply leading-6 px-1;
 		}
 	}
 	

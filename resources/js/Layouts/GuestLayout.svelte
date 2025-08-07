@@ -12,8 +12,6 @@
 			<Logo class="h-12 w-12 fill-emerald-400" />
 		</a>
 	
-		<div class="mt-6 w-full overflow-hidden bg-slate-50 px-6 py-4 shadow-md max-w-md rounded-lg">
-			<slot />
-		</div>
+		<slot />
 	</div>
 </Page>

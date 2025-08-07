@@ -7,29 +7,46 @@
 		min = 0,
 		max = 100,
 		step = 1,
+		style = "fill",
+		showValue = false,
 		showTicks = false,
-		multiple = false
+		multiple = false,
+		reverse = false,
+		...restProps
     } = $props()
+
+	// Compute the actual min/max values based on reverse
+    // const actualMin = $derived(reverse ? Math.max(min, max) : Math.min(min, max))
+    // const actualMax = $derived(reverse ? Math.min(min, max) : Math.max(min, max))
+
+	// function displayValue(thumbIndex) {
+    //     if (!showValue) return ''
+    //     const val = multiple ? value[thumbIndex] : value
+    //     return reverse ? actualMax - val + actualMin : val
+    // }
 
 </script>
 
+
+
+
+
 <Slider.Root
-	class="slider"
+	class="{className} input-slider {restProps.disabled ? "style-disabled" : ""}"
 	type={multiple ? "multiple" : "single"}
 	bind:value
 	{min} {max} {step}
+	{...restProps}
 >
 	{#snippet children({ ticks, thumbs })}
-		<span class="slider-track style-input">
-			<Slider.Range class="slider-range" />
+		<span class="input-slider-track {["empty","both"].includes(style) ? "accent" : "neutral"}">
+			<Slider.Range class="slider-range {["fill","both"].includes(style) ? "accent" : "neutral"}" />
 		</span>
 
 		{#each thumbs as thumb}
 			<Slider.Thumb index={thumb} class="slider-thumb">
-				{#if multiple}
-					{value[thumb]}
-				{:else}
-					{value}
+				{#if showValue}
+					{multiple ? value[thumb] : value}
 				{/if}
 			</Slider.Thumb>
 		{/each}
@@ -47,38 +64,52 @@
 
 <style lang="postcss">
 
-	:global(.slider) {
-		@apply relative flex items-center h-11 w-full;
+	:global(.input-slider) {
+		@apply relative inline-flex items-center h-10 w-full;
 		@apply touch-none select-none;
 	}
 
-	.slider-track {
-		@apply relative h-4 w-full grow cursor-pointer overflow-hidden;
-		@apply border rounded-full;
+	.input-slider-track {
+		@apply relative h-4 w-full grow overflow-hidden;
+		@apply border-none rounded-full;
+		background-color: var(--bg-white);
+		border: none;
+		box-shadow: 0 1px 0 var(--shadow-lowlight);
+		&.accent {
+			background: var(--bg-accent-gradient);
+		}
+		&.neutral {
+			background-color: var(--bg-white);
+		}
 	}
 
 	:global(.slider-range) {
-		@apply relative h-full border rounded-full;
-		background: var(--gradient-primary);
-		border-color: var(--border-primary);
+		@apply relative h-full rounded-full;
+		/* background: var(--bg-accent-gradient); */
+		&.accent {
+			background: var(--bg-accent-gradient);
+		}
+		&.neutral {
+			background-color: var(--bg-white);
+		}
 	}
 
 	:global(.slider-thumb) {
-		@apply flex items-center justify-center h-8 w-8 z-10;
+		@apply flex items-center justify-center min-h-5 min-w-5 z-10;
 		@apply border rounded-full;
-		@apply cursor-pointer shadow-sm active:scale-[0.98];
+		@apply cursor-pointer shadow-sm;
 		@apply text-sm;
 		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
 		background: var(--bg-accent-gradient);
-		border-color: var(--border-accent);
+		border-color: var(--border-accent-strong);
 		color: var(--text-white);
 		&:hover {
-			background: var(--bg-accent-gradient-alt);
+			@apply min-h-6 min-w-6;
 		}
 	}
 
 	.ticks {
-		@apply absolute flex items-center justify-between px-3.5 h-full w-full;
+		@apply absolute flex items-center justify-between px-2 h-full w-full;
 	}
 
 	:global(.slider-tick) {

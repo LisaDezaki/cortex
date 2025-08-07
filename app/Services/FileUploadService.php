@@ -6,13 +6,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 
-class FileUploadService
+// class FileUploadService
 {
     /**
      * Upload a file to a temporary location.
      */
     public function uploadToTemp(UploadedFile $file): string
     {
+		// sleep(3);
         return $file->store('tmp', 'public'); // Stores in `storage/app/public/tmp`
     }
 	

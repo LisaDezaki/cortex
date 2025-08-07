@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Storage;
 
 class FactionResource extends JsonResource
 {
@@ -20,9 +19,8 @@ class FactionResource extends JsonResource
 			'slug'         => $this->slug,
 			'name'         => $this->name,
 			'description'  => $this->description,
-			'image'        => $this->image,
-			'image_path'   => $this->image ? Storage::url($this->image) : null,
 
+			'emblem'       => new MediaResource($this->whenLoaded('emblem')),
 			'headquarters' => new LocationResource($this->whenLoaded('headquarters')),
 			'members'      => FactionMemberResource::collection($this->whenLoaded('members')),
 			'ranks'        => FactionRankResource::collection($this->whenLoaded('ranks')),

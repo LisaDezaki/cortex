@@ -22,15 +22,15 @@ class CustomFieldController extends Controller
 
 
 	protected $validationRules = [
-		'customfieldable_type' => ['required', 'in:character'],
-		'type'        => ['string', 'required', 'in:text,number,range,switch,select,entity,upload'],
-		'name'        => ['string', 'required'],
-		'label'       => ['string', 'nullable'],
-		'placeholder' => ['string', 'nullable'],
-		'description' => ['string', 'nullable'],
-		'required'    => ['boolean'],
-		'options'     => ['array', 'nullable', 'min:2', 'required_if:type,select'], // At least 2 items
-    	'options.*'   => ['string', 'distinct'] // Each item must be a unique string
+		'fieldable_type' => ['string', 'required', 'in:character,faction,location'],
+		'type'       	 => ['string', 'required', 'in:text,number,range,switch,select,entity,upload'],
+		'name'       	 => ['string', 'required'],
+		'label'      	 => ['string', 'nullable'],
+		'placeholder'	 => ['string', 'nullable'],
+		'description'	 => ['string', 'nullable'],
+		'required'   	 => ['boolean'],
+		'options'    	 => ['array', 'nullable', 'min:2', 'required_if:type,select'], // At least 2 items
+    	'options.*'  	 => ['string', 'distinct'] // Each item must be a unique string
 	];
 
 
@@ -45,9 +45,9 @@ class CustomFieldController extends Controller
 		if (!$project) {
 			return Redirect::route("dashboard");
 		}
-		$custom_fields = $project->customFields()->with('options')->get();
+		$customFields = $project->customFields()->with('options')->get();
 		return Inertia::render('CustomFields/Index', [
-			'custom_fields' => $custom_fields
+			'customFields' => $customFields
 		]);
 	}
 

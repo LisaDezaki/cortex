@@ -3,11 +3,11 @@
 	let {
 		children,
 		class: className,
-		...attrs
+		...restProps
 	} = $props()
 </script>
 
-<Tabs.Root class="tabs {className}" {...attrs}>
+<Tabs.Root class="tabs {className}" {...restProps}>
 	{@render children()}
 </Tabs.Root>
 

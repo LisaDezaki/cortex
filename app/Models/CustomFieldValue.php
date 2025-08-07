@@ -24,7 +24,7 @@ class CustomFieldValue extends Model
 
 	 protected $fillable = [
 		'custom_field_id',
-		'customfieldable_id',
+		'fieldable_id',
 		'value',
 	];
 
@@ -43,10 +43,20 @@ class CustomFieldValue extends Model
 
 	public function entity()
 	{
-		$entity = $this->customField->customfieldable_type;
-		return $this->belongsTo($entity, 'customfieldable_id', 'uuid');
+		$entity = $this->customField->fieldable_type;
+		return $this->belongsTo($entity, 'fieldable_id', 'uuid');
 	}
 
-
+	public function getDisplayValue()
+	{
+		if (!$this->customField->hasOptions()) {
+			return $this->value;
+		}
+		
+		$option = $this->customField->options
+			->firstWhere('value', $this->value);
+			
+		return $option ? $option->label : $this->value;
+	}
 
 }

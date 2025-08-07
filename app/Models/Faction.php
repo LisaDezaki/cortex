@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Faction extends Model
 {
@@ -48,10 +50,13 @@ class Faction extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
+	
 	public function project(): BelongsTo
 	{
 		return $this->belongsTo(Project::class);
 	}
+
+	
 
 	public function headquarters(): BelongsTo
 	{
@@ -65,21 +70,32 @@ class Faction extends Model
 			->withPivot(['rank_id']);
 	}
 
-// 	public function members()
-// {
-//     return $this->belongsToMany(Character::class, 'faction_members')
-//         ->withPivot(['rank_id'])
-//         ->using(FactionMember::class);
-// }
-
 	public function ranks(): HasMany
 	{
 		return $this->hasMany(FactionRank::class);
 	}
 
-		public function customFields()
+	public function customFields()
 	{
-		return $this->morphMany(CustomField::class, 'customfieldable');
+		return $this->morphMany(CustomField::class, 'fieldable');
+	}
+
+	/**
+	 * Set up media relationships.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\Relation
+	 */
+
+	public function emblem(): MorphOne
+	{
+		return $this->morphOne(Media::class, 'mediable')
+			->where('type', 'faction_emblem');
+	}
+
+	public function gallery(): MorphMany
+	{
+		return $this->morphMany(Media::class, 'mediable')
+			->where('type', 'faction_gallery');
 	}
 
 

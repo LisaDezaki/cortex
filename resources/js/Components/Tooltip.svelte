@@ -4,12 +4,12 @@
 		children,
 		class: className,
 		content,
-		...attrs
+		...restProps
     } = $props()
 </script>
 
 <Tooltip.Root>
-	<Tooltip.Trigger class="tooltip-trigger {className}">
+	<Tooltip.Trigger class="tooltip-trigger {className}" {...restProps}>
 		{#if children}
 			{@render children()}
 		{/if}

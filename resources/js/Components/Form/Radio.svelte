@@ -6,7 +6,7 @@
 		checked = $bindable(),
 		class: className,
 		options,
-		...attrs
+		...restProps
 	} = $props();
 
 	function valueChange(value) {
@@ -14,73 +14,78 @@
 	}
 </script>
 
-<RadioGroup.Root class="form-radio" value={checked} onValueChange={valueChange} {...attrs}>
+
+
+
+
+
+
+{#snippet radioItem(option)}
+	<Label
+		id="{option.id}-label"
+		for={option.id}
+		class="radio-label {className}"
+		description={option.description}
+		disabled={option.disabled}
+		required={option.required}
+	>
+		<RadioGroup.Item
+			aria-labelledby="{option.id}-label"
+			id={option.value}
+			value={option.value}
+			class="radio"
+			disabled={option.disabled}
+		{...option}>
+			<div class="dot"></div>
+		</RadioGroup.Item>
+
+		<span class="font-style-regular">{option.label}</span>
+	</Label>
+{/snippet}
+
+<RadioGroup.Root class="input-radio" value={checked} onValueChange={valueChange} {...restProps}>
 	{#each options as option}
-		<div class="radio-option" class:disabled={option.disabled}>
-			<RadioGroup.Item id={option.value} value={option.value} class="radio style-input" disabled={option.disabled}><div class="dot"></div></RadioGroup.Item>
-			<Label inline for={option.value} class="inline-label cursor-pointer" disabled={option.disabled}>{option.label || option.value}</Label>
-		</div>
+		{@render radioItem(option)}
 	{/each}
 </RadioGroup.Root>
 
 <style lang="postcss">
 
-	:global(.form-radio) {
-		@apply relative flex flex-col bg-transparent border-none h-auto w-full;
+	:global(.input-radio) {
+		@apply flex flex-col;
+
+		:global(.radio-label) {
+			/* outline: 1px solid red;
+			outline-offset: -1px; */
+			@apply flex items-start gap-3 min-h-10 py-2 cursor-pointer;
+			&[disabled="true"] {
+				cursor: not-allowed;
+				opacity: 50%;
+				pointer-events: none;
+			}
+
+			:global(.radio) {
+				@apply appearance-none min-h-6 min-w-6 rounded-full flex-shrink-0;
+				@apply inline-flex items-center justify-center;
+				background-color: var(--bg-input);
+				box-shadow: 0 1px 0 var(--shadow-lowlight);
+
+				&[data-state="checked"] {
+					background: var(--bg-accent-gradient);
+					border: 1px solid var(--border-accent-strong);
+					color: var(--text-white);
+				}
+			}
+		}
 	}
 
-	.radio-option {
-		@apply flex items-center gap-3 bg-transparent min-h-11 px-2 w-full;
-		@apply rounded-none;
-		border-color: var(--border-soft);
-		color: var(--text-input);
-		&:hover {
-			border-color: var(--border-input);
-		}
-		&:first-of-type {
-			@apply rounded-tl-lg rounded-tr-lg;
-		}
-		&:last-of-type {
-			@apply rounded-bl-lg rounded-br-lg;
-		}
-		&:not(:first-of-type) {
-			@apply mt-[-1px];
-		}
-		&.disabled {
-			@apply cursor-not-allowed;
-			opacity: 50%;
-		}
-	}
-
-	:global(.radio) {
-		@apply appearance-none min-h-7 min-w-7 border inline-flex items-center justify-center rounded-full flex-shrink-0;
-		&:not([data-state="checked"]) {
-			/* background-color: var(--bg-input);
-			border-color: var(--border-input);
-			color: var(--text-input); */
-		}
-		&[data-state="checked"] {
-			background: var(--bg-accent-gradient);
-			border-color: var(--border-accent);
-			color: var(--text-white);
-		}
-		&[data-disabled] {
-			pointer-events: none;
-			/* opacity: 50%; */
-		}
-	}
 
 	:global(.radio .dot) {
-		@apply bg-transparent h-0 w-0 rounded-full transition-all duration-200 ease-in-out;
-	}
-
-	:global(.radio-option.disabled .radio),
-	:global(.radio-option.disabled .inline-label) {
-		@apply cursor-not-allowed;
+		@apply h-4 w-4 rounded-full transition-all duration-300 ease-in-out;
 	}
 
 	:global(.radio[data-state="checked"] .dot) {
-		@apply bg-white h-3.5 w-3.5;
+		@apply bg-white h-2 w-2;
 	}
 
 </style>

@@ -1,142 +1,162 @@
-<!-- SCRIPT -->
-
 <script>
-
-	//	Import onMount from Svelte to handle component lifecycle
     import { onMount } from 'svelte'
-
-	//  Import Components to use within this component
 	import { Select } from "bits-ui";
-	import Button from '@/Components/Button.svelte'
-	import Icon from '@/Components/Icon.svelte'
 
-	//	Define the component properties using $props
+	import Icon from '@/Components/Icon.svelte'
+	import Thumbnail from '@/Components/Thumbnail.svelte'
+
 	let {
 		children,
 		class: className,
+		contentClass,
 		icon,
+		multiple = false,
 		options,
+		overrideLabel,
 		placeholder = "Select one...",
 		value = $bindable(),
-        ...attrs
+        ...restProps
     } = $props()
 
-	//	Declare a variable to hold the input element reference
     let input
+	let hasFocus    = $state(false)
+	let selection   = $state(null)
+	let isEmpty     = $derived(value == null || value == '' || value == [])
 
-	//	Export a function to focus the input element
+	function checkFocus() {
+		hasFocus = document.activeElement === input;
+	}
+
     export function focus() {
         input?.focus()
     }
 
-	//	Use onMount to focus the input element if autofocus is set
-    onMount(() => {
-        if (attrs.autofocus && input) {
-            input.focus()
-        }
-    })
+	function updateSelection(val) {
+		value = val
+		if (!multiple) {
+			selection = val ? options.find(o => o.value === val) : null
+		} else if (multiple) {
+			selection = val ? options.filter(o => val.includes(o.value)) : null
+		}
+	}
 
-	//  Use $derived to create reactive variables for selected label and options
-	let selectedLabel = $derived(
-		value
-		? options.find(option => option.value === value)?.label
-		: placeholder
-	)
-	let selectOptions = $derived(
-		options.map(option => ({
-			label: option.label,
-			value: option.value || option.label.toLowerCase(),
-			disabled: option.disabled,
-			...option
-		}))
-	)
+    onMount(() => {
+        if (restProps.autofocus && input) {
+            input.focus()
+			checkFocus()
+        }
+		updateSelection(value)
+    })
 
 </script>
 
 
 
-<!-- STRUCTURE -->
 
-<Select.Root class="select" type="single" items={options} {...attrs} bind:value={value}>
 
-	<!-- The trigger element is what will be clicked to access the options -->
-	<Select.Trigger class="style-input select-trigger {className}" aria-label={selectedLabel}>
-		{#if icon}
-			<Icon name={icon} class="text-slate-400" size={16} weight="bold" />
+{#snippet option(item)}
+	{#if item?.image}
+		<Thumbnail class="rounded-full w-6" src={item.image} />
+	{/if}
+	{#if item?.icon}
+		<Icon name={item.icon} size={20} weight="regular" />
+	{/if}
+	{#if item?.label}
+		<span class="line-clamp-1">{item.label}</span>
+	{/if}
+{/snippet}
+
+{#snippet selectedValue()}
+	{#if !multiple}
+		{@render option(selection)}
+	{:else if multiple}
+		<div class="inline-flex justify-start gap-1 overflow-hidden">
+			{#each selection as selectionValue}
+				<div class="bg-slate-500/5 flex-shrink-0 inline-flex items-center gap-1 h-8 px-1.5 py-0.5 rounded">
+					{@render option(selectionValue)}
+				</div>
+			{/each}
+		</div>
+	{/if}
+{/snippet}
+
+
+
+
+
+<Select.Root class="select"
+	bind:this={input}
+	bind:value={value}
+	type={multiple ? "multiple" : "single"}
+	items={options}
+	onfocus={checkFocus}
+	onblur={checkFocus}
+	onValueChange={updateSelection}
+{...restProps}>
+
+
+
+	<!-- Trigger -->
+
+	<Select.Trigger class="{className} input-select {restProps.disabled ? "disabled" : ""} {hasFocus ? "focus" : ""}">
+
+		{#if icon && !selection?.icon && !selection?.image}
+			<Icon class="input-icon" name={icon} size={20} weight="regular" />
 		{/if}
-		<span class="text-left px-3 py-2 w-full">{selectedLabel}</span>
-		<Button
-			class="p-2"
-			icon="CaretUpDown"
-		/>
+
+		<div class="input-value {icon ? "pl-icon" : ""}">
+			{#if isEmpty}
+				{placeholder}
+			{:else if overrideLabel}
+				{overrideLabel}
+			{:else}
+				{@render selectedValue()}
+			{/if}
+		</div>
+
+		<Icon class="input-action" name="CaretUpDown" size="sm" weight="light" />
+
 	</Select.Trigger>
 
-	<!-- The content will appear when the trigger is clicked -->
-	<Select.Portal class="w-full">
-		<Select.Content class="select-content min-w-[var(--bits-select-anchor-width)]" position="popper" sideOffset={4}>
 
+
+	<!-- Content -->
+	 
+	<Select.Portal>
+		<Select.Content
+			class="{contentClass} min-w-[var(--bits-select-anchor-width)]"
+			align="start"
+			sideOffset={-1}
+		>
 			<Select.ScrollUpButton class="flex w-full items-center justify-center opacity-50">
-				<Icon name="CaretDoubleUp" size={12} />
+				<Icon name="CaretDoubleUp" size="xs" />
 			</Select.ScrollUpButton>
 
 			<Select.Viewport>
-				{#each selectOptions as option, i (i + option.value)}
-					<Select.Item class="select-item" label={option.label} value={option.value} disabled={option.disabled}>
-						{#snippet children({ selected })}
-							{option.label}
-							{#if selected}
-								<div class="ml-auto">
-								<Icon name="Check" />
-								</div>
-							{/if}
-						{/snippet}
+				{#each options as opt, i (i + opt.value)}
+					<Select.Item
+						class="input-option"
+						label={opt?.label}
+						value={opt?.value}
+						disabled={opt?.disabled}
+					>
+						{@render option(opt)}
+						{#if value == opt.value}
+							<Icon class="ml-auto" name="Check" size="sm" />
+						{/if}
 					</Select.Item>
+				{:else}
+					<span class="block px-5 py-2 text-sm text-muted-foreground">
+						No results found, try again.
+					</span>
 				{/each}
 			</Select.Viewport>
 
 			<Select.ScrollDownButton class="flex w-full items-center justify-center opacity-50">
-				<Icon name="CaretDoubleDown" size={12} />
+				<Icon name="CaretDoubleDown" size="xs" />
 			</Select.ScrollDownButton>
 
 		</Select.Content>
 	</Select.Portal>
 
 </Select.Root>
-
-
-
-<!-- STYLE -->
-
-<style lang="postcss">
-
-	:global(.select-trigger) {
-		@apply flex gap-3 min-h-10 rounded-lg w-full;
-		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
-		
-		&[data-placeholder] span {
-			color: var(--text-placeholder);
-			font-style: italic;
-			opacity: 75%;
-		}
-	}
-
-	:global(.select-content) {
-		@apply block max-h-72 p-1 w-full ;
-		@apply border rounded-lg shadow-2xl;
-		background-color: var(--bg-white);
-		border-color: var(--border-input);
-		color: var(--text-input);
-
-		:global(.select-item) {
-			@apply flex items-center gap-3 px-3 py-2;
-			@apply rounded cursor-pointer;
-			&:hover {
-				background-color: var(--background);
-			}
-			&[aria-selected] {
-				color: var(--text-accent);
-			}
-		}
-	}
-
-</style>

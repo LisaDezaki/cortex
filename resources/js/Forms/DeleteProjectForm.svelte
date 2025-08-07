@@ -3,9 +3,12 @@
     import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 
-    let { oncancel, project } = $props()
+    let {
+		oncancel = () => {},
+		project
+	} = $props()
 
 	const form = useForm({
 		confirm_name: ''
@@ -25,15 +28,15 @@
 	recentlySuccessful={$form.recentlySuccessful}
 >
 	<p>This process will also delete all data associated with the project. Are you absolutely sure you want to delete the entire project? </p>
-	<p>Please type the name of the project to confirm deletion.</p>
 
 	<Form.Field required autofocus
 		id="confirm_name"
 		type="text"
-		label="Project name"
 		bind:value={$form.confirm_name}
 		errors={$form.errors.confirm_name}
 	/>
+
+	<p>Please type the name of the project ("<strong>{project.name}</strong>") to confirm deletion.</p>
 
 	{#snippet actions()}
 		<Button style="hard" theme="neutral"

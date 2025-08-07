@@ -22,9 +22,10 @@ class ProjectResource extends JsonResource
 		return [
 			'id'          => $this->id,
 			'name'        => $this->name,
+			'type'        => $this->type,
 			'description' => $this->description,
-			'image'       => $this->image,
-			'image_path'  => $this->image ? Storage::url($this->image) : null,
+
+			'banner' => new MediaResource($this->whenLoaded('banner')),
 
 			'characters'  => CharacterResource::collection($this->whenLoaded('characters', function() {
 				return $this->characters->sortBy('name');
@@ -42,7 +43,7 @@ class ProjectResource extends JsonResource
 				return $this->regions->sortBy('name');
 			})),
 
-			'custom_fields' => CustomFieldResource::collection($this->whenLoaded('customFields')),
+			'customFields' => CustomFieldResource::collection($this->whenLoaded('customFields')),
 			
 			'meta' => [
 				'created_at' => $this->created_at,

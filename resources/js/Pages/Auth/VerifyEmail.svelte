@@ -1,8 +1,11 @@
 <script>
     import { inertia, useForm } from '@inertiajs/svelte'
+    import { route } from 'momentum-trail'
+
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
     import Button from '@/Components/Button.svelte'
-    import { route } from 'momentum-trail'
+	import Form from '@/Components/Form.svelte'
+    import Field from '@/Components/Field.svelte'
 
     let { status } = $props()
 
@@ -32,18 +35,17 @@
         </div>
     {/if}
 
-    <form onsubmit={submit}>
-        <div class="mt-4 flex items-center justify-between">
-            <Button primary class={$form.processing && 'opacity-25'} disabled={$form.processing}>
-                Resend Verification Email
-            </Button>
+    <Form title="Verify Email" onsubmit={submit} class="form-styles w-96">
+        <div class="flex items-center justify-between gap-3 mt-6">
+            <Button style="hard" theme="accent"
+				class={$form.processing && 'opacity-25'} disabled={$form.processing}
+				label="Resend Verification Email"
+			/>
 
-            <button
+            <button style="hard" theme="danger"
                 use:inertia={{ href: route('logout'), method: 'post' }}
                 class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-            >
-                Log Out
-            </button>
+            >Log Out</button>
         </div>
-    </form>
+    </Form>
 </GuestLayout>

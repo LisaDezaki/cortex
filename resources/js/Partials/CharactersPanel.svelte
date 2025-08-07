@@ -2,10 +2,10 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import Panel from '@/Components/Panel'
+	import Panel from '@/Components/Panel.svelte'
 
-	let project = $page.props.active_project.data
-	let characters = project.characters
+	const activeProject = $page.props.activeProject.data
+	const characters = activeProject.characters
 
 </script>
 
@@ -16,7 +16,7 @@
 			return {
 				icon:   'User',
 				label:  character.name,
-				image:  character.image_path,
+				image:  character.portrait?.url,
 				href:   route('characters.show', {character: character.slug}),
 				active: $page.url == `/characters/${character.slug}` || $page.url.startsWith(`/characters/${character.slug}/`)
 			}

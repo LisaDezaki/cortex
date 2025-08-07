@@ -1,7 +1,7 @@
 <script>
 
 	import { Switch } from "bits-ui";
-	import Form from '@/Components/Form'
+	import Label from '@/Components/Form/Label.svelte'
 
     let {
 		checked = $bindable(false),
@@ -9,20 +9,20 @@
 		id,
 		label,
 		name,
-        ...attrs
+        ...restProps
     } = $props()
 
 </script>
 
 {#if label}
-	<Form.Label class="form-switch {attrs.disabled ? 'disabled' : ''}">
+	<Label class="form-switch {restProps.disabled ? 'disabled' : ''}">
 		<span class="switch-label">{label}</span>
-		<Switch.Root class="switch style-input {className}" id={id} name={name} bind:checked {...attrs}>
+		<Switch.Root class="switch style-input {className}" id={id} name={name} bind:checked {...restProps}>
 			<Switch.Thumb class="switch-thumb"></Switch.Thumb>
 		</Switch.Root>
-	</Form.Label>
+	</Label>
 {:else}
-	<Switch.Root class="switch style-input {className}" id={id} name={name} bind:checked {...attrs}>
+	<Switch.Root class="switch style-input {className}" id={id} name={name} bind:checked {...restProps}>
 		<Switch.Thumb class="switch-thumb"></Switch.Thumb>
 	</Switch.Root>
 {/if}
@@ -30,18 +30,18 @@
 <style lang="postcss">
 
 	:global(.form-switch) {
-		@apply flex items-center gap-2 min-h-11 px-3 py-2 w-full;
+		@apply flex items-center gap-2 min-h-10 px-3 py-2 w-full;
 		/* @apply border rounded-lg; */
-		background-color: transparent;
-		border-color: var(--border-soft);
-		color: var(--text-input);
+		/* background-color: transparent;
+		border-color: var(--border-neutral-softest);
+		color: var(--text-neutral-soft); */
 		&:hover {
-			border-color: var(--border-input);
+			/* border-color: var(--border-neutral-softest); */
 		}
 	}
 
 	:global(.switch) {
-		@apply inline-flex rounded-full h-7 w-11 p-1 border flex-shrink-0;
+		@apply inline-flex rounded-full h-6 w-10 p-1 border flex-shrink-0;
 		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
 		&[data-state="checked"] {
 			background: var(--bg-accent-gradient);
@@ -50,8 +50,8 @@
 
 		:global(.switch-thumb) {
 			@apply rounded-full h-full aspect-square border transition;
-			background-color: var(--bg-neutral);
-			border-color: var(--border-neutral);
+			background-color: var(--bg-neutral-soft);
+			border-color: var(--border-neutral-soft);
 			&[data-state="checked"] {
 				background-color: var(--bg-white);
 				border-color: var(--border-white);

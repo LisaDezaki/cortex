@@ -1,18 +1,21 @@
-<script>
+<!-- <script>
     let {
 		children,
 		checked = $bindable(false),
 		class: className,
 		description = null,
 		errors,
+		inputClass,
+		inputType,
 		label,
 		layout,
+		multiple,
 		name,
 		options = [],
 		required = false,
 		type,
 		value = $bindable(''),
-        ...attrs
+        ...restProps
     } = $props()
 
 	import Checkbox from './Checkbox.svelte'
@@ -53,100 +56,111 @@
 		{/if}
 	{/if}
 
-	<div class="col-span-1">
+	<div class="col-span-2">
 
-		{#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(type)}
+		{#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(inputType)}
 			<Input
 				id={name}
 				bind:value={value}
+				class={inputClass}
 				type={type}
-				{...attrs}
+				{...restProps}
 			/>
 		{/if}
 	
-		{#if type == 'textarea'}
+		{#if inputType == 'textarea'}
 			<Textarea
 				id={name}
 				bind:value={value}
-				{...attrs}
+				class={inputClass}
+				{...restProps}
 			/>
 		{/if}
 	
-		{#if type == 'number'}
+		{#if inputType == 'number'}
 			<Number
 				id={name}
 				bind:value={value}
-				{...attrs}
+				class={inputClass}
+				{...restProps}
 			/>
 		{/if}
 	
-		{#if type == 'slider'}
+		{#if inputType == 'slider'}
 			<Slider
 				id={name}
 				bind:value={value}
-				{...attrs}
+				class={inputClass}
+				{...restProps}
 			/>
 		{/if}
 	
-		{#if type == 'select'}
+		{#if inputType == 'select'}
 			<Select
 				id={name}
 				bind:value={value}
+				class={inputClass}
 				options={options}
-				{...attrs}
+				{...restProps}
 			/>
 		{/if}
 	
-		{#if type == 'combobox'}
+		{#if inputType == 'combobox'}
 			<Combobox
 				id={name}
 				bind:value={value}
+				class={inputClass}
 				options={options}
-				{...attrs}
+				{...restProps}
 			/>
 		{/if}
 	
-		{#if type == 'checkbox'}
+		{#if inputType == 'checkbox'}
 			{#if options.length > 0}
 				<Checkboxes
 					id={name}
 					bind:checked={checked}
+					class={inputClass}
 					options={options}
-					{...attrs}
+					{...restProps}
 				/>
 			{:else}
 				<Checkbox
 					id={name}
 					bind:checked={checked}
-					{...attrs}
+					class={inputClass}
+					{...restProps}
 				/>
 			{/if}
 		{/if}
 	
-		{#if type == 'radio'}
+		{#if inputType == 'radio'}
 			<Radio
 				id={name}
 				bind:checked={checked}
+				class={inputClass}
 				options={options}
-				{...attrs}
+				{...restProps}
 			/>
 		{/if}
 	
-		{#if type == 'switch'}
+		{#if inputType == 'switch'}
 			<Switch
 				id={name}
 				bind:checked={checked}
+				class={inputClass}
 				label={label}
-				{...attrs}
+				{...restProps}
 			/>
 		{/if}
 	
-		{#if type == 'file'}
+		{#if inputType == 'file'}
 			<Upload
 				id={name}
 				bind:value={value}
+				class={inputClass}
 				label={label}
-				{...attrs}
+				{...restProps}
 			/>
 		{/if}
 
@@ -164,11 +178,11 @@
 
 <style lang="postcss">
 	.form-field.block {
-		@apply grid grid-cols-2 gap-4 w-full;
+		@apply grid grid-cols-3 gap-6 w-full;
 	}
 
 	.form-field.inline {
-		@apply flex flex-col items-center gap-4;
+		@apply flex flex-col items-center gap-3;
 	}
 
-</style>
+</style> -->

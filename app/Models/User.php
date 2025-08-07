@@ -11,26 +11,20 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-	use HasFactory, Notifiable;
+	use HasUuids, HasFactory, Notifiable;
 
-	/**
-	 * The attributes that are mass assignable.
-	 *
-	 * @var array<int, string>
-	 */
 	protected $fillable = [
 		'name',
 		'email',
-		'avatar',
+		'avatar_id',
 		'password',
 		'active_project'
 	];
 
-	/**
-	 * The attributes that should be hidden for serialization.
-	 *
-	 * @var array<int, string>
-	 */
+	protected $with = [
+		'avatar'
+	];
+
 	protected $hidden = [
 		'password',
 		'remember_token',
@@ -54,6 +48,8 @@ class User extends Authenticatable
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
+	
+	
 	public function projects(): HasMany
 	{
 		return $this->hasMany(Project::class);
@@ -64,20 +60,16 @@ class User extends Authenticatable
 		return Project::where('id', $this->active_project)->first();
 	}
 
-	// public function unpackProject()
-	// {
-	// 	$project = Project::where('id', $this->active_project)->first();
-	// 	// $project->characters = $project->characters()->with(['factions', 'location'])->get();
-	// 	// $project->characters->each(function ($character) {
-	// 	// 	$character->all_relationships = $character->relationships->merge($character->inverseRelationships);
-	// 	// 	unset($character->relationships);
-	// 	// 	unset($character->inverseRelationships);
-	// 	// });
-	// 	// $project->factions = $project->factions()->with(['members'])->get();
-	// 	// $project->locations = $project->locations()->get();
-	// 	// $project->custom_fields = $project->customFields()->with('options')->get();
+	/**
+	 * Set up media relationships.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\Relation
+	 */
 
-	// 	return $project;
-	// }
+	public function avatar()
+	{
+		return $this->morphOne(Media::class, 'mediable')
+			->where('type', 'user_avatar');
+	}
 
 }

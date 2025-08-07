@@ -1,5 +1,8 @@
 <script>
 	import { Link } from '@inertiajs/svelte'
+
+	import Button from '@/Components/Button.svelte';
+	import Dropdown from '@/Components/Dropdown.svelte';
 	import Icon from '@/Components/Icon.svelte';
 
     let {
@@ -7,70 +10,123 @@
 		href,
 		image,
 		icon,
+		onclick,
+		options,
 		title,
 		subtitle,
-        ...attrs
+        ...restProps
     } = $props()
+
+	const clickable = $derived(href || onclick) 
+
 </script>
 
-<div class="card-item {className}" {...attrs}>
+<div class="card {clickable ? "cursor-pointer" : null} {className}" onclick={onclick} {...restProps}>
 
 	{#if href}
 		<Link class="card-link" href={href}></Link>
 	{/if}
 
-	{#if image}
-		<img class="card-image" src={image} alt={title} />
-	{:else if icon}
-		<Icon class="card-icon" name={icon} size={32} />
-	{/if}
-
-	<div class="card-filter"></div>
-
-	<div class="card-details">
-		<span class="font-style-small font-semibold line-clamp-1 text-center w-full">{title}</span>
-		{#if subtitle}
-			<span class="font-style-tiny line-clamp-1 text-center w-full">{subtitle}</span>
+	<div class="card-visual">
+		{#if image}
+			<img class="card-image" src={image} alt={title} />
+		{:else if icon}
+			<Icon class="card-icon" name={icon} size={32} />
 		{/if}
 	</div>
+
+	<div class="card-details -space-y-0.5">
+		<span class="font-style-small font-semibold line-clamp-1 w-full">{title}</span>
+		{#if subtitle}
+			<span class="font-style-tiny line-clamp-1 w-full">{subtitle}</span>
+		{/if}
+	</div>
+
+	{#if options}
+
+		<Dropdown class="card-dropdown"
+			icon="DotsThreeOutlineVertical"
+			options={options}
+		/>
+
+		<!-- <Dropdown class="card-dropdown">
+			<Button class="card-item-options-button rounded-full" icon="DotsThreeOutlineVertical" iconSize={16} iconWeight="fill" />
+			{#snippet content()}
+				<div class="flex flex-col py-1">
+					{#each options as option}
+						<Link class="flex gap-2 px-2 py-1 hover:bg-slate-500/10" {...option}>
+							<Icon class="mt-[2px]" name={option.icon} />
+							{option.label}
+						</Link>
+					{/each}
+				</div>
+			{/snippet}
+		</Dropdown> -->
+	{/if}
 
 </div>
 
 <style lang="postcss">
 
-	.card-item {
-		@apply relative flex flex-col items-center justify-center min-w-24 rounded-lg;
-		background-color: var(--bg-input);
-
-		.card-filter {
-			@apply absolute top-0 left-0 h-full w-full rounded-lg transition-all;
-			@apply bg-gradient-to-bl from-transparent via-slate-800/25 to-slate-950/50;
-		}
-
+	.card {
+		@apply relative flex flex-col items-center justify-center gap-1.5 min-w-24 mb-3 rounded-lg overflow-hidden;
 		&:hover {
-			background-color: var(--bg-input-hover);
-			.card-filter {
-				@apply bg-gradient-to-bl from-transparent via-white/25 to-white/50;
+			.card-visual {
+				background-color: var(--bg-card-hover);
+			}
+			.card-image {
+				mix-blend-mode: multiply;
+			}
+			.card-details {
+				color: var(--text-accent);
+			}
+			:global(.card-item-options-button) {
+				opacity: 1;
 			}
 		}
-	}
+		&[disabled="true"] {
+			opacity: 0.35;
+			pointer-events: none;
+		}
 
-	:global(.card-link) {
-		@apply absolute inset-0 z-10;
-	}
+		:global(.card-link) {
+			@apply absolute inset-0;
+			z-index: 1;
+		}
 
-	.card-details {
-		@apply flex flex-col items-start justify-end absolute bottom-1 left-1 right-1 px-1 pb-1.5;
-		@apply backdrop-blur-sm text-white rounded-md;
-	}
+		.card-visual {
+			@apply aspect-square flex items-center justify-center rounded-lg overflow-hidden w-full;
+			background-color: var(--bg-card);
 
-	.card-image {
-		@apply absolute top-0 left-0 h-full w-full rounded-lg object-cover;
-	}
+			.card-image {
+				@apply min-h-full min-w-full object-cover;
+			}
 
-	:global(.card-icon) {
-		color: var(--text-label);
-		margin-bottom: 1rem;
+			:global(.card-icon) {
+				@apply aspect-square p-6 rounded-full;
+				background-color: var(--bg-neutral-softest);
+				color: var(--text-neutral-softest);
+			}
+		}
+
+		.card-details {
+			@apply px-1 w-full;
+		}
+
+		:global(.card-dropdown) {
+			@apply absolute top-2 right-2;
+			z-index: 5;
+		}
+
+		:global(.card-item-options-button) {
+			@apply backdrop-blur-sm h-8 w-8;
+			background-color: rgba(0,0,0,0.15);
+			color: var(--text-white);
+			opacity: 0;
+			&:hover {
+				background-color: rgba(255,255,255,0.2);
+			}
+		}
 	}
 
 </style>

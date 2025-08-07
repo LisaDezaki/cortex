@@ -1,10 +1,13 @@
 <script>
+	import { inertia, useForm } from '@inertiajs/svelte'
+    import { route } from 'momentum-trail'
+
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
     import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
-
-    import { inertia, useForm } from '@inertiajs/svelte'
-    import { route } from 'momentum-trail'
+    import Card from '@/Components/Card.svelte'
+	import Form from '@/Components/Form.svelte'
+    import Field from '@/Components/Field.svelte'
+    import Input from '@/Components/Input.svelte'
 
     let {
         canResetPassword,
@@ -18,6 +21,9 @@
     })
 
     const submit = (e) => {
+
+		console.log('submitting login request')
+
         e.preventDefault()
 
         $form.post(route('login'), {
@@ -33,62 +39,62 @@
 <GuestLayout>
 	
     {#if status}
-        <div class="mb-4 text-sm font-medium text-green-600">
+        <div class="text-sm font-medium text-green-600 mb-6">
             {status}
         </div>
     {/if}
 
-    <Form title="Log in" onsubmit={submit}>
+	<Form title="Log in" onsubmit={submit} class="form-styles w-96">
 
-		<Form.Field
+		<Field
 			id="email"
 			type="email"
-			class="mt-1 block w-full"
+			label="Email"
+			icon="At"
 			bind:value={$form.email}
 			errors={$form.errors.email}
-			label="Email"
 			required
 			autocomplete="username"
 			autofocus
 		/>
 
-		<Form.Field
+		<Field
 			id="password"
 			type="password"
-			class="mt-1 block w-full"
+			label="Password"
+			icon="Password"
 			bind:value={$form.password}
 			errors={$form.errors.password}
-			label="Password"
 			required
 			autocomplete="current-password"
 		/>
 
-		<Form.Field
+		<Field
 			id="remember"
 			type="checkbox"
-			class="mt-4 block w-full"
+			class="mt-4"
 			bind:value={$form.remember}
-			errors={$form.errors.remember}
 			labelText="Remember me"
+			errors={$form.errors.remember}
 		/>
 
-        <div class="mt-4 flex items-center justify-end">
-            {#if canResetPassword}
-                <a
-                    use:inertia
-                    href={route('password.request')}
-                    class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-                >
-                    Forgot your password?
-                </a>
-            {/if}
+		<div class="flex items-center justify-end gap-3 mt-6">
+			{#if canResetPassword}
+				<a
+					use:inertia
+					href={route('password.request')}
+					class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
+				>
+					Forgot your password?
+				</a>
+			{/if}
 
-            <Button class="ml-4"
-				type="submit" style="hard" theme="accent"
+			<Button style="hard" theme="accent" class="ml-4"
+				type="submit" 
 				label="Log in"
 				loading={$form.processing}
 				disabled={$form.processing}
 			/>
-        </div>
-    </Form>
+		</div>
+	</Form>
 </GuestLayout>

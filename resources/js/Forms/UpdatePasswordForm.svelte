@@ -2,7 +2,7 @@
     import { useForm } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 
     let passwordInput
     let currentPasswordInput

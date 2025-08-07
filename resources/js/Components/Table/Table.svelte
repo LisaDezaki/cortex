@@ -8,12 +8,12 @@
 		data,
 		headRow,
 		bodyRow,
-        ...attrs
+        ...restProps
     } = $props()
 
 </script>
 
-<table class={className} {...attrs}>
+<table class={className} {...restProps}>
 	{#if headRow}
 		<thead>
 			<Row>
@@ -43,8 +43,13 @@
 		:global(tbody tr) {
 			display: flex;
 			@apply w-full;
-			box-shadow: inset 0  1px  0 var(--shadow-highlight),
-						inset 0 -1px  0 var(--shadow-lowlight);
+			/* box-shadow: inset 0  1px  0 var(--shadow-highlight),
+						inset 0 -1px  0 var(--shadow-lowlight); */
+		}
+
+		:global(tbody tr:not(:last-of-type)) {
+			@apply border-b;
+			border-color: var(--border-neutral-softest);
 		}
 
 		:global(tr th:first-of-type),
@@ -58,8 +63,8 @@
 		}
 		
 		:global(tbody tr:hover) {
-			background-color: rgba(0,0,0,0.05);
-			box-shadow: none;
+			background-color: var(--bg-neutral-softest);
+			/* box-shadow: none; */
 		}
 	}
 

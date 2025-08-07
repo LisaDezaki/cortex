@@ -2,7 +2,7 @@
     import { inertia, page, useForm } from '@inertiajs/svelte'
 
 	import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 
     import Transition from 'svelte-transition'
     import { route } from 'momentum-trail'
@@ -12,7 +12,7 @@
         status,
     } = $props()
 
-    const user = $page.props.auth.user
+    const user = $page.props.auth.user.data
     const form = useForm({
         name: user.name,
         email: user.email,

@@ -80,7 +80,10 @@
 <style lang="postcss">
 
 	.modal {
-		@apply mb-6 transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:mx-auto sm:w-full dark:bg-gray-800;
+		@apply mb-6 transform overflow-y-auto rounded-lg shadow-xl transition-all sm:mx-auto dark:bg-gray-800;
+		background-color: var(--bg-modal);
+		color: var(--text-neutral);
+		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 	}
 
 	.overlay-wrap {

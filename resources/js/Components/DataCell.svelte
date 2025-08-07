@@ -11,11 +11,11 @@
 		icon,
 		title,
 		subtitle,
-        ...attrs
+        ...restProps
     } = $props()
 </script>
 
-<Link href={href} class="flex items-center gap-2 hover:text-emerald-500 hover:underline {className}">
+<Link href={href} class="flex items-center gap-2 hover:text-emerald-500 hover:underline {className}" {...restProps}>
 	{#if image}
 		<Thumbnail class="h-9 w-9" icon={icon} src={image} alt={title} />
 	{:else if icon}

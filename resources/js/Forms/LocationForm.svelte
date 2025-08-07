@@ -4,14 +4,14 @@
 
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 	import Heading from '@/Components/Heading.svelte'
 	import Section from '@/Components/Section.svelte'
 	import Tabs from '@/Components/Tabs'
 
 	//  Props
 
-	let project = $page.props.active_project.data
+	const activeProject = $page.props.activeProject.data
 	let { location } = $props()
 
 	//  Form
@@ -26,7 +26,7 @@
 
 	//  Process the custom fields and make sure they are
 	//  populated correctly if the location is being edited
-	// project?.custom_fields?.forEach((field) => {
+	// activeProject?.custom_fields?.forEach((field) => {
 
 	// 	//  Generate a field name that is safe for use in JavaScript
 	// 	let locationData = location.custom_field_values.find(f => f.custom_field_id === field.id)?.value
@@ -90,39 +90,41 @@
 	<Tabs.Content value="location" class="space-y-6 mt-6">
 		<Form class="col-span-3 space-y-6">
 
-			<pre>{JSON.stringify(location,null,4)}</pre>
-
 			<Section class="space-y-6">
 
 				<Heading is="h2" as="h5"
 					heading={location ? "Edit Location" : "New Location"}
-					subheading={location ? "Edit this location's details." : `Build a new location to add to the ${project.name} project.`}
+					subheading={location ? "Edit this location's details." : `Build a new location to add to the ${activeProject.name} project.`}
 					class="mb-12"
 				/>
 
 				<!-- FORM.MAIN -->
 
-				<!-- <Form.Field
+				<Form.Field
 					type="file"
 					id="banner"
 					layout="block"
 					class="w-full"
 					bind:value={$form.banner}
+					previewPath={location?.banner?.url}
 					description="Upload a banner image for this location."
 					errors={$form.errors.banner}
-					label="Map"
-				/> -->
+					label="Banner"
+					inputClass="aspect-video"
+				/>
 
-				<!-- <Form.Field
+				<Form.Field
 					type="file"
 					id="map"
 					layout="block"
 					class="w-full"
 					bind:value={$form.map}
+					previewPath={location?.map?.url}
 					description="Upload a map for this location."
 					errors={$form.errors.map}
 					label="Map"
-				/> -->
+					inputClass="aspect-square"
+				/>
 
 				<Form.Field
 					type="text"
@@ -159,7 +161,7 @@
 						class="aspect-[3/4]"
 						title={member.name}
 						subtitle={member.role}
-						image={member.image_path}
+						image={member.portrait?.url}
 						href={route('characters.show', {character: member.slug})}
 					/>
 				{/each}
@@ -266,7 +268,7 @@
 						class="aspect-[3/4]"
 						title={member.name}
 						subtitle={member.role}
-						image={member.image_path}
+						image={member.portrait?.url}
 						href={route('characters.show', {character: member.slug})}
 					/>
 				{/each}

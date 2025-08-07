@@ -7,11 +7,11 @@
         class: className,
 		shrink = false,
 		sortable = false,
-        ...attrs
+        ...restProps
     } = $props()
 </script>
 
-<th class="{className} {shrink ? 'shrink' : ''}" {...attrs}>
+<th class="{className} {shrink ? 'shrink' : ''}" {...restProps}>
 	<div class="cell font-label">
 		{@render children()}
 		{#if sortable}

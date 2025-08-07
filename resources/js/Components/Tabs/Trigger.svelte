@@ -4,11 +4,11 @@
 		active,
 		children,
 		class: className,
-		...attrs
+		...restProps
 	} = $props()
 </script>
 
-<Tabs.Trigger class="tab-trigger font-style-button {className}" {...attrs}>
+<Tabs.Trigger class="tab-trigger font-style-button {className}" {...restProps}>
 	{@render children()}
 </Tabs.Trigger>
 
@@ -19,12 +19,12 @@
 		@apply transition duration-150 ease-in-out bg-transparent border border-transparent;
 		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
 		&[aria-selected="true"] {
-			background: var(--gradient-primary);
-			border-color: var(--border-primary);
+			background: var(--bg-accent-gradient);
+			border-color: var(--border-accent-strong);
 			color: var(--text-white);
 		}
 		&:hover {
-			background-color: var(--bg-disabled);
+			background-color: var(--bg-neutral-softer);
 		}
 	}
 

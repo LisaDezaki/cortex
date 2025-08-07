@@ -3,11 +3,11 @@
     let {
 		children,
         class: className,
-        ...attrs
+        ...restProps
     } = $props()
 
 </script>
 
-<tr class={className} {...attrs}>
+<tr class={className} {...restProps}>
 	{@render children()}
 </tr>

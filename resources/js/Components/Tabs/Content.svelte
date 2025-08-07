@@ -4,11 +4,11 @@
 		active,
 		children,
 		class: className,
-		...attrs
+		...restProps
 	} = $props()
 </script>
 
-<Tabs.Content class="tabs-content {className}" {...attrs}>
+<Tabs.Content class="tabs-content {className}" {...restProps}>
 	{#if children}
 		{@render children()}
 	{/if}

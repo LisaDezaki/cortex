@@ -11,7 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+
+		Schema::create('media', function (Blueprint $table) {
+			$table->uuid('id')->primary()->index();
+			$table->string('disk')->default('public');
+			$table->string('path');
+			// $table->string('original_name');
+			// $table->string('mime_type');
+			// $table->unsignedInteger('size');
+			$table->string('type')->nullable(); // 'avatar', 'character_portrait', etc.
+			$table->morphs('mediable'); // Polymorphic relationship
+			$table->json('metadata')->nullable(); // Dimensions, colors, etc.
+			$table->timestamps();
+			$table->index('type');
+		});
     }
 
     /**
@@ -19,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('media');
     }
 };

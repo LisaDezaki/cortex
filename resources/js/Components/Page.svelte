@@ -3,11 +3,11 @@
     let {
 		children,
 		class: className,
-		...attrs
+		...restProps
     } = $props()
 </script>
 
-<div class="page {className}">
+<div class="page {className}" {...restProps}>
 	<Tooltip.Provider>
 		{#if children}
 			{@render children()}
@@ -18,13 +18,14 @@
 <style lang="postcss">
 	
 	.page {
+		font-family: 'Archivo', 'Figtree';
 		@apply h-screen flex items-stretch overflow-hidden selection:bg-emerald-500;
 	}
 	.page:not([class*="bg-"]) {
 		background-color: var(--background);
 	}
 	.page:not([class*="text-"]) {
-		color: var(--text-body);
+		color: var(--text-neutral);
 	}
 
 </style>

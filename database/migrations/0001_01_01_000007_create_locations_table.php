@@ -17,8 +17,6 @@ return new class extends Migration
 			$table->foreignUuid('project_id')->constrained('projects')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('name');
 			$table->string('slug')->nullable();
-			$table->string('banner')->nullable();
-			$table->string('map')->nullable();
 			$table->text('description')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
@@ -29,8 +27,6 @@ return new class extends Migration
 			$table->foreignUuid('region_id')->constrained('regions')->nullable()->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('name');
 			$table->string('slug')->nullable();
-			$table->string('banner')->nullable();
-			$table->string('map')->nullable();
 			$table->text('description')->nullable();
 			$table->string('coordinates_x')->nullable();
 			$table->string('coordinates_y')->nullable();

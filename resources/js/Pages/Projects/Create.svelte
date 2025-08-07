@@ -1,8 +1,9 @@
-<script>
+<!-- <script>
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import CreateProjectForm from '@/Forms/CreateProjectForm.svelte'
+	import ProjectForm from '@/Forms/ProjectForm.svelte'
 
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
+    import { route } from 'momentum-trail'
 </script>
 
 <svelte:head>
@@ -13,8 +14,7 @@
 
 	{#snippet header()}
 		<Breadcrumbs data={[
-			{ title: "User", href: "/user" },
-			{ title: "Projects", href: "/user/projects"},
+			{ title: "Projects", href: route('projects') },
 			{ title: "New project" }
 		]} />
 	{/snippet}
@@ -24,7 +24,7 @@
 			heading="New Project"
 			subheading="Create a brand new world and populate it with all your great ideas!"
 		/>
-		<CreateProjectForm />
+		<ProjectForm />
 	{/snippet}
     
-</AuthenticatedLayout>
+</AuthenticatedLayout> -->

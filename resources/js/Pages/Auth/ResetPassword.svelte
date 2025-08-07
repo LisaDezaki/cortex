@@ -1,8 +1,11 @@
 <script>
+    import { useForm } from '@inertiajs/svelte'
+    import { route } from 'momentum-trail'
+
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
     import Button from '@/Components/Button.svelte'
-    import { route } from 'momentum-trail'
-    import { useForm } from '@inertiajs/svelte'
+    import Form from '@/Components/Form.svelte'
+    import Field from '@/Components/Field.svelte'
 
     let { email, token } = $props()
 
@@ -27,13 +30,12 @@
 </svelte:head>
 
 <GuestLayout>
-    <form onsubmit={submit}>
+    <Form title="Reset Password" onsubmit={submit} class="form-styles w-96">
         <div>
             <Form.Label for="email" value="Email" />
             <Form.Input
                 id="email"
                 type="email"
-                class="mt-1 block w-full"
                 bind:value={$form.email}
                 required
                 autofocus
@@ -47,7 +49,6 @@
             <Form.Input
                 id="password"
                 type="password"
-                class="mt-1 block w-full"
                 bind:value={$form.password}
                 required
                 autocomplete="new-password"
@@ -61,7 +62,6 @@
             <Form.Input
                 id="password_confirmation"
                 type="password"
-                class="mt-1 block w-full"
                 bind:value={$form.password_confirmation}
                 required
                 autocomplete="new-password"
@@ -75,5 +75,5 @@
                 >Reset Password</Button
             >
         </div>
-    </form>
+    </Form>
 </GuestLayout>

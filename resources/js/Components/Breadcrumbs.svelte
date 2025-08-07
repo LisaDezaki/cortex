@@ -1,36 +1,65 @@
 <script>
-
 	import { Link, page } from '@inertiajs/svelte'
+	// import { DropdownMenu } from "bits-ui";
 
+	import Dropdown from '@/Components/Dropdown.svelte'
 	import Icon from '@/Components/Icon.svelte'
+	import ProjectActivator from '@/Components/ProjectActivator.svelte'
 	import Thumbnail from '@/Components/Thumbnail.svelte'
+    import { route } from 'momentum-trail'
+
+	const user = $page.props.auth?.user?.data
+	const projects = $page.props.projects?.data
+	const activeProject = $page.props.activeProject?.data
 
     let {
 		class: className,
 		data,
-        ...attrs
+		withProject = true,
+        ...restProps
     } = $props()
-
-	let user = $page.props.auth.user
-	let project = $page.props.active_project.data
 
 </script>
 
-<div class="breadcrumbs {className}" {...attrs}>
+<div class="breadcrumbs {className}" {...restProps}>
 
 	{#if user}
-		<Thumbnail class="rounded-full w-9" src={user.avatar} alt={user.name} />
-		<Link class="breadcrumb" href="#">{user.name}</Link>
+		<Link href={route('dashboard')} class="inline-flex items-center justify-center rounded-full mx-1.5 border border-transparent p-0.5 hover:border-emerald-500">
+			<Thumbnail class="rounded-full w-7" src={user?.avatar?.url} alt={user.name} />
+		</Link>
 	{/if}
 
-	{#if project}
-		<Icon name="CaretRight" size={16} />
-		<Link class="breadcrumb" href="#">{project.name}</Link>
+	{#if withProject && activeProject && projects}
+		<Icon class="opacity-25" name="CaretRight" size={16} />
+
+		<Dropdown
+			class="breadcrumb"
+			contentClass="w-52"
+			label={activeProject.name}
+			options={projects.map((pr => {
+				return { label: project.name, value: project.id }
+			}))}
+		/>
+
+
+		<!-- <Dropdown class="breadcrumb">
+			{activeProject.name}
+			<Icon class="translate-y-0.5" name="CaretDown" />
+			{#snippet content()}
+				<ul>
+					{#each projects as project}
+						<li>
+							<ProjectActivator class="breadcrumb-dropdown-link" activeClass="breadcrumb-dropdown-link-active" projectId={project.id}>{project.name}</ProjectActivator>
+						</li>
+					{/each}
+				</ul>
+			{/snippet}
+		</Dropdown> -->
 	{/if}
 
     {#each data as breadcrumb, i}
 		
-		<Icon name="CaretRight" size={16} />
+		<Icon class="opacity-25" name="CaretRight" size={16} />
 
 		{#if breadcrumb.href}
 			<Link class="breadcrumb" href={breadcrumb.href}>{breadcrumb.title}</Link>
@@ -48,26 +77,33 @@
 	.breadcrumbs {
 		@apply flex items-center justify-start gap-2 px-4 py-2 text-sm w-full;
 
-		:global(a) {
-			color: var(--text-link);
+		:global(a),
+		:global(.dropdown-trigger) {
+			color: var(--text-accent);
 		}
-
-		:global(svg) {
-			opacity: 0.25;
-		}
-
-		/* .breadcrumb-separator {
-			opacity: 0.25;
-		} */
 	}
 
 	:global(.breadcrumb) {
 		@apply px-1.5 py-1 rounded;
 	}
-	:global(a.breadcrumb) {
+	:global(a.breadcrumb),
+	:global(.dropdown-trigger.breadcrumb) {
 		&:hover {
-			background-color: var(--bg-neutral-soft);
+			background-color: var(--bg-neutral-softest);
+			color: var(--text-accent);
 		}
+	}
+
+	:global(.breadcrumb-dropdown-link) {
+		@apply px-1.5 py-1 rounded text-left w-full;
+		&:hover {
+			background-color: var(--bg-neutral-softest);
+			color: var(--text-accent);
+		}
+	}
+	:global(.breadcrumb-dropdown-link-active) {
+		@apply font-semibold pointer-events-none;
+		color: var(--text-accent);
 	}
 
 </style>

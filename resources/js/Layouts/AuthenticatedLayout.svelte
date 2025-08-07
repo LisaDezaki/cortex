@@ -9,6 +9,8 @@
     import Sidebar from '@/Components/Sidebar.svelte';
     import StickyHeader from '@/Components/StickyHeader.svelte';
 
+	const activeProject = $page.props.activeProject.data;
+
     let {
 		article,
 		header,
@@ -16,20 +18,18 @@
 		sidebar
 	} = $props()
 
-	let project = $page.props.active_project.data;
-
 </script>
 
 <Page>
 
-	<Navigation {project} />
+	<Navigation project={activeProject} />
 
 	<div class="relative flex flex-grow-0 flex-col h-screen overflow-hidden w-full">
-		{#if header}
+		<!-- {#if header}
 			<StickyHeader>
 				{@render header()}
 			</StickyHeader>
-		{/if}
+		{/if} -->
 		<Main>
 			{@render panel?.()}
 			<Splitpanes>

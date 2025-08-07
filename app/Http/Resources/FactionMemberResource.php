@@ -20,9 +20,8 @@ class FactionMemberResource extends JsonResource
 			'slug'         => $this->slug,
 			'name'         => $this->name,
 			'description'  => $this->description,
-			'image'        => $this->image,
-			'image_path'  => $this->image ? Storage::url($this->image) : null,
 
+			'portrait'     => new MediaResource($this->whenLoaded('portrait')),
 			'rank'         => new FactionRankResource($this->pivot->rank)
 		];
     }

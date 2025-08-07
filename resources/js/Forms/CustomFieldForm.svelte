@@ -5,14 +5,14 @@
     import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 	import Icon from '@/Components/Icon.svelte'
 
 	//  Props
     let {
 		class: className,
 		data,
-        oncancel
+        oncancel = () => {}
     } = $props()
 
 	//  State & Reactivity
@@ -56,7 +56,7 @@
 	function resetData() {
 		let freshData = {
 			id: null,
-			customfieldable_type: $form.customfieldable_type,
+			fieldable_type: $form.fieldable_type,
 			...blankData
 		}
 		for (const [key, value] of Object.entries(freshData)) {

@@ -3,16 +3,16 @@
 		children,
         class: className,
 		label,
-        ...attrs
+        ...restProps
     } = $props()
 </script>
 
-<span {...attrs}
+<span {...restProps}
 	class="tag {className}"
-	class:plain={attrs.plain}
-	class:primary={attrs.primary}
-	class:secondary={attrs.secondary}
-	class:disabled={attrs.disabled}
+	class:plain={restProps.plain}
+	class:primary={restProps.primary}
+	class:secondary={restProps.secondary}
+	class:disabled={restProps.disabled}
 >
     {#if label}
 		<span class="label">{label}</span>

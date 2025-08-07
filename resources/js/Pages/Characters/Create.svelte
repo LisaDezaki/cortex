@@ -9,19 +9,18 @@
 	import Back from '@/Components/Back.svelte'
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
 
-	let project = $page.props.active_project.data
+	const activeProject = $page.props.activeProject.data
 
 </script>
 
 <svelte:head>
-    <title>{project.name} / New Character</title>
+    <title>{activeProject.name} / New Character</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 	
 	{#snippet header()}
 		<Breadcrumbs data={[
-			{ title: "Project",    href: "/" },
 			{ title: "Characters", href: route('characters') },
 			{ title: "Create" }
 		]} />
@@ -34,6 +33,10 @@
 	{#snippet article()}
 		<Back href={route('characters')} />
 		<CharacterForm />
+	{/snippet}
+
+	{#snippet sidebar()}
+		asd
 	{/snippet}
 
 </AuthenticatedLayout>

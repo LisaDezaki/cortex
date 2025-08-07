@@ -5,15 +5,18 @@
 		children,
 		class: className,
 		fallback = "AB",
+		if: showIf = true,
 		src,
-		...attrs
+		...restProps
 	} = $props()
 </script>
 
-<Avatar.Root class="avatar {className} {attrs.square ? 'square' : ''}" {...attrs}>
-	<Avatar.Image class="avatar-image" src={src} alt={alt}></Avatar.Image>
-	<Avatar.Fallback class="avatar-fallback">{fallback}</Avatar.Fallback>
-</Avatar.Root>
+{#if showIf}
+	<Avatar.Root class="avatar {className} {restProps.square ? 'square' : ''}" {...restProps}>
+		<Avatar.Image class="avatar-image" src={src} alt={alt}></Avatar.Image>
+		<Avatar.Fallback class="avatar-fallback">{fallback}</Avatar.Fallback>
+	</Avatar.Root>
+{/if}
 
 <style lang="postcss">
 
@@ -23,7 +26,7 @@
 		@apply font-black text-lg tracking-tighter;
 	}
 	:global(.avatar:not([class*="border-"])) {
-		border-color: var(--border-input);
+		border-color: var(--border-neutral-softest);
 	}
 
 	:global(.avatar-image) {
@@ -33,8 +36,8 @@
 	:global(.avatar-fallback) {
 		@apply flex items-center justify-center w-full h-full;
 		@apply rounded-full;
-		background-color: var(--background-alt);
-		color: var(--text-subtle);
+		background-color: var(--bg-neutral-softer);
+		color: var(--text-neutral-soft);
 	}
 
 </style>

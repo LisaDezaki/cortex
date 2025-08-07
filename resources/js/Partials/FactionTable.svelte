@@ -5,7 +5,7 @@
 
 	import Button from '@/Components/Button.svelte'
 	import CharacterIcon from '@/Components/CharacterIcon.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 	import Table from '@/Components/Table'
 	import Thumbnail from '@/Components/Thumbnail.svelte'
 
@@ -57,7 +57,7 @@
 		<Link href={route('factions.show', {faction: faction.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
 				class="h-9 w-9"
-				src={faction.image_path}
+				src={faction.emblem?.url}
 				icon="FlagBannerFold"
 			/>
 			<div class="-space-y-0.5">
@@ -68,18 +68,19 @@
 	</Table.Cell>
 	<Table.Cell>
 		{#if faction.members.length > 0}
-			<div class="w-full -space-x-3">
+			<div class="flex w-full">
 				{#each faction.members as member, i}
 					<CharacterIcon
+						class="outline-emerald-500 outline-offset-2 hover:outline outline-1 {i !== 0 ? "-ml-3 " : ""}"
 						href={route('characters.show', {character: member.slug})}
-						src={member.image_path}
+						src={member.portrait?.url}
 					/>
 				{/each}
 			</div>
 		{:else}
-			<Button
-				class="bg-emerald-500/20 rounded-full w-9 aspect-square border border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/30 hover:border-emerald-500/40"
-				icon="Plus"
+			<Button style="soft" theme="accent"
+				icon="Plus" iconSize={20} iconWeight="light"
+				class="h-9 w-9 rounded-full"
 			/>
 		{/if}
 	</Table.Cell>
@@ -88,18 +89,18 @@
 			<Link href={route('locations.show', {location: faction.headquarters.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 				<Thumbnail
 					class="h-9 w-9"
-					src={faction.headquarters.image_path}
+					src={faction.headquarters.banner?.url}
 					icon="MapPin"
 				/>
 				<div class="-space-y-0.5">
-					<div class="font-style-regular">{faction.headquarters.name}</div>
+					<div class="font-style-regular line-clamp-1">{faction.headquarters.name}</div>
 					<div class="font-style-tiny line-clamp-1 opacity-65">{faction?.headquarters?.region?.name}</div>
 				</div>
 			</Link>
 		{:else}
-			<Button
-				class="bg-emerald-500/20 rounded-lg w-9 border border-emerald-500/30 text-emerald-500 hover:bg-emerald-500/30 hover:border-emerald-500/40"
-				icon="Plus"
+			<Button style="soft" theme="accent"
+				icon="Plus" iconSize={20} iconWeight="light"
+				class="h-9 w-9"
 			/>
 		{/if}
 	</Table.Cell>

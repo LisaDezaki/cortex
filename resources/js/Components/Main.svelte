@@ -2,11 +2,11 @@
     let {
 		children,
 		class: className,
-		...attrs
+		...restProps
     } = $props()
 </script>
 
-<main class="main {className}">
+<main class="main {className}" {...restProps}>
 	{#if children}
 		{@render children()}
 	{/if}

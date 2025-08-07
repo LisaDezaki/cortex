@@ -10,14 +10,14 @@
 		class: className,
 		icon,
 		label,
-        ...attrs
+        ...restProps
     } = $props()
 </script>
 
 <li class="nav-item {active ? 'active' : ''}">
 
 	<Link
-		{...attrs}
+		{...restProps}
 		class="nav-link {className} {active ? 'active' : ''}"
 	>
 		{#if icon}
@@ -57,8 +57,8 @@
 	.nav-item.active {
 		@apply bg-emerald-600;
 		@apply text-white;
-		background-color: var(--bg-nav-link-hover);
-		color: var(--text-nav-link-hover);
+		background-color: var(--bg-nav-active);
+		color: var(--text-white);
 	}
 
 </style>

@@ -12,15 +12,15 @@
 		inline,
 		required,
         value,
-        ...attrs
+        ...restProps
     } = $props()
 </script>
 
 <label
 	for={labelFor}
-	{...attrs}
+	{...restProps}
 	class="label {className}"
-	class:disabled={attrs.disabled}
+	class:disabled={restProps.disabled}
 	class:inline={inline}
 >
     {#if value}
@@ -34,7 +34,7 @@
 	{/if} -->
 
 	{#if description}
-		<Tooltip class="ml-auto text-slate-400/40 hover:text-emerald-500">
+		<Tooltip class="ml-auto hover:text-emerald-500">
 			<Icon class="label-description" name="Info" size={16} weight="fill" />
 			{#snippet content()}
 				{description}
@@ -47,11 +47,11 @@
 <style lang="postcss">
 
 	label {
-		@apply flex items-center gap-2;
+		/* @apply flex gap-2; */
 		&:not(.inline) {
 			@apply text-sm;
 			&:not([class*="text-"]) {
-				color: var(--text-label);
+				color: var(--text-neutral);
 			}
 		}
 	}
@@ -59,7 +59,7 @@
 	label.inline {
 		@apply inline-flex items-center my-1 flex-shrink w-full;
 		&:not(.disabled):not([class*="text-"]) {
-			color: var(--text-body);
+			color: var(--text-neutral);
 		}
 		&.disabled:not([class*="text-"]) {
 			color: var(--text-disabled);

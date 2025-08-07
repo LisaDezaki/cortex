@@ -1,9 +1,10 @@
 <script>
+    import { useForm } from '@inertiajs/svelte'
+    import { route } from 'momentum-trail'
+
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
     import Button from '@/Components/Button.svelte'
-    import Form from '@/Components/Form'
-    import { route } from 'momentum-trail'
-    import { useForm } from '@inertiajs/svelte'
+    import Form from '@/Components/Form.svelte'
 
     const form = useForm({
         password: '',
@@ -27,7 +28,7 @@
         This is a secure area of the application. Please confirm your password before continuing.
     </div>
 
-    <form onsubmit={submit}>
+    <Form onsubmit={submit}>
         <div>
             <Form.Label for="password" value="Password" />
             <Form.Input
@@ -47,5 +48,5 @@
                 >Confirm</Button
             >
         </div>
-    </form>
+    </Form>
 </GuestLayout>

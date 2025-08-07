@@ -27,7 +27,7 @@ class CustomField extends Model
 	 */
 
 	 protected $fillable = [
-		'customfieldable_type',
+		'fieldable_type',
 		'type',
 		'name',
 		'description',
@@ -38,6 +38,10 @@ class CustomField extends Model
 
 	protected $guarded = [
 		'project_id',
+	];
+
+	protected $casts = [
+		'type' => 'string',
 	];
 
 
@@ -53,7 +57,7 @@ class CustomField extends Model
 		return $this->belongsTo(Project::class);
 	}
 
-	public function customfieldable(): MorphTo
+	public function fieldable(): MorphTo
 	{
 		return $this->morphTo();
 	}
@@ -61,6 +65,11 @@ class CustomField extends Model
 	public function options(): HasMany
 	{
 		return $this->hasMany(CustomFieldOption::class);
+	}
+
+	public function hasOptions()
+	{
+		return $this->type === 'select';
 	}
 
 

@@ -46,10 +46,10 @@ class Location extends Model
 	 *
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
-	// public function project(): BelongsTo
-	// {
-	// 	return $this->belongsTo(Project::class, 'project_id');
-	// }
+	public function project(): BelongsTo
+	{
+		return $this->belongsTo(Project::class, 'project_id');
+	}
 
 	public function characters(): HasMany
 	{
@@ -68,7 +68,24 @@ class Location extends Model
 
 	public function customFields()
 	{
-		return $this->morphMany(CustomField::class, 'customfieldable');
+		return $this->morphMany(CustomField::class, 'fieldable');
+	}
+
+
+	public function banner()
+	{
+		return $this->morphOne(Media::class, 'mediable')
+			->where('type', 'location_banner');
+	}
+	public function map()
+	{
+		return $this->morphOne(Media::class, 'mediable')
+			->where('type', 'location_map');
+	}
+	public function gallery()
+	{
+		return $this->morphMany(Media::class, 'mediable')
+			->where('type', 'location_gallery');
 	}
 
 

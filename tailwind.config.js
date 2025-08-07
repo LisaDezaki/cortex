@@ -14,7 +14,7 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Switzer', ...defaultTheme.fontFamily.sans],
+                // sans: ['Switzer', ...defaultTheme.fontFamily.sans],
             },
         },
     },

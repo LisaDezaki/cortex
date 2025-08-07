@@ -7,24 +7,23 @@
 	import Article from '@/Components/Article.svelte';
 	import Back from '@/Components/Back.svelte';
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
 	import Heading from '@/Components/Heading.svelte';
 	import Section from '@/Components/Section.svelte'
 
-	let project = $page.props.active_project.data
+	const activeProject = $page.props.activeProject.data
 
 </script>
 
 <svelte:head>
-    <title>{project.name} / Location Settings</title>
+    <title>{activeProject.name} / Location Settings</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 	
 	{#snippet header()}
 		<Breadcrumbs data={[
-			{ title: "Project",  href: "/" },
-			{ title: "Locations", href: route('locations') },
+			{ title: "Locations",  href: route('locations') },
 			{ title: "Settings" }
 		]} />
 	{/snippet}

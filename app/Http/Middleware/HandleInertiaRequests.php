@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\UserResource;
 use App\Models\Character;
 use App\Models\Project;
 use Illuminate\Http\Request;
@@ -35,39 +36,55 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+		$user = Auth::user();
 
 		//	Fetch all projects (shallow fetch) for the authenticated user, if they are logged in.
-		$projects = Auth::check() ? Auth::user()->projects()->with([
-			'characters', 'factions', 'locations'
-			])->get() : null;
+		$projects = Auth::check() ? $user->projects()->with([
+			'banner', 'characters', 'factions', 'locations'
+		])->get() : null;
 
 		//	Fetch the active project (deep fetch) for the authenticated user, if they are logged in and have an active project.
-		$active_project = Auth::user() && $projects && Auth::user()->active_project
-			? Auth::user()->projects()->with([
+		$activeProject = $user && $user->active_project
+			? $user->projects()->with([
+				'banner',
+				'characters.location.banner',
 				'characters.location.region',
+				'characters.factions.emblem',
 				'characters.factions.members',
+				'characters.portrait',
 				'characters.relationships',
+				'characters.customFieldValues.customField',
+				'factions.emblem',
+				'factions.headquarters.banner',
 				'factions.headquarters.region',
 				'factions.ranks',
-				'factions.members',
-				'locations.characters',
+				'factions.members.portrait',
+				'locations.banner',
+				'locations.characters.portrait',
+				'locations.map',
 				'locations.region',
-				'regions.locations.characters',
+				'regions.locations.banner',
+				'regions.locations.characters.portrait',
 				'customFields.options'
-			])->get()->find(Auth::user()->active_project)
+			])->find($user->active_project)
 			: null;
 
         return array_merge(parent::share($request), [
 			'appName' => config('app.name'),
 			'csrfToken' => csrf_token(),
+			// 'auth.user' => fn () => $request->user()
+			// 	? $request->user()->only('id', 'name', 'email', 'avatar')
+			// 	: null,
 			'auth.user' => fn () => $request->user()
-				? $request->user()->only('id', 'name', 'email', 'avatar')
+				? new UserResource($request->user())
 				: null,
 			'flash' => [
+				'success' => fn () => $request->session()->get('success'),
+            	'error'   => fn () => $request->session()->get('error'),
 				'message' => fn () => $request->session()->get('message')
 			],
 			'projects' => $projects ? ProjectResource::collection($projects) : [],
-			'active_project' => $active_project ? new ProjectResource($active_project) : []
+			'activeProject' => $activeProject ? new ProjectResource($activeProject) : []
 		]);
     }
 }

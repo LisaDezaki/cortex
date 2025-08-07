@@ -1,10 +1,11 @@
-<script>
-	
+<!-- <script>
 	import { page } from '@inertiajs/svelte'
+
     import UserLayout from '@/Layouts/UserLayout.svelte'
-	import UpdateProjectForm from '@/Forms/UpdateProjectForm.svelte'
+	import ProjectForm from '@/Forms/ProjectForm.svelte'
 
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
+    import { route } from 'momentum-trail'
 
 	let { project } = $props()
 
@@ -17,8 +18,7 @@
 <UserLayout>
 	{#snippet header()}
 		<Breadcrumbs data={[
-			{ title: "User", href: "/user" },
-			{ title: "Projects", href: "/user/projects"},
+			{ title: "Projects", href: route('projects') },
 			{ title: project.name }
 		]} />
 	{/snippet}
@@ -31,8 +31,8 @@
 			</p>
 		</header>
 
-		<UpdateProjectForm project={project} />
+		<ProjectForm project={project} />
 
 	</section>
     
-</UserLayout>
+</UserLayout> -->

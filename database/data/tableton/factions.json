@@ -51,6 +51,15 @@
 			"perd": "Tourist"
 		}
 	},
+	"magicclub": {
+		"name": "Magic Club",
+		"desc": "The closest thing to a Mage's Guild since the Council banned larger magical gatherings.",
+		"hq": null,
+		"ranks": [ "Club President", "Club Member" ],
+		"members": {
+	
+		}
+	},
 	"swarm": {
 		"name": "The Swarm",
 		"desc": "The Insectoids are a newer gang in town, starting to cause problems late at night. They're experiencing a parasitic pandemic amongst themselves back in their home realm.",
@@ -61,6 +70,16 @@
 			"brundle": "Soldier",
 			"manto": "Soldier",
 			"wikus": "Soldier"
+		}
+	},
+	"protestors": {
+		"name": "Protestors",
+		"desc": "A group of activists trying to prevent the deforestation of the Cursed Forest.",
+		"hq": null,
+		"ranks": [ "Leader", "Activist" ],
+		"members": {
+			"binksy": "Activist",
+			"nocturna": "Activist"
 		}
 	},
 	"rednecks": {

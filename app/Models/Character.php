@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Character extends Model
 {
@@ -22,9 +24,9 @@ class Character extends Model
 		'appearance',
 		'personality',
 		'motivations',
-		'flaws',      
+		'flaws',
 		'location_id',
-		'image'
+		'portrait_id'
 	];
 
 	protected $guarded = [
@@ -70,18 +72,17 @@ class Character extends Model
 
 	public function customFields()
 	{
-		return $this->morphMany(CustomField::class, 'customfieldable');
+		return $this->morphMany(CustomField::class, 'fieldable');
 	}
 
 	public function customFieldValues(): HasMany
 	{
-		return $this->hasMany(CustomFieldValue::class, 'customfieldable_id');
+		return $this->hasMany(CustomFieldValue::class, 'fieldable_id');
 	}
 
 	public function factions(): BelongsToMany
 	{
-		return $this->belongsToMany(Faction::class, 'faction_members')
-			->withPivot('rank_id');
+		return $this->belongsToMany(Faction::class, 'faction_members')->withPivot('rank_id');
 	}
 
 	public function location()
@@ -89,6 +90,23 @@ class Character extends Model
 		return $this->belongsTo(Location::class, 'location_id');
 	}
 
+	/**
+	 * Set up media relationships.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Relations\Relation
+	 */
+
+	public function portrait(): MorphOne
+	{
+		return $this->morphOne(Media::class, 'mediable')
+			->where('type', 'character_portrait');
+	}
+
+	public function gallery(): MorphMany
+	{
+		return $this->morphMany(Media::class, 'mediable')
+			->where('type', 'character_gallery');
+	}
 
 
 	/**

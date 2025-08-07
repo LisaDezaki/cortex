@@ -3,10 +3,11 @@
     import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
-	import Form from '@/Components/Form'
+	import Form from '@/Components/Form.svelte'
+	import Field from '@/Components/Field.svelte'
 
     let {
-		oncancel,
+		oncancel = () => {},
 		character
 	} = $props()
 
@@ -26,14 +27,14 @@
 
 <Form
 	class="form-styles space-y-3"
-	title="Delete {character.name}?"
+	title="Are you sure you want to delete {character.name}?"
 	enctype="multipart/form-data"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
-	<p class="mb-4">Clicking 'Yes' will <strong>delete</strong> this character and all associated data. Are you <strong>absolutely</strong> sure you want to delete this character? </p>
+	<p class="mb-4">This process will remove this character and all associated data from the database. Are you sure you want to delete this character? </p>
 
-	<p>Please type the name of the character ('<strong>{character.name}</strong>') to confirm deletion.</p>
+	<p>Please type the name of the character ("<strong>{character.name}</strong>") to confirm deletion.</p>
 
 	<Form.Field>
 		<Form.Label for="confirm_name" value="Character name" />

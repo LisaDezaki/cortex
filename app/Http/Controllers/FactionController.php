@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\FactionResource;
+use App\Http\Resources\CustomFieldResource;
 use App\Http\Requests\StoreFactionRequest;
 use App\Http\Requests\UpdateFactionRequest;
 use App\Models\CustomField;
 use App\Models\Faction;
-use App\Services\FileUploadService;
+use App\Services\MediaService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -17,33 +19,37 @@ use Inertia\Response;
 class FactionController extends Controller
 {
 
-	protected $uploadService;
+	protected $mediaService;
 
-	public function __construct(FileUploadService $uploadService)
+	public function __construct(MediaService $mediaService)
 	{
-		$this->uploadService = $uploadService;
+		$this->mediaService = $mediaService;
 	}
 
 	protected $validationRules = [
-		// Standard fields
 		'name' => ['string', 'required'],
 		'description' => ['string', 'nullable'],
-		'image' => ['string', 'nullable'],
-		// Dynamic custom fields
+		'emblem' => ['string', 'nullable'],
 		'custom_fields' => 'sometimes|array',
-        // 'custom_fields.*.name' => 'required|string',  // Field name
-        'custom_fields.*' => 'present',        // Field value (can be null)
+        'custom_fields.*' => 'present',
+		'custom_fields.*.id' => 'required|distinct|exists:custom_fields,id',
+		'custom_fields.*.value' => 'nullable|string'
 	];
 
     public function index()
     {
-		$custom_fields = CustomField::where([
+		$active_project = Auth::user()->active_project;
+		if (!$active_project) {
+			return Redirect::route('projects');
+		}
+
+		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
-			'customfieldable_type' => 'faction'
+			'fieldable_type' => 'faction'
 		])->with('options')->get();
 
 		return Inertia::render('Factions/Index', [
-			'custom_fields' => $custom_fields
+			'customFields' => CustomFieldResource::collection($customFields)
 		]);
     }
 
@@ -52,19 +58,22 @@ class FactionController extends Controller
         return Inertia::render('Factions/Create');
     }
 
-	public function settings(Request $request): Response
+    public function store(Request $request): RedirectResponse
     {
-    	return Inertia::render('Factions/Settings');
-    }
-
-    public function store(StoreFactionRequest $request)
-    {
-        //
+        $validatedData = $request->validate($this->validationRules);
+		$faction = Auth::user()->activeProject()->factions()->create($validatedData);
+		$this->handleEmblem($request, $faction);
+		// $this->handleCustomFields($validatedData['custom_fields'], $character);
+		$faction->save();
+		return Redirect::route("factions.show", [
+			'faction' => $faction->slug
+		]);
     }
 
     public function show(Faction $faction)
     {
 		$faction->load([
+			'emblem',
 			'members',
 			'ranks',
 			'headquarters'
@@ -77,6 +86,7 @@ class FactionController extends Controller
     public function edit(Faction $faction)
     {
         $faction->load([
+			'emblem',
 			'members',
 			'ranks'
 		]);
@@ -87,21 +97,11 @@ class FactionController extends Controller
 
     public function update(Request $request, Faction $faction)
     {
-        // Validate user request
 		$validatedData = $request->validate($this->validationRules);
 		$faction->fill($validatedData);
-
-		//	Move temporary image to permanent location.
-		$faction->image = $this->uploadService->moveToPermanent(
-			$request->image,
-			Auth::user()->email."/factions",
-			$faction->slug ?: strtolower(str_replace(' ', '-', $request->name))
-		);
-
-		// Redirect user to new character page.
-		
+		$this->handleEmblem($request, $faction);
+		// $this->handleCustomFields($validatedData['custom_fields'], $faction);
 		$faction->update();
-
 		return Redirect::route("factions.show", [
 			'faction' => $faction->slug
 		]);
@@ -111,4 +111,27 @@ class FactionController extends Controller
     {
         //
     }
+
+	public function settings(Request $request): Response
+    {
+    	return Inertia::render('Factions/Settings');
+    }
+
+	public function handleEmblem(Request $request, Faction $faction)
+	{
+		$request->validate([
+			'emblem' => 'string|nullable',
+		]);
+
+		$user = Auth::user();
+		$userDir    = "user_"   .substr($user->id, 0, 8);
+		$projectDir = "project_".substr($user->active_project, 0, 8);
+
+		$this->mediaService->updateImage(
+			$faction,
+			$faction->emblem(),
+			$request->emblem,
+			"$userDir/$projectDir/factions"
+		);
+	}
 }

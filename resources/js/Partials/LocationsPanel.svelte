@@ -2,10 +2,10 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import Panel from '@/Components/Panel'
+	import Panel from '@/Components/Panel.svelte'
 
-	let project = $page.props.active_project.data
-	let locations = project.locations
+	const activeProject = $page.props.activeProject.data
+	const locations = activeProject.locations
 
 </script>
 
@@ -16,7 +16,7 @@
 			return {
 				icon:   'MapPin',
 				label:  location.name,
-				image:  location.image_path,
+				image:  location.banner?.url,
 				href:   route('locations.show', {location: location.slug}),
 				active: $page.url == `/locations/${location.slug}` || $page.url.startsWith(`/locations/${location.slug}/`)
 			}

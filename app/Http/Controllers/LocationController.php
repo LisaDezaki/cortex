@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\LocationResource;
 use App\Http\Requests\StoreLocationRequest;
-use App\Http\Requests\UpdateLocationRequest;
 use App\Models\CustomField;
 use App\Models\Location;
-use App\Models\Region;
-use App\Services\FileUploadService;
+use App\Services\MediaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -17,73 +15,53 @@ use Inertia\Response;
 
 class LocationController extends Controller
 {
-	protected $uploadService;
+	protected $mediaService;
 
-	public function __construct(FileUploadService $uploadService)
+	public function __construct(MediaService $mediaService)
 	{
-		$this->uploadService = $uploadService;
+		$this->mediaService = $mediaService;
 	}
 
 	protected $validationRules = [
-		// Standard fields
 		'name' => ['string', 'required'],
 		'description' => ['string', 'nullable'],
 		'banner' => ['string', 'nullable'],
 		'map' => ['string', 'nullable'],
-		// Dynamic custom fields
 		'custom_fields' => 'sometimes|array',
-        // 'custom_fields.*.name' => 'required|string',  // Field name
-        'custom_fields.*' => 'present',        // Field value (can be null)
+        'custom_fields.*' => 'present',
+		'custom_fields.*.id' => 'required|distinct|exists:custom_fields,id',
+		'custom_fields.*.value' => 'nullable|string'
 	];
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-		$custom_fields = CustomField::where([
-			'project_id' => Auth::user()->active_project,
-			'customfieldable_type' => 'location'
-		])->with('options')->get();
-
-		// $regions = Region::where([
-		// 	'project_id' => Auth::user()->active_project
-		// ])->get();
-
-        return Inertia::render('Locations/Index', [
-			'custom_fields' => $custom_fields,
-			// 'regions' => $regions
-		]);
+        return Inertia::render('Locations/Index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
 		return Inertia::render('Locations/Create');
     }
 
-	public function settings(Request $request): Response
-    {
-    	return Inertia::render('Locations/Settings');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreLocationRequest $request)
     {
-        //
+        $validatedData = $request->validate($this->validationRules);
+		$location = Auth::user()->activeProject()->locations()->create($validatedData);
+		$this->handleBanner($request, $location);
+		$this->handleMap($request, $location);
+		// $this->handleCustomFields($validatedData['custom_fields'], $location);
+		$location->save();
+		return Redirect::route("locations.show", [
+			'location' => $location->slug
+		]);
     }
 
-    /**
-     * Display the specified resource.
-     */
 	public function show(Location $location)
 	{
 		$location->load([
+			'banner',
 			'characters',
+			'map',
 			'region'
 		]);
 
@@ -92,9 +70,6 @@ class LocationController extends Controller
 		]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(Location $location)
     {
         $location->load([
@@ -107,36 +82,62 @@ class LocationController extends Controller
 		]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Location $location)
     {
-        // Validate user request
 		$validatedData = $request->validate($this->validationRules);
 		$location->fill($validatedData);
-
-		//	Move temporary image to permanent location.
-		$location->image = $this->uploadService->moveToPermanent(
-			$request->image,
-			"locations",
-			$location->slug ?: strtolower(str_replace(' ', '-', $request->name))
-		);
-
-		// Redirect user to new character page.
-		
+		$this->handleBanner($request, $location);
+		$this->handleMap($request, $location);
+		// $this->handleCustomFields($validatedData['custom_fields'], $location);
 		$location->update();
-
 		return Redirect::route("locations.show", [
 			'location' => $location->slug
 		]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Location $location)
     {
         //
     }
+
+	public function settings(Request $request): Response
+    {
+    	return Inertia::render('Locations/Settings');
+    }
+
+	public function handleBanner(Request $request, Location $location)
+	{
+		$request->validate([
+			'banner' => 'string|nullable',
+		]);
+
+		$user = Auth::user();
+		$userDir    = "user_"   .substr($user->id, 0, 8);
+		$projectDir = "project_".substr($user->active_project, 0, 8);
+
+		$this->mediaService->updateImage(
+			$location,
+			$location->banner(),
+			$request->banner,
+			"$userDir/$projectDir/locations"
+		);
+	}
+
+	public function handleMap(Request $request, Location $location)
+	{
+		$request->validate([
+			'map' => 'string|nullable',
+		]);
+
+		$user = Auth::user();
+		$userDir    = "user_"   .substr($user->id, 0, 8);
+		$projectDir = "project_".substr($user->active_project, 0, 8);
+
+		$this->mediaService->updateImage(
+			$location,
+			$location->map(),
+			$request->map,
+			"$userDir/$projectDir/locations"
+		);
+	}
 }

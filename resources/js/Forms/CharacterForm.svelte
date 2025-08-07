@@ -2,32 +2,41 @@
 	import { page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
+	import CharacterRelationshipForm from '@/Forms/CharacterRelationshipForm.svelte'
+
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
-	import Form from '@/Components/Form'
+	import CharacterCardNew from '@/Components/CharacterCardNew.svelte'
+	import Field from '@/Components/Field.svelte'
+	import Form from '@/Components/Form.svelte'
 	import Heading from '@/Components/Heading.svelte'
+	import Modal from '@/Components/Modal.svelte'
 	import Section from '@/Components/Section.svelte'
 
 	//  Props
 
-	let project = $page.props.active_project.data
+	const activeProject = $page.props.activeProject.data
+	
 	let { character } = $props()
 
 	//  Form
 
 	let startData = {
-		image: character?.image || null,
+		portrait: character?.portrait || null,
         name: character?.name || null,
 		alias: character?.alias || null,
         description: character?.description || null,
-		custom_fields: character?.custom_fields || []
+		faction_id: character?.faction_id || null,
+		location_id: character?.location_id || null,
+		relationships: character?.relationships || null,
+		custom_fields: character?.customFields || []
 	}
 
 	//  Process the custom fields and make sure they are
 	//  populated correctly if the character is being edited
-	project?.custom_fields?.forEach((field) => {
+	activeProject?.customFields?.forEach((field) => {
 
-		let characterData = character?.custom_field_values.find(f => f.custom_field_id === field.id)?.value
+		let characterData = character?.customFieldValues.find(f => f.customFieldId === field.id)?.value
 		let value = characterData || (field.type === 'checkbox' ? false : '')
 
 		startData.custom_fields.push({
@@ -40,6 +49,9 @@
 	})
 
 	const form = useForm(startData)
+
+	let addingRelationshipModal = $state(false)
+	let activeRelationship      = $state(null)
 
 	//  Functions
 
@@ -72,34 +84,75 @@
 	function updateCharacter(slug) {
 		$form.patch(route('characters.update', {character: slug}))
 	}
+
+	function openRelationshipModal(e, rel) {
+		activeRelationship = rel
+		addingRelationshipModal = true
+	}
+
+	function closeModal() {
+		activeRelationship = null
+		addingRelationshipModal = false
+	}
+
+	function handleRelationship(e, formData) {
+		e.preventDefault();
+		addingRelationshipModal = false
+
+		if ($form.relationships.find(rel => rel.id === formData.related.id) ) {
+			$form.relationships = $form.relationships.map(r => {
+				return r.id === formData.related.id
+					? { ...r,
+						id: formData.related.id,
+						name: formData.related.name,
+						role: formData.related_role,
+						parentRole: formData.character_role,
+						slug: formData.related.slug
+					} : r
+				
+			})
+		} else {
+			$form.relationships = [ ...$form.relationships, {
+				id: formData.related.id,
+				name: formData.related.name,
+				role: formData.related_role,
+				parentRole: formData.character_role,
+				slug: formData.related.slug
+			} ]
+		}
+	}
 	
 </script>
 
 
+
+
 <Form>
-	
+
 	<!-- MAIN INFORMATION-->
 	
 	<Section class="space-y-6">
 
 		<Heading is="h2" as="h5"
 			heading={character ? "Edit Character" : "New Character"}
-			subheading={character ? "Edit your character's details." : "Build a new character to add to your " + project.name + " project."}
+			subheading={character ? "Edit your character's details." : "Build a new character to add to this project."}
 			class="mb-12"
 		/>
 
-		<Form.Field
+		<Field
 			type="file"
-			id="image"
+			id="portrait"
 			layout="block"
-			class="w-full"
-			bind:value={$form.image}
-			description="Upload an image of the character."
-			errors={$form.errors.image}
+			bind:value={$form.portrait}
+			description="Upload a portrait of the character."
+			errors={$form.errors.portrait}
 			label="Image"
+			inputClass="h-48 w-40"
 		/>
 
-		<Form.Field
+		<!-- <pre>{JSON.stringify($form.portrait,null,4)}</pre> -->
+
+		<Field
 			type="text"
 			id="name"
 			layout="block"
@@ -111,7 +164,7 @@
 			required
 		/>
 
-		<Form.Field
+		<Field
 			type="textarea"
 			id="description"
 			layout="block"
@@ -129,14 +182,22 @@
 		title="Relationships"
 		subtitle="Other characters that this character has a relationship with."
 	>
-		{#each character?.relationships as relationship, i}
-			<Card
-				character={relationship}
-				subtitle={relationship.role}
-				image={relationship.image_path}
-				href={route('characters.show', {character: relationship.slug})}
+		<div class="flex items-start flex-wrap gap-1.5">
+			{#each $form.relationships as relationship, i}
+				<Card
+					class="w-32"
+					title={relationship.name}
+					subtitle={relationship.role}
+					icon="User"
+					image={relationship.portrait?.url}
+					onclick={(e) => openRelationshipModal(e, relationship)}
+				/>
+			{/each}
+			<CharacterCardNew
+				class="w-32"
+				onclick={openRelationshipModal}
 			/>
-		{/each}
+		</div>
 	</Section>
 
 	<!-- CUSTOM FIELDS -->
@@ -144,9 +205,10 @@
 	<Section
 		title="Custom Fields"
 		subtitle="Custom fields for this character."
+		class="space-y-6"
 	>
-		{#each project.custom_fields as field, i}
-			<Form.Field
+		{#each activeProject.customFields as field, i}
+			<Field
 				type={field.type}
 				id={getFieldName(field.name)}
 				layout="block"
@@ -178,3 +240,9 @@
 	</Section>
 	
 </Form>
+
+<Modal show={addingRelationshipModal} onclose={closeModal} class="flex items-start p-6">
+	{#if addingRelationshipModal}
+		<CharacterRelationshipForm character={character} relationship={activeRelationship} oncancel={closeModal} onsubmit={handleRelationship} />
+	{/if}
+</Modal>

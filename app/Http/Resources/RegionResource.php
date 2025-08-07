@@ -22,10 +22,13 @@ class RegionResource extends JsonResource
 			'name'        => $this->name,
 			'description' => $this->description,
 
-			'banner'      => $this->banner,
-			'banner_path' => $this->banner ? Storage::url($this->banner) : null,
-			'map'         => $this->map,
-			'map_path'    => $this->map ? Storage::url($this->map) : null,
+			'banner' => new MediaResource($this->whenLoaded('banner')),
+			'map'    => new MediaResource($this->whenLoaded('map')),
+
+			// 'banner'      => $this->banner,
+			// 'banner_path' => $this->banner ? Storage::url($this->banner) : null,
+			// 'map'         => $this->map,
+			// 'map_path'    => $this->map ? Storage::url($this->map) : null,
 
 			'locations'      => LocationResource::collection($this->whenLoaded('locations')),
 

@@ -1,45 +1,41 @@
-<!-- SCRIPT -->
-
 <script>
-
-	//	Import onMount from Svelte to handle component lifecycle
     import { onMount } from 'svelte'
 
-	//  Import Components to use within this component
 	import Button from '@/Components/Button.svelte'
+	import Icon from '@/Components/Icon.svelte'
 
-	//	Define the component properties using $props
     let {
         class: className,
+		icon,
         value = $bindable(),
-        ...attrs
+        ...restProps
     } = $props()
 
-	//	Declare a variable to hold the input element reference
     let input
+	let hasFocus = $state(false)
+	let step     = $state( Number(restProps.step) || 1 )
 
-	//	Export a function to focus the input element
+	function checkFocus() {
+		hasFocus = document.activeElement === input;
+	}
+
     export function focus() {
         input?.focus()
     }
 
-	//	Use onMount to focus the input element if autofocus is set
     onMount(() => {
-        if (attrs.autofocus && input) {
+        if (restProps.autofocus && input) {
             input.focus()
         }
     })
 
-	//	Use $state to create a reactive state for the step value
-	let step = $state( Number(attrs.step) || 1 )
-
-	//	Functions to increment and decrement the value by the specified step amount (default 1), ensuring it stays within min and max bounds
 	function decrement() {
-		if (attrs.min && Number(attrs.min) > Number(value) - step) { return }
+		if (restProps.min && Number(restProps.min) > Number(value) - step) { return }
 		value = Number(value) - step
 	}
+
 	function increment() {
-		if (attrs.max && Number(attrs.max) < Number(value) + step) { return }
+		if (restProps.max && Number(restProps.max) < Number(value) + step) { return }
 		value = Number(value) + step
 	}
 
@@ -47,67 +43,37 @@
 
 
 
-<!-- STRUCTURE -->
 
-<div class="form-number style-input">
+
+<div class="input-number {className}" class:disabled={restProps.disabled} class:focus={hasFocus}>
+
+	{#if icon}
+		<Icon class="input-icon" name={icon} size={20} weight="regular" />
+	{/if}
 
 	<input type="number"
-		{...attrs}
-		aria-disabled={attrs.disabled ? 'true' : undefined}
-		class="{className}"
+		aria-disabled={restProps.disabled ? 'true' : undefined}
+		class="input-element {icon ? "pl-icon" : ""}"
 		bind:value
 		bind:this={input}
+		onfocus={checkFocus}
+		onblur={checkFocus}
+		{...restProps}
 	/>
 
-	<Button style="plain" theme={value - step < attrs.min ? "neutral" : "accent"}
-		class="form-number-button left-1"
-		disabled={value - step < attrs.min}
-		icon="Minus"
-		onclick={decrement}
-	/>
-
-	<Button style="plain" theme={value + step > attrs.max ? "neutral" : "accent"}
-		class="form-number-button right-1"
-		disabled={value + step > attrs.max}
-		icon="Plus"
-		onclick={increment}
-	/>
+	<div class="flex items-center">
+		<Button style="plain" theme={value - step < restProps.min ? "neutral" : "accent"}
+			class="input-action"
+			disabled={value - step < restProps.min || restProps.disabled}
+			icon="Minus" iconSize={16}
+			onclick={decrement}
+		/>
+		<Button style="plain" theme={value + step > restProps.max ? "neutral" : "accent"}
+			class="input-action"
+			disabled={value + step > restProps.max || restProps.disabled}
+			icon="Plus" iconSize={16}
+			onclick={increment}
+		/>
+	</div>
 
 </div>
-
-
-
-<!-- STYLE -->
-
-<style lang="postcss">
-
-	.form-number {
-		@apply relative flex items-center min-h-10 rounded-lg w-full;
-
-		:global(.form-number-button) {
-			@apply absolute border flex-shrink-0 rounded-md w-8;
-			/* @apply bg-slate-100 hover:bg-slate-300 border-slate-200 text-emerald-500; */
-
-			&.disabled {
-				background-color: var(--bg-disabled);
-				border-color: var(--border-disabled);
-				color: var(--text-disabled);
-				cursor: not-allowed;
-			}
-		}
-
-		input {
-			@apply bg-transparent border-none;
-			@apply px-11 rounded-lg w-full;
-			@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
-
-			&::placeholder {
-				color: var(--text-placeholder);
-				font-style: italic;
-				opacity: 75%;
-			}
-		}
-
-	}
-
-</style>
