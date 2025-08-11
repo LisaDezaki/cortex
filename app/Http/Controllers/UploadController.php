@@ -20,14 +20,18 @@ class UploadController extends Controller
 	public function uploadTemp(Request $request)
 	{
 		$request->validate([
-			'file' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Adjust mime types and max size as needed
+			'files' => 'array',
+			'files.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-		$file = $request->file('file');
-		$fileInfo = $this->mediaService->storeTempFile($file);
-		$fileInfo['path'] = Storage::url($fileInfo['temp_path']);
+		$filesData = [];
+		$files = $request->file('files');
+		foreach ($files as $file) {
+			$fileInfo = $this->mediaService->storeTempFile($file);
+			$filesData[] = $fileInfo;
+		}
 		return response()->json([
 			'success' => true,
-			'file' => $fileInfo
+			'files' => $filesData
 		]);
 	}
 

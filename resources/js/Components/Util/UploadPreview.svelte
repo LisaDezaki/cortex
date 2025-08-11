@@ -5,7 +5,9 @@
 
 	let {
 		children,
-		class: className
+		class: className,
+		layoutClass,
+		imageClass,
 	} = $props();
 
 	function getPreviewUrl(file) {
@@ -15,19 +17,23 @@
 
 <div class="upload-preview relative {className}">
 
-	<div class="absolute flex items-center justify-center">
+	<div class="absolute inset-0 grid grid-cols-{$files.length} gap-1.5 justify-center {layoutClass}">
 		{#each $files as file}
-			<img src={getPreviewUrl(file)} alt={file.name} class="preview-image" />
+			<img src={getPreviewUrl(file)} alt={file.name} class="preview-image {imageClass}" />
 		{/each}
 	</div>
 
-	{@render children(files, clearFiles)}
+	{@render children?.(files, clearFiles)}
 
 </div>
 
 <style lang="postcss">
 	.upload-preview {
-		@apply overflow-hidden;
+		@apply min-h-16 min-w-16 overflow-hidden w-full;
 		background-color: var(--bg-neutral-softest);
+
+		.preview-image {
+			@apply object-cover min-h-full min-w-full;
+		}
 	}
 </style>

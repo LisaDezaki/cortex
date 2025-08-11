@@ -3,7 +3,9 @@
 	import { route } from 'momentum-trail'
 
 	import CharacterRelationshipForm from '@/Forms/CharacterRelationshipForm.svelte'
-
+	
+	
+	
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
 	import CardGrid from '@/Components/CardGrid.svelte'
@@ -149,7 +151,20 @@
 			heading={character ? "Edit Character" : "New Character"}
 		/>
 
-		<!-- <pre>{JSON.stringify(personalityTraits,null,3)}</pre> -->
+		<!-- Portrait -->
+
+		<Field layout="block" inputClass="w-56"
+			type="file"
+			id="portrait"
+			aspect="square"
+			label="Image"
+			description="Upload a portrait of the character."
+			icon="Image"
+			placeholder="Upload a portrait..."
+			preview={character?.portrait?.url}
+			bind:value={$form.portrait}
+			errors={$form.errors.portrait}
+		/>
 
 		<!-- Slug -->
 
@@ -190,19 +205,7 @@
 
 		
 
-		<!-- Portrait -->
-
-		<!-- <Field layout="block" inputClass="aspect-square h-72 w-72"
-			type="file"
-			id="portrait"
-			label="Image"
-			description="Upload a portrait of the character."
-			icon="Image"
-			placeholder="Upload a portrait..."
-			preview={character?.portrait?.url}
-			bind:value={$form.portrait}
-			errors={$form.errors.portrait}
-		/> -->
+		
 
 		<!-- Faction -->
 

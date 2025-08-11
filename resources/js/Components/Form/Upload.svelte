@@ -4,10 +4,15 @@
 	import { useForm } from '@inertiajs/svelte';
 	import { route } from 'momentum-trail';
 
+	import UploadContext from '@/Components/Util/UploadContext.svelte'
+	import UploadPreview from '@/Components/Util/UploadPreview.svelte'
+	import UploadTrigger from '@/Components/Util/UploadTrigger.svelte'
+
 	import Button from '@/Components/Button.svelte';
 	import Icon from '@/Components/Icon.svelte';
 
 	let {
+		aspect = "square",
 		class: className,
 		altText = '',
 		accept = 'image/*',
@@ -83,75 +88,20 @@
 
 </script>
 
+<UploadContext bind:value={value}>
+	<UploadTrigger label="Upload Portrait" class="input flex-col p-2 {className}">
 
+		<UploadPreview class="aspect-{aspect}" />
 
-<label for={id} class="input-upload {className}" class:disabled class:focus={hasFocus}>
+		<div class="flex items-center gap-2 p-1 w-full">
+			<Icon name={icon || "File"} size="md" />
+			{#if value}
+				<span class="inline-flex items-center h-8 line-clamp-1 truncate">{value}</span>
+				<Button class="input-action ml-auto" icon="X" iconSize="sm" theme="danger" onclick={handleRemoveClick} disabled={disabled} />
+			{:else}
+				<span class="input-placeholder inline-flex items-center h-8 line-clamp-1 truncate">{placeholder || "Upload a portrait..."}</span>
+			{/if}
+		</div>
 
-	<div class="input-upload-preview">
-		{#if $uploadForm.path || $uploadForm.blob || preview}
-			<img
-				src={$uploadForm.path || $uploadForm.blob || preview}
-				alt={altText}
-				class="preview-image"
-			/>
-			<button class="image-replace" type="button" onclick={handleReplaceClick} disabled={disabled}>
-				<span>Replace</span>
-			</button>
-		{:else}
-			<Icon name="UploadSimple" size="md" />
-		{/if}
-	</div>
-
-	<div class="input-value {icon ? "pl-icon" : ""}">
-		<Icon class="input-icon" name={icon} size="md" />
-		{#if value}
-			<span class="inline-flex items-center h-8 line-clamp-1 truncate">{value}</span>
-			<Button class="input-action ml-auto" icon="X" iconSize="sm" theme="danger" onclick={handleRemoveClick} disabled={disabled} />
-		{:else}
-			<span class="input-placeholder inline-flex items-center h-8 line-clamp-1 truncate">{placeholder}</span>
-		{/if}
-	</div>
-
-	<input id={id} class="absolute opacity-0 pointer-events-none"
-		bind:this={input}
-		accept={accept}
-		disabled={disabled}
-		onchange={handleFileChange}
-		onfocus={checkFocus}
-		onblur={checkFocus}
-		type="file"
-	{...restProps} />
-	
-</label>
-
-
-
-<style lang="postcss">
-
-	.input-upload {
-		@apply relative flex flex-col items-center justify-center gap-1 min-h-48 min-w-28 p-1;
-		@apply border rounded-lg cursor-pointer overflow-hidden;
-		&.disabled {
-			@apply cursor-not-allowed;
-			background-color: var(--bg-disabled);
-			border-color: var(--border-disabled);
-			color: var(--text-disabled);
-		}
-		&:hover {		
-			.image-replace {
-				opacity: 1;
-			}
-		}
-
-		.input-upload-preview {
-			@apply relative flex items-center justify-center h-full min-w-full max-w-none max-h-none object-cover overflow-hidden rounded;
-			background-color: var(--bg-neutral-softest);
-		}
-		.image-replace {
-			@apply absolute inset-0 h-full rounded w-full text-white;
-			@apply backdrop-blur-sm transition-all;
-			opacity: 0;
-		}
-	}
-
-</style>
+	</UploadTrigger>
+</UploadContext>

@@ -5,11 +5,16 @@
 	
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
+	import UploadContext from '@/Components/Util/UploadContext.svelte'
+	import UploadPreview from '@/Components/Util/UploadPreview.svelte'
+	import UploadTrigger from '@/Components/Util/UploadTrigger.svelte'
+
 	import Article     from '@/Components/Article.svelte'
 	import Avatar      from '@/Components/Avatar.svelte'
 	import Badge       from '@/Components/Badge.svelte'
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
 	import Button      from '@/Components/Button.svelte'
+	import Checkbox    from '@/Components/Form/Checkbox.svelte'
 	import Dropdown    from '@/Components/Dropdown.svelte'
 	import Form        from '@/Components/Form.svelte'
 	import Field       from '@/Components/Field.svelte'
@@ -90,7 +95,7 @@
 
 	{#snippet article()}
 		<Section>
-			<Tabs value="tab2">
+			<Tabs value="tab1">
 
 				<Tabs.List class="max-w-4xl">
 					<Tabs.Trigger value="tab1">General</Tabs.Trigger>
@@ -105,6 +110,20 @@
 						heading="General Components"
 						class="mt-12 mb-12"
 					/>
+
+					<UploadContext bind:value={$form.upload}>
+						<UploadTrigger />
+						<UploadPreview class="aspect-square h-48 w-72" />
+					</UploadContext>
+
+					<pre>{JSON.stringify($form.upload)}</pre>
+					
+					<UploadContext bind:value={$form.upload_multi} multiple>
+						<UploadTrigger />
+						<UploadPreview class="aspect-square h-48 w-72" />
+					</UploadContext>
+					
+					<pre>{JSON.stringify($form.upload_multi)}</pre>
 
 					<!-- Avatar -->
 
@@ -627,14 +646,14 @@
 					/>
 
 					{#snippet headRow()}
-						<Table.Head shrink={true}><Form.Checkbox checked={false} /></Table.Head>
+						<Table.Head shrink={true}><Checkbox checked={false} /></Table.Head>
 						<Table.Head sortable={true}>Name</Table.Head>
 						<Table.Head sortable={true}>Role</Table.Head>
 						<Table.Head sortable={true}>Color</Table.Head>
 					{/snippet}
 
 					{#snippet bodyRow(item)}
-						<Table.Cell shrink={true}><Form.Checkbox checked={false} /></Table.Cell>
+						<Table.Cell shrink={true}><Checkbox checked={false} /></Table.Cell>
 						<Table.Cell><Thumbnail class="w-9" src="/img/avatar.jpg" alt="User" />{item.name}</Table.Cell>
 						<Table.Cell>{item.role}</Table.Cell>
 						<Table.Cell>{item.color}</Table.Cell>
