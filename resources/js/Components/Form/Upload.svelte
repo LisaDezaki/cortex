@@ -86,8 +86,8 @@
 
 
 <label for={id} class="input-upload {className}" class:disabled class:focus={hasFocus}>
-	<div class="input-upload-preview">
 
+	<div class="input-upload-preview">
 		{#if $uploadForm.path || $uploadForm.blob || preview}
 			<img
 				src={$uploadForm.path || $uploadForm.blob || preview}
@@ -100,20 +100,18 @@
 		{:else}
 			<Icon name="UploadSimple" size="md" />
 		{/if}
-
 	</div>
+
 	<div class="input-value {icon ? "pl-icon" : ""}">
-
 		<Icon class="input-icon" name={icon} size="md" />
-
 		{#if value}
 			<span class="inline-flex items-center h-8 line-clamp-1 truncate">{value}</span>
 			<Button class="input-action ml-auto" icon="X" iconSize="sm" theme="danger" onclick={handleRemoveClick} disabled={disabled} />
 		{:else}
 			<span class="input-placeholder inline-flex items-center h-8 line-clamp-1 truncate">{placeholder}</span>
 		{/if}
-
 	</div>
+
 	<input id={id} class="absolute opacity-0 pointer-events-none"
 		bind:this={input}
 		accept={accept}
@@ -123,6 +121,7 @@
 		onblur={checkFocus}
 		type="file"
 	{...restProps} />
+	
 </label>
 
 
@@ -130,7 +129,7 @@
 <style lang="postcss">
 
 	.input-upload {
-		@apply relative flex flex-col items-center justify-center gap-1 h-48 min-w-28 p-1;
+		@apply relative flex flex-col items-center justify-center gap-1 min-h-48 min-w-28 p-1;
 		@apply border rounded-lg cursor-pointer overflow-hidden;
 		&.disabled {
 			@apply cursor-not-allowed;

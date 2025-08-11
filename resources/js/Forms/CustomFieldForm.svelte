@@ -5,13 +5,18 @@
     import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
+	import DragHandle from '@/Components/DragHandle.svelte'
+	import Field from '@/Components/Field.svelte'
 	import Form from '@/Components/Form.svelte'
 	import Icon from '@/Components/Icon.svelte'
+	import Input from '@/Components/Input.svelte'
+	import Label from '@/Components/Form/Label.svelte'
+	import ReorderableList from '@/Components/ReorderableList.svelte'
 
 	//  Props
     let {
 		class: className,
-		data,
+		field,
         oncancel = () => {}
     } = $props()
 
@@ -23,20 +28,22 @@
 		default: '',
 		description: '',
 		label: '',
+		filetype: 'image',
 		placeholder: '',
 		required: false,
-		options: [{label:'',value:''},{label:'',value:''}],
+		options: [ "", "" ],
 		min: '',
 		max: '',
 		rows: ''
 	}
 
 	let multiline = $state(false)
+	let inputType = $state('text')
 
 	//  The form object needs to be reactive to changes in the data prop
-	const form = useForm(data || blankData)
+	let form = useForm(field || blankData)
 	$effect(() => {
-		for (const [key, value] of Object.entries(data || blankData)) {
+		for (const [key, value] of Object.entries(field || blankData)) {
 			$form[key] = value
 		}
 	})
@@ -45,10 +52,13 @@
 
 	//  Methods
     
+	function setType(type) {
+		inputType = type
+	}
 
 	function setData() {
-		if (data == null) { resetData(); return }
-		for (const [key, value] of Object.entries(data)) {
+		if (field == null) { resetData(); return }
+		for (const [key, value] of Object.entries(field)) {
 			$form[key] = value
 		}
 	}
@@ -56,7 +66,6 @@
 	function resetData() {
 		let freshData = {
 			id: null,
-			fieldable_type: $form.fieldable_type,
 			...blankData
 		}
 		for (const [key, value] of Object.entries(freshData)) {
@@ -67,7 +76,7 @@
 	function addOption() {
 		$form.options = [
 			...$form.options,
-			{ label: '', value: '' }
+			""
 		]
 	}
 	function removeOption(index) {
@@ -81,44 +90,48 @@
 	function submit(e) {
 		e.preventDefault()
 
+		console.log('submitting')
+
 		//  Map prop data to form data
-		for (const [key, value] of Object.entries(data)) {
-			$form[key] = value
+		if (field) {
+			for (const [key, value] of Object.entries(field)) {
+				$form[key] = value
+			}
 		}
 
 		//  Map options to form data if applicable
-		$form.options = $form.type == 'select'
-			? $form.options.map(o => o.label)
-			: null
+		// $form.options = $form.type == 'select'
+		// 	? $form.options
+		// 	: null
 
 		//  Post data to server and handle response
-		if (data.id) {
-			$form.post( route('customfields.update', { field: data.id }, {
-				onSuccess: () => {
-					oncancel()
-				}
-			}) )
-		} else {
-			$form.post( route('customfields.store'), {
-				onSuccess: (a,b) => {
-					oncancel()
-				}
-			} )
-		}
+		// if (data.id) {
+		// 	$form.post( route('customfields.update', { field: data.id }, {
+		// 		onSuccess: () => {
+		// 			oncancel()
+		// 		}
+		// 	}) )
+		// } else {
+		// 	$form.post( route('customfields.store'), {
+		// 		onSuccess: (a,b) => {
+		// 			oncancel()
+		// 		}
+		// 	} )
+		// }
 	}
 
 </script>
 
 <Form
-	class="relative {className}"
+	class="relative {className} flex flex-col h-full"
 	onsubmit={submit}
 	enctype="multipart/form-data"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
-	<div class="flex space-y-3">
+	<div class="flex flex-1 overflow-hidden">
 
-		<div class="flex flex-col items-start border-r py-4 w-32">
+		<div class="flex flex-col items-start border-r py-4 w-40">
 			{#each [
 				{ value: 'text',   label: 'Text',    icon: 'TextAa' },
 				{ value: 'number', label: 'Number',  icon: 'Hash' },
@@ -126,170 +139,186 @@
 				{ value: 'switch', label: 'Switch',  icon: 'ToggleRight' },
 				{ value: 'select', label: 'Options', icon: 'RowsPlusBottom' },
 				{ value: 'entity', label: 'Entity',  icon: 'Table' },
-				{ value: 'upload', label: 'File',    icon: 'ImageSquare' }
+				{ value: 'upload', label: 'File',    icon: 'File' }
 			] as type}
-				<Button
-					class={type.value == $form.type ? 'text-emerald-500' : ''}
-					onclick={() => $form.type = type.value}
-					icon={type.icon}
-					iconSize={20}
-					iconWeight="regular"
-					label={type.label}
-				/>
+				<button type="button"
+					class="flex gap-2 px-2 py-1 w-full {type.value == inputType ? 'text-emerald-500' : ''} hover:bg-slate-500/10"
+					onclick={() => setType(type.value)}
+				>
+					<Icon name={type.icon} size="md" weight="regular" />
+					<span>{type.label}</span>
+				</button>
 			{/each}
+
 		</div>
 
-		<div class="flex flex-col gap-3 p-6 min-h-[420px] w-full overflow-y-auto">
-
-			<div class="flex items-center justify-end -mt-6 -mr-4">
-
-				<h4 class="font-style-h6 text-slate-500 w-full">Custom {$form.type} field</h4>
-
-				<Button
-					class="text-rose-500"
-					onclick={oncancel}
-					icon='X'
-					iconSize={24}
-					iconWeight="regular"
-				/>
-			</div>
-
-			<!-- <pre>{JSON.stringify(data, null, 2)}</pre> -->
+		<div class="flex flex-grow flex-col gap-1 px-6 py-3 h-full min-h-[420px] overflow-y-auto w-96">
 
 			<!-- Name -->
 	
-			<Form.Field
+			<Field
 				type="text"
 				required
 				id="name"
-				description="Name your custom field. This will be shown to the user when they fill out the form."
-				errors={$form.errors.name}
 				label="Name"
 				placeholder="Custom field name"
-				bind:value={$form.name}
+				bind:value={$form.label}
+				errors={$form.errors.label}
 				autofocus
 			/>
 
 			<!-- Placeholder -->
 	
-			<!-- {#if ['text', 'textarea', 'link', 'number', 'select'].includes($form.type)}
-				<Form.Field
-					type={$form.type == 'number' ? "number" : "text"}
+			{#if ['text', 'textarea', 'link', 'number', 'select'].includes(inputType)}
+				<Field
+					type="text"
 					id="placeholder"
-					description="The placeholder text that will be shown in the field as an example to the user. This can be left empty."
 					errors={$form.errors.placeholder}
 					label="Placeholder"
-					placeholder={$form.type == 'number' ? "0" : "Empty"}
+					placeholder={inputType == 'number' ? "0" : "Empty"}
 					bind:value={$form.placeholder}
 				/>
-			{/if} -->
+			{/if}
 
 			<!-- Description -->
 	
-			{#if ['text', 'textarea', 'number', 'select', 'upload', 'entity'].includes($form.type)}
-				<Form.Field
+			{#if ['text', 'textarea', 'number', 'select', 'upload', 'entity'].includes(inputType)}
+				<Field
 					type="text"
 					id="description"
-					description="A short description of the field's purpose, that will be shown as a tooltip if the user hovers on the 'help' icon, like you are now."
-					errors={$form.errors.description}
-					label="Field description"
-					placeholder="Write a description of this field's purpose..."
+					label="Description"
+					placeholder="Describe the field..."
 					bind:value={$form.description}
+					errors={$form.errors.description}
 				/>
 			{/if}
 
 			<!-- Checkbox label -->
 	
-			<!-- {#if ['checkbox', 'radio', 'switch'].includes($form.type)}
-				<Form.Field
+			{#if ['checkbox', 'radio', 'switch'].includes(inputType)}
+				<Field
 					required
 					type="text"
 					id="label"
-					description="The label that will be shown next to the toggle switch."
 					errors={$form.errors.label}
 					label="Descriptive label"
 					placeholder="Write a descriptive label"
 					bind:value={$form.label}
 				/>
-			{/if} -->
+			{/if}
 
 			<!-- Options -->
 	
-			{#if $form.type == 'select'}
+			{#if inputType == 'select'}
+
+				<!-- <pre>{JSON.stringify($form.options)}</pre> -->
+
 				<div>
-					<Form.Label
-						required
-						value="Field options"
-						description="The available options for this field. There must be at least two options."
+					<Field
+						label="Field options"
+						description="There must be at least two options available."
 					/>
-					<ul>
-						{#each $form.options as option, i}
-							<li class="flex items-center w-full mb-1">
-								<button class="flex items-center p-2 cursor-move">
-									<Icon name="DotsSixVertical" size={24} />
-								</button>
-								<Form.Field
+					<ReorderableList bind:items={$form.options}>
+						{#snippet itemTemplate(item, index)}
+							<li class="flex items-center gap-1 w-full mb-1">
+								<DragHandle />
+								<Input
 									type="text"
-									id="option_{i+1}"
+									id="option_{index+1}"
 									class="flex-grow"
-									errors={$form.errors.options}
-									placeholder="Option {i+1}"
-									bind:value={option.label}
+									placeholder="Option {index+1}"
+									bind:value={$form.options[index]}
+									errors={$form.errors.options?.[index]}
 								/>
 								{#if $form.options.length > 2}
-									<button class="flex items-center p-2 text-rose-500" type="button" onclick={() => removeOption(i)}>
-										<Icon name="X" size={24} />
-									</button>
+									<Button style="plain" theme="danger"
+										icon="X" iconSize="md"
+										onclick={() => removeOption(i)}
+									/>
 								{/if}
 							</li>
-						{/each}
-					</ul>
+						{/snippet}
+					</ReorderableList>
 					<div class="flex justify-center">
-						<Button secondary class="h-10 mx-auto w-12" type="button" icon="Plus" onclick={addOption} />
+						<Button style="soft" theme="accent" class="h-10 mx-auto w-12" type="button" icon="Plus" onclick={addOption} />
 					</div>
 				</div>
 			{/if}
 
 			<!-- Min. & Max. -->
 	
-			{#if ['number', 'slider'].includes($form.type)}
+			{#if ['number', 'slider'].includes(inputType)}
 				<div class="flex items-center gap-2">
-					<Form.Field
+					<Field
 						type="number"
 						id="min"
-						description="The smallest value that this field can have."
-						errors={$form.errors.min}
-						label="Minimum value"
+						label="Minimum"
 						placeholder={0}
 						bind:value={$form.min}
+						errors={$form.errors.min}
 					/>
 	
-					<Form.Field
+					<Field
 						type="number"
 						id="default"
-						errors={$form.errors.default}
-						label="Default value"
+						label="Default"
 						placeholder={1}
 						bind:value={$form.default}
+						errors={$form.errors.default}
 					/>
 	
-					<Form.Field
+					<Field
 						type="number"
 						id="max"
-						description="The largest value that this field can have."
-						errors={$form.errors.max}
-						label="Maximum value"
+						label="Maximum"
 						placeholder={255}
 						bind:value={$form.max}
+						errors={$form.errors.max}
 					/>
 				</div>
+			{/if}
+
+			<!-- Entity Type -->
+	
+			{#if ['entity'].includes(inputType)}
+				<Field
+					type="select"
+					id="entitytype"
+					label="Entity Type"
+					placeholder="Select an entity type"
+					bind:value={$form.filetype}
+					errors={$form.errors.filetype}
+					options={[
+						{ icon: 'User',            label: 'Character', value: 'character' },
+						{ icon: 'FlagBannerFold',  label: 'Faction', value: 'faction' },
+						{ icon: 'MapPin',          label: 'Location', value: 'location' }
+					]}
+				/>
+			{/if}
+
+			<!-- File Type -->
+	
+			{#if ['upload'].includes(inputType)}
+				<Field
+					type="select"
+					id="filetype"
+					label="File Type"
+					bind:value={$form.filetype}
+					errors={$form.errors.filetype}
+					options={[
+						{ icon: 'FileAudio', label: 'Audio',    value: 'audio'    },
+						{ icon: 'FileText',  label: 'Document', value: 'document' },
+						{ icon: 'FileImage', label: 'Image',    value: 'image'    },
+						{ icon: 'FileVideo', label: 'Video',    value: 'video'    }
+					]}
+				/>
 			{/if}
 
 			<!-- Multiline -->
 	
 			<!-- {#if ['text', 'textarea'].includes($form.type)}
 				<div class="grid grid-cols-2 items-center gap-2">
-					<Form.Field
+					<Field
 						type="switch"
 						id="multiline"
 						class="pt-6"
@@ -299,7 +328,7 @@
 						onCheckedChange={toggleMultiline}
 					/>
 					{#if multiline}
-						<Form.Field
+						<Field
 							type="number"
 							id="rows"
 							description="The number of rows that this text area will have."
@@ -317,7 +346,7 @@
 			<!-- Required -->
 		
 			<!-- {#if $form.type !== 'switch'}
-				<Form.Field
+				<Field
 					type="switch"
 					id="required"
 					class="pt-8"
@@ -327,7 +356,7 @@
 					bind:checked={$form.required}
 				/>
 			{/if} -->
-			<div class="mt-auto flex-shrink-0">
+			<!-- <div class="mt-auto flex-shrink-0">
 				<div class="flex items-center justify-center gap-3 pt-2">
 					<Button style="hard" theme="neutral"
 						type="button"
@@ -339,10 +368,23 @@
 						label="Save Custom Field"
 					/>
 				</div>
-			</div>
+			</div> -->
 		</div>
 		
 	</div>
 
+	<div class="border-t flex-0 flex justify-end min-h-12">
+		<Button style="hard" theme="neutral" class="border-none rounded-none px-4 w-1/2"
+			type="button"
+			icon="X"
+			label="Cancel"
+			onclick={oncancel}
+		/>
+		<Button style="hard" theme="accent" class="border-none rounded-none px-4 w-1/2"
+			type="submit"
+			icon="Check"
+			label="Save"
+		/>
+	</div>
 
 </Form>

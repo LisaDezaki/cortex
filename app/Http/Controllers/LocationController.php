@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CustomFieldResource;
 use App\Http\Resources\LocationResource;
 use App\Http\Requests\StoreLocationRequest;
 use App\Models\CustomField;
@@ -35,12 +36,36 @@ class LocationController extends Controller
 
     public function index()
     {
-        return Inertia::render('Locations/Index');
+		$active_project = Auth::user()->active_project;
+		if (!$active_project) {
+			return Redirect::route('projects');
+		}
+		
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'faction'
+		])->with('options')->get();
+
+        return Inertia::render('Locations/Index', [
+			'customFields' => CustomFieldResource::collection($customFields)
+		]);
     }
 
     public function create()
     {
-		return Inertia::render('Locations/Create');
+		$active_project = Auth::user()->active_project;
+		if (!$active_project) {
+			return Redirect::route('projects');
+		}
+		
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'faction'
+		])->with('options')->get();
+
+		return Inertia::render('Locations/Create', [
+			'customFields' => CustomFieldResource::collection($customFields)
+		]);
     }
 
     public function store(StoreLocationRequest $request)
@@ -60,7 +85,7 @@ class LocationController extends Controller
 	{
 		$location->load([
 			'banner',
-			'characters',
+			'characters.portrait',
 			'map',
 			'region'
 		]);
@@ -72,13 +97,26 @@ class LocationController extends Controller
 
     public function edit(Location $location)
     {
+		$active_project = Auth::user()->active_project;
+		if (!$active_project) {
+			return Redirect::route('projects');
+		}
+
         $location->load([
-			'characters',
+			'banner',
+			'characters.portrait',
+			'map',
 			'region'
 		]);
 
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'faction'
+		])->with('options')->get();
+
 		return Inertia::render('Locations/Edit', [
 			'location' => new LocationResource($location),
+			'customFields' => CustomFieldResource::collection($customFields)
 		]);
     }
 
@@ -89,6 +127,8 @@ class LocationController extends Controller
 		$this->handleBanner($request, $location);
 		$this->handleMap($request, $location);
 		// $this->handleCustomFields($validatedData['custom_fields'], $location);
+		unset($location->banner);
+		unset($location->map);
 		$location->update();
 		return Redirect::route("locations.show", [
 			'location' => $location->slug

@@ -6,6 +6,7 @@
 		cols,
 		controls,
 		class: className,
+		empty,
 		filters,
 		items,
 		showControls = false,
@@ -34,6 +35,8 @@
 			<li class="w-full">
 				{@render card(item, showItemControls)}
 			</li>
+		{:else}
+			{@render empty()}
 		{/each}
 	{:else if children}
 		{@render children()}

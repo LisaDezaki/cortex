@@ -142,7 +142,7 @@
 <style lang="postcss">
 
 	:global(.input) {
-		@apply relative flex items-center min-h-10 p-1 rounded-lg;
+		@apply relative inline-flex items-center min-h-10 p-1 rounded-lg;
 		background-color: var(--bg-white);
 		border: none;
 		color: var(--text-input);
@@ -228,7 +228,7 @@
 	}
 
 	:global(.input-content) {
-		@apply block max-h-72 overflow-y-auto py-1 z-10;
+		@apply block max-h-96 overflow-y-auto py-1 z-10;
 		@apply border rounded-lg shadow-lg;
 		background-color: var(--bg-white);
 		border-color: var(--border-accent);
@@ -236,7 +236,7 @@
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 
 		:global(.input-option) {
-			@apply flex items-center gap-3 px-2.5 py-1.5;
+			@apply flex items-center gap-2 px-3 py-1.5;
 			@apply cursor-pointer;
 			&:hover,
 			&[data-highlighted] {

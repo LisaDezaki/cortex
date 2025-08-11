@@ -22,6 +22,10 @@
 	import DotsThreeOutlineVertical from "phosphor-svelte/lib/DotsThreeOutlineVertical"
 	import DotsThreeVertical from "phosphor-svelte/lib/DotsThreeVertical"
 	import File from "phosphor-svelte/lib/File"
+	import FileAudio from "phosphor-svelte/lib/FileAudio"
+	import FileImage from "phosphor-svelte/lib/FileImage"
+	import FileText from "phosphor-svelte/lib/FileText"
+	import FileVideo from "phosphor-svelte/lib/FileVideo"
 	import FilmSlate from "phosphor-svelte/lib/FilmSlate"
 	import FlagBannerFold from "phosphor-svelte/lib/FlagBannerFold"
 	import FolderSimple from "phosphor-svelte/lib/FolderSimple"
@@ -104,6 +108,10 @@
 		'DotsThreeOutlineVertical': DotsThreeOutlineVertical,
 		'DotsThreeVertical': DotsThreeVertical,
 		'File': File,
+		'FileAudio': FileAudio,
+		'FileImage': FileImage,
+		'FileText': FileText,
+		'FileVideo': FileVideo,
 		'FilmSlate': FilmSlate,
 		'FlagBannerFold': FlagBannerFold,
 		'FolderSimple': FolderSimple,

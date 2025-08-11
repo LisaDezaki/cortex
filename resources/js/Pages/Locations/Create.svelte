@@ -3,29 +3,35 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import LocationsPanel from '@/Partials/LocationsPanel.svelte'
 	import LocationForm from '@/Forms/LocationForm.svelte'
 	import Back from '@/Components/Back.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
 
 	const activeProject = $page.props.activeProject.data
 
 </script>
+
+
+
+
 
 <svelte:head>
     <title>{activeProject.name} / New Location</title>
 </svelte:head>
 
 <AuthenticatedLayout>
-	{#snippet header()}
-		<Breadcrumbs data={[
-			{ title: "Locations",  href: route('locations') },
-			{ title: "Create" }
-		]} />
+
+	{#snippet panel()}
+		<LocationsPanel />
 	{/snippet}
 
 	{#snippet article()}
 		<Back href={route('locations')} />
 		<LocationForm />
+	{/snippet}
+
+	{#snippet sidebar()}
+		Empty
 	{/snippet}
 
 </AuthenticatedLayout>

@@ -13,7 +13,7 @@
 </script>
 
 
-<section class="section xl:px-24 lg:px-16 md:px-8 sm:px-4 py-6 first-of-type:pt-9 w-full {limitWidth ? 'max-w-[60rem]' : 'max-w-full'} {className}">
+<section class="section w-full {limitWidth ? 'max-w-[60rem]' : 'max-w-full'} {className}">
 	{#if title}
 		<Heading is="h3" as="h5" class="mb-3"
 			heading={title}
@@ -24,3 +24,17 @@
 	{@render children?.()}
 
 </section>
+
+
+<style lang="postcss">
+
+	:global(.article-body > .section),
+	:global(.article-body > .form > .section) {
+		@apply xl:px-32 lg:px-24 md:px-16 sm:px-8 py-12;
+	}
+
+	.section:not(:first-of-type) {
+		border-top: 1px solid var(--border-neutral-softest);
+	}
+
+</style>

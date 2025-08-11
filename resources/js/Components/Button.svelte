@@ -115,6 +115,14 @@
 				background-color: var(--bg-neutral-softer);
 			}
 		}
+		&.button-soft.button-white {
+			background-color: rgba(255,255,255,0.1);
+			border-color: rgba(255,255,255,0.35);
+			color: var(--text-white);
+			&:hover {
+				background-color: rgba(255,255,255,0.2);
+			}
+		}
 		&.button-soft.button-danger {
 			background-color: var(--bg-danger-softest);
 			border-color: var(--border-danger-softest);

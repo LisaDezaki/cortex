@@ -7,17 +7,11 @@
 	import CharacterTable from '@/Partials/CharacterTable.svelte'
 
 	import Back from '@/Components/Back.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
-	import Button from '@/Components/Button.svelte'
-	import CharacterFilter from '@/Components/CharacterFilter.svelte'
 	import Dropdown from '@/Components/Dropdown.svelte'
-	import Form from '@/Components/Form.svelte'
-	import HeaderButton from '@/Components/HeaderButton.svelte'
 	import Heading from '@/Components/Heading.svelte'
 	import Icon from '@/Components/Icon.svelte'
 	import Input from '@/Components/Input.svelte'
 	import Section from '@/Components/Section.svelte'
-	import SetLayout from '@/Components/SetLayout.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const characters    = activeProject?.characters
@@ -39,13 +33,20 @@
 		characters
 			.filter(c => {
 				if (query.length > 0 && !c.name.toLowerCase().includes(query.toLowerCase())) { return false }
-				// if (filter === 'faction' && c.factions[0]?.name !== filter.value) { return false }
-				// if (filter === 'location' && c.location?.name !== filter.value) { return false }
-				// if (filter === 'relationship' && !c.relationships?.map(r => r.name).includes(filter.value)) { return false }
-				// if (!['Faction', 'Location', 'Relationship'].includes(filter.name) && filter.value && c.customFieldValues?.find(f => f.field?.label === filter.name)?.value !== filter.value) { return false }
+				if (filter === 'faction' && c.factions[0]?.name !== filter.value) { return false }
+				if (filter === 'location' && c.location?.name !== filter.value) { return false }
+				if (filter === 'relationship' && !c.relationships?.map(r => r.name).includes(filter.value)) { return false }
+				if (!['Faction', 'Location', 'Relationship'].includes(filter.name) && filter.value && c.customFieldValues?.find(f => f.field?.label === filter.name)?.value !== filter.value) { return false }
 				return true
 			}).sort((a, b) => {
-				if (sortBy === 'name') { return a.name > b.name ? 1 : -1 }
+				if (sortBy === 'name')       { return a.name                 < b.name                 ? -1 : 1 }
+				if (sortBy === 'alias')      { return a.alias                < b.alias                ? -1 : 1 }
+				if (sortBy === 'popularity') { return a.relationships.length > b.relationships.length ? -1 : 1 }
+				if (sortBy === 'faction')    { return a.factions?.[0]?.name  < b.factions?.[0]?.name  ? -1 : 1 }
+				if (sortBy === 'location')   { return a.location?.name       < b.location?.name       ? -1 : 1 }
+				if (sortBy === 'created_at') { return a.meta.createdAt       < b.meta.createdAt       ? -1 : 1 }
+				if (sortBy === 'updated_at') { return a.meta.updatedAt       < b.meta.updatedAt       ? -1 : 1 }
+				if (sortBy === 'random')     { return Math.random()          < 0.5                    ? -1 : 1 }
 			})
 	)
 	let characterListSorted = $derived( sortOrder == 'asc' ? characterList : characterList.reverse())
@@ -55,10 +56,6 @@
 			label: (item.label || item.name),
 			value: (item.slug || item.value)
 		}
-	}
-
-	function removeFilter(index) {
-		filter = {}
 	}
 
 </script>
@@ -75,27 +72,27 @@
 			<Heading is="h2" as="h4"
 				heading="Characters"
 				actions={[
-					{ label: "Settings",           icon: "GearFine", theme: "neutral", href: route('characters.settings')},
-					{ label: "Create a character", icon: "Plus",     theme: "accent",  href: route('characters.create') },
+					{ icon: "Plus",     theme: "accent",  href: route('characters.create'),  label: "Create" },
+					{ icon: "GearFine", theme: "neutral", href: route('characters.settings') },
 				]}
 			/>
+
+			<!-- <pre>{JSON.stringify(characterListSorted,null,3)}</pre> -->
 
 			<div class="flex items-start gap-3">
 
 				<!-- Search -->
 
-				<Input type="search" bind:value={query} class="max-w-64"
-					icon="MagnifyingGlass" name="search" placeholder="Search characters..."
+				<Input type="search" bind:value={query} class="w-48"
+					icon="MagnifyingGlass" name="search" placeholder="Search..."
 				/>
 				
 				<!-- Filter -->
 
-				<Dropdown class="w-52" contentClass="w-52" icon="FunnelSimple" label="All characters" bind:value={filter} options={[
+				<Dropdown class="w-48" contentClass="w-48" icon="FunnelSimple" label="All characters" bind:value={filter} options={[
 					{ label: 'Nameless',   value: 'noname' },
 					{ label: 'Incomplete', value: 'incomplete' },
-
 					{ separator: true },
-
 					{ label: 'Faction...', children: factions.map(f => {
 						return { label: f.name, value: `faction.${f.slug}`, image: f.emblem?.url }
 					}) },
@@ -114,13 +111,15 @@
 
 				<!-- Sort -->
 
-				<Input type="select" class="max-w-40" icon="SortAscending" placeholder="Sort by" bind:value={sortBy} options={[
+				<Input type="select" class="w-48" icon="SortAscending" placeholder="Sort by" bind:value={sortBy} options={[
 					{ value: 'name',       label: "By name" },
+					{ value: 'alias',      label: "By alias" },
 					{ value: 'popularity', label: "By popularity" },
-					{ value: 'location',   label: "By location name" },
-					{ value: 'faction',    label: "Faction name" },
-					{ value: 'created-at', label: "Date Created" },
-					{ value: 'updated-at', label: "Date Updated" },
+					{ value: 'location',   label: "By location" },
+					{ value: 'faction',    label: "By faction" },
+					{ separator: true },
+					{ value: 'created_at', label: "Date Created" },
+					{ value: 'updated_at', label: "Date Updated" },
 					{ value: 'random',     label: "Randomly" },
 				]} />
 
@@ -137,7 +136,6 @@
 				<!-- Size-->
 
 				<div class="inline-flex gap-1.5 ml-auto min-w-40 flex-shrink-0">
-
 					{#if layout === 'graph'}
 						<Icon name="MagnifyingGlass" size="md" />
 						<Input type="slider" style="none" class="" showValue={false} min={4} max={12} bind:value={rowSize} />
@@ -171,26 +169,20 @@
 						{ icon: "Table",    label: "Table",  value: "table" }
 					]}
 				/>
-				 
-				<!-- <SetLayout bind:layout options={[
-					{ icon: "GridFour", value: "grid"  },
-					{ icon: "Table",    value: "table" }
-				]} /> -->
-
 			</div>
 
 			<!-- Display Characters -->
 
 			{#if activeProject && characters.length > 0}
 				{#if layout === 'graph'}
-					<p class="my-12 font-style-placeholder">This layout type isn't working yet. Try again later.</p>
+					<p class="mt-12 font-style-placeholder">This layout type isn't working yet. Try again later.</p>
 				{:else if layout === 'grid'}
-					<CharacterGrid characters={characterListSorted} cols={gridRows} showItemControls />
+					<CharacterGrid characters={characterList} cols={gridRows} showItemControls />
 				{:else if layout === 'table'}
-					<CharacterTable characters={characterListSorted} />
+					<CharacterTable characters={characterList} />
 				{/if}
 			{:else}
-				<p class="mt-12">There are no characters for this project yet. <Link href={route('characters.create')}>Create one?</Link></p>
+				<p class="mt-12 font-style-placeholder">There are no characters for this project yet. <Link href={route('characters.create')}>Create one?</Link></p>
 			{/if}
 		</Section>
 	{/snippet}

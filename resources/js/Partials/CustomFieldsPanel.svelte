@@ -50,7 +50,7 @@
 />
 
 <ReorderableList items={customFields}>
-	{#snippet itemTemplate(field)}
+	{#snippet itemTemplate(field, index)}
 		<div class="flex gap-1.5 w-full p-1">
 			<div class="flex items-center">
 				<DragHandle item={field} />
@@ -63,7 +63,7 @@
 				<Button
 					style="soft" theme="accent"
 					icon="Pen"
-					onclick={() => editCustomField(i)}
+					onclick={() => editCustomField(index)}
 				/>
 				<Button
 					style="soft" theme="danger"
@@ -75,16 +75,22 @@
 	{/snippet}
 </ReorderableList>
 
-<div class="flex flex-col items-center">
+<div class="flex flex-col items-center mt-1">
 	<Button
 		style="soft" theme="accent"
-		class="bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-500 rounded-lg font-style-button mt-1.5"
 		icon="Plus"
 		label="Add a custom field"
 		onclick={createCustomField}
 	/>
 </div>
 
-<Modal show={showCustomFieldModal} onclose={closeModal}>
-	<CustomFieldForm data={activeCustomField} oncancel={closeModal} />
+<Modal
+	title="{activeCustomField ? "Edit" : "Add"} Custom Field"
+	show={showCustomFieldModal}
+	onclose={closeModal}
+>
+	<CustomFieldForm
+		field={activeCustomField}
+		oncancel={closeModal}
+	/>
 </Modal>

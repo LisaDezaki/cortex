@@ -24,8 +24,8 @@
 	const context = {
 		startDrag: (e, item) => {
 
-			activeId   = item.id;
-			targetId   = item.id
+			activeId   = item?.id || item
+			targetId   = item?.id || item
 
 			dragStartY = e.clientY
 			itemRects  = measureItems()
@@ -137,7 +137,7 @@
 </script>
 
 <div bind:this={listElement} class="reorderable-list" class:active={activeId}>
-	{#each items as item (item.id)}
+	{#each items as item, index (item?.id || index+item)}
 		<div
 			data-id={item.id}
 			class="reorderable-item"
@@ -147,7 +147,7 @@
 			class:shift={ shouldShift(item) }
 			style:transform={activeId === item.id ? `translateY(${mouseY - dragStartY}px)` : ""}
 		>
-			{@render itemTemplate(item)}
+			{@render itemTemplate(item, index)}
 		</div>
 	{/each}
 	<div bind:this={placeholderElement} class="reorderable-placeholder"></div>

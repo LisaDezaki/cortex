@@ -108,17 +108,11 @@ class TabletonSeeder extends Seeder
 			$characters[$slug] = Character::factory()->create([
 				'project_id'  => $projects['tableton']->id,
 				'name'        => $character['name'],
+				'alias'        => $character['alias'],
 				'slug'        => $slug,
 				'description' => $character['desc'],
 				'location_id' => isset($character['location']) ? $locations[$character['location']]->id : null,
 			]);
-			if ($character['alias']) {
-				CustomFieldValue::create([
-					'fieldable_id' => $characters[$slug]->id,
-					'custom_field_id' => $fields['alias']->id,
-					'value'           => $character['alias'],
-				]);
-			}
 			if ($character['species']) {
 				CustomFieldValue::create([
 					'fieldable_id' => $characters[$slug]->id,
@@ -142,6 +136,7 @@ class TabletonSeeder extends Seeder
 			$factions[$slug] = Faction::factory()->create([
 				'project_id'      => $projects['tableton']->id,
 				'name'            => $faction['name'],
+				'type'            => $faction['type'],
 				'slug'            => $slug,
 				'description'     => $faction['desc'],
 				'headquarters_id' => $faction['hq'] ? $locations[$faction['hq']]->id : null,

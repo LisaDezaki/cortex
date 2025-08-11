@@ -100,5 +100,49 @@
 		"related_character": "duggan",
 		"character_role": "Older brother",
 		"related_character_role": "Younger brother"
+	},
+
+
+
+	{
+		"character": "mawloq",
+		"related_character": "brundle",
+		"character_role": "Queen",
+		"related_character_role": "Soldier"
+	},
+	{
+		"character": "mawloq",
+		"related_character": "manto",
+		"character_role": "Queen",
+		"related_character_role": "Soldier"
+	},
+	{
+		"character": "mawloq",
+		"related_character": "wikus",
+		"character_role": "Queen",
+		"related_character_role": "Soldier"
+	},
+	{
+		"character": "brundle",
+		"related_character": "manto",
+		"character_role": "Soldier",
+		"related_character_role": "Soldier"
+	},
+	{
+		"character": "manto",
+		"related_character": "wikus",
+		"character_role": "Soldier",
+		"related_character_role": "Soldier"
+	},
+	{
+		"character": "wikus",
+		"related_character": "brundle",
+		"character_role": "Soldier",
+		"related_character_role": "Soldier"
 	}
+
+
+
+
+	
 ]

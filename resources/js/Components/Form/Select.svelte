@@ -3,6 +3,7 @@
 	import { Select } from "bits-ui";
 
 	import Icon from '@/Components/Icon.svelte'
+	import Separator from '@/Components/Separator.svelte'
 	import Thumbnail from '@/Components/Thumbnail.svelte'
 
 	let {
@@ -19,9 +20,9 @@
     } = $props()
 
     let input
-	let hasFocus    = $state(false)
-	let selection   = $state(null)
-	let isEmpty     = $derived(value == null || value == '' || value == [])
+	let hasFocus  = $state(false)
+	let selection = $state(null)
+	let isEmpty   = $derived(value == null || value == '' || value == [])
 
 	function checkFocus() {
 		hasFocus = document.activeElement === input;
@@ -32,11 +33,10 @@
     }
 
 	function updateSelection(val) {
-		value = val
 		if (!multiple) {
-			selection = val ? options.find(o => o.value === val) : null
+			selection = val ? options.find(o => o.value === val || o.label === val) : null
 		} else if (multiple) {
-			selection = val ? options.filter(o => val.includes(o.value)) : null
+			selection = val ? options.filter(o => val.includes(o.value) || val.includes(o.label)) : null
 		}
 	}
 
@@ -98,13 +98,13 @@
 
 	<!-- Trigger -->
 
-	<Select.Trigger class="{className} input-select {restProps.disabled ? "disabled" : ""} {hasFocus ? "focus" : ""}">
+	<Select.Trigger class="{className} input-select min-w-24 {restProps.disabled ? "disabled" : ""} {hasFocus ? "focus" : ""}">
 
 		{#if icon && !selection?.icon && !selection?.image}
-			<Icon class="input-icon" name={icon} size={20} weight="regular" />
+			<Icon class="input-icon" name={icon} size="md" weight="regular" />
 		{/if}
 
-		<div class="input-value {icon ? "pl-icon" : ""}">
+		<div class="input-value {icon ? "pl-icon" : ""}" class:font-style-placeholder={isEmpty}>
 			{#if isEmpty}
 				{placeholder}
 			{:else if overrideLabel}
@@ -122,9 +122,9 @@
 
 	<!-- Content -->
 	 
-	<Select.Portal>
+	<Select.Portal class="z-50">
 		<Select.Content
-			class="{contentClass} min-w-[var(--bits-select-anchor-width)]"
+			class="{contentClass} min-w-[var(--bits-select-anchor-width)] z-50"
 			align="start"
 			sideOffset={-1}
 		>
@@ -134,17 +134,21 @@
 
 			<Select.Viewport>
 				{#each options as opt, i (i + opt.value)}
-					<Select.Item
-						class="input-option"
-						label={opt?.label}
-						value={opt?.value}
-						disabled={opt?.disabled}
-					>
-						{@render option(opt)}
-						{#if value == opt.value}
-							<Icon class="ml-auto" name="Check" size="sm" />
-						{/if}
-					</Select.Item>
+					{#if opt.separator}
+						<Separator class="my-1" />
+					{:else}
+						<Select.Item
+							class="input-option"
+							label={opt?.label}
+							value={opt?.value}
+							disabled={opt?.disabled}
+						>
+							{@render option(opt)}
+							{#if value == opt.value}
+								<Icon class="ml-auto" name="Check" size="sm" />
+							{/if}
+						</Select.Item>
+					{/if}
 				{:else}
 					<span class="block px-5 py-2 text-sm text-muted-foreground">
 						No results found, try again.

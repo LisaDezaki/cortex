@@ -3,6 +3,7 @@
     import { route } from 'momentum-trail'
 
 	import Button from '@/Components/Button.svelte'
+	import Field from '@/Components/Field.svelte'
 	import Form from '@/Components/Form.svelte'
 
 	const customFields = $page.props.customFields?.data
@@ -23,15 +24,12 @@
 
 </script>
 
-<Form
-	class="mt-6 space-y-2 {className}"
-	onsubmit={updateSettings}
->
+<Form onsubmit={updateSettings}>
+	
 	<!-- Character Settings -->
 
-	<Form.Field
+	<Field layout="block" inputClass="w-full"
 		type="select"
-		layout="block"
 		label="Character subheading"
 		description="Which field would you like to show under the character's name when viewing them?"
 		options={customFields.map((field) => {

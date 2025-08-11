@@ -32,7 +32,7 @@
 
 {#snippet panelItem(item)}
 	<li class="panel-item">
-		<Link class="panel-link" active={item.active} preserveScroll>
+		<Link class="panel-link" active={item.active} href={item.href} preserveScroll>
 			
 			<Thumbnail class="h-8" src={item.image} alt={item.label} icon={item.icon} />
 
@@ -42,9 +42,9 @@
 				{/if}
 			</div>
 
-			{#if item.active}
+			<!-- {#if item.active}
 				<Icon class="flex-shrink-0 ml-auto" name="ArrowRight" size="sm" />
-			{/if}
+			{/if} -->
 
 		</Link>
 	</li>

@@ -50,7 +50,7 @@
 		"name": "Hikers",
 		"type": "Club",
 		"desc": "A group of hikers who like to go hiking in the nearby Red Mountains.",
-		"hq": "campsite",
+		"hq": "hikers-camp",
 		"ranks": [ "Tour Guide", "Tourist" ],
 		"members": {
 			"ovina": "Tour Guide",

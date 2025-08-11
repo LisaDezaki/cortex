@@ -97,14 +97,17 @@
 			</div>
 
 			<Section class="relative">
-				<Heading is="h2" as="h4"
-					heading="Dashboard"
-					subheading="Manage your project"
+				<Heading is="h2" as="h3"
+					eyebrowIcon="GlobeStand"
+					eyebrow="Project"
+					heading={activeProject.name}
+					subheading={activeProject.type}
 					actions={[
 						{ label: "Edit",       icon: "Pen",   onclick: updateProject },
 						{ label: "Delete",     icon: "Trash", onclick: deleteProject, theme: "danger" }
 					]}
 				/>
+				<p class="max-w-[65ch] my-6">{activeProject.description}</p>
 				<div class="flex justify-around gap-3 my-12 w-full">
 					<Link class="flex flex-col items-center justify-center rounded p-2 pb-4 w-full hover:bg-slate-500/10 hover:text-emerald-500" href={route('characters')}>
 						<span class="font-style-h1 opacity-60">{activeProject.characters?.length || 0}</span>
@@ -146,14 +149,12 @@
 			</Section>
 
 			{#if activeProject.characters?.length > 0}
-				<Section
-					title="{activeProject.name} Characters"
-					subtitle="{activeProject.characters?.length} characters"
-				>
+				<Section title="Recent Characters">
 					<div items={activeProject.characters} class="flex justify-start gap-2 pb-3 overflow-x-auto w-full">
 						{#each activeProject.characters as character}
 							<Card
-								class="flex-shrink-0 w-32"
+								class="flex-shrink-0 w-48"
+								aspect="square"
 								image={character.portrait?.url}
 								icon="User"
 								title={character.name}
@@ -166,14 +167,12 @@
 			{/if}
 
 			{#if activeProject.factions?.length > 0}
-				<Section
-					title="{activeProject.name} Factions"
-					subtitle="{activeProject.factions?.length} factions"
-				>
+				<Section title="Recent Factions">
 					<div items={activeProject.factions} class="flex justify-start gap-2 pb-3 overflow-x-auto w-full">
 						{#each activeProject.factions as faction}
 							<Card
-								class="flex-shrink-0 w-32"
+								aspect="square"
+								class="flex-shrink-0 w-48"
 								image={faction.emblem?.url}
 								icon="FlagBannerFold"
 								title={faction.name}
@@ -186,14 +185,12 @@
 			{/if}
 
 			{#if activeProject.locations?.length > 0}
-				<Section
-					title="{activeProject.name} Locations"
-					subtitle="{activeProject.locations?.length} locations"
-				>
+				<Section title="Recent Locations">
 					<div items={activeProject.locations} class="flex justify-start gap-2 pb-3 overflow-x-auto w-full">
 						{#each activeProject.locations as location}
 							<Card
-								class="aspect-video w-56 flex-shrink-0"
+								aspect="video"
+								class="flex-shrink-0 w-72"
 								image={location.banner?.url}
 								icon="MapPin"
 								title={location.name}
@@ -237,12 +234,12 @@
 	
 </AuthenticatedLayout>
 
-<Modal class="p-8" show={creatingProject || updatingProject} onclose={closeModal}>
+<Modal show={creatingProject || updatingProject} onclose={closeModal}>
 	<ProjectForm project={activeProject} oncancel={closeModal} />
 </Modal>
 
 {#if activeProject}
-	<Modal class="p-8" show={deletingProject} onclose={closeModal}>
+	<Modal title="Delete Project" show={deletingProject} onclose={closeModal}>
 		<DeleteProjectForm project={activeProject} oncancel={closeModal} />
 	</Modal>
 {/if}

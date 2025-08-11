@@ -1,44 +1,47 @@
 <script>
-	import { page } from '@inertiajs/svelte'
+	import { page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
 	import Back from '@/Components/Back.svelte';
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
-	import Button from '@/Components/Button.svelte';
+	import Field from '@/Components/Field.svelte'
 	import Form from '@/Components/Form.svelte'
-	import HeaderButton from '@/Components/HeaderButton.svelte';
+	import Heading from '@/Components/Heading.svelte'
 	import Section from '@/Components/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
+	const settings = $page.props.settings?.factions?.data
+
+	const form = useForm({
+        enable_factions: ''
+    })
+
+	function updateSettings() {
+		console.log('update settings');
+	}
 
 </script>
 
 <svelte:head>
-    <title>{activeProject.name} / Faction Settings</title>
+    <title>Faction Settings</title>
 </svelte:head>
 
 <AuthenticatedLayout>
-	
-	{#snippet header()}
-		<Breadcrumbs data={[
-			{ title: "Factions",   href: route('factions') },
-			{ title: "Settings" }
-		]} />
-		<HeaderButton icon="Plus" theme="accent" href={route('factions.create')} />
-	{/snippet}
 
 	{#snippet article()}
 		<Back href={route('factions')} />
-		<Section
-			title="Faction Settings"
-			subtitle="Manage your faction settings and preferences for this project."
-		>
+		<Section>
+			<Heading is="h2" as="h4" class="mb-12"
+				heading="Faction Settings"
+				subheading="Manage your faction settings and preferences for this project."
+			/>
 			<Form>
-				<Form.Field
+				<Field layout="block"
 					type="switch"
 					label="Enable Factions"
+					description="Enable factions for this project?"
+					bind:value={$form.enable_factions}
 				/>
 			</Form>
 		</Section>

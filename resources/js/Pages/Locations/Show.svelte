@@ -5,11 +5,13 @@
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import LocationsPanel from '@/Partials/LocationsPanel.svelte'
 	import DeleteLocationForm from '@/Forms/DeleteLocationForm.svelte'
+	import NewLocationForm from '@/Forms/NewLocationForm.svelte'
 
 	import Back from '@/Components/Back.svelte'
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
+	import CardGrid from '@/Components/CardGrid.svelte'
 	import HeaderButton from '@/Components/HeaderButton.svelte'
 	import Heading from '@/Components/Heading.svelte'
 	import Icon from '@/Components/Icon.svelte'
@@ -19,12 +21,17 @@
 	const activeProject = $page.props.activeProject.data
 	const location = $page.props.location.data
 
-	let deletingLocation = $state(false)
+	let locationModalOpen = $state(false)
+	let deletingLocation  = $state(false)
 
+	function openLocationModal(location) {
+        locationModalOpen = true
+    }
 	function deleteLocation() {
         deletingLocation = true
     }
 	function closeModal() {
+		locationModalOpen = false
 		deletingLocation = false
     }
 
@@ -36,29 +43,23 @@
 
 <AuthenticatedLayout>
 
-	{#snippet header()}
-		<Breadcrumbs data={[
-			{ title: "Locations",  href: route('locations') },
-			{ title: location.name }
-		]} />
-		<HeaderButton icon="Pen"   theme="neutral" href={route('locations.edit', {location: location.slug})} />
-		<HeaderButton icon="Trash" theme="danger"  onclick={deleteLocation} />
-	{/snippet}
-
 	{#snippet panel()}
 		<LocationsPanel />
 	{/snippet}
 
 	{#snippet article()}
-
 		<Back href={route('locations')} />
+		<Section>
 
-		<Section class="flex flex-col space-y-6 max-w-[40rem] mx-auto">
-
-			<Heading is="h1" as="h3"
+			<Heading is="h1" as="h3" class="my-12"
+				eyebrowIcon="MapPin" eyebrow="Location"
 				heading={location.name}
 				subheading={location.region?.name}
-				class="mb-6"
+				
+				actions={[
+					{ label: "Edit",   icon: "Pen",   onclick: openLocationModal },
+					{ label: "Delete", icon: "Trash", onclick: deleteLocation, theme: "danger" }
+				]}
 			/>
 
 			<p class="mt-4 font-style-regular">
@@ -69,20 +70,20 @@
 
 		{#if location.characters.length > 0}
 			<Section>
-				<div class="px-8">
-					<h4 class="font-style-h6 mb-2">Characters</h4>
-					<div class="grid grid-cols-4 gap-2">
-						{#each location.characters as character}
-							<Card
-								class="aspect-[3/4]"
-								title={character.name}
-								subtitle={character.subtitle}
-								image={character.portrait?.url}
-								href={route('characters.show', {character: character.slug})}
-							/>
-						{/each}
-					</div>
-				</div>
+				<Heading is="h2" as="h5" class="mb-6"
+					heading="Characters"
+				/>
+				<CardGrid cols={5}>
+					{#each location.characters as character}
+						<Card aspect="square" class="w-full"
+							icon="User"
+							image={character.portrait?.url}
+							title={character.name}
+							subtitle={character.subtitle}
+							href={route('characters.show', {character: character.slug})}
+						/>
+					{/each}
+				</CardGrid>
 			</Section>
 		{/if}
 	
@@ -94,7 +95,7 @@
 			{#if location.banner}
 				<img src={location.banner?.url} alt={location.name} class="min-h-full min-w-full object-cover" />
 			{:else}
-				<Icon name="MapPin" size={64} weight="thin" />
+				<Icon name="MapPin" size="xl" weight="thin" />
 			{/if}
 		</div>
 
@@ -125,6 +126,10 @@
 	{/snippet}
 
 </AuthenticatedLayout>
+
+<Modal title="Edit Location" show={locationModalOpen} onclose={closeModal}>
+	<NewLocationForm locationData={location} oncancel={closeModal} />
+</Modal>
 
 <Modal show={deletingLocation} onclose={closeModal}>
 	<DeleteLocationForm {location} oncancel={closeModal} />

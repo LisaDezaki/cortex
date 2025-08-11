@@ -4,8 +4,10 @@
 	import Button from '@/Components/Button.svelte';
 	import Dropdown from '@/Components/Dropdown.svelte';
 	import Icon from '@/Components/Icon.svelte';
+	import Popover from '@/Components/Popover.svelte';
 
     let {
+		aspect,
 		class: className,
 		href,
 		image,
@@ -27,7 +29,7 @@
 		<Link class="card-link" href={href}></Link>
 	{/if}
 
-	<div class="card-visual">
+	<div class="card-visual aspect-{aspect}">
 		{#if image}
 			<img class="card-image" src={image} alt={title} />
 		{:else if icon}
@@ -35,41 +37,42 @@
 		{/if}
 	</div>
 
-	<div class="card-details -space-y-0.5">
-		<span class="font-style-small font-semibold line-clamp-1 w-full">{title}</span>
-		{#if subtitle}
-			<span class="font-style-tiny line-clamp-1 w-full">{subtitle}</span>
+	<div class="flex justify-start w-full">
+		<div class="card-details -space-y-0.5">
+			<span class="font-style-small font-semibold line-clamp-1 w-full">{title}</span>
+			{#if subtitle}
+				<span class="font-style-tiny line-clamp-1 w-full">{subtitle}</span>
+			{/if}
+		</div>
+		{#if options}
+
+			<!-- <Dropdown class="card-dropdown"
+				icon="DotsThreeOutlineVertical"
+				options={options}
+			/> -->
+	
+			<Popover class="card-dropdown">
+				<Button style="plain" theme="neutral" class="card-item-options-button rounded-full" icon="DotsThreeOutlineVertical" iconSize={16} iconWeight="fill" />
+				{#snippet content()}
+					<div class="flex flex-col py-1">
+						{#each options as option}
+							<Link class="flex gap-2 px-2 py-1 hover:bg-slate-500/10" {...option}>
+								<Icon class="mt-[2px]" name={option.icon} />
+								{option.label}
+							</Link>
+						{/each}
+					</div>
+				{/snippet}
+			</Popover>
 		{/if}
 	</div>
-
-	{#if options}
-
-		<Dropdown class="card-dropdown"
-			icon="DotsThreeOutlineVertical"
-			options={options}
-		/>
-
-		<!-- <Dropdown class="card-dropdown">
-			<Button class="card-item-options-button rounded-full" icon="DotsThreeOutlineVertical" iconSize={16} iconWeight="fill" />
-			{#snippet content()}
-				<div class="flex flex-col py-1">
-					{#each options as option}
-						<Link class="flex gap-2 px-2 py-1 hover:bg-slate-500/10" {...option}>
-							<Icon class="mt-[2px]" name={option.icon} />
-							{option.label}
-						</Link>
-					{/each}
-				</div>
-			{/snippet}
-		</Dropdown> -->
-	{/if}
 
 </div>
 
 <style lang="postcss">
 
 	.card {
-		@apply relative flex flex-col items-center justify-center gap-1.5 min-w-24 mb-3 rounded-lg overflow-hidden;
+		@apply relative flex flex-col flex-shrink-0 gap-1.5 min-w-24 mb-3 rounded-lg overflow-hidden;
 		&:hover {
 			.card-visual {
 				background-color: var(--bg-card-hover);
@@ -95,7 +98,7 @@
 		}
 
 		.card-visual {
-			@apply aspect-square flex items-center justify-center rounded-lg overflow-hidden w-full;
+			@apply flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden w-full;
 			background-color: var(--bg-card);
 
 			.card-image {
@@ -114,17 +117,18 @@
 		}
 
 		:global(.card-dropdown) {
-			@apply absolute top-2 right-2;
+			/* @apply absolute top-2 right-2; */
+			@apply absolute;
 			z-index: 5;
 		}
 
 		:global(.card-item-options-button) {
-			@apply backdrop-blur-sm h-8 w-8;
-			background-color: rgba(0,0,0,0.15);
-			color: var(--text-white);
+			/* @apply backdrop-blur-sm h-8 w-8; */
+			/* background-color: rgba(0,0,0,0.15); */
+			/* color: var(--text-white); */
 			opacity: 0;
 			&:hover {
-				background-color: rgba(255,255,255,0.2);
+				/* background-color: rgba(255,255,255,0.2); */
 			}
 		}
 	}

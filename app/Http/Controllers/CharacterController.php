@@ -10,6 +10,7 @@ use App\Services\MediaService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -33,9 +34,9 @@ class CharacterController extends Controller
 		'location_id'           => ['nullable',  'exists:locations,id'],
 		'relationships'         => ['sometimes',  'array'],
 		'relationships.*'		=> ['present'],
-		'relationships.id'      => ['required',  'distinct', 'exists:characters,id'],
-		'relationships.role'    => ['required', 'string'],
-		'relationships.related_role' => ['required', 'string'],
+		// 'relationships.*.id'    => ['required',  'distinct', 'exists:characters,id'],
+		// 'relationships.*.role'  => ['required', 'string'],
+		// 'relationships.*.related_role' => ['required', 'string'],
 
 		'custom_fields'			=> ['sometimes', 'array'],
         'custom_fields.*'       => ['present'],
@@ -66,7 +67,18 @@ class CharacterController extends Controller
 		if (!$activeProject) {
 			return Redirect::route('projects');
 		}
-		return Inertia::render('Characters/Create');
+
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'character'
+		])->with('options')->get();
+
+		$traitsPersonality = File::get(database_path('data/options/personality.json'));
+
+		return Inertia::render('Characters/Create', [
+			'customFields' => CustomFieldResource::collection($customFields),
+			'traitsPersonality' => json_decode($traitsPersonality, true)
+		]);
 	}
 
 	public function store(Request $request): RedirectResponse
@@ -122,8 +134,17 @@ class CharacterController extends Controller
 			'customFieldValues.customField'
 		]);
 
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'character'
+		])->with('options')->get();
+
+		$traitsPersonality = File::get(database_path('data/options/personality.json'));
+
 		return Inertia::render('Characters/Edit', [
-			'character'  => new CharacterResource($character)
+			'character'  => new CharacterResource($character),
+			'customFields' => CustomFieldResource::collection($customFields),
+			'traitsPersonality' => json_decode($traitsPersonality, true)
 		]);
 	}
 
@@ -134,17 +155,17 @@ class CharacterController extends Controller
 		$this->handlePortrait($request, $character);
 		$this->handleCustomFields($validatedData['custom_fields'], $character);
 
-		if ($request->has('faction_id')) {
-			$character->faction()->associate($validatedData['faction_id']);
-		}
+		// if ($request->has('faction_id')) {
+		// 	$character->factions()->associate($validatedData['faction_id']);
+		// }
 
 		if ($request->has('location_id')) {
 			$character->location()->associate($validatedData['location_id']);
 		}
 
-		if ($request->has('relationships')) {
-			$character->relationships()->sync($validatedData['relationships']);
-		}
+		// if ($request->has('relationships')) {
+		// 	$character->relationships()->sync($validatedData['relationships']);
+		// }
 
 		$character->update();
 		

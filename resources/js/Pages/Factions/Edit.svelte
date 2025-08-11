@@ -8,9 +8,6 @@
 	import DeleteFactionForm from '@/Forms/DeleteFactionForm.svelte'
 
 	import Back from '@/Components/Back.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
-	import Button from '@/Components/Button.svelte'
-	import HeaderButton from '@/Components/HeaderButton.svelte'
 	import Modal from '@/Components/Modal.svelte'
 
 	const activeProject = $page.props.activeProject.data
@@ -27,20 +24,15 @@
 
 </script>
 
+
+
+
+
 <svelte:head>
     <title>{activeProject.name} / {faction.name}</title>
 </svelte:head>
 
 <AuthenticatedLayout>
-
-	{#snippet header()}
-		<Breadcrumbs data={[
-			{ title: "Factions",   href: route('factions') },
-			{ title: faction.name, href: route('factions.show', {faction: faction.slug}) },
-			{ title: "Edit" }
-		]} />
-		<HeaderButton icon="Trash" theme="danger" onclick={deleteFaction} />
-	{/snippet}
 
 	{#snippet panel()}
 		<FactionsPanel />
@@ -49,6 +41,10 @@
 	{#snippet article()}
 		<Back href={route('factions.show', {faction: faction.slug})} />
 		<FactionForm {faction} />
+	{/snippet}
+
+	{#snippet sidebar()}
+		Empty
 	{/snippet}
 	
 </AuthenticatedLayout>

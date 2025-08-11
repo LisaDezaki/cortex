@@ -3,10 +3,10 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
 	import Form from '@/Components/Form.svelte'
+	import Field from '@/Components/Field.svelte';
 	import Heading from '@/Components/Heading.svelte';
-	import Panel from '@/Components/Panel';
+	import Input from '@/Components/Input.svelte';
 	import Section from '@/Components/Section.svelte';
 </script>
 
@@ -15,10 +15,6 @@
 </svelte:head>
 
 <AuthenticatedLayout>
-	
-	{#snippet header()}
-		<Breadcrumbs data={[ { title: "Settings" } ]} />
-    {/snippet}
 
 	{#snippet article()}
 		<Section>
@@ -27,26 +23,26 @@
 				subheading="Adjust your account settings to align with your preferences."
 			/>
 			<Form submitLabel="Update settings">
-				<Form.Field>
-					<Form.Switch id="username" label="Enable or disabled some feature or whatever." />
-					<Form.Error for="username" />
-				</Form.Field>
-				<Form.Field>
-					<Form.Switch id="username" label="Enable or disabled some feature or whatever." />
-					<Form.Error for="username" />
-				</Form.Field>
-				<Form.Field>
-					<Form.Switch id="username" label="Enable or disabled some feature or whatever." />
-					<Form.Error for="username" />
-				</Form.Field>
-				<Form.Field>
-					<Form.Switch id="username" label="Enable or disabled some feature or whatever." />
-					<Form.Error for="username" />
-				</Form.Field>
-				<Form.Field>
-					<Form.Switch id="username" label="Enable or disabled some feature or whatever." />
-					<Form.Error for="username" />
-				</Form.Field>
+				<Field>
+					<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
+					<Error for="username" />
+				</Field>
+				<Field>
+					<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
+					<Error for="username" />
+				</Field>
+				<Field>
+					<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
+					<Error for="username" />
+				</Field>
+				<Field>
+					<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
+					<Error for="username" />
+				</Field>
+				<Field>
+					<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
+					<Error for="username" />
+				</Field>
 			</Form>
 		</Section>
 	{/snippet}

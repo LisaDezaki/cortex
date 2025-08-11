@@ -8,6 +8,7 @@
 	import CharacterCard from '@/Components/CharacterCard.svelte'
 	import Form from '@/Components/Form.svelte'
 	import Heading from '@/Components/Heading.svelte'
+	import Input from '@/Components/Input.svelte'
 	import Thumbnail from '@/Components/Thumbnail.svelte'
 
 	let characters = $page.props.activeProject?.data.characters
@@ -26,6 +27,8 @@
 		character_role: relationship?.parentRole || null,
 		related_role:   relationship?.role || null
 	})
+
+	let existingRelationshipSlugs = $derived(character.relationships.map(rel => rel.slug))
 
 	// let relatedCharacter = $derived(characters.find(char => char.id === $relationshipForm.related.id))
 
@@ -54,12 +57,10 @@
 	}
 
 	onMount(() => {
-		console.log('mount form')
 		$relationshipForm.reset()
 	});
 
 	onDestroy(() => {
-		console.log('destroy form')
 		$relationshipForm.reset()
 	});
 
@@ -84,9 +85,9 @@
 
 	{#if $relationshipForm.related == null}
 
-		<CardGrid items={characters} cols={4}>
+		<CardGrid items={characters.filter(c => c.id !== character.id)} cols={6}>
 			{#snippet card(char)}
-				<CharacterCard character={char} onclick={selectRelatedCharacter} disabled={char.id === character?.id} />
+				<CharacterCard character={char} onclick={selectRelatedCharacter} disabled={existingRelationshipSlugs.includes(char.slug)} />
 			{/snippet}
 		</CardGrid>
 
@@ -97,7 +98,7 @@
 				<Thumbnail class="rounded-full h-16 w-16" src={$relationshipForm.character?.portrait?.url} />
 				<div class="space-y-1">
 					<div>{$relationshipForm.character?.name} is {$relationshipForm.related?.name}'s</div>
-					<Form.Input bind:value={$relationshipForm.character_role} />
+					<Input bind:value={$relationshipForm.character_role} />
 				</div>
 			</div>
 
@@ -105,7 +106,7 @@
 				<Thumbnail class="rounded-full w-16" src={$relationshipForm.related?.portrait?.url} />
 				<div class="space-y-1">
 					<div>{$relationshipForm.related?.name} is {$relationshipForm.character?.name}'s</div>
-					<Form.Input bind:value={$relationshipForm.related_role} />
+					<Input bind:value={$relationshipForm.related_role} />
 				</div>
 			</div>
 		</div>

@@ -1,12 +1,4 @@
 {
-	"alias": {
-		"fieldable_type": "character",
-		"type": "text",
-		"name": "alias",
-		"label": "Alias",
-		"description": "What role is your character known by?",
-		"required": false
-	},
 	"species": {
 		"fieldable_type": "character",
 		"type": "select",

@@ -13,6 +13,10 @@
 
 </script>
 
+
+
+
+
 <CardGrid
 	items={characters}
 	class="{cols ? `grid grid-cols-${cols}` : 'flex flex-wrap'} {className}"

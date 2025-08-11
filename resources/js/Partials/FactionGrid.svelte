@@ -13,10 +13,12 @@
 
 </script>
 
-<CardGrid items={factions} class={className} {...restProps}>
+<CardGrid
+	items={factions}
+	class="{cols ? `grid grid-cols-${cols}` : 'flex flex-wrap'} {className}"
+{...restProps}>
 	{#snippet card(faction)}
-		<Card
-			class="aspect-square w-full {cols ? `grid grid-cols-${cols}` : 'flex flex-wrap'} {className}"
+		<Card aspect="square"
 			image={faction.emblem?.url}
 			icon="FlagBannerFold"
 			title={faction.name}

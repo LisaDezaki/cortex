@@ -5,12 +5,12 @@
 		class: className,
 		description = null,
 		errors,
-		// inputClass,
+		inputClass,
 		// inputType,
 		label,
 		layout,
 		// multiple,
-		// name,
+		name,
 		// options = [],
 		required = false,
 		type,
@@ -47,7 +47,9 @@
 {/snippet}
 
 {#snippet inputBlock()}
-	<Input {type} bind:value {...restProps} />
+	{#if type}
+		<Input class="{inputClass} my-1" name={name} {type} bind:value {...restProps} />
+	{/if}
 {/snippet}
 
 {#snippet errorBlock()}
@@ -57,19 +59,19 @@
 <div class="form-field {className} {layout}">
 
 	{#if layout == 'block'}
-		<div class="col-span-2">
+		<div class="col-span-1">
 			{@render labelBlock()}
 			{@render descriptionBlock()}
 		</div>
-		<div class="col-span-3">
+		<div class="col-span-1">
 			{@render inputBlock()}
 			{@render errorBlock()}
 		</div>
 	{:else}
 		{@render labelBlock()}
+		{@render descriptionBlock()}
 		{@render inputBlock()}
 		{@render errorBlock()}
-		{@render descriptionBlock()}
 	{/if}
 
 	{@render children?.()}
@@ -91,25 +93,25 @@
 <style lang="postcss">
 
 	.field-label {
-		@apply mt-1.5 px-1.5 text-sm;
+		@apply mt-1 px-1.5 text-sm;
 		color: var(--text-neutral-soft);
 	}
 
 	.form-field.block {
-		@apply grid grid-cols-5 gap-6 w-full;
+		@apply grid grid-cols-2 gap-6 w-full mb-3;
 	}
 
-	.form-field.inline {
-		@apply flex flex-col items-center gap-3;
+	.form-field:not(.block) {
+		@apply flex flex-col items-stretch mb-3;
 	}
 
 	.field-description {
-		@apply mt-1.5 px-1.5 text-sm;
+		@apply mt-1 px-1.5 text-sm;
 		color: var(--text-neutral-soft);
 	}
 
 	.field-errors {
-		@apply mt-1.5 px-1.5 text-sm;
+		@apply mt-1 px-1.5 text-sm;
 		color: var(--text-neutral-soft);
 	}
 

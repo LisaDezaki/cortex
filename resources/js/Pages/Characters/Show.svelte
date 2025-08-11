@@ -53,16 +53,20 @@
 
 	{#snippet article()}
 		<Back href={route('characters')} />
-		<Section class="space-y-6">
-			<Heading is="h1" as="h3" class="mb-6"
+		<Section>
+
+			<Heading is="h1" as="h3" class="my-12"
+				eyebrowIcon="User" eyebrow="Character"
 				heading={character.name}
-				subheading={character.subtitle}
+				subheading={character.alias}
 				actions={[
 					{ label: "Edit",   icon: "Pen",   href: route('characters.edit', {character: character.slug}) },
 					{ label: "Delete", icon: "Trash", onclick: deleteCharacter, theme: "danger" }
 				]}
 			/>
-			<p>{character.description}</p>
+
+			<p class="max-w-[65ch]">{character.description}</p>
+
 			<!-- <div>
 				<h6 class="font-style-regular font-bold">Appearance</h6>
 				<p>{character.appearance}</p>
@@ -86,9 +90,9 @@
 				<Heading is="h2" as="h5" class="mb-6"
 					heading="Relationships"
 				/>
-				<CardGrid cols={6}>
+				<CardGrid cols={5}>
 					{#each character.relationships as relationship}
-						<Card
+						<Card aspect="square"
 							icon="User"
 							image={relationship.portrait?.url}
 							title={relationship.name}

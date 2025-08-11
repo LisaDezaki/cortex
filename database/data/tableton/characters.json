@@ -39,7 +39,7 @@
 		"alias": "The Fly",
 		"species": "insectoid",
 		"desc": "Brundle uses its compound eyes and many limbs to shoot in every direction simultaneously with ease.",
-		"location": null
+		"location": "ruins"
 	},
 	"bugbeard": {
 		"name": "Bugbeard",
@@ -144,14 +144,14 @@
 		"alias": "The Mantis",
 		"species": "insectoid",
 		"desc": "Manto uses its two scythes to slice down anything in its path.",
-		"location": null
+		"location": "ruins"
 	},
 	"mawloq": {
 		"name": "Mawloq",
 		"alias": "The Beast",
 		"species": "insectoid",
-		"desc": "Mawloq is a monster.",
-		"location": null
+		"desc": "Mawloq is the Queen of the insectoids.",
+		"location": "ruins"
 	},
 	"montag": {
 		"name": "Montag",
@@ -186,14 +186,14 @@
 		"alias": "The Sherpa",
 		"species": "caoraa",
 		"desc": "Ovina gives guided tours of the nearby Red Mountains.",
-		"location": "hikers-camp"
+		"location": "campsite"
 	},
 	"perd": {
 		"name": "Perd",
 		"alias": "The Tourist",
 		"species": "verdan",
 		"desc": "Perd is a verdan tourist.",
-		"location": "hikers-camp"
+		"location": "campsite"
 	},
 	"pockets": {
 		"name": "Pockets",
@@ -263,7 +263,7 @@
 		"alias": "The Prawn",
 		"species": "insectoid",
 		"desc": "Wikus is a relentless stabbing machine.",
-		"location": null
+		"location": "ruins"
 	},
 	"willow": {
 		"name": "Willow",

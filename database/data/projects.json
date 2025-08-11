@@ -16,6 +16,12 @@
 		"name": "Brawllywood",
 		"type": "Bollywood Brawler",
 		"description": "An old school Beat 'Em Up inspired by Indian cinema's greatest heroes and villains."
+	},
+
+	"marvel": {
+		"name": "Marvel",
+		"type": "Superhero Universe",
+		"description": "Just tracking Marvel characters to test the app."
 	}
 
 }

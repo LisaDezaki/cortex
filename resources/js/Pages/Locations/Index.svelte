@@ -3,22 +3,22 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import NewLocationForm from '@/Forms/NewLocationForm.svelte'
+	import RegionForm from '@/Forms/RegionForm.svelte'
 	import LocationGrid from '@/Partials/LocationGrid.svelte'
 	import LocationTable from '@/Partials/LocationTable.svelte'
 
 	import Back from '@/Components/Back.svelte';
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
-	import Button from '@/Components/Button.svelte';
-	import Form from '@/Components/Form.svelte'
-	import HeaderButton from '@/Components/HeaderButton.svelte'
+	import Dropdown from '@/Components/Dropdown.svelte'
 	import Heading from '@/Components/Heading.svelte'
 	import Icon from '@/Components/Icon.svelte'
 	import Input from '@/Components/Input.svelte'
+	import Modal from '@/Components/Modal.svelte'
 	import RegionMap from '@/Components/RegionMap.svelte'
 	import Section from '@/Components/Section.svelte'
-	import SetLayout from '@/Components/SetLayout.svelte'
 
 	const activeProject = $page.props.activeProject.data
+	const characters = activeProject?.characters
 	const locations = activeProject?.locations
 	const regions = activeProject?.regions
 	const customFields  = $page.props.customFields?.data
@@ -27,14 +27,20 @@
 	let filter    = $state({})
 	let layout    = $state('grid')
 	let query     = $state('')
-	let rowSize   = $state(6)
+	let rowSize   = $state(5)
 	let sortBy    = $state('name')
 	let sortOrder = $state('asc')
 
 	let filteredLocations = $state(locations)
 	let selectedLocations = $state([])
 
-	let creatingLocations = $state(false)
+	let locationModalOpen       = $state(false)
+	let deleteLocationModalOpen = $state(false)
+	let regionModalOpen         = $state(false)
+	let deleteRegionModalOpen   = $state(false)
+
+	let activeLocation    = $state(null)
+	let activeRegion      = $state(null)
 
 	let gridCols = $derived(10-rowSize)
 	let hasFilter     = $derived(Boolean(filter.name && filter.value))
@@ -46,15 +52,35 @@
 				if (!['Faction', 'Location', 'Relationship'].includes(filter.name) && filter.value && c.customFieldValues?.find(f => f.field?.label === filter.name)?.value !== filter.value) { return false }
 				return true
 			}).sort((a, b) => {
-				if (sortBy === 'name') { return a.name > b.name ? 1 : -1 }
+				if (sortBy === 'name')    { return a.name > b.name                       ? 1 : -1 }
+				if (sortBy === 'region')  { return a.region.name > b.region.name         ? 1 : -1 }
+				if (sortBy === 'created') { return a.meta.created_at > b.meta.created_at ? 1 : -1 }
+				if (sortBy === 'updated') { return a.meta.created_at > b.meta.created_at ? 1 : -1 }
+				if (sortBy === 'random')  { return Math.random() > 0.5                   ? 1 : -1 }
 			})
 	)
 
-	function createLocation() {
-        creatingLocation = true
+	function openLocationModal(location) {
+		activeLocation = location
+        locationModalOpen = true
     }
+	function deleteLocationModal(location) {
+		activeLocation = location
+		deleteLocationModalOpen = true
+	}
+	function openRegionModal(region) {
+		activeRegion = region
+		regionModalOpen = true
+	}
+	function deleteRegionModal(region) {
+		activeRegion = region
+		deleteRegionModalOpen = true
+	}
 	function closeModal() {
-        creatingLocation = false
+        locationModalOpen = false
+		deleteLocationModalOpen = false
+		regionModalOpen = false
+		deleteRegionModalOpen = false
     }
 
 	function filterLocations(e) {
@@ -95,8 +121,9 @@
 			<Heading is="h2" as="h4"
 				heading="Locations"
 				actions={[
-					{ label: "Settings",          icon: "GearFine", theme: "neutral", href: route('locations.settings')},
-					{ label: "Create a location", icon: "Plus",     theme: "accent",  href: route('locations.create') },
+					{ icon: "Plus",     theme: "accent",  onclick: openRegionModal,   label: "Add Region" },
+					{ icon: "Plus",     theme: "accent",  onclick: openLocationModal, label: "Add Location" },
+					{ icon: "GearFine", theme: "neutral", href: route('locations.settings') },
 				]}
 			/>
 
@@ -104,22 +131,38 @@
 
 				<!-- Search -->
 
-				<Input type="search" bind:value={query} class="max-w-64"
-					icon="MagnifyingGlass" name="search" placeholder="Search locations..."
+				<Input type="search" bind:value={query} class="w-48"
+					icon="MagnifyingGlass" name="search" placeholder="Search..."
 				/>
 
 				<!-- Filter -->
 
-				<!-- <CharacterFilter bind:filter /> -->
+				<Dropdown class="w-48" contentClass="w-48" icon="FunnelSimple" label="All locations..." bind:value={filter} options={[
+					{ label: 'Nameless',   value: 'noname' },
+					{ label: 'Incomplete', value: 'incomplete' },
+					{ separator: true },
+					{ label: 'Has character...', children: characters.map(c => {
+						return { label: c.name, value: `character.${c.slug}`, image: c.portrait?.url }
+					}) },
+					{ label: 'In region...', children: regions.map(r => {
+						return { label: r.name, value: `region.${r.slug}`, image: r.banner?.url }
+					}) },
+					...customFields.filter(f => f.type == 'select').map(f => {
+						return { label: `${f.label}...`, children: f.options.map(o => {
+							return { label: o.label, value: `${f.name}.${o.value}` }
+						})}
+					})
+				]} />
 
 				<!-- Sort -->
 
-				<Input type="select" class="max-w-40" icon="SortAscending" placeholder="Sort by" bind:value={sortBy} options={[
-					{ value: 'name',             label: "By location name" },
-					{ value: 'region',           label: "By region name" },
-					{ value: 'created-at',       label: "Date Created" },
-					{ value: 'updated-at',       label: "Date Updated" },
-					{ value: 'random',           label: "Randomly" },
+				<Input type="select" class="w-48" icon="SortAscending" placeholder="Sort by" bind:value={sortBy} options={[
+					{ value: 'name',   label: "By location name" },
+					{ value: 'region', label: "By region name" },
+					{ separator: true },
+					{ value: 'created', label: "Date Created" },
+					{ value: 'updated', label: "Date Updated" },
+					{ value: 'random',  label: "Randomly" },
 				]} />
 
 				<!-- Result Count -->
@@ -131,7 +174,7 @@
 				<div class="inline-flex gap-1.5 ml-auto min-w-40 flex-shrink-0">
 					{#if layout === 'grid'}
 						<Icon name="Resize" size={24} />
-						<Form.Slider class="" showValue={false} min={3} max={7} bind:value={rowSize} />
+						<Input type="slider" class="" showValue={false} min={3} max={7} bind:value={rowSize} />
 					{:else if layout === 'table'}
 						<Input type="select" multiple
 							class="ml-auto"
@@ -149,29 +192,35 @@
 
 				<!-- Layout -->
 
-				<SetLayout bind:layout options={[
-					{ icon: "Compass",  value: "map"   },
-					{ icon: "GridFour", value: "grid"  },
-					{ icon: "Table",    value: "table" }
-				]} />
+				<Input type="select" class="w-32"
+					bind:value={layout}
+					options={[
+						{ icon: "Compass",  label: "Map",   value: "map" },
+						{ icon: "GridFour", label: "Grid",  value: "grid"  },
+						{ icon: "Table",    label: "Table", value: "table" }
+					]}
+				/>
 
 			</div>
 
 			{#if activeProject && locations?.length > 0}
 				<div class="flex flex-col gap-4">
 					{#if layout == 'table'}
-						<LocationTable locations={filteredLocations} bind:selected={selectedLocations} {selectionMode} />
+						<LocationTable locations={locationList} />
 					{:else if layout == 'grid'}
 						{#if regions.length > 0}
-							<LocationGrid regions={regions} cols={gridCols} />
-							<!-- {#each regions as region}
-								<h6 class="font-style-h6 mb-3">{region.name}</h6>
-								<LocationGrid locations={region.locations} />
-							{/each} -->
+							<LocationGrid cols={gridCols}
+								locations={locationList}
+								regions={regions}
+								byRegion={sortBy == 'region'}
+								onEdit={openLocationModal}
+								onDelete={deleteLocationModal}
+							/>
 						{/if}
 					{:else if layout == 'map'}
-						<div class="space-y-6">
+						<div class="space-y-3">
 							{#each regions as region}
+								<Heading heading={region.name} is="h5" as="h6" />
 								<RegionMap region={region} />
 							{/each}
 						</div>
@@ -184,3 +233,11 @@
 	{/snippet}
     
 </AuthenticatedLayout>
+
+<Modal title="Add Location" show={locationModalOpen} onclose={closeModal}>
+	<NewLocationForm oncancel={closeModal} />
+</Modal>
+
+<Modal title="Add Region" show={regionModalOpen} onclose={closeModal}>
+	<RegionForm oncancel={closeModal} />
+</Modal>

@@ -4,19 +4,25 @@
 
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
+	import CardGrid from '@/Components/CardGrid.svelte'
+	import CardNew from '@/Components/CardNew.svelte'
+	import Field from '@/Components/Field.svelte'
 	import Form from '@/Components/Form.svelte'
 	import Heading from '@/Components/Heading.svelte'
+	import Modal from '@/Components/Modal.svelte'
 	import Section from '@/Components/Section.svelte'
 
 	//  Props
 
 	const activeProject = $page.props.activeProject.data
+	const customFields  = $page.props.customFields.data
+
 	let { faction } = $props()
 
 	//  Form
 
 	let startData = {
-		emblem: faction?.emblem || null,
+		emblem: faction?.emblem?.path || null,
         name: faction?.name || null,
         description: faction?.description || null,
 		custom_fields: faction?.custom_fields || []
@@ -40,6 +46,9 @@
 	// })
 
 	const form = useForm(startData)
+
+	let addingMemberModal = $state(false)
+	let activeMember      = $state(null)
 
 	//  Functions
 
@@ -72,6 +81,16 @@
 	function updateFaction(slug) {
 		$form.patch(route('factions.update', {faction: slug}))
 	}
+
+	function openMembershipModal(e, rel) {
+		activeMember = rel
+		addingMemberModal = true
+	}
+
+	function closeModal() {
+		activeMember = null
+		addingMemberModal = false
+	}
 	
 </script>
 
@@ -81,78 +100,89 @@
 
 	<Section class="space-y-6">
 
-		<Heading is="h2" as="h5"
+		<Heading is="h2" as="h5" class="mb-12"
 			heading={faction ? "Edit Faction" : "New Faction"}
-			subheading={faction ? "Edit this faction's details." : "Build a new faction to add to the " + activeProject.name + " project."}
-			class="mb-12"
 		/>
 
-		<Form.Field
-			type="file"
-			id="emblem"
-			layout="block"
-			class="w-full"
-			bind:value={$form.emblem}
-			previewPath={faction?.emblem?.url}
-			description="Upload a logo, icon, or sigil for this faction."
-			errors={$form.errors.image}
-			label="Image"
-		/>
-
-		<Form.Field
+		<Field layout="block" inputClass="w-full"
 			type="text"
 			id="name"
-			layout="block"
-			class="w-full"
-			bind:value={$form.name}
-			description="The name of the faction."
-			errors={$form.errors.name}
 			label="Name"
+			description="The name of the faction."
+			placeholder="Faction name"
+			bind:value={$form.name}
+			errors={$form.errors.name}
 			required
 		/>
 
-		<Form.Field
+		<Field layout="block" inputClass="w-full"
 			type="textarea"
 			id="description"
-			layout="block"
-			bind:value={$form.description}
-			description="A detailed description of the faction."
-			errors={$form.errors.description}
 			label="Description"
-			rows={8}
+			description="A detailed description of the faction."
+			placeholder="Description..."
+			bind:value={$form.description}
+			errors={$form.errors.description}
+			rows={5}
 		/>
+
+		<Field layout="block" inputClass="aspect-square h-72 w-72"
+			type="file"
+			id="emblem"
+			label="Image"
+			description="Upload a logo, icon, or sigil for this faction."
+			icon="Image"
+			placeholder="Upload an emblem..."
+			preview={faction?.emblem?.url}
+			bind:value={$form.emblem}
+			errors={$form.errors.image}
+		/>
+
 	</Section>
 
-	<!-- Members -->
+	<!-- MEMBERS -->
 
 	<Section>
-		<Heading is="h2" as="h5"
+		<Heading is="h3" as="h6" class="mb-6"
 			heading="Members"
-			subheading="Characters that are members of this faction."
-			class="mb-3"
 		/>
-		<div class="flex flex-wrap gap-1.5 px-3">
+		<CardGrid cols={5}>
 			{#each faction?.members as member, i}
-				<Card
-					class="aspect-[3/4]"
+				<Card aspect="square" class="w-full"
+					icon="User"
+					image={member.portrait?.url}
 					title={member.name}
 					subtitle={member.role}
-					image={member.portrait?.url}
 					href={route('characters.show', {character: member.slug})}
 				/>
 			{/each}
-		</div>
+			<CardNew aspect="square" class="w-full"
+				onclick={openMembershipModal}
+			/>
+		</CardGrid>
 	</Section>
 
 	<!-- CUSTOM FIELDS -->
 
-	<Section
-		title="Custom Fields"
-		subtitle="To edit these Custom Fields, visit your Project Settings."
-		bodyclass="px-6 space-y-6"
-	>
+	<Section title="Custom Fields" class="space-y-6">
+		{#each customFields as field, i}
+			<Field
+				type={field.type}
+				id={getFieldName(field.name)}
+				layout="block"
+				inputClass="w-full"
+				description={field.description}
+				label={field.label || field.name}
+				placeholder={field.placeholder || field.label}
+				required={field.required}
+				options={field.options}
+				bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
+			/>
+		{:else}
+			<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
+		{/each}
 		<!-- {#each project.custom_fields as field, i}
-			<Form.Field
+			<Field
 				type={field.type}
 				id={getFieldName(field.name)}
 				layout="block"
@@ -174,7 +204,7 @@
 		</div> -->
 
 		<!-- {#each project.custom_fields as field, i}
-			<Form.Field
+			<Field
 				type={field.type}
 				id={getFieldName(field.name)}
 				layout="block"
@@ -193,7 +223,6 @@
 	<Section class="flex justify-center gap-3 w-full">
 		<Button style="hard" theme="neutral"
 			type="button"
-			secondary
 			label="Cancel"
 			onclick={() => history.back()}
 		/>
@@ -206,3 +235,10 @@
 	</Section>
 
 </Form>
+
+<Modal show={addingMemberModal} onclose={closeModal} class="flex items-start p-6">
+	{#if addingMemberModal}
+		TEST
+		<!-- <FactionMemberForm faction={faction} member={activeMember} oncancel={closeModal} onsubmit={handleRelationship} /> -->
+	{/if}
+</Modal>

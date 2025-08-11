@@ -19,7 +19,7 @@
 		<div class="flex flex-col items-center gap-2 px-2 pt-2 w-full">
 			<div class="flex items-center justify-between w-full">
 				<Nav.Logo />
-				<Avatar class="w-10 hover:outline hover:outline-1 hover:outline-emerald-500 hover:-outline-offset-1" src={user.avatar.url} />
+				<Avatar class="w-10 hover:outline hover:outline-1 hover:outline-emerald-500 hover:-outline-offset-1" src={user.avatar?.url} />
 			</div>
 			<ProjectSelect projects={projects} active={activeProject?.id} />
 		</div>

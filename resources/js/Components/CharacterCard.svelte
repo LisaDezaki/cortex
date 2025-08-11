@@ -1,6 +1,6 @@
 <script>
-	import Card from '@/Components/Card.svelte'
 	import { route } from 'momentum-trail'
+	import Card from '@/Components/Card.svelte'
 
     let {
 		class: className,
@@ -24,10 +24,11 @@
 </script>
 
 <Card
+	aspect="square"
 	icon="User"
 	image={character.portrait?.url}
 	title={character.name}
-	subtitle={character.subtitle}
+	subtitle={character.alias}
 	onclick={handleClick || null}
 	href={onclick ? null : route('characters.show', {character: character.slug})}
 	options={showControls ? [
@@ -37,5 +38,4 @@
 		{  label: "Edit",         icon: "Pen",   href: route('characters.edit', {character: character.slug}) },
 		{  label: "Delete",       icon: "Trash", onclick: deleteCharacter, theme: "danger" }
 	] : null}
-	{...restProps}
-/>
+{...restProps} />

@@ -17,7 +17,7 @@
 
 <!-- STRUCTURE -->
 
-<div class="relative flex gap-2 w-full" {...restProps}>
+<div class="relative flex gap-2 mb-12 w-full" {...restProps}>
 
 	<div class="map relative flex-grow bg-slate-100 border border-slate-200 rounded-lg max-w-[50%]">
 		<img

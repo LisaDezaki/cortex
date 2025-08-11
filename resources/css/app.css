@@ -337,6 +337,54 @@
 
 	.bg-surface 			{ background-color: var(--surface); }
 	.bg-background 			{ background-color: var(--background); }
+	
+	.bg-accent 				{ background-color: var(--bg-accent); }
+	.bg-accent-strong 		{ background-color: var(--bg-accent-strong); }
+	.bg-accent-soft 		{ background-color: var(--bg-accent-soft); }
+	.bg-accent-softer 		{ background-color: var(--bg-accent-softer); }
+	.bg-accent-softest 		{ background-color: var(--bg-accent-softest); }
+	.bg-neutral 			{ background-color: var(--bg-neutral); }
+	.bg-neutral-strong 		{ background-color: var(--bg-neutral-strong); }
+	.bg-neutral-soft 		{ background-color: var(--bg-neutral-soft); }
+	.bg-neutral-softer 		{ background-color: var(--bg-neutral-softer); }
+	.bg-neutral-softest 	{ background-color: var(--bg-neutral-softest); }
+	.bg-danger 				{ background-color: var(--bg-danger); }
+	.bg-danger-strong 		{ background-color: var(--bg-danger-strong); }
+	.bg-danger-soft 		{ background-color: var(--bg-danger-soft); }
+	.bg-danger-softer 		{ background-color: var(--bg-danger-softer); }
+	.bg-danger-softest 		{ background-color: var(--bg-danger-softest); }
+
+	.border-accent 			{ border-color: var(--border-accent); }
+	.border-accent-strong 	{ border-color: var(--border-accent-strong); }
+	.border-accent-soft 	{ border-color: var(--border-accent-soft); }
+	.border-accent-softer 	{ border-color: var(--border-accent-softer); }
+	.border-accent-softest 	{ border-color: var(--border-accent-softest); }
+	.border-neutral 		{ border-color: var(--border-neutral); }
+	.border-neutral-strong 	{ border-color: var(--border-neutral-strong); }
+	.border-neutral-soft 	{ border-color: var(--border-neutral-soft); }
+	.border-neutral-softer 	{ border-color: var(--border-neutral-softer); }
+	.border-neutral-softest { border-color: var(--border-neutral-softest); }
+	.border-danger 			{ border-color: var(--border-danger); }
+	.border-danger-strong 	{ border-color: var(--border-danger-strong); }
+	.border-danger-soft 	{ border-color: var(--border-danger-soft); }
+	.border-danger-softer 	{ border-color: var(--border-danger-softer); }
+	.border-danger-softest 	{ border-color: var(--border-danger-softest); }
+
+	.text-accent 			{ color: var(--text-accent); }
+	.text-accent-strong 	{ color: var(--text-accent-strong); }
+	.text-accent-soft 		{ color: var(--text-accent-soft); }
+	.text-accent-softer 	{ color: var(--text-accent-softer); }
+	.text-accent-softest 	{ color: var(--text-accent-softest); }
+	.text-neutral 			{ color: var(--text-neutral); }
+	.text-neutral-strong 	{ color: var(--text-neutral-strong); }
+	.text-neutral-soft 		{ color: var(--text-neutral-soft); }
+	.text-neutral-softer 	{ color: var(--text-neutral-softer); }
+	.text-neutral-softest 	{ color: var(--text-neutral-softest); }
+	.text-danger 			{ color: var(--text-danger); }
+	.text-danger-strong 	{ color: var(--text-danger-strong); }
+	.text-danger-soft 		{ color: var(--text-danger-soft); }
+	.text-danger-softer 	{ color: var(--text-danger-softer); }
+	.text-danger-softest 	{ color: var(--text-danger-softest); }
 
 	.font-style-h1 			{ @apply font-semibold text-8xl tracking-tighter; }
 	.font-style-h2 			{ @apply font-semibold text-7xl tracking-tighter; }
@@ -357,6 +405,13 @@
 		color: var(--text-neutral-softer);
 	}
 
+
+
+
+
+
+
+
 	.style-disabled {
 		opacity: 50%;
 		cursor: not-allowed;
@@ -374,12 +429,14 @@
 		}
 	}
 
-	button:focus {
+	.input:focus {
+		/* @apply appearance-none focus:border-none focus:outline-none; */
 		@apply rounded-lg;
 		box-shadow: 0 1px 0 var(--bg-accent);
 		color: var(--text-accent);
 		outline: 1px solid var(--border-accent);
 		outline-offset: -1px;
+		z-index: 10;
 	}
 
 }
@@ -418,6 +475,10 @@ select:focus {
 	outline: none;
 }
 
+[data-bits-floating-content-wrapper] {
+	z-index: 50!important;
+}
+
 .default-theme.splitpanes--vertical > .splitpanes__splitter {
 	background-color: transparent!important;
 	border-left: 0px solid transparent!important;
@@ -432,6 +493,9 @@ select:focus {
 		width: 4px!important;
 		transform: translateXY(-50%, 0%)!important;
 		z-index: 10!important;
+	}
+	&:hover {
+		background-color: var(--bg-accent)!important;
 	}
 }
 

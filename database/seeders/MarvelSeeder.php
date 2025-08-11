@@ -7,48 +7,37 @@ use App\Models\CustomField;
 use App\Models\CustomFieldOption;
 use App\Models\CustomFieldValue;
 use App\Models\Faction;
-use App\Models\Location;
-use App\Models\Project;
 use App\Models\Region;
-use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class DatabaseSeeder extends Seeder
+class MarvelSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function run($projects): void
     {
-		$user = User::factory()->create([
-			'name' => 'Administrator',
-			'email' => 'admin@example.com',
-		]);
-
-		/*	PROJECTS  */
-
-		$projects = [];
-		$json = File::get(database_path('data/projects.json'));
-		$json_projects = json_decode($json, true);
-		foreach ($json_projects as $slug => $project) {
-			$projects[$slug] = Project::create([
-				'user_id' => $user->id,
-				'name'    => $project['name'],
-				'type'    => $project['type'],
-				'description' => $project['description']
-			]);
-		}
-
-		$this->callWith( TabletonSeeder::class,    ['projects' => $projects] );
-		$this->callWith( BrawllywoodSeeder::class, ['projects' => $projects] );
-		$this->callWith( MarvelSeeder::class,      ['projects' => $projects] );
 
 
-		//	CUSTOM FIELD: SPECIES
+		/**
+		 * Create Custom Fields
+		 */
+
+		// $fields = [];
+		// $json = File::get(database_path('data/marvel/custom_fields.json'));
+		// $json_fields = json_decode($json, true);
+		// foreach($json_fields as $slug => $field) {
+		// 	$fields[$slug] = CustomField::create([
+		// 		'project_id' => $projects['tableton']->id,
+		// 		'fieldable_type' => $field['fieldable_type'],
+		// 		'type' => $field['type'],
+		// 		'name' => $field['name'],
+		// 		'label' => $field['label'],
+		// 		'description' => $field['description'] ?? null,
+		// 		'placeholder' => $field['placeholder'] ?? null,
+		// 		'required' => $field['required'] ?? false
+		// 	]);
+		// }
 
 		// $species_field = CustomField::create([
 		// 	'project_id' => $projects['tableton']->id,
@@ -61,20 +50,26 @@ class DatabaseSeeder extends Seeder
 		// 	'required' => false
 		// ]);
 
+		/**
+		 * Populate Custom Field Options
+		 */
+
 		// $species_list = [];
-		// $json = File::get(database_path('data/tableton/species.json'));
+		// $json = File::get(database_path('data/marvel/species.json'));
 		// $json_species = json_decode($json, true);
 		// foreach ($json_species as $slug => $species) {
 		// 	$species_list[$slug] = CustomFieldOption::create([
-		// 		'custom_field_id' => $species_field->id,
+		// 		'custom_field_id' => $fields['species']->id,
 		// 		'value'           => $slug,
 		// 		'label'           => $species['name'],
 		// 	]);
 		// }
 
 
-		
-		//	LOCATIONS
+
+		/**
+		 * LOCATIONS
+		 */
 
 		// $regions = [];
 		// $json = File::get(database_path('data/tableton/locations.json'));
@@ -101,31 +96,29 @@ class DatabaseSeeder extends Seeder
 
 
 
-		//	CHARACTERS
+		/**
+		 * CHARACTERS
+		 */
 
-		// $characters = [];
-		// $json = File::get(database_path('data/tableton/characters.json'));
-		// $json_characters = json_decode($json, true);
-		
-		// foreach ($json_characters as $slug => $character) {
-		// 	$characters[$slug] = Character::factory()->create([
-		// 		'project_id'  => $projects['tableton']->id,
-		// 		'name'        => $character['name'],
-		// 		'subtitle'    => $character['subtitle'],
-		// 		'slug'        => $slug,
-		// 		'description' => $character['desc'],
-		// 		'location_id' => isset($character['location']) ? $locations[$character['location']]->id : null,
-		// 	]);
-		// 	CustomFieldValue::create([
-		// 		'fieldable_id' => $characters[$slug]->id,
-		// 		'custom_field_id' => $species_field->id,
-		// 		'value'           => $character['species'],
-		// 	]);
-		// }
+		$characters = [];
+		$json = File::get(database_path('data/marvel/characters.json'));
+		$json_characters = json_decode($json, true);
+
+		foreach ($json_characters as $slug => $character) {
+			$characters[$slug] = Character::factory()->create([
+				'project_id'  => $projects['marvel']->id,
+				'name'        => $character['name'],
+				'alias'        => $character['alias'],
+				'slug'        => $slug,
+				'description' => $character['desc'] ?? null,
+			]);
+		}
 
 
 
-		//	FACTIONS
+		/**
+		 * FACTIONS
+		 */
 
 		// $factions = [];
 		// $ranks = [];
@@ -135,6 +128,7 @@ class DatabaseSeeder extends Seeder
 		// 	$factions[$slug] = Faction::factory()->create([
 		// 		'project_id'      => $projects['tableton']->id,
 		// 		'name'            => $faction['name'],
+		// 		'type'            => $faction['type'],
 		// 		'slug'            => $slug,
 		// 		'description'     => $faction['desc'],
 		// 		'headquarters_id' => $faction['hq'] ? $locations[$faction['hq']]->id : null,
@@ -155,7 +149,9 @@ class DatabaseSeeder extends Seeder
 
 
 
-		//	RELATIONSHIPS
+		/**
+		 * RELATIONSHIPS
+		 */
 
 		// $relationships = [];
 		// $json = File::get(database_path('data/tableton/relationships.json'));
@@ -171,5 +167,5 @@ class DatabaseSeeder extends Seeder
 		// 		'updated_at' => now(),
 		// 	]);
 		// }
-    }
+	}
 }

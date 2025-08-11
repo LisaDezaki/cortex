@@ -10,6 +10,7 @@
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
 	import Button from '@/Components/Button.svelte';
 	import Card from '@/Components/Card.svelte';
+	import CardGrid from '@/Components/CardGrid.svelte';
 	import HeaderButton from '@/Components/HeaderButton.svelte';
 	import Heading from '@/Components/Heading.svelte'
 	import Icon from '@/Components/Icon.svelte'
@@ -52,7 +53,8 @@
 	{#snippet article()}
 		<Back href={route('factions')} />
 		<Section>
-			<Heading is="h1" as="h3" class="mb-6"
+			<Heading is="h1" as="h3" class="my-12"
+				eyebrowIcon="FlagBannerFold" eyebrow="Faction"
 				heading={faction.name}
 				actions={[
 					{ label: "Edit",   icon: "Pen",   href: route('factions.edit', {faction: faction.slug}) },
@@ -65,20 +67,21 @@
 		{#if faction.ranks.length > 0}
 			<Section title="Membership">
 				{#each faction.ranks as rank}
-					<div class="font-style-large mb-1.5">
+					<span class="bg-slate-500/10 font-style-large px-2 py-1 rounded-full">
 						{rank.name}
-					</div>
-					<div class="flex gap-1.5 mb-6 pb-6 border-b">
+					</span>
+					<CardGrid cols={5} class="mt-2">
 						{#each faction.members.filter(m => m.rank.id == rank.id) as member}
 							<Card
-								class="aspect-[3/4] w-28"
+								aspect="square"
 								title={member.name}
 								subtitle={member.rank.name}
+								icon="User"
 								image={member.portrait?.url}
 								href={route('characters.show', {character: member.slug})}
 							/>
 						{/each}
-					</div>
+					</CardGrid>
 				{/each}
 			</Section>
 		{/if}
@@ -91,22 +94,22 @@
 			{#if faction.emblem}
 				<img src={faction.emblem.url} alt={faction.slug} class="w-full rounded-t-lg" />
 			{:else}
-				<Icon name="FlagBannerFold" size={64} weight="thin" />
+				<Icon name="FlagBannerFold" size="xl" weight="thin" />
 			{/if}
 		</div>
 
 		<div class="space-y-1.5 py-3">
 			{#if faction.headquarters}
-				<div class="grid grid-cols-3 gap-3">
-					<span class="col-span-1 font-bold">HQ</span>
-					<Link class="col-span-2 line-clamp-1 text-emerald-500 hover:underline"
+				<div class="flex items-start gap-3">
+					<span class="font-bold w-20">HQ</span>
+					<Link class="col-span-2 text-emerald-500 hover:underline"
 						href={route('locations.show', {location: faction.headquarters.slug})}
 					>{faction.headquarters.name}</Link>
 				</div>
 			{/if}
-			<div class="grid grid-cols-3 gap-3">
-				<span class="col-span-1 font-bold">Leader</span>
-				<Link class="col-span-2 line-clamp-1 text-emerald-500 hover:underline"
+			<div class="flex items-start gap-3">
+				<span class="font-bold w-20">Leader</span>
+				<Link class="col-span-2 text-emerald-500 hover:underline"
 					href
 				></Link>
 			</div>

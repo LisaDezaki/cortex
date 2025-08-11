@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\UploadedFile;
 
-// class FileUploadService
+class FileUploadService
 {
     /**
      * Upload a file to a temporary location.

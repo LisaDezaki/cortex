@@ -61,7 +61,7 @@
 		{...restProps}
 	/>
 
-	<div class="flex items-center">
+	<!-- <div class="flex items-center">
 		<Button style="plain" theme={value - step < restProps.min ? "neutral" : "accent"}
 			class="input-action"
 			disabled={value - step < restProps.min || restProps.disabled}
@@ -74,6 +74,6 @@
 			icon="Plus" iconSize={16}
 			onclick={increment}
 		/>
-	</div>
+	</div> -->
 
 </div>

@@ -53,9 +53,9 @@
 			icon="At"
 			bind:value={$form.email}
 			errors={$form.errors.email}
-			required
 			autocomplete="username"
 			autofocus
+			required
 		/>
 
 		<Field
@@ -65,8 +65,8 @@
 			icon="Password"
 			bind:value={$form.password}
 			errors={$form.errors.password}
-			required
 			autocomplete="current-password"
+			required
 		/>
 
 		<Field

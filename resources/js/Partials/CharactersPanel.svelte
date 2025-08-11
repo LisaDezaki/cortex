@@ -12,13 +12,13 @@
 <Panel
 	searchable
 	items={[
-		...characters.map(character => {
+		...characters.map(c => {
 			return {
 				icon:   'User',
-				label:  character.name,
-				image:  character.portrait?.url,
-				href:   route('characters.show', {character: character.slug}),
-				active: $page.url == `/characters/${character.slug}` || $page.url.startsWith(`/characters/${character.slug}/`)
+				image:  c.portrait?.url,
+				label:  c.name,
+				href:   route('characters.show', {character: c.slug}),
+				active: $page.url == `/characters/${c.slug}` || $page.url.startsWith(`/characters/${c.slug}/`)
 			}
 		})
 	]}

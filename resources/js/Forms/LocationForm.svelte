@@ -4,6 +4,9 @@
 
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
+	import CardGrid from '@/Components/CardGrid.svelte'
+	import CardNew from '@/Components/CardNew.svelte'
+	import Field from '@/Components/Field.svelte'
 	import Form from '@/Components/Form.svelte'
 	import Heading from '@/Components/Heading.svelte'
 	import Section from '@/Components/Section.svelte'
@@ -12,12 +15,15 @@
 	//  Props
 
 	const activeProject = $page.props.activeProject.data
+	const customFields  = $page.props.customFields.data
+
 	let { location } = $props()
 
 	//  Form
 
 	let startData = {
-		banner: location?.banner || null,
+		slug: location?.slug || null,
+		banner: location?.banner?.path || null,
 		map: location?.map || null,
         name: location?.name || null,
         description: location?.description || null,
@@ -78,241 +84,136 @@
 	
 </script>
 
-<Tabs value="location" class="max-w-4xl">
 
-	<Section>
-		<Tabs.List class="max-w-64 mx-auto">
-			<Tabs.Trigger value="location">Location</Tabs.Trigger>
-			<Tabs.Trigger value="region">Region</Tabs.Trigger>
-		</Tabs.List>
+<Form>
+
+	<!-- MAIN INFORMATION -->
+
+	<Section class="space-y-3">
+		<Heading is="h2" as="h4" class="mb-12"
+			heading={location ? "Edit Location" : "New Location"}
+		/>
+
+		<Field layout="block"
+			type="text"
+			id="slug"
+			label="Slug"
+			placeholder={$form.name?.toLowerCase() || "slug"}
+			bind:value={$form.slug}
+			description="The URL slug for this location."
+			errors={$form.errors.slug}
+		/>
+
+		<Field layout="block" inputClass="w-full"
+			type="text"
+			id="name"
+			label="Name"
+			placeholder="Name"
+			bind:value={$form.name}
+			description="The name of the location."
+			errors={$form.errors.name}
+			required
+		/>
+
+		<Field layout="block" inputClass="w-full"
+			type="textarea"
+			id="description"
+			label="Description"
+			placeholder="Description..."
+			bind:value={$form.description}
+			description="A detailed description of the location."
+			errors={$form.errors.description}
+			rows={8}
+		/>
 	</Section>
 
-	<Tabs.Content value="location" class="space-y-6 mt-6">
-		<Form class="col-span-3 space-y-6">
+	<!-- MEDIA -->
 
-			<Section class="space-y-6">
+	<Section class="space-y-3">
+		<Heading is="h2" as="h4" class="mb-12"
+			heading="Images"
+		/>
 
-				<Heading is="h2" as="h5"
-					heading={location ? "Edit Location" : "New Location"}
-					subheading={location ? "Edit this location's details." : `Build a new location to add to the ${activeProject.name} project.`}
-					class="mb-12"
+		<Field layout="block" inputClass="aspect-video h-40 w-72"
+			type="file"
+			id="banner"
+			label="Banner"
+			description="Upload a banner image for this location."
+			icon="Image"
+			placeholder="Upload a banner..."
+			bind:value={$form.banner}
+			preview={location?.banner?.url}
+			errors={$form.errors.banner}
+		/>
+
+		<Field layout="block" inputClass="aspect-square h-72 w-72"
+			type="file"
+			id="map"
+			label="Map"
+			description="Upload a map for this location."
+			icon="Image"
+			placeholder="Upload a map..."
+			bind:value={$form.map}
+			preview={location?.map?.url}
+			errors={$form.errors.map}
+		/>
+	</Section>
+
+	<!-- CHARACTERS -->
+
+	<Section>
+		<Heading is="h3" as="h6" class="mb-6"
+			heading="Characters"
+		/>
+		<CardGrid cols={5}>
+			{#each location?.characters as character, i}
+				<Card aspect="square" class="w-full"
+					icon="User"
+					image={character.portrait?.url}
+					title={character.name}
+					subtitle={character.role}
+					href={route('characters.show', {character: character.slug})}
 				/>
+			{/each}
+			<CardNew aspect="square" class="w-full"
+			/>
+		</CardGrid>
+	</Section>
 
-				<!-- FORM.MAIN -->
+	<Section class="space-y-6">
+		<Heading is="h3" as="h6" class="mb-6"
+			heading="Custom Fields"
+		/>
+		{#each customFields as field, i}
+			<Field layout="block" inputClass="w-full"
+				type={field.type}
+				id={getFieldName(field.name)}
+				description={field.description}
+				label={field.label || field.name}
+				placeholder={field.placeholder || field.label}
+				required={field.required}
+				options={field.options}
+				bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
+			/>
+		{:else}
+			<p class="font-style-placeholder">There are no custom fields for Locations yet.</p>
+		{/each}
+	</Section>
+	
+	<Section class="flex items-center justify-center gap-3">
+		<Button style="hard" theme="neutral"
+			type="button"
+			secondary
+			label="Cancel"
+			onclick={() => history.back()}
+		/>
+		<Button style="hard" theme="accent"
+			type="submit"
+			primary={$form.isDirty}
+			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
+			label="{location ? "Update" : "Create"} Location"
+			onclick={submit}
+		/>
+	</Section>
 
-				<Form.Field
-					type="file"
-					id="banner"
-					layout="block"
-					class="w-full"
-					bind:value={$form.banner}
-					previewPath={location?.banner?.url}
-					description="Upload a banner image for this location."
-					errors={$form.errors.banner}
-					label="Banner"
-					inputClass="aspect-video"
-				/>
-
-				<Form.Field
-					type="file"
-					id="map"
-					layout="block"
-					class="w-full"
-					bind:value={$form.map}
-					previewPath={location?.map?.url}
-					description="Upload a map for this location."
-					errors={$form.errors.map}
-					label="Map"
-					inputClass="aspect-square"
-				/>
-
-				<Form.Field
-					type="text"
-					id="name"
-					layout="block"
-					class="w-full"
-					bind:value={$form.name}
-					description="The name of the location."
-					errors={$form.errors.name}
-					label="Name"
-					required
-				/>
-
-				<Form.Field
-					type="textarea"
-					id="description"
-					layout="block"
-					bind:value={$form.description}
-					description="A detailed description of the location."
-					errors={$form.errors.description}
-					label="Description"
-					rows={8}
-				/>
-			</Section>
-
-			<Section>
-				<Heading is="h3" as="h6"
-					heading="Characters"
-					subheading="Characters that are found at this location."
-					class="mb-6"
-				/>
-				{#each location?.members as member, i}
-					<Card
-						class="aspect-[3/4]"
-						title={member.name}
-						subtitle={member.role}
-						image={member.portrait?.url}
-						href={route('characters.show', {character: member.slug})}
-					/>
-				{/each}
-			</Section>
-
-			<Section
-				title="Custom Fields"
-				subtitle="Custom fields for this location."
-				bodyclass="px-6 space-y-6"
-			>
-				<!-- {#each project.custom_fields as field, i}
-					<Form.Field
-						type={field.type}
-						id={getFieldName(field.name)}
-						layout="block"
-						class="w-full"
-						description={field.description}
-						label={field.label || field.name}
-						placeholder={field.placeholder || field.name}
-						required={field.required}
-						options={field.options}
-						bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
-					/>
-				{/each} -->
-			</Section>
-			
-			<Section class="flex items-center justify-center gap-3">
-				<Button style="hard" theme="neutral"
-					type="button"
-					secondary
-					label="Cancel"
-					onclick={() => history.back()}
-				/>
-				<Button style="hard" theme="accent"
-					type="submit"
-					primary={$form.isDirty}
-					disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
-					label="{location ? "Update" : "Create"} Location"
-					onclick={submit}
-				/>
-			</Section>
-
-		</Form>
-
-	</Tabs.Content>
-
-	<Tabs.Content value="region" class="space-y-6 mt-6">
-
-		<Form class="col-span-3 space-y-6">
-
-			<Section class="space-y-6">
-
-				<Heading is="h2" as="h5"
-					heading={location ? "Edit Region" : "New Region"}
-					subheading={location ? "Edit this region's details." : `Build a new region to add to the ${project.name} project.`}
-					class="mb-12"
-				/>
-
-				<!-- FORM.MAIN -->
-
-				<!-- <Form.Field
-					type="file"
-					id="banner"
-					layout="block"
-					class="w-full"
-					bind:value={$form.banner}
-					description="Upload a logo, icon, or sigil for this location."
-					errors={$form.errors.banner}
-					label="Image"
-				/> -->
-
-				<Form.Field
-					type="text"
-					id="name"
-					layout="block"
-					class="w-full"
-					bind:value={$form.name}
-					description="The name of the location."
-					errors={$form.errors.name}
-					label="Name"
-					required
-				/>
-
-				<Form.Field
-					type="textarea"
-					id="description"
-					layout="block"
-					bind:value={$form.description}
-					description="A detailed description of the location."
-					errors={$form.errors.description}
-					label="Description"
-					rows={8}
-				/>
-			</Section>
-
-			<Section>
-				<Heading is="h3" as="h6"
-					heading="Characters"
-					subheading="Characters that are found at this location."
-					class="mb-6"
-				/>
-				{#each location?.members as member, i}
-					<Card
-						class="aspect-[3/4]"
-						title={member.name}
-						subtitle={member.role}
-						image={member.portrait?.url}
-						href={route('characters.show', {character: member.slug})}
-					/>
-				{/each}
-			</Section>
-
-			<Section
-				title="Custom Fields"
-				subtitle="Custom fields for this location."
-				bodyclass="px-6 space-y-6"
-			>
-				<!-- {#each project.custom_fields as field, i}
-					<Form.Field
-						type={field.type}
-						id={getFieldName(field.name)}
-						layout="block"
-						class="w-full"
-						description={field.description}
-						label={field.label || field.name}
-						placeholder={field.placeholder || field.name}
-						required={field.required}
-						options={field.options}
-						bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
-					/>
-				{/each} -->
-			</Section>
-			
-			<Section class="flex items-center justify-center gap-3">
-				<Button style="hard" theme="neutral"
-					type="button"
-					secondary
-					label="Cancel"
-					onclick={() => history.back()}
-				/>
-				<Button style="hard" theme="accent"
-					type="submit"
-					primary={$form.isDirty}
-					disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
-					label="{location ? "Update" : "Create"} Location"
-					onclick={submit}
-				/>
-			</Section>
-
-		</Form>
-
-	</Tabs.Content>
-</Tabs>
-
+</Form>

@@ -18,7 +18,7 @@ class CharacterResource extends JsonResource
 			'id'          => $this->id,
 			'slug'        => $this->slug,
 			'name'        => $this->name,
-			'subtitle'    => $this->subtitle,
+			'alias'       => $this->alias,
 			'description' => $this->description,
 			'appearance'  => $this->appearance,
 			'personality' => $this->personality,
@@ -34,9 +34,9 @@ class CharacterResource extends JsonResource
 			'customFieldValues' => CustomFieldValueResource::collection($this->whenLoaded('customFieldValues')),
 
 			'meta' => [
-				'project_id' => $this->project_id,
-				'created_at' => $this->created_at,
-				'updated_at' => $this->updated_at
+				'projectId' => $this->project_id,
+				'createdAt' => $this->created_at,
+				'updatedAt' => $this->updated_at
 			]
 		];
     }

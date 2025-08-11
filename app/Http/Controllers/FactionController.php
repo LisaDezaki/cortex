@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\FactionResource;
 use App\Http\Resources\CustomFieldResource;
+use App\Http\Resources\FactionResource;
 use App\Http\Requests\StoreFactionRequest;
 use App\Http\Requests\UpdateFactionRequest;
 use App\Models\CustomField;
@@ -27,13 +27,13 @@ class FactionController extends Controller
 	}
 
 	protected $validationRules = [
-		'name' => ['string', 'required'],
-		'description' => ['string', 'nullable'],
-		'emblem' => ['string', 'nullable'],
-		'custom_fields' => 'sometimes|array',
-        'custom_fields.*' => 'present',
-		'custom_fields.*.id' => 'required|distinct|exists:custom_fields,id',
-		'custom_fields.*.value' => 'nullable|string'
+		'name'          	  	=> ['required', 'string'],
+		'description'   	  	=> ['nullable', 'string'],
+		'emblem'        	  	=> ['nullable', 'string'],
+		'custom_fields' 	  	=> ['sometimes', 'array'],
+        'custom_fields.*'     	=> ['present'],
+		'custom_fields.*.id'    => ['required', 'distinct', 'exists:custom_fields,id'],
+		'custom_fields.*.value' => ['nullable', 'string']
 	];
 
     public function index()
@@ -55,7 +55,19 @@ class FactionController extends Controller
 
     public function create()
     {
-        return Inertia::render('Factions/Create');
+		$active_project = Auth::user()->active_project;
+		if (!$active_project) {
+			return Redirect::route('projects');
+		}
+
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'faction'
+		])->with('options')->get();
+
+        return Inertia::render('Factions/Create', [
+			'customFields' => CustomFieldResource::collection($customFields)
+		]);
     }
 
     public function store(Request $request): RedirectResponse
@@ -74,7 +86,7 @@ class FactionController extends Controller
     {
 		$faction->load([
 			'emblem',
-			'members',
+			'members.portrait',
 			'ranks',
 			'headquarters'
 		]);
@@ -87,11 +99,23 @@ class FactionController extends Controller
     {
         $faction->load([
 			'emblem',
-			'members',
+			'members.portrait',
 			'ranks'
 		]);
+
+		$active_project = Auth::user()->active_project;
+		if (!$active_project) {
+			return Redirect::route('projects');
+		}
+
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'faction'
+		])->with('options')->get();
+
         return Inertia::render('Factions/Edit', [
 			'faction' => new FactionResource($faction),
+			'customFields' => CustomFieldResource::collection($customFields)
 		]);
     }
 
@@ -101,6 +125,12 @@ class FactionController extends Controller
 		$faction->fill($validatedData);
 		$this->handleEmblem($request, $faction);
 		// $this->handleCustomFields($validatedData['custom_fields'], $faction);
+		if ($request->has('headquarters_id')) {
+			$faction->headquarters()->associate($validatedData['headquarters_id']);
+		}
+
+		unset($faction->emblem);
+
 		$faction->update();
 		return Redirect::route("factions.show", [
 			'faction' => $faction->slug

@@ -1,22 +1,488 @@
 {
+	"abomination": {
+		"name": "Abomination",
+		"alias": "Emil Blonsky",
+		"type": "villain",
+		"team": null
+	},
+	"adam-warlock": {
+		"name": "Adam Warlock",
+		"alias": "Adam Warlock",
+		"type": "hero",
+		"team": "guardians-of-the-galaxy"
+	},
+	"ant-man": {
+		"name": "Ant-Man",
+		"alias": "Scott Lang",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"beast": {
+		"name": "Beast",
+		"alias": "Henry McCoy",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"black-bolt": {
+		"name": "Black Bolt",
+		"alias": "Blackagar Boltagon",
+		"type": "hero",
+		"team": null
+	},
+	"black-panther": {
+		"name": "Black Panther",
+		"alias": "T'Challa",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"black-widow": {
+		"name": "Black Widow",
+		"alias": "Natalia Romanova",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"blade": {
+		"name": "Blade",
+		"alias": "Eric Brooks",
+		"type": "hero",
+		"team": null
+	},
+	"bullseye": {
+		"name": "Bullseye",
+		"alias": "Lester",
+		"type": "villain",
+		"team": null
+	},
+	"cable": {
+		"name": "Cable",
+		"alias": "Nathan Summers",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"captain-america": {
+		"name": "Captain America",
+		"alias": "Steve Rogers",
+		"type": "hero",
+		"team": "avengers"
+	},
 	"captain-marvel": {
-		"name": "Carol Danvers",
-		"hero_name": "Captain Marvel",
-		"team": "Avengers"
+		"name": "Captain Marvel",
+		"alias": "Carol Danvers",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"cloak": {
+		"name": "Cloak",
+		"alias": "Tyrone Johnson",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"colossus": {
+		"name": "Colossus",
+		"alias": "Piotr Rasputin",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"cyclops": {
+		"name": "Cyclops",
+		"alias": "Scott Summers",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"dagger": {
+		"name": "Dagger",
+		"alias": "Tandy Bowen",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"daredevil": {
+		"name": "Daredevil",
+		"alias": "Matthew Murdock",
+		"type": "hero",
+		"team": null
+	},
+	"darwin": {
+		"name": "Darwin",
+		"alias": "Armando Muñoz",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"deadpool": {
+		"name": "Deadpool",
+		"alias": "Wade Wilson",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"doctor-strange": {
+		"name": "Doctor Strange",
+		"alias": "Steven Strange",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"domino": {
+		"name": "Domino",
+		"alias": "Neena Thurman",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"drax": {
+		"name": "Drax the Destroyer",
+		"alias": "Arthur Douglas",
+		"type": "hero",
+		"team": "guardians-of-the-galaxy"
+	},
+	"gambit": {
+		"name": "Gambit",
+		"alias": "Remy LaBeau",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"gamora": {
+		"name": "Gamora",
+		"alias": "Gamora",
+		"type": "hero",
+		"team": "guardians-of-the-galaxy"
+	},
+	"ghost-rider": {
+		"name": "Ghost Rider",
+		"alias": "Johnny Blaze",
+		"type": "anti-hero",
+		"team": null
+	},
+	"ghost-rider-2": {
+		"name": "Ghost Rider",
+		"alias": "Roberto 'Robbie' Reyes",
+		"type": "hero",
+		"team": null
+	},
+	"goblin-queen": {
+		"name": "Goblin Queen",
+		"alias": "Madelyne Pryor",
+		"type": "villain",
+		"team": "x-men"
+	},
+	"groot": {
+		"name": "Groot",
+		"alias": "Groot",
+		"type": "hero",
+		"team": "guardians-of-the-galaxy"
+	},
+	"hawkeye": {
+		"name": "Hawkeye",
+		"alias": "Clint Barton",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"hawkeye-2": {
+		"name": "Hawkeye",
+		"alias": "Kate Bishop",
+		"type": "hero",
+		"team": null
+	},
+	"hulk": {
+		"name": "The Incredible Hulk",
+		"alias": "Bruce Banner",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"human-torch": {
+		"name": "Human Torch",
+		"alias": "Johhny Storm",
+		"type": "hero",
+		"team": "fantastic-four"
+	},
+	"iceman": {
+		"name": "Iceman",
+		"alias": "Bobby Drake",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"invisible-woman": {
+		"name": "Invisible Woman",
+		"alias": "Sue Storm",
+		"type": "hero",
+		"team": "fantastic-four"
 	},
 	"iron-man": {
-		"name": "Tony Stark",
-		"hero_name": "Iron Man",
-		"team": "Avengers"
+		"name": "Iron Man",
+		"alias": "Tony Stark",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"ironheart": {
+		"name": "Ironheart",
+		"alias": "Riri Williams",
+		"type": "hero",
+		"team": null
+	},
+	"jean-grey": {
+		"name": "Phoenix",
+		"alias": "Jean Grey",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"jessica-jones": {
+		"name": "Jessica Jones",
+		"alias": "Jessica Jones",
+		"type": "hero",
+		"team": null
+	},
+	"jubilee": {
+		"name": "Jubilee",
+		"alias": "Jubilation Lee",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"juggernaut": {
+		"name": "Juggernaut",
+		"alias": "Cain Marko",
+		"type": "villain",
+		"team": "x-men"
+	},
+	"legion": {
+		"name": "Legion",
+		"alias": "David Haller",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"loki": {
+		"name": "Loki",
+		"alias": "Loki",
+		"type": "hero",
+		"team": null
+	},
+	"luke-cage": {
+		"name": "Luke Cage",
+		"alias": "Luke Cage",
+		"type": "hero",
+		"team": null
+	},
+	"luna-snow": {
+		"name": "Luna Snow",
+		"alias": "Seol Hee",
+		"type": "hero",
+		"team": null
+	},
+	"magik": {
+		"name": "Magik",
+		"alias": "Illyana Rasputina",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"magneto": {
+		"name": "Magneto",
+		"alias": "Max Eisenhardt",
+		"type": "villain",
+		"team": "x-men"
 	},
 	"mantis": {
 		"name": "Mantis",
-		"hero_name": "Mantis",
-		"team": "Guardians of the Galaxy"
+		"alias": "Mantis",
+		"type": "hero",
+		"team": "guardians-of-the-galaxy"
+	},
+	"moon-knight": {
+		"name": "Ghost Rider",
+		"alias": "Marc Spector / Jake Lockley / Steven Grant",
+		"type": "hero",
+		"team": null
+	},
+	"mr-fantastic": {
+		"name": "Mr. Fantastic",
+		"alias": "Reed Richards",
+		"type": "hero",
+		"team": "fantastic-four"
+	},
+	"ms-america": {
+		"name": "Ms. America",
+		"alias": "America Chavez",
+		"type": "hero",
+		"team": null
+	},
+	"ms-marvel": {
+		"name": "Ms. Marvel",
+		"alias": "Kamala Khan",
+		"type": "hero",
+		"team": null
+	},
+	"mystique": {
+		"name": "Mystique",
+		"alias": "Raven Darkhölme",
+		"type": "villain",
+		"team": "x-men"
+	},
+	"namor": {
+		"name": "Sub-Mariner",
+		"alias": "Namor McKenzie",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"nebula": {
+		"name": "Nebula",
+		"alias": "Nebula",
+		"type": "villain",
+		"team": "guardians-of-the-galaxy"
+	},
+	"nightcrawler": {
+		"name": "Nightcrawler",
+		"alias": "Kurt Wagner",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"professor-x": {
+		"name": "Professor X",
+		"alias": "Charles Xavier",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"psylocke": {
+		"name": "Psylocke",
+		"alias": "Sai",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"punisher": {
+		"name": "Punisher",
+		"alias": "Frank Castle",
+		"type": "anti-hero",
+		"team": null
+	},
+	"quicksilver": {
+		"name": "Quicksilver",
+		"alias": "Pietro Maximoff",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"red-bishop": {
+		"name": "RedBishop",
+		"alias": "Lucas Bishop",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"rocket-raccoon": {
+		"name": "Rocket Raccoon",
+		"alias": "Rocket Raccoon",
+		"type": "hero",
+		"team": "guardians-of-the-galaxy"
+	},
+	"rogue": {
+		"name": "Rogue",
+		"alias": "Anna Marie LeBeau",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"scarlet-witch": {
+		"name": "Scarlet Witch",
+		"alias": "Wanda Maximoff",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"sentry": {
+		"name": "Sentry",
+		"alias": "Robert 'Bob' Reynolds",
+		"type": "hero",
+		"team": null
+	},
+	"shadowcat": {
+		"name": "Shadowcat",
+		"alias": "Kitty Pryde",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"shang-chi": {
+		"name": "Shang-Chi",
+		"alias": "Zheng Shang-Chi",
+		"type": "hero",
+		"team": null
+	},
+	"she-hulk": {
+		"name": "She-Hulk",
+		"alias": "Jennifer Walters",
+		"type": "hero",
+		"team": null
+	},
+	"spider-man": {
+		"name": "Spider-Man",
+		"alias": "Peter Parker",
+		"type": "hero",
+		"team": "spiderverse"
 	},
 	"spider-woman": {
-		"name": "Gwen Stacy",
-		"hero_name": "Spider-Woman",
-		"team": "Spiderverse"
+		"name": "Spider-Woman",
+		"alias": "Gwen Stacy",
+		"type": "hero",
+		"team": "spiderverse"
+	},
+	"squirrel-girl": {
+		"name": "Squirrel Girl",
+		"alias": "Doreen Green",
+		"type": "hero",
+		"team": null
+	},
+	"star-lord": {
+		"name": "Star-Lord",
+		"alias": "Peter Quill",
+		"type": "hero",
+		"team": "guardians-of-the-galaxy"
+	},
+	"storm": {
+		"name": "Storm",
+		"alias": "Ororo Munroe",
+		"type": "hero",
+		"team": "x-men"
+	},
+	"thanos": {
+		"name": "Thanos",
+		"alias": "Thanos",
+		"type": "villain",
+		"team": "avengers"
+	},
+	"the-thing": {
+		"name": "The Thing",
+		"alias": "Ben Grimm",
+		"type": "hero",
+		"team": "fantastic-four"
+	},
+	"thor": {
+		"name": "Thor",
+		"alias": "Thor Odinson",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"venom": {
+		"name": "Venom",
+		"alias": "Eddie Brock",
+		"type": "anti-hero",
+		"team": "spiderverse"
+	},
+	"vision": {
+		"name": "Vision",
+		"alias": "The Vision",
+		"type": "hero",
+		"team": "avengers"
+	},
+	"wasp": {
+		"name": "Wasp",
+		"alias": "Janet Van Dyne",
+		"type": "hero",
+		"team": null
+	},
+	"white-queen": {
+		"name": "White Queen",
+		"alias": "Emma Frost",
+		"type": "villain",
+		"team": "x-men"
+	},
+	"winter-soldier": {
+		"name": "Winter Soldier",
+		"alias": "James 'Bucky' Barnes",
+		"type": "anti-hero",
+		"team": "avengers"
+	},
+	"wolverine": {
+		"name": "Wolverine",
+		"alias": "James 'Logan' Howlett",
+		"type": "hero",
+		"team": "x-men"
 	}
 }
