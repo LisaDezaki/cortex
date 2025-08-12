@@ -4,11 +4,12 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharactersPanel from '@/Partials/CharactersPanel.svelte'
-	import CharacterForm from '@/Forms/CharacterForm.svelte'
-	import DeleteCharacterForm from '@/Forms/DeleteCharacterForm.svelte'
 	
-	import Back from '@/Components/Back.svelte'
-	import Modal from '@/Components/Modal.svelte'
+	import CharacterForm       from '@/Forms/Character/Character.svelte'
+	import DeleteCharacterForm from '@/Forms/Character/Delete.svelte'
+	
+	import Back  from '@/Components/UI/Back.svelte'
+	import Modal from '@/Components/UI/Modal.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const character = $page.props.character.data

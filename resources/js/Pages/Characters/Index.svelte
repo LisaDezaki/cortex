@@ -6,12 +6,14 @@
 	import CharacterGrid  from '@/Partials/CharacterGrid.svelte'
 	import CharacterTable from '@/Partials/CharacterTable.svelte'
 
-	import Back from '@/Components/Back.svelte'
-	import Dropdown from '@/Components/Dropdown.svelte'
-	import Heading from '@/Components/Heading.svelte'
-	import Icon from '@/Components/Icon.svelte'
-	import Input from '@/Components/Input.svelte'
-	import Section from '@/Components/Section.svelte'
+	import Flex from '@/Components/Core/Flex.svelte'
+
+	import Back     from '@/Components/UI/Back.svelte'
+	import Dropdown from '@/Components/UI/Dropdown.svelte'
+	import Heading  from '@/Components/UI/Heading.svelte'
+	import Icon     from '@/Components/UI/Icon.svelte'
+	import Input    from '@/Components/UI/Input.svelte'
+	import Section  from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const characters    = activeProject?.characters
@@ -79,7 +81,7 @@
 
 			<!-- <pre>{JSON.stringify(characterListSorted,null,3)}</pre> -->
 
-			<div class="flex items-start gap-3">
+			<Flex align="start" gap={3}>
 
 				<!-- Search -->
 
@@ -127,15 +129,9 @@
 
 				<div class="bg-emerald-500/10 text-emerald-500 rounded-lg p-2">{characterList.length} {characterList.length !== 1 ? 'results' : 'result'}</div>
 
-				<!-- Advanced -->
+				<!-- Layout-specific Controls -->
 
-				<!-- <Button style="plain" theme="accent"
-					label="Advanced filters"
-				/> -->
-
-				<!-- Size-->
-
-				<div class="inline-flex gap-1.5 ml-auto min-w-40 flex-shrink-0">
+				<Flex gap={1.5} class="ml-auto min-w-40 flex-shrink-0">
 					{#if layout === 'graph'}
 						<Icon name="MagnifyingGlass" size="md" />
 						<Input type="slider" style="none" class="" showValue={false} min={4} max={12} bind:value={rowSize} />
@@ -157,7 +153,7 @@
 							]}
 						/>
 					{/if}
-				</div>
+				</Flex>
 
 				<!-- Layout -->
 
@@ -169,7 +165,7 @@
 						{ icon: "Table",    label: "Table",  value: "table" }
 					]}
 				/>
-			</div>
+			</Flex>
 
 			<!-- Display Characters -->
 

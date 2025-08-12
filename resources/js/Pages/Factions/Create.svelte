@@ -4,8 +4,8 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import FactionsPanel from '@/Partials/FactionsPanel.svelte'
-	import FactionForm from '@/Forms/FactionForm.svelte'
-	import Back from '@/Components/Back.svelte';
+	import FactionForm from '@/Forms/Faction/Faction.svelte'
+	import Back from '@/Components/UI/Back.svelte';
 
 	const activeProject = $page.props.activeProject
 

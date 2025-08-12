@@ -3,12 +3,13 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import LocationsPanel from '@/Partials/LocationsPanel.svelte'
-	import DeleteLocationForm from '@/Forms/DeleteLocationForm.svelte'
-	import LocationForm from '@/Forms/LocationForm.svelte'
+	import LocationsPanel      from '@/Partials/LocationsPanel.svelte'
 
-	import Back from '@/Components/Back.svelte'
-	import Modal from '@/Components/Modal.svelte'
+	import LocationForm       from '@/Forms/Location/Location.svelte'
+	import DeleteLocationForm from '@/Forms/Location/Delete.svelte'
+
+	import Back  from '@/Components/UI/Back.svelte'
+	import Modal from '@/Components/UI/Modal.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const location = $page.props.location.data

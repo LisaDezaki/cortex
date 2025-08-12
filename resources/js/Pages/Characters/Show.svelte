@@ -3,20 +3,17 @@
 	import { route } from 'momentum-trail'
 	
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import CharactersPanel from '@/Partials/CharactersPanel.svelte'
-	import DeleteCharacterForm from '@/Forms/DeleteCharacterForm.svelte'
+	import CharactersPanel     from '@/Partials/CharactersPanel.svelte'
+	import DeleteCharacterForm from '@/Forms/Character/Delete.svelte'
 
-	import Back from '@/Components/Back.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
-	import Button from '@/Components/Button.svelte'
-	import Card from '@/Components/Card.svelte'
-	import CardGrid from '@/Components/CardGrid.svelte'
-    import CharacterCard from '@/Components/CharacterCard.svelte'
-	import HeaderButton from '@/Components/HeaderButton.svelte'
-	import Heading from '@/Components/Heading.svelte'
-	import Icon from '@/Components/Icon.svelte'
-	import Modal from '@/Components/Modal.svelte'
-	import Section from '@/Components/Section.svelte'
+	import { Flex, Grid, Stack } from '@/Components/Core'
+
+	import Back     from '@/Components/UI/Back.svelte'
+	import Card     from '@/Components/UI/Card.svelte'
+	import Heading  from '@/Components/UI/Heading.svelte'
+	import Icon     from '@/Components/UI/Icon.svelte'
+	import Modal    from '@/Components/UI/Modal.svelte'
+	import Section  from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const character = $page.props.character.data
@@ -37,15 +34,6 @@
 </svelte:head>
 
 <AuthenticatedLayout>
-
-	<!-- {#snippet header()}
-		<Breadcrumbs data={[
-			{ title: "Characters", href: route('characters') },
-			{ title: character.name }
-		]} />
-		<HeaderButton icon="Pen"   theme="neutral" href={route('characters.edit', {character: character.slug})} />
-		<HeaderButton icon="Trash" theme="danger"  onclick={deleteCharacter} />
-	{/snippet} -->
 
 	{#snippet panel()}
 		<CharactersPanel />
@@ -90,7 +78,7 @@
 				<Heading is="h2" as="h5" class="mb-6"
 					heading="Relationships"
 				/>
-				<CardGrid cols={5}>
+				<Grid cols={5}>
 					{#each character.relationships as relationship}
 						<Card aspect="square"
 							icon="User"
@@ -100,50 +88,50 @@
 							href={route('characters.show', {character: relationship.slug})}
 						/>
 					{/each}
-				</CardGrid>
+				</Grid>
 			</Section>
 		{/if}
 	{/snippet}
 
 	{#snippet sidebar()}
 
-		<div class="mx-auto flex items-center justify-center aspect-square bg-slate-900/10 rounded-lg  border-slate-900/15 overflow-hidden max-w-64 w-[80%]">
+		<Flex align="center" justify="center" class="aspect-square bg-slate-900/10 rounded-lg  border-slate-900/15 overflow-hidden max-w-64 mx-auto w-[80%]">
 			{#if character.portrait}
 				<img src={character.portrait.url} alt={character.slug} class="min-h-full min-w-full object-cover" />
 			{:else}
 				<Icon name="User" size={64} weight="thin" />
 			{/if}
-		</div>
+		</Flex>
 
-		<div class="space-y-1.5 py-3">
+		<Stack gap={1.5} class="py-3">
 			{#if character.factions.length > 0}
-				<div class="grid grid-cols-3 gap-3">
-					<span class="col-span-1 font-bold">Faction</span>
-					<Link class="col-span-2 line-clamp-1 text-emerald-500 hover:underline" href={route('factions.show', {faction: character.factions[0]?.slug})}>{character.factions[0]?.name}</Link>
-				</div>
+				<Flex gap={3}>
+					<span class="font-bold w-20">Faction</span>
+					<Link class="line-clamp-1 text-emerald-500 hover:underline" href={route('factions.show', {faction: character.factions[0]?.slug})}>{character.factions[0]?.name}</Link>
+				</Flex>
 			{/if}
 
 			{#if character.location}
-				<div class="grid grid-cols-3 gap-3">
-					<span class="col-span-1 font-bold">Location</span>
-					<Link class="col-span-2 line-clamp-1 text-emerald-500 hover:underline" href={route('locations.show', {location: character.location.slug})}>{character.location?.name}</Link>
-				</div>
+				<Flex gap={3}>
+					<span class="font-bold w-20">Location</span>
+					<Link class="line-clamp-1 text-emerald-500 hover:underline" href={route('locations.show', {location: character.location.slug})}>{character.location?.name}</Link>
+				</Flex>
 			{/if}
 
 			{#if character.customFieldValues.length > 0}
 				{#each character.customFieldValues as field}
-					<div class="grid grid-cols-3 gap-3">
-						<span class="col-span-1 font-bold">{field.field.label}</span>
-						<span class="col-span-2">{field.value}</span>
-					</div>
+					<Flex gap={3}>
+						<span class="font-bold w-20">{field.field.label}</span>
+						<span class="line-clamp-1">{field.value}</span>
+					</Flex>
 				{/each}
 			{/if}
-		</div>
+		</Stack>
 
 	{/snippet}
 	
 </AuthenticatedLayout>
 
-<Modal show={deletingCharacter} onclose={closeModal}>
+<Modal title="Delete {character.name}?" show={deletingCharacter} onclose={closeModal}>
 	<DeleteCharacterForm {character} oncancel={closeModal} />
 </Modal>

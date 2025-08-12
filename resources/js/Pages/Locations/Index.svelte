@@ -3,20 +3,23 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import NewLocationForm from '@/Forms/NewLocationForm.svelte'
-	import RegionForm from '@/Forms/RegionForm.svelte'
-	import LocationGrid from '@/Partials/LocationGrid.svelte'
-	import LocationTable from '@/Partials/LocationTable.svelte'
+	import NewLocationForm     from '@/Forms/Location/LocationNew.svelte'
+	import RegionForm          from '@/Forms/Location/Region.svelte'
+	import LocationGrid        from '@/Partials/LocationGrid.svelte'
+	import LocationTable       from '@/Partials/LocationTable.svelte'
 
-	import Back from '@/Components/Back.svelte';
-	import Dropdown from '@/Components/Dropdown.svelte'
-	import Heading from '@/Components/Heading.svelte'
-	import Icon from '@/Components/Icon.svelte'
-	import Input from '@/Components/Input.svelte'
-	import Modal from '@/Components/Modal.svelte'
-	import RegionMap from '@/Components/RegionMap.svelte'
-	import Section from '@/Components/Section.svelte'
+	import { Flex, Inline, Stack } from '@/Components/Core'
 
+	import Back      from '@/Components/UI/Back.svelte';
+	import Dropdown  from '@/Components/UI/Dropdown.svelte'
+	import Heading   from '@/Components/UI/Heading.svelte'
+	import Icon      from '@/Components/UI/Icon.svelte'
+	import Input     from '@/Components/UI/Input.svelte'
+	import Modal     from '@/Components/UI/Modal.svelte'
+	import Section   from '@/Components/UI/Section.svelte'
+
+	import RegionMap from '@/Components/Features/Location/RegionMap.svelte'
+	
 	const activeProject = $page.props.activeProject.data
 	const characters = activeProject?.characters
 	const locations = activeProject?.locations
@@ -127,7 +130,7 @@
 				]}
 			/>
 
-			<div class="flex items-start gap-3">
+			<Flex align="start" gap={3}>
 
 				<!-- Search -->
 
@@ -171,7 +174,7 @@
 
 				<!-- Size / Columns -->
 
-				<div class="inline-flex gap-1.5 ml-auto min-w-40 flex-shrink-0">
+				<Inline gap={1.5} class="ml-auto min-w-40 flex-shrink-0">
 					{#if layout === 'grid'}
 						<Icon name="Resize" size={24} />
 						<Input type="slider" class="" showValue={false} min={3} max={7} bind:value={rowSize} />
@@ -188,7 +191,7 @@
 							]}
 						/>
 					{/if}
-				</div>
+				</Inline>
 
 				<!-- Layout -->
 
@@ -201,31 +204,29 @@
 					]}
 				/>
 
-			</div>
+			</Flex>
 
 			{#if activeProject && locations?.length > 0}
-				<div class="flex flex-col gap-4">
-					{#if layout == 'table'}
-						<LocationTable locations={locationList} />
-					{:else if layout == 'grid'}
-						{#if regions.length > 0}
-							<LocationGrid cols={gridCols}
-								locations={locationList}
-								regions={regions}
-								byRegion={sortBy == 'region'}
-								onEdit={openLocationModal}
-								onDelete={deleteLocationModal}
-							/>
-						{/if}
-					{:else if layout == 'map'}
-						<div class="space-y-3">
-							{#each regions as region}
-								<Heading heading={region.name} is="h5" as="h6" />
-								<RegionMap region={region} />
-							{/each}
-						</div>
+				{#if layout == 'table'}
+					<LocationTable locations={locationList} />
+				{:else if layout == 'grid'}
+					{#if regions.length > 0}
+						<LocationGrid cols={gridCols}
+							locations={locationList}
+							regions={regions}
+							byRegion={sortBy == 'region'}
+							onEdit={openLocationModal}
+							onDelete={deleteLocationModal}
+						/>
 					{/if}
-				</div>
+				{:else if layout == 'map'}
+					<Stack class="space-y-3">
+						{#each regions as region}
+							<Heading heading={region.name} is="h5" as="h6" />
+							<RegionMap region={region} />
+						{/each}
+					</Stack>
+				{/if}
 			{:else}
 				<p class="mt-12">There are no locations for this project yet. <Link href={route('locations.create')}>Create one?</Link></p>
 			{/if}

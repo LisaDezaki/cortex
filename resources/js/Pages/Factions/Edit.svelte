@@ -4,11 +4,11 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import FactionsPanel from '@/Partials/FactionsPanel.svelte'
-	import FactionForm from '@/Forms/FactionForm.svelte'
-	import DeleteFactionForm from '@/Forms/DeleteFactionForm.svelte'
+	import FactionForm from '@/Forms/Faction/Faction.svelte'
+	import DeleteFactionForm from '@/Forms/Faction/Delete.svelte'
 
-	import Back from '@/Components/Back.svelte'
-	import Modal from '@/Components/Modal.svelte'
+	import Back  from '@/Components/UI/Back.svelte'
+	import Modal from '@/Components/UI/Modal.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const faction = $page.props.faction.data

@@ -3,11 +3,9 @@
     import { route } from 'momentum-trail'
 
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
-    import Button from '@/Components/Button.svelte'
-    import Card from '@/Components/Card.svelte'
-	import Form from '@/Components/Form.svelte'
-    import Field from '@/Components/Field.svelte'
-    import Input from '@/Components/Input.svelte'
+	import Form from '@/Components/Core/Form.svelte'
+    import Button from '@/Components/UI/Button.svelte'
+    import Field from '@/Components/UI/Field.svelte'
 
     let {
         canResetPassword,

@@ -3,16 +3,14 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import DeleteProjectForm from '@/Forms/DeleteProjectForm.svelte'
-	import ProjectSettingsForm from '@/Forms/ProjectSettingsForm.svelte'
-	import ProjectForm from '@/Forms/ProjectForm.svelte'
+	import ProjectForm         from '@/Forms/Project/Project.svelte'
+	import ProjectSettingsForm from '@/Forms/Project/Settings.svelte'
+	import DeleteProjectForm   from '@/Forms/Project/Delete.svelte'
 	
-	import Back from '@/Components/Back.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
-	import Button from '@/Components/Button.svelte'
-	import HeaderButton from '@/Components/HeaderButton.svelte'
-	import Modal from '@/Components/Modal.svelte'
-	import Section from '@/Components/Section.svelte'
+	import Back        from '@/Components/UI/Back.svelte'
+	import Button      from '@/Components/UI/Button.svelte'
+	import Modal       from '@/Components/UI/Modal.svelte'
+	import Section     from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject?.data
 	const form = useForm({
@@ -35,11 +33,6 @@
 </svelte:head>
 
 <AuthenticatedLayout>
-
-	{#snippet header()}
-		<Breadcrumbs data={[ { title: "Settings" } ]} />
-		<HeaderButton icon="Trash" theme="danger" onclick={deleteProject} />
-	{/snippet}
 
 	{#snippet article()}
 		<Back href="/" />

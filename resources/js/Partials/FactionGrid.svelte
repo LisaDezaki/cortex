@@ -1,8 +1,8 @@
 <script>
 	import { route } from 'momentum-trail'
 
-    import Card from '@/Components/Card.svelte'
-    import CardGrid from '@/Components/CardGrid.svelte'
+	import Grid from '@/Components/Core/Grid.svelte'
+    import Card from '@/Components/UI/Card.svelte'
 
 	let {
 		factions,
@@ -13,11 +13,11 @@
 
 </script>
 
-<CardGrid
-	items={factions}
-	class="{cols ? `grid grid-cols-${cols}` : 'flex flex-wrap'} {className}"
+<Grid
+	cols={cols}
+	gap={2}
 {...restProps}>
-	{#snippet card(faction)}
+	{#each factions as faction}
 		<Card aspect="square"
 			image={faction.emblem?.url}
 			icon="FlagBannerFold"
@@ -25,5 +25,5 @@
 			subtitle="{faction.members.length} members"
 			href={route('factions.show', {faction: faction.slug})}
 		/>
-	{/snippet}
-</CardGrid>
+	{/each}
+</Grid>

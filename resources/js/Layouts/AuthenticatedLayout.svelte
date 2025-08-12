@@ -3,17 +3,15 @@
 	import { Pane, Splitpanes } from 'svelte-splitpanes';
 
 	import Navigation from '@/Partials/Navigation.svelte';
-    import Article from '@/Components/Article.svelte';
-    import Main from '@/Components/Main.svelte';
-    import Page from '@/Components/Page.svelte';
-    import Sidebar from '@/Components/Sidebar.svelte';
-    import StickyHeader from '@/Components/StickyHeader.svelte';
+    import Article    from '@/Components/UI/Article.svelte';
+    import Main       from '@/Components/UI/Main.svelte';
+    import Page       from '@/Components/UI/Page.svelte';
+    import Sidebar    from '@/Components/UI/Sidebar.svelte';
 
 	const activeProject = $page.props.activeProject.data;
 
     let {
 		article,
-		header,
 		panel,
 		sidebar
 	} = $props()
@@ -25,11 +23,6 @@
 	<Navigation project={activeProject} />
 
 	<div class="relative flex flex-grow-0 flex-col h-screen overflow-hidden w-full">
-		<!-- {#if header}
-			<StickyHeader>
-				{@render header()}
-			</StickyHeader>
-		{/if} -->
 		<Main>
 			{@render panel?.()}
 			<Splitpanes>

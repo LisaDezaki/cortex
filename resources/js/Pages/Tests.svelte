@@ -5,26 +5,25 @@
 	
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import UploadContext from '@/Components/Util/UploadContext.svelte'
-	import UploadPreview from '@/Components/Util/UploadPreview.svelte'
-	import UploadTrigger from '@/Components/Util/UploadTrigger.svelte'
+	import {
+		Form,
+		UploadContext,
+		UploadPreview,
+		UploadTrigger
+	 } from '@/Components/Core'
 
-	import Article     from '@/Components/Article.svelte'
-	import Avatar      from '@/Components/Avatar.svelte'
-	import Badge       from '@/Components/Badge.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
-	import Button      from '@/Components/Button.svelte'
-	import Checkbox    from '@/Components/Form/Checkbox.svelte'
-	import Dropdown    from '@/Components/Dropdown.svelte'
-	import Form        from '@/Components/Form.svelte'
-	import Field       from '@/Components/Field.svelte'
-	import Heading     from '@/Components/Heading.svelte'
-	import Input       from '@/Components/Input.svelte'
-	import Section     from '@/Components/Section.svelte'
-	import Separator   from '@/Components/Separator.svelte'
-	import Table       from '@/Components/Table'
-	import Tabs        from '@/Components/Tabs'
-	import Thumbnail   from '@/Components/Thumbnail.svelte'
+	import Avatar      from '@/Components/UI/Avatar.svelte'
+	import Badge       from '@/Components/UI/Badge.svelte'
+	import Breadcrumbs from '@/Components/UI/Breadcrumbs.svelte'
+	import Button      from '@/Components/UI/Button.svelte'
+	import Checkbox    from '@/Components/UI/Form/Checkbox.svelte'
+	import Dropdown    from '@/Components/UI/Dropdown.svelte'
+	import Heading     from '@/Components/UI/Heading.svelte'
+	import Input       from '@/Components/UI/Input.svelte'
+	import Section     from '@/Components/UI/Section.svelte'
+	import Table       from '@/Components/UI/Table'
+	import Tabs        from '@/Components/UI/Tabs'
+	import Thumbnail   from '@/Components/UI/Thumbnail.svelte'
 
 	const activeProject = $page.props.activeProject?.data
 

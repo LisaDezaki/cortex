@@ -1,14 +1,16 @@
 <script>
 	import { page } from '@inertiajs/svelte'
 
-	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-    import DeleteUserForm from '@/Forms/DeleteUserForm.svelte'
-    import UpdatePasswordForm from '@/Forms/UpdatePasswordForm.svelte'
-    import UpdateProfileInformationForm from '@/Forms/UpdateProfileInformationForm.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
-	import Button from '@/Components/Button.svelte';
-	import Modal from '@/Components/Modal.svelte';
-	import Section from '@/Components/Section.svelte';
+	import AuthenticatedLayout          from '@/Layouts/AuthenticatedLayout.svelte'
+	
+    import DeleteUserForm               from '@/Forms/User/Delete.svelte'
+    import UpdatePasswordForm           from '@/Forms/User/UpdatePassword.svelte'
+    import UpdateProfileInformationForm from '@/Forms/User/UpdateProfile.svelte'
+
+	import Breadcrumbs from '@/Components/UI/Breadcrumbs.svelte';
+	import Button      from '@/Components/UI/Button.svelte';
+	import Modal       from '@/Components/UI/Modal.svelte';
+	import Section     from '@/Components/UI/Section.svelte';
 
 	let confirmingUserDeletion = $state(false)
 

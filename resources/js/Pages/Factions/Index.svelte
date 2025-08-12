@@ -6,20 +6,20 @@
 	import FactionGrid from '@/Partials/FactionGrid.svelte'
 	import FactionTable from '@/Partials/FactionTable.svelte'
 
-	import Back from '@/Components/Back.svelte'
-	import Dropdown from '@/Components/Dropdown.svelte'
-	import Form from '@/Components/Form.svelte'
-	import HeaderButton from '@/Components/HeaderButton.svelte'
-	import Heading from '@/Components/Heading.svelte'
-	import Icon from '@/Components/Icon.svelte'
-	import Input from '@/Components/Input.svelte'
-	import Section from '@/Components/Section.svelte'
+	import { Flex, Inline } from '@/Components/Core'
+
+	import Back         from '@/Components/UI/Back.svelte'
+	import Dropdown     from '@/Components/UI/Dropdown.svelte'
+	import Heading      from '@/Components/UI/Heading.svelte'
+	import Icon         from '@/Components/UI/Icon.svelte'
+	import Input        from '@/Components/UI/Input.svelte'
+	import Section      from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
-	const characters = activeProject?.characters
-	const factions   = activeProject?.factions
-	const locations  = activeProject?.locations
 	const customFields  = $page.props.customFields?.data
+	const characters    = activeProject?.characters
+	const factions      = activeProject?.factions
+	const locations     = activeProject?.locations
 
 	let columns   = $state(['name', 'members', 'headquarters'])
 	let filter    = $state({})
@@ -32,8 +32,8 @@
 	let filteredFactions = $state(factions)
 	let selectedFactions = $state([])
 
-	let gridRows      = $derived(16-rowSize)
-	let hasFilter     = $derived(Boolean(filter.name && filter.value))
+	let gridRows    = $derived( 16-rowSize )
+	let hasFilter   = $derived( Boolean(filter.name && filter.value) )
 	let factionList = $derived(
 		factions
 			.filter(c => {
@@ -74,7 +74,7 @@
 					{ icon: "GearFine", theme: "neutral", href: route('factions.settings'), },
 				]}
 			/>
-			<div class="flex items-start gap-3">
+			<Flex align="start" gap={3}>
 
 				<!-- Search -->
 
@@ -118,7 +118,7 @@
 
 				<!-- Size-->
 
-				<div class="inline-flex gap-1.5 ml-auto min-w-40 flex-shrink-0">
+				<Inline gap={1.5} class="ml-auto min-w-40 flex-shrink-0">
 					{#if layout === 'grid'}
 						<Icon name="Resize" size="md" />
 						<Input type="slider" style="none" class="" showValue={false} min={4} max={12} bind:value={rowSize} />
@@ -132,7 +132,7 @@
 							// })
 						]} />
 					{/if}
-				</div>
+				</Inline>
 
 				<!-- Layout -->
 
@@ -149,7 +149,7 @@
 					{ icon: "Table",    value: "table" }
 				]} /> -->
 
-			</div>
+			</Flex>
 
 			{#if activeProject && factions?.length > 0}
 				{#if layout == 'grid'}

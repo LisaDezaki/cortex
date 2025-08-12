@@ -7,7 +7,7 @@
 	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
 	import Button from '@/Components/Button.svelte'
 	import Card from '@/Components/Card.svelte'
-	import CardGrid from '@/Components/CardGrid.svelte'
+	import Grid from '@/Components/Grid.svelte'
 	import Heading from '@/Components/Heading.svelte'
 	import Modal from '@/Components/Modal.svelte'
 	import Panel from '@/Components/Panel'
@@ -62,8 +62,8 @@
 			/>
 
 			{#if projects}
-				<CardGrid class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1" items={projects}>
-					{#snippet card(project)}
+				<Grid class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
+					{#each projects as project}
 						<Card
 							class="aspect-video"
 							title={project.name}
@@ -76,8 +76,8 @@
 									: (e) => activateProject(e, project.id)
 							}
 						/>
-					{/snippet}
-				</CardGrid>
+					{/each}
+				</Grid>
 			{:else}
 				No projects
 			{/if}

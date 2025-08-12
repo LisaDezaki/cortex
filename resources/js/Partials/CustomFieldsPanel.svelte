@@ -1,13 +1,13 @@
 <script>
 	import { page } from '@inertiajs/svelte'
 
-	import CustomFieldForm from '@/Forms/CustomFieldForm.svelte'
-	import Button from '@/Components/Button.svelte'
-	import DragHandle from '@/Components/DragHandle.svelte'
-	import Heading from '@/Components/Heading.svelte'
-	import Icon from '@/Components/Icon.svelte'
-	import Modal from '@/Components/Modal.svelte'
-	import ReorderableList from '@/Components/ReorderableList.svelte'
+	import CustomFieldForm from '@/Forms/CustomField/CustomField.svelte'
+	import { Flex, ReorderableList } from '@/Components/Core'
+	import Button          from '@/Components/UI/Button.svelte'
+	import DragHandle      from '@/Components/UI/DragHandle.svelte'
+	import Heading         from '@/Components/UI/Heading.svelte'
+	import Icon            from '@/Components/UI/Icon.svelte'
+	import Modal           from '@/Components/UI/Modal.svelte'
 
 	const customFields = $page.props.customFields?.data
 
@@ -45,44 +45,40 @@
 </script>
 
 <Heading is="h4" as="h6" class="mb-6"
-	heading="Custom Fields"
-	subheading="Manage your custom fields here."
+	heading="Manage Custom Fields"
+	subheading="Unlock the freedom of your mind."
 />
 
 <ReorderableList items={customFields}>
 	{#snippet itemTemplate(field, index)}
-		<div class="flex gap-1.5 w-full p-1">
-			<div class="flex items-center">
-				<DragHandle item={field} />
-			</div>
-			<div class="border border-slate-500/15 flex items-center gap-1.5 px-2 w-full rounded-md">
+		<Flex gap={1.5} class="p-1 w-full">
+			<DragHandle item={field} />
+			<Flex align="center" gap={1.5} class="border border-neutral-softest px-2 rounded-md w-full">
 				<Icon name={iconForType[field.type] || 'Question'} size={20} weight="light" class="text-emerald-500" />
 				<span class="line-clamp-1 pb-0.5">{field.label}</span>
-			</div>
-			<div class="col-span-1 flex justify-end gap-0.5">
-				<Button
-					style="soft" theme="accent"
-					icon="Pen"
-					onclick={() => editCustomField(index)}
-				/>
-				<Button
-					style="soft" theme="danger"
-					icon="Trash"
-					onclick={deleteCustomField}
-				/>
-			</div>
-		</div>
+			</Flex>
+			<Button
+				style="soft" theme="accent"
+				icon="Pen"
+				onclick={() => editCustomField(index)}
+			/>
+			<Button
+				style="soft" theme="danger"
+				icon="Trash"
+				onclick={deleteCustomField}
+			/>
+		</Flex>
 	{/snippet}
 </ReorderableList>
 
-<div class="flex flex-col items-center mt-1">
+<Flex justify="center" class="mt-1">
 	<Button
 		style="soft" theme="accent"
 		icon="Plus"
 		label="Add a custom field"
 		onclick={createCustomField}
 	/>
-</div>
+</Flex>
 
 <Modal
 	title="{activeCustomField ? "Edit" : "Add"} Custom Field"

@@ -3,13 +3,13 @@
 	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import Button from '@/Components/Button.svelte'
-	import CharacterFilter from '@/Components/CharacterFilter.svelte'
-	import CharacterIcon from '@/Components/CharacterIcon.svelte'
-	import Form from '@/Components/Form.svelte'
-	import Icon from '@/Components/Icon.svelte'
-	import Table from '@/Components/Table'
-	import Thumbnail from '@/Components/Thumbnail.svelte'
+	import Button        from '@/Components/UI/Button.svelte'
+	import Form          from '@/Components/Core/Form.svelte'
+	import Icon          from '@/Components/UI/Icon.svelte'
+	import Table         from '@/Components/UI/Table'
+	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
+
+	import CharacterIcon from '@/Components/Features/Character/CharacterIcon.svelte'
 
 	let customFields = $page.props.customFields?.data
 

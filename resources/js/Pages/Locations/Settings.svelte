@@ -4,15 +4,15 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
-	import UploadContext from '@/Components/Util/UploadContext.svelte';
-	import UploadPreview from '@/Components/Util/UploadPreview.svelte';
-	import UploadTrigger from '@/Components/Util/UploadTrigger.svelte';
-	import Back from '@/Components/Back.svelte';
-	import Button from '@/Components/Button.svelte';
-	import Field from '@/Components/Field.svelte'
-	import Form from '@/Components/Form.svelte'
-	import Heading from '@/Components/Heading.svelte';
-	import Section from '@/Components/Section.svelte'
+	import Form          from '@/Components/Core/Form.svelte'
+	import UploadContext from '@/Components/Core/UploadContext.svelte';
+	import UploadPreview from '@/Components/Core/UploadPreview.svelte';
+	import UploadTrigger from '@/Components/Core/UploadTrigger.svelte';
+	import Back          from '@/Components/UI/Back.svelte';
+	import Button        from '@/Components/UI/Button.svelte';
+	import Field         from '@/Components/UI/Field.svelte'
+	import Heading       from '@/Components/UI/Heading.svelte';
+	import Section       from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const settings = $page.props.settings?.factions?.data

@@ -1,9 +1,10 @@
 <script>
-    import CardGrid from '@/Components/CardGrid.svelte'
-    import CharacterCard from '@/Components/CharacterCard.svelte'
+    import Grid          from '@/Components/Core/Grid.svelte'
+    import CharacterCard from '@/Components/Features/Character/CharacterCard.svelte'
 
 	let {
 		characters,
+		children,
 		class: className,
 		cols,
 		showControls = false,
@@ -17,11 +18,11 @@
 
 
 
-<CardGrid
-	items={characters}
-	class="{cols ? `grid grid-cols-${cols}` : 'flex flex-wrap'} {className}"
+<Grid
+	cols={cols}
+	gap={2}
 {...restProps}>
-	{#snippet card(character)}
-		<CharacterCard {character} showControls={showItemControls} />
-	{/snippet}
-</CardGrid>
+	{#each characters as character}
+		<CharacterCard {character} />
+	{/each}
+</Grid>

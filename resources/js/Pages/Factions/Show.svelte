@@ -4,18 +4,17 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import FactionsPanel from '@/Partials/FactionsPanel.svelte'
-	import DeleteFactionForm from '@/Forms/DeleteFactionForm.svelte'
+	import DeleteFactionForm from '@/Forms/Faction/Delete.svelte'
 
-	import Back from '@/Components/Back.svelte';
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte';
-	import Button from '@/Components/Button.svelte';
-	import Card from '@/Components/Card.svelte';
-	import CardGrid from '@/Components/CardGrid.svelte';
-	import HeaderButton from '@/Components/HeaderButton.svelte';
-	import Heading from '@/Components/Heading.svelte'
-	import Icon from '@/Components/Icon.svelte'
-	import Modal from '@/Components/Modal.svelte'
-	import Section from '@/Components/Section.svelte'
+	import { Flex, Grid, Stack } from '@/Components/Core'
+
+	import Back         from '@/Components/UI/Back.svelte';
+	import Button       from '@/Components/UI/Button.svelte';
+	import Card         from '@/Components/UI/Card.svelte';
+	import Heading      from '@/Components/UI/Heading.svelte'
+	import Icon         from '@/Components/UI/Icon.svelte'
+	import Modal        from '@/Components/UI/Modal.svelte'
+	import Section      from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const faction = $page.props.faction.data
@@ -70,7 +69,7 @@
 					<span class="bg-slate-500/10 font-style-large px-2 py-1 rounded-full">
 						{rank.name}
 					</span>
-					<CardGrid cols={5} class="mt-2">
+					<Grid cols={5} class="mt-2">
 						{#each faction.members.filter(m => m.rank.id == rank.id) as member}
 							<Card
 								aspect="square"
@@ -81,7 +80,7 @@
 								href={route('characters.show', {character: member.slug})}
 							/>
 						{/each}
-					</CardGrid>
+					</Grid>
 				{/each}
 			</Section>
 		{/if}
@@ -90,55 +89,46 @@
 
 	{#snippet sidebar()}
 
-		<div class="mx-auto flex items-center justify-center aspect-square bg-slate-900/10 rounded-lg  border-slate-900/15 overflow-hidden max-w-64 w-[80%]">
+		<Flex align="center" justify="center" class="aspect-square bg-slate-900/10 rounded-lg  border-slate-900/15 overflow-hidden max-w-64 mx-auto w-[80%]">
 			{#if faction.emblem}
 				<img src={faction.emblem.url} alt={faction.slug} class="w-full rounded-t-lg" />
 			{:else}
 				<Icon name="FlagBannerFold" size="xl" weight="thin" />
 			{/if}
-		</div>
+		</Flex>
 
-		<div class="space-y-1.5 py-3">
+		<Stack gap={1.5} class="py-3">
+
 			{#if faction.headquarters}
-				<div class="flex items-start gap-3">
+				<Flex gap={3}>
 					<span class="font-bold w-20">HQ</span>
-					<Link class="col-span-2 text-emerald-500 hover:underline"
+					<Link class="line-clamp-1 text-emerald-500 hover:underline"
 						href={route('locations.show', {location: faction.headquarters.slug})}
 					>{faction.headquarters.name}</Link>
-				</div>
+				</Flex>
 			{/if}
-			<div class="flex items-start gap-3">
+
+			<Flex gap={3}>
 				<span class="font-bold w-20">Leader</span>
-				<Link class="col-span-2 text-emerald-500 hover:underline"
+				<Link class="line-clamp-1 text-emerald-500 hover:underline"
 					href
 				></Link>
-			</div>
-		</div>
+			</Flex>
 
-		<section>
-			<Heading is="h3" as="h6"
-				heading="Custom Fields"
-				class="mt-6 mb-6"
-			/>
 			{#if location.customFieldValues?.length > 0}
 				{#each location.customFieldValues as field}
-					<div class="grid grid-cols-2">
-						<span class="col-span-1 px-2 py-1 font-bold border-r border-slate-500/15 text-right">{field.field.label}</span>
-						<span class="col-span-1 px-2 py-1">{field.value}</span>
-					</div>
+					<Flex gap={3}>
+						<span class="font-bold w-20">{field.field.label}</span>
+						<span class="line-clamp-1">{field.value}</span>
+					</Flex>
 				{/each}
-			{:else}
-				No custom fields
 			{/if}
-		</section>
-
-		{#each faction.customFieldValues as field}
-			<div class="grid grid-cols-2">
-				<span class="col-span-1 px-2 py-1 font-bold border-r border-slate-500/15 text-right">{field.field.label}</span>
-				<span class="col-span-1 px-2 py-1">{field.value}</span>
-			</div>
-		{/each}
+		</Stack>
 
 	{/snippet}
 	
 </AuthenticatedLayout>
+
+<Modal title="Delete {faction.name}?" show={deletingFaction} onclose={closeModal}>
+	<DeleteFactionForm {faction} oncancel={closeModal} />
+</Modal>

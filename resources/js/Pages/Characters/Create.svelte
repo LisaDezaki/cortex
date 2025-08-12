@@ -4,8 +4,8 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharactersPanel from '@/Partials/CharactersPanel.svelte'
-	import CharacterForm from '@/Forms/CharacterForm.svelte'
-	import Back from '@/Components/Back.svelte'
+	import CharacterForm from '@/Forms/Character/Character.svelte'
+	import Back from '@/Components/UI/Back.svelte'
 
 	const activeProject = $page.props.activeProject.data
 

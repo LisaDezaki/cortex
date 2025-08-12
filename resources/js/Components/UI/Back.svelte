@@ -1,0 +1,19 @@
+<script>
+
+	import Button from '@/Components/UI/Button.svelte'
+
+	let {
+		children,
+		class: className,
+		href,
+		...restProps
+	} = $props()
+
+</script>
+
+<div class="sticky top-12 ml-12 h-0">
+	<Button {href} {...restProps}
+		class="rounded-full h-12 w-12 hover:text-emerald-500 {className}"
+		icon="ArrowLeft" iconSize="xl" iconWeight="light"
+	/>
+</div>

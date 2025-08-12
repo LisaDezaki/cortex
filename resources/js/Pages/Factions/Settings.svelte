@@ -4,11 +4,11 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
-	import Back from '@/Components/Back.svelte';
-	import Field from '@/Components/Field.svelte'
-	import Form from '@/Components/Form.svelte'
-	import Heading from '@/Components/Heading.svelte'
-	import Section from '@/Components/Section.svelte'
+	import Form    from '@/Components/Core/Form.svelte'
+	import Back    from '@/Components/UI/Back.svelte';
+	import Field   from '@/Components/UI/Field.svelte'
+	import Heading from '@/Components/UI/Heading.svelte'
+	import Section from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const settings = $page.props.settings?.factions?.data

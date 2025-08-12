@@ -3,11 +3,11 @@
 	import { Link } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import Button from '@/Components/Button.svelte'
-	import CharacterIcon from '@/Components/CharacterIcon.svelte'
-	import Form from '@/Components/Form.svelte'
-	import Table from '@/Components/Table'
-	import Thumbnail from '@/Components/Thumbnail.svelte'
+	import Form          from '@/Components/Core/Form.svelte'
+	import Button        from '@/Components/UI/Button.svelte'
+	import Table         from '@/Components/UI/Table'
+	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
+	import CharacterIcon from '@/Components/Features/Character/CharacterIcon.svelte'
 
     let {
 		factions,

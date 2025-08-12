@@ -2,7 +2,7 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import Panel from '@/Components/Panel.svelte'
+	import Panel from '@/Components/UI/Panel.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const factions = activeProject.factions

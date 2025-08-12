@@ -3,11 +3,11 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import CharacterSettingsForm from '@/Forms/CharacterSettingsForm.svelte'
+	import CharacterSettingsForm from '@/Forms/Character/Settings.svelte'
 	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
-	import Back from '@/Components/Back.svelte'
-	import Heading from '@/Components/Heading.svelte';
-	import Section from '@/Components/Section.svelte'
+	import Back    from '@/Components/UI/Back.svelte'
+	import Heading from '@/Components/UI/Heading.svelte';
+	import Section from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 

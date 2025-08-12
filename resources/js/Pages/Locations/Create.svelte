@@ -4,8 +4,8 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import LocationsPanel from '@/Partials/LocationsPanel.svelte'
-	import LocationForm from '@/Forms/LocationForm.svelte'
-	import Back from '@/Components/Back.svelte'
+	import LocationForm from '@/Forms/Location/Location.svelte'
+	import Back from '@/Components/UI/Back.svelte'
 
 	const activeProject = $page.props.activeProject.data
 

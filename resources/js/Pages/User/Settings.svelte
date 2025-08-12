@@ -3,11 +3,11 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import Form from '@/Components/Form.svelte'
-	import Field from '@/Components/Field.svelte';
-	import Heading from '@/Components/Heading.svelte';
-	import Input from '@/Components/Input.svelte';
-	import Section from '@/Components/Section.svelte';
+	import Form    from '@/Components/Core/Form.svelte'
+	import Field   from '@/Components/UI/Field.svelte';
+	import Heading from '@/Components/UI/Heading.svelte';
+	import Input   from '@/Components/UI/Input.svelte';
+	import Section from '@/Components/UI/Section.svelte';
 </script>
 
 <svelte:head>

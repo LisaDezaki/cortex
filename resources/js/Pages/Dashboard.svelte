@@ -4,19 +4,17 @@
 	import { route } from 'momentum-trail'
 	
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import ProjectForm from '@/Forms/ProjectForm.svelte'
-	import DeleteProjectForm   from '@/Forms/DeleteProjectForm.svelte'
+	import ProjectForm         from '@/Forms/Project/Project.svelte'
+	import DeleteProjectForm   from '@/Forms/Project/Delete.svelte'
 
-	import Breadcrumbs 	from '@/Components/Breadcrumbs.svelte'
-	import Button		from '@/Components/Button.svelte'
-	import Card 		from '@/Components/Card.svelte'
-	import CardGrid 	from '@/Components/CardGrid.svelte'
-	import Heading     	from '@/Components/Heading.svelte'
-	import Icon     	from '@/Components/Icon.svelte'
-	import Modal     	from '@/Components/Modal.svelte'
-	import ProjectCard  from '@/Components/ProjectCard.svelte'
-	import Section     	from '@/Components/Section.svelte'
-	import SetAvatar    from '@/Components/SetAvatar.svelte'
+	import { Flex, Grid } from '@/Components/Core'
+
+	import Card 	from '@/Components/UI/Card.svelte'
+	import Heading  from '@/Components/UI/Heading.svelte'
+	import Icon     from '@/Components/UI/Icon.svelte'
+	import Modal    from '@/Components/UI/Modal.svelte'
+	import Section  from '@/Components/UI/Section.svelte'
+	import ProjectCard from '@/Components/Features/Project/ProjectCard.svelte'
 
 	let user     		= $state($page.props.auth.user.data)
 	let activeProject 	= $state($page.props.activeProject?.data)
@@ -85,7 +83,7 @@
 	{#snippet article()}
 
 		{#if activeProject}
-			<div class="relative flex items-center justify-center mb-12 w-full min-h-96 h-[40vh] bg-slate-500/10 overflow-hidden">
+			<Flex align="center" justify="center" class="relative bg-neutral-softest mb-12 min-h-96 h-[40vh] overflow-hidden">
 				{#if activeProject.banner}
 					<img
 						src={activeProject.banner.url} alt={activeProject.name}
@@ -94,7 +92,7 @@
 				{:else}
 					<Icon class="opacity-25" name="ImageSquare" size={48} weight="light" />
 				{/if}
-			</div>
+			</Flex>
 
 			<Section class="relative">
 				<Heading is="h2" as="h3"
@@ -108,7 +106,7 @@
 					]}
 				/>
 				<p class="max-w-[65ch] my-6">{activeProject.description}</p>
-				<div class="flex justify-around gap-3 my-12 w-full">
+				<Flex justify="around" gap={3} class="my-12 w-full">
 					<Link class="flex flex-col items-center justify-center rounded p-2 pb-4 w-full hover:bg-slate-500/10 hover:text-emerald-500" href={route('characters')}>
 						<span class="font-style-h1 opacity-60">{activeProject.characters?.length || 0}</span>
 						<span class="font-style-large">Characters</span>
@@ -145,15 +143,15 @@
 						<span class="font-style-h1 opacity-60">{activeProject.wildlife?.length || 0}</span>
 						<span class="font-style-large">Wildlife</span>
 					</Link>
-				</div>
+				</Flex>
 			</Section>
 
 			{#if activeProject.characters?.length > 0}
 				<Section title="Recent Characters">
-					<div items={activeProject.characters} class="flex justify-start gap-2 pb-3 overflow-x-auto w-full">
+					<Flex justify="start" gap={2} class="pb-3 overflow-x-auto w-full">
 						{#each activeProject.characters as character}
 							<Card
-								class="flex-shrink-0 w-48"
+								class="flex-shrink-0 w-40"
 								aspect="square"
 								image={character.portrait?.url}
 								icon="User"
@@ -162,17 +160,17 @@
 								href={route('characters.show', {character: character.slug})}
 							/>
 						{/each}
-					</div>
+					</Flex>
 				</Section>
 			{/if}
 
 			{#if activeProject.factions?.length > 0}
 				<Section title="Recent Factions">
-					<div items={activeProject.factions} class="flex justify-start gap-2 pb-3 overflow-x-auto w-full">
+					<Flex justify="start" gap={2} class="pb-3 overflow-x-auto w-full">
 						{#each activeProject.factions as faction}
 							<Card
 								aspect="square"
-								class="flex-shrink-0 w-48"
+								class="flex-shrink-0 w-40"
 								image={faction.emblem?.url}
 								icon="FlagBannerFold"
 								title={faction.name}
@@ -180,13 +178,13 @@
 								href={route('factions.show', {faction: faction.slug})}
 							/>
 						{/each}
-					</div>
+					</Flex>
 				</Section>
 			{/if}
 
 			{#if activeProject.locations?.length > 0}
 				<Section title="Recent Locations">
-					<div items={activeProject.locations} class="flex justify-start gap-2 pb-3 overflow-x-auto w-full">
+					<Flex justify="start" gap={2} class="pb-3 overflow-x-auto w-full">
 						{#each activeProject.locations as location}
 							<Card
 								aspect="video"
@@ -198,7 +196,7 @@
 								href={route('locations.show', {location: location.slug})}
 							/>
 						{/each}
-					</div>
+					</Flex>
 				</Section>
 			{/if}
 		{:else}
@@ -209,8 +207,8 @@
 				/>
 
 				{#if projects}
-					<CardGrid class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1" items={projects}>
-						{#snippet card(project)}
+					<Grid class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
+						{#each projects as project}
 							<ProjectCard
 								class="aspect-video"
 								title={project.name}
@@ -222,8 +220,8 @@
 										: (e) => activateProject(e, project.id)
 								}
 							/>
-						{/snippet}
-					</CardGrid>
+						{/each}
+					</Grid>
 				{:else}
 					No projects
 				{/if}
@@ -239,7 +237,7 @@
 </Modal>
 
 {#if activeProject}
-	<Modal title="Delete Project" show={deletingProject} onclose={closeModal}>
+	<Modal title="Delete {activeProject.name}" show={deletingProject} onclose={closeModal}>
 		<DeleteProjectForm project={activeProject} oncancel={closeModal} />
 	</Modal>
 {/if}

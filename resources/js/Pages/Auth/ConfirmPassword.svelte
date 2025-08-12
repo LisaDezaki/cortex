@@ -3,8 +3,10 @@
     import { route } from 'momentum-trail'
 
     import GuestLayout from '@/Layouts/GuestLayout.svelte'
-    import Button from '@/Components/Button.svelte'
-    import Form from '@/Components/Form.svelte'
+
+    import { Form } from '@/Components/Core'
+    import Button from '@/Components/UI/Button.svelte'
+    import Field from '@/Components/UI/Field.svelte'
 
     const form = useForm({
         password: '',
@@ -29,24 +31,24 @@
     </div>
 
     <Form onsubmit={submit}>
-        <div>
-            <Form.Label for="password" value="Password" />
-            <Form.Input
-                id="password"
-                type="password"
-                class="mt-1 block w-full"
-                bind:value={$form.password}
-                required
-                autocomplete="current-password"
-                autofocus
-            />
-            <Form.Error message={$form.errors.password} />
-        </div>
+        <Field
+			id="password"
+			type="password"
+			class="mt-1 block w-full"
+			label="Password"
+			bind:value={$form.password}
+			errors={$form.errors.password}
+			required
+			autocomplete="current-password"
+			autofocus
+		/>
 
         <div class="mt-4 flex justify-end">
-            <Button primary class="ms-4 {$form.processing && 'opacity-25'}" disabled={$form.processing}
-                >Confirm</Button
-            >
+            <Button style="hard" theme="accent"
+				class="ms-4 {$form.processing && 'opacity-25'}"
+				disabled={$form.processing}
+				label="Confirm"
+			/>
         </div>
     </Form>
 </GuestLayout>

@@ -1,9 +1,9 @@
 <script>
 	import { route } from 'momentum-trail'
 
-    import Card from '@/Components/Card.svelte'
-    import CardGrid from '@/Components/CardGrid.svelte'
-    import Heading from '@/Components/Heading.svelte'
+	import Grid    from '@/Components/Core/Grid.svelte'
+    import Card    from '@/Components/UI/Card.svelte'
+    import Heading from '@/Components/UI/Heading.svelte'
 
 	let {
 		class: className,
@@ -32,8 +32,8 @@
 {#if byRegion}
 	{#each regions as region}
 		<Heading heading={region.name} is="h5" as="h6" />
-		<CardGrid items={locations.filter(l => l.region?.id == region.id)} class="mb-6{className}" {...restProps}>
-			{#snippet card(location)}
+		<Grid class="mb-6 {className}" {...restProps}>
+			{#each locations.filter(l => l.region?.id == region.id) as location}
 				<Card aspect="video"
 					icon="MapPin"
 					image={location.banner?.url}
@@ -45,15 +45,15 @@
 						{ icon: 'Trash',  theme: 'danger',  onclick: destroy, label: 'Delete Location' }
 					]}
 				/>
-			{/snippet}
+			{/each}
 			{#snippet empty()}
 				<p class="font-style-placeholder">No locations found in this region.</p>
 			{/snippet}
-		</CardGrid>
+		</Grid>
 	{/each}
 {:else}
-	<CardGrid items={locations} class={className} {...restProps}>
-		{#snippet card(location)}
+	<Grid class={className} {...restProps}>
+		{#each locations as location}
 			<Card
 				aspect="video"
 				image={location.banner?.url}
@@ -66,6 +66,6 @@
 					{ icon: 'Trash',  theme: 'danger',  onclick: destroy, label: 'Delete Location' }
 				]}
 			/>
-		{/snippet}
-	</CardGrid>
+		{/each}
+	</Grid>
 {/if}

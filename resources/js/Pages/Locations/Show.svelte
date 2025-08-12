@@ -4,19 +4,19 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import LocationsPanel from '@/Partials/LocationsPanel.svelte'
-	import DeleteLocationForm from '@/Forms/DeleteLocationForm.svelte'
-	import NewLocationForm from '@/Forms/NewLocationForm.svelte'
+	
+	import DeleteLocationForm from '@/Forms/Location/Delete.svelte'
+	import NewLocationForm    from '@/Forms/Location/LocationNew.svelte'
 
-	import Back from '@/Components/Back.svelte'
-	import Breadcrumbs from '@/Components/Breadcrumbs.svelte'
-	import Button from '@/Components/Button.svelte'
-	import Card from '@/Components/Card.svelte'
-	import CardGrid from '@/Components/CardGrid.svelte'
-	import HeaderButton from '@/Components/HeaderButton.svelte'
-	import Heading from '@/Components/Heading.svelte'
-	import Icon from '@/Components/Icon.svelte'
-	import Modal from '@/Components/Modal.svelte'
-	import Section from '@/Components/Section.svelte'
+	import Grid     from '@/Components/Core/Grid.svelte'
+
+	import Back     from '@/Components/UI/Back.svelte'
+	import Button   from '@/Components/UI/Button.svelte'
+	import Card     from '@/Components/UI/Card.svelte'
+	import Heading  from '@/Components/UI/Heading.svelte'
+	import Icon     from '@/Components/UI/Icon.svelte'
+	import Modal    from '@/Components/UI/Modal.svelte'
+	import Section  from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const location = $page.props.location.data
@@ -38,7 +38,7 @@
 </script>
 
 <svelte:head>
-    <title>{activeProject.name} / {location.name}</title>
+    <title>{location.name}</title>
 </svelte:head>
 
 <AuthenticatedLayout>
@@ -73,7 +73,7 @@
 				<Heading is="h2" as="h5" class="mb-6"
 					heading="Characters"
 				/>
-				<CardGrid cols={5}>
+				<Grid cols={5}>
 					{#each location.characters as character}
 						<Card aspect="square" class="w-full"
 							icon="User"
@@ -83,7 +83,7 @@
 							href={route('characters.show', {character: character.slug})}
 						/>
 					{/each}
-				</CardGrid>
+				</Grid>
 			</Section>
 		{/if}
 	
@@ -131,6 +131,6 @@
 	<NewLocationForm locationData={location} oncancel={closeModal} />
 </Modal>
 
-<Modal show={deletingLocation} onclose={closeModal}>
+<Modal title="Delete {location.name}?" show={deletingLocation} onclose={closeModal}>
 	<DeleteLocationForm {location} oncancel={closeModal} />
 </Modal>
