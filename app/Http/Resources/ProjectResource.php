@@ -39,10 +39,6 @@ class ProjectResource extends JsonResource
 				return $this->locations->sortBy('name');
 			})),
 
-			'regions'     => RegionResource::collection( $this->whenLoaded('regions', function() {
-				return $this->regions->sortBy('name');
-			})),
-
 			'customFields' => CustomFieldResource::collection($this->whenLoaded('customFields')),
 			
 			'meta' => [

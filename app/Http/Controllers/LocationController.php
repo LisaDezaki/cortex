@@ -40,6 +40,11 @@ class LocationController extends Controller
 		if (!$active_project) {
 			return Redirect::route('projects');
 		}
+
+		$worldTree = Location::where([
+			'project_id'   => Auth::user()->active_project,
+			'is_world_map' => true
+		])->with('descendants')->first();
 		
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
@@ -47,7 +52,8 @@ class LocationController extends Controller
 		])->with('options')->get();
 
         return Inertia::render('Locations/Index', [
-			'customFields' => CustomFieldResource::collection($customFields)
+			'customFields' => CustomFieldResource::collection($customFields),
+			'worldTree'  => $worldTree
 		]);
     }
 
@@ -87,7 +93,6 @@ class LocationController extends Controller
 			'banner',
 			'characters.portrait',
 			'map',
-			'region'
 		]);
 
 		return Inertia::render('Locations/Show', [
@@ -106,7 +111,6 @@ class LocationController extends Controller
 			'banner',
 			'characters.portrait',
 			'map',
-			'region'
 		]);
 
 		$customFields = CustomField::where([

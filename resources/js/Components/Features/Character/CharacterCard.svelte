@@ -33,7 +33,7 @@
 	href={onclick ? null : route('characters.show', {character: character.slug})}
 	options={showControls ? [
 		{  label: "Set Faction",  icon: "FlagBannerFold" },
-		{  label: "Set Location", icon: "MapPin" },
+		{  label: "Set Location", icon: "MapPinArea" },
 		{  label: "Rename",       icon: "Pen" },
 		{  label: "Edit",         icon: "Pen",   href: route('characters.edit', {character: character.slug}) },
 		{  label: "Delete",       icon: "Trash", onclick: deleteCharacter, theme: "danger" }

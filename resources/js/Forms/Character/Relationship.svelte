@@ -36,7 +36,6 @@
 	function selectRelatedCharacter(e, related_character) {
 		e.preventDefault()
 		$relationshipForm.related = related_character
-		// console.log($relationshipForm.related_character)
 	}
 
 	function submitRelationship(e) {

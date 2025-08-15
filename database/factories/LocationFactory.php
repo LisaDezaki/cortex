@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Region;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +17,6 @@ class LocationFactory extends Factory
     public function definition(): array
     {
         return [
-			// 'region_id' => Region::inRandomOrder()->first()->id,
 			'name' => fake()->city(),
 			'description' => fake()->text(500),
 		];

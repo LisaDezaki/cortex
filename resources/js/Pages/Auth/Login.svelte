@@ -19,11 +19,7 @@
     })
 
     const submit = (e) => {
-
-		console.log('submitting login request')
-
         e.preventDefault()
-
         $form.post(route('login'), {
             onFinish: () => $form.reset('password'),
         })

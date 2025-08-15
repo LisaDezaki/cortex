@@ -13,7 +13,7 @@
 
 <Flex {align} {gap}
 	class={className}
-	direction="col" 
+	direction="col"
 {...restProps}>
 	{@render children?.()}
 </Flex>

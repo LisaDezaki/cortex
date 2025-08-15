@@ -7,7 +7,7 @@ use App\Models\CustomField;
 use App\Models\CustomFieldOption;
 use App\Models\CustomFieldValue;
 use App\Models\Faction;
-use App\Models\Region;
+use App\Models\Location;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -71,28 +71,43 @@ class TabletonSeeder extends Seeder
 		 * LOCATIONS
 		 */
 
-		$regions = [];
+		$locations = [];
 		$json = File::get(database_path('data/tableton/locations.json'));
 		$json_locations = json_decode($json, true);
-		foreach ($json_locations as $slug => $region) {
-			$regionModel = Region::create([
+		foreach ($json_locations as $slug => $location) {
+			$locations[$slug] = Location::create([
 				'project_id'  => $projects['tableton']->id,
-				'name'        => $region['name'],
+				'parent_location_id' => null,
+				'name'        => $location['name'],
+				'type'        => $location['type'] ?? null,
+				'icon'		  => $location['icon'] ?? null,
 				'slug'        => $slug,
-				'description' => $region['desc']
+				'description' => $location['desc'] ?? null,
+				'coordinates_x' => $location['coordinates']['x'] ?? null,
+				'coordinates_y' => $location['coordinates']['y'] ?? null,
+				'is_world_map'  => $location['is_world_map'] ?? false,
 			]);
-			$regions[$slug] = $regionModel;
-			foreach($region['locations'] as $locationslug => $location) {
-				$locationModel = $regionModel->locations()->create([
-					'name'        => $location['name'],
-					'slug'        => $locationslug,
-					'description' => $location['desc'],
-					'coordinates_x' => $location['coordinates']['x'],
-					'coordinates_y' => $location['coordinates']['y']
+		}
+
+		foreach ($json_locations as $slug => $location) {
+
+			if (isset($location['parent'])) {
+
+				$id = $locations[$slug]->id;
+				$parentSlug = $location['parent'];
+				$parentId = $locations[$parentSlug]->id;
+	
+				DB::table('locations')->where([
+					'id' => $id,
+				])->update([
+					'parent_location_id' => $parentId
 				]);
-				$locations[$locationslug] = $locationModel;
 			}
 		}
+
+
+
+		
 
 
 

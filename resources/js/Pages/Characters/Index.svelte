@@ -6,13 +6,14 @@
 	import CharacterGrid  from '@/Partials/CharacterGrid.svelte'
 	import CharacterTable from '@/Partials/CharacterTable.svelte'
 
-	import Flex from '@/Components/Core/Flex.svelte'
+	import { Flex, Stack } from '@/Components/Core'
 
 	import Back     from '@/Components/UI/Back.svelte'
 	import Dropdown from '@/Components/UI/Dropdown.svelte'
 	import Heading  from '@/Components/UI/Heading.svelte'
 	import Icon     from '@/Components/UI/Icon.svelte'
 	import Input    from '@/Components/UI/Input.svelte'
+	import PageHeader  from '@/Components/UI/PageHeader.svelte'
 	import Section  from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
@@ -63,23 +64,21 @@
 </script>
 
 <svelte:head>
-    <title>{activeProject?.name} Characters</title>
+    <title>Character List</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 
-	{#snippet article()}
-		<Back href="/" />
-		<Section class="space-y-6">
-			<Heading is="h2" as="h4"
-				heading="Characters"
-				actions={[
-					{ icon: "Plus",     theme: "accent",  href: route('characters.create'),  label: "Create" },
-					{ icon: "GearFine", theme: "neutral", href: route('characters.settings') },
-				]}
-			/>
-
-			<!-- <pre>{JSON.stringify(characterListSorted,null,3)}</pre> -->
+	{#snippet header()}
+		<PageHeader
+			breadcrumbs={[]}
+			back={route('dashboard')}
+			title="Character List"
+			actions={[
+				{ icon: "Plus",     theme: "accent",  href: route('characters.create') },
+				{ icon: "GearFine", theme: "neutral", href: route('characters.settings') },
+			]}
+		>
 
 			<Flex align="start" gap={3}>
 
@@ -167,11 +166,31 @@
 				/>
 			</Flex>
 
-			<!-- Display Characters -->
+		</PageHeader>
+	{/snippet}
 
+	<!-- {#snippet panel()}
+		 <Stack class="bg-surface border-r w-64 p-6">
+
+			{#each [
+				{ icon: "UserList",       label: "Details",      href: "#bio" },
+				{ icon: "UsersThree",     label: "Relationship", href: "#relationships" },
+				{ icon: "FlagBannerFold", label: "Factions",     href: "#factions" },
+				{ icon: "Backpack",       label: "Inventory",    href: "#inventory" }
+			] as link}
+				<Link class="inline-flex items-center gap-2 px-3 py-1.5" href={link.href}>
+					<Icon name={link.icon} size="md" />
+					{link.label}
+				</Link>
+			{/each}
+		 </Stack>
+	{/snippet} -->
+
+	{#snippet article()}
+		<Section gap={6} size="7xl" class="py-6">
 			{#if activeProject && characters.length > 0}
 				{#if layout === 'graph'}
-					<p class="mt-12 font-style-placeholder">This layout type isn't working yet. Try again later.</p>
+					<p class="font-style-placeholder">This layout type isn't working yet. Try again later.</p>
 				{:else if layout === 'grid'}
 					<CharacterGrid characters={characterList} cols={gridRows} showItemControls />
 				{:else if layout === 'table'}

@@ -20,7 +20,7 @@
 	const customFields  = $page.props.customFields.data
 	const personalityTraits = $page.props.traitsPersonality
 
-	let { character } = $props()
+	let { character, class:className } = $props()
 
 	let factions  = $derived(activeProject?.factions)
 	let locations = $derived(activeProject?.locations)
@@ -139,30 +139,22 @@
 
 
 
-<Form>
+<Form class={className}>
 
 	<!-- MAIN INFORMATION-->
 	
-	<Section class="space-y-3">
-
-		<Heading is="h2" as="h5" class="mb-12"
-			heading={character ? "Edit Character" : "New Character"}
+	<Section id="details">
+		<Heading is="h3" as="h5" class="my-6"
+			heading="Details"
 		/>
+
+		<!-- <Heading is="h2" as="h5" class="mb-12"
+			heading={character ? "Edit Character" : "New Character"}
+		/> -->
 
 		<!-- Portrait -->
 
-		<Field layout="block" inputClass="w-56"
-			type="file"
-			id="portrait"
-			aspect="square"
-			label="Image"
-			description="Upload a portrait of the character."
-			icon="Image"
-			placeholder="Upload a portrait..."
-			preview={character?.portrait?.url}
-			bind:value={$form.portrait}
-			errors={$form.errors.portrait}
-		/>
+		
 
 		<!-- Slug -->
 
@@ -205,17 +197,7 @@
 
 		
 
-		<!-- Faction -->
-
-		<Field layout="block" inputClass="w-full"
-			type="select"
-			id="faction"
-			description="Which faction does this character belong to?"
-			label="Faction"
-			placeholder="Select faction..."
-			options={factions.map(f => ({ image: f.emblem?.url, label: f.name, value: f.id }))}
-			bind:value={$form.faction_id}
-		/>
+		
 
 		<!-- Location -->
 
@@ -256,6 +238,67 @@
 
 	</Section>
 
+	<!-- Relationships -->
+
+	<Section id="relationships">
+		<Heading is="h3" as="h5" class="my-6"
+			heading="Relationships"
+		/>
+		<Grid cols={6}>
+			{#each $form.relationships as rel, i}
+				<Card aspect="square"
+					icon="User"
+					image={getRelationship(rel.slug)?.portrait?.url}
+					title={getRelationship(rel.slug)?.name}
+					subtitle={getRelationship(rel.slug)?.role}
+					onclick={(e) => openRelationshipModal(e, getRelationship(rel.slug))}
+				/>
+			{/each}
+			<CardNew aspect="square"
+				onclick={openRelationshipModal}
+			/>
+		</Grid>
+	</Section>
+
+	<!-- Factions -->
+
+	<Section id="factions">
+		<Heading is="h3" as="h5" class="my-6"
+			heading="Factions"
+		/>
+
+		<Field layout="block" inputClass="w-full"
+			type="select"
+			id="faction"
+			description="Which faction does this character belong to?"
+			label="Faction"
+			placeholder="Select faction..."
+			options={factions.map(f => ({ image: f.emblem?.url, label: f.name, value: f.id }))}
+			bind:value={$form.faction_id}
+		/>
+	</Section>
+
+	<!-- Media -->
+
+	<Section id="media">
+		<Heading is="h3" as="h5" class="my-6"
+			heading="Media"
+		/>
+		<Field layout="block" inputClass="w-56"
+			type="file"
+			id="portrait"
+			aspect="square"
+			label="Image"
+			description="Upload a portrait of the character."
+			icon="Image"
+			placeholder="Upload a portrait..."
+			preview={character?.portrait?.url}
+			bind:value={$form.portrait}
+			errors={$form.errors.portrait}
+		/>
+	</Section>
+
+
 	<!-- CUSTOM FIELDS -->
 
 	<Section class="space-y-6">
@@ -280,11 +323,11 @@
 
 	<!-- RELATIONSHIPS -->
 
-	<Section>
+	<!-- <Section>
 		<Heading is="h3" as="h6" class="mb-6"
 			heading="Relationships"
 		/>
-		<Grid cols={5}>
+		<Grid cols={6}>
 			{#each $form.relationships as rel, i}
 				<Card aspect="square"
 					icon="User"
@@ -298,7 +341,7 @@
 				onclick={openRelationshipModal}
 			/>
 		</Grid>
-	</Section>
+	</Section> -->
 
 	<!-- FORM.BUTTONS -->
 

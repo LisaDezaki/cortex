@@ -14,12 +14,12 @@
 </script>
 
 <article class="article {className}">
-	{#if title}
+	<!-- {#if title}
 		<Heading class="article-header" is="h2" as="h4"
 			heading={title}
 			subheading={subtitle}
 		/>
-	{/if}
+	{/if} -->
 	{#if actions}
 		<div class="absolute top-6 right-6">
 			{#each actions as action}
@@ -43,8 +43,11 @@
 <style lang="postcss">
 
 	.article {
-		@apply relative h-full w-full overflow-y-auto space-y-3;
-		background-color: var(--surface);
+		@apply relative h-full w-full overflow-hidden space-y-3;
+
+		.article-body {
+			@apply flex items-stretch justify-center h-full overflow-hidden;
+		}
 	}
 
 </style>

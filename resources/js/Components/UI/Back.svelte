@@ -11,9 +11,9 @@
 
 </script>
 
-<div class="sticky top-12 ml-12 h-0">
+<!-- <div> -->
 	<Button {href} {...restProps}
-		class="rounded-full h-12 w-12 hover:text-emerald-500 {className}"
-		icon="ArrowLeft" iconSize="xl" iconWeight="light"
+		class="rounded-full h-10 w-10 border border-neutral-softest hover:text-emerald-500 {className}"
+		icon="ArrowLeft" iconSize="lg" iconWeight="bold"
 	/>
-</div>
+<!-- </div> -->

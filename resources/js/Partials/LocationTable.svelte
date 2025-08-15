@@ -11,9 +11,11 @@
 	import CharacterIcon from '@/Components/Features/Character/CharacterIcon.svelte'
 
     let {
+		class: className,
 		locations,
 		selected = [],
-		selectionMode
+		selectionMode,
+		...restProps
 	} = $props()
 
 	function selectAll() {
@@ -54,7 +56,7 @@
 		<Link href={route('locations.show', {location: location.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
 				class="h-8 w-12 rounded"
-				icon="MapPin"
+				icon="MapPinArea"
 				src={location.banner?.url}
 			/>
 			<div class="-space-y-0.5">
@@ -77,4 +79,9 @@
 	</Table.Cell>
 {/snippet}
 
-<Table data={locations} {headRow} {bodyRow} />
+<Table
+	class={className}
+	data={locations}
+	{headRow}
+	{bodyRow}
+{...restProps} />

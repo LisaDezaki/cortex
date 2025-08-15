@@ -31,7 +31,7 @@
 		"type": "Alliance",
 		"desc": "The Dragon Council is a recent addition to the city. While a few people have connected the dots, most people haven't realized yet that the dragons are siphoning resources from the city.",
 		"hq": "council",
-		"ranks": [ "Co-conspirator", "Councilor" ], 
+		"ranks": [ "Co-conspirator" ], 
 		"members": {
 			"bhezox": "Co-conspirator",
 			"rhaegan": "Co-conspirator",
@@ -88,6 +88,7 @@
 		"ranks": [ "Leader", "Activist" ],
 		"members": {
 			"binksy": "Activist",
+			"lafferty": "Activist",
 			"nocturna": "Activist"
 		}
 	},

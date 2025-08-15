@@ -9,7 +9,6 @@ use App\Models\CustomFieldValue;
 use App\Models\Faction;
 use App\Models\Location;
 use App\Models\Project;
-use App\Models\Region;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;

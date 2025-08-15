@@ -90,7 +90,7 @@
 				<Thumbnail
 					class="h-9 w-9"
 					src={faction.headquarters.banner?.url}
-					icon="MapPin"
+					icon="MapPinArea"
 				/>
 				<div class="-space-y-0.5">
 					<div class="font-style-regular line-clamp-1">{faction.headquarters.name}</div>

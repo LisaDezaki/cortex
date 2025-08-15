@@ -4,11 +4,14 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
-	import Form    from '@/Components/Core/Form.svelte'
-	import Back    from '@/Components/UI/Back.svelte';
-	import Field   from '@/Components/UI/Field.svelte'
-	import Heading from '@/Components/UI/Heading.svelte'
-	import Section from '@/Components/UI/Section.svelte'
+	import Form       from '@/Components/Core/Form.svelte'
+	import Back       from '@/Components/UI/Back.svelte'
+	import Container  from '@/Components/UI/Container.svelte'
+	import Heading    from '@/Components/UI/Heading.svelte'
+	import Field      from '@/Components/UI/Field.svelte'
+	import PageHeader from '@/Components/UI/PageHeader.svelte'
+	import PageMenu   from '@/Components/UI/PageMenu.svelte'
+	import Section    from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const settings = $page.props.settings?.factions?.data
@@ -29,14 +32,27 @@
 
 <AuthenticatedLayout>
 
+	{#snippet header()}
+		<PageHeader
+			breadcrumbs={[
+				{ label: "Factions",   href: route('factions') },
+				{ label: "Settings" }
+			]}
+			back={route('factions')}
+			title="Faction Settings"
+		/>
+	{/snippet}
+
 	{#snippet article()}
-		<Back href={route('factions')} />
-		<Section>
-			<Heading is="h2" as="h4" class="mb-12"
-				heading="Faction Settings"
-				subheading="Manage your faction settings and preferences for this project."
+		<Container size="7xl" class="flex gap-12">
+			<PageMenu
+				items={[
+					{ icon: "UserList",       label: "Overview",      href: "#overview",      active: $page.url.endsWith('#overview') },
+					{ icon: "ImagesSquare",   label: "Media",         href: "#media",         active: $page.url.endsWith('#media') },
+					{ icon: "Textbox",        label: "Custom Fields", href: "#customfields",  active: $page.url.endsWith('#customfields') }
+				]}
 			/>
-			<Form>
+			<Form class="py-12">
 				<Field layout="block"
 					type="switch"
 					label="Enable Factions"
@@ -44,11 +60,11 @@
 					bind:value={$form.enable_factions}
 				/>
 			</Form>
-		</Section>
+		</Container>
 	{/snippet}
 
-	{#snippet sidebar()}
+	<!-- {#snippet sidebar()}
 		<CustomFieldsPanel />
-	{/snippet}
+	{/snippet} -->
 
 </AuthenticatedLayout>

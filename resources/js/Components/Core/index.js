@@ -4,6 +4,8 @@ export { default as Flex }    from './Flex.svelte';
 export { default as Form }    from './Form.svelte';
 export { default as Grid }    from './Grid.svelte';
 export { default as Inline }  from './Inline.svelte';
+export { default as PanZoom } from './PanZoom.svelte';
+export { default as PanZoomGPT } from './PanZoomGPT.svelte';
 export { default as Popover } from './Popover.svelte';
 export { default as ReorderableList } from './ReorderableList.svelte';
 export { default as Stack }   from './Stack.svelte';

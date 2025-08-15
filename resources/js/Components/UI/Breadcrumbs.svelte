@@ -20,25 +20,48 @@
 
 </script>
 
+
+
+
+
+<!-- {#snippet breadcrumb(item)}
+	{#if item.href}
+		<Link class="breadcrumb" href={item.href}>{item.label}</Link>
+	{:else}
+		<span class="breadcrumb">{item.label}</span>
+	{/if}
+{/snippet} -->
+
+
+<!-- {#snippet separator()}
+	<Icon class="opacity-25" name="LineVertical" size={16} />
+{/snippet} -->
+
+
+
+
+
 <div class="breadcrumbs {className}" {...restProps}>
 
-	{#if user}
+	<!-- {#if user}
 		<Link href={route('dashboard')} class="inline-flex items-center justify-center rounded-full mx-1.5 border border-transparent p-0.5 hover:border-emerald-500">
 			<Thumbnail class="rounded-full w-7" src={user?.avatar?.url} alt={user.name} />
 		</Link>
-	{/if}
+	{/if} -->
 
 	{#if withProject && activeProject && projects}
-		<Icon class="opacity-25" name="CaretRight" size={16} />
+		<Link class="breadcrumb" href={route('dashboard')}>{activeProject.name}</Link>
+		<!-- <Icon class="opacity-25" name="LineVertical" size={16} /> -->
+		<span class="text-neutral-softer">/</span>
 
-		<Dropdown
+		<!-- <Dropdown
 			class="breadcrumb"
 			contentClass="w-52"
 			label={activeProject.name}
 			options={projects.map((pr => {
-				return { label: project.name, value: project.id }
+				return { label: pr.name, value: pr.id }
 			}))}
-		/>
+		/> -->
 
 
 		<!-- <Dropdown class="breadcrumb">
@@ -56,17 +79,30 @@
 		</Dropdown> -->
 	{/if}
 
-    {#each data as breadcrumb, i}
+    {#each data as item, i}
 		
-		<Icon class="opacity-25" name="CaretRight" size={16} />
-
-		{#if breadcrumb.href}
-			<Link class="breadcrumb" href={breadcrumb.href}>{breadcrumb.title}</Link>
-		{:else}
-			<span class="breadcrumb">{breadcrumb.title}</span>
+		<!-- <Icon class="opacity-25" name="LineVertical" size={16} /> -->
+		{#if i > 0}
+			<!-- <Icon class="opacity-25" name="LineVertical" size={16} /> -->
+			<span class="text-neutral-softer">/</span>
 		{/if}
 
+		{#if item.href}
+			<Link class="breadcrumb" href={item.href}>{item.label}</Link>
+		{:else}
+			<span class="breadcrumb">{item.label}</span>
+		{/if}
+
+		<!-- {#if breadcrumb.href}
+			<Link class="breadcrumb" href={breadcrumb.href}>{breadcrumb.label}</Link>
+		{:else}
+			<span class="breadcrumb">{breadcrumb.label}</span>
+		{/if} -->
+
 	{/each}
+
+	<!-- <Icon class="opacity-25" name="LineVertical" size={16} /> -->
+	<span class="text-neutral-softer">/</span>
 </div>
 
 
@@ -74,7 +110,7 @@
 <style lang="postcss">
 
 	.breadcrumbs {
-		@apply flex items-center justify-start gap-2 px-4 py-2 text-sm w-full;
+		@apply flex items-center justify-start gap-2 px-1 py-1 text-sm w-full;
 
 		:global(a),
 		:global(.dropdown-trigger) {

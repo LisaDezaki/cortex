@@ -14,7 +14,7 @@
 	items={[
 		...locations.map(location => {
 			return {
-				icon:   'MapPin',
+				icon:   'MapPinArea',
 				label:  location.name,
 				image:  location.banner?.url,
 				href:   route('locations.show', {location: location.slug}),

@@ -30,7 +30,7 @@
 <style lang="postcss">
 
 	:global(.form-switch) {
-		@apply flex items-center gap-2 min-h-10 px-3 py-2 w-full;
+		@apply inline-flex items-center gap-2 min-h-10 px-3 py-2;
 		/* @apply border rounded-lg; */
 		/* background-color: transparent;
 		border-color: var(--border-neutral-softest);

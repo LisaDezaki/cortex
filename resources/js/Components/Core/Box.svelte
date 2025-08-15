@@ -10,6 +10,6 @@
 <svelte:element
 	this={as}
 	class={`box ${className}`}
->
+{...restProps}>
 	{@render children?.()}
 </svelte:element>

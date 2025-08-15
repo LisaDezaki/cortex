@@ -35,7 +35,7 @@
 		<Grid class="mb-6 {className}" {...restProps}>
 			{#each locations.filter(l => l.region?.id == region.id) as location}
 				<Card aspect="video"
-					icon="MapPin"
+					icon="MapPinArea"
 					image={location.banner?.url}
 					title={location.name}
 					subtitle={location.region?.name}
@@ -57,7 +57,7 @@
 			<Card
 				aspect="video"
 				image={location.banner?.url}
-				icon="MapPin"
+				icon="MapPinArea"
 				title={location.name}
 				subtitle={location.region?.name}
 				href={route('locations.show', {location: location.slug})}

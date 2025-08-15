@@ -48,7 +48,7 @@ class HandleInertiaRequests extends Middleware
 			? $user->projects()->with([
 				'banner',
 				'characters.location.banner',
-				'characters.location.region',
+				'characters.location.parent',
 				'characters.factions.emblem',
 				'characters.factions.members',
 				'characters.portrait',
@@ -56,15 +56,12 @@ class HandleInertiaRequests extends Middleware
 				'characters.customFieldValues.customField',
 				'factions.emblem',
 				'factions.headquarters.banner',
-				'factions.headquarters.region',
 				'factions.ranks',
 				'factions.members.portrait',
 				'locations.banner',
 				'locations.characters.portrait',
 				'locations.map',
-				'locations.region',
-				'regions.locations.banner',
-				'regions.locations.characters.portrait',
+				'locations.parent',
 				'customFields.options'
 			])->find($user->active_project)
 			: null;

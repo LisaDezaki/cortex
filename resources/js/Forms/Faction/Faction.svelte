@@ -17,7 +17,7 @@
 	const activeProject = $page.props.activeProject.data
 	const customFields  = $page.props.customFields.data
 
-	let { faction } = $props()
+	let { class: className, faction } = $props()
 
 	//  Form
 
@@ -94,7 +94,7 @@
 	
 </script>
 
-<Form class="col-span-3 space-y-6">
+<Form class="col-span-3 space-y-6 {className}">
 
 	<!-- MAIN INFORMATION-->
 

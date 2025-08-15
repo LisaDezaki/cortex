@@ -18,6 +18,7 @@ class FactionResource extends JsonResource
 			'id'           => $this->id,
 			'slug'         => $this->slug,
 			'name'         => $this->name,
+			'type'         => $this->type,
 			'description'  => $this->description,
 
 			'emblem'       => new MediaResource($this->whenLoaded('emblem')),

@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-// use App\Models\RegionResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Storage;
@@ -21,21 +20,20 @@ class LocationResource extends JsonResource
 			'slug'        => $this->slug,
 			'name'        => $this->name,
 			'description' => $this->description,
+			'banner'      => new MediaResource($this->whenLoaded('banner')),
+			'map'         => new MediaResource($this->whenLoaded('map')),
 
-			// 'banner'      => $this->banner,
-			// 'banner_path' => $this->banner ? Storage::url($this->banner) : null,
-			// 'map'         => $this->map,
-			// 'map_path'    => $this->map ? Storage::url($this->map) : null,
+			// 'parent'      => new LocationResource($this->whenLoaded('parent')),
+			// 'children'    => LocationResource::collection($this->whenLoaded('children')),
+
+			// 'children' => $this->whenLoaded('children'),
 
 			'coordinates' => [
 				'x' => $this->coordinates_x,
 				'y' => $this->coordinates_y
 			],
 
-			'banner'      => new MediaResource($this->whenLoaded('banner')),
-			'map'         => new MediaResource($this->whenLoaded('map')),
 			'characters'  => CharacterResource::collection($this->whenLoaded('characters')),
-			'region'      => new RegionResource($this->whenLoaded('region')),
 
 			'meta' => [
 				'created_at' => $this->created_at,

@@ -26,15 +26,15 @@
 	let { locationData, oncancel } = $props()
 
 	let characters = $derived(activeProject?.characters.filter(c => c.location === null) || null)
-	let regions    = $derived(activeProject?.regions || null)
+	let locations  = $derived(activeProject?.locations)
 
 	let startData = {
 		slug: locationData?.slug || null,
 		banner: locationData?.banner?.path || null,
+		parent: locationData?.parent.id || null,
 		map: locationData?.map || null,
         name: locationData?.name || null,
         description: locationData?.description || null,
-		region: locationData?.region?.slug || null,
 		characters: locationData?.characters || [],
 		custom_fields: locationData?.custom_fields || []
 	}
@@ -93,13 +93,13 @@
 
 				<Field layout="block" class="px-3" inputClass="w-full"
 					type="select"
-					id="region"
-					label="Region"
-					description="Which region this location is found in."
-					placeholder="Select region..."
-					bind:value={$form.region}
-					errors={$form.errors.region}
-					options={regions.map(r => {
+					id="parent"
+					label="Parent"
+					description="Which location this location is found within."
+					placeholder="Select parent location..."
+					bind:value={$form.parent}
+					errors={$form.errors.parent}
+					options={locations.map(r => {
 						return { label: r.name, value: r.slug }
 					})}
 				/>
@@ -110,7 +110,7 @@
 					label="Description"
 					placeholder="Description..."
 					bind:value={$form.description}
-					description="A detailed description of the region."
+					description="A detailed description of the location."
 					errors={$form.errors.description}
 					rows={4}
 				/>

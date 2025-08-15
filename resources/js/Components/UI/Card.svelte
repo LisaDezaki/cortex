@@ -26,10 +26,6 @@
 
 <Stack class="card {clickable ? "cursor-pointer" : null} {className}" onclick={onclick} {...restProps}>
 
-	{#if href}
-		<Link class="card-link" href={href}></Link>
-	{/if}
-
 	<div class="card-visual aspect-{aspect}">
 		{#if image}
 			<img class="card-image" src={image} alt={title} />
@@ -67,6 +63,10 @@
 			</Popover>
 		{/if}
 	</Flex>
+
+	{#if href}
+		<Link class="card-link" href={href}></Link>
+	{/if}
 
 </Stack>
 

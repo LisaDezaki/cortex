@@ -79,37 +79,18 @@ class Project extends Model
 		return $this->hasMany(Faction::class)->orderBy('slug', 'ASC');
 	}
 
-	public function regions(): HasMany
+	public function locations(): HasMany
 	{
-		return $this->hasMany(Region::class);
-	}
-
-	// public function locations(): HasMany
-	// {
-	// 	return $this->hasMany(Location::class)->orderBy('slug', 'ASC');
-	// }
-
-	public function locations()
-	{
-		return $this->hasManyThrough(
-			Location::class, // Target model (locations)
-			Region::class,   // Intermediate model (regions)
-			'project_id',   // Foreign key on regions table
-			'region_id',   // Foreign key on locations table
-			'id',           // Local key on projects table
-			'id'      // Local key on regions table
-		)->orderBy('locations.slug', 'ASC');
+		return $this->hasMany(Location::class)->orderBy('slug', 'ASC');
 	}
 
 	public function banner()
     {
-        return $this->morphOne(Media::class, 'mediable')
-			->where('type', 'project_banner');
+        return $this->morphOne(Media::class, 'mediable')->where('type', 'project_banner');
     }
 	
 	public function gallery()
 	{
-		return $this->morphMany(Media::class, 'mediable')
-			->where('type', 'project_gallery');
+		return $this->morphMany(Media::class, 'mediable')->where('type', 'project_gallery');
 	}
 }

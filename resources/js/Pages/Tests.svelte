@@ -7,6 +7,8 @@
 
 	import {
 		Form,
+		PanZoom,
+		PanZoomGPT,
 		UploadContext,
 		UploadPreview,
 		UploadTrigger
@@ -20,6 +22,7 @@
 	import Dropdown    from '@/Components/UI/Dropdown.svelte'
 	import Heading     from '@/Components/UI/Heading.svelte'
 	import Input       from '@/Components/UI/Input.svelte'
+	import PageHeader  from '@/Components/UI/PageHeader.svelte'
 	import Section     from '@/Components/UI/Section.svelte'
 	import Table       from '@/Components/UI/Table'
 	import Tabs        from '@/Components/UI/Tabs'
@@ -86,15 +89,16 @@
 
 <AuthenticatedLayout>
 
-    {#snippet header()}
-		<Breadcrumbs data={[
-			{ title: 'Tests' },
-		]} />
-    {/snippet}
+	{#snippet header()}
+		<PageHeader
+			back={route('dashboard')}
+			title="Tests"
+		/>
+	{/snippet}
 
 	{#snippet article()}
-		<Section>
-			<Tabs value="tab1">
+		<Section size="5xl" class="overflow-y-auto">
+			<Tabs value="tab1" class="py-12">
 
 				<Tabs.List class="max-w-4xl">
 					<Tabs.Trigger value="tab1">General</Tabs.Trigger>
@@ -110,20 +114,28 @@
 						class="mt-12 mb-12"
 					/>
 
+					<!-- <PanZoomGPT
+						debug
+						constrainBounds
+						class="h-96 w-full"
+					>
+						<img class="h-screen w-screen" src="/img/world-5.png" alt="world map" />
+					</PanZoomGPT> -->
+
+					<PanZoom debug constrain class="h-96">
+						<img class="h-screen w-screen" src="/img/world-4.png" alt="world map" />
+					</PanZoom>
+
 					<UploadContext bind:value={$form.upload}>
 						<UploadTrigger />
 						<UploadPreview class="aspect-square h-48 w-72" />
 					</UploadContext>
 
-					<pre>{JSON.stringify($form.upload)}</pre>
-					
 					<UploadContext bind:value={$form.upload_multi} multiple>
 						<UploadTrigger />
 						<UploadPreview class="aspect-square h-48 w-72" />
 					</UploadContext>
 					
-					<pre>{JSON.stringify($form.upload_multi)}</pre>
-
 					<!-- Avatar -->
 
 					<div>

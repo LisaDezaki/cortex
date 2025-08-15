@@ -5,6 +5,7 @@
 	import At from "phosphor-svelte/lib/At"
 	import Backpack from "phosphor-svelte/lib/Backpack"
 	import Books from "phosphor-svelte/lib/Books"
+	import BuildingApartment from "phosphor-svelte/lib/BuildingApartment"
 	import Butterfly from "phosphor-svelte/lib/Butterfly"
 	import CalendarDots from "phosphor-svelte/lib/CalendarDots"
 	import CaretDoubleDown from "phosphor-svelte/lib/CaretDoubleDown"
@@ -17,6 +18,7 @@
 	import Check from "phosphor-svelte/lib/Check"
 	import CheckFat from "phosphor-svelte/lib/CheckFat"
 	import Compass from "phosphor-svelte/lib/Compass"
+	import CompassRose from "phosphor-svelte/lib/CompassRose"
 	import DotsSixVertical from "phosphor-svelte/lib/DotsSixVertical"
 	import DotsThreeOutline from "phosphor-svelte/lib/DotsThreeOutline"
 	import DotsThreeOutlineVertical from "phosphor-svelte/lib/DotsThreeOutlineVertical"
@@ -34,20 +36,26 @@
 	import FunnelSimpleX from "phosphor-svelte/lib/FunnelSimpleX"
 	import FunnelX from "phosphor-svelte/lib/FunnelX"
 	import GearFine from "phosphor-svelte/lib/GearFine"
+	import GlobeHemisphereEast from "phosphor-svelte/lib/GlobeHemisphereEast"
+	import GlobeHemisphereWest from "phosphor-svelte/lib/GlobeHemisphereWest"
 	import GlobeStand from "phosphor-svelte/lib/GlobeStand"
 	import Graph from "phosphor-svelte/lib/Graph"
 	import GridFour from "phosphor-svelte/lib/GridFour"
 	import Hamburger from "phosphor-svelte/lib/Hamburger"
+	import Handshake from "phosphor-svelte/lib/Handshake"
 	import Hash from "phosphor-svelte/lib/Hash"
 	import Image from "phosphor-svelte/lib/Image"
 	import ImageSquare from "phosphor-svelte/lib/ImageSquare"
+	import ImagesSquare from "phosphor-svelte/lib/ImagesSquare"
 	import Info from "phosphor-svelte/lib/Info"
 	import Key from "phosphor-svelte/lib/Key"
+	import LineVertical from "phosphor-svelte/lib/LineVertical"
 	import Link from "phosphor-svelte/lib/Link"
 	import List from "phosphor-svelte/lib/List"
 	import MagnifyingGlass from "phosphor-svelte/lib/MagnifyingGlass"
 	import MapPin from "phosphor-svelte/lib/MapPin"
 	import MapPinArea from "phosphor-svelte/lib/MapPinArea"
+	import MapTrifold from "phosphor-svelte/lib/MapTrifold"
 	import Minus from "phosphor-svelte/lib/Minus"
 	import Moon from "phosphor-svelte/lib/Moon"
 	import Password from "phosphor-svelte/lib/Password"
@@ -72,6 +80,7 @@
 	import User from "phosphor-svelte/lib/User"
 	import UserCircle from "phosphor-svelte/lib/UserCircle"
 	import UserList from "phosphor-svelte/lib/UserList"
+	import UsersFour from "phosphor-svelte/lib/UsersFour"
 	import UsersThree from "phosphor-svelte/lib/UsersThree"
 	import Wrench from "phosphor-svelte/lib/Wrench"
 	import X from "phosphor-svelte/lib/X"
@@ -91,6 +100,7 @@
 		'At': At,
 		'Backpack': Backpack,
 		'Books': Books,
+		'BuildingApartment': BuildingApartment,
 		'Butterfly': Butterfly,
 		'CalendarDots': CalendarDots,
 		'CaretDoubleDown': CaretDoubleDown,
@@ -103,6 +113,7 @@
 		'Check': Check,
 		'CheckFat': CheckFat,
 		'Compass': Compass,
+		'CompassRose': CompassRose,
 		'DotsSixVertical': DotsSixVertical,
 		'DotsThreeOutline': DotsThreeOutline,
 		'DotsThreeOutlineVertical': DotsThreeOutlineVertical,
@@ -120,18 +131,24 @@
 		'FunnelSimpleX': FunnelSimpleX,
 		'FunnelX': FunnelX,
 		'GearFine': GearFine,
+		'GlobeHemisphereEast': GlobeHemisphereEast,
+		'GlobeHemisphereWest': GlobeHemisphereWest,
 		'GlobeStand': GlobeStand,
 		'Graph': Graph,
 		'GridFour': GridFour,
 		'Hamburger': Hamburger,
+		'Handshake': Handshake,
 		'Hash': Hash,
 		'Image': Image,
 		'ImageSquare': ImageSquare,
+		'ImagesSquare': ImagesSquare,
 		'Info': Info,
 		'Key': Key,
+		'LineVertical': LineVertical,
 		'Link': Link,
 		'List': List,
 		'MagnifyingGlass': MagnifyingGlass,
+		'MapTrifold': MapTrifold,
 		'MapPin': MapPin,
 		'MapPinArea': MapPinArea,
 		'Minus': Minus,
@@ -158,6 +175,7 @@
 		'User': User,
 		'UserCircle': UserCircle,
 		'UserList': UserList,
+		'UsersFour': UsersFour,
 		'UsersThree': UsersThree,
 		'Wrench': Wrench,
 		'X': X,

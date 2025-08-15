@@ -4,31 +4,31 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import NewLocationForm     from '@/Forms/Location/LocationNew.svelte'
-	import RegionForm          from '@/Forms/Location/Region.svelte'
 	import LocationGrid        from '@/Partials/LocationGrid.svelte'
 	import LocationTable       from '@/Partials/LocationTable.svelte'
 
 	import { Flex, Inline, Stack } from '@/Components/Core'
 
-	import Back      from '@/Components/UI/Back.svelte';
-	import Dropdown  from '@/Components/UI/Dropdown.svelte'
-	import Heading   from '@/Components/UI/Heading.svelte'
-	import Icon      from '@/Components/UI/Icon.svelte'
-	import Input     from '@/Components/UI/Input.svelte'
-	import Modal     from '@/Components/UI/Modal.svelte'
-	import Section   from '@/Components/UI/Section.svelte'
-
-	import RegionMap from '@/Components/Features/Location/RegionMap.svelte'
+	import Back       from '@/Components/UI/Back.svelte';
+	import Dropdown   from '@/Components/UI/Dropdown.svelte'
+	import Heading    from '@/Components/UI/Heading.svelte'
+	import Icon       from '@/Components/UI/Icon.svelte'
+	import Input      from '@/Components/UI/Input.svelte'
+	import Modal      from '@/Components/UI/Modal.svelte'
+	import PageHeader from '@/Components/UI/PageHeader.svelte'
+	import Section    from '@/Components/UI/Section.svelte'
+	
+	import Map        from '@/Components/Features/Location/Map.svelte'
 	
 	const activeProject = $page.props.activeProject.data
-	const characters = activeProject?.characters
-	const locations = activeProject?.locations
-	const regions = activeProject?.regions
 	const customFields  = $page.props.customFields?.data
+	const worldTree     = $page.props.worldTree
+	const characters    = activeProject?.characters || []
+	const locations     = activeProject?.locations  || []
 
 	let columns   = $state(['name', 'characters'])
 	let filter    = $state({})
-	let layout    = $state('grid')
+	let layout    = $state('map')
 	let query     = $state('')
 	let rowSize   = $state(5)
 	let sortBy    = $state('name')
@@ -39,14 +39,12 @@
 
 	let locationModalOpen       = $state(false)
 	let deleteLocationModalOpen = $state(false)
-	let regionModalOpen         = $state(false)
 	let deleteRegionModalOpen   = $state(false)
 
 	let activeLocation    = $state(null)
-	let activeRegion      = $state(null)
 
-	let gridCols = $derived(10-rowSize)
-	let hasFilter     = $derived(Boolean(filter.name && filter.value))
+	let gridCols     = $derived(10-rowSize)
+	let hasFilter    = $derived(Boolean(filter.name && filter.value))
 	let locationList = $derived(
 		locations
 			.filter(c => {
@@ -56,7 +54,6 @@
 				return true
 			}).sort((a, b) => {
 				if (sortBy === 'name')    { return a.name > b.name                       ? 1 : -1 }
-				if (sortBy === 'region')  { return a.region.name > b.region.name         ? 1 : -1 }
 				if (sortBy === 'created') { return a.meta.created_at > b.meta.created_at ? 1 : -1 }
 				if (sortBy === 'updated') { return a.meta.created_at > b.meta.created_at ? 1 : -1 }
 				if (sortBy === 'random')  { return Math.random() > 0.5                   ? 1 : -1 }
@@ -71,18 +68,9 @@
 		activeLocation = location
 		deleteLocationModalOpen = true
 	}
-	function openRegionModal(region) {
-		activeRegion = region
-		regionModalOpen = true
-	}
-	function deleteRegionModal(region) {
-		activeRegion = region
-		deleteRegionModalOpen = true
-	}
 	function closeModal() {
         locationModalOpen = false
 		deleteLocationModalOpen = false
-		regionModalOpen = false
 		deleteRegionModalOpen = false
     }
 
@@ -99,6 +87,10 @@
 		filter = {}
 	}
 
+	function setTab(tabName) {
+		currentTab = tabName
+	}
+
 	// function groupByRegion(locations) {
 	// 	let regions = [];
 
@@ -113,23 +105,23 @@
 </script>
 
 <svelte:head>
-    <title>{activeProject?.name} Locations</title>
+    <title>Location List</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 
-	{#snippet article()}
-		<Back href="/" />
-		<Section class="space-y-6">
-			<Heading is="h2" as="h4"
-				heading="Locations"
-				actions={[
-					{ icon: "Plus",     theme: "accent",  onclick: openRegionModal,   label: "Add Region" },
-					{ icon: "Plus",     theme: "accent",  onclick: openLocationModal, label: "Add Location" },
-					{ icon: "GearFine", theme: "neutral", href: route('locations.settings') },
-				]}
-			/>
-
+	{#snippet header()}
+		<PageHeader
+			breadcrumbs={[
+				{ label: "Locations",   href: route('locations') },
+			]}
+			back={route('dashboard')}
+			title={layout == 'map' ? "Map" : "Location List"}
+			actions={[
+				{ icon: "Plus",     theme: "accent",  onclick: openLocationModal },
+				{ icon: "GearFine", theme: "neutral", href: route('locations.settings') },
+			]}
+		>
 			<Flex align="start" gap={3}>
 
 				<!-- Search -->
@@ -147,9 +139,6 @@
 					{ label: 'Has character...', children: characters.map(c => {
 						return { label: c.name, value: `character.${c.slug}`, image: c.portrait?.url }
 					}) },
-					{ label: 'In region...', children: regions.map(r => {
-						return { label: r.name, value: `region.${r.slug}`, image: r.banner?.url }
-					}) },
 					...customFields.filter(f => f.type == 'select').map(f => {
 						return { label: `${f.label}...`, children: f.options.map(o => {
 							return { label: o.label, value: `${f.name}.${o.value}` }
@@ -161,7 +150,6 @@
 
 				<Input type="select" class="w-48" icon="SortAscending" placeholder="Sort by" bind:value={sortBy} options={[
 					{ value: 'name',   label: "By location name" },
-					{ value: 'region', label: "By region name" },
 					{ separator: true },
 					{ value: 'created', label: "Date Created" },
 					{ value: 'updated', label: "Date Updated" },
@@ -198,34 +186,47 @@
 				<Input type="select" class="w-32"
 					bind:value={layout}
 					options={[
-						{ icon: "Compass",  label: "Map",   value: "map" },
+						{ icon: "Compass",  label: "Maps",  value: "map"   },
 						{ icon: "GridFour", label: "Grid",  value: "grid"  },
 						{ icon: "Table",    label: "Table", value: "table" }
 					]}
 				/>
 
 			</Flex>
+		</PageHeader>
+	{/snippet}
 
+	{#snippet article()}
+		<Section>
 			{#if activeProject && locations?.length > 0}
+
+
+				<!-- Table -->
+
 				{#if layout == 'table'}
-					<LocationTable locations={locationList} />
+					<LocationTable
+						locations={locationList}
+					/>
+					
+
+				<!-- Grid -->
+
 				{:else if layout == 'grid'}
-					{#if regions.length > 0}
-						<LocationGrid cols={gridCols}
-							locations={locationList}
-							regions={regions}
-							byRegion={sortBy == 'region'}
-							onEdit={openLocationModal}
-							onDelete={deleteLocationModal}
-						/>
-					{/if}
+					<LocationGrid cols={gridCols}
+						locations={locationList}
+						onEdit={openLocationModal}
+						onDelete={deleteLocationModal}
+					/>
+
+
+				<!-- Map -->
+				
 				{:else if layout == 'map'}
-					<Stack class="space-y-3">
-						{#each regions as region}
-							<Heading heading={region.name} is="h5" as="h6" />
-							<RegionMap region={region} />
-						{/each}
-					</Stack>
+					<Map
+						locationTree={worldTree}
+					/>
+
+
 				{/if}
 			{:else}
 				<p class="mt-12">There are no locations for this project yet. <Link href={route('locations.create')}>Create one?</Link></p>
@@ -237,8 +238,4 @@
 
 <Modal title="Add Location" show={locationModalOpen} onclose={closeModal}>
 	<NewLocationForm oncancel={closeModal} />
-</Modal>
-
-<Modal title="Add Region" show={regionModalOpen} onclose={closeModal}>
-	<RegionForm oncancel={closeModal} />
 </Modal>

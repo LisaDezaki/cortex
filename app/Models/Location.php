@@ -25,8 +25,13 @@ class Location extends Model
 	protected $fillable = [
 		'name',
 		'description',
+		'is_world_map',
 		'banner',
 		'map'
+	];
+
+	protected $casts = [
+		'is_world_map' => 'boolean',
 	];
 
 
@@ -37,7 +42,6 @@ class Location extends Model
 	 * @var array<int, string>
 	 */
 	protected $guarded = [
-		'region_id'
 	];
 
 
@@ -52,14 +56,61 @@ class Location extends Model
 		return $this->belongsTo(Project::class, 'project_id');
 	}
 
+	public function hasParent(): bool
+	{
+		return !is_null($this->parent_location_id);
+	}
+	public function parent(): BelongsTo
+    {
+        return $this->belongsTo(Location::class, 'parent_location_id');
+    }
+	public function ancestors()
+	{
+		return $this->parent()->with('ancestors');
+	}
+
+	public function hasChildren(): bool
+	{
+		return $this->children()->exists();
+	}
+	public function children(): HasMany
+    {
+        return $this->hasMany(Location::class, 'parent_location_id');
+    }
+	public function descendants()
+	{
+		return $this->children()->with('descendants');
+	}
+
+	public function getWorldMap()
+	{
+		return self::where('project_id', $this->project_id)
+				->where('is_world_map', true)
+				->first();
+	}
+
+	public function getWorldTree()
+	{
+		$worldMap = $this->getWorldMap();
+		
+		if ($worldMap) {
+			return $worldMap->load('descendants');
+		}
+		
+		return null;
+	}
+
+	// Get all descendants (requires recursive query or package like 'baum/baum')
+	
+
+	// Get all ancestors (requires recursive query)
+	
+
+
+
 	public function characters(): HasMany
 	{
 		return $this->hasMany(Character::class, 'location_id');
-	}
-
-	public function region(): BelongsTo
-	{
-		return $this->belongsTo(Region::class, 'region_id');
 	}
 
 	public function factionHeadquarters(): HasMany

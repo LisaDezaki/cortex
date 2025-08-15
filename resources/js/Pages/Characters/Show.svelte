@@ -6,14 +6,16 @@
 	import CharactersPanel     from '@/Partials/CharactersPanel.svelte'
 	import DeleteCharacterForm from '@/Forms/Character/Delete.svelte'
 
-	import { Flex, Grid, Stack } from '@/Components/Core'
+	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
 
-	import Back     from '@/Components/UI/Back.svelte'
-	import Card     from '@/Components/UI/Card.svelte'
-	import Heading  from '@/Components/UI/Heading.svelte'
-	import Icon     from '@/Components/UI/Icon.svelte'
-	import Modal    from '@/Components/UI/Modal.svelte'
-	import Section  from '@/Components/UI/Section.svelte'
+	import Card       from '@/Components/UI/Card.svelte'
+	import Container  from '@/Components/UI/Container.svelte'
+	import Heading    from '@/Components/UI/Heading.svelte'
+	import Icon       from '@/Components/UI/Icon.svelte'
+	import Modal      from '@/Components/UI/Modal.svelte'
+	import PageHeader from '@/Components/UI/PageHeader.svelte'
+	import PageMenu   from '@/Components/UI/PageMenu.svelte'
+	import Section    from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const character = $page.props.character.data
@@ -30,70 +32,116 @@
 </script>
 
 <svelte:head>
-    <title>{activeProject.name} / {character.name}</title>
+    <title>{character.name}</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 
-	{#snippet panel()}
-		<CharactersPanel />
+	{#snippet header()}
+		<PageHeader
+			breadcrumbs={[
+				{ label: "Characters",   href: route('characters') },
+			]}
+			back={route('characters')}
+			title={character.name}
+			actions={[
+				{ icon: "Pen",   href: route('characters.edit', {character: character.slug}) },
+				{ icon: "Trash", onclick: deleteCharacter, theme: "danger" }
+			]}
+		/>
 	{/snippet}
 
-	{#snippet article()}
-		<Back href={route('characters')} />
-		<Section>
+	<!-- {#snippet menu()}
+		<PageMenu items={[
+			{ icon: "UserList",       label: "Details",       href: "#bio" },
+			{ icon: "Handshake",      label: "Relationships", href: "#relationships" },
+			{ icon: "FlagBannerFold", label: "Factions",      href: "#factions" },
+			{ icon: "Backpack",       label: "Inventory",     href: "#inventory" }
+		]} />
+	{/snippet} -->
 
-			<Heading is="h1" as="h3" class="my-12"
-				eyebrowIcon="User" eyebrow="Character"
-				heading={character.name}
-				subheading={character.alias}
-				actions={[
-					{ label: "Edit",   icon: "Pen",   href: route('characters.edit', {character: character.slug}) },
-					{ label: "Delete", icon: "Trash", onclick: deleteCharacter, theme: "danger" }
+	{#snippet article()}
+		<Container size="7xl" class="flex gap-12">
+
+			<PageMenu
+				items={[
+					{ icon: "UserList",       label: "Details",       href: "#bio",           active: $page.url.endsWith('#bio') },
+					{ icon: "Handshake",      label: "Relationships", href: "#relationships", active: $page.url.endsWith('#relationships') },
+					{ icon: "FlagBannerFold", label: "Factions",      href: "#factions",      active: $page.url.endsWith('#factions') },
+					{ icon: "Backpack",       label: "Inventory",     href: "#inventory",     active: $page.url.endsWith('#inventory') },
+					{ icon: "ImagesSquare",   label: "Media",         href: "#media",         active: $page.url.endsWith('#media') },
+					{ icon: "Textbox",        label: "Custom Fields", href: "#customfields",  active: $page.url.endsWith('#customfields') }
 				]}
 			/>
 
-			<p class="max-w-[65ch]">{character.description}</p>
-
-			<!-- <div>
-				<h6 class="font-style-regular font-bold">Appearance</h6>
-				<p>{character.appearance}</p>
-			</div>
-			<div>
-				<h6 class="font-style-regular font-bold">Personality</h6>
-				<p>{character.personality}</p>
-			</div>
-			<div>
-				<h6 class="font-style-regular font-bold">Motivations</h6>
-				<p>{character.motivations}</p>
-			</div>
-			<div>
-				<h6 class="font-style-regular font-bold">Flaws</h6>
-				<p>{character.flaws}</p>
-			</div> -->
-		</Section>
-
-		{#if character.relationships.length > 0}
-			<Section>
-				<Heading is="h2" as="h5" class="mb-6"
-					heading="Relationships"
-				/>
-				<Grid cols={5}>
-					{#each character.relationships as relationship}
-						<Card aspect="square"
-							icon="User"
-							image={relationship.portrait?.url}
-							title={relationship.name}
-							subtitle={relationship.role}
-							href={route('characters.show', {character: relationship.slug})}
+			<Stack gap={12} class="w-full">
+				<Section id="bio">
+					<Heading is="h4" as="h6" heading="Description" class="my-6" />
+					<p class="max-w-[65ch]">{character.description}</p>
+				</Section>
+		
+				{#if character.relationships.length > 0}
+					<Section id="relationships">
+						<Heading is="h4" as="h6" class="mb-6"
+							heading="Relationships"
 						/>
-					{/each}
-				</Grid>
-			</Section>
-		{/if}
+						<Grid cols={6}>
+							{#each character.relationships as relationship}
+								<Card aspect="square"
+									icon="User"
+									image={relationship.portrait?.url}
+									title={relationship.name}
+									subtitle={relationship.role}
+									href={route('characters.show', {character: relationship.slug})}
+								/>
+							{/each}
+						</Grid>
+					</Section>
+				{/if}
+		
+				{#if character.factions.length > 0}
+					<Section id="factions">
+						<Heading is="h4" as="h6" class="mb-6"
+							heading="Factions"
+						/>
+						<Grid cols={6}>
+							{#each character.factions as faction}
+								<Card aspect="square"
+									icon="FlagBannerFold"
+									image={faction.emblem?.url}
+									title={faction.name}
+									subtitle={faction.role}
+									href={route('factions.show', {faction: faction.slug})}
+								/>
+							{/each}
+						</Grid>
+					</Section>
+				{/if}
+		
+				<!-- {#if character.inventory.length > 0}
+					<Section id="factions" size="2xl">
+						<Heading is="h4" as="h6" class="mb-6"
+							heading="Inventory"
+						/>
+						<Grid cols={5}>
+							{#each character.inventory as item}
+								<Card aspect="square"
+									icon="Backpack"
+									image={item.emblem?.url}
+									title={item.name}
+									subtitle={item.role}
+									href={route('items.show', {item: item.slug})}
+								/>
+							{/each}
+						</Grid>
+					</Section>
+				{/if} -->
+			</Stack>
+	
+		</Container>
 	{/snippet}
 
-	{#snippet sidebar()}
+	<!-- {#snippet sidebar()}
 
 		<Flex align="center" justify="center" class="aspect-square bg-slate-900/10 rounded-lg  border-slate-900/15 overflow-hidden max-w-64 mx-auto w-[80%]">
 			{#if character.portrait}
@@ -128,7 +176,7 @@
 			{/if}
 		</Stack>
 
-	{/snippet}
+	{/snippet} -->
 	
 </AuthenticatedLayout>
 

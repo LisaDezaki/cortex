@@ -5,13 +5,13 @@
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
 	import Form          from '@/Components/Core/Form.svelte'
-	import UploadContext from '@/Components/Core/UploadContext.svelte';
-	import UploadPreview from '@/Components/Core/UploadPreview.svelte';
-	import UploadTrigger from '@/Components/Core/UploadTrigger.svelte';
-	import Back          from '@/Components/UI/Back.svelte';
-	import Button        from '@/Components/UI/Button.svelte';
+	import Back          from '@/Components/UI/Back.svelte'
+	import Button        from '@/Components/UI/Button.svelte'
+	import Container  from '@/Components/UI/Container.svelte'
 	import Field         from '@/Components/UI/Field.svelte'
-	import Heading       from '@/Components/UI/Heading.svelte';
+	import Heading       from '@/Components/UI/Heading.svelte'
+	import PageHeader from '@/Components/UI/PageHeader.svelte'
+	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section       from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
@@ -33,13 +33,25 @@
 
 <AuthenticatedLayout>
 
-	{#snippet article()}
-		<Back href={route('locations')} />
+	{#snippet header()}
+		<PageHeader
+			breadcrumbs={[
+				{ label: "Factions",   href: route('locations') },
+				{ label: "Settings" }
+			]}
+			back={route('locations')}
+			title="Location Settings"
+		/>
+	{/snippet}
 
-		<Section>
-			<Heading is="h2" as="h4" class="mb-12"
-				heading="Location Settings"
-				subheading="Manage your location settings and preferences for this project."
+	{#snippet article()}
+		<Container size="7xl" class="flex gap-12">
+			<PageMenu
+				items={[
+					{ icon: "UserList",       label: "Overview",      href: "#overview",      active: $page.url.endsWith('#overview') },
+					{ icon: "ImagesSquare",   label: "Media",         href: "#media",         active: $page.url.endsWith('#media') },
+					{ icon: "Textbox",        label: "Custom Fields", href: "#customfields",  active: $page.url.endsWith('#customfields') }
+				]}
 			/>
 			<Form>
 				<Field layout="block"
@@ -49,11 +61,11 @@
 					bind:value={$form.enable_regions}
 				/>
 			</Form>
-		</Section>
+		</Container>
 	{/snippet}
 
-	{#snippet sidebar()}
+	<!-- {#snippet sidebar()}
 		<CustomFieldsPanel />
-	{/snippet}
+	{/snippet} -->
 
 </AuthenticatedLayout>

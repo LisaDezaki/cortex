@@ -31,7 +31,6 @@
 			$uploadForm,
 			{ headers: { 'Content-Type': 'multipart/form-data' } }
 		).then(response => {
-			console.log(response.data);
 			$uploadForm = { ...$uploadForm,
 				...response.data.files.map(f => f.temp_path)
 			}

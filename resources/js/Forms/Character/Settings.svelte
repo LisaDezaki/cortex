@@ -4,8 +4,10 @@
 
 	import { Form }   from '@/Components/Core'
 
-	import Button from '@/Components/UI/Button.svelte'
-	import Field  from '@/Components/UI/Field.svelte'
+	import Button  from '@/Components/UI/Button.svelte'
+	import Field   from '@/Components/UI/Field.svelte'
+	import Heading from '@/Components/UI/Heading.svelte'
+	import Input   from '@/Components/UI/Input.svelte'
 
 	const customFields = $page.props.customFields?.data
 	const settings = $page.props.settings?.characters?.data
@@ -16,6 +18,7 @@
     } = $props()
 
 	const form = useForm({
+		enabled: true,
         subheading: ''
     })
 	
@@ -25,9 +28,19 @@
 
 </script>
 
-<Form onsubmit={updateSettings}>
-	
-	<!-- Character Settings -->
+<Form onsubmit={updateSettings} class={className}>
+
+	<Heading is="h4" as="h6" class="mb-6"
+		heading="Overview"
+		subheading="The most important settings for the Character entity."
+	/>
+
+	<Input
+		type="switch"
+		label="Enable Characters"
+		bind:checked={$form.enabled}
+		errors={$form.errors.enabled}
+	/>
 
 	<Field layout="block" inputClass="w-full"
 		type="select"

@@ -37,7 +37,8 @@ return new class extends Migration
 		Schema::create('faction_members', function (Blueprint $table) {
 			$table->foreignUuid('faction_id')->constrained('factions')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignUuid('character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
-			$table->string('rank_id')->nullable();
+			$table->string('rank_id')->nullable()->constrained('faction_ranks')->cascadeOnUpdate()->cascadeOnDelete();
+			$table->string('role')->nullable();
 			$table->primary(['faction_id', 'character_id']);
 			$table->index('rank_id');
 		});

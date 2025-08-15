@@ -6,13 +6,14 @@
 	import FactionGrid from '@/Partials/FactionGrid.svelte'
 	import FactionTable from '@/Partials/FactionTable.svelte'
 
-	import { Flex, Inline } from '@/Components/Core'
+	import { Flex, Inline, Stack } from '@/Components/Core'
 
 	import Back         from '@/Components/UI/Back.svelte'
 	import Dropdown     from '@/Components/UI/Dropdown.svelte'
 	import Heading      from '@/Components/UI/Heading.svelte'
 	import Icon         from '@/Components/UI/Icon.svelte'
 	import Input        from '@/Components/UI/Input.svelte'
+	import PageHeader  from '@/Components/UI/PageHeader.svelte'
 	import Section      from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
@@ -59,21 +60,24 @@
 </script>
 
 <svelte:head>
-    <title>{activeProject?.name} Factions</title>
+    <title>Faction List</title>
 </svelte:head>
 
 <AuthenticatedLayout>
-	
-	{#snippet article()}
-		<Back href="/" />
-		<Section class="space-y-6">
-			<Heading is="h2" as="h4"
-				heading="Factions"
-				actions={[
-					{ icon: "Plus",     theme: "accent",  href: route('factions.create'),   label: "Create" },
-					{ icon: "GearFine", theme: "neutral", href: route('factions.settings'), },
-				]}
-			/>
+
+	{#snippet header()}
+		<PageHeader
+			breadcrumbs={[
+				{ label: "Factions",   href: route('factions') },
+			]}
+			back={route('dashboard')}
+			title="Faction List"
+			actions={[
+				{ icon: "Plus",     theme: "accent",  href: route('factions.create') },
+				{ icon: "GearFine", theme: "neutral", href: route('factions.settings') },
+			]}
+		>
+
 			<Flex align="start" gap={3}>
 
 				<!-- Search -->
@@ -84,15 +88,15 @@
 
 				<!-- Filter -->
 
-				<Dropdown class="w-48" contentClass="w-48" icon="FunnelSimple" label="All characters" bind:value={filter} options={[
+				<Dropdown class="w-48" contentClass="w-48" icon="FunnelSimple" label="All factions" bind:value={filter} options={[
 					{ label: 'Nameless',   value: 'noname' },
 					{ label: 'Incomplete', value: 'incomplete' },
 					{ separator: true },
-					{ label: 'Characters...', children: characters.map(c => {
-						return { label: c.name, value: `character.${c.slug}`, image: c.portrait?.url }
-					}) },
-					{ label: 'Headquarters...', children: locations.map(l => {
+					{ label: 'Headquarters at...', children: locations.map(l => {
 						return { label: l.name, value: `location.${l.slug}`, image: l.banner?.url }
+					}) },
+					{ label: 'Has member...', children: characters.map(c => {
+						return { label: c.name, value: `character.${c.slug}`, image: c.portrait?.url }
 					}) },
 					...customFields.filter(f => f.type == 'select').map(f => {
 						return { label: `${f.label}...`, children: f.options.map(o => {
@@ -151,6 +155,11 @@
 
 			</Flex>
 
+		</PageHeader>
+	{/snippet}
+	
+	{#snippet article()}
+		<Section gap={6} size="7xl" class="py-6">
 			{#if activeProject && factions?.length > 0}
 				{#if layout == 'grid'}
 					<FactionGrid factions={factionList} cols={gridRows} showItemControls />

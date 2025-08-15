@@ -26,7 +26,7 @@
 			<Thumbnail
 				class="map-pin absolute w-8"
 				style="left: {location.coordinates.x}%; top: {location.coordinates.y}%;"
-				icon="MapPin"
+				icon="MapPinArea"
 				src={location.banner_path}
 				alt={location.name}
 			/>

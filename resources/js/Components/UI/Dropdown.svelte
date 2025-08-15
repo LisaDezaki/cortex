@@ -26,7 +26,6 @@
 
 	function updateValue(e) {
 		e.preventDefault()
-		console.log('updateValue', e)
 	}
 
 </script>
