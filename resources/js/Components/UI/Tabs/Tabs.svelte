@@ -15,6 +15,9 @@
 
 	:global(.tabs) {
 		@apply w-full;
+		&[data-orientation="vertical"] {
+			@apply flex items-start gap-12;
+		}
 	}
 
 </style>

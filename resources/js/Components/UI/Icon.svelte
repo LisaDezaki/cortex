@@ -4,6 +4,9 @@
 	import ArrowsLeftRight from "phosphor-svelte/lib/ArrowsLeftRight"
 	import At from "phosphor-svelte/lib/At"
 	import Backpack from "phosphor-svelte/lib/Backpack"
+	import Bag from "phosphor-svelte/lib/Bag"
+	import Bank from "phosphor-svelte/lib/Bank"
+	import BeerStein from "phosphor-svelte/lib/BeerStein"
 	import Books from "phosphor-svelte/lib/Books"
 	import BuildingApartment from "phosphor-svelte/lib/BuildingApartment"
 	import Butterfly from "phosphor-svelte/lib/Butterfly"
@@ -19,6 +22,7 @@
 	import CheckFat from "phosphor-svelte/lib/CheckFat"
 	import Compass from "phosphor-svelte/lib/Compass"
 	import CompassRose from "phosphor-svelte/lib/CompassRose"
+	import Crane from "phosphor-svelte/lib/Crane"
 	import DotsSixVertical from "phosphor-svelte/lib/DotsSixVertical"
 	import DotsThreeOutline from "phosphor-svelte/lib/DotsThreeOutline"
 	import DotsThreeOutlineVertical from "phosphor-svelte/lib/DotsThreeOutlineVertical"
@@ -29,12 +33,14 @@
 	import FileText from "phosphor-svelte/lib/FileText"
 	import FileVideo from "phosphor-svelte/lib/FileVideo"
 	import FilmSlate from "phosphor-svelte/lib/FilmSlate"
+	import Fish from "phosphor-svelte/lib/Fish"
 	import FlagBannerFold from "phosphor-svelte/lib/FlagBannerFold"
 	import FolderSimple from "phosphor-svelte/lib/FolderSimple"
 	import Funnel from "phosphor-svelte/lib/Funnel"
 	import FunnelSimple from "phosphor-svelte/lib/FunnelSimple"
 	import FunnelSimpleX from "phosphor-svelte/lib/FunnelSimpleX"
 	import FunnelX from "phosphor-svelte/lib/FunnelX"
+	import GasPump from "phosphor-svelte/lib/GasPump"
 	import GearFine from "phosphor-svelte/lib/GearFine"
 	import GlobeHemisphereEast from "phosphor-svelte/lib/GlobeHemisphereEast"
 	import GlobeHemisphereWest from "phosphor-svelte/lib/GlobeHemisphereWest"
@@ -47,8 +53,10 @@
 	import Image from "phosphor-svelte/lib/Image"
 	import ImageSquare from "phosphor-svelte/lib/ImageSquare"
 	import ImagesSquare from "phosphor-svelte/lib/ImagesSquare"
+	import Island from "phosphor-svelte/lib/Island"
 	import Info from "phosphor-svelte/lib/Info"
 	import Key from "phosphor-svelte/lib/Key"
+	import Lighthouse from "phosphor-svelte/lib/Lighthouse"
 	import LineVertical from "phosphor-svelte/lib/LineVertical"
 	import Link from "phosphor-svelte/lib/Link"
 	import List from "phosphor-svelte/lib/List"
@@ -61,20 +69,27 @@
 	import Password from "phosphor-svelte/lib/Password"
 	import Pen from "phosphor-svelte/lib/Pen"
 	import Pentagram from "phosphor-svelte/lib/Pentagram"
+	import PipeWrench from "phosphor-svelte/lib/PipeWrench"
 	import Plus from "phosphor-svelte/lib/Plus"
 	import Question from "phosphor-svelte/lib/Question"
 	import Resize from "phosphor-svelte/lib/Resize"
 	import RowsPlusBottom from "phosphor-svelte/lib/RowsPlusBottom"
+	import Sailboat from "phosphor-svelte/lib/Sailboat"
 	import SignOut from "phosphor-svelte/lib/SignOut"
+	import Siren from "phosphor-svelte/lib/Siren"
 	import SortAscending from "phosphor-svelte/lib/SortAscending"
 	import SortDescending from "phosphor-svelte/lib/SortDescending"
 	import Speedometer from "phosphor-svelte/lib/Speedometer"
+	import Student from "phosphor-svelte/lib/Student"
 	import Sun from "phosphor-svelte/lib/Sun"
 	import Table from "phosphor-svelte/lib/Table"
+	import TagSimple from "phosphor-svelte/lib/TagSimple"
+	import Tent from "phosphor-svelte/lib/Tent"
 	import TextAa from "phosphor-svelte/lib/TextAa"
 	import Textbox from "phosphor-svelte/lib/Textbox"
 	import ToggleRight from "phosphor-svelte/lib/ToggleRight"
 	import Trash from "phosphor-svelte/lib/Trash"
+	import TreeEvergreen from "phosphor-svelte/lib/TreeEvergreen"
 	import Trophy from "phosphor-svelte/lib/Trophy"
 	import UploadSimple from "phosphor-svelte/lib/UploadSimple"
 	import User from "phosphor-svelte/lib/User"
@@ -99,6 +114,9 @@
 		'ArrowsLeftRight': ArrowsLeftRight,
 		'At': At,
 		'Backpack': Backpack,
+		'Bag': Bag,
+		'Bank': Bank,
+		'BeerStein': BeerStein,
 		'Books': Books,
 		'BuildingApartment': BuildingApartment,
 		'Butterfly': Butterfly,
@@ -112,6 +130,7 @@
 		'Chats': Chats,
 		'Check': Check,
 		'CheckFat': CheckFat,
+		'Crane': Crane,
 		'Compass': Compass,
 		'CompassRose': CompassRose,
 		'DotsSixVertical': DotsSixVertical,
@@ -124,12 +143,14 @@
 		'FileText': FileText,
 		'FileVideo': FileVideo,
 		'FilmSlate': FilmSlate,
+		'Fish': Fish,
 		'FlagBannerFold': FlagBannerFold,
 		'FolderSimple': FolderSimple,
 		'Funnel': Funnel,
 		'FunnelSimple': FunnelSimple,
 		'FunnelSimpleX': FunnelSimpleX,
 		'FunnelX': FunnelX,
+		'GasPump': GasPump,
 		'GearFine': GearFine,
 		'GlobeHemisphereEast': GlobeHemisphereEast,
 		'GlobeHemisphereWest': GlobeHemisphereWest,
@@ -142,8 +163,10 @@
 		'Image': Image,
 		'ImageSquare': ImageSquare,
 		'ImagesSquare': ImagesSquare,
+		'Island': Island,
 		'Info': Info,
 		'Key': Key,
+		'Lighthouse': Lighthouse,
 		'LineVertical': LineVertical,
 		'Link': Link,
 		'List': List,
@@ -156,20 +179,27 @@
 		'Password': Password,
 		'Pen': Pen,
 		'Pentagram': Pentagram,
+		'PipeWrench': PipeWrench,
 		'Plus': Plus,
 		'Question': Question,
 		'Resize': Resize,
 		'RowsPlusBottom': RowsPlusBottom,
+		'Sailboat': Sailboat,
 		'SignOut': SignOut,
+		'Siren': Siren,
 		'SortAscending': SortAscending,
 		'SortDescending': SortDescending,
 		'Speedometer': Speedometer,
+		'Student': Student,
 		'Sun': Sun,
 		'Table': Table,
+		'TagSimple': TagSimple,
+		'Tent': Tent,
 		'TextAa': TextAa,
 		'Textbox': Textbox,
 		'ToggleRight': ToggleRight,
 		'Trash': Trash,
+		'TreeEvergreen': TreeEvergreen,
 		'Trophy': Trophy,
 		'UploadSimple': UploadSimple,
 		'User': User,

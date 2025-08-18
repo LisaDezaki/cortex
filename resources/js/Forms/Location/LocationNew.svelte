@@ -14,6 +14,7 @@
 	import CardNew   from '@/Components/UI/CardNew.svelte'
 	import Field     from '@/Components/UI/Field.svelte'
 	import Heading   from '@/Components/UI/Heading.svelte'
+	import Input    from '@/Components/UI/Input.svelte'
 	import Section   from '@/Components/UI/Section.svelte'
 	import Tabs      from '@/Components/UI/Tabs'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
@@ -30,9 +31,10 @@
 
 	let startData = {
 		slug: locationData?.slug || null,
+		is_world_map: locationData?.isWorldMap || null,
 		banner: locationData?.banner?.path || null,
-		parent: locationData?.parent.id || null,
-		map: locationData?.map || null,
+		parent: locationData?.parent?.id || null,
+		map: locationData?.map?.path || null,
         name: locationData?.name || null,
         description: locationData?.description || null,
 		characters: locationData?.characters || [],
@@ -43,20 +45,33 @@
 
     function submit(e) {
         e.preventDefault()
-		if (locationData) { updateLocation(locationData.slug) }
-		else            { createLocation() }
+		if (locationData) {
+			updateLocation(locationData.slug)
+		} else              {
+			createLocation()
+		}
     }
+
+	function createLocation() {
+		$form.post(route('locations.store'))
+	}
+
+	function updateLocation(slug) {
+		$form.patch(route('locations.update', {location: slug}))
+	}
 	
 </script>
 
 
-<Form class="grid grid-cols-2 overflow-hidden max-w-[72vw]">
+<Form class="grid grid-cols-2 overflow-hidden max-w-[86vw]">
 
 	<!-- MAP -->
 
-	<UploadContext class="col-span-1 relative flex aspect-square border-r bg-slate-500/10">
+	<UploadContext class="col-span-1 relative flex aspect-square border-r bg-slate-500/10"
+		bind:value={$form.map} preview={locationData?.map?.url}
+	>
 		<UploadPreview class="h-full w-full flex items-center justify-center">
-			<UploadTrigger icon="Image" label="Upload Map" />
+			<UploadTrigger icon="Image" label={$form.map ? "Replace Map" : "Upload Map"} />
 		</UploadPreview>
 	</UploadContext>
 
@@ -64,7 +79,7 @@
 
 	<div class="col-span-1 flex flex-col h-full p-3 aspect-square overflow-hidden">
 		<Tabs value="tab1" class="h-full">
-			<Tabs.List class="min-w-[32rem] w-[32rem] max-w-[32rem]">
+			<Tabs.List class="w-full">
 				<Tabs.Trigger value="tab1">General</Tabs.Trigger>
 				<Tabs.Trigger value="tab2">Characters</Tabs.Trigger>
 				<Tabs.Trigger value="tab3">Custom Fields</Tabs.Trigger>
@@ -72,15 +87,38 @@
 	
 			<Tabs.Content value="tab1">
 
-				<div class="aspect-[22/9] flex items-center justify-center border-r rounded-lg bg-slate-500/10 mb-3">
-					<Button style="soft" theme="accent"
-						type="button"
-						icon="Image"
-						label="Upload Banner"
+				<UploadContext bind:value={$form.banner} preview={locationData?.banner?.url} class="aspect-[22/9] relative flex items-center justify-center border-r overflow-hidden rounded-lg bg-slate-500/10 mb-3">
+					<UploadPreview class="h-full w-full flex items-center justify-center">
+						<UploadTrigger icon="Image" label={$form.banner ? "Replace Banner" : "Upload Banner"} />
+					</UploadPreview>
+				</UploadContext>
+
+				<div class="grid grid-cols-2 gap-6 mt-6 mb-6 px-3">
+					<Input class="col-span-1" inputClass="w-full"
+						type="select"
+						id="parent"
+						label="Parent"
+						description="Which location this location is found within."
+						placeholder="Select parent location..."
+						bind:value={$form.parent}
+						errors={$form.errors.parent}
+						options={locations?.map(r => {
+							return { label: r.name, value: r.slug }
+						})}
+						disabled={$form.is_world_map}
+					/>
+					<Input class="col-span-1"
+						type="checkbox"
+						id="worldMap"
+						labelText="World Map"
+						bind:checked={$form.is_world_map}
+						errors={$form.errors.is_world_map}
+						required
 					/>
 				</div>
 
-				<Field layout="block" class="px-3" inputClass="w-full"
+
+				<Field layout="inline" class="px-3" inputClass="w-full"
 					type="text"
 					id="name"
 					label="Name"
@@ -89,19 +127,6 @@
 					bind:value={$form.name}
 					errors={$form.errors.name}
 					required
-				/>
-
-				<Field layout="block" class="px-3" inputClass="w-full"
-					type="select"
-					id="parent"
-					label="Parent"
-					description="Which location this location is found within."
-					placeholder="Select parent location..."
-					bind:value={$form.parent}
-					errors={$form.errors.parent}
-					options={locations.map(r => {
-						return { label: r.name, value: r.slug }
-					})}
 				/>
 
 				<Field class="px-3" inputClass="w-full"
@@ -116,7 +141,7 @@
 				/>
 			</Tabs.Content>
 	
-			<Tabs.Content value="tab2" class="w-[32rem]">
+			<Tabs.Content value="tab2">
 
 				<Heading heading="Characters" is="h5" as="h6" class="mb-3 px-2" />
 				<Grid cols={5} class="overflow-y-auto px-2 w-full">

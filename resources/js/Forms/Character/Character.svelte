@@ -4,20 +4,26 @@
 
 	import CharacterRelationshipForm from '@/Forms/Character/Relationship.svelte'
 	
-	import { Form, Grid } from '@/Components/Core'
+	import { Flex, Form, Grid } from '@/Components/Core'
 
 	import Button  from '@/Components/UI/Button.svelte'
 	import Card    from '@/Components/UI/Card.svelte'
 	import CardNew from '@/Components/UI/CardNew.svelte'
 	import Field   from '@/Components/UI/Field.svelte'
 	import Heading from '@/Components/UI/Heading.svelte'
+	import Icon    from '@/Components/UI/Icon.svelte'
 	import Modal   from '@/Components/UI/Modal.svelte'
+	import PageMenu from '@/Components/UI/PageMenu.svelte'
 	import Section from '@/Components/UI/Section.svelte'
+	import Tabs    from '@/Components/UI/Tabs'
+
+	import Map   from '@/Components/Features/Location/Map.svelte'
 
 	//  Props
 
 	const activeProject = $page.props.activeProject.data
 	const customFields  = $page.props.customFields.data
+	const appearanceTraits  = $page.props.traitsAppearance
 	const personalityTraits = $page.props.traitsPersonality
 
 	let { character, class:className } = $props()
@@ -36,6 +42,7 @@
 		faction_id: character?.factions?.[0]?.id || null,
 		location_id: character?.location?.id || null,
 		relationships: character?.relationships || null,
+		appearance: character?.appearance || [],
 		personality: character?.personality || [],
 		custom_fields: character?.customFields || []
 	}
@@ -139,213 +146,9 @@
 
 
 
-<Form class={className}>
 
-	<!-- MAIN INFORMATION-->
-	
-	<Section id="details">
-		<Heading is="h3" as="h5" class="my-6"
-			heading="Details"
-		/>
-
-		<!-- <Heading is="h2" as="h5" class="mb-12"
-			heading={character ? "Edit Character" : "New Character"}
-		/> -->
-
-		<!-- Portrait -->
-
-		
-
-		<!-- Slug -->
-
-		<!-- <Field layout="block"
-			type="text"
-			id="slug"
-			label="Slug"
-			placeholder={$form.name?.toLowerCase() || "slug"}
-			bind:value={$form.slug}
-			description="The URL slug for this character."
-			errors={$form.errors.name}
-		/> -->
-
-		<!-- Name -->
-
-		<Field layout="block" inputClass="w-full"
-			type="text"
-			id="name"
-			label="Name"
-			placeholder="Name"
-			bind:value={$form.name}
-			description="The name of the character."
-			errors={$form.errors.name}
-			required
-		/>
-
-		<!-- Alias -->
-
-		<Field layout="block" inputClass="w-full"
-			type="text"
-			id="alias"
-			label="Alias"
-			description="An alternative name that the character is known by."
-			placeholder="Alias"
-			bind:value={$form.alias}
-			errors={$form.errors.name}
-		/>
-
-		
-
-		
-
-		
-
-		<!-- Location -->
-
-		<Field layout="block" inputClass="w-full"
-			type="select"
-			id="location"
-			description="In which location is this character found?"
-			label="Location"
-			placeholder="Select location..."
-			options={locations.map(l => ({ image: l.banner?.url, label: l.name, value: l.id }))}
-			bind:value={$form.location_id}
-		/>
-
-		<!-- Description -->
-
-		<Field layout="block" inputClass="w-full"
-			type="combobox"
-			id="personality"
-			label="Personality"
-			description="What are they like as a person?"
-			placeholder="Personality traits..."
-			bind:value={$form.personality}
-			errors={$form.errors.personality}
-			options={personalityTraits.map(t => ({ label: t, value: t }))}
-			multiple
-		/>
-
-		<Field inputClass="w-full"
-			type="textarea"
-			id="description"
-			label="Description"
-			placeholder="Description..."
-			bind:value={$form.description}
-			description="A description of the character."
-			errors={$form.errors.description}
-			rows={5}
-		/>
-
-	</Section>
-
-	<!-- Relationships -->
-
-	<Section id="relationships">
-		<Heading is="h3" as="h5" class="my-6"
-			heading="Relationships"
-		/>
-		<Grid cols={6}>
-			{#each $form.relationships as rel, i}
-				<Card aspect="square"
-					icon="User"
-					image={getRelationship(rel.slug)?.portrait?.url}
-					title={getRelationship(rel.slug)?.name}
-					subtitle={getRelationship(rel.slug)?.role}
-					onclick={(e) => openRelationshipModal(e, getRelationship(rel.slug))}
-				/>
-			{/each}
-			<CardNew aspect="square"
-				onclick={openRelationshipModal}
-			/>
-		</Grid>
-	</Section>
-
-	<!-- Factions -->
-
-	<Section id="factions">
-		<Heading is="h3" as="h5" class="my-6"
-			heading="Factions"
-		/>
-
-		<Field layout="block" inputClass="w-full"
-			type="select"
-			id="faction"
-			description="Which faction does this character belong to?"
-			label="Faction"
-			placeholder="Select faction..."
-			options={factions.map(f => ({ image: f.emblem?.url, label: f.name, value: f.id }))}
-			bind:value={$form.faction_id}
-		/>
-	</Section>
-
-	<!-- Media -->
-
-	<Section id="media">
-		<Heading is="h3" as="h5" class="my-6"
-			heading="Media"
-		/>
-		<Field layout="block" inputClass="w-56"
-			type="file"
-			id="portrait"
-			aspect="square"
-			label="Image"
-			description="Upload a portrait of the character."
-			icon="Image"
-			placeholder="Upload a portrait..."
-			preview={character?.portrait?.url}
-			bind:value={$form.portrait}
-			errors={$form.errors.portrait}
-		/>
-	</Section>
-
-
-	<!-- CUSTOM FIELDS -->
-
-	<Section class="space-y-6">
-		<Heading is="h3" as="h6" class="mb-6"
-			heading="Custom Fields"
-		/>
-		{#each customFields as field, i}
-			<Field layout="block" inputClass="w-full"
-				type={field.type}
-				id={getFieldName(field.name)}
-				description={field.description}
-				label={field.label || field.name}
-				placeholder={field.placeholder || field.label}
-				required={field.required}
-				options={field.options}
-				bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
-			/>
-		{:else}
-			<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
-		{/each}
-	</Section>
-
-	<!-- RELATIONSHIPS -->
-
-	<!-- <Section>
-		<Heading is="h3" as="h6" class="mb-6"
-			heading="Relationships"
-		/>
-		<Grid cols={6}>
-			{#each $form.relationships as rel, i}
-				<Card aspect="square"
-					icon="User"
-					image={getRelationship(rel.slug)?.portrait?.url}
-					title={getRelationship(rel.slug)?.name}
-					subtitle={getRelationship(rel.slug)?.role}
-					onclick={(e) => openRelationshipModal(e, getRelationship(rel.slug))}
-				/>
-			{/each}
-			<CardNew aspect="square"
-				onclick={openRelationshipModal}
-			/>
-		</Grid>
-	</Section> -->
-
-	<!-- FORM.BUTTONS -->
-
-	<Section class="flex justify-center gap-3 w-full">
+{#snippet actions()}
+	<Flex class="flex justify-center gap-3 w-full">
 		<Button style="hard" theme="neutral"
 			type="button"
 			label="Cancel"
@@ -357,8 +160,231 @@
 			onclick={submit}
 			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
 		/>
-	</Section>
-	
+	</Flex>
+{/snippet}
+
+
+
+<Form class={className}>
+	<Tabs value="bio" orientation="vertical">
+
+		<Tabs.List class="pt-12">
+			{#each [
+					{ icon: "UserList",       label: "Details",       value: "bio" },
+					{ icon: "TagSimple",      label: "Tags",          value: "tags" },
+					{ icon: "Handshake",      label: "Relationships", value: "relationships" },
+					{ icon: "FlagBannerFold", label: "Factions",      value: "factions" },
+					{ icon: "Backpack",       label: "Inventory",     value: "items" },
+					{ icon: "MapPinArea",     label: "Location",      value: "location" },
+					{ icon: "ImagesSquare",   label: "Media",         value: "media" },
+					{ icon: "Textbox",        label: "Custom Fields", value: "customfields" }
+				] as tabData}
+				<Tabs.Trigger value={tabData.value}>
+					<Icon name={tabData.icon} size="md" />
+					<span class:text-accent={tabData.active}>{tabData.label}</span>
+				</Tabs.Trigger>
+			{/each}
+		</Tabs.List>
+
+		<!-- Details -->
+
+		<Tabs.Content value="bio">
+
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Details"
+			/>
+
+			<Field layout="block" inputClass="w-full"
+				type="text"
+				id="name"
+				label="Name"
+				placeholder="Name"
+				bind:value={$form.name}
+				description="The name of the character."
+				errors={$form.errors.name}
+				required
+			/>
+
+			<Field layout="block" inputClass="w-full"
+				type="text"
+				id="alias"
+				label="Alias"
+				description="An alternative name that the character is known by."
+				placeholder="Alias"
+				bind:value={$form.alias}
+				errors={$form.errors.name}
+			/>
+
+			<Field inputClass="w-full"
+				type="textarea"
+				id="description"
+				label="Description"
+				placeholder="Description..."
+				bind:value={$form.description}
+				description="A description of the character."
+				errors={$form.errors.description}
+				rows={5}
+			/>
+
+			{@render actions()}
+		</Tabs.Content>
+
+		<Tabs.Content value="tags">
+
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Tags"
+			/>
+
+			<Field layout="block" inputClass="w-full"
+				type="combobox"
+				id="appearance"
+				label="Appearance"
+				description="What do they look like physically?"
+				placeholder="Appearance traits..."
+				bind:value={$form.appearance}
+				errors={$form.errors.appearance}
+				options={appearanceTraits.map(t => ({ label: t, value: t }))}
+				multiple
+			/>
+
+			<Field layout="block" inputClass="w-full"
+				type="combobox"
+				id="personality"
+				label="Personality"
+				description="What are they like as a person?"
+				placeholder="Personality traits..."
+				bind:value={$form.personality}
+				errors={$form.errors.personality}
+				options={personalityTraits.map(t => ({ label: t, value: t }))}
+				multiple
+			/>
+
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- Relationships -->
+
+		<Tabs.Content value="relationships">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Relationships"
+			/>
+			<Grid cols={6}>
+				{#each $form.relationships as rel, i}
+					<Card aspect="square"
+						icon="User"
+						image={getRelationship(rel.slug)?.portrait?.url}
+						title={getRelationship(rel.slug)?.name}
+						subtitle={getRelationship(rel.slug)?.role}
+						onclick={(e) => openRelationshipModal(e, getRelationship(rel.slug))}
+					/>
+				{/each}
+				<CardNew aspect="square"
+					onclick={openRelationshipModal}
+				/>
+			</Grid>
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- Factions -->
+
+		<Tabs.Content value="factions">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Factions"
+			/>
+
+			<Field layout="block" inputClass="w-full"
+				type="select"
+				id="faction"
+				description="Which faction does this character belong to?"
+				label="Faction"
+				placeholder="Select faction..."
+				options={factions.map(f => ({ image: f.emblem?.url, label: f.name, value: f.id }))}
+				bind:value={$form.faction_id}
+			/>
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- Inventory -->
+
+		<Tabs.Content value="items">
+
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Inventory"
+			/>
+
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- Location -->
+
+		<Tabs.Content value="location">
+
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Location"
+			/>
+
+			<Field layout="block" inputClass="w-full"
+				type="select"
+				id="location"
+				description="In which location is this character found?"
+				label="Location"
+				placeholder="Select location..."
+				options={locations.map(l => ({ image: l.banner?.url, label: l.name, value: l.id }))}
+				bind:value={$form.location_id}
+			/>
+
+			{#if $form.location_id}
+				<Map class="aspect-square w-full" location={locations.find(l => l.id == $form.location_id)} />
+			{/if}
+
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- Media -->
+
+		<Tabs.Content value="media">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Media"
+			/>
+			<Field layout="block" inputClass="w-56"
+				type="file"
+				id="portrait"
+				aspect="square"
+				label="Image"
+				description="Upload a portrait of the character."
+				icon="Image"
+				placeholder="Upload a portrait..."
+				preview={character?.portrait?.url}
+				bind:value={$form.portrait}
+				errors={$form.errors.portrait}
+			/>
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- CUSTOM FIELDS -->
+
+		<Tabs.Content value="customfields">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Custom Fields"
+			/>
+			{#each customFields as field, i}
+				<Field layout="block" inputClass="w-full"
+					type={field.type}
+					id={getFieldName(field.name)}
+					description={field.description}
+					label={field.label || field.name}
+					placeholder={field.placeholder || field.label}
+					required={field.required}
+					options={field.options}
+					bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
+				/>
+			{:else}
+				<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
+			{/each}
+			{@render actions()}
+		</Tabs.Content>
+
+	</Tabs>
 </Form>
 
 <Modal show={addingRelationshipModal} onclose={closeModal} class="flex items-start p-6">

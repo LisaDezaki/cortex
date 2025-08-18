@@ -35,9 +35,9 @@
 
 <AuthenticatedLayout>
 
-	{#snippet panel()}
+	<!-- {#snippet panel()}
 		<LocationsPanel />
-	{/snippet}
+	{/snippet} -->
 
 	{#snippet article()}
 		<Back href={route('locations.show', {location: location.slug})} />

@@ -1,4 +1,5 @@
 <script>
+	import { Link } from '@inertiajs/svelte'
 	import { Flex, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
@@ -12,6 +13,8 @@
 		eyebrowIcon,
 		heading,
 		subheading,
+		subheadingClass,
+		subheadingLink,
 		class: className,
 		...restProps
     } = $props()
@@ -21,7 +24,7 @@
 
 	<Stack>
 		{#if eyebrow}
-			<Flex align="center" gap={1} class="absolute font-style-button -mt-5 text-accent">
+			<Flex align="center" gap={1} class="italic mb-1.5 text-accent">
 				{#if eyebrowIcon}
 					<Icon name={eyebrowIcon} size="sm" weight="regular" />
 				{/if}
@@ -34,8 +37,12 @@
 			{@render children?.()}
 		</svelte:element>
 		
-		{#if subheading}
-			<div class="heading-subhead font-style-placeholder">
+		{#if subheadingLink && subheading}
+			<Link class="italic text-accent hover:underline {subheadingClass}" href={subheadingLink}>
+				{subheading}
+			</Link>
+		{:else if subheading}
+			<div class="heading-subhead italic {subheadingClass}">
 				{subheading}
 			</div>
 		{/if}

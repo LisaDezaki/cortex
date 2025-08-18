@@ -41,8 +41,8 @@
 	</Inline>
 {/snippet}
 
-<Box class="sticky top-12">
-	<Stack class="page-menu min-w-48 py-2 rounded-lg {className}" {...restProps}>
+<Box class="sticky top-12 {className}">
+	<Stack class="page-menu min-w-48 py-2 rounded-lg" {...restProps}>
 	
 		{#if restProps.searchable}
 			<div class="flex-shrink-0 px-1.5">

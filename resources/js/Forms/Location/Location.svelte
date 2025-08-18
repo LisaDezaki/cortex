@@ -17,7 +17,7 @@
 	const activeProject = $page.props.activeProject.data
 	const customFields  = $page.props.customFields.data
 
-	let { location } = $props()
+	let { class:className, location } = $props()
 
 	//  Form
 
@@ -85,16 +85,16 @@
 </script>
 
 
-<Form>
+<Form class={className}>
 
 	<!-- MAIN INFORMATION -->
 
-	<Section class="space-y-3">
-		<Heading is="h2" as="h4" class="mb-12"
-			heading={location ? "Edit Location" : "New Location"}
+	<Section id="details">
+		<Heading is="h3" as="h5" class="my-6"
+			heading="Details"
 		/>
 
-		<Field layout="block"
+		<!-- <Field layout="block"
 			type="text"
 			id="slug"
 			label="Slug"
@@ -102,7 +102,7 @@
 			bind:value={$form.slug}
 			description="The URL slug for this location."
 			errors={$form.errors.slug}
-		/>
+		/> -->
 
 		<Field layout="block" inputClass="w-full"
 			type="text"
@@ -130,8 +130,8 @@
 	<!-- MEDIA -->
 
 	<Section class="space-y-3">
-		<Heading is="h2" as="h4" class="mb-12"
-			heading="Images"
+		<Heading is="h3" as="h5" class="my-6"
+			heading="Media"
 		/>
 
 		<Field layout="block" inputClass="aspect-video h-40 w-72"
@@ -162,7 +162,7 @@
 	<!-- CHARACTERS -->
 
 	<Section>
-		<Heading is="h3" as="h6" class="mb-6"
+		<Heading is="h3" as="h5" class="mb-6"
 			heading="Characters"
 		/>
 		<Grid cols={5}>

@@ -28,7 +28,7 @@
 
 	let columns   = $state(['name', 'characters'])
 	let filter    = $state({})
-	let layout    = $state('map')
+	let layout    = $state('grid')
 	let query     = $state('')
 	let rowSize   = $state(5)
 	let sortBy    = $state('name')
@@ -54,6 +54,8 @@
 				return true
 			}).sort((a, b) => {
 				if (sortBy === 'name')    { return a.name > b.name                       ? 1 : -1 }
+				if (sortBy === 'type')    { return a.type > b.type                       ? 1 : -1 }
+				if (sortBy === 'parent')  { return a.parent?.name > b.parent?.name       ? 1 : -1 }
 				if (sortBy === 'created') { return a.meta.created_at > b.meta.created_at ? 1 : -1 }
 				if (sortBy === 'updated') { return a.meta.created_at > b.meta.created_at ? 1 : -1 }
 				if (sortBy === 'random')  { return Math.random() > 0.5                   ? 1 : -1 }
@@ -113,12 +115,11 @@
 	{#snippet header()}
 		<PageHeader
 			breadcrumbs={[
-				{ label: "Locations",   href: route('locations') },
 			]}
 			back={route('dashboard')}
 			title={layout == 'map' ? "Map" : "Location List"}
 			actions={[
-				{ icon: "Plus",     theme: "accent",  onclick: openLocationModal },
+				{ icon: "Plus",     theme: "accent",  href: route('locations.create') },
 				{ icon: "GearFine", theme: "neutral", href: route('locations.settings') },
 			]}
 		>
@@ -150,6 +151,8 @@
 
 				<Input type="select" class="w-48" icon="SortAscending" placeholder="Sort by" bind:value={sortBy} options={[
 					{ value: 'name',   label: "By location name" },
+					{ value: 'type',   label: "By location type" },
+					{ value: 'parent', label: "By parent name" },
 					{ separator: true },
 					{ value: 'created', label: "Date Created" },
 					{ value: 'updated', label: "Date Updated" },
@@ -197,7 +200,7 @@
 	{/snippet}
 
 	{#snippet article()}
-		<Section>
+		<Section class="overflow-y-auto py-12">
 			{#if activeProject && locations?.length > 0}
 
 

@@ -65,7 +65,7 @@ class CharacterController extends Controller
 	{
 		$activeProject = Auth::user()->active_project;
 		if (!$activeProject) {
-			return Redirect::route('projects');
+			return Redirect::route('dashboard');
 		}
 
 		$customFields = CustomField::where([
@@ -73,10 +73,12 @@ class CharacterController extends Controller
 			'fieldable_type' => 'character'
 		])->with('options')->get();
 
+		$traitsAppearance  = File::get(database_path('data/options/appearance.json'));
 		$traitsPersonality = File::get(database_path('data/options/personality.json'));
 
 		return Inertia::render('Characters/Create', [
 			'customFields' => CustomFieldResource::collection($customFields),
+			'traitsAppearance'  => json_decode($traitsAppearance,  true),
 			'traitsPersonality' => json_decode($traitsPersonality, true)
 		]);
 	}
@@ -139,11 +141,13 @@ class CharacterController extends Controller
 			'fieldable_type' => 'character'
 		])->with('options')->get();
 
+		$traitsAppearance  = File::get(database_path('data/options/appearance.json'));
 		$traitsPersonality = File::get(database_path('data/options/personality.json'));
 
 		return Inertia::render('Characters/Edit', [
 			'character'  => new CharacterResource($character),
 			'customFields' => CustomFieldResource::collection($customFields),
+			'traitsAppearance'  => json_decode($traitsAppearance,  true),
 			'traitsPersonality' => json_decode($traitsPersonality, true)
 		]);
 	}

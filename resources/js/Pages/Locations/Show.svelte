@@ -1,5 +1,5 @@
 <script>
-	import { page } from '@inertiajs/svelte'
+	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
@@ -10,6 +10,7 @@
 
 	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
 
+	import ArticleBanner     from '@/Components/UI/ArticleBanner.svelte'
 	import Back     from '@/Components/UI/Back.svelte'
 	import Button   from '@/Components/UI/Button.svelte'
 	import Card     from '@/Components/UI/Card.svelte'
@@ -20,6 +21,8 @@
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section  from '@/Components/UI/Section.svelte'
+
+	import Map        from '@/Components/Features/Location/Map.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const location = $page.props.location.data
@@ -63,29 +66,65 @@
 	{#snippet article()}
 		<Container size="7xl" class="flex gap-12">
 
-			<PageMenu
+			<PageMenu class="py-12"
 				items={[
-					{ icon: "MapPinArea",       label: "Details",       href: "#bio",           active: $page.url.endsWith('#bio') },
-					{ icon: "UsersThree",      label: "People", href: "#people", active: $page.url.endsWith('#people') },
-					{ icon: "ImagesSquare",   label: "Media",         href: "#media",         active: $page.url.endsWith('#media') },
-					{ icon: "Textbox",        label: "Custom Fields", href: "#customfields",  active: $page.url.endsWith('#customfields') }
+					{ icon: "MapPinArea",   label: "Details",       href: "#bio",          active: $page.url.endsWith('#bio')          },
+					{ icon: "Compass",      label: "Map",           href: "#map",          active: $page.url.endsWith('#map')          },
+					{ icon: "UsersThree",   label: "People",        href: "#people",       active: $page.url.endsWith('#people')       },
+					{ icon: "ImagesSquare", label: "Media",         href: "#media",        active: $page.url.endsWith('#media')        },
+					{ icon: "Textbox",      label: "Custom Fields", href: "#customfields", active: $page.url.endsWith('#customfields') }
 				]}
 			/>
 
 			<Stack gap={12} class="w-full">
-				<Section>
-		
-					<Heading is="h1" as="h3" class="my-12"
-						eyebrowIcon="MapPin" eyebrow="Location"
-						heading={location.name}
-						subheading={location.region?.name}
-					/>
+				<Section class="py-12">
+
+					<ArticleBanner image={location.banner?.url}>
+						{#if location.parent}
+							Back to <Link class="text-accent hover:underline" href={route('locations.show', { location: location.parent.slug })}>
+								{location.parent?.name}
+							</Link>
+						{/if}
+			
+						<Heading is="h1" as="h3" class="mt-6 {location.banner ? 'text-white' : ''}"
+							heading={location.name}
+							subheading={location.type}
+						/>
+					</ArticleBanner>
+
+
+					<!-- {#if location.parent}
+						<Link href={route('locations.show', { location: location.parent.slug })}>{location.parent.name}</Link>
+					{/if} -->
 		
 					<p class="mt-4 font-style-regular">
 						{location.description}
 					</p>
 		
 				</Section>
+
+				{#if location.map}
+					<Map location={location} />
+				{/if}
+
+				{#if location.children.length > 0}
+					<Section>
+						<Heading is="h2" as="h5" class="mb-6"
+							heading="Points of Interest"
+						/>
+						<Grid cols={3}>
+							{#each location.children as loc}
+								<Card aspect="video" class="w-full"
+									icon={loc.icon || "MapPinArea"}
+									image={loc.banner?.url}
+									title={loc.name}
+									subtitle={loc.type}
+									href={route('locations.show', {location: loc.slug})}
+								/>
+							{/each}
+						</Grid>
+					</Section>
+				{/if}
 		
 				{#if location.characters.length > 0}
 					<Section>

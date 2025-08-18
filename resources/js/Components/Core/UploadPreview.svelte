@@ -1,7 +1,7 @@
 <script>
 	import { getContext } from "svelte";
 
-	const { files, clearFiles } = getContext("file-upload-context");
+	const { files, preview, clearFiles } = getContext("file-upload-context");
 
 	let {
 		children,
@@ -15,17 +15,9 @@
 	}
 </script>
 
-<div class="upload-preview relative {className}">
 
-	<div class="absolute inset-0 grid grid-cols-{$files.length || 1} gap-1.5 justify-center {layoutClass}">
-		{#each $files as file}
-			<img src={getPreviewUrl(file)} alt={file.name} class="preview-image {imageClass}" />
-		{/each}
-	</div>
 
-	{@render children?.(files, clearFiles)}
 
-</div>
 
 <style lang="postcss">
 	.upload-preview {
@@ -37,3 +29,24 @@
 		}
 	}
 </style>
+
+
+
+
+
+<div class="upload-preview relative {className}">
+
+	<div class="absolute inset-0 grid grid-cols-{$files.length || 1} gap-1.5 justify-center {layoutClass}">
+		{#if preview}
+			<img src={preview} alt="Preview" class="preview-image {imageClass}" />
+		{/if}
+		{#if files}
+			{#each $files as file}
+				<img src={preview || getPreviewUrl(file)} alt={file.name} class="preview-image {imageClass}" />
+			{/each}
+		{/if}
+	</div>
+
+	{@render children?.(files, clearFiles)}
+
+</div>

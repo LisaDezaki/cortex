@@ -38,7 +38,7 @@ class LocationController extends Controller
     {
 		$active_project = Auth::user()->active_project;
 		if (!$active_project) {
-			return Redirect::route('projects');
+			return Redirect::route('dashboard');
 		}
 
 		$worldTree = Location::where([
@@ -91,6 +91,8 @@ class LocationController extends Controller
 	{
 		$location->load([
 			'banner',
+			'parent',
+			'children',
 			'characters.portrait',
 			'map',
 		]);
@@ -127,7 +129,11 @@ class LocationController extends Controller
     public function update(Request $request, Location $location)
     {
 		$validatedData = $request->validate($this->validationRules);
+
 		$location->fill($validatedData);
+
+		dd($location);
+
 		$this->handleBanner($request, $location);
 		$this->handleMap($request, $location);
 		// $this->handleCustomFields($validatedData['custom_fields'], $location);

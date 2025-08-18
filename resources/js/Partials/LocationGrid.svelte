@@ -38,7 +38,8 @@
 					icon="MapPinArea"
 					image={location.banner?.url}
 					title={location.name}
-					subtitle={location.region?.name}
+					subtitle={location.parent?.name}
+					subtitleClass={location.isWorldMap ? 'text-accent' : ''}
 					href={route('locations.show', {location: location.slug})}
 					options={[
 						{ icon: 'Pencil', theme: 'neutral', onclick: edit,    label: 'Edit Location'   },
@@ -57,9 +58,10 @@
 			<Card
 				aspect="video"
 				image={location.banner?.url}
-				icon="MapPinArea"
+				icon={location.icon || "MapPinArea"}
 				title={location.name}
-				subtitle={location.region?.name}
+				subtitle={location.isWorldMap ? 'World Map' : `${location.type} in ${location.parent?.name}`}
+				subtitleClass={location.isWorldMap ? 'text-accent' : ''}
 				href={route('locations.show', {location: location.slug})}
 				options={[
 					{ icon: 'Pencil', theme: 'neutral', onclick: edit,    label: 'Edit Location'   },

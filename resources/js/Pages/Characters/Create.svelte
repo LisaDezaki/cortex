@@ -34,30 +34,11 @@
 			title="Create Character"
 		/>
 	{/snippet}
-	
-	<!-- {#snippet panel()}
-		<CharactersPanel />
-	{/snippet} -->
 
 	{#snippet article()}
 		<Container size="7xl" class="flex gap-12">
-			<PageMenu
-				class="sticky top-6 left-6"
-				items={[
-					{ icon: "UserList",       label: "Details",       href: "#bio",           active: $page.url.endsWith('#bio') },
-					{ icon: "Handshake",      label: "Relationships", href: "#relationships", active: $page.url.endsWith('#relationships') },
-					{ icon: "FlagBannerFold", label: "Factions",      href: "#factions",      active: $page.url.endsWith('#factions') },
-					{ icon: "Backpack",       label: "Inventory",     href: "#inventory",     active: $page.url.endsWith('#inventory') },
-					{ icon: "ImagesSquare",   label: "Media",         href: "#media",         active: $page.url.endsWith('#media') },
-					{ icon: "Textbox",        label: "Custom Fields", href: "#customfields",  active: $page.url.endsWith('#customfields') }
-				]}
-			/>
-			<CharacterForm class="py-6" />
+			<CharacterForm class="overflow-y-auto py-6" />
 		</Container>
 	{/snippet}
-
-	<!-- {#snippet sidebar()}
-		Empty
-	{/snippet} -->
 
 </AuthenticatedLayout>

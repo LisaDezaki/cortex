@@ -36,8 +36,7 @@
 	{#snippet header()}
 		<PageHeader
 			breadcrumbs={[
-				{ label: "Factions",   href: route('locations') },
-				{ label: "Settings" }
+				{ label: "Locations",   href: route('locations') },
 			]}
 			back={route('locations')}
 			title="Location Settings"

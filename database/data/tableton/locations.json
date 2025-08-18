@@ -2,21 +2,25 @@
 	"tableton": {
 		"name": "Tableton",
 		"desc": "This small fishing town used to look so different before the Dragon Triumvirate gentrified the place.",
+		"type": "Overworld",
 		"is_world_map": true
 	},
 
-
-
 	"uptown": {
 		"name": "Hightown",
-		"desc": "The adventuring school in Tableton, where aspiring adventurers learn the basics of combat, magic, and survival. The school is run by a retired adventurer named Master Eldrin.",
+		"desc": "The wealthy part of town. North of the river. Upper Tableton. Rich fucks, you get it.",
+		"type": "Region",
+		"tags": ["Clean", "Judgemental", "Wealthy", "Well-funded"],
 		"parent": "tableton",
-		"coordinates": { "x": "25", "y": "75" }
+		"coordinates": { "x": "56", "y": "38" }
 	},
+
 	"school": {
-		"icon": "Student",
 		"name": "Uma's Adventuring Academy",
 		"desc": "The adventuring school in Tableton, where aspiring adventurers learn the basics of combat, magic, and survival. The school is run by a retired adventurer named Master Eldrin.",
+		"type": "Education",
+		"tags": ["Crowded", "Ethically questionable"],
+		"icon": "Student",
 		"parent": "uptown",
 		"coordinates": { "x": "25", "y": "75" }
 	},
@@ -24,6 +28,8 @@
 		"icon": "Bank",
 		"name": "City Council",
 		"desc": "The government building of Tableton, where the town council meets to discuss local issues and make decisions. The council is made up of elected officials from various districts of the town.",
+		"type": "Government",
+		"tags": ["Brutalist", "Clean"],
 		"parent": "uptown",
 		"coordinates": { "x": "10", "y": "15" }
 	},
@@ -31,6 +37,8 @@
 		"icon": "Crane",
 		"name": "Construction Site",
 		"desc": "A new tower being built in the center of Tableton. The construction workers are a bit rowdy, but they are friendly enough. What the citizens and even the workers don't know is that it's hiding an Ancient Draconic Burial Ground.",
+		"type": "Construction",
+		"tags": ["Concerning", "Noteworthy", "Recent"],
 		"parent": "uptown",
 		"coordinates": { "x": "55", "y": "70" }
 	},
@@ -38,6 +46,8 @@
 		"icon": "Bag",
 		"name": "The Mall",
 		"desc": "A mall in the center of Tableton, with a variety of shops and restaurants. A large section of it has been \"closed for renovation\" for a few years now, but it's functionally abandoned.",
+		"type": "Commercial",
+		"tags": ["Empty", "Large"],
 		"parent": "uptown",
 		"coordinates": { "x": "65", "y": "10" }
 	},
@@ -45,35 +55,42 @@
 		"icon": "BuildingApartment",
 		"name": "Clocktower Apartments",
 		"desc": "This highrise is home to most of the wealthier citizens of Tableton, including a Wizard's Penthouse.",
+		"type": "Residential",
+		"tags": ["Classy", "Clean"],
 		"parent": "uptown",
 		"coordinates": { "x": "75", "y": "15" }
 	},
 
-
-
 	"downtown": {
 		"name": "Downtown",
 		"desc": "The government building of Tableton, where the town council meets to discuss local issues and make decisions. The council is made up of elected officials from various districts of the town.",
+		"type": "Region",
+		"tags": ["Crowded", "Dirty"],
 		"parent": "tableton",
-		"coordinates": { "x": "10", "y": "15" }
+		"coordinates": { "x": "52", "y": "48" }
 	},
 	"docks": {
-		"icon": "Fish",
 		"name": "The Docks",
 		"desc": "The town docks are used for shipping goods in and out of Tableton. The Scallywags have been docked here for a while now, causing some to speculate. Are they pirates or smugglers?",
+		"type": "Commercial",
+		"tags": ["Crowded", "Dirty"],
+		"icon": "Fish",
 		"parent": "downtown",
 		"coordinates": { "x": "25", "y": "75" }
 	},
 	"alley": {
 		"name": "Graffiti Alley",
 		"desc": "A dark alley that's always covered in magical moving graffiti. The culprit is still at large.",
+		"type": "Point of interest",
+		"tags": ["Empty", "Dirty"],
 		"parent": "downtown",
 		"coordinates": { "x": "20", "y": "10" }
 	},
 	"precinct": {
-		"icon": "Siren",
 		"name": "Police Precinct",
 		"desc": "The police station of Tableton, where the local law enforcement operates. The precinct is small and slow, with few officers on duty at any time.",
+		"type": "Government",
+		"icon": "Siren",
 		"parent": "downtown",
 		"coordinates": { "x": "45", "y": "25" }
 	},
@@ -82,6 +99,7 @@
 		"name": "Tavern (\"The Lucky Die\")",
 		"desc": "The local tavern in Tableton owned by Grenn, where many of the town's residents gather to drink and socialize.",
 		"parent": "downtown",
+		"type": "Commercial",
 		"coordinates": { "x": "15", "y": "45" }
 	},
 	"pirate-ship": {
@@ -89,6 +107,7 @@
 		"name": "Pirate Ship (\"The Random Encounter\")",
 		"desc": "A pirate ship docked at the Tableton docks, owned by the Scallywags. The ship is known for its rowdy crew and wild parties.",
 		"parent": "downtown",
+		"type": "Vessel",
 		"coordinates": { "x": "65", "y": "85" }
 	},
 
@@ -96,33 +115,38 @@
 
 	"outskirts": {
 		"name": "Outskirts",
-		"desc": "The government building of Tableton, where the town council meets to discuss local issues and make decisions. The council is made up of elected officials from various districts of the town.",
+		"desc": "Out of town, there are more enemies (and fewer friends).",
+		"type": "Region",
 		"parent": "tableton",
-		"coordinates": { "x": "65", "y": "85" }
+		"coordinates": { "x": "28", "y": "72" }
 	},
 	"junkyard": {
-		"icon": "PipeWrench",
 		"name": "Junkyard",
 		"desc": "Run by a sentient construct (scrap golem).",
+		"icon": "PipeWrench",
+		"type": "Commercial",
 		"parent": "outskirts",
 		"coordinates": { "x": "15", "y": "45" }
 	},
 	"gas-station": {
-		"icon": "GasPump",
 		"name": "Gas Station",
 		"desc": "An old dilapidated gas station right outside of town.",
+		"icon": "GasPump",
+		"type": "Commercial",
 		"parent": "outskirts",
 		"coordinates": { "x": "85", "y": "75" }
 	},
 	"motel": {
 		"name": "Shady Motel (\"The Loaded Dice\")",
 		"desc": "Great for a cheap room for the night. Not Room 13 though. Room 13 is a pocket dimension. Keep out.",
+		"type": "Commercial",
 		"parent": "outskirts",
 		"coordinates": { "x": "75", "y": "65" }
 	},
 	"trailer-park": {
 		"name": "Trailer Park",
 		"desc": "A trailer park outside of town, near the Red Mountains, mostly occupied by the Rednecks. The park is known for its barbeque parties and rowdy gatherings.",
+		"type": "Residential",
 		"parent": "outskirts",
 		"coordinates": { "x": "55", "y": "15" }
 	},
@@ -133,30 +157,35 @@
 		"icon": "TreeEvergreen",
 		"name": "Cursed Forest",
 		"desc": "The dark forest on the edge of town is said to be cursed. A recent proposal has passed to begin deforestation.",
+		"type": "Region",
 		"parent": "tableton",
-		"coordinates": { "x": "55", "y": "15" }
+		"coordinates": { "x": "70", "y": "30" }
 	},
 	"cabin": {
 		"name": "Abandoned Cabin",
 		"desc": "The dark forest on the edge of town is said to be cursed. A recent proposal has passed to begin deforestation.",
+		"type": "Safehouse",
 		"parent": "forest",
 		"coordinates": { "x": "5", "y": "65" }
 	},
 	"grotto": {
 		"name": "Fungal Grotto",
 		"desc": "A deep thicket of forest with all kinds of spores.",
+		"type": "Dungeon",
 		"parent": "forest",
 		"coordinates": { "x": "25", "y": "25" }
 	},
 	"lake": {
 		"name": "Black Lake",
 		"desc": "The dark forest on the edge of town is said to be cursed. A recent proposal has passed to begin deforestation.",
+		"type": "Boss Arena",
 		"parent": "forest",
 		"coordinates": { "x": "65", "y": "25" }
 	},
 	"protest-site": {
 		"name": "Protest Site",
 		"desc": "A small group of protestors are opposing the ongoing deforestation effort.",
+		"type": "Point of interest",
 		"parent": "forest",
 		"coordinates": { "x": "70", "y": "30" }
 	},
@@ -166,12 +195,14 @@
 	"mountains": {
 		"name": "Red Mountains",
 		"desc": "A hiking route outside of town, leading to the Red Mountains. The mountains are known for their red rocks and beautiful views, but recently have been the site of strange occurrences.",
+		"type": "Region",
 		"parent": "tableton",
-		"coordinates": { "x": "70", "y": "30" }
+		"coordinates": { "x": "93", "y": "50" }
 	},
 	"mine": {
 		"name": "Abandoned Mine",
 		"desc": "An old abandoned crystal mine that closed after the goblin problem became unmanageable.",
+		"type": "Dungeon",
 		"parent": "mountains",
 		"coordinates": { "x": "20", "y": "70" }
 	},
@@ -186,12 +217,14 @@
 	"goblin-camp": {
 		"name": "Goblin Caves",
 		"desc": "A large cave system filled with goblins.",
+		"type": "Dungeon",
 		"parent": "mountains",
 		"coordinates": { "x": "35", "y": "75" }
 	},
 	"summit": {
 		"name": "Thunderpeak Summit",
 		"desc": "Where a dragon once slumbered.",
+		"type": "Boss Arena",
 		"parent": "mountains",
 		"coordinates": { "x": "75", "y": "15" }
 	},
@@ -202,31 +235,36 @@
 		"icon": "Island",
 		"name": "Mysterious Island",
 		"desc": "A hiking route outside of town, leading to the Red Mountains. The mountains are known for their red rocks and beautiful views, but recently have been the site of strange occurrences.",
+		"type": "Region",
 		"parent": "tableton",
-		"coordinates": { "x": "70", "y": "30" }
+		"coordinates": { "x": "34", "y": "8" }
 	},
 	"lighthouse": {
 		"icon": "Lighthouse",
 		"name": "The Lighthouse",
 		"desc": "An old lighthouse, but the keeper is nowhere to be found.",
+		"type": "Dungeon",
 		"parent": "island",
 		"coordinates": { "x": "38", "y": "78" }
 	},
 	"ruins": {
 		"name": "Jungle Ruins",
 		"desc": "Mysterious ruins belonging to an ancient civilization.",
+		"type": "Dungeon",
 		"parent": "island",
 		"coordinates": { "x": "80", "y": "20" }
 	},
 	"shipwreck": {
 		"name": "Shipwreck Cove",
 		"desc": "Ghost pirates guard a long lost treasure map.",
+		"type": "Point of interest",
 		"parent": "island",
 		"coordinates": { "x": "10", "y": "50" }
 	},
 	"volcano": {
 		"name": "Volcanic Crater",
 		"desc": "Portal to an elemental plane of fire.",
+		"type": "Boss Arena",
 		"parent": "island",
 		"coordinates": { "x": "28", "y": "10" }
 	}

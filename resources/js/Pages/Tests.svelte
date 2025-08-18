@@ -122,8 +122,8 @@
 						<img class="h-screen w-screen" src="/img/world-5.png" alt="world map" />
 					</PanZoomGPT> -->
 
-					<PanZoom debug constrain class="h-96">
-						<img class="h-screen w-screen" src="/img/world-4.png" alt="world map" />
+					<PanZoom debug constrain class="flex items-center justify-center h-96">
+						<img src="/img/world-4.png" alt="world map" />
 					</PanZoom>
 
 					<UploadContext bind:value={$form.upload}>

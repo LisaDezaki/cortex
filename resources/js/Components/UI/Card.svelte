@@ -17,6 +17,7 @@
 		options,
 		title,
 		subtitle,
+		subtitleClass,
         ...restProps
     } = $props()
 
@@ -38,7 +39,7 @@
 		<div class="card-details -space-y-0.5">
 			<span class="font-style-small font-semibold line-clamp-1 w-full">{title}</span>
 			{#if subtitle}
-				<span class="font-style-tiny line-clamp-1 w-full">{subtitle}</span>
+				<span class="font-style-tiny line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
 			{/if}
 		</div>
 		{#if options}

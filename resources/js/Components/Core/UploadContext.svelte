@@ -11,6 +11,7 @@
 		children,
 		class: className,
 		multiple = false,
+		preview,
 		value = $bindable(),
 	} = $props();
 
@@ -31,6 +32,7 @@
 			$uploadForm,
 			{ headers: { 'Content-Type': 'multipart/form-data' } }
 		).then(response => {
+			console.log(response)
 			$uploadForm = { ...$uploadForm,
 				...response.data.files.map(f => f.temp_path)
 			}
@@ -50,7 +52,9 @@
 	// Expose state and methods via context
 	setContext("file-upload-context", {
 		files,
+		preview,
 		multiple,
+		value,
 		handleFileUpload,
 		clearFiles,
 	});
@@ -58,5 +62,5 @@
 </script>
 
 <div class="upload-context {className}">
-	 {@render children(files, clearFiles)}
+	{@render children(files, clearFiles)}
 </div>

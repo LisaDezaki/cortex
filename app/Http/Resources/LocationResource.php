@@ -19,12 +19,15 @@ class LocationResource extends JsonResource
 			'id'          => $this->id,
 			'slug'        => $this->slug,
 			'name'        => $this->name,
+			'type'        => $this->type,
+			'icon'        => $this->icon,
 			'description' => $this->description,
 			'banner'      => new MediaResource($this->whenLoaded('banner')),
 			'map'         => new MediaResource($this->whenLoaded('map')),
 
-			// 'parent'      => new LocationResource($this->whenLoaded('parent')),
-			// 'children'    => LocationResource::collection($this->whenLoaded('children')),
+			'isWorldMap'  => $this->is_world_map,
+			'parent'      => new LocationResource($this->whenLoaded('parent')),
+			'children'    => LocationResource::collection($this->whenLoaded('children')),
 
 			// 'children' => $this->whenLoaded('children'),
 
