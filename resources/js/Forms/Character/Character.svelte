@@ -4,20 +4,20 @@
 
 	import CharacterRelationshipForm from '@/Forms/Character/Relationship.svelte'
 	
-	import { Flex, Form, Grid } from '@/Components/Core'
+	import { Flex, Form, Grid, Tabs } from '@/Components/Core'
 
-	import Button  from '@/Components/UI/Button.svelte'
-	import Card    from '@/Components/UI/Card.svelte'
-	import CardNew from '@/Components/UI/CardNew.svelte'
-	import Field   from '@/Components/UI/Field.svelte'
-	import Heading from '@/Components/UI/Heading.svelte'
-	import Icon    from '@/Components/UI/Icon.svelte'
-	import Modal   from '@/Components/UI/Modal.svelte'
-	import PageMenu from '@/Components/UI/PageMenu.svelte'
-	import Section from '@/Components/UI/Section.svelte'
-	import Tabs    from '@/Components/UI/Tabs'
+	import ArticleTabs  from '@/Components/UI/ArticleTabs.svelte'
+	import Button  		from '@/Components/UI/Button.svelte'
+	import Card    		from '@/Components/UI/Card.svelte'
+	import CardNew 		from '@/Components/UI/CardNew.svelte'
+	import Field   		from '@/Components/UI/Field.svelte'
+	import Heading 		from '@/Components/UI/Heading.svelte'
+	import Icon    		from '@/Components/UI/Icon.svelte'
+	import Modal   		from '@/Components/UI/Modal.svelte'
+	import PageMenu 	from '@/Components/UI/PageMenu.svelte'
+	import Section 		from '@/Components/UI/Section.svelte'
 
-	import Map   from '@/Components/Features/Location/Map.svelte'
+	import Map   		from '@/Components/Features/Location/Map.svelte'
 
 	//  Props
 
@@ -148,7 +148,7 @@
 
 
 {#snippet actions()}
-	<Flex class="flex justify-center gap-3 w-full">
+	<Flex items="center" justify="center" gap={3}>
 		<Button style="hard" theme="neutral"
 			type="button"
 			label="Cancel"
@@ -166,30 +166,21 @@
 
 
 <Form class={className}>
-	<Tabs value="bio" orientation="vertical">
 
-		<Tabs.List class="pt-12">
-			{#each [
-					{ icon: "UserList",       label: "Details",       value: "bio" },
-					{ icon: "TagSimple",      label: "Tags",          value: "tags" },
-					{ icon: "Handshake",      label: "Relationships", value: "relationships" },
-					{ icon: "FlagBannerFold", label: "Factions",      value: "factions" },
-					{ icon: "Backpack",       label: "Inventory",     value: "items" },
-					{ icon: "MapPinArea",     label: "Location",      value: "location" },
-					{ icon: "ImagesSquare",   label: "Media",         value: "media" },
-					{ icon: "Textbox",        label: "Custom Fields", value: "customfields" }
-				] as tabData}
-				<Tabs.Trigger value={tabData.value}>
-					<Icon name={tabData.icon} size="md" />
-					<span class:text-accent={tabData.active}>{tabData.label}</span>
-				</Tabs.Trigger>
-			{/each}
-		</Tabs.List>
+	<ArticleTabs value="details" tabs={[
+		{ icon: "UserList",       label: "Details",       value: "details"       },
+		{ icon: "TagSimple",      label: "Tags",          value: "tags"          },
+		{ icon: "Handshake",      label: "Relationships", value: "relationships" },
+		{ icon: "FlagBannerFold", label: "Factions",      value: "factions"      },
+		{ icon: "Backpack",       label: "Inventory",     value: "items"         },
+		{ icon: "MapPinArea",     label: "Location",      value: "location"      },
+		{ icon: "ImagesSquare",   label: "Media",         value: "media"         },
+		{ icon: "Textbox",        label: "Custom Fields", value: "customfields"  }
+	]}>
 
 		<!-- Details -->
 
-		<Tabs.Content value="bio">
-
+		<Tabs.Content value="details">
 			<Heading is="h3" as="h5" class="mb-6"
 				heading="Details"
 			/>
@@ -384,7 +375,8 @@
 			{@render actions()}
 		</Tabs.Content>
 
-	</Tabs>
+	<!-- </Tabs> -->
+	</ArticleTabs>
 </Form>
 
 <Modal show={addingRelationshipModal} onclose={closeModal} class="flex items-start p-6">

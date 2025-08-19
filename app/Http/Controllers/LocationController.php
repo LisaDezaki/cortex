@@ -44,7 +44,7 @@ class LocationController extends Controller
 		$worldTree = Location::where([
 			'project_id'   => Auth::user()->active_project,
 			'is_world_map' => true
-		])->with('descendants')->first();
+		])->with(['map', 'descendants.map'])->first();
 		
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
@@ -53,7 +53,7 @@ class LocationController extends Controller
 
         return Inertia::render('Locations/Index', [
 			'customFields' => CustomFieldResource::collection($customFields),
-			'worldTree'  => $worldTree
+			'worldTree'  => new LocationResource($worldTree)
 		]);
     }
 
@@ -131,8 +131,6 @@ class LocationController extends Controller
 		$validatedData = $request->validate($this->validationRules);
 
 		$location->fill($validatedData);
-
-		dd($location);
 
 		$this->handleBanner($request, $location);
 		$this->handleMap($request, $location);

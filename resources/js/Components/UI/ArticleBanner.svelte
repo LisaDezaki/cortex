@@ -12,13 +12,11 @@
 
 </script>
 
-<Stack items="start" justify="end" class="article-banner relative bg-neutral-softest h-56 overflow-hidden px-6 py-6 rounded-lg {className}" {...restProps}>
+<Stack items="start" justify="end" class="article-banner relative bg-neutral-softer h-56 -mx-6 px-6 py-6 rounded-lg w-full {className}" {...restProps}>
 	{#if image}
-		<Flex items="center" justify="center" class="absolute inset-0">
+		<Flex items="center" justify="center" class="absolute inset-0 overflow-hidden rounded-lg">
 			<img src={image} alt={imageAlt} class="min-h-full min-w-full object-cover" />
 		</Flex>
 	{/if}
-	<div class="relative z-10">
-		{@render children?.()}
-	</div>
+	{@render children?.()}
 </Stack>

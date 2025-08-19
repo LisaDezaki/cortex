@@ -28,8 +28,7 @@ class LocationResource extends JsonResource
 			'isWorldMap'  => $this->is_world_map,
 			'parent'      => new LocationResource($this->whenLoaded('parent')),
 			'children'    => LocationResource::collection($this->whenLoaded('children')),
-
-			// 'children' => $this->whenLoaded('children'),
+			'descendants' => LocationResource::collection($this->whenLoaded('descendants')),
 
 			'coordinates' => [
 				'x' => $this->coordinates_x,

@@ -8,8 +8,9 @@
 		controls,
 		constrain = false,
 		debug   = false,
-		maxZoom = 3,
-		minZoom = 1,
+		maxZoom = $bindable(3),
+		minZoom = $bindable(1),
+		position = $bindable({ x:0, y:0 }),
 		zoom    = $bindable(1),
 		...restProps
 	} = $props();
@@ -24,7 +25,6 @@
 	let dragVector   = $state({ x:0, y:0 })
 	let moveVector   = $state({ x:0, y:0 })
 	let origin       = $state({ x:0, y:0 })
-	let position     = $state({ x:0, y:0 })
 	let transform    = $state({ x:0, y:0 })
 
 	let containerWidth = $state(null)
@@ -157,19 +157,22 @@
 	onwheel={handleScroll}
 {...restProps}>
 	{#if debug}
-		<ul class="absolute top-1 left-1 backdrop-blur-sm bg-white/15 p-1 pointer-events-none rounded text-xs text-white z-10">
-			<li class="">
+		<ul class="absolute space-y-1 top-16 left-3 backdrop-blur-sm hover:backdrop-blur-md border border-white/40 bg-white/15 p-2 pointer-events-none rounded text-xs text-white z-10">
+			<!-- <li class="">
 				constraints: X:{Math.floor(constrainX.min)}-{Math.floor(constrainX.max)}, Y:{Math.floor(constrainY.min)}-{Math.floor(constrainY.max)}
-			</li>
+			</li> -->
 			<!-- <li class="">
 				isDragging: {isDragging}
 			</li> -->
 			<!-- <li class="">
 				clickStart: {Math.floor(clickStart.x)}, {Math.floor(clickStart.y)}
 			</li> -->
-			<li class="">
+			<!-- <li class="">
+				origin: {Math.floor(origin.x)}, {Math.floor(origin.y)}
+			</li> -->
+			<!-- <li class="">
 				dragVector: {Math.floor(dragVector.x)}, {Math.floor(dragVector.y)}
-			</li>
+			</li> -->
 			<li class="">
 				zoom: {Math.floor(zoom*100)}%
 			</li>
@@ -179,33 +182,22 @@
 			<li class="">
 				position: {Math.floor(position.x)}, {Math.floor(position.y)}
 			</li>
-			<!-- <li class="">
-				containerWidth: {containerWidth}
-			</li> -->
-			<!-- <li class="">
-				contentWidth: {contentWidth}
-			</li> -->
-			<!-- <li class="">
-				contentWidth*zoom: {Math.floor(contentWidth*zoom)}
-			</li> -->
-			
-			<!-- <li class="">
-				constraintsX: {Math.floor(minX)}, {Math.floor(maxX)}
-			</li> -->
-			<!-- <li class="">
-				constraintsY: {Math.floor(minY)}, {Math.floor(maxY)}
-			</li> -->
+			{#if typeof debug == "object"}
+				{#each Object.entries(debug) as [key,val]}
+					<li class="">
+						{key}: {val}
+					</li>
+				{/each}
+			{/if}
 		</ul>
 	{/if}
 
 	{#if controls}
-		<div class="absolute inset-0">
-			{@render controls()}
-		</div>
+		{@render controls()}
 	{/if}
 
 	<div bind:this={contentRef}
-		class="draggable {contentClass}"
+		class="draggable min-h-full {contentClass}"
 		style="transform: scale({zoom}) translate({(position.x+transform.x)/zoom}px, {(position.y+transform.y)/zoom}px); transform-origin: {origin.x}px {origin.y}px"
 		onpointerdown={dragStart}
 	>

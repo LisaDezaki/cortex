@@ -27,6 +27,7 @@
 			files.set(Array.from(input.files));
 			$uploadForm.files = input.files;
 		}
+
 		await axios.post(
 			route('upload.temp'),
 			$uploadForm,

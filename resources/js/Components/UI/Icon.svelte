@@ -1,4 +1,5 @@
 <script>
+	import ArrowElbowUpLeft from "phosphor-svelte/lib/ArrowElbowUpLeft"
 	import ArrowLeft from "phosphor-svelte/lib/ArrowLeft"
 	import ArrowRight from "phosphor-svelte/lib/ArrowRight"
 	import ArrowsLeftRight from "phosphor-svelte/lib/ArrowsLeftRight"
@@ -61,6 +62,8 @@
 	import Link from "phosphor-svelte/lib/Link"
 	import List from "phosphor-svelte/lib/List"
 	import MagnifyingGlass from "phosphor-svelte/lib/MagnifyingGlass"
+	import MagnifyingGlassMinus from "phosphor-svelte/lib/MagnifyingGlassMinus"
+	import MagnifyingGlassPlus from "phosphor-svelte/lib/MagnifyingGlassPlus"
 	import MapPin from "phosphor-svelte/lib/MapPin"
 	import MapPinArea from "phosphor-svelte/lib/MapPinArea"
 	import MapTrifold from "phosphor-svelte/lib/MapTrifold"
@@ -109,6 +112,7 @@
     } = $props()
 
 	const icons = {
+		'ArrowElbowUpLeft': ArrowElbowUpLeft,
 		'ArrowLeft': ArrowLeft,
 		'ArrowRight': ArrowRight,
 		'ArrowsLeftRight': ArrowsLeftRight,
@@ -171,6 +175,8 @@
 		'Link': Link,
 		'List': List,
 		'MagnifyingGlass': MagnifyingGlass,
+		'MagnifyingGlassMinus': MagnifyingGlassMinus,
+		'MagnifyingGlassPlus': MagnifyingGlassPlus,
 		'MapTrifold': MapTrifold,
 		'MapPin': MapPin,
 		'MapPinArea': MapPinArea,

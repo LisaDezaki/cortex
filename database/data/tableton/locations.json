@@ -15,50 +15,65 @@
 		"coordinates": { "x": "56", "y": "38" }
 	},
 
-	"school": {
-		"name": "Uma's Adventuring Academy",
-		"desc": "The adventuring school in Tableton, where aspiring adventurers learn the basics of combat, magic, and survival. The school is run by a retired adventurer named Master Eldrin.",
-		"type": "Education",
-		"tags": ["Crowded", "Ethically questionable"],
-		"icon": "Student",
-		"parent": "uptown",
-		"coordinates": { "x": "25", "y": "75" }
-	},
 	"council": {
-		"icon": "Bank",
 		"name": "City Council",
 		"desc": "The government building of Tableton, where the town council meets to discuss local issues and make decisions. The council is made up of elected officials from various districts of the town.",
-		"type": "Government",
 		"tags": ["Brutalist", "Clean"],
+		"type": "Government",
+		"icon": "Bank",
 		"parent": "uptown",
-		"coordinates": { "x": "10", "y": "15" }
+		"coordinates": { "x": "70", "y": "25" }
 	},
 	"construction-site": {
-		"icon": "Crane",
 		"name": "Construction Site",
 		"desc": "A new tower being built in the center of Tableton. The construction workers are a bit rowdy, but they are friendly enough. What the citizens and even the workers don't know is that it's hiding an Ancient Draconic Burial Ground.",
-		"type": "Construction",
 		"tags": ["Concerning", "Noteworthy", "Recent"],
+		"type": "Construction",
+		"icon": "Crane",
 		"parent": "uptown",
-		"coordinates": { "x": "55", "y": "70" }
+		"coordinates": { "x": "73", "y": "79" }
+	},
+	"fountain": {
+		"name": "Public Fountain",
+		"desc": "A beautiful water feature right in the center of the public square.",
+		"tags": ["Pleasant", "Serene"],
+		"type": "Point of interest",
+		"parent": "uptown",
+		"coordinates": { "x": "52", "y": "55" }
+	},
+	"memorial": {
+		"name": "Hero Memorial",
+		"desc": "A memorial to a fallen hero that saved the town many years ago. They are remembered fondly by older residents, but younger folks don't have much interest in history.",
+		"tags": ["Moving", "Stone"],
+		"type": "Point of interest",
+		"parent": "uptown",
+		"coordinates": { "x": "53", "y": "79" }
+	},
+	"museum": {
+		"name": "Town Museum",
+		"desc": "Learn all about the town's lore, and let the kids play with some fun (but safe) magic experiments.",
+		"tags": ["Educational"],
+		"type": "Museum",
+		"parent": "uptown",
+		"coordinates": { "x": "40", "y": "12" }
 	},
 	"shopping-mall": {
-		"icon": "Bag",
 		"name": "The Mall",
 		"desc": "A mall in the center of Tableton, with a variety of shops and restaurants. A large section of it has been \"closed for renovation\" for a few years now, but it's functionally abandoned.",
-		"type": "Commercial",
 		"tags": ["Empty", "Large"],
+		"type": "Commercial",
+		"icon": "Bag",
 		"parent": "uptown",
-		"coordinates": { "x": "65", "y": "10" }
+		"coordinates": { "x": "9.5", "y": "42" }
 	},
 	"highrise": {
-		"icon": "BuildingApartment",
 		"name": "Clocktower Apartments",
 		"desc": "This highrise is home to most of the wealthier citizens of Tableton, including a Wizard's Penthouse.",
 		"type": "Residential",
+		"icon": "BuildingApartment",
 		"tags": ["Classy", "Clean"],
 		"parent": "uptown",
-		"coordinates": { "x": "75", "y": "15" }
+		"coordinates": { "x": "13", "y": "18" }
 	},
 
 	"downtown": {
@@ -76,7 +91,7 @@
 		"tags": ["Crowded", "Dirty"],
 		"icon": "Fish",
 		"parent": "downtown",
-		"coordinates": { "x": "25", "y": "75" }
+		"coordinates": { "x": "85", "y": "83.5" }
 	},
 	"alley": {
 		"name": "Graffiti Alley",
@@ -84,7 +99,7 @@
 		"type": "Point of interest",
 		"tags": ["Empty", "Dirty"],
 		"parent": "downtown",
-		"coordinates": { "x": "20", "y": "10" }
+		"coordinates": { "x": "22", "y": "60" }
 	},
 	"precinct": {
 		"name": "Police Precinct",
@@ -92,23 +107,32 @@
 		"type": "Government",
 		"icon": "Siren",
 		"parent": "downtown",
-		"coordinates": { "x": "45", "y": "25" }
+		"coordinates": { "x": "79.5", "y": "26" }
+	},
+	"school": {
+		"name": "Uma's Adventuring Academy",
+		"desc": "The adventuring school in Tableton, where aspiring adventurers learn the basics of combat, magic, and survival. The school is run by a retired adventurer named Master Eldrin.",
+		"type": "Education",
+		"tags": ["Crowded", "Ethically questionable"],
+		"icon": "Student",
+		"parent": "downtown",
+		"coordinates": { "x": "50", "y": "60" }
 	},
 	"tavern": {
-		"icon": "BeerStein",
 		"name": "Tavern (\"The Lucky Die\")",
 		"desc": "The local tavern in Tableton owned by Grenn, where many of the town's residents gather to drink and socialize.",
-		"parent": "downtown",
 		"type": "Commercial",
-		"coordinates": { "x": "15", "y": "45" }
+		"icon": "BeerStein",
+		"parent": "downtown",
+		"coordinates": { "x": "60", "y": "75" }
 	},
 	"pirate-ship": {
-		"icon": "Sailboat",
 		"name": "Pirate Ship (\"The Random Encounter\")",
 		"desc": "A pirate ship docked at the Tableton docks, owned by the Scallywags. The ship is known for its rowdy crew and wild parties.",
-		"parent": "downtown",
 		"type": "Vessel",
-		"coordinates": { "x": "65", "y": "85" }
+		"icon": "Sailboat",
+		"parent": "downtown",
+		"coordinates": { "x": "30", "y": "93" }
 	},
 
 
@@ -204,7 +228,7 @@
 		"desc": "An old abandoned crystal mine that closed after the goblin problem became unmanageable.",
 		"type": "Dungeon",
 		"parent": "mountains",
-		"coordinates": { "x": "20", "y": "70" }
+		"coordinates": { "x": "58", "y": "47" }
 	},
 	"campsite": {
 		"icon": "Tent",
@@ -212,21 +236,21 @@
 		"type": "Campsite",
 		"desc": "An empty campsite with some evidence of the hikers who went missing a week ago.",
 		"parent": "mountains",
-		"coordinates": { "x": "15", "y": "25" }
+		"coordinates": { "x": "67", "y": "94" }
 	},
 	"goblin-camp": {
 		"name": "Goblin Caves",
 		"desc": "A large cave system filled with goblins.",
 		"type": "Dungeon",
 		"parent": "mountains",
-		"coordinates": { "x": "35", "y": "75" }
+		"coordinates": { "x": "65", "y": "25" }
 	},
 	"summit": {
 		"name": "Thunderpeak Summit",
 		"desc": "Where a dragon once slumbered.",
 		"type": "Boss Arena",
 		"parent": "mountains",
-		"coordinates": { "x": "75", "y": "15" }
+		"coordinates": { "x": "32", "y": "19" }
 	},
 
 
@@ -245,27 +269,27 @@
 		"desc": "An old lighthouse, but the keeper is nowhere to be found.",
 		"type": "Dungeon",
 		"parent": "island",
-		"coordinates": { "x": "38", "y": "78" }
+		"coordinates": { "x": "54", "y": "18.5" }
 	},
 	"ruins": {
 		"name": "Jungle Ruins",
 		"desc": "Mysterious ruins belonging to an ancient civilization.",
 		"type": "Dungeon",
 		"parent": "island",
-		"coordinates": { "x": "80", "y": "20" }
+		"coordinates": { "x": "27", "y": "64" }
 	},
 	"shipwreck": {
 		"name": "Shipwreck Cove",
 		"desc": "Ghost pirates guard a long lost treasure map.",
 		"type": "Point of interest",
 		"parent": "island",
-		"coordinates": { "x": "10", "y": "50" }
+		"coordinates": { "x": "64", "y": "85" }
 	},
 	"volcano": {
 		"name": "Volcanic Crater",
 		"desc": "Portal to an elemental plane of fire.",
 		"type": "Boss Arena",
 		"parent": "island",
-		"coordinates": { "x": "28", "y": "10" }
+		"coordinates": { "x": "56", "y": "50" }
 	}
 }

@@ -24,7 +24,7 @@
 <style lang="postcss">
 
 	:global(.thumbnail) {
-		@apply relative inline-flex items-center justify-center aspect-square overflow-hidden flex-shrink-0;
+		@apply inline-flex items-center justify-center aspect-square overflow-hidden flex-shrink-0;
 		background-color: var(--bg-neutral-softest);
 		border-color: var(--border-neutral-softest);
 		

@@ -21,6 +21,7 @@
 		label:  'button-label font-style-button',
 		hard:   'button-hard border',
 		soft:   'button-soft border',
+		glass:  'button-glass border',
 		plain:  'button-plain',
 	}
 </script>
@@ -131,6 +132,33 @@
 				background-color: var(--bg-danger-softer);
 			}
 		}
+
+		/* &.button-glass.button-accent {
+			background: var(--bg-accent-gradient);
+			border-color: var(--border-accent-strong);
+			color: var(--text-white);
+			&:hover {
+				background: var(--bg-accent-gradient-alt);
+			}
+		} */
+		&.button-glass.button-neutral {
+			backdrop-filter: blur(4px);
+			background: rgba(255,255,255,0.1);
+			border-color: rgba(255,255,255,0.5);
+			color: var(--text-white);
+			&:hover {
+				backdrop-filter: blur(8px);
+				background: rgba(255,255,255,0.2);
+			}
+		}
+		/* &.button-glass.button-danger {
+			background: var(--bg-danger-gradient);
+			border-color: var(--border-danger-strong);
+			color: var(--text-white);
+			&:hover {
+				background: var(--bg-danger-gradient-alt);
+			}
+		} */
 
 		&.button-plain.button-accent {
 			color: var(--text-accent);

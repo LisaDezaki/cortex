@@ -1,16 +1,16 @@
 <script>
-	import { Link, page, useForm } from '@inertiajs/svelte'
+	import { page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import { Form, Grid } from '@/Components/Core'
+	import { Flex, Form, Grid, Tabs } from '@/Components/Core'
 	
+	import ArticleTabs  from '@/Components/UI/ArticleTabs.svelte'
 	import Button   from '@/Components/UI/Button.svelte'
 	import Card     from '@/Components/UI/Card.svelte'
 	import CardNew  from '@/Components/UI/CardNew.svelte'
 	import Field    from '@/Components/UI/Field.svelte'
 	import Heading  from '@/Components/UI/Heading.svelte'
 	import Section  from '@/Components/UI/Section.svelte'
-	import Tabs     from '@/Components/UI/Tabs'
 
 	//  Props
 
@@ -85,135 +85,164 @@
 </script>
 
 
-<Form class={className}>
 
-	<!-- MAIN INFORMATION -->
 
-	<Section id="details">
-		<Heading is="h3" as="h5" class="my-6"
-			heading="Details"
-		/>
 
-		<!-- <Field layout="block"
-			type="text"
-			id="slug"
-			label="Slug"
-			placeholder={$form.name?.toLowerCase() || "slug"}
-			bind:value={$form.slug}
-			description="The URL slug for this location."
-			errors={$form.errors.slug}
-		/> -->
-
-		<Field layout="block" inputClass="w-full"
-			type="text"
-			id="name"
-			label="Name"
-			placeholder="Name"
-			bind:value={$form.name}
-			description="The name of the location."
-			errors={$form.errors.name}
-			required
-		/>
-
-		<Field layout="block" inputClass="w-full"
-			type="textarea"
-			id="description"
-			label="Description"
-			placeholder="Description..."
-			bind:value={$form.description}
-			description="A detailed description of the location."
-			errors={$form.errors.description}
-			rows={8}
-		/>
-	</Section>
-
-	<!-- MEDIA -->
-
-	<Section class="space-y-3">
-		<Heading is="h3" as="h5" class="my-6"
-			heading="Media"
-		/>
-
-		<Field layout="block" inputClass="aspect-video h-40 w-72"
-			type="file"
-			id="banner"
-			label="Banner"
-			description="Upload a banner image for this location."
-			icon="Image"
-			placeholder="Upload a banner..."
-			bind:value={$form.banner}
-			preview={location?.banner?.url}
-			errors={$form.errors.banner}
-		/>
-
-		<Field layout="block" inputClass="aspect-square h-72 w-72"
-			type="file"
-			id="map"
-			label="Map"
-			description="Upload a map for this location."
-			icon="Image"
-			placeholder="Upload a map..."
-			bind:value={$form.map}
-			preview={location?.map?.url}
-			errors={$form.errors.map}
-		/>
-	</Section>
-
-	<!-- CHARACTERS -->
-
-	<Section>
-		<Heading is="h3" as="h5" class="mb-6"
-			heading="Characters"
-		/>
-		<Grid cols={5}>
-			{#each location?.characters as character, i}
-				<Card aspect="square" class="w-full"
-					icon="User"
-					image={character.portrait?.url}
-					title={character.name}
-					subtitle={character.role}
-					href={route('characters.show', {character: character.slug})}
-				/>
-			{/each}
-			<CardNew aspect="square" class="w-full"
-			/>
-		</Grid>
-	</Section>
-
-	<Section class="space-y-6">
-		<Heading is="h3" as="h6" class="mb-6"
-			heading="Custom Fields"
-		/>
-		{#each customFields as field, i}
-			<Field layout="block" inputClass="w-full"
-				type={field.type}
-				id={getFieldName(field.name)}
-				description={field.description}
-				label={field.label || field.name}
-				placeholder={field.placeholder || field.label}
-				required={field.required}
-				options={field.options}
-				bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
-			/>
-		{:else}
-			<p class="font-style-placeholder">There are no custom fields for Locations yet.</p>
-		{/each}
-	</Section>
-	
-	<Section class="flex items-center justify-center gap-3">
+{#snippet actions()}
+	<Flex items="center" justify="center" gap={3}>
 		<Button style="hard" theme="neutral"
 			type="button"
-			secondary
 			label="Cancel"
 			onclick={() => history.back()}
 		/>
 		<Button style="hard" theme="accent"
 			type="submit"
-			primary={$form.isDirty}
-			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
 			label="{location ? "Update" : "Create"} Location"
 			onclick={submit}
+			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
 		/>
-	</Section>
+	</Flex>
+{/snippet}
+
+
+
+<Form class={className}>
+
+	<ArticleTabs value="details" tabs={[
+		{ icon: "MapPinArea",   label: "Details",       value: "details" },
+		{ icon: "Compass",      label: "Map",           value: "map"     },
+		{ icon: "UsersThree",   label: "People",        value: "people"  },
+		{ icon: "ImagesSquare", label: "Media",         value: "media"   },
+		{ icon: "Textbox",      label: "Custom Fields", value: "custom"  }
+	]}>
+
+		<!-- Details -->
+
+		<Tabs.Content value="details">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Details"
+			/>
+
+			<Field layout="block" inputClass="w-full"
+				type="text"
+				id="name"
+				label="Name"
+				placeholder="Name"
+				bind:value={$form.name}
+				description="The name of the location."
+				errors={$form.errors.name}
+				required
+			/>
+
+			<Field layout="block" inputClass="w-full"
+				type="textarea"
+				id="description"
+				label="Description"
+				placeholder="Description..."
+				bind:value={$form.description}
+				description="A detailed description of the location."
+				errors={$form.errors.description}
+				rows={8}
+			/>
+
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- Map -->
+
+		<Tabs.Content value="map">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Map"
+			/>
+
+
+
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- People -->
+
+		<Tabs.Content value="people">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="People"
+			/>
+
+			<Grid cols={5}>
+				{#each location?.characters as character, i}
+					<Card aspect="square" class="w-full"
+						icon="User"
+						image={character.portrait?.url}
+						title={character.name}
+						subtitle={character.role}
+						href={route('characters.show', {character: character.slug})}
+					/>
+				{/each}
+				<CardNew aspect="square" class="w-full"
+				/>
+			</Grid>
+
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- Media -->
+
+		<Tabs.Content value="media">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Media"
+			/>
+
+			<Field layout="block" inputClass="aspect-video h-40 w-72"
+				type="file"
+				id="banner"
+				label="Banner"
+				description="Upload a banner image for this location."
+				icon="Image"
+				placeholder="Upload a banner..."
+				bind:value={$form.banner}
+				preview={location?.banner?.url}
+				errors={$form.errors.banner}
+			/>
+
+			<Field layout="block" inputClass="aspect-square h-72 w-72"
+				type="file"
+				id="map"
+				label="Map"
+				description="Upload a map for this location."
+				icon="Image"
+				placeholder="Upload a map..."
+				bind:value={$form.map}
+				preview={location?.map?.url}
+				errors={$form.errors.map}
+			/>
+
+			{@render actions()}
+		</Tabs.Content>
+
+		<!-- Custom Fields -->
+
+		<Tabs.Content value="custom">
+			<Heading is="h3" as="h5" class="mb-6"
+				heading="Custom Fields"
+			/>
+
+			{#each customFields as field, i}
+				<Field layout="block" inputClass="w-full"
+					type={field.type}
+					id={getFieldName(field.name)}
+					description={field.description}
+					label={field.label || field.name}
+					placeholder={field.placeholder || field.label}
+					required={field.required}
+					options={field.options}
+					bind:value={$form.custom_fields[getFieldIndexById(field.id)].value}
+				/>
+			{:else}
+				<p class="font-style-placeholder">There are no custom fields for Locations yet.</p>
+			{/each}
+
+			{@render actions()}
+		</Tabs.Content>
+
+	</ArticleTabs>
 
 </Form>

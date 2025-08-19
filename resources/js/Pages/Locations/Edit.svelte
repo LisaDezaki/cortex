@@ -3,15 +3,14 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import LocationsPanel      from '@/Partials/LocationsPanel.svelte'
 
 	import LocationForm       from '@/Forms/Location/Location.svelte'
 	import DeleteLocationForm from '@/Forms/Location/Delete.svelte'
 
-	import Back  from '@/Components/UI/Back.svelte'
-	import Modal from '@/Components/UI/Modal.svelte'
+	import Container  from '@/Components/UI/Container.svelte'
+	import Modal      from '@/Components/UI/Modal.svelte'
+	import PageHeader from '@/Components/UI/PageHeader.svelte'
 
-	const activeProject = $page.props.activeProject.data
 	const location = $page.props.location.data
 
 	let deletingLocation = $state(false)
@@ -30,24 +29,31 @@
 
 
 <svelte:head>
-    <title>{activeProject.name} / {location.name}</title>
+    <title>Edit {location.name}</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 
-	<!-- {#snippet panel()}
-		<LocationsPanel />
-	{/snippet} -->
+	{#snippet header()}
+		<PageHeader
+			breadcrumbs={[
+				{ label: "Locations",   href: route('locations') },
+				{ label: location.name, href: route('locations.show', { location: location.slug }) },
+			]}
+			back={route('locations.show', { location: location.slug })}
+			title="Edit Location"
+			actions={[
+				{ icon: "Trash", onclick: deleteLocation, theme: "danger" }
+			]}
+		/>
+	{/snippet}
 
 	{#snippet article()}
-		<Back href={route('locations.show', {location: location.slug})} />
-		<LocationForm {location} />
+		<Container size="7xl" class="flex gap-12">
+			<LocationForm {location} class="overflow-y-auto py-12"/>
+		</Container>
 	{/snippet}
 
-	{#snippet sidebar()}
-		Empty
-	{/snippet}
-	
 </AuthenticatedLayout>
 
 <Modal show={deletingLocation} onclose={closeModal}>

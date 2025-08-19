@@ -33,12 +33,11 @@
 	<Flex justify="center" class="w-full">
 
 		<!-- Breadcrumbs and page name  -->
-		<Stack align="start" class="flex-1 w-full">
+		<Stack align="start" gap={0} class="flex-1 pb-2 w-full">
 			{#if breadcrumbs}
 				<Breadcrumbs data={breadcrumbs} />
 			{/if}
-			<Inline gap={3} class="px-3 py-1.5 w-full">
-				<Back href={back} />
+			<Inline gap={3} class="px-3 w-full">
 				<Heading is="h1" as="h4"
 					heading={title}
 				/>

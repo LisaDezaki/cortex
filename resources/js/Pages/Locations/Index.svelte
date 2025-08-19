@@ -22,13 +22,13 @@
 	
 	const activeProject = $page.props.activeProject.data
 	const customFields  = $page.props.customFields?.data
-	const worldTree     = $page.props.worldTree
+	const worldTree     = $page.props.worldTree?.data
 	const characters    = activeProject?.characters || []
 	const locations     = activeProject?.locations  || []
 
 	let columns   = $state(['name', 'characters'])
 	let filter    = $state({})
-	let layout    = $state('grid')
+	let layout    = $state('map')
 	let query     = $state('')
 	let rowSize   = $state(5)
 	let sortBy    = $state('name')
@@ -117,7 +117,7 @@
 			breadcrumbs={[
 			]}
 			back={route('dashboard')}
-			title={layout == 'map' ? "Map" : "Location List"}
+			title={layout == 'map' ? "World Map" : "Location List"}
 			actions={[
 				{ icon: "Plus",     theme: "accent",  href: route('locations.create') },
 				{ icon: "GearFine", theme: "neutral", href: route('locations.settings') },
@@ -226,7 +226,9 @@
 				
 				{:else if layout == 'map'}
 					<Map
-						locationTree={worldTree}
+						constrain={false}
+						class="bg-black/50 max-h-full rounded-lg"
+						location={worldTree}
 					/>
 
 

@@ -21,21 +21,17 @@ class UploadController extends Controller
 	{
 		$request->validate([
 			'files' => 'array',
-			'files.*' => 'image|mimes:jpeg,png,jpg,gif|max:4096',
+			'files.*' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
 		$filesData = [];
 		$files = $request->file('files');
+		foreach ($files as $file) {
+			$fileInfo = $this->mediaService->storeTempFile($file);
+			$filesData[] = $fileInfo;
+		}
 		return response()->json([
 			'success' => true,
-			'files' => $files
+			'files' => $filesData
 		]);
-		// foreach ($files as $file) {
-		// 	$fileInfo = $this->mediaService->storeTempFile($file);
-		// 	$filesData[] = $fileInfo;
-		// }
-		// return response()->json([
-		// 	'success' => true,
-		// 	'files' => $filesData
-		// ]);
 	}
 }

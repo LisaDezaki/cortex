@@ -3,20 +3,15 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import LocationsPanel from '@/Partials/LocationsPanel.svelte'
-	
 	import DeleteLocationForm from '@/Forms/Location/Delete.svelte'
-	import NewLocationForm    from '@/Forms/Location/LocationNew.svelte'
 
-	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
+	import { Grid, Inline, Stack } from '@/Components/Core'
 
 	import ArticleBanner     from '@/Components/UI/ArticleBanner.svelte'
 	import Back     from '@/Components/UI/Back.svelte'
-	import Button   from '@/Components/UI/Button.svelte'
 	import Card     from '@/Components/UI/Card.svelte'
 	import Container  from '@/Components/UI/Container.svelte'
 	import Heading  from '@/Components/UI/Heading.svelte'
-	import Icon     from '@/Components/UI/Icon.svelte'
 	import Modal    from '@/Components/UI/Modal.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
@@ -24,20 +19,14 @@
 
 	import Map        from '@/Components/Features/Location/Map.svelte'
 
-	const activeProject = $page.props.activeProject.data
 	const location = $page.props.location.data
 
-	let locationModalOpen = $state(false)
 	let deletingLocation  = $state(false)
 
-	function openLocationModal(location) {
-        locationModalOpen = true
-    }
 	function deleteLocation() {
         deletingLocation = true
     }
 	function closeModal() {
-		locationModalOpen = false
 		deletingLocation = false
     }
 
@@ -57,14 +46,14 @@
 			back={route('locations')}
 			title={location.name}
 			actions={[
-				{ icon: "Pen",   onclick: openLocationModal },
+				{ icon: "Pen",   href: route('locations.edit', { location: location.slug }) },
 				{ icon: "Trash", onclick: deleteLocation, theme: "danger" }
 			]}
 		/>
 	{/snippet}
 
 	{#snippet article()}
-		<Container size="7xl" class="flex gap-12">
+		<Container size="7xl" class="flex gap-12 overflow-y-auto">
 
 			<PageMenu class="py-12"
 				items={[
@@ -76,26 +65,22 @@
 				]}
 			/>
 
-			<Stack gap={12} class="w-full">
-				<Section class="py-12">
+			<Stack gap={12} class="py-6 w-full">
+				<Section id="bio">
 
 					<ArticleBanner image={location.banner?.url}>
 						{#if location.parent}
-							Back to <Link class="text-accent hover:underline" href={route('locations.show', { location: location.parent.slug })}>
-								{location.parent?.name}
-							</Link>
+							<Inline class="relative">
+								<Back icon="ArrowElbowUpLeft" href={route('locations.show', { location: location.parent.slug })} style="glass" />
+								<span class="font-style-large text-white">{location.parent?.name}</span>
+							</Inline>
 						{/if}
 			
-						<Heading is="h1" as="h3" class="mt-6 {location.banner ? 'text-white' : ''}"
+						<Heading is="h1" as="h3" class="mt-auto z-10 {location.banner ? 'text-white' : ''}"
 							heading={location.name}
 							subheading={location.type}
 						/>
 					</ArticleBanner>
-
-
-					<!-- {#if location.parent}
-						<Link href={route('locations.show', { location: location.parent.slug })}>{location.parent.name}</Link>
-					{/if} -->
 		
 					<p class="mt-4 font-style-regular">
 						{location.description}
@@ -103,9 +88,11 @@
 		
 				</Section>
 
-				{#if location.map}
-					<Map location={location} />
-				{/if}
+				<Section id="map">
+					{#if location.map}
+						<Map class="min-h-80 max-h-2xl rounded-lg" location={location} />
+					{/if}
+				</Section>
 
 				{#if location.children.length > 0}
 					<Section>
@@ -185,10 +172,6 @@
 	{/snippet} -->
 
 </AuthenticatedLayout>
-
-<Modal title="Edit Location" show={locationModalOpen} onclose={closeModal}>
-	<NewLocationForm locationData={location} oncancel={closeModal} />
-</Modal>
 
 <Modal title="Delete {location.name}?" show={deletingLocation} onclose={closeModal}>
 	<DeleteLocationForm {location} oncancel={closeModal} />
