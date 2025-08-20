@@ -1,147 +1,29 @@
 {
-	"blackthorns": {
-		"name": "The Blackthorn Pact",
-		"type": "Alliance",
-		"desc": "A secretive coven of forest inhabitants who protect the forest's dark secrets.",
-		"hq": "lake",
-		"ranks": [ "Elder", "Guardian", "Hunter" ],
-		"members": {}
+	"avengers": {
+		"name": "The Avengers",
+		"type": "Heroes",
+		"desc": "",
+		"hq": "The Avengers Tower",
+		"founder": "nick-fury",
+		"leader": "iron-man",
+		"members": [ "ant-man", "black-widow", "captain-america", "doctor-strange", "hawkeye", "hulk", "iron-man", "scarlet-witch", "thor" ]
 	},
-	"cold-bloods": {
-		"name": "The Cold-Blood Syndicate",
-		"type": "Gang",
-		"desc": "The Cold-Blood Syndicate is an organized crime syndicate operating in town, primarily through the tavern and the docks.",
-		"hq": "tavern",
-		"ranks": [ "Boss", "Muscle", "Grunt" ],
-		"members": {
-			"grenn": "Boss",
-			"bogdan": "Muscle"
-		}
+	"fantastic-four": {
+		"name": "The Fantastic Four",
+		"type": "Heroes",
+		"desc": "",
+		"hq": "",
+		"founder": "mister-fantastic",
+		"leader": "cyclops",
+		"members": [ "human-torch", "invisible-woman", "mister-fantastic", "the-thing" ]
 	},
-	"cult": {
-		"name": "No Purpose Cult",
-		"type": "Cult",
-		"desc": "A small group of radical conspiracy theorists who are obsessed with the idea that they have no free will or agency, and are all being secretly controlled by a being known as The Game Master.",
-		"hq": "ruins",
-		"ranks": [ "Cult Leader", "Cultist", "Recruit" ],
-		"members": {}
-	},
-	"dragon-council": {
-		"name": "Dragon Council",
-		"type": "Alliance",
-		"desc": "The Dragon Council is a recent addition to the city. While a few people have connected the dots, most people haven't realized yet that the dragons are siphoning resources from the city.",
-		"hq": "council",
-		"ranks": [ "Co-conspirator", "Councilor" ], 
-		"members": {
-			"bhezox": "Co-conspirator",
-			"rhaegan": "Co-conspirator",
-			"murhdox": "Co-conspirator"
-		}
-	},
-	"goblins": {
-		"name": "Red Goblins",
-		"type": "Gang",
-		"desc": "A bunch of goblins who live in a camp in the Red Mountains",
-		"hq": "goblin-camp",
-		"ranks": [ "Chieftan", "Hunter", "Scavenger" ],
-		"members": {}
-	},
-	"hikers": {
-		"name": "Hikers",
-		"type": "Club",
-		"desc": "A group of hikers who like to go hiking in the nearby Red Mountains.",
-		"hq": "hikers-camp",
-		"ranks": [ "Tour Guide", "Tourist" ],
-		"members": {
-			"ovina": "Tour Guide",
-			"perd": "Tourist"
-		}
-	},
-	"magicclub": {
-		"name": "Magic Club",
-		"type": "Club",
-		"desc": "The closest thing to a Mage's Guild since the Council banned larger magical gatherings.",
-		"hq": null,
-		"ranks": [ "Club President", "Club Member" ],
-		"members": {
-	
-		}
-	},
-	"swarm": {
-		"name": "The Swarm",
-		"type": "Gang",
-		"desc": "The Insectoids are a newer gang in town, starting to cause problems late at night. They're experiencing a parasitic pandemic amongst themselves back in their home realm.",
-		"hq": null,
-		"ranks": [ "Queen", "Soldier" ],
-		"members": {
-			"mawloq": "Queen",
-			"brundle": "Soldier",
-			"manto": "Soldier",
-			"wikus": "Soldier"
-		}
-	},
-	"protestors": {
-		"name": "Protestors",
-		"type": "Alliance",
-		"desc": "A group of activists trying to prevent the deforestation of the Cursed Forest.",
-		"hq": null,
-		"ranks": [ "Leader", "Activist" ],
-		"members": {
-			"binksy": "Activist",
-			"nocturna": "Activist"
-		}
-	},
-	"rednecks": {
-		"name": "Rednecks",
-		"type": "Gang",
-		"desc": "A group of kobolds who live in the trailer park near The Red Mountains. They are known for their love of ale and barbequed meats.",
-		"hq": "trailer-park",
-		"ranks": [ "Trash" ],
-		"members": {
-			"gack": "Trash"
-		}
-	},
-	"pirates": {
-		"name": "Pirates",
-		"type": "Gang",
-		"desc": "The pirates have been harbored in Tableton Dock for a few weeks now.",
-		"hq": "pirate-ship",
-		"ranks": [ "Captain", "First Mate", "Deckhand" ],
-		"members": {
-			"bugbeard": "Captain",
-			"abigail": "First Mate",
-			"duggan": "Deckhand"
-		}
-	},
-	"school": {
-		"name": "School",
-		"type": "School",
-		"desc": "All attendees of Tableton Academy, student or staff.",
-		"hq": "school",
-		"ranks": [ "Headmistress", "Teacher", "Student" ],
-		"members": {
-			"uma": "Headmistress",
-			"kem": "Teacher",
-			"torva": "Teacher",
-			"binksy": "Student",
-			"mae": "Student",
-			"nocturna": "Student",
-			"stark": "Student",
-			"thalassa": "Student"
-		}
-	},
-	"tavern-workers": {
-		"name": "Tavern Workers Union",
-		"type": "Union",
-		"desc": "A lot of people in the town make their money through the town's tavern.",
-		"hq": "tavern",
-		"ranks": [ "Landlord", "Bouncer", "Cook", "Bartender", "Server"],
-		"members": {
-			"grenn": "Landlord",
-			"bogdan": "Bouncer",
-			"hamfast": "Cook",
-			"rodrik": "Bartender",
-			"willow": "Server"
-		}
+	"x-men": {
+		"name": "X-Men",
+		"type": "Heroes",
+		"desc": "",
+		"hq": "Xavier's Mansion",
+		"founder": "professor-x",
+		"leader": "cyclops",
+		"members": [ "beast", "cyclops", "gambit", "phoenix", "rogue", "wolverine" ]
 	}
 }

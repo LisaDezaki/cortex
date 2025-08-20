@@ -8,31 +8,24 @@
         children,
 		class: className,
 		bodyclass,
+		noscroll,
 		title,
-		size = "5xl",
+		size = "full",
 		subtitle,
     } = $props()
 
 </script>
 
-<article class="article {className}">
+<article class="article xl:px-24 lg:px-12 md:px-6 sm:px-3 {noscroll ? 'overflow-hidden' : 'overflow-y-auto'} {className}">
 	{#if children}
-		<Container {size} class="article-body {bodyclass}">
-			{@render children()}
-		</Container>
+		{@render children()}
 	{:else}
 		<p class="font-style-large text-center opacity-50">No content available.</p>
 	{/if}
 </article>
 
 <style lang="postcss">
-
 	.article {
-		@apply relative h-full w-full overflow-hidden space-y-3;
-
-		:global(.article-body) {
-			@apply flex items-stretch justify-center h-full overflow-hidden w-full;
-		}
+		@apply relative h-full w-full space-y-3;
 	}
-
 </style>

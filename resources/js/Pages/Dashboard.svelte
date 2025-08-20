@@ -84,7 +84,8 @@
 
 	{#snippet header()}
 		<PageHeader
-			title="Projects"
+			breadcrumbs={[]}
+			title={activeProject ? "Dashboard" : "Select a Project"}
 			actions={[
 				{ icon: "Plus",     theme: "accent",  onclick: updateProject },
 				{ icon: "GearFine", theme: "neutral", href: route('projects.settings') }
@@ -108,14 +109,6 @@
 				</Flex>
 			</Section>
 			<Section size="7xl" class="relative pt-12">
-				<!-- <Heading is="h2" as="h3"
-					heading={activeProject.name}
-					subheading={activeProject.type}
-					actions={[
-						{ label: "Edit",       icon: "Pen",   onclick: updateProject },
-						{ label: "Delete",     icon: "Trash", onclick: deleteProject, theme: "danger" }
-					]}
-				/> -->
 				<p class="max-w-[65ch] my-6">{activeProject.description}</p>
 				<Flex justify="center" gap={3} class="my-12 w-full">
 					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500" href={route('characters')}>
@@ -214,7 +207,7 @@
 				</Section>
 			{/if}
 		{:else}
-			<Section size="7xl" class="py-12">
+			<Section class="py-12">
 				{#if projects}
 					<Grid gap={3} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
 						{#each projects as project}

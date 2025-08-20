@@ -6,6 +6,7 @@
 
 	import Avatar      from '@/Components/UI/Avatar.svelte'
 	import Nav         from '@/Components/UI/Nav'
+	import Navatar     from '@/Components/UI/Navatar.svelte'
 	import ThemeSwitch from '@/Components/UI/ThemeSwitch.svelte'
 
 	import ProjectSelect from '@/Components/Features/Project/ProjectSelect.svelte'
@@ -22,7 +23,7 @@
 		<Stack align="center" gap={2} class="px-2 pt-2 w-full">
 			<Flex align="center" justify="between" class="w-full">
 				<Nav.Logo />
-				<Avatar class="w-10 hover:outline hover:outline-1 hover:outline-emerald-500 hover:-outline-offset-1" src={user.avatar?.url} />
+				<Navatar src={user.avatar?.url} fallback={user.name?.toUpperCase().substr(0,2)} />
 			</Flex>
 			<ProjectSelect projects={projects} active={activeProject?.id} />
 		</Stack>

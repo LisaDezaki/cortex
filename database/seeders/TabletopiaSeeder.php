@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
-class TabletonSeeder extends Seeder
+class TabletopiaSeeder extends Seeder
 {
     public function run($projects): void
     {
@@ -24,11 +24,11 @@ class TabletonSeeder extends Seeder
 		 */
 
 		$fields = [];
-		$json = File::get(database_path('data/tableton/custom_fields.json'));
+		$json = File::get(database_path('data/tabletopia/custom_fields.json'));
 		$json_fields = json_decode($json, true);
 		foreach($json_fields as $slug => $field) {
 			$fields[$slug] = CustomField::create([
-				'project_id' => $projects['tableton']->id,
+				'project_id' => $projects['tabletopia']->id,
 				'fieldable_type' => $field['fieldable_type'],
 				'type' => $field['type'],
 				'name' => $field['name'],
@@ -40,7 +40,7 @@ class TabletonSeeder extends Seeder
 		}
 
 		// $species_field = CustomField::create([
-		// 	'project_id' => $projects['tableton']->id,
+		// 	'project_id' => $projects['tabletopia']->id,
 		// 	'fieldable_type' => 'character',
 		// 	'type' => 'select',
 		// 	'name' => 'species',
@@ -55,7 +55,7 @@ class TabletonSeeder extends Seeder
 		 */
 
 		$species_list = [];
-		$json = File::get(database_path('data/tableton/species.json'));
+		$json = File::get(database_path('data/tabletopia/species.json'));
 		$json_species = json_decode($json, true);
 		foreach ($json_species as $slug => $species) {
 			$species_list[$slug] = CustomFieldOption::create([
@@ -72,11 +72,11 @@ class TabletonSeeder extends Seeder
 		 */
 
 		$locations = [];
-		$json = File::get(database_path('data/tableton/locations.json'));
+		$json = File::get(database_path('data/tabletopia/locations.json'));
 		$json_locations = json_decode($json, true);
 		foreach ($json_locations as $slug => $location) {
 			$locations[$slug] = Location::create([
-				'project_id'  => $projects['tableton']->id,
+				'project_id'  => $projects['tabletopia']->id,
 				'parent_location_id' => null,
 				'name'        => $location['name'],
 				'type'        => $location['type'] ?? null,
@@ -116,12 +116,12 @@ class TabletonSeeder extends Seeder
 		 */
 
 		$characters = [];
-		$json = File::get(database_path('data/tableton/characters.json'));
+		$json = File::get(database_path('data/tabletopia/characters.json'));
 		$json_characters = json_decode($json, true);
 
 		foreach ($json_characters as $slug => $character) {
 			$characters[$slug] = Character::factory()->create([
-				'project_id'  => $projects['tableton']->id,
+				'project_id'  => $projects['tabletopia']->id,
 				'name'        => $character['name'],
 				'alias'        => $character['alias'],
 				'slug'        => $slug,
@@ -145,11 +145,11 @@ class TabletonSeeder extends Seeder
 
 		$factions = [];
 		$ranks = [];
-		$json = File::get(database_path('data/tableton/factions.json'));
+		$json = File::get(database_path('data/tabletopia/factions.json'));
 		$json_factions = json_decode($json, true);
 		foreach ($json_factions as $slug => $faction) {
 			$factions[$slug] = Faction::factory()->create([
-				'project_id'      => $projects['tableton']->id,
+				'project_id'      => $projects['tabletopia']->id,
 				'name'            => $faction['name'],
 				'type'            => $faction['type'],
 				'slug'            => $slug,
@@ -177,7 +177,7 @@ class TabletonSeeder extends Seeder
 		 */
 
 		$relationships = [];
-		$json = File::get(database_path('data/tableton/relationships.json'));
+		$json = File::get(database_path('data/tabletopia/relationships.json'));
 		$json_relationships = json_decode($json, true);
 		foreach ($json_relationships as $relationship) {
 			DB::table('character_relationships')->insert([

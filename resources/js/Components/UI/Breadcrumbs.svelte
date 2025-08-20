@@ -1,13 +1,7 @@
 <script>
 	import { Link, page } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
-	// import { DropdownMenu } from "bits-ui";
 
-	import Dropdown         from '@/Components/UI/Dropdown.svelte'
-	import Icon             from '@/Components/UI/Icon.svelte'
-	import Thumbnail        from '@/Components/UI/Thumbnail.svelte'
-
-	const user = $page.props.auth?.user?.data
 	const projects = $page.props.projects?.data
 	const activeProject = $page.props.activeProject?.data
 
@@ -21,89 +15,6 @@
 </script>
 
 
-
-
-
-<!-- {#snippet breadcrumb(item)}
-	{#if item.href}
-		<Link class="breadcrumb" href={item.href}>{item.label}</Link>
-	{:else}
-		<span class="breadcrumb">{item.label}</span>
-	{/if}
-{/snippet} -->
-
-
-<!-- {#snippet separator()}
-	<Icon class="opacity-25" name="LineVertical" size={16} />
-{/snippet} -->
-
-
-
-
-
-<div class="breadcrumbs {className}" {...restProps}>
-
-	<!-- {#if user}
-		<Link href={route('dashboard')} class="inline-flex items-center justify-center rounded-full mx-1.5 border border-transparent p-0.5 hover:border-emerald-500">
-			<Thumbnail class="rounded-full w-7" src={user?.avatar?.url} alt={user.name} />
-		</Link>
-	{/if} -->
-
-	{#if withProject && activeProject && projects}
-		<Link class="breadcrumb" href={route('dashboard')}>{activeProject.name}</Link>
-		<!-- <Icon class="opacity-25" name="LineVertical" size={16} /> -->
-		<span class="text-neutral-softer">/</span>
-
-		<!-- <Dropdown
-			class="breadcrumb"
-			contentClass="w-52"
-			label={activeProject.name}
-			options={projects.map((pr => {
-				return { label: pr.name, value: pr.id }
-			}))}
-		/> -->
-
-
-		<!-- <Dropdown class="breadcrumb">
-			{activeProject.name}
-			<Icon class="translate-y-0.5" name="CaretDown" />
-			{#snippet content()}
-				<ul>
-					{#each projects as project}
-						<li>
-							<ProjectActivator class="breadcrumb-dropdown-link" activeClass="breadcrumb-dropdown-link-active" projectId={project.id}>{project.name}</ProjectActivator>
-						</li>
-					{/each}
-				</ul>
-			{/snippet}
-		</Dropdown> -->
-	{/if}
-
-    {#each data as item, i}
-		
-		<!-- <Icon class="opacity-25" name="LineVertical" size={16} /> -->
-		{#if i > 0}
-			<!-- <Icon class="opacity-25" name="LineVertical" size={16} /> -->
-			<span class="text-neutral-softer">/</span>
-		{/if}
-
-		{#if item.href}
-			<Link class="breadcrumb" href={item.href}>{item.label}</Link>
-		{:else}
-			<span class="breadcrumb">{item.label}</span>
-		{/if}
-
-		<!-- {#if breadcrumb.href}
-			<Link class="breadcrumb" href={breadcrumb.href}>{breadcrumb.label}</Link>
-		{:else}
-			<span class="breadcrumb">{breadcrumb.label}</span>
-		{/if} -->
-
-	{/each}
-
-	<!-- <Icon class="opacity-25" name="LineVertical" size={16} /> -->
-	<span class="text-neutral-softer">/</span>
-</div>
 
 
 
@@ -142,3 +53,28 @@
 	}
 
 </style>
+
+
+
+
+
+
+<div class="breadcrumbs {className}" {...restProps}>
+
+	{#if withProject && activeProject && projects}
+		<Link class="breadcrumb" href={route('dashboard')}>{activeProject.name}</Link>
+		<span class="text-neutral-softer">/</span>
+	{/if}
+
+    {#each data as item, i}
+		{#if i > 0}
+			<span class="text-neutral-softer">/</span>
+		{/if}
+		{#if item.href}
+			<Link class="breadcrumb" href={item.href}>{item.label}</Link>
+		{:else}
+			<span class="breadcrumb">{item.label}</span>
+		{/if}
+	{/each}
+
+</div>

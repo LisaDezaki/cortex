@@ -28,8 +28,8 @@
 	<Stack class="w-full">
 		{@render header?.()}
 		<Flex class="relative flex-grow-0 h-screen overflow-hidden w-full">
-			<Splitpanes>
-				<Pane>
+			<!-- <Splitpanes> -->
+				<!-- <Pane> -->
 					<Main>
 						<!-- <Container class="flex items-start gap-6"> -->
 							<!-- {@render menu?.()} -->
@@ -38,15 +38,15 @@
 							</Article>
 						<!-- </Container> -->
 					</Main>
-				</Pane>
-				{#if sidebar}
+				<!-- </Pane> -->
+				<!-- {#if sidebar}
 					<Pane minSize={19.1} size={25} maxSize={50}>
 						<Sidebar>
 							{@render sidebar()}
 						</Sidebar>
 					</Pane>
-				{/if}
-			</Splitpanes>
+				{/if} -->
+			<!-- </Splitpanes> -->
 		</Flex>
 	</Stack>
 

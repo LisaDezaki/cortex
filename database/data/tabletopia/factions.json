@@ -105,7 +105,7 @@
 	"pirates": {
 		"name": "Pirates",
 		"type": "Gang",
-		"desc": "The pirates have been harbored in Tableton Dock for a few weeks now.",
+		"desc": "The pirates have been harbored in New Miniport Dock for a few weeks now.",
 		"hq": "pirate-ship",
 		"ranks": [ "Captain", "First Mate", "Deckhand" ],
 		"members": {
@@ -117,7 +117,7 @@
 	"school": {
 		"name": "School",
 		"type": "School",
-		"desc": "All attendees of Tableton Academy, student or staff.",
+		"desc": "All attendees of New Miniport Academy, student or staff.",
 		"hq": "school",
 		"ranks": [ "Headmistress", "Teacher", "Student" ],
 		"members": {

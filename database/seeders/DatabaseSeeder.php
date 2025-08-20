@@ -33,7 +33,7 @@ class DatabaseSeeder extends Seeder
 			]);
 		}
 
-		$this->callWith( TabletonSeeder::class,    ['projects' => $projects] );
+		$this->callWith( TabletopiaSeeder::class,  ['projects' => $projects] );
 		$this->callWith( BrawllywoodSeeder::class, ['projects' => $projects] );
 		$this->callWith( MarvelSeeder::class,      ['projects' => $projects] );
     }

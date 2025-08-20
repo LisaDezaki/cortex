@@ -14,6 +14,6 @@
 
 
 
-<section class="section xl:px-12 lg:px-9 md:px-6 sm:px-3 w-full {className}">
+<section class="section w-full {className}">
 	{@render children?.()}
 </section>

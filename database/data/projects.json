@@ -1,23 +1,29 @@
 {
-	
-	"tableton": {
-		"name": "Tableton",
-		"type": "Fantasy RPG",
-		"description": "A sprawling coastal diorama town with a rich history and a vibrant community. The town has recently been revitalized, attracting new residents and businesses. The tavern is a common gathering place, where locals and travelers share stories and laughter."
-	},
-		
-	"deadworld": {
-		"name": "Deadworld",
-		"type": "Sci-fi Dystopia",
-		"description": "A post-apocalyptic world where survivors struggle to survive. The remnants of civilization are scattered across the land, with small pockets of humanity clinging to life. The world is filled with danger, from mutated creatures to hostile factions."
-	},
-	
+
 	"brawllywood": {
 		"name": "Brawllywood",
 		"type": "Bollywood Brawler",
 		"description": "An old school Beat 'Em Up inspired by Indian cinema's greatest heroes and villains."
 	},
 
+	"deadworld": {
+		"name": "Deadworld",
+		"type": "Sci-fi Dystopia",
+		"description": "A post-apocalyptic world where survivors struggle to survive. The remnants of civilization are scattered across the land, with small pockets of humanity clinging to life. The world is filled with danger, from mutated creatures to hostile factions."
+	},
+
+	"fallout": {
+		"name": "Fallout",
+		"type": "Fanfiction",
+		"description": "A horny lesbian fanfic between Sapphire, a vault-dweller's mind in the body of a synth, and Ruby, a mechanic with a robot dog and a robot arm and a robot leg."
+	},
+
+	"tabletopia": {
+		"name": "Tabletopia",
+		"type": "Fantasy RPG",
+		"description": "A sprawling coastal diorama town with a rich history and a vibrant community. The town has recently been revitalized, attracting new residents and businesses. The tavern is a common gathering place, where locals and travelers share stories and laughter."
+	},
+	
 	"marvel": {
 		"name": "Marvel",
 		"type": "Superhero Universe",
