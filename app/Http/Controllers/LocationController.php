@@ -92,7 +92,7 @@ class LocationController extends Controller
 		$location->load([
 			'banner',
 			'parent',
-			'children',
+			'children.banner',
 			'characters.portrait',
 			'map',
 		]);

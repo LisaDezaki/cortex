@@ -28,7 +28,7 @@
 
 	let columns   = $state(['name', 'characters'])
 	let filter    = $state({})
-	let layout    = $state('map')
+	let layout    = $state('grid')
 	let query     = $state('')
 	let rowSize   = $state(5)
 	let sortBy    = $state('name')

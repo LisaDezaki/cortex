@@ -18,6 +18,7 @@
 	import Section  from '@/Components/UI/Section.svelte'
 
 	import Map        from '@/Components/Features/Location/Map.svelte'
+    import { parse } from 'svelte/compiler'
 
 	const location = $page.props.location.data
 
@@ -72,7 +73,7 @@
 						{#if location.parent}
 							<Inline class="relative">
 								<Back icon="ArrowElbowUpLeft" href={route('locations.show', { location: location.parent.slug })} style="glass" />
-								<span class="font-style-large text-white">{location.parent?.name}</span>
+								<span class="font-style-large {location.banner ? 'text-white' : ''}">{location.parent?.name}</span>
 							</Inline>
 						{/if}
 			
@@ -82,7 +83,7 @@
 						/>
 					</ArticleBanner>
 		
-					<p class="mt-4 font-style-regular">
+					<p class="mt-6 font-style-regular whitespace-pre-line">
 						{location.description}
 					</p>
 		

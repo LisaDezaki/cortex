@@ -54,7 +54,8 @@
 
 	{#snippet article()}
 
-		<CharacterTabs tab="details">
+		<CharacterTabs tab="details" class="overflow-y-auto">
+
 
 			<!-- Details -->
 
@@ -69,13 +70,11 @@
 				</ArticleBanner>
 
 				<Heading is="h3" as="h5" heading="Description" class="mt-12 mb-6" />
-				<p class="max-w-[65ch]">{character.description}</p>
+
+				<p class="font-style-large max-w-[56ch] whitespace-pre-wrap">
+					{character.description}
+				</p>
 		
-				
-		
-				
-		
-				
 			</Tabs.Content>
 
 
@@ -150,6 +149,7 @@
 				{/if} -->
 			</Tabs.Content>
 
+
 			<!-- Media -->
 
 			<Tabs.Content value="media" class="py-12">
@@ -158,6 +158,7 @@
 				/>
 			</Tabs.Content>
 
+			
 			<!-- Custom Fields -->
 
 			<Tabs.Content value="custom" class="py-12">
