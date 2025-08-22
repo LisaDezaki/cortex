@@ -169,23 +169,6 @@
 		</PageHeader>
 	{/snippet}
 
-	<!-- {#snippet panel()}
-		 <Stack class="bg-surface border-r w-64 p-6">
-
-			{#each [
-				{ icon: "UserList",       label: "Details",      href: "#bio" },
-				{ icon: "UsersThree",     label: "Relationship", href: "#relationships" },
-				{ icon: "FlagBannerFold", label: "Factions",     href: "#factions" },
-				{ icon: "Backpack",       label: "Inventory",    href: "#inventory" }
-			] as link}
-				<Link class="inline-flex items-center gap-2 px-3 py-1.5" href={link.href}>
-					<Icon name={link.icon} size="md" />
-					{link.label}
-				</Link>
-			{/each}
-		 </Stack>
-	{/snippet} -->
-
 	{#snippet article()}
 		<Section gap={6} size="7xl" class="py-6">
 			{#if activeProject && characters.length > 0}

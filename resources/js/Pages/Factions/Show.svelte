@@ -6,18 +6,21 @@
 	import FactionsPanel from '@/Partials/FactionsPanel.svelte'
 	import DeleteFactionForm from '@/Forms/Faction/Delete.svelte'
 
-	import { Flex, Grid, Stack } from '@/Components/Core'
+	import { Flex, Grid, Stack, Tabs } from '@/Components/Core'
 
-	import Back         from '@/Components/UI/Back.svelte'
-	import Button       from '@/Components/UI/Button.svelte'
-	import Card         from '@/Components/UI/Card.svelte'
-	import Container  from '@/Components/UI/Container.svelte'
-	import Heading      from '@/Components/UI/Heading.svelte'
-	import Icon         from '@/Components/UI/Icon.svelte'
-	import Modal        from '@/Components/UI/Modal.svelte'
-	import PageHeader from '@/Components/UI/PageHeader.svelte'
-	import PageMenu   from '@/Components/UI/PageMenu.svelte'
-	import Section      from '@/Components/UI/Section.svelte'
+	import ArticleBanner	from '@/Components/UI/ArticleBanner.svelte'
+	import ArticleTabs		from '@/Components/UI/ArticleTabs.svelte'
+	import Back				from '@/Components/UI/Back.svelte'
+	import Button			from '@/Components/UI/Button.svelte'
+	import Card				from '@/Components/UI/Card.svelte'
+	import Container		from '@/Components/UI/Container.svelte'
+	import Heading			from '@/Components/UI/Heading.svelte'
+	import Icon				from '@/Components/UI/Icon.svelte'
+	import Modal			from '@/Components/UI/Modal.svelte'
+	import PageHeader		from '@/Components/UI/PageHeader.svelte'
+	import PageMenu			from '@/Components/UI/PageMenu.svelte'
+	import Section			from '@/Components/UI/Section.svelte'
+	import Thumbnail			from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
 	const faction = $page.props.faction.data
@@ -43,7 +46,6 @@
 		<PageHeader
 			breadcrumbs={[
 				{ label: "Factions",   href: route('factions') },
-				{ label: faction.name, href: route('factions.show', { faction: faction.slug }) }
 			]}
 			back={route('factions')}
 			title={faction.name}
@@ -55,19 +57,60 @@
 	{/snippet}
 
 	{#snippet article()}
-		<Container size="7xl" class="flex gap-12">
+		<Section gap={6} size="7xl" class="py-12">
 
-			<PageMenu
-				items={[
-					{ icon: "Info",      label: "Details",    href: "#details",    active: $page.url.endsWith('#details') },
-					{ icon: "MapPinArea", label: "Headquarters", href: "#hq", active: $page.url.endsWith('#hq') },
-					{ icon: "UsersFour", label: "Membership", href: "#membership", active: $page.url.endsWith('#membership') },
-					{ icon: "ImagesSquare",   label: "Media",         href: "#media",         active: $page.url.endsWith('#media') },
-					{ icon: "Textbox",        label: "Custom Fields", href: "#customfields",  active: $page.url.endsWith('#customfields') }
-				]}
-			/>
+			<ArticleTabs value="details" tabs={[
+				{ icon: "Info",      	label: "Details",    	value: "details"	},
+				{ icon: "MapPinArea", 	label: "Headquarters", 	value: "hq"			},
+				{ icon: "UsersFour", 	label: "Membership", 	value: "members"	},
+				{ icon: "ImagesSquare", label: "Media",         value: "media" 		},
+				{ icon: "Textbox",      label: "Custom Fields", value: "fields" 	}
+			]}>
 
-			<Stack gap={12}>
+				<!-- Details -->
+		
+				<Tabs.Content value="details">
+		
+					<ArticleBanner class="relative" image={faction.emblem?.url}>
+						<Heading is="h1" as="h3" class="mt-auto z-10 {faction.emblem ? 'text-white' : ''}"
+							heading={faction.name}
+							subheading={faction.type}
+						/>
+						<Thumbnail class="absolute right-12 -bottom-16 w-40" src={faction.emblem?.url} />
+					</ArticleBanner>
+		
+					<Heading is="h3" as="h5" heading="Description" class="mt-12 mb-6" />
+		
+					<p class="font-style-large max-w-[64ch] whitespace-pre-wrap">
+						{faction.description}
+					</p>
+			
+				</Tabs.Content>
+
+				<Tabs.Content value="hq">
+					<Heading is="h3" as="h5">Headquarters</Heading>
+					<!-- <Map /> -->
+				</Tabs.Content>
+
+				<Tabs.Content value="members">
+					<Heading is="h3" as="h5">Membership</Heading>
+					Ranks
+					<!-- <CharacterGrid /> -->
+				</Tabs.Content>
+
+				<Tabs.Content value="media">
+					<Heading is="h3" as="h5">Media</Heading>
+					<!-- <MediaGrid /> -->
+				</Tabs.Content>
+
+				<Tabs.Content value="fields">
+					<Heading is="h3" as="h5">Custom Field</Heading>
+					<!-- CustomFields />-->
+				</Tabs.Content>
+
+			</ArticleTabs>
+
+			<!-- <Stack gap={12}>
 				<Section id="#details">
 					<Heading is="h2" as="h3" class="my-12"
 						eyebrowIcon="FlagBannerFold" eyebrow="Faction"
@@ -101,9 +144,9 @@
 						{/each}
 					</Section>
 				{/if}
-			</Stack>
+			</Stack> -->
 
-		</Container>
+		</Section>
 	{/snippet}
 
 	<!-- {#snippet sidebar()}

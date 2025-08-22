@@ -20,7 +20,7 @@
     } = $props()
 </script>
 
-<Flex as="header" align="start" class="heading {className}" {...restProps}>
+<Flex as="header" align="center" class="heading {className}" {...restProps}>
 
 	<Stack>
 		{#if eyebrow}

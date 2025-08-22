@@ -2,70 +2,68 @@
 	"blackthorns": {
 		"name": "The Blackthorn Pact",
 		"type": "Alliance",
-		"desc": "A secretive coven of forest inhabitants who protect the forest's dark secrets.",
 		"hq": "lake",
 		"ranks": [ "Elder", "Guardian", "Hunter" ],
-		"members": {}
+		"members": {},
+		"desc": "The Cursed Forest is not actually haunted, but it is guarded. The Blackthorn Pact is a secretive and ancient alliance of the forest's most primordial inhabitants, bound by a single sacred duty: to protect the wood's darkest secrets from the outside world—especially from the desecrating axes of DragonCorp and the ignorant curiosity of townsfolk.\n\nThey do not see themselves as owners of the forest, but as its stewards, their fates intrinsically woven into the gnarled roots and shadowed paths. They are the reason the forest's \"curse\" has teeth; every strange disappearance, every whispered warning, and every feeling of being watched is often a deliberate act of preservation by the Pact.\n\nThe alliance is a rare and fragile truce between species that would normally be at odds, united by a common threat. Its key members include:\n\nThe Myconid Sovereign: The ancient, psychic ruler of the Fungal Grotto. It does not speak, but communicates through a symphony of released spores that convey visions, emotions, and warnings to other Pact members. It views the forest as a single, interconnected living organism and the Pact as its immune system.\n\nCorvus: The grim and silent kenku leader of a murder of intelligent, blood-black crows that serve as the Pact's eyes and ears. They track intruders, steal shiny tools, and deliver cryptic omens to those who venture too deep.\n\nBriar: A vengeful dryad whose tree is anchored near the Black Lake. She is the Pact's most aggressive defender, capable of weaving thorns and roots into deadly traps and using her mesmerizing voice to lead interlopers to their doom in the lake or towards the Abandoned Cabin.\n\nThe Grove Warden: A massive, ancient treant of immense strength and patience, who slumbers near the forest's heart. It is the Pact's final, devastating weapon, a walking catastrophe that can be roused only in the face of existential threat, to crush entire work camps and swallow machinery into the earth.\n\nThe Pact's methods range from subtle misdirection to outright terror. They are not evil, but they are mercilessly pragmatic. They did not start this war, but they will ensure that anyone who seeks to strip the forest of its secrets pays a permanent price."
 	},
 	"cold-bloods": {
 		"name": "The Cold-Blood Syndicate",
 		"type": "Gang",
-		"desc": "The Cold-Blood Syndicate is an organized crime syndicate operating in town, primarily through the tavern and the docks.",
 		"hq": "tavern",
 		"ranks": [ "Boss", "Muscle", "Grunt" ],
 		"members": {
 			"grenn": "Boss",
 			"bogdan": "Muscle"
-		}
+		},
+		"desc": "Operating from the shadowy back rooms of The Lucky Die tavern, the Cold-Bloods are Miniport's most prominent criminal syndicate, a network of reptilian and amphibious toughs, enforcers, and schemers led by the cunning lizardfolk slumlord, Grenn.\n\nUnlike the Dragon Council's sleek, corporate oppression, the Cold-Bloods' tyranny is intimate and personal. They are the ones who knock on your door to double your rent, who \"collect\" on a sudden, inexplicable debt, or who ensure that a business that doesn't pay for \"protection\" meets with a series of unfortunate accidents.\n\nTheir power is built on a foundation of fear, blackmail, and Grenn's corrupt deal-making with the Council itself, which allows them to operate with a degree of impunity as long as they kick a share of their profits uphill.\n\nThe syndicate is more than just its infamous leader and his hulking bodyguard. Its ranks include:\n\nSsslatha: A quick-tongued spyder-drider informant who lurks in the rafters of the tavern and in the eaves of Hightown. She overhears everything and sells secrets to Grenn in exchange for rare enchanted gems to feed her young.\n\nFinn: A slick, opportunistic grung (poison dart frog folk) who serves as the syndicate's poisoner and alchemist. He runs a shady apothecary front that sells legitimate remedies while dealing in potent toxins, paralytic, and illegal potions from the back room.\n\nThe Scaleback Twins: A pair of ruthless kobold twins, Kix and Kax, who serve as Grenn's primary legbreakers and collectors. Small, fast, and vicious, they specialize in swarming a target, overwhelming them with a flurry of blows from clubs and knives before disappearing into the sewers or alleyways.\n\nTogether, they form a versatile and ruthless organization that preys on the common folk of Miniport, representing a more immediate, street-level threat than the distant, bureaucratic evil of the Council."
 	},
 	"cult": {
 		"name": "No Purpose Cult",
 		"type": "Cult",
-		"desc": "A small group of radical conspiracy theorists who are obsessed with the idea that they have no free will or agency, and are all being secretly controlled by a being known as The Game Master.",
 		"hq": "ruins",
 		"ranks": [ "Cult Leader", "Cultist", "Recruit" ],
-		"members": {}
+		"members": {},
+		"desc": "A small group of radical conspiracy theorists who are obsessed with the idea that they have no free will or agency, and are all being secretly controlled by a being known as The Game Master."
 	},
 	"dragon-council": {
 		"name": "Dragon Council",
 		"type": "Alliance",
-		"desc": "The Dragon Council is a recent addition to the city. While a few people have connected the dots, most people haven't realized yet that the dragons are siphoning resources from the city.",
 		"hq": "council",
 		"ranks": [ "Co-conspirator" ], 
 		"members": {
 			"bhezox": "Co-conspirator",
 			"rhaegan": "Co-conspirator",
 			"murhdox": "Co-conspirator"
-		}
+		},
+		"desc": "The Dragon Council is the true, unassailable power behind the gleaming facade of progress in New Miniport and beyond. They are not a democratic body but an oligarchy of ancient, immensely wealthy dragonborn who operate from their obsidian spire in Hightown, viewing the world below as a chessboard upon which they are the only players that matter.\n\nTheir rule is a masterful, three-pronged strategy of absolute control: Bhezox manipulates the economy, ensuring all wealth flows dragonward; Muhrdox controls the media, shaping reality itself through propaganda and misinformation; and Rhaegon crafts the laws, legally enshrining their supremacy while dismantling the rights of others.\n\nTogether, they form a perfect, tyrannical symbiosis, their coordinated efforts making their authority seem as inevitable and natural as the rising sun.\n\nTo the public, the Council presents itself as a benevolent force of order and modernization, the necessary architects of a prosperous new era.\n\nThey speak of security, efficiency, and growth, using these virtues to justify their increasingly authoritarian decrees and the systematic erosion of the town's old freedoms. But in truth, their ideology is one of pure, unadulterated draconic supremacy—a belief that their strength, longevity, and inherent superiority grant them the right to dominate all other races. They see the diverse residents of Miniport not as citizens, but as resources to be exploited, obstacles to be removed, or amusing curiosities to be tolerated only until they are no longer useful.\n\nThey are the source of the rot festering beneath the town's miniature charm, a cold, calculating evil that operates not with roars and fire, but with contracts, edicts, and the quiet, relentless turning of an economic screw."
 	},
 	"goblins": {
 		"name": "Red Goblins",
-		"type": "Gang",
-		"desc": "A bunch of goblins who live in a camp in the Red Mountains",
+		"type": "Goblin Clan",
 		"hq": "goblin-camp",
 		"ranks": [ "Chieftan", "Hunter", "Scavenger" ],
-		"members": {}
+		"members": {},
+		"desc": "Deep within the labyrinthine cave networks of the Red Mountains, far from the well-traveled paths, thrives the Rust-Eater Clan. This industrious and fiercely independent tribe of goblins has carved out a unique existence, largely ignored by the world above.\n\nThey are scavengers, engineers, and hoarders of the highest order, specializing in repurposing the discarded junk that finds its way into the mountains—lost mining equipment, wrecked wagons, and even the occasional piece of shot-down DragonCorp machinery. Their caves are a mesmerizing, clanking warren of patched-together metal, whirring makeshift turbines, and tunnels lit by the glow of recycled alchemical lamps.\n\nThe clan is ruled by a cunning and practical matriarchy:\n\nChieftainess Cogsprocket: The brilliant, if slightly unhinged, goblin leader. She wears a crown welded from rusted gearheads and is never without her prized tool, a multi-articulated wrench of her own design. She values cleverness and useful trash above all else.\n\nBoiler: The clan's hulking goblin enforcer, encased in a suit of powered armor cobbled together from a discarded DragonCorp security automaton. He speaks in guttural rumbles and hisses of steam, and is fiercely loyal to the Chieftainess.\n\nSprocket: A young, wildly innovative goblin tinkerer and the Chieftainess's niece. She is responsible for the clan's most daring mechanical innovations, including their complex elevator systems and defenses, often using \"borrowed\" magic items to power her creations.\n\nThe Rust-Eaters are neutral but territorial. They care little for the politics of Miniport or the Dragon Council, viewing both as sources of excellent scrap. They might trade salvaged parts for food or shiny baubles, but woe to anyone who ventures into their tunnels uninvited; their caves are booby-trapped with ingenious and deadly mechanical pitfalls. They are a hidden, clanking heartbeat within the mountains, a testament to goblin ingenuity thriving in the dark."
 	},
 	"hikers": {
-		"name": "Hikers",
+		"name": "Missing Hikers",
 		"type": "Club",
-		"desc": "A group of hikers who like to go hiking in the nearby Red Mountains.",
 		"hq": "campsite",
 		"ranks": [ "Tour Guide", "Tourist" ],
 		"members": {
 			"ovina": "Tour Guide",
 			"perd": "Tourist"
-		}
+		},
+		"desc": "What began as a simple guided tour of the Red Mountains' scenic routes has become another New Miniport mystery: the entire hiking party led by the renowned caora sherpa, Ovina has disappeared. The party consisted of:\n\nOvina: The expert caora (sheepfolk) sherpa. Her absence is the most alarming fact of all; she knew the mountains better than anyone, and her disappearance signals that something is terribly, fundamentally wrong.\n\nPerd: The bright-eyed verdan tourist, away from home for the first time. Her intended adventure of a lifetime has turned into a nightmare, and her lack of wilderness experience makes her particularly vulnerable.\n\nBorin: A stout, middle-aged dwarf geologist from Miniport's university. He was on the trip to study unique mineral formations, more focused on his rocks than the path ahead.\n\nElara: A quiet half-elf botanist, colleague of Borin's. She was meticulously documenting the alpine flora and is likely the most resourceful of the group after Ovina.\n\nThistle: A young, energetic halfling porter, newest member of Ovina's guiding company. Eager to prove himself, he was responsible for carrying the party's extra supplies.\n\nTheir last known location was the treacherous area known as Hiker's Cramp. Search parties have found no signs of a struggle, no dropped gear, and no trail. It's as if the mountain itself swallowed them whole."
 	},
 	"magicclub": {
 		"name": "Magic Club",
 		"type": "Club",
-		"desc": "The closest thing to a Mage's Guild since the Council banned larger magical gatherings.",
 		"hq": null,
 		"ranks": [ "Club President", "Club Member" ],
-		"members": {
-	
-		}
+		"members": {},
+		"desc": "The closest thing to a Mage's Guild since the Council banned larger magical gatherings."
 	},
 	"swarm": {
 		"name": "The Swarm",
@@ -83,14 +81,14 @@
 	"protestors": {
 		"name": "Protestors",
 		"type": "Alliance",
-		"desc": "A group of activists trying to prevent the deforestation of the Cursed Forest.",
 		"hq": null,
 		"ranks": [ "Leader", "Activist" ],
 		"members": {
 			"binksy": "Activist",
 			"lafferty": "Activist",
 			"nocturna": "Activist"
-		}
+		},
+		"desc": "What began as a scattered gathering of concerned citizens has swiftly coalesced into a determined and organized resistance force known as the Timberline Protectors. This is a loose alliance of environmental activists, fearful locals, and sympathetic adventurers who have drawn a line in the soil at the edge of the Cursed Forest. Their goal is singular: to halt the Dragon Council's deforestation efforts and protect the ancient, mysterious woodland from being clear-cut for the DragonCorp tower's expansion. They are a faction born of passion and principle, armed with signs, songs, and a steadfast refusal to back down.\n\nThe group is a diverse coalition, featuring a wide array of supporters:\n\nNocturna: The fiery tiefling barista and college student, who acts as a frontline organizer and one of the most vocal leaders. Her sharp wit and anti-authoritarian zeal make her a powerful voice for the cause.\n\nBinksy: The gnome graffiti artist, who provides the movement's visual identity. Their magical artwork on nearby rocks and barricades serves to inspire allies, disorient opposition, and mark safe zones.\n\nLafferty: The gnoll comedian, who uses his sharp tongue and stage presence to rally morale and publicly skewer the Council's greed, turning complex issues into relatable, powerful jokes.\n\nSoren: The meticulous half-elf scholar from the Lucky Die, who provides strategic planning, historical precedent on the forest's importance, and a calm, logical counterpoint to the Council's propaganda.\n\nMyconid Emissaries: Silent, solemn delegates from the Fungal Grotto, whose very presence at the protest is a powerful statement. They stand as living proof of what is at stake, communicating through empathetic spores that convey feelings of anguish and urgency to sensitive protesters.\n\nThey are not a violent group, but they are fiercely disruptive. Their tactics include forming human (and non-human) chains in front of equipment, organizing sit-ins, and using magical and mundane means to slow progress to a crawl. They represent the conscience of Miniport, standing against the cold calculus of profit and \"progress\" in defense of a world they believe is priceless."
 	},
 	"rednecks": {
 		"name": "Rednecks",
@@ -105,44 +103,59 @@
 	"pirates": {
 		"name": "Pirates",
 		"type": "Gang",
-		"desc": "The pirates have been harbored in New Miniport Dock for a few weeks now.",
 		"hq": "pirate-ship",
 		"ranks": [ "Captain", "First Mate", "Deckhand" ],
 		"members": {
 			"bugbeard": "Captain",
 			"abigail": "First Mate",
 			"duggan": "Deckhand"
-		}
+		},
+		"desc": "Moored in a secluded, rocky cove just beyond Miniport's main docks, the Crimson Tide is home to a small but fiercely loyal and highly specialized pirate crew. Led by the principled bugbear, Captain Bugbeard, they operate less like traditional cutthroats and more like a maritime strike force, executing precision raids on corrupt merchant vessels and DragonCorp supply ships with a focus on minimizing casualties and maximizing redistributable wealth.\n\nTheir reputation paints them as dangerous radicals, but on board their ship, they function as a tight-knit, found family bound by a shared disdain for tyranny and a belief in their captain's Robin Hood ideology. The ship itself is a reflection of this—well-maintained but bearing the scars of countless battles, its hull a canvas for Abigail's expertly charted courses and its decks a stage for Duggan's explosive interventions.\n\nThe core crew, while small, covers all the essentials of their unique operation:\n\n\"Stitches\": A weathered, cynical human ex-surgeon with a shaky hand and a drinking problem, who was drummed out of a prestigious Hightown medical guild for questioning a DragonCorp mandate. He keeps the crew patched up, grumbling about the mess they get into with every suture he ties.\n\nSilas: A nimble and paranoid kenku lookout and infiltrator. Perched high in the crow's nest or swinging silently onto enemy decks, he is the crew's eyes and ears. He communicates through a perfect repertoire of creaking ropes, warning shouts, and copied snippets of conversation, making him an eerie but incredibly effective scout.\n\nBarrel: The ship's cook and morale officer, a jovial hobgoblin whose name is both a description of his physique and his primary domain—the ship's galley. He turns stolen provisions into surprisingly delicious meals and is the only one who can calm Duggan down with a specially prepared snack, usually involving something explosive (like chili peppers) to keep the troll happy.\n\nThey are a crew of outcasts, each with a reason to hate the system the Dragon Council enforces. Under Bugbeard's command and Abigail's brilliant navigation, they are a persistent thorn in the side of corruption, a symbol of hope for the common folk, and a constant headache for the authorities."
 	},
-	"school": {
-		"name": "School",
-		"type": "School",
-		"desc": "All attendees of New Miniport Academy, student or staff.",
+	"scalefront": {
+		"name": "ScaleFront",
+		"type": "Cult",
+		"hq": null,
+		"ranks": ["High Dragon"],
+		"members": {},
+		"desc": "Operating from the dusty trailers, dimly lit tavern corners, and the shadowy forums of Makk's podcast chat, ScaleFront is a loose but vocal faction of dragon-supremacists who wholeheartedly believe in the Dragon Council's ideology of inherent draconic superiority. They see the Council's rise not as a corporate takeover, but as a necessary restoration of the \"natural order\", where the strong (those with scales and a connection to draconic bloodlines) rightfully rule over the weak (everyone else). Their rhetoric is a toxic blend of misplaced pride, bitter resentment, and a desperate desire for a place in what they believe is the coming hierarchy.\n\nWhile they lack the official power of the Council or the street-level ruthlessness of the Cold-Bloods, their danger lies in their ability to radicalize the disaffected and spread their poison through the community. Their ranks include:\n\nGack: The kobold true believer, their most fervent and paranoid foot soldier, who sees his trailer as a frontline fortress in a cultural war.\n\nVex: A bitter and frustrated dragonborn failure who never lived up to his own perceived genetic potential. He blames his shortcomings on \"unfair\" systems that favor \"lesser races\" and channels his rage into online harassment and spreading propaganda for the faction.\n\nMakk: The grift-ogre podcaster, who acts as their unofficial, self-serving mouthpiece. He doesn't believe a word of it himself, but he knows that stoking racial resentment and anger is incredibly profitable and builds a loyal audience. He provides the platform and the inflammatory rhetoric that gives the group a sense of legitimacy and reach.\n\nThey are a sad, fractious group, united more by their shared prejudices and grievances than any coherent plan. The Dragon Council tolerates them as useful idiots—a source of free propaganda and grassroots support—but privately views them with the same disdain they hold for all non-dragons. To the ScaleFront, they are visionary patriots. To everyone else, they are the town's most embarrassing and dangerous bigots."
+	},
+	"faculty": {
+		"name": "School Faculty",
+		"type": "Workplace",
 		"hq": "school",
-		"ranks": [ "Headmistress", "Teacher", "Student" ],
+		"ranks": [ "Headmistress", "Teacher", "Custodian" ],
 		"members": {
 			"uma": "Headmistress",
 			"kem": "Teacher",
-			"torva": "Teacher",
+			"torva": "Teacher"
+		},
+		"desc": "The faculty of Miniport's Adventuring Academy, led by the perpetually exhausted Headmistress Wynth, is a faction defined by a shared, Sisyphean task: preparing the next generation for a world that is becoming increasingly hostile and complex. They are overworked, underfunded by the Dragon Council, and burdened by bureaucracy, but united by a deep, if well-hidden, care for their students. They possess immense knowledge and power, but their influence is often curtailed by the need to appease their Council overseers and maintain order. Their faction goal is survival—of the school, its traditions, and its students—often forcing them into pragmatic compromises that conflict with their ideals."
+	},
+	"students": {
+		"name": "School Students",
+		"type": "",
+		"hq": "school",
+		"ranks": ["Student"],
+		"members": {
 			"binksy": "Student",
 			"mae": "Student",
 			"nocturna": "Student",
 			"stark": "Student",
 			"thalassa": "Student"
-		}
+		},
+		"desc": "The students are a faction of burgeoning power and passionate, if sometimes naive, ideals. They are here to learn the art of adventure, but their education is increasingly happening outside the classroom as they react to the injustices in their town. This faction is less a unified body and more a collection of cliques and causes, often at odds with each other but capable of uniting around a common threat. They are the source of the town's newest heroes—and its biggest troublemakers. Their faction goal is to find their place in the world, whether by upholding the system, tearing it down, or simply surviving it."
 	},
 	"tavern-workers": {
 		"name": "Tavern Workers Union",
 		"type": "Union",
-		"desc": "A lot of people in the town make their money through the town's tavern.",
 		"hq": "tavern",
 		"ranks": [ "Landlord", "Bouncer", "Cook", "Bartender", "Server"],
 		"members": {
-			"grenn": "Landlord",
-			"bogdan": "Bouncer",
 			"hamfast": "Cook",
 			"rodrik": "Bartender",
 			"willow": "Server"
-		}
+		},
+		"desc": "Operating in furtive whispers during late-night clean-ups and stolen moments in the pantry, the Tavern Worker's Union is a fledgling, secretive faction born from shared frustration and courage. Its members are the overworked and underpaid staff of The Lucky Die—the dishwashers, serving wenches, and kitchen helpers who have borne the brunt of Grenn's greed and Bogdan's intimidation for too long. They've watched their hours get longer, their pay get thinner, and their treatment get worse, all while Grenn's profits soar. The union is their desperate, whispered answer, a pact to risk everything for basic dignity and a fair share of the wealth their labor creates.\n\nTheir meetings are held in the only place they can be sure Grenn's ears don't reach: the walk-in freezer, their voices hushed against the hum of the condenser. The movement is spearheaded by a core of true believers:\n\nPip: A quick-fingered halfling dishwasher with a head for numbers and a simmering rage. He's the union's reluctant organizer, keeping meticulous, secret records of withheld wages and safety violations on waterproof parchment.\n\nMara: A stout dwarf serving wench with a famously excellent memory for orders. She's the union's recruiter, using her charm and rapport with the staff to quietly gauge discontent and bring trusted individuals into the fold.\n\nGlimmer: A young, idealistic half-elf bartender who assists Rodrik. She's the optimist, believing deeply in the cause and using her position to eavesdrop on Grenn and Bogdan's conversations, feeding intelligence back to the group.\n\nThey know the stakes are catastrophically high. If Grenn discovers their plot, the consequences wouldn't be mere firings—they'd be disappearances. Their fight is a quiet, terrifying one, not for revolution, but for a contract, a living wage, and the radical notion that their lives are worth more than the coin they generate for a crime lord. They are the trembling heart of a rebellion growing right under the boss's nose."
 	}
 }

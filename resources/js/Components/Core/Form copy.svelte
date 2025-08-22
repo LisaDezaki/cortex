@@ -1,7 +1,8 @@
-<!-- <script>
+<script>
 	import { inertia, page } from '@inertiajs/svelte'
 
-	import Heading from '@/Components/Heading.svelte';
+	import Flex    from '@/Components/Core/Flex.svelte';
+	import Heading from '@/Components/UI/Heading.svelte';
 
 	const user = $page.props.auth.user
 
@@ -16,8 +17,8 @@
 		recentlySuccessful,
 		status,
 		submitLabel,
-		title,
-		subtitle,
+		// title,
+		// subtitle,
         ...restProps
     } = $props()
 
@@ -25,12 +26,12 @@
 
 <form class="form {className}" {onsubmit} {...restProps}>
 
-	{#if title}
+	<!-- {#if title}
 		<Heading is="h4" as="h5"
 			heading={title}
 			subheading={subtitle}
 		/>
-	{/if}
+	{/if} -->
 
 	{@render children?.()}
 
@@ -53,9 +54,9 @@
 	{/if}
 
 	{#if actions}
-		<div class="flex items-center justify-center gap-4 mt-4 col-span-full">
+		<Flex align="center" justify="center" gap={3} class="mt-4 col-span-full">
 			{@render actions()}
-		</div>
+		</Flex>
 	{/if}
 
 </form>
@@ -85,4 +86,4 @@
 		@apply text-slate-400 mb-2 col-span-full w-full;
 	}
 
-</style> -->
+</style>

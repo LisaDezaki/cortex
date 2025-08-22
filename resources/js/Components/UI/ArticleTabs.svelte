@@ -1,6 +1,7 @@
 <script>
 
 	import { Tabs } from '@/Components/Core'
+	import Container from '@/Components/UI/Container.svelte'
 	import Icon from '@/Components/UI/Icon.svelte'
 
 	let {
@@ -29,7 +30,9 @@
 		{/each}
 	</Tabs.List>
 
-	{@render children?.()}
+	<div class="w-full">
+		{@render children?.()}
+	</div>
 
 </Tabs>
 
@@ -37,7 +40,7 @@
 <style lang="postcss">
 
 	:global(.article-tabs) {
-		@apply flex items-start gap-12 w-full;
+		@apply flex items-start justify-center gap-12 w-full;
 
 		:global(.tab-trigger) {
 			@apply flex items-center justify-start gap-2 px-3 py-1.5 rounded w-full;

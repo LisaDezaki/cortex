@@ -5,13 +5,12 @@
 	import Input from '@/Components/UI/Input.svelte'
 	import Label from '@/Components/UI/Form/Label.svelte'
 	
-	// const { form } = getContext("form");
+	const { form } = getContext("form");
 
 	let {
 		children,
 		class: className,
 		description = null,
-		errors,
 		inputClass,
 		label,
 		labelSrOnly = false,
@@ -19,7 +18,6 @@
 		name,
 		required = false,
 		type,
-		value = $bindable(),
         ...restProps
     } = $props()
 </script>
@@ -41,13 +39,12 @@
 	{#if type}
 		<Input {name} {type}
 			class="{inputClass} my-1"
-			bind:value
 		{...restProps} />
 	{/if}
 {/snippet}
 
 {#snippet errorBlock()}
-	<Error message={errors} />
+	<Error message={$form.errors[name]} />
 {/snippet}
 
 <!-- <pre>{JSON.stringify($form, null, 3)}</pre> -->

@@ -5,7 +5,7 @@
 	let {
         children,
 		class: className,
-		size = '5xl',
+		size = 'full',
 		...restProps
     } = $props()
 
@@ -17,6 +17,6 @@
 
 
 
-<Box class="container max-w-{size} mx-auto w-full {className}" {...restProps}>
+<Box class="container max-w-{size} w-full {className}" {...restProps}>
 	{@render children?.()}
 </Box>

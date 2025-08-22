@@ -5,7 +5,7 @@
 	let {
         children,
 		class: className,
-		// size,
+		size = "full",
     } = $props()
 
 </script>
@@ -14,6 +14,8 @@
 
 
 
-<section class="section w-full {className}">
-	{@render children?.()}
+<section class="section flex justify-center w-full {className}">
+	<Container size={size}>
+		{@render children?.()}
+	</Container>
 </section>

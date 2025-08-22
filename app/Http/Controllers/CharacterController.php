@@ -120,8 +120,14 @@ class CharacterController extends Controller
 			'customFieldValues.customField'
 		]);
 
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => 'character'
+		])->with('options')->get();
+
 		return Inertia::render('Characters/Show', [
 			'character'  => new CharacterResource($character),
+			'customFields' => CustomFieldResource::collection($customFields)
 		]);
 	}
 

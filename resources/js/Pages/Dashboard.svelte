@@ -109,41 +109,42 @@
 				</Flex>
 			</Section>
 			<Section size="7xl" class="relative pt-12">
+				<Heading is="h1" as="h2" heading={activeProject.name} />
 				<p class="max-w-[65ch] my-6">{activeProject.description}</p>
 				<Flex justify="center" gap={3} class="my-12 w-full">
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500" href={route('characters')}>
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('characters')}>
 						<span class="font-style-h3 opacity-60">{activeProject.characters?.length || 0}</span>
 						<span class="font-style-large">Characters</span>
 					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500">
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
 						<span class="font-style-h3 opacity-60">{activeProject.dialogue?.length || 0}</span>
 						<span class="font-style-large">Dialogues</span>
 					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500">
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
 						<span class="font-style-h3 opacity-60">{activeProject.events?.length || 0}</span>
 						<span class="font-style-large">Events</span>
 					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500" href={route('factions')}>
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('factions')}>
 						<span class="font-style-h3 opacity-60">{activeProject.factions?.length || 0}</span>
 						<span class="font-style-large">Factions</span>
 					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500">
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
 						<span class="font-style-h3 opacity-60">{activeProject.items?.length || 0}</span>
 						<span class="font-style-large">Items</span>
 					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500" href={route('locations')}>
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('locations')}>
 						<span class="font-style-h3 opacity-60">{activeProject.locations?.length || 0}</span>
 						<span class="font-style-large">Locations</span>
 					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500">
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
 						<span class="font-style-h3 opacity-60">{activeProject.mechanics?.length || 0}</span>
 						<span class="font-style-large">Mechanics</span>
 					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500">
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
 						<span class="font-style-h3 opacity-60">{activeProject.quests?.length || 0}</span>
 						<span class="font-style-large">Quests</span>
 					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-slate-500/10 hover:text-emerald-500">
+					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
 						<span class="font-style-h3 opacity-60">{activeProject.wildlife?.length || 0}</span>
 						<span class="font-style-large">Wildlife</span>
 					</Link>
@@ -151,8 +152,8 @@
 			</Section>
 
 			{#if activeProject.characters?.length > 0}
-				<Section size="7xl">
-					<Heading is="h4" as="h6" heading="Recent Characters" />
+				<Section size="7xl" class="py-6">
+					<Heading is="h3" as="h5" heading="Recent Characters" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each activeProject.characters as character}
 							<Card
@@ -170,8 +171,8 @@
 			{/if}
 
 			{#if activeProject.factions?.length > 0}
-				<Section size="7xl">
-					<Heading is="h4" as="h6" heading="Recent Factions" />
+				<Section size="7xl" class="py-6">
+					<Heading is="h3" as="h5" heading="Recent Factions" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each activeProject.factions as faction}
 							<Card
@@ -189,8 +190,8 @@
 			{/if}
 
 			{#if activeProject.locations?.length > 0}
-				<Section size="7xl">
-					<Heading is="h4" as="h6" heading="Recent Locations" />
+				<Section size="7xl" class="py-6">
+					<Heading is="h3" as="h5" heading="Recent Locations" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each activeProject.locations as location}
 							<Card
@@ -207,7 +208,7 @@
 				</Section>
 			{/if}
 		{:else}
-			<Section class="py-12">
+			<Section class="px-12 py-12">
 				{#if projects}
 					<Grid gap={3} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
 						{#each projects as project}

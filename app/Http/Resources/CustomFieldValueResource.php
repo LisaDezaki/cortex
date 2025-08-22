@@ -16,7 +16,8 @@ class CustomFieldValueResource extends JsonResource
     {
 		return [
 			'customFieldId' => $this->custom_field_id,
-			'value' => $this->getDisplayValue(),
+			'value' => $this->value,
+			'displayValue' => $this->getDisplayValue(),
 			'field' => new CustomFieldResource($this->whenLoaded('customField'))
 		];
     }

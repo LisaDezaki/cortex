@@ -19,6 +19,7 @@
 	import Button      from '@/Components/UI/Button.svelte'
 	import Checkbox    from '@/Components/UI/Form/Checkbox.svelte'
 	import Dropdown    from '@/Components/UI/Dropdown.svelte'
+	import Field       from '@/Components/UI/Field.svelte'
 	import Heading     from '@/Components/UI/Heading.svelte'
 	import Input       from '@/Components/UI/Input.svelte'
 	import PageHeader  from '@/Components/UI/PageHeader.svelte'
@@ -29,12 +30,13 @@
 
 	const activeProject = $page.props.activeProject?.data
 
-	const form = useForm({
-		input: '',
-		text: '',
-		email: '',
-		password: '',
-		number: null,
+	const initialData = {
+		input: 'Input',
+		text: 'Text input',
+		icon: 'Input with icon',
+		email: 'email',
+		password: 'password',
+		number: 123,
 		url: '',
 		search: '',
 		textarea: '',
@@ -78,7 +80,7 @@
 		radio: 'radio1',
 		switch: false,
 		
-	})
+	}
 	
 </script>
 
@@ -97,7 +99,7 @@
 
 	{#snippet article()}
 		<Section size="5xl" class="overflow-y-auto">
-			<Tabs value="tab1" class="py-12">
+			<Tabs value="tab2" class="py-12">
 
 				<Tabs.List class="max-w-4xl">
 					<Tabs.Trigger value="tab1">General</Tabs.Trigger>
@@ -117,7 +119,7 @@
 						<img src="/img/world-4.png" alt="world map" />
 					</PanZoom>
 
-					<UploadContext bind:value={$form.upload}>
+					<!-- <UploadContext bind:value={$form.upload}>
 						<UploadTrigger />
 						<UploadPreview class="aspect-square h-48 w-72" />
 					</UploadContext>
@@ -125,7 +127,7 @@
 					<UploadContext bind:value={$form.upload_multi} multiple>
 						<UploadTrigger />
 						<UploadPreview class="aspect-square h-48 w-72" />
-					</UploadContext>
+					</UploadContext> -->
 					
 					<!-- Avatar -->
 
@@ -224,74 +226,78 @@
 						heading="Form Components"
 						class="mt-12 mb-12"
 					/>
-					<Form class="grid grid-cols-4 gap-6">
+					<Form class="grid grid-cols-4 gap-6" initialData={initialData}>
 						<div class="col-span-1 space-y-3">
-
-
 							
 							<!-- Input -->
 
-							<Input type="text"
-								id="text"
+							<!-- <Input type="text"
+								name="text"
 								class="w-full"
 								placeholder="Input"
-								bind:value={$form.input}
+							/> -->
+
+							<Field type="text"
+								name="text"
+								label="Name"
+								class="w-full"
+								placeholder="Input"
 							/>
 
-							<Input type="text"
-								id="text"
+							<!-- <Input type="text"
+								name="icon"
 								class="w-full"
 								icon="TextAa"
 								placeholder="Input with icon"
-								bind:value={$form.text}
+							/> -->
+
+							<Field type="text"
+								name="icon"
+								label="Name"
+								class="w-full"
+								placeholder="Input with icon"
 							/>
 
 							<Input type="email"
-								id="email"
+								name="email"
 								class="w-full"
 								icon="At"
 								placeholder="user@email.com"
-								bind:value={$form.email}
 							/>
 
 							<Input type="password"
-								id="password"
+								name="password"
 								class="w-full"
 								icon="Password"
 								placeholder="Input with icon"
-								bind:value={$form.password}
 							/>
 
 							<Input type="number"
-								id="number"
+								name="number"
 								class="w-full"
 								icon="Hash"
 								placeholder={0}
-								bind:value={$form.number}
 							/>
 
 							<Input type="url"
-								id="url"
+								name="url"
 								class="w-full"
 								icon="Link"
 								placeholder="URL input"
-								bind:value={$form.url}
 							/>
 
 							<Input type="search"
-								id="search"
+								name="search"
 								class="w-full"
 								icon="MagnifyingGlass"
 								placeholder="Search..."
-								bind:value={$form.search}
 							/>
 
 							<Input type="textarea"
-								id="textarea"
+								name="textarea"
 								class="w-full"
 								placeholder="Textarea"
 								rows={3}
-								bind:value={$form.textarea}
 							/>
 
 							<!-- <Field type="text"
@@ -324,7 +330,7 @@
 
 							<!-- Select -->
 
-							<Input type="select"
+							<!-- <Input type="select"
 								id="select"
 								class="w-full"
 								placeholder="Select..."
@@ -397,7 +403,7 @@
 									{ icon: "Backpack",       value: 'items',      label: 'Items' }
 								]}
 								multiple
-							/>
+							/> -->
 
 							<!-- <Input type="select"
 								id="select_multi"
@@ -470,7 +476,7 @@
 								bind:value={$form.upload}
 							/> -->
 
-							<Input type="file"
+							<!-- <Input type="file"
 								id="image"
 								class="w-full"
 								icon="Image"
@@ -484,14 +490,14 @@
 								icon="File"
 								placeholder="Upload a file..."
 								bind:value={$form.file}
-							/>
+							/> -->
 
 						</div>
 						<div class="col-span-1 space-y-3">
 
 							<!-- Slider -->
 						
-							<Input type="slider"
+							<!-- <Input type="slider"
 								id="slider1"
 								style="fill"
 								bind:value={$form.slider_1}
@@ -515,9 +521,9 @@
 								bind:value={$form.slider_4}
 								step={25}
 								showTicks
-							/>
+							/> -->
 
-							<Input type="slider"
+							<!-- <Input type="slider"
 								id="slider5"
 								style="fill"
 								bind:value={$form.slider_5}
@@ -545,7 +551,7 @@
 								step={25}
 								showTicks
 								multiple
-							/>
+							/> -->
 							<!-- <Form.Field
 								id="slider"
 								inputType="slider"
@@ -587,7 +593,7 @@
 
 							<!-- Checkbox -->
 
-							<Input type="checkbox"
+							<!-- <Input type="checkbox"
 								id="checkbox1"
 								bind:checked={$form.checkbox_1}
 								labelText="Checkbox example #1"
@@ -612,11 +618,11 @@
 									{ value: 'checkbox2', label: 'Checkbox example #2' },
 									{ value: 'checkbox3', label: 'Checkbox example #3', disabled: true },
 								]}
-							/>
+							/> -->
 
 							<!-- Radio -->
 
-							<Input type="radio"
+							<!-- <Input type="radio"
 								id="radio"
 								bind:checked={$form.radio}
 								options={[
@@ -624,7 +630,7 @@
 									{ value: 'radio2', label: 'Radio example #2' },
 									{ value: 'radio3', label: 'Radio example #3', disabled: true },
 								]}
-							/>
+							/> -->
 
 							<!-- Switch -->
 

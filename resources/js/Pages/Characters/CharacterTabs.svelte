@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 
 	import ArticleTabs  from '@/Components/UI/ArticleTabs.svelte'
 
@@ -12,16 +12,15 @@
 </script>
 
 <ArticleTabs class={className} value={tab} tabs={[
-		{ icon: "UserList",       label: "Details",       value: "details"       },
-		{ icon: "TagSimple",      label: "Tags",          value: "tags"          },
-		{ icon: "Handshake",      label: "Relationships", value: "relationships" },
-		{ icon: "FlagBannerFold", label: "Factions",      value: "factions"      },
-		{ icon: "Backpack",       label: "Inventory",     value: "items"         },
-		{ icon: "MapPinArea",     label: "Location",      value: "location"      },
-		{ icon: "ImagesSquare",   label: "Media",         value: "media"         },
-		{ icon: "Textbox",        label: "Custom Fields", value: "custom"        }
+	{ icon: "UserList",       label: "Details",       value: "details"       },
+	{ icon: "Handshake",      label: "Relationships", value: "relationships" },
+	{ icon: "FlagBannerFold", label: "Factions",      value: "factions"      },
+	{ icon: "Backpack",       label: "Inventory",     value: "items"         },
+	{ icon: "MapPinArea",     label: "Location",      value: "location"      },
+	{ icon: "ImagesSquare",   label: "Media",         value: "media"         },
+	{ icon: "Textbox",        label: "Custom Fields", value: "custom"        }
 ]} {...restProps}>
 
 	{@render children?.()}
 
-</ArticleTabs>
+</ArticleTabs> -->

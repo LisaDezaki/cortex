@@ -92,7 +92,7 @@
 	bind:position
 	bind:zoom
 	constrain={constrain}
-	class="map-container {className}"
+	class="map-container bg-neutral {className}"
 	{minZoom} {maxZoom}
 	debug={{
 		location: location.name
