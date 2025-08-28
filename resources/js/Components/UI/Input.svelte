@@ -1,15 +1,15 @@
 <script>
-	import Checkbox   from '@/Components/UI/Form/Checkbox.svelte'
-	import Checkboxes from '@/Components/UI/Form/Checkboxes.svelte'
-	import Combobox   from '@/Components/UI/Form/Combobox.svelte'
-	import Input      from '@/Components/UI/Form/Input.svelte'
-	import Number     from '@/Components/UI/Form/Number.svelte'
-    import Radio      from '@/Components/UI/Form/Radio.svelte'
-	import Select     from '@/Components/UI/Form/Select.svelte'
-	import Slider     from '@/Components/UI/Form/Slider.svelte'
-	import Switch     from '@/Components/UI/Form/Switch.svelte'
-	import Textarea   from '@/Components/UI/Form/Textarea.svelte'
-	import Upload     from '@/Components/UI/Form/Upload.svelte'
+	import Checkbox   from '@/Components/UI/Inputs/Checkbox.svelte'
+	import Checkboxes from '@/Components/UI/Inputs/Checkboxes.svelte'
+	import Combobox   from '@/Components/UI/Inputs/Combobox.svelte'
+	import Input      from '@/Components/UI/Inputs/Input.svelte'
+	import Number     from '@/Components/UI/Inputs/Number.svelte'
+    import Radio      from '@/Components/UI/Inputs/Radio.svelte'
+	import Select     from '@/Components/UI/Inputs/Select.svelte'
+	import Slider     from '@/Components/UI/Inputs/Slider.svelte'
+	import Switch     from '@/Components/UI/Inputs/Switch.svelte'
+	import Textarea   from '@/Components/UI/Inputs/Textarea.svelte'
+	import Upload     from '@/Components/UI/Inputs/Upload.svelte'
 
 	let {
 		checked = $bindable(false),

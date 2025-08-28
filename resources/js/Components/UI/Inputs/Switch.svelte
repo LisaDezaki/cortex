@@ -1,7 +1,7 @@
 <script>
 
 	import { Switch } from "bits-ui";
-	import Label from '@/Components/UI/Form/Label.svelte'
+	import Label from './Label.svelte'
 
     let {
 		checked = $bindable(false),

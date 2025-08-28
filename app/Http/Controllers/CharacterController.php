@@ -10,7 +10,6 @@ use App\Services\MediaService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -25,24 +24,39 @@ class CharacterController extends Controller
 		$this->mediaService = $mediaService;
 	}
 
+	/**
+	 * VALIDATION
+	 * 
+	 * Validate the incoming requests.
+	 * Validation will fail if the incoming request includes any fields that are not
+	 * included in this list.
+	 */
+
 	protected $validationRules = [
-		'name'                  => ['required',  'string'],
+		'name'                  => ['sometimes', 'string'],
 		'description'           => ['nullable',  'string'],
+		'banner'                => ['nullable',  'string'],
 		'portrait'              => ['nullable',  'string'],
 
 		'faction_id'            => ['nullable',  'exists:factions,id'],
 		'location_id'           => ['nullable',  'exists:locations,id'],
 		'relationships'         => ['sometimes',  'array'],
 		'relationships.*'		=> ['present'],
-		// 'relationships.*.id'    => ['required',  'distinct', 'exists:characters,id'],
-		// 'relationships.*.role'  => ['required', 'string'],
-		// 'relationships.*.related_role' => ['required', 'string'],
+		'relationships.*.id'    => ['required',  'distinct', 'exists:characters,id'],
+		'relationships.*.role'  => ['required', 'string'],
+		'relationships.*.related_role' => ['required', 'string'],
 
 		'custom_fields'			=> ['sometimes', 'array'],
         'custom_fields.*'       => ['present'],
 		'custom_fields.*.id'    => ['required', 'distinct', 'exists:custom_fields,id'],
 		'custom_fields.*.value' => ['nullable', 'string']
 	];
+
+	/**
+	 * INDEX
+	 * 
+	 * Show the list of Characters
+	 */
 
 	public function index()
 	{
@@ -61,34 +75,29 @@ class CharacterController extends Controller
 		]);
 	}
 
-	public function create()
-	{
-		$activeProject = Auth::user()->active_project;
-		if (!$activeProject) {
-			return Redirect::route('dashboard');
-		}
+	/**
+	 * CREATE / STORE
+	 * 
+	 * When a CharacterCreateRequest is received, it will be handled by the Store
+	 * method in the CharacterController. The user will likely only be submitting
+	 * a name to initially create a Character.
+	 */
 
-		$customFields = CustomField::where([
-			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'character'
-		])->with('options')->get();
-
-		$traitsAppearance  = File::get(database_path('data/options/appearance.json'));
-		$traitsPersonality = File::get(database_path('data/options/personality.json'));
-
-		return Inertia::render('Characters/Create', [
-			'customFields' => CustomFieldResource::collection($customFields),
-			'traitsAppearance'  => json_decode($traitsAppearance,  true),
-			'traitsPersonality' => json_decode($traitsPersonality, true)
-		]);
-	}
-
+	public function create() {}
 	public function store(Request $request): RedirectResponse
 	{
 		$validatedData = $request->validate($this->validationRules);
 		$character = Auth::user()->activeProject()->characters()->create($validatedData);
-		$this->handlePortrait($request, $character);
-		$this->handleCustomFields($validatedData['custom_fields'], $character);
+	
+		if ($request->has('portrait')) {
+			$this->mediaService->attachMedia($character, 'portrait', $request->portrait);
+			unset($validatedData['portrait']);
+		}
+
+		if ($request->has('banner')) {
+			$this->mediaService->attachMedia($character, 'banner', $request->banner);
+			unset($validatedData['banner']);
+		}
 
 		if ($request->has('faction_id')) {
 			$character->faction()->associate($validatedData['faction_id']);
@@ -102,18 +111,25 @@ class CharacterController extends Controller
 			$character->relationships()->sync($validatedData['relationships']);
 		}
 
+		$this->handleCustomFields($validatedData['custom_fields'], $character);
 		$character->save();
-
 		return Redirect::route("characters.show", [
 			'character' => $character->slug
 		]);
 	}
+
+	/**
+	 * SHOW
+	 * 
+	 * Render the Character entity page for the requested Character.
+	 */
 
 	public function show(Character $character): Response
 	{
 		$character->load([
 			'location',
 			'factions',
+			'banner',
 			'portrait',
 			'relationships.portrait',
 			'inverseRelationships.portrait',
@@ -131,58 +147,52 @@ class CharacterController extends Controller
 		]);
 	}
 
-	public function edit(Character $character): Response
-	{
-		$character->load([
-			'location',
-			'factions',
-			'portrait',
-			'relationships.portrait',
-			'inverseRelationships.portrait',
-			'customFieldValues.customField'
-		]);
 
-		$customFields = CustomField::where([
-			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'character'
-		])->with('options')->get();
+	/**
+	 * EDIT / UPDATE
+	 * 
+	 * When a CharacterUpdateRequest is received, it will be handled by the Update
+	 * method in the CharacterController. The user may submit any piece of
+	 * Character model to update, and so it must be updated on a per-item basis.
+	 */
 
-		$traitsAppearance  = File::get(database_path('data/options/appearance.json'));
-		$traitsPersonality = File::get(database_path('data/options/personality.json'));
-
-		return Inertia::render('Characters/Edit', [
-			'character'  => new CharacterResource($character),
-			'customFields' => CustomFieldResource::collection($customFields),
-			'traitsAppearance'  => json_decode($traitsAppearance,  true),
-			'traitsPersonality' => json_decode($traitsPersonality, true)
-		]);
-	}
-
+	public function edit(Character $character) {}
 	public function update(Request $request, Character $character): RedirectResponse
 	{
 		$validatedData = $request->validate($this->validationRules);
-		$character->fill($validatedData);
-		$this->handlePortrait($request, $character);
-		$this->handleCustomFields($validatedData['custom_fields'], $character);
 
-		// if ($request->has('faction_id')) {
-		// 	$character->factions()->associate($validatedData['faction_id']);
-		// }
+		if ($request->has('banner')) {
+			$this->mediaService->attachMedia($character, 'banner', $request->banner);
+			unset($validatedData['banner']);
+		}
+
+		if ($request->has('portrait')) {
+			$this->mediaService->attachMedia($character, 'portrait', $request->portrait);
+			unset($validatedData['portrait']);
+		}
+
+		if ($request->has('custom_fields')) {
+			$this->handleCustomFields($validatedData['custom_fields'], $character);
+		}
 
 		if ($request->has('location_id')) {
 			$character->location()->associate($validatedData['location_id']);
 		}
-
-		// if ($request->has('relationships')) {
-		// 	$character->relationships()->sync($validatedData['relationships']);
-		// }
-
-		$character->update();
 		
+		$character->fill($validatedData);
+		$character->update();
 		return Redirect::route("characters.show", [
 			'character' => $character->slug
 		]);
 	}
+
+
+	/**
+	 * DELETE
+	 * 
+	 * Remove the entity and all associated data from the database.
+	 * Characters have soft-deletes, meaning they can be restored.
+	 */
 
 	public function destroy(Request $request, Character $character)
 	{
@@ -202,6 +212,8 @@ class CharacterController extends Controller
 		return Redirect::route("characters");
 	}
 
+
+
 	public function settings(Request $request): Response
 	{
 		$customFields = CustomField::where([
@@ -214,23 +226,7 @@ class CharacterController extends Controller
 		]);
 	}
 
-	public function handlePortrait(Request $request, Character $character)
-	{
-		$request->validate([
-			'portrait' => 'string|nullable',
-		]);
 
-		$user = Auth::user();
-		$userDir    = "user_"   .substr($user->id, 0, 8);
-		$projectDir = "project_".substr($user->active_project, 0, 8);
-
-		$this->mediaService->updateImage(
-			$character,
-			$character->portrait(),
-			$request->portrait,
-			"$userDir/$projectDir/characters"
-		);
-	}
 
 	public function handleCustomFields(array $custom_fields)
 	{

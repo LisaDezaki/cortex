@@ -127,8 +127,9 @@
 		"ranks": [ "Headmistress", "Teacher", "Custodian" ],
 		"members": {
 			"uma": "Headmistress",
+			"bak": "Teacher",
 			"kem": "Teacher",
-			"torva": "Teacher"
+			"orlok": "Teacher"
 		},
 		"desc": "The faculty of Miniport's Adventuring Academy, led by the perpetually exhausted Headmistress Wynth, is a faction defined by a shared, Sisyphean task: preparing the next generation for a world that is becoming increasingly hostile and complex. They are overworked, underfunded by the Dragon Council, and burdened by bureaucracy, but united by a deep, if well-hidden, care for their students. They possess immense knowledge and power, but their influence is often curtailed by the need to appease their Council overseers and maintain order. Their faction goal is survival—of the school, its traditions, and its students—often forcing them into pragmatic compromises that conflict with their ideals."
 	},

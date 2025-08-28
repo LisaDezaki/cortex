@@ -17,7 +17,7 @@
 	import Badge       from '@/Components/UI/Badge.svelte'
 	import Breadcrumbs from '@/Components/UI/Breadcrumbs.svelte'
 	import Button      from '@/Components/UI/Button.svelte'
-	import Checkbox    from '@/Components/UI/Form/Checkbox.svelte'
+	import Checkbox    from '@/Components/UI/Inputs/Checkbox.svelte'
 	import Dropdown    from '@/Components/UI/Dropdown.svelte'
 	import Field       from '@/Components/UI/Field.svelte'
 	import Heading     from '@/Components/UI/Heading.svelte'
@@ -30,7 +30,7 @@
 
 	const activeProject = $page.props.activeProject?.data
 
-	const initialData = {
+	const form = useForm({
 		input: 'Input',
 		text: 'Text input',
 		icon: 'Input with icon',
@@ -80,7 +80,7 @@
 		radio: 'radio1',
 		switch: false,
 		
-	}
+	})
 	
 </script>
 
@@ -226,7 +226,7 @@
 						heading="Form Components"
 						class="mt-12 mb-12"
 					/>
-					<Form class="grid grid-cols-4 gap-6" initialData={initialData}>
+					<Form class="grid grid-cols-4 gap-6" form={form}>
 						<div class="col-span-1 space-y-3">
 							
 							<!-- Input -->

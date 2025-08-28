@@ -38,7 +38,7 @@
 
 	:global(.navatar-fallback) {
 		@apply flex items-center justify-center w-full h-full;
-		@apply rounded-full;
+		@apply rounded-full font-light;
 		color: var(--text-accent);
 	}
 

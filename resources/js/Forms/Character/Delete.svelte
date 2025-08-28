@@ -32,7 +32,7 @@
 	recentlySuccessful={$form.recentlySuccessful}
 >
 	<Stack class="p-6">
-		<p class="mb-4">This process will remove this character and all associated data from the database. Are you sure you want to delete this character? </p>
+		<p class="mb-3">This process will remove this character and all associated data from the database. Are you sure you want to delete this character? </p>
 	
 		<p>Please type the name of the character ("<strong>{character.name}</strong>") to confirm deletion.</p>
 	

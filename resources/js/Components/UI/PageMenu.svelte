@@ -23,8 +23,11 @@
 
 {#snippet menuItem(item)}
 	<Inline as="li" class="page-menu-item">
-		<Link class="flex items-center gap-3 px-3 py-1.5 rounded w-full hover:bg-neutral-softest {item.active ? 'text-accent' : ''}" active={item.active} href={item.href} preserveScroll>
-			
+		<svelte:element this={item.href ? 'a' : 'button'}
+			class="flex items-center gap-3 px-3 py-1.5 rounded w-full hover:bg-neutral-softest"
+			class:text-accent={item.active}
+			class:text-danger={item.theme == "danger"}
+		{...item}>
 			<Icon name={item.icon} size="md" />
 
 			<div class="font-style-regular flex-shrink truncate">
@@ -32,16 +35,11 @@
 					{item.label}
 				{/if}
 			</div>
-
-			<!-- {#if item.active}
-				<Icon class="flex-shrink-0 ml-auto" name="ArrowRight" size="sm" />
-			{/if} -->
-
-		</Link>
+		</svelte:element>
 	</Inline>
 {/snippet}
 
-<Box class="sticky top-6 place-self-start {className}">
+<Box class="sticky top-12 place-self-start {className}">
 	<Stack class="page-menu min-w-48 py-2 rounded-lg" {...restProps}>
 	
 		{#if restProps.searchable}

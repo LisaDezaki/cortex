@@ -9,6 +9,15 @@
 		"desc": "As the first mate and chief navigator of Captain Bugbeard's infamous vessel, The Crimson Tide, Abigail is the undisputed brains of the operation. While Bugbeard provides the booming voice and fearsome reputation, it is Abigail's sharp mind that charts their course through both treacherous waters and even more treacherous dungeon delves.\n\nA satyr whose keen eyes miss nothing, she reads star-charts, ocean currents, and the subtle tells of a duplicitous noble with equal skill. Her tools are not just a sextant and compass, but a well-maintained flintlock pistol for surprising obstacles and a wickedly sharp cutlass for the expected ones.\n\nHer loyalty to her crew is as solid as the ship's keel, forged not just in shared plunder but in the unbreakable bond of those who have stared into the leviathan's maw and lived to tell the tale.\n\nBeneath her pragmatic and calculating exterior lies a spirit that thrives on the freedom of the high seas and the thrill of the unknown. She joined Bugbeard's crew not out of desperation, but by choice, trading a predictable life on land for the endless horizon and the promise of forgotten treasures buried within the diorama's most remote dungeon islands.\n\nShe is fiercely protective of her found family, and while she might roll her eyes at the crew's more boisterous antics, any threat to them is met with cold, calculated precision. In the heat of a dungeon battle, her voice cuts through the chaos with clear, tactical commands, making her the steady rudder that guides the pirate crew through any storm, be it of water, magic, or steel."
 	},
 
+	"bak": {
+		"name": "Bak",
+		"alias": "The Historian",
+		"species": "goblin",
+		"location": "school",
+		"personality": ["Boring", "Talkative"],
+		"desc": "In a dusty, dimly lit classroom that smells of old parchment and chalk dust, Professor Bak teaches the history of Diorama. A goblin with spectacles perpetually sliding down his nose and a tweed vest covered in ink stains, he is the Adventuring Academy's resident historian and lore-master. His knowledge of historical events, royal lineages, and epic battles is encyclopedic and utterly unimpeachable.\n\nHe is also, quite possibly, the most soul-crushingly boring orator in all of New Miniport. Professor Bak possesses the unique and tragic gift of transforming tales of legendary heroism, catastrophic dragon attacks, and world-shattering magical calamities into a monotonous recitation of dates, supply-line logistics, and agricultural impact reports.\n\nFor Professor Bak, the \"why\" of history is infinitely less interesting than the \"what,\" the \"when,\" and the \"how much it cost.\"\n\nHe will spend an entire hour detailing the tax reforms that preceded the Rise of the Serpent Kings, but only mention the ensuing century of tyrannical rule as a footnote on grain production.\n\nStudents quickly learn that his class is the ultimate test of endurance; a place where the most thrilling adventures go to die a slow, pedantic death. Yet, buried within his endless droning are gems of crucial information—the exact weakness of a long-dead lich, the secret entrance to a forgotten fortress, the true name of a demon lord—if anyone can manage to stay awake long enough to hear it. He is a living library, but one where the most exciting stories are locked in the driest, most verbose books on the shelf."
+	},
+
 	"barry": {
 		"name": "Barry",
 		"alias": "The Butcher",
@@ -66,7 +75,7 @@
 		"name": "Dirk",
 		"alias": "The Private Investigator",
 		"species": "orc",
-		"location": "shopping-mall",
+		"location": "mall",
 		"personality": ["Analytical", "Chain-smoker", "Meticulous", "Perceptive"],
 		"desc": "In a dimly-lit office tucked between a defunct arcade and a candle shop in the New Miniport Galleria, you'll find Dirk. A hulking orc in a trench coat that's seen better days, he speaks in the gravelly, metaphor-laden drawl of a hardboiled noir detective, a style starkly at odds with his orcish accent. It's a dissonance that makes clients pause, but it never lasts long.\n\nBehind the world-weary act is the sharpest investigative mind in the region. Dirk can spot a misplaced fiber at a crime scene, read a micro-expression like a billboard, and piece together clues everyone else has trampled over. His methods are unorthodox, but his results are undeniable.\n\nHis greatest nemesis isn't a thug in a back alley, but the soul-crushing bureaucracy of the New Miniport PD. He's locked in a perpetual, grinding battle to access public records they are legally obligated to provide, a battle personified by Officer Laggard, a tortle cop whose deliberate pace makes molasses look speedy.\n\nWhile he handles the mundane cases that pay the rent (the Missing Hikers, the ever-present Graffitti, the infamous Stolen Bike), his real focus is his magnum opus: building an ironclad case against the Cold-Bloods syndicate. He's certain their operations are a front for something far darker, and he's determined to connect their crime boss, the seemingly respectable tavern owner Grenn, to the rot festering beneath New Miniport's streets. All he needs is one more break, and the patience to outlast Laggard's next delay tactic."
 	},
@@ -136,11 +145,19 @@
 
 	"kem": {
 		"name": "Kem",
-		"alias": "The Professor",
-		"species": "goblin",
+		"alias": "The Alchemist",
+		"species": "kenku",
 		"location": "school",
 		"personality": ["Erratic", "Unpredictable"],
 		"desc": "In a classroom that hums with the energy of contained arcane reactions and smells faintly of ozone and sulfur, Professor Kem is a whirlwind of manic, brilliant energy. A goblin whose spectacles are perpetually askew and whose lab coat is stained with a fascinating history of metaphysical mishaps, he lives and breathes the intricate science of adventure. To him, a dungeon isn't just a place of monsters and treasure; it's a grand, unpredictable laboratory filled with unstable reagents, temporal anomalies, and substances that defy conventional physics.\n\nHe teaches his students to see the world not through a lens of mere combat, but through the rigorous principles of observation, hypothesis, and experimental verification.\n\nHis passion is utterly contagious. He doesn't just lecture; he performs, his voice rising to a fever pitch of excitement as he demonstrates the resonant frequency that shatters phantom crystal or the precise alchemical compound that neutralizes a slime's corrosive ooze. For every monstrous obstacle and environmental puzzle the dungeons throw at his students, Kem believes there is a logical, scientific solution waiting to be discovered.\n\nHe loves nothing more than the spark of understanding in a student's eye, the moment a chaotic magical effect is neatly explained by a elegant equation. In a world of brute force and simple spells, Professor Kem is a passionate advocate for the power of a keen mind and the scientific method, proving that the most powerful tool any adventurer can carry is their intellect."
+	},
+
+	"kero": {
+		"name": "Kero",
+		"alias": "The Sensei",
+		"species": "frogfolk",
+		"location": "downtown",
+		"desc": "In a modest, slightly worn dojo tucked between a bakery and a tailor in the downtown district, the air is thick with the sound of focused exertion and the smell of polished wood and sweat. Here, Kero, a wiry and intensely perceptive frogfolk of few words, presides as sensei. His establishment, aptly named Saving Throw, is renowned not for teaching traditional martial arts, but for imparting a brutally practical philosophy of self-preservation.\n\nKero believes that a real fight isn't won with honor, but with survival. His curriculum is a unique blend of melee combat, environmental awareness, and cunning, designed to turn a student's panic into a tactical advantage.\n\nKero specializes in teaching adventuring students how to use anything at their disposal as a weapon—a chair leg, a hot pie from the bakery next door, a bag of flour to blind an opponent. He drills them in using an enemy's weight against them, how to turn a shove into a fall down a flight of stairs, and how to always, always, be aware of the nearest exit.\n\nHis lessons are less about kata and more about controlled chaos. While he maintains a stern, disciplined exterior, he possesses a deep, quiet care for his students, many of whom come from the poorer parts of town and cannot afford traditional weapon training.\n\nTo Kero, every student who learns to land safely from a push or disarm a bully with a belt is a life improved, a personal victory in a world that often feels stacked against the little guy. He is teaching them that the most important roll they'll ever make is the one to avoid getting hit."
 	},
 
 	"lafferty": {
@@ -195,11 +212,19 @@
 	},
 
 	"montag": {
-		"name": "Montag",
+		"name": "Montague",
 		"alias": "The Firefighter",
 		"species": "loxodon",
-		"desc": "Montag is a loxodon firefighter.",
-		"location": null
+		"location": null,
+		"desc": "In a town built largely of wood and packed with thatched roofs, magical mishaps, and the occasional alchemical explosion, the role of firefighter is an important duty. And there is no one in town more suited to this duty than Montague, a towering, immensely patient loxodon.\n\nAs the captain of the town's small but dedicated fire brigade, he is a calming, steadfast presence. His size and strength allow him to clear debris and support buckling structures, while his powerful trunk is a uniquely versatile tool, capable of delivering a precise deluge of water or carefully ventilating a roof to control a blaze. He is a pillar of the community, respected by all for his courage and his gentle, steady nature.\n\nMontague's role, however, has become increasingly complex and political. While he and his crew are officially funded by the town, they find themselves constantly at odds with the Dragon Council's new priorities. They are chronically underfunded, their equipment is aging, and their requests for better magical suppression gear are ignored—while just across the river, the DragonCorp tower construction site has its own state-of-the-art, privately funded fire-prevention system.\n\nMontague often has to make difficult choices about allocating his scarce resources, a quiet tension that pits his duty to the entire town against the Council's neglect of its older districts. He is a silent witness to the town's inequalities, and one of the few figures of authority who genuinely has everyone's best interests at heart."
+	},
+
+	"moss": {
+		"name": "Moss",
+		"alias": "The Forestguard",
+		"species": "firbolg",
+		"location": "forest",
+		"desc": "Moss is one of the forest's protectors."
 	},
 
 	"murhdox": {
@@ -210,6 +235,14 @@
 		"desc": "Where Bhezox controls the money, Muhrdox controls the minds. A media mogul with blazing crimson scales and a tie the color of fresh blood, his influence is a constant, insidious presence in every New Miniport home. He owns the news networks that spin pro-Council propaganda, the social media platforms that algorithmically silence dissent, and the radio stations that play jingles praising DragonCorp's \"innovation.\"\n\nHe crafts narratives, manufactures consent, and turns public opinion with the ease of changing a channel, ensuring the populace is too misinformed, distracted, or fearful to question the Council's authority. He is a master of perception, believing that whoever tells the story controls the world."
 	},
 
+	"murv": {
+		"name": "Murv",
+		"alias": "The Boxer",
+		"species": "ratfolk",
+		"location": "tavern",
+		"desc": "Murv is an ex-boxer who retired after going blind during his big title fight years ago. He insists he's still got it, but most think he's all bluster."
+	},
+
 	"naomi": {
 		"name": "Naomi",
 		"alias": "The Dancer",
@@ -218,12 +251,28 @@
 		"location": null
 	},
 
+	"nelbjorn": {
+		"name": "Nelbjorn",
+		"alias": "The Forestguard",
+		"species": "centaur",
+		"location": "forest",
+		"desc": "Nelbjorn is one of the forest's protectors."
+	},
+
 	"nocturna": {
 		"name": "Nocturna",
 		"alias": "The Barista",
 		"species": "tiefling",
-		"location": "shopping-mall",
+		"location": "mall",
 		"desc": "When the sun sets on New Miniport and respectable citizens retreat to their homes, the night shift begins at the 'Rise & Grind' coffee house, presided over by its prickly, horned night-shift warden: Nocturna. A tiefling with a glare that could curdle milk and a wit sharp enough to etch glass, she serves caffeine and sarcasm in equally potent measures.\n\nShe is the guardian of the late-night study session, the savior of the overnight worker, and the terror of any customer who dares to be rude or condescending. She has no patience for fools and even less for the entitled, and she's been known to verbally eviscerate a DragonCorp executive over his pronunciation of \"macchiato.\"\n\nThis defiant attitude isn't confined to the counter. By day, she's a college student drowning in a seemingly inescapable tide of debt, watching her loan balance creep higher with every payment she makes. This systemic exploitation has forged her into a fervent anti-authoritarian. She is a fixture at every protest, march, and sit-in against the Dragon Council's policies, her unmistakable silhouette a familiar sight on the front lines.\n\nShe's currently spending her precious free time (and risking her job) standing with the protesters in the Cursed Forest, not just for the cause, but for the sheer principle of giving the powerful a headache. For Nocturna, every perfectly thrown insult and every protest sign is a small act of war against a system designed to grind her down."
+	},
+
+	"orlok": {
+		"name": "Orlok",
+		"alias": "The Showstopper",
+		"species": "batfolk",
+		"location": "school",
+		"desc": "Professor Orlok is the school's Music & Drama teacher. He is obsessed with all things related to stage and set production."
 	},
 
 	"ovina": {
@@ -296,14 +345,6 @@
 		"species": "triton",
 		"location": "school",
 		"desc": "In the halls of New Miniport's academy, Thalassa cuts a formidable figure. A triton valedictorian and student president with an unwavering moral compass, she navigates the land-bound world from her wheelchair device she views, not as a limitation, but as a stark indictment of the town's poor design.\n\nWith the keen intellect of a scholar and the unshakable confidence of someone who knows her true power, she often points out that in her underwater home, it is the air-breathing mammals who would be considered \"disabled\", utterly helpless beneath the waves. This perspective fuels her fierce advocacy for justice and accessibility.\n\nThalassa is a force of nature in student government, a brilliant orator and organizer who fights tirelessly for the rights of the marginalized. She sees the systemic injustices in New Miniport—the favoritism of the Dragon Council, the exploitation by figures like Grenn, the struggles of people like Ferman and Nocturna—not as isolated problems, but as failures of a system that refuses to accommodate anyone outside the norm.\n\nShe will always, without fail, defend the underdog, using her sharp wit and top-tier grades as weapons to dismantle arguments and shame bullies. For Thalassa, her wheelchair is a constant reminder that the world needs to change, not her, and she is the unstoppable tide that will see it happen."
-	},
-
-	"torva": {
-		"name": "Torva",
-		"alias": "The Alchemist",
-		"species": "kenku",
-		"desc": "Torva is a kenku alchemist at the academy who works with Kem. He also works part-time as a pharmacist.",
-		"location": "school"
 	},
 
 	"uma": {

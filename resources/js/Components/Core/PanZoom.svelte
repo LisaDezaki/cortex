@@ -81,7 +81,7 @@
 
 	function handleScroll(e) {
 		e.preventDefault()
-		origin = { x: e.clientX, y: e.clientY }
+		origin = { x: e.clientX - containerRect.left, y: e.clientY - containerRect.top }
 		if (e.deltaY !== null) {
 			zoom *= e.deltaY < 0 ? 1.05 : 0.95
 			zoom = clamp(minZoom, zoom, maxZoom)
@@ -154,6 +154,8 @@
 	class="relative overflow-hidden {className}"
 	class:cursor-grab={!isDragging}
 	class:cursor-grabbing={isDragging}
+	onpointerdown={dragStart}
+	
 	onwheel={handleScroll}
 {...restProps}>
 	{#if debug}
@@ -167,9 +169,9 @@
 			<!-- <li class="">
 				clickStart: {Math.floor(clickStart.x)}, {Math.floor(clickStart.y)}
 			</li> -->
-			<!-- <li class="">
+			<li class="">
 				origin: {Math.floor(origin.x)}, {Math.floor(origin.y)}
-			</li> -->
+			</li>
 			<!-- <li class="">
 				dragVector: {Math.floor(dragVector.x)}, {Math.floor(dragVector.y)}
 			</li> -->
@@ -197,9 +199,8 @@
 	{/if}
 
 	<div bind:this={contentRef}
-		class="draggable min-h-full {contentClass}"
+		class="draggable min-h-full min-w-full {contentClass}"
 		style="transform: scale({zoom}) translate({(position.x+transform.x)/zoom}px, {(position.y+transform.y)/zoom}px); transform-origin: {origin.x}px {origin.y}px"
-		onpointerdown={dragStart}
 	>
 		{@render children?.()}
 	</div>

@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Location extends Model
 {
@@ -118,27 +120,34 @@ class Location extends Model
 		return $this->hasMany(Faction::class, 'headquarters_id');
 	}
 
-	public function customFields()
+	public function customFields(): MorphMany
 	{
 		return $this->morphMany(CustomField::class, 'fieldable');
 	}
 
 
-	public function banner()
+	/**
+	 * Media relationships.
+	 * @return \Illuminate\Database\Eloquent\Relations\Relation
+	 */
+
+	public function media(): MorphMany
 	{
-		return $this->morphOne(Media::class, 'mediable')
-			->where('type', 'location_banner');
+		return $this->morphMany(Media::class, 'mediable');
+	}
+	public function banner(): MorphOne
+	{
+		return $this->morphOne(Media::class, 'mediable')->where('type', 'banner');
 	}
 	public function map()
 	{
-		return $this->morphOne(Media::class, 'mediable')
-			->where('type', 'location_map');
+		return $this->morphOne(Media::class, 'mediable')->where('type', 'map');
 	}
-	public function gallery()
+	public function gallery(): MorphMany
 	{
-		return $this->morphMany(Media::class, 'mediable')
-			->where('type', 'location_gallery');
+		return $this->morphMany(Media::class, 'mediable')->where('type', 'gallery');
 	}
+	
 
 
 

@@ -11,30 +11,31 @@
 		project
 	} = $props()
 
-	const form = useForm({
-		confirm_name: ''
-	});
-	function deleteProject(e) {
-		e.preventDefault();
-		$form.delete(route('projects.destroy', { project: project.id}) );
-	}
+	// const form = useForm({
+	// 	confirm_name: ''
+	// });
+	// function deleteProject(e) {
+	// 	e.preventDefault();
+	// 	$form.delete(route('projects.destroy', { project: project.id}) );
+	// }
 
 </script>
 
 <Form
 	class="max-w-lg"
 	enctype="multipart/form-data"
-	processing={$form.processing}
-	recentlySuccessful={$form.recentlySuccessful}
+	endpoint={route('projects.destroy', { project: project.id})}
+	method="delete"
+	initialData={{
+		confirm_name: ''
+	}}
 >
 	<Stack class="p-6">
 		<p>This process will also delete all data associated with the project. Are you absolutely sure you want to delete the entire project? </p>
 	
 		<Field class="my-3"
-			id="confirm_name"
+			name="confirm_name"
 			type="text"
-			bind:value={$form.confirm_name}
-			errors={$form.errors.confirm_name}
 			required autofocus
 		/>
 	
@@ -50,7 +51,6 @@
 		<Button style="hard" theme="danger" class="border-none rounded-none w-1/2"
 			type="submit"
 			label="Yes, Delete this project"
-			onclick={deleteProject}
 		/>
 	</Flex>
 

@@ -3,7 +3,8 @@
     import Portal from 'svelte-portal'
     import Transition from 'svelte-transition'
 
-    import Stack from '@/Components/Core/Stack.svelte'
+    import { Flex, Stack } from '@/Components/Core'
+	import Button from '@/Components/UI/Button.svelte'
 	import Heading from '@/Components/UI/Heading.svelte'
 
     let {
@@ -11,6 +12,7 @@
         children,
 		class: className,
         closeable = true,
+		footer,
         maxWidth = 'none',
         onclose = () => {},
 		title,
@@ -19,12 +21,12 @@
 
     let maxWidthClass = $derived(
         {
-			none: 'sm:max-w-none',
-            sm: 'sm:max-w-sm',
-            md: 'sm:max-w-md',
-            lg: 'sm:max-w-lg',
-            xl: 'sm:max-w-xl',
-            '2xl': 'sm:max-w-2xl',
+			'none': 'sm:max-w-none',
+            'sm':   'sm:max-w-sm',
+            'md':   'sm:max-w-md',
+            'lg':   'sm:max-w-lg',
+            'xl':   'sm:max-w-xl',
+            '2xl':  'sm:max-w-2xl',
         }[maxWidth],
     )
 
@@ -77,9 +79,17 @@
             >
                 <div class="modal {maxWidthClass} {className}">
 					{#if title}
-						<div class="modal-head">
+						<Flex justify="between" class="modal-head">
 							<Heading heading={title} />
-						</div>
+							<Flex gap={3}>
+								<Button style="plain" theme="danger" class="rounded-full"
+									icon="X" onclick={close}
+								/>
+								<!-- <Button style="soft" theme="accent" class="rounded-full"
+									icon="Check"
+								/> -->
+							</Flex>
+						</Flex>
 					{/if}
 					<div class="modal-body">
 						{@render children()}
@@ -88,6 +98,11 @@
 						<div class="modal-foot">
 							{@render actions()}
 						</div>
+					{/if}
+					{#if footer}
+						<Flex align="center" justify="start" class="modal-foot">
+							{@render footer?.()}
+						</Flex>
 					{/if}
                 </div>
             </Transition>
@@ -98,15 +113,15 @@
 <style lang="postcss">
 
 	.modal {
-		@apply mb-6 transform overflow-y-auto rounded-lg shadow-xl transition-all sm:mx-auto dark:bg-gray-800;
-		@apply flex flex-col items-stretch overflow-hidden;
+		@apply mb-6 transform overflow-y-auto rounded-lg shadow-xl transition-all sm:mx-auto;
+		@apply flex flex-col items-stretch overflow-hidden w-full;
 		background-color: var(--bg-modal);
 		color: var(--text-neutral);
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 
-		.modal-head {
+		:global(.modal-head) {
 			@apply flex-shrink-0 border-b;
-			@apply px-6 py-3 z-10;
+			@apply p-2 pl-4 z-10;
 			background-color: var(--surface);
 		}
 
@@ -114,7 +129,7 @@
 			@apply flex-grow overflow-y-hidden;
 		}
 
-		.modal-foot {
+		:global(.modal-foot) {
 			@apply flex-shrink-0 border-t;
 			@apply border-t flex items-center justify-center gap-3 p-3;
 		}

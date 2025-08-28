@@ -5,6 +5,8 @@
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharacterSettingsForm from '@/Forms/Character/Settings.svelte'
 	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
+
+	import { Flex }   from '@/Components/Core'
 	import Back       from '@/Components/UI/Back.svelte'
 	import Container  from '@/Components/UI/Container.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
@@ -34,20 +36,36 @@
 	{/snippet}
 
 	{#snippet article()}
-		<Container size="7xl" class="flex gap-12">
+		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu
 				items={[
-					{ icon: "UserList",       label: "Overview",      href: "#overview",      active: $page.url.endsWith('#overview') },
-					{ icon: "ImagesSquare",   label: "Media",         href: "#media",         active: $page.url.endsWith('#media') },
-					{ icon: "Textbox",        label: "Custom Fields", href: "#customfields",  active: $page.url.endsWith('#customfields') }
+					{ icon: "UserList",       label: "Overview",      href: "#overview" },
+					{ icon: "ImagesSquare",   label: "Media",         href: "#media"    },
+					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   }
 				]}
 			/>
-			<CharacterSettingsForm class="py-12" />
-		</Container>
-	{/snippet}
+			<Container size="4xl">
 
-	{#snippet sidebar()}
-		<CustomFieldsPanel />
+				<Section id="overview" class="pb-12">
+					<CharacterSettingsForm />
+				</Section>
+
+				<Section id="media" class="pb-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Media</Heading>
+					</Flex>
+					Media
+				</Section>
+
+				<Section id="custom" class="pb-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Custom Fields</Heading>
+					</Flex>
+					Custom Fields
+				</Section>
+
+			</Container>
+		</Flex>
 	{/snippet}
 
 </AuthenticatedLayout>

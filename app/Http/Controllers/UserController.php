@@ -66,19 +66,24 @@ class UserController extends Controller
 
 	public function updateAvatar(Request $request)
 	{
-		$request->validate([
-			'temp_path' => 'string|nullable',
+		return response()->json([
+			'success' => true,
+			'request' => $request
 		]);
 
-		$user = Auth::user();
-		$userFolder = "user_".substr($user->id, 0, 8);
+		// $request->validate([
+		// 	'temp_path' => 'string|nullable',
+		// ]);
 
-		return $this->mediaService->updateImage(
-			$user,
-			$user->avatar(),
-			$request->temp_path,
-			"$userFolder"
-		);
+		// $user = Auth::user();
+		// $userFolder = "user_".substr($user->id, 0, 8);
+
+		// return $this->mediaService->updateImage(
+		// 	$user,
+		// 	$user->avatar(),
+		// 	$request->temp_path,
+		// 	"$userFolder"
+		// );
 
 		// try {
 		// 	if ($request->has('temp_path') && empty($request->temp_path)) {

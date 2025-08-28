@@ -8,7 +8,7 @@
 		class: className,
 		direction = 'row',
 		gap = 1.5,
-		justify = 'flex-start',
+		justify = 'start',
 		wrap = false,
 		...restProps
 	} = $props()

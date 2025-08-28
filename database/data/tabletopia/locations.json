@@ -1,11 +1,14 @@
 {
-
 	"newminiport": {
 		"is_world_map": true,
 		"name": "New Miniport",
 		"type": "Overworld",
 		"desc": "Nestled between the gentle, foam-capped waves of the Sapphire Bay and the looming, mysterious peaks of the Red Mountains, New Miniport exists as a picture-perfect diorama of coastal life. From above, it is a charming mosaic of cobblestone streets, brightly painted fishing shacks with shingle roofs, and a bustling dockyard where tiny, intricately painted vessels bob on the water. Miniature adventurers, no taller than a thumb, cross paths with mini-fishermen mending nets, mini-bakers delivering warm bread, and mini-citizens simply enjoying the sea breeze on quaint, bench-sized parks. For generations, it has been a peaceful, interconnected community where everyone knows their neighbor and a sense of shared purpose hums in the salt-tinged air.\n\nBut that harmony is beginning to fray at the edges. The influence of the Dragon Council, once a distant concern, now casts a long shadow over the miniature town. New, sleek structures of obsidian and steel—DragonCorp outposts—clash with the rustic wooden architecture. The air, once clean, occasionally carries the faint smog of industrial magic from the Hightown construction site.\n\nFor some residents, like Billy the Butcher seeing his customers dwindle, or families facing eviction notices from Grenn, the peaceful illusion has cracked. New Miniport remains a place of community and beauty, but a quiet anxiety now simmers beneath its picturesque surface, a sense that the simple, hard-won peace of this miniature world is under threat from forces far larger than itself."
 	},
+
+
+
+
 
 	"uptown": {
 		"name": "Hightown",
@@ -14,6 +17,17 @@
 		"coordinates": { "x": "56", "y": "38" },
 		"tags": ["Clean", "Judgemental", "Wealthy", "Well-funded"],
 		"desc": "North of the river, where the streets are paved with smooth, light-grey cobblestones and the air smells of expensive ozone and polished brass, lies Hightown. This is the gleaming, prosperous heart of New Miniport's power and wealth.\n\nGrand structures of imported marble and enchanted glass house the formidable bank, the opulent guildhall for recognized adventuring companies, and the austere Council building where the scales of justice are heavily tipped. The sprawling shopping mall offers luxuries from across the realms, and the museum curates a sanitized version of the town's history.\n\nTowering over it all is the skeletal framework of the new DragonCorp tower, a monument to ambition that grows taller by the day, its shadow stretching further across the older parts of the district.\n\nAt the center of it all lies the Sunstone Fountain, a beautiful public work where sparkling water dances over magically illuminated crystals. Beside it stands the memorial to a local Hero, a weathered stone figure forever locked in battle with a forgotten beast—a poignant, if somewhat ignored, reminder of the town's humble, courageous past.\n\nHightown is a district of order, ambition, and immense power, but it is a cold, impersonal beauty. The warmth and communal spirit of the older quarters are absent here, replaced by the quiet hum of transactions and the unspoken understanding that in this part of town, your worth is measured by the gold in your purse and the scales on your back."
+	},
+
+	"construction-site": {
+		"name": "Construction Site",
+		"official_name": "DragonCorp Tower\nConstruction Site",
+		"tags": ["Concerning", "Noteworthy", "Recent"],
+		"type": "Construction",
+		"icon": "Crane",
+		"parent": "uptown",
+		"coordinates": { "x": "73", "y": "79" },
+		"desc": "Jutting out of Hightown's pristine district like a raw, steel-and-scaffold scar, the DragonCorp Tower construction site is a constant, grating monument to progress without consent. The air hums not with industry, but with the oppressive thrum of powerful abjuration magic containing the dust and noise, a courtesy for the wealthy neighbors that feels more like a cage.\n\nBehind shimmering barrier wards, titanic girders claw at the sky, and earthmovers shaped like great beasts tear into the bedrock. For the residents, it's an eyesore, a symbol of gentrification, a traffic nightmare, and the source of Ferman's unsafe working conditions—valid grievances that scratch the surface of a far deeper violation.\n\nUnknown to the protesting citizens and the overworked crew, the Council's chosen location is no accident. The site is a desecration, built directly atop a sacred Ancient Draconic Burial Ground. The deeper the excavation goes, the more the air thickens with a primordial energy that the containment fields cannot fully mask—a feeling of deep unease and whispered power that workers dismiss as fatigue.\n\nThe true purpose of the tower is not corporate expansion, but to act as a massive siphon, its foundational runes designed to tap into the slumbering power of the entombed ancients below, draining their residual energy to fuel the Council's insatiable ambition and further cement their tyrannical rule. The tower isn't just being built on a foundation of concrete and greed, but on a pillaged tomb."
 	},
 
 	"council": {
@@ -26,17 +40,6 @@
 		"desc": "The New Miniport Council Building is a structure of imposing, draconic architecture, all sharp angles, polished obsidian facades, and sweeping arches designed to intimidate rather than welcome.\n\nIts grand hall, once the vibrant heart of the town's democracy, is now a place of profound disillusionment. Rows of polished wooden benches, once filled with passionate mini-citizens debating the future of their home, now sit largely empty. The air, though still, feels heavy with neglected responsibility and silenced voices.\n\nThe new Dragon Council presides from an elevated dais of dark marble, looking down upon the few stubborn residents who still bother to bring their grievances. These petitions for fair housing, safer working conditions, or protection for local businesses are met with cold, dismissive formalities. Their voices are heard, meticulously recorded by bored clerks, and then promptly ignored, vanishing into the labyrinthine bureaucracy that protects the Council's interests.\n\nThe hall's majestic stained-glass windows, depicting scenes of communal triumph, now cast colorful but ironic light onto a process that has become a hollow pantomime of civic engagement, a stark symbol of how power has been wrested from the people and consolidated in the claws of a few."
 	},
 
-	"construction-site": {
-		"name": "Construction Site",
-		"official_name": "DragonCorp Tower Construction Site",
-		"tags": ["Concerning", "Noteworthy", "Recent"],
-		"type": "Construction",
-		"icon": "Crane",
-		"parent": "uptown",
-		"coordinates": { "x": "73", "y": "79" },
-		"desc": "Jutting out of Hightown's pristine district like a raw, steel-and-scaffold scar, the DragonCorp Tower construction site is a constant, grating monument to progress without consent. The air hums not with industry, but with the oppressive thrum of powerful abjuration magic containing the dust and noise, a courtesy for the wealthy neighbors that feels more like a cage.\n\nBehind shimmering barrier wards, titanic girders claw at the sky, and earthmovers shaped like great beasts tear into the bedrock. For the residents, it's an eyesore, a symbol of gentrification, a traffic nightmare, and the source of Ferman's unsafe working conditions—valid grievances that scratch the surface of a far deeper violation.\n\nUnknown to the protesting citizens and the overworked crew, the Council's chosen location is no accident. The site is a desecration, built directly atop a sacred Ancient Draconic Burial Ground. The deeper the excavation goes, the more the air thickens with a primordial energy that the containment fields cannot fully mask—a feeling of deep unease and whispered power that workers dismiss as fatigue.\n\nThe true purpose of the tower is not corporate expansion, but to act as a massive siphon, its foundational runes designed to tap into the slumbering power of the entombed ancients below, draining their residual energy to fuel the Council's insatiable ambition and further cement their tyrannical rule. The tower isn't just being built on a foundation of concrete and greed, but on a pillaged tomb."
-	},
-
 	"fountain": {
 		"name": "Public Fountain",
 		"desc": "A beautiful water feature right in the center of the public square.",
@@ -44,6 +47,27 @@
 		"type": "Point of interest",
 		"parent": "uptown",
 		"coordinates": { "x": "52", "y": "55" }
+	},
+
+	"highrise": {
+		"name": "Clocktower Apartments",
+		"alias": "Highrise",
+		"type": "Residential",
+		"icon": "BuildingApartment",
+		"tags": ["Classy", "Clean"],
+		"parent": "uptown",
+		"coordinates": { "x": "13", "y": "18" },
+		"desc": "This highrise is home to most of the wealthier citizens of New Miniport, including a Wizard's Penthouse."
+	},
+
+	"mall": {
+		"name": "New Miniport Mall",
+		"tags": ["Empty", "Large"],
+		"type": "Commercial",
+		"icon": "Bag",
+		"parent": "uptown",
+		"coordinates": { "x": "9.5", "y": "42" },
+		"desc": "A mall in the center of New Miniport, with a variety of shops and restaurants. A large section of it has been \"closed for renovation\" for a few years now, but it's functionally abandoned."
 	},
 
 	"memorial": {
@@ -64,27 +88,9 @@
 		"coordinates": { "x": "40", "y": "12" }
 	},
 
-	"shopping-mall": {
-		"name": "The Mall",
-		"official_name": "The Mall",
-		"tags": ["Empty", "Large"],
-		"type": "Commercial",
-		"icon": "Bag",
-		"parent": "uptown",
-		"coordinates": { "x": "9.5", "y": "42" },
-		"desc": "A mall in the center of New Miniport, with a variety of shops and restaurants. A large section of it has been \"closed for renovation\" for a few years now, but it's functionally abandoned."
-	},
 
-	"highrise": {
-		"name": "Highrise",
-		"official_name": "The Clocktower Apartments",
-		"type": "Residential",
-		"icon": "BuildingApartment",
-		"tags": ["Classy", "Clean"],
-		"parent": "uptown",
-		"coordinates": { "x": "13", "y": "18" },
-		"desc": "This highrise is home to most of the wealthier citizens of New Miniport, including a Wizard's Penthouse."
-	},
+
+
 
 	"downtown": {
 		"name": "Downtown",
@@ -95,10 +101,39 @@
 		"desc": "On the South side of town, the air is thick with the smell of salt, fish, and wet rope. This is the docks district, a bustling, noisy, and gloriously unpolished quarter where the weight of the Dragon Council's rule feels a little lighter, or at least, is more openly grumbled about. Here, the Piked Plaice fishery stands as a bastion of tradition, its wooden pier creaking under the daily haul brought in by a fleet of brightly painted miniature boats. Tucked away in a rain-slicked alley, Binksy's magical graffiti pulses with rebellious energy, a stark contrast to the weary but warm faces of the dockworkers, fishermen, and merchants who define the area.\n\nAt the center of it all, both literally and socially, is The Lucky Die tavern, its windows glowing with a welcoming light and the sound of laughter and Lafferty's sets spilling out onto the street. And just beyond the main pier, resting in a secluded berth like a patient predator, is the distinctive silhouette of the Crimson Tide, Captain Bugbeard's pirate ship, a permanent (and controversial) new feature of the waterfront.\n\nThis is a place of calloused hands and shared struggles, where Billy the Butcher knows his customers by name and Rodrik knows their secrets. Despite being the poorer part of town, it thrives on a powerful sense of community, where everyone's daily routine is woven together with warm greetings and genuine care, creating a resilient tapestry that even the Council's influence has yet to unravel."
 	},
 
+	"alley": {
+		"name": "Graffiti Alley",
+		"desc": "A dark alley that's always covered in magical moving graffiti. The culprit is still at large.",
+		"type": "Point of interest",
+		"tags": ["Empty", "Dirty"],
+		"parent": "downtown",
+		"coordinates": { "x": "23", "y": "59" }
+	},
+
+	"armory": {
+		"name": "Critical Hit Armory",
+		"type": "Merchant",
+		"icon": "Sword",
+		"tags": ["Empty", "Dirty"],
+		"parent": "downtown",
+		"coordinates": { "x": "34", "y": "34" },
+		"desc": "This armory doesn't just sell standard gear. They specialize in \"keen\" weapons, expertly balanced for precision strikes, and armor engraved with subtle enchantments to help blows land true. The smith might critique your fighting style and recommend a specific weapon weight or hilt wrap to \"improve your crit range.\" It's the place to go when you need an edge, not just a sword."
+	},
+
+	"bakery": {
+		"name": "Sweet Roll Bakery",
+		"type": "Merchant",
+		"icon": "Bread",
+		"tags": [],
+		"parent": "downtown",
+		"coordinates": { "x": "6.5", "y": "17" },
+		"desc": ""
+	},
+
 	"docks": {
 		"name": "The Docks",
 		"official_name": "Piked Plaice",
-		"type": "Commercial",
+		"type": "Merchant",
 		"tags": ["Crowded", "Dirty"],
 		"icon": "Fish",
 		"parent": "downtown",
@@ -106,17 +141,41 @@
 		"desc": "A symphony of shouted orders, haggling voices, and the triumphant splash of the day's catch hitting the gleaming ice beds, Piked Plaice is a place of thrilling spectacle and honest commerce, where burly fishermen with salt-crusted beards happily hurl massive, silvery cod over the heads of delighted customers to be wrapped and weighed. The air is chilled and smells profoundly of the sea—of brine, fresh scale, and clean ice—a welcome respite from the city's warmer streets.\n\nBut the true magic of the Piked Plaice isn't in the fish, but in the people. This is where the community gathers not just to buy, but to connect. Laughter is exchanged as freely as gold, gossip is traded alongside recipes, and every merchant knows their regulars by name and preference. It's a bastion of tradition and personal touch in a town increasingly leaning toward DragonCorp's impersonal convenience.\n\nHere, Billy the Butcher is a respected pillar, his stall a constant in the cheerful chaos, and the sense of shared purpose and camaraderie is as tangible as the mist rolling off the bay. It is a happy, noisy, and delicious reminder of the town's soul."
 	},
 
-	"alley": {
-		"name": "Graffiti Alley",
-		"desc": "A dark alley that's always covered in magical moving graffiti. The culprit is still at large.",
-		"type": "Point of interest",
-		"tags": ["Empty", "Dirty"],
+	"dojo": {
+		"name": "Saving Throw",
+		"alias": "Self Defense Dojo",
+		"type": "Defensive Dojo",
+		"tags": [],
+		"icon": "BoxingGlove",
 		"parent": "downtown",
-		"coordinates": { "x": "22", "y": "60" }
+		"coordinates": { "x": "27", "y": "21" },
+		"desc": "Tucked between a bustling bakery and a tailor's shop in the heart of downtown New Miniport, Saving Throw is a haven of focused discipline amidst the chaotic charm of the district. The dojo's exterior is simple and unassuming, but the sounds from within tell a different story. The air hums with the thud of bodies hitting practice mats, the sharp kip of a student mastering a breakfall, and the low, steady voice of Sensei Darto cutting through the exertion. The smell of polished pine floors, faint sweat, and the sweet aroma of bread from next door creates a unique, welcoming atmosphere that is both rigorous and oddly comforting.\n\nInside, the space is utilitarian and efficient, reflecting the dojo's philosophy. Sunlight streams through high windows, illuminating practice dummies made from stuffed burlap and sand, and racks of improvised weapons—weighted wooden bars meant to mimic chair legs, lengths of rope, and even practice versions of bags of flour. There are no flashy trophies or ornate decorations, only well-worn training equipment and a single, calligraphed scroll on the wall that reads: “The best attack is not to be there.” This is not a place for learning flashy kicks or ceremonial forms; it is a workshop where the youth of New Miniport learn the most vital skill of all: how to walk away from a fight in one piece."
+	},
+
+	"fishmarket": {
+		"name": "Piked Plaice",
+		"alias": "Fish Market",
+		"type": "Merchant",
+		"tags": ["Crowded", "Dirty"],
+		"icon": "Fish",
+		"parent": "downtown",
+		"coordinates": { "x": "85", "y": "83.5" },
+		"desc": "A symphony of shouted orders, haggling voices, and the triumphant splash of the day's catch hitting the gleaming ice beds, Piked Plaice is a place of thrilling spectacle and honest commerce, where burly fishermen with salt-crusted beards happily hurl massive, silvery cod over the heads of delighted customers to be wrapped and weighed. The air is chilled and smells profoundly of the sea—of brine, fresh scale, and clean ice—a welcome respite from the city's warmer streets.\n\nBut the true magic of the Piked Plaice isn't in the fish, but in the people. This is where the community gathers not just to buy, but to connect. Laughter is exchanged as freely as gold, gossip is traded alongside recipes, and every merchant knows their regulars by name and preference. It's a bastion of tradition and personal touch in a town increasingly leaning toward DragonCorp's impersonal convenience.\n\nHere, Billy the Butcher is a respected pillar, his stall a constant in the cheerful chaos, and the sense of shared purpose and camaraderie is as tangible as the mist rolling off the bay. It is a happy, noisy, and delicious reminder of the town's soul."
+	},
+
+	"gym": {
+		"name": "Power Lift",
+		"alias": "Gym",
+		"type": "Skill",
+		"icon": "Barbell",
+		"tags": ["Sweaty"],
+		"parent": "downtown",
+		"coordinates": { "x": "33", "y": "49" },
+		"desc": ""
 	},
 
 	"precinct": {
-		"name": "New Miniport Police Department",
+		"name": "New Miniport\nPolice Department",
 		"alias": "The Precinct",
 		"desc": "The police station of New Miniport, where the local law enforcement operates. The precinct is small and slow, with few officers on duty at any time.",
 		"type": "Government",
@@ -126,8 +185,8 @@
 	},
 
 	"school": {
-		"name": "Uma's Adventuring Academy",
-		"alias": "The School",
+		"name": "Adventuring Academy",
+		"alias": "Adventuring Academy",
 		"type": "Education",
 		"tags": ["Crowded", "Ethically questionable"],
 		"icon": "Student",
@@ -149,49 +208,50 @@
 	"pirate-ship": {
 		"name": "The Crimson Tide",
 		"alias": "Pirate Ship",
-		"desc": "A pirate ship docked at the New Miniport docks, owned by the Scallywags. The ship is known for its rowdy crew and wild parties.",
 		"type": "Vessel",
 		"icon": "Sailboat",
 		"parent": "downtown",
-		"coordinates": { "x": "30", "y": "93" }
+		"coordinates": { "x": "30", "y": "93" },
+		"desc": "Moored in a secluded, rocky inlet just beyond the main docks of New Miniport, The Crimson Tide is a vessel that wears its history proudly. This is no sleek, generic raider; it's a sturdy caravel, its hull a mosaic of repaired battle damage, its sails patched with canvas stolen from a dozen different merchant vessels. The wood is dark with salt and age, and the ship's figurehead—a fierce mermaid wielding a cutlass and a ledger—embodies its unique mission. The Tide is less a warship and more a mobile command center for righteous rebellion, a symbol of hope for the oppressed and a stark warning to the corrupt. It smells of tar, sea spray, gunpowder, and the distinct aroma of its unique crew.\n\nLife aboard is a testament to its captain's code. The deck, though often cluttered with barrels of supplies and Duggan's intimidating cannon, is meticulously maintained. The crew's quarters are cramped but personal, filled with scavenged hammocks and the few treasures each member holds dear.\n\nThe heart of the ship is the helm, where Abigail's navigation charts are spread out, her precise calculations and keen perception guiding them through treacherous waters and away from Council patrols. Below, Stitches has his infirmary set up near the magazine, Barrel's galley constantly emits hearty smells, and Silas the kenku can be found perched in the rigging, his keen eyes scanning the horizon. It is a floating fortress, a home, and a legend, all rolled into one—a steadfast reminder that even in a world of draconic greed, there are still those who fight for what's right."
 	},
+
+
 
 
 
 	"outskirts": {
 		"name": "Outskirts",
-		"desc": "Out of town, there are more enemies (and fewer friends).",
 		"type": "Region",
 		"parent": "newminiport",
-		"coordinates": { "x": "28", "y": "72" }
+		"coordinates": { "x": "28", "y": "72" },
+		"desc": "Out of town, there are more enemies (and fewer friends)."
+	},
+
+	"gas-station": {
+		"name": "Gas Station",
+		"icon": "GasPump",
+		"type": "Commercial",
+		"parent": "outskirts",
+		"coordinates": { "x": "85", "y": "75" },
+		"desc": "Tucked away on a forgotten stretch of road on the outskirts of New Miniport, the old gas station stands as a lonely sentinel to a era of travel that has all but passed. Its name, \"The Rustic Pump,\" is still faintly visible in faded, peeling paint on a sign that creaks on a rusted hinge.\n\nThe place is a study in decay: the pumps are ancient, squat mechanisms with glass domes and manual dials, now frozen in time.The single-bay garage door is permanently shut, its windows caked with grime, though a faint, warm light often glows from within after dark.\n\nThis isn't merely an abandoned eyesore; it's a clandestine haven. The station is run by Glim, a quick-eyed and deeply paranoid kobold mechanic who is convinced the Dragon Council is watching his every move.\n\nTo the outside world, the Pump is closed. But to those who know the secret knock or the right signal, Glim operates a bustling black-market garage and parts shop from the cluttered garage bay. He specializes in \"off-the-books\" modifications for vehicles and gear—de-identifying stolen carts, installing hidden compartments, or souping up engines for those who need to make a quick, unobserved getaway.\n\nThe air inside is thick with the smell of old gasoline, ozone, and soldering irons, a testament to Glim's illicit trade. It's the last stop for those who need to disappear down a road the Council doesn't know exists."
+	},
+
+	"motel": {
+		"name": "Short Rest Motel",
+		"alias": "Motel",
+		"type": "Commercial",
+		"parent": "outskirts",
+		"coordinates": { "x": "75", "y": "65" },
+		"desc": "On the bleached, dusty strip of the outskirts highway, the Short Rest Motel flickers under a broken neon sign that almost sarcastically promises vacancy in a sputtering, sickly pink glow.\n\nIt's a two-story, U-shaped collection of rooms with doors the color of faded bruises and windows permanently shaded by brittle, yellowed blinds. The air hangs heavy with the scent of exhaust fumes, cheap cleaning solvents, and the dry, electric tang of something not quite right.\n\nIt's a place of transient souls, whispered deals, and the quiet hum of desperation, managed by a clerk who never makes eye contact and asks no questions.\n\nThe door to Room 13 is barricaded with a heavy chain and a padlock. The room is officially \"out of service\", but staff will tell you without much prompting that it actually became a pocket dimension last week, and nobody is sure why."
 	},
 
 	"scrapyard": {
-		"name": "Rusthaven",
-		"alias": "Scrapyard",
+		"name": "Rusthaven Scrapyard",
 		"icon": "PipeWrench",
 		"type": "Commercial",
 		"parent": "outskirts",
 		"coordinates": { "x": "15", "y": "45" },
 		"desc": "On the dusty, wind-scoured outskirts of New Miniport, where the paved roads give way to hardpan and weeds, lies the Rusthaven Scrapyard. It is a sprawling, chaotic landscape of forgotten history and discarded dreams. Towers of shattered carriage wheels, mountains of bent armor, tangles of copper wire, and the skeletal remains of arcane constructs rise like a metallic forest under the open sky. The air smells of ozone, rust, and old magic, and is filled with the constant, gentle groaning of settling metal and the skittering of tiny, scavenging mechanimals.\n\nPresiding over this kingdom of scrap is its sole resident and curator: a massive, sentient scrap-golem known only as The Curator. Forged from a mismatched assemblage of armor plating, rusted gears, and salvaged machinery, The Curator moves with a surprising, gentle grace through the narrow canyons of its domain.\n\nIt doesn't speak in words, but communicates through a complex language of resonant hums, clanking gestures, and the shifting of its metallic form. It knows the story and potential of every screw and spar in its care, and is surprisingly generous to those who ask politely for a part, often trading for interesting new additions to its archive rather than coin. The the Curator, this is a library of lost things waiting for the right person to give them a new purpose."
-	},
-
-	"gas-station": {
-		"name": "Gas Station",
-		"desc": "Tucked away on a forgotten stretch of road on the outskirts of New Miniport, the old gas station stands as a lonely sentinel to a era of travel that has all but passed. Its name, \"The Rustic Pump,\" is still faintly visible in faded, peeling paint on a sign that creaks on a rusted hinge.\n\nThe place is a study in decay: the pumps are ancient, squat mechanisms with glass domes and manual dials, now frozen in time.The single-bay garage door is permanently shut, its windows caked with grime, though a faint, warm light often glows from within after dark.\n\nThis isn't merely an abandoned eyesore; it's a clandestine haven. The station is run by Glim, a quick-eyed and deeply paranoid kobold mechanic who is convinced the Dragon Council is watching his every move.\n\nTo the outside world, the Pump is closed. But to those who know the secret knock or the right signal, Glim operates a bustling black-market garage and parts shop from the cluttered garage bay. He specializes in \"off-the-books\" modifications for vehicles and gear—de-identifying stolen carts, installing hidden compartments, or souping up engines for those who need to make a quick, unobserved getaway.\n\nThe air inside is thick with the smell of old gasoline, ozone, and soldering irons, a testament to Glim's illicit trade. It's the last stop for those who need to disappear down a road the Council doesn't know exists.",
-		"icon": "GasPump",
-		"type": "Commercial",
-		"parent": "outskirts",
-		"coordinates": { "x": "85", "y": "75" }
-	},
-
-	"motel": {
-		"name": "Starlight Motel",
-		"alias": "Motel",
-		"type": "Commercial",
-		"parent": "outskirts",
-		"coordinates": { "x": "75", "y": "65" },
-		"desc": "On the bleached, dusty strip of the outskirts highway, the Starlight Motel flickers under a broken neon sign that almost sarcastically promises vacancy in a sputtering, sickly pink glow.\n\nIt's a two-story, U-shaped collection of rooms with doors the color of faded bruises and windows permanently shaded by brittle, yellowed blinds. The air hangs heavy with the scent of exhaust fumes, cheap cleaning solvents, and the dry, electric tang of something not quite right.\n\nIt's a place of transient souls, whispered deals, and the quiet hum of desperation, managed by a clerk who never makes eye contact and asks no questions.\n\nThe door to Room 13 is barricaded with a heavy chain and a padlock. The room is officially \"out of service\", but staff will tell you without much prompting that it actually became a pocket dimension last week, and nobody is sure why."
 	},
 
 	"trailer-park": {
@@ -220,10 +280,10 @@
 	},
 	"grotto": {
 		"name": "Fungal Grotto",
-		"desc": "A deep thicket of forest with all kinds of spores.",
 		"type": "Dungeon",
 		"parent": "forest",
-		"coordinates": { "x": "25", "y": "25" }
+		"coordinates": { "x": "25", "y": "25" },
+		"desc": "A deep thicket of forest with all kinds of spores."
 	},
 	"lake": {
 		"name": "Black Lake",
@@ -242,39 +302,39 @@
 
 	"mountains": {
 		"name": "Red Mountains",
-		"desc": "A hiking route outside of town, leading to the Red Mountains. The mountains are known for their red rocks and beautiful views, but recently have been the site of strange occurrences.",
 		"type": "Region",
 		"parent": "newminiport",
-		"coordinates": { "x": "93", "y": "50" }
+		"coordinates": { "x": "93", "y": "50" },
+		"desc": "A hiking route outside of town, leading to the Red Mountains. The mountains are known for their red rocks and beautiful views, but recently have been the site of strange occurrences."
 	},
 	"mine": {
 		"name": "Abandoned Mine",
-		"desc": "An old abandoned crystal mine that closed after the goblin problem became unmanageable.",
 		"type": "Dungeon",
 		"parent": "mountains",
-		"coordinates": { "x": "58", "y": "47" }
+		"coordinates": { "x": "58", "y": "47" },
+		"desc": "An old abandoned crystal mine that closed after the goblin problem became unmanageable."
 	},
 	"campsite": {
 		"icon": "Tent",
 		"name": "Hiker's Cramp",
 		"type": "Campsite",
-		"desc": "An empty campsite with some evidence of the hikers who went missing a week ago.",
 		"parent": "mountains",
-		"coordinates": { "x": "67", "y": "94" }
+		"coordinates": { "x": "67", "y": "94" },
+		"desc": "An empty campsite with some evidence of the hikers who went missing a week ago."
 	},
 	"goblin-camp": {
 		"name": "Goblin Caves",
-		"desc": "A large cave system filled with goblins.",
 		"type": "Dungeon",
 		"parent": "mountains",
-		"coordinates": { "x": "65", "y": "25" }
+		"coordinates": { "x": "65", "y": "25" },
+		"desc": "A large cave system filled with goblins."
 	},
 	"summit": {
 		"name": "Thunderpeak Summit",
-		"desc": "Where a dragon once slumbered.",
 		"type": "Boss Arena",
 		"parent": "mountains",
-		"coordinates": { "x": "32", "y": "19" }
+		"coordinates": { "x": "32", "y": "19" },
+		"desc": "Where a dragon once slumbered."
 	},
 
 
@@ -282,38 +342,38 @@
 	"island": {
 		"icon": "Island",
 		"name": "Mysterious Island",
-		"desc": "A hiking route outside of town, leading to the Red Mountains. The mountains are known for their red rocks and beautiful views, but recently have been the site of strange occurrences.",
 		"type": "Region",
 		"parent": "newminiport",
-		"coordinates": { "x": "34", "y": "8" }
+		"coordinates": { "x": "34", "y": "8" },
+		"desc": "A hiking route outside of town, leading to the Red Mountains. The mountains are known for their red rocks and beautiful views, but recently have been the site of strange occurrences."
 	},
 	"lighthouse": {
 		"icon": "Lighthouse",
 		"name": "The Lighthouse",
-		"desc": "An old lighthouse, but the keeper is nowhere to be found.",
 		"type": "Dungeon",
 		"parent": "island",
-		"coordinates": { "x": "54", "y": "18.5" }
+		"coordinates": { "x": "54", "y": "18.5" },
+		"desc": "An old lighthouse, but the keeper is nowhere to be found."
 	},
 	"ruins": {
 		"name": "Jungle Ruins",
-		"desc": "Mysterious ruins belonging to an ancient civilization.",
 		"type": "Dungeon",
 		"parent": "island",
-		"coordinates": { "x": "27", "y": "64" }
+		"coordinates": { "x": "27", "y": "64" },
+		"desc": "Mysterious ruins belonging to an ancient civilization, currently inhabited by thousands of insectoids who are ravaging the land."
 	},
 	"shipwreck": {
 		"name": "Shipwreck Cove",
-		"desc": "Ghost pirates guard a long lost treasure map.",
 		"type": "Point of interest",
 		"parent": "island",
-		"coordinates": { "x": "64", "y": "85" }
+		"coordinates": { "x": "64", "y": "85" },
+		"desc": "Ghost pirates guard a long lost treasure map."
 	},
 	"volcano": {
 		"name": "Volcanic Crater",
-		"desc": "Portal to an elemental plane of fire.",
 		"type": "Boss Arena",
 		"parent": "island",
-		"coordinates": { "x": "56", "y": "50" }
+		"coordinates": { "x": "56", "y": "50" },
+		"desc": "Portal to an elemental plane of fire."
 	}
 }

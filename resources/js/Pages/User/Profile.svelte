@@ -8,7 +8,7 @@
     import UpdatePasswordForm           from '@/Forms/User/UpdatePassword.svelte'
     import UpdateProfileInformationForm from '@/Forms/User/UpdateProfile.svelte'
 
-	import { Stack } from '@/Components/Core'
+	import { Flex, Stack } from '@/Components/Core'
 
 	import Breadcrumbs from '@/Components/UI/Breadcrumbs.svelte'
 	import Button      from '@/Components/UI/Button.svelte'
@@ -45,41 +45,37 @@
 
     {#snippet header()}
 		<PageHeader
-			breadcrumbs={[
-				{ label: "Profile" }
-			]}
+			breadcrumbs={[{ label: "Profile" }]}
 			back={route('dashboard')}
 			title="Account Profile"
 		/>
 	{/snippet}
 
     {#snippet article()}
+		<Flex justify="center" gap={12} class="py-12">
+			<PageMenu items={[
+				{ icon: "UserList", label: "Profile Info",    href: "#profile",  active: $page.url.endsWith('#profile') },
+				{ icon: "Password", label: "Update Password", href: "#password", active: $page.url.endsWith('#password') },
+				{ icon: "Trash",    label: "Delete Account",  onclick: confirmUserDeletion, theme: "danger" }
+			]} />
 
-		<Container size="7xl" class="flex gap-12">
-			<PageMenu
-				items={[
-					{ icon: "UserList", label: "Profile Info",    href: "#profile",  active: $page.url.endsWith('#profile') },
-					{ icon: "Password", label: "Update Password", href: "#password", active: $page.url.endsWith('#password') },
-					{ icon: "Trash",    label: "Delete Account",  onclick: confirmUserDeletion, theme: "danger" }
-				]}
-			/>
-			<Stack class="py-12">
-				<Section>
-					<Heading is="h4" as="h6"
+			<Container size="4xl">
+				<Section id="profile">
+					<Heading is="h4" as="h6" class="mt-9 mb-6"
 						heading="Profile Information"
 						subheading="Update your account's profile information and email address."
 					/>
 					<UpdateProfileInformationForm {mustVerifyEmail} {status} />
 				</Section>
-				<Section>
-					<Heading is="h4" as="h6"
+				<Section id="password">
+					<Heading is="h4" as="h6" class="mt-9 mb-6"
 						heading="Update Password"
 						subheading="Ensure your account is using a long, random password to stay secure."
 					/>
 					<UpdatePasswordForm />
 				</Section>
-				<Section>
-					<Heading is="h4" as="h6"
+				<Section id="delete">
+					<Heading is="h4" as="h6" class="mt-9 mb-6"
 						heading="Delete Account"
 						subheading="Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
 					your account, please download any data or information that you wish to retain."
@@ -89,8 +85,8 @@
 						onclick={confirmUserDeletion}
 					/>
 				</Section>
-			</Stack>
-		</Container>
+			</Container>
+		</Flex>
 
 		<!-- <Section class="flex items-center gap-12 border-b">
 			<SetAvatar

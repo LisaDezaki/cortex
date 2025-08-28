@@ -29,7 +29,9 @@
     }
 </script>
 
-<Form class="max-w-lg p-6" {...restProps}>
+<Form form={form}
+	class="max-w-lg p-6"
+{...restProps}>
 	<h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
 		Are you sure you want to delete your account?
 	</h2>
@@ -40,10 +42,8 @@
 	</p>
 
 	<Field type="password" class="mt-4"
-		id="password"
+		name="password"
 		label="Password" labelSrOnly
-		bind:this={passwordInput}
-		bind:value={$form.password}
 		errors={$form.errors.password}
 		onkeyup={(e) => e.key === 'Enter' && deleteUser()}
 		required

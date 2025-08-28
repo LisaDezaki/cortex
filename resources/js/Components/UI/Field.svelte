@@ -1,11 +1,11 @@
 <script>
 	import { getContext } from "svelte";
 
-	import Error from '@/Components/UI/Form/Error.svelte'
 	import Input from '@/Components/UI/Input.svelte'
-	import Label from '@/Components/UI/Form/Label.svelte'
+	import Error from '@/Components/UI/Inputs/Error.svelte'
+	import Label from '@/Components/UI/Inputs/Label.svelte'
 	
-	// const { form } = getContext("form");
+	const { form } = getContext("form");
 
 	let {
 		children,
@@ -19,9 +19,11 @@
 		name,
 		required = false,
 		type,
-		value = $bindable(),
         ...restProps
     } = $props()
+
+	if (!name) { console.error(`The Field component requires a "name" field. You may have mistakenly used "id", which is set to ${restProps.id}`) }
+
 </script>
 
 {#snippet labelBlock()}
@@ -41,7 +43,7 @@
 	{#if type}
 		<Input {name} {type}
 			class="{inputClass} my-1"
-			bind:value
+			bind:value={$form[name]}
 		{...restProps} />
 	{/if}
 {/snippet}
@@ -94,11 +96,11 @@
 	}
 
 	.form-field.block {
-		@apply grid grid-cols-2 gap-6 w-full mb-3;
+		@apply grid grid-cols-2 gap-6 w-full;
 	}
 
 	.form-field:not(.block) {
-		@apply flex flex-col items-stretch mb-3;
+		@apply flex flex-col;
 	}
 
 	.field-description {

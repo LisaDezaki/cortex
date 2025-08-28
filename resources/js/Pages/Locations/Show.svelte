@@ -1,34 +1,53 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { page, router } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import DeleteLocationForm from '@/Forms/Location/Delete.svelte'
 
-	import { Grid, Inline, Stack } from '@/Components/Core'
+	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
 
-	import ArticleBanner     from '@/Components/UI/ArticleBanner.svelte'
-	import Back     from '@/Components/UI/Back.svelte'
-	import Card     from '@/Components/UI/Card.svelte'
-	import Container  from '@/Components/UI/Container.svelte'
-	import Heading  from '@/Components/UI/Heading.svelte'
-	import Modal    from '@/Components/UI/Modal.svelte'
-	import PageHeader from '@/Components/UI/PageHeader.svelte'
-	import PageMenu   from '@/Components/UI/PageMenu.svelte'
-	import Section  from '@/Components/UI/Section.svelte'
+	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
+	import Button     	 from '@/Components/UI/Button.svelte'
+	import Card     	 from '@/Components/UI/Card.svelte'
+	import CardNew       from '@/Components/UI/CardNew.svelte'
+	import Chip			 from '@/Components/UI/Chip.svelte'
+	import Container	 from '@/Components/UI/Container.svelte'
+	import Field    	 from '@/Components/UI/Field.svelte'
+	import Heading  	 from '@/Components/UI/Heading.svelte'
+	import Icon  		 from '@/Components/UI/Icon.svelte'
+	import Media     	 from '@/Components/UI/Media.svelte'
+	import MediaGrid     from '@/Components/UI/MediaGrid.svelte'
+	import Modal    	 from '@/Components/UI/Modal.svelte'
+	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
+	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
+	import Section  	 from '@/Components/UI/Section.svelte'
 
-	import Map        from '@/Components/Features/Location/Map.svelte'
-    import { parse } from 'svelte/compiler'
+	import Map			 from '@/Components/Features/Location/Map.svelte'
 
-	const location = $page.props.location.data
+	const location 	   = $page.props.location?.data
 
 	let deletingLocation  = $state(false)
 
+	let mediaUploadProps  = $derived({
+		endpoint: route('locations.update', { location: location.slug }),
+		method: 'patch',
+		onSuccess: (res) => {
+			router.visit( $page.url, {
+				only: ['location.media'],
+			})
+		}
+	})
+
+	let media_banner	= $derived(location.media.filter(m => m.type === 'banner')?.[0])
+	let media_map		= $derived(location.media.filter(m => m.type === 'map')?.[0])
+	let media_gallery	= $derived(location.media)
+
 	function deleteLocation() {
-        deletingLocation = true
+        deletingLocation  = true
     }
 	function closeModal() {
-		deletingLocation = false
+		deletingLocation  = false
     }
 
 </script>
@@ -41,65 +60,95 @@
 
 	{#snippet header()}
 		<PageHeader
-			breadcrumbs={[
-				{ label: "Locations",   href: route('locations') },
-			]}
+			breadcrumbs={[{ label: "Locations", href: route('locations') }]}
 			back={route('locations')}
 			title={location.name}
-			actions={[
-				{ icon: "Pen",   href: route('locations.edit', { location: location.slug }) },
-				{ icon: "Trash", onclick: deleteLocation, theme: "danger" }
-			]}
 		/>
 	{/snippet}
 
 	{#snippet article()}
-		<Container size="7xl" class="flex gap-12 overflow-y-auto">
+		<Flex justify="center" gap={12} class="py-12">
 
-			<PageMenu class="py-12"
-				items={[
-					{ icon: "MapPinArea",   label: "Details",       href: "#bio",          active: $page.url.endsWith('#bio')          },
-					{ icon: "Compass",      label: "Map",           href: "#map",          active: $page.url.endsWith('#map')          },
-					{ icon: "UsersThree",   label: "People",        href: "#people",       active: $page.url.endsWith('#people')       },
-					{ icon: "ImagesSquare", label: "Media",         href: "#media",        active: $page.url.endsWith('#media')        },
-					{ icon: "Textbox",      label: "Custom Fields", href: "#customfields", active: $page.url.endsWith('#customfields') }
-				]}
-			/>
+			<PageMenu items={[
+				{ icon: "MapPinArea",   	label: "Details",       	href: "#details"	},
+				{ icon: "Textbox",      	label: "Custom Fields", 	href: "#custom"		},
+				{ icon: "Compass",      	label: "Map",           	href: "#map"		},
+				{ icon: "MapPinSimpleArea", label: "Points of Interest", href: "#points"	},
+				{ icon: "UsersThree",   	label: "Characters",        href: "#characters"	},
+				{ icon: "ImagesSquare", 	label: "Gallery",         	href: "#gallery"	},
+				{ icon: "Trash", 			label: "Delete", 			onclick: deleteLocation, theme: "danger" }
+			]} />
 
-			<Stack gap={12} class="py-6 w-full">
-				<Section id="bio">
+			<Container size="4xl">
 
-					<ArticleBanner image={location.banner?.url}>
+				<!-- Details -->
+
+				<Section id="details" class="pb-12">
+
+					<ArticleBanner>
+
+						<Media replaceable
+							aspect="aspect-[7/3]"
+							class="absolute inset-0 rounded-lg overflow-hidden"
+							media={media_banner}
+							type="banner"
+							uploadProps={mediaUploadProps}
+						/>
+
+						<Media replaceable
+							aspect="aspect-square"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-24 rounded-lg overflow-hidden w-48 transition-all"
+							media={media_map}
+							type="map"
+							uploadProps={mediaUploadProps}
+						/>
+
 						{#if location.parent}
 							<Inline class="relative">
-								<Back icon="ArrowElbowUpLeft" href={route('locations.show', { location: location.parent.slug })} style="glass" />
-								<span class="font-style-large {location.banner ? 'text-white' : ''}">{location.parent?.name}</span>
+								<Button style="glass" class="rounded-full"
+									icon={location.parent.icon || "ArrowElbowUpLeft"} label={location.parent.name}
+									href={route('locations.show', { location: location.parent.slug })}
+								/>
 							</Inline>
 						{/if}
 			
-						<Heading is="h1" as="h3" class="mt-auto z-10 {location.banner ? 'text-white' : ''}"
+						<Heading is="h1" as="h3"
+							class="mt-auto z-10 {media_banner ? 'text-white' : ''}"
 							heading={location.name}
+							headingClass="whitespace-pre-wrap"
 							subheading={location.type}
 						/>
 					</ArticleBanner>
 		
-					<p class="mt-6 font-style-regular whitespace-pre-line">
+					<Heading is="h3" as="h5" heading="Description" class="mx-6 mt-9 mb-6" />
+
+					<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
 						{location.description}
 					</p>
 		
 				</Section>
 
-				<Section id="map">
-					{#if location.map}
-						<Map class="min-h-80 max-h-2xl rounded-lg" location={location} />
+				<Section id="fields" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Custom Fields</Heading>
+					{#if location.customFields}
+						Custom Fields
+					{:else}
+						<p class="font-style-placeholder">There aren't any Custom Fields for Locations yet.</p>
 					{/if}
 				</Section>
 
-				{#if location.children.length > 0}
-					<Section>
-						<Heading is="h2" as="h5" class="mb-6"
-							heading="Points of Interest"
-						/>
+				<Section id="map" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Map</Heading>
+					{#if media_map || location.children?.length > 0 || location.descendants?.length > 0}
+						<Map class="aspect-video rounded-lg" location={location} />
+					{:else}
+						<p class="font-style-placeholder">{location.name} doesn't have a map or any child locations yet.</p>
+					{/if}
+				</Section>
+
+				<Section id="points" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Points of Interest</Heading>
+					{#if location.children.length > 0}
 						<Grid cols={3}>
 							{#each location.children as loc}
 								<Card aspect="video" class="w-full"
@@ -111,15 +160,15 @@
 								/>
 							{/each}
 						</Grid>
-					</Section>
-				{/if}
+					{:else}
+						<p class="font-style-placeholder">{location.name} doesn't have any points of interest yet.</p>
+					{/if}
+				</Section>
 		
-				{#if location.characters.length > 0}
-					<Section>
-						<Heading is="h2" as="h5" class="mb-6"
-							heading="Characters"
-						/>
-						<Grid cols={5}>
+				<Section id="characters" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Characters</Heading>
+					{#if location.characters.length > 0}
+						<Grid cols={6}>
 							{#each location.characters as character}
 								<Card aspect="square" class="w-full"
 									icon="User"
@@ -130,50 +179,26 @@
 								/>
 							{/each}
 						</Grid>
-					</Section>
-				{/if}
-			</Stack>
-		</Container>
+					{:else}
+						<p class="font-style-placeholder">There are no characters at {location.name} yet.</p>
+					{/if}
+				</Section>
+
+				<Section id="gallery" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
+					<MediaGrid cols={6}
+						media={media_gallery}
+						type="gallery"
+						addable
+					/>
+				</Section>
+
+			</Container>
+		</Flex>
 	{/snippet}
-
-	<!-- {#snippet sidebar()}
-
-		<div class="flex items-center justify-center aspect-video bg-slate-900/10 rounded-lg w-full border-b border-slate-900/15 overflow-hidden">
-			{#if location.banner}
-				<img src={location.banner?.url} alt={location.name} class="min-h-full min-w-full object-cover" />
-			{:else}
-				<Icon name="MapPin" size="xl" weight="thin" />
-			{/if}
-		</div>
-
-		<div class="space-y-1.5 my-3 font-style-small">
-
-			<div class="grid grid-cols-3 gap-3">
-				<span class="col-span-1 font-bold text-right">Name</span>
-				<span class="col-span-2">{location.name}</span>
-			</div>
-
-			{#if location.region}
-				<div class="grid grid-cols-3 gap-3">
-					<span class="col-span-1 font-bold text-right">Region</span>
-					<span class="col-span-2">{location.region.name}</span>
-				</div>
-			{/if}
-
-			{#if location.customFieldValues?.length > 0}
-				{#each location.customFieldValues as field}
-					<div class="grid grid-cols-3">
-						<span class="col-span-1 px-2 py-1 font-bold border-r border-black/15 text-right">{field.field.label}</span>
-						<span class="col-span-2 px-2 py-1">{field.value}</span>
-					</div>
-				{/each}
-			{/if}
-		</div>
-
-	{/snippet} -->
 
 </AuthenticatedLayout>
 
-<Modal title="Delete {location.name}?" show={deletingLocation} onclose={closeModal}>
+<Modal title="Delete {location.name}?" maxWidth="lg" show={deletingLocation} onclose={closeModal}>
 	<DeleteLocationForm {location} oncancel={closeModal} />
 </Modal>

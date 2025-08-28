@@ -33,34 +33,28 @@
     }
 </script>
 
-<Form
+<Form form={form}
 	class="mt-6 space-y-2"
 	onsubmit={updatePassword}
 	submitLabel="Update password"
 >
 	<Field type="password"
-		id="current_password"
+		name="current_password"
 		label="Current Password"
-		bind:this={currentPasswordInput}
-		bind:value={$form.current_password}
 		errors={$form.errors.current_password}
 		autocomplete="current-password"
 	/>
 
 	<Field type="password"
-		id="password"
+		name="password"
 		label="New Password"
-		bind:this={passwordInput}
-		bind:value={$form.password}
 		errors={$form.errors.password}
 		autocomplete="new-password"
 	/>
 
 	<Field type="password"
-		id="password_confirmation"
+		name="password_confirmation"
 		label="Confirm Password"
-		bind:value={$form.password_confirmation}
-		errors={$form.errors.password_confirmation}
 		autocomplete="new-password"
 	/>
 	

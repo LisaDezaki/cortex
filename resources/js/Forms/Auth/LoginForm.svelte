@@ -4,29 +4,19 @@
     import { route } from 'momentum-trail'
 
 	import Form    from '@/Components/Core/Form.svelte'
-    import GuestLayout from '@/Layouts/GuestLayout.svelte'
-	import LoginForm   from '@/Forms/Auth/LoginForm.svelte'
     import Button      from '@/Components/UI/Button.svelte'
     import Field       from '@/Components/UI/Field.svelte'
-    import Heading     from '@/Components/UI/Heading.svelte'
 
     let {
         canResetPassword,
         status,
     } = $props()
 
-    const form = useForm({
-        email: '',
+	let loginForm = useForm({
+		email: '',
         password: '',
         remember: false,
-    })
-
-    const submit = (e) => {
-        e.preventDefault()
-        $form.post(route('login'), {
-            onFinish: () => $form.reset('password'),
-        })
-    }
+	})
 
 </script>
 
@@ -34,38 +24,33 @@
 
 
 
-<Form onsubmit={submit}>
+<Form
+	endpoint={route('login')}
+	form={loginForm}
+	method="post"
+>
 
-	<Field
-		id="email"
+	<Field name="email"
 		type="email"
 		label="Email"
 		icon="At"
-		bind:value={$form.email}
-		errors={$form.errors.email}
 		autocomplete="username"
 		autofocus
 		required
 	/>
 
-	<Field
-		id="password"
+	<Field name="password"
 		type="password"
 		label="Password"
 		icon="Password"
-		bind:value={$form.password}
-		errors={$form.errors.password}
 		autocomplete="current-password"
 		required
 	/>
 
-	<Field
-		id="remember"
+	<Field name="remember"
 		type="checkbox"
-		class="mt-4"
-		bind:value={$form.remember}
+		class="mt-2 ml-4"
 		labelText="Remember me"
-		errors={$form.errors.remember}
 	/>
 
 	<div class="flex items-center justify-end gap-3 mt-6">
@@ -82,8 +67,6 @@
 		<Button style="hard" theme="accent" class="ml-4 w-full"
 			type="submit" 
 			label="Log in"
-			loading={$form.processing}
-			disabled={$form.processing}
 		/>
 	</div>
 </Form>

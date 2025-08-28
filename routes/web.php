@@ -35,17 +35,19 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
+
 	/*	Dashboard  */
 
 	Route::get('/',    			     [ProjectController::class, 'dashboard' ])->name('dashboard');
 	Route::get('/tests',             fn () => Inertia::render('Tests')  )->name('tests');
 
+
 	/*  File uploads  */
 
 	Route::post(  '/upload-temp',    [UploadController::class, 'uploadTemp' ])->name('upload.temp');
-	Route::post(  '/upload',         [UploadController::class, 'upload'     ])->name('upload');
-	Route::post(  '/save-upload',    [UploadController::class, 'save'       ])->name('upload.save');
+	Route::post(  '/upload',         [UploadController::class, 'moveToPermanent' ])->name('upload');
  
+
 	/*	User routes  */
 
     Route::get(   '/profile', 		[UserController::class,    'edit'        ])->name('profile.edit');
@@ -55,7 +57,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::get(   '/projects',		[ProjectController::class, 'index'       ])->name('projects');
 	Route::get(   '/settings',		[UserController::class,    'settings'    ])->name('settings');
 
-	/*	Project routes  */
+
+	/*	Projects */
 	
 	Route::get(   '/projects/create',     			[ProjectController::class, 'create'    ])->name('projects.create');
     Route::post(  '/projects',            			[ProjectController::class, 'store'     ])->name('projects.store');
@@ -63,39 +66,42 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::delete('/projects/{project}',  			[ProjectController::class, 'destroy'   ])->name('projects.destroy');
     Route::get(   '/project/settings',    			[ProjectController::class, 'settings'  ])->name('projects.settings');
 	Route::get(   '/projects/{project}',     		[ProjectController::class, 'show'      ])->name('projects.show');
-	Route::post( '/activate-project/{project}', 	[ProjectController::class, 'activate'  ])->name('projects.activate');
-	Route::post( '/deactivate-project', 			[ProjectController::class, 'deactivate'])->name('projects.deactivate');
+	Route::post(  '/activate-project/{project}', 	[ProjectController::class, 'activate'  ])->name('projects.activate');
+	Route::post(  '/deactivate-project', 			[ProjectController::class, 'deactivate'])->name('projects.deactivate');
+
 
 	/*	Characters  */
 
 	Route::get(   '/characters',						[CharacterController::class, 'index'   ])->name('characters');
-	Route::get(   '/characters/create',					[CharacterController::class, 'create'  ])->name('characters.create');
+	// Route::get(   '/characters/create',					[CharacterController::class, 'create'  ])->name('characters.create');
 	Route::get(   '/characters/settings',				[CharacterController::class, 'settings'])->name('characters.settings');
 	Route::get(   '/characters/{character}',			[CharacterController::class, 'show'    ])->name('characters.show');
-	Route::get(   '/characters/{character}/edit',		[CharacterController::class, 'edit'    ])->name('characters.edit');
+	// Route::get(   '/characters/{character}/edit',		[CharacterController::class, 'edit'    ])->name('characters.edit');
 	Route::post(  '/characters',						[CharacterController::class, 'store'   ])->name('characters.store');
 	Route::patch( '/characters/{character}',			[CharacterController::class, 'update'  ])->name('characters.update');
 	Route::delete('/characters/{character}',			[CharacterController::class, 'destroy' ])->name('characters.destroy');
 	Route::get(   '/characters/custom-fields',			[CharacterController::class, 'customfields' ])->name('characters.customfields');
 
+
 	/*	Factions  */
 
 	Route::get(   '/factions',					[FactionController::class, 'index'   ])->name('factions');
-	Route::get(   '/factions/create',			[FactionController::class, 'create'  ])->name('factions.create');
+	// Route::get(   '/factions/create',			[FactionController::class, 'create'  ])->name('factions.create');
 	Route::get(   '/factions/settings',			[FactionController::class, 'settings'])->name('factions.settings');
 	Route::get(   '/factions/{faction}',		[FactionController::class, 'show'    ])->name('factions.show');
-	Route::get(   '/factions/{faction}/edit',	[FactionController::class, 'edit'    ])->name('factions.edit');
+	// Route::get(   '/factions/{faction}/edit',	[FactionController::class, 'edit'    ])->name('factions.edit');
 	Route::post(  '/factions',					[FactionController::class, 'store'   ])->name('factions.store');
 	Route::patch( '/factions/{faction}',		[FactionController::class, 'update'  ])->name('factions.update');
 	Route::delete('/factions/{faction}',		[FactionController::class, 'destroy' ])->name('factions.destroy');
 	
 
 	/*	Locations  */
+	
 	Route::get(   '/locations',					[LocationController::class, 'index'   ])->name('locations');
-	Route::get(   '/locations/create',			[LocationController::class, 'create'  ])->name('locations.create');
+	// Route::get(   '/locations/create',			[LocationController::class, 'create'  ])->name('locations.create');
 	Route::get(   '/locations/settings',		[LocationController::class, 'settings'])->name('locations.settings');
 	Route::get(   '/locations/{location}', 		[LocationController::class, 'show'    ])->name('locations.show');
-	Route::get(   '/locations/{location}/edit',	[LocationController::class, 'edit'    ])->name('locations.edit');
+	// Route::get(   '/locations/{location}/edit',	[LocationController::class, 'edit'    ])->name('locations.edit');
 	Route::post(  '/locations',					[LocationController::class, 'store'   ])->name('locations.store');
 	Route::patch( '/locations/{location}', 		[LocationController::class, 'update'  ])->name('locations.update');
 	Route::delete('/locations/{location}', 		[LocationController::class, 'destroy' ])->name('locations.destroy');

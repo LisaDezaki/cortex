@@ -3,9 +3,10 @@
 	import { Link, page, router, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 	
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import ProjectForm         from '@/Forms/Project/Project.svelte'
-	import DeleteProjectForm   from '@/Forms/Project/Delete.svelte'
+    import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
+	import ProjectForm         	from '@/Forms/Project/Project.svelte'
+	import MediaUploadForm 		from '@/Forms/Media/Upload.svelte'
+	import DeleteProjectForm   	from '@/Forms/Project/Delete.svelte'
 
 	import { Flex, Grid } from '@/Components/Core'
 
@@ -15,6 +16,7 @@
 	import Modal      from '@/Components/UI/Modal.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
+	import SetMedia   from '@/Components/UI/SetMedia.svelte'
 
 	import ProjectCard from '@/Components/Features/Project/ProjectCard.svelte'
 
@@ -29,18 +31,23 @@
 	let creatingProject = $state(false)
 	let updatingProject = $state(false)
 	let deletingProject = $state(false)
+	let settingBanner   = $state(false)
 
 	function createProject() {
         creatingProject = true
     }
+	function setBanner() {
+		settingBanner   = true
+	}
 	function updateProject() {
-        updatingProject = true
+		updatingProject = true
     }
 	function deleteProject() {
-        deletingProject = true
+		deletingProject = true
     }
 	function closeModal() {
 		creatingProject = false
+		settingBanner   = false
         updatingProject = false
 		deletingProject = false
     }
@@ -87,8 +94,9 @@
 			breadcrumbs={[]}
 			title={activeProject ? "Dashboard" : "Select a Project"}
 			actions={[
-				{ icon: "Plus",     theme: "accent",  onclick: updateProject },
-				{ icon: "GearFine", theme: "neutral", href: route('projects.settings') }
+				{ icon: "GlobeStand", theme: "neutral", onclick: deactivateProject },
+				// { icon: "Pen",        theme: "neutral", onclick: updateProject },
+				{ icon: "GearFine",   theme: "neutral", href: route('projects.settings') }
 			]}
 		/>
 	{/snippet}
@@ -96,18 +104,31 @@
 	{#snippet article()}
 
 		{#if activeProject}
-			<Section size="full">
-				<Flex align="center" justify="center" class="relative bg-neutral-softest min-h-96 h-[40vh] overflow-hidden">
-					{#if activeProject?.banner}
-						<img
-							src={activeProject.banner.url} alt={activeProject.name}
-							class="absolute object-cover w-full"
-						/>
-					{:else}
-						<Icon class="opacity-25" name="ImageSquare" size={48} weight="light" />
-					{/if}
-				</Flex>
+
+			<Section>
+				<!-- <button class="flex items-center justify-center h-[50vh] min-h-96 overflow-hidden w-full" type="button" onclick={setBanner}>
+					<img src={activeProject.banner?.url} alt="Project Banner" />
+				</button> -->
+
+
+				<SetMedia
+					class="relative h-[50vh] min-h-96 overflow-hidden w-full"
+					endpoint={route('projects.update', { project: activeProject.id })}
+					method="patch"
+					media={activeProject.banner}
+					mediaType="project_banner"
+					requestKey="banner"
+					onSuccess={(res) => {
+						router.visit(route('dashboard'), {
+							only: ['activeProject.banner'],
+						})
+					}}
+					onFinish={(req) => {
+						console.log('Finish:', req)
+					}}
+				/>
 			</Section>
+
 			<Section size="7xl" class="relative pt-12">
 				<Heading is="h1" as="h2" heading={activeProject.name} />
 				<p class="max-w-[65ch] my-6">{activeProject.description}</p>
@@ -235,12 +256,16 @@
 	
 </AuthenticatedLayout>
 
-<Modal show={creatingProject || updatingProject} onclose={closeModal}>
-	<ProjectForm project={activeProject} oncancel={closeModal} />
-</Modal>
 
+
+<!-- <Modal show={creatingProject || updatingProject} onclose={closeModal}>
+	<ProjectForm project={activeProject} oncancel={closeModal} />
+</Modal> -->
 {#if activeProject}
-	<Modal title="Delete {activeProject.name}" show={deletingProject} onclose={closeModal}>
-		<DeleteProjectForm project={activeProject} oncancel={closeModal} />
+	<Modal maxWidth="2xl" show={settingBanner} onclose={closeModal}>
+		<MediaUploadForm aspect="aspect-[7/3]" media={activeProject.banner} oncancel={closeModal} />
 	</Modal>
+	<!-- <Modal title="Delete {activeProject.name}" show={deletingProject} onclose={closeModal}>
+		<DeleteProjectForm project={activeProject} oncancel={closeModal} />
+	</Modal> -->
 {/if}

@@ -1,48 +1,51 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { page, router } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import CustomFieldsForm  from '@/Forms/Character/Partials/CustomFieldsForm.svelte'
-	import FactionsForm      from '@/Forms/Character/Partials/FactionsForm.svelte'
-	import InventoryForm     from '@/Forms/Character/Partials/InventoryForm.svelte'
-	import LocationForm      from '@/Forms/Character/Partials/LocationForm.svelte'
-	import MediaForm         from '@/Forms/Character/Partials/MediaForm.svelte'
-	import RelationshipsForm from '@/Forms/Character/Partials/RelationshipsForm.svelte'
+	import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
+	import DeleteCharacterForm 	from '@/Forms/Character/Delete.svelte'
 	
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import DeleteCharacterForm from '@/Forms/Character/Delete.svelte'
-
-	import { Flex, Grid, Stack, Tabs } from '@/Components/Core'
+	import { Flex, Grid, Stack } from '@/Components/Core'
 
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
-	import ArticleTabs   from '@/Components/UI/ArticleTabs.svelte'
+	import Button        from '@/Components/UI/Button.svelte'
 	import Card       	 from '@/Components/UI/Card.svelte'
+	import CardNew       from '@/Components/UI/CardNew.svelte'
+	import Chip  	  	 from '@/Components/UI/Chip.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
+	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
+	import MediaGrid     from '@/Components/UI/MediaGrid.svelte'
 	import Modal      	 from '@/Components/UI/Modal.svelte'
 	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
-	import SectionBanner from '@/Components/UI/SectionBanner.svelte'
+	import SetMedia    	 from '@/Components/UI/SetMedia.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 
-	const character    = $page.props.character.data
-	const customFields = $page.props.customFields.data
+	import Map      	 from '@/Components/Features/Location/Map.svelte'
+
+	const character    = $page.props.character?.data
+	const customFields = $page.props.customFields?.data
 
 	let deletingCharacter = $state(false)
 	let editMode = $state(false)
 
-	function toggleEditMode() {
-		console.log(editMode, !editMode)
-		let value = !editMode
-		editMode = value
-	}
 	function deleteCharacter() {
         deletingCharacter = true
     }
 	function closeModal() {
 		deletingCharacter = false
     }
+	function toggleEditMode() {
+		editMode = !editMode
+	}
+	function findDisplayValue(fieldId) {
+		return character.customFieldValues.find(v => v.customFieldId == fieldId).displayValue || null
+	}
+	function findValue(fieldId) {
+		return character.customFieldValues.find(v => v.customFieldId == fieldId).value || null
+	}
 
 </script>
 
@@ -60,154 +63,252 @@
 			back={route('characters')}
 			title={character.name}
 			actions={[
-				// { icon: "Pen",   href: route('characters.edit', {character: character.slug}) },
-				{ icon: "Pen",   onclick: toggleEditMode },
-				{ icon: "Trash", onclick: deleteCharacter, theme: "danger" }
+				// { icon: "Pen",   onclick: toggleEditMode },
+				// { icon: "Trash", onclick: deleteCharacter, theme: "danger" }
 			]}
 		/>
 	{/snippet}
 
 	{#snippet article()}
+		<Flex justify="center" gap={12} class="py-12">
+			<PageMenu items={[
+				{ icon: "Info",         	label: "Details",       href: "#details"       },
+				{ icon: "Handshake",        label: "Relationships", href: "#relationships" },
+				{ icon: "FlagBannerFold",   label: "Factions",      href: "#factions"      },
+				{ icon: "Backpack",         label: "Inventory",     href: "#items"         },
+				{ icon: "MapPinSimpleArea", label: "Location",      href: "#location"      },
+				{ icon: "ImagesSquare",     label: "Gallery",       href: "#gallery"       },
+				{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        }
+			]} />
+			<Container size="4xl">
 
-		<Section gap={6} size="7xl" class="py-12">
 
-			<ArticleTabs value="details" tabs={[
-				{ icon: "UserList",       label: "Details",       value: "details"       },
-				{ icon: "Handshake",      label: "Relationships", value: "relationships" },
-				{ icon: "FlagBannerFold", label: "Factions",      value: "factions"      },
-				{ icon: "Backpack",       label: "Inventory",     value: "items"         },
-				{ icon: "MapPinArea",     label: "Location",      value: "location"      },
-				{ icon: "ImagesSquare",   label: "Media",         value: "media"         },
-				{ icon: "Textbox",        label: "Custom Fields", value: "custom"        }
-			]}>
-		
 				<!-- Details -->
-		
-				<Tabs.Content value="details">
-		
+			
+				<Section id="details" class="pb-12">
+
 					<ArticleBanner class="relative" image={character.banner?.url}>
+						
+						<SetMedia
+							aspect="aspect-square"
+							class="absolute bg-slate-200 border border-slate-300 top-0 left-0 h-full w-full rounded-lg overflow-hidden"
+							endpoint={route('characters.update', { character: character.slug })}
+							method="patch"
+							media={character.banner}
+							mediaType="character_banner"
+							requestKey="banner"
+							onSuccess={(res) => {
+								router.visit(route('characters.show', { character: character.slug }), {
+									only: ['character.banner'],
+								})
+							}}
+							onFinish={(req) => {
+								console.log('Finish:', req)
+							}}
+						/>
+						<SetMedia
+							aspect="aspect-square"
+							class="absolute bg-slate-200/10 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-24 rounded-lg overflow-hidden w-48 transition-all"
+							endpoint={route('characters.update', { character: character.slug })}
+							method="patch"
+							media={character.portrait}
+							mediaType="character_portrait"
+							requestKey="portrait"
+							onSuccess={(res) => {
+								router.visit(route('characters.show', { character: character.slug }), {
+									only: ['character.portrait'],
+								})
+							}}
+							onFinish={(req) => {
+								console.log('Finish:', req)
+							}}
+						/>
 						<Heading is="h1" as="h3" class="mt-auto z-10 {character.banner ? 'text-white' : ''}"
 							heading={character.name}
 							subheading={character.alias}
 						/>
-						<Thumbnail class="absolute right-12 -bottom-16 w-40" src={character.portrait?.url} />
 					</ArticleBanner>
 		
-					<Heading is="h3" as="h5" heading="Description" class="mt-12 mb-6" />
+					<Heading is="h3" as="h5" class="mx-6 mt-9 mb-6">Description</Heading>
 		
-					<p class="font-style-large max-w-[64ch] whitespace-pre-wrap">
-						{character.description}
-					</p>
+					{#if editMode}
+						<Field
+							class="max-w-[64ch]"
+							type="textarea"
+							name="description"
+							value={character.description}
+							rows={12}
+						/>
+					{:else}
+						<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
+							{character.description}
+						</p>
+					{/if}
 			
-				</Tabs.Content>
+				</Section>
 		
-		
+
 				<!-- Relationships -->
 		
-				<Tabs.Content value="relationships">
-					<RelationshipsForm
-						character={character}
-						relationships={character.relationships}
-					/>
-					<!-- <CharacterGrid /> -->
-				</Tabs.Content>
+				<Section id="relationships" class="px-6 py-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Relationships</Heading>
+					</Flex>
+					<Stack gap={3}>
+						{#each character.relationships as rel, i}
+
+							<Flex align="center" gap={3}>
+								<Stack align="end">
+									<div class="font-bold">{character.name}</div>
+									<div class="text-sm">{rel.parentRole}</div>
+								</Stack>
+								<Flex align="center" class="-space-x-6">
+									<Thumbnail class="aspect-square bg-slate-200 rounded-full w-12"
+										src={character.portrait?.url}
+									/>
+									<Thumbnail class="aspect-square bg-slate-200 rounded-full w-12"
+										src={rel.portrait?.url}
+									/>
+								</Flex>
+								<Stack>
+									<div class="font-bold">{rel.name}</div>
+									<div class="text-sm">{rel.role}</div>
+								</Stack>
+							</Flex>
+							<!-- <Chip aspect="square"
+								icon="User"
+								image={character.portrait?.url}
+								title={character.name}
+								subtitle={rel.parentRole}
+							/>
+							<Chip aspect="square"
+								icon="User"
+								image={rel.portrait?.url}
+								title={rel.name}
+								subtitle={rel.role}
+							/> -->
+						{/each}
+					</Stack>
+				</Section>
 		
 		
 				<!-- Factions -->
 		
-				<Tabs.Content value="factions">
-					<FactionsForm
+				<Section id="factions" class="px-6 py-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Factions</Heading>
+					</Flex>
+					<Grid cols={8}>
+						{#each character.factions as fac, i}
+							<Card aspect="square"
+								icon="User"
+								title={fac.name}
+								subtitle={fac}
+							/>
+						{/each}
+						<CardNew aspect="square"
+							onclick={() => {}}
+						/>
+					</Grid>
+					<!-- <FactionsForm
 						character={character}
 						factions={character.factions}
-					/>
+					/> -->
 					<!-- <FactionGrid /> -->
-				</Tabs.Content>
+				</Section>
 		
 		
 				<!-- Inventory -->
 		
-				<Tabs.Content value="items">
-					<InventoryForm
+				<Section id="items" class="px-6 py-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Inventory</Heading>
+					</Flex>
+					<Grid cols={8}>
+						{#each character.inventory as item, i}
+							<Card aspect="square"
+								icon="User"
+								title={item.name}
+								subtitle={item.category}
+							/>
+						{/each}
+						<CardNew aspect="square"
+							onclick={() => {}}
+						/>
+					</Grid>
+					<!-- <InventoryForm
 						character={character}
 						items={character.inventory}
-					/>
+					/> -->
 					<!-- <ItemGrid /> -->
-				</Tabs.Content>
-
-
-				<!-- Media -->
+				</Section>
 		
-				<Tabs.Content value="location">
-					<LocationForm
+		
+				<!-- Location -->
+		
+				<Section id="location" class="px-6 py-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Location</Heading>
+					</Flex>
+					{#if location}
+						<Map class="aspect-video rounded-lg w-full"
+							location={character.location}
+						/>
+					{:else}
+						<p class="font-style-placeholder">{character.name} hasn't been assigned a location yet.</p>
+					{/if}
+					<!-- <LocationForm
 						character={character}
 						location={character.location}
-					/>
+					/> -->
 					<!-- <Map /> -->
-				</Tabs.Content>
+				</Section>
 		
 		
 				<!-- Media -->
 		
-				<Tabs.Content value="media">
-					<MediaForm
-						character={character}
-						media={character.media}
-					/>
-					<!-- <MediaGrid /> -->
-				</Tabs.Content>
+				<Section id="gallery" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
+					<MediaGrid cols={4} media={[{},{},{},{}]} />
+				</Section>
 		
 				
 				<!-- Custom Fields -->
 		
-				<Tabs.Content value="custom">
-					<CustomFieldsForm
+				<Section id="custom" class="px-6 py-12">
+
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Custom Fields</Heading>
+					</Flex>
+
+					{#if customFields && customFields.length > 0}
+						{#each customFields as field, i}
+
+							{#if editMode}
+								<Field layout="block" inputClass="w-full" {...field} />
+
+							{:else}
+								<Flex gap={3}>
+									<span class="font-bold w-20">{field.label}:</span>
+									<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
+								</Flex>
+
+							{/if}
+						{/each}
+						
+					{:else}
+						<p class="font-style-placeholder">There are no custom fields for Characters yet.</p>
+						
+					{/if}
+					<!-- <CustomFieldsForm
 						fields={customFields}
 						values={character.customFieldValues}
-					/>
-					<!-- <CustomFields /> -->
-				</Tabs.Content>
-		
-			</ArticleTabs>
-		</Section>
-	
-	{/snippet}
-
-	<!-- {#snippet sidebar()}
-
-		<Flex align="center" justify="center" class="aspect-square bg-slate-900/10 rounded-lg  border-slate-900/15 overflow-hidden max-w-64 mx-auto w-[80%]">
-			{#if character.portrait}
-				<img src={character.portrait.url} alt={character.slug} class="min-h-full min-w-full object-cover" />
-			{:else}
-				<Icon name="User" size={64} weight="thin" />
-			{/if}
+					/> -->
+				</Section>
+				
+			</Container>
 		</Flex>
-
-		<Stack gap={1.5} class="py-3">
-			{#if character.factions.length > 0}
-				<Flex gap={3}>
-					<span class="font-bold w-20">Faction</span>
-					<Link class="line-clamp-1 text-emerald-500 hover:underline" href={route('factions.show', {faction: character.factions[0]?.slug})}>{character.factions[0]?.name}</Link>
-				</Flex>
-			{/if}
-
-			{#if character.location}
-				<Flex gap={3}>
-					<span class="font-bold w-20">Location</span>
-					<Link class="line-clamp-1 text-emerald-500 hover:underline" href={route('locations.show', {location: character.location.slug})}>{character.location?.name}</Link>
-				</Flex>
-			{/if}
-
-			{#if character.customFieldValues.length > 0}
-				{#each character.customFieldValues as field}
-					<Flex gap={3}>
-						<span class="font-bold w-20">{field.field.label}</span>
-						<span class="line-clamp-1">{field.value}</span>
-					</Flex>
-				{/each}
-			{/if}
-		</Stack>
-
-	{/snippet} -->
+	{/snippet}
 	
 </AuthenticatedLayout>
 

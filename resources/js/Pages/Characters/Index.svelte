@@ -8,19 +8,17 @@
 
 	import { Flex, Stack } from '@/Components/Core'
 
-	import Back     from '@/Components/UI/Back.svelte'
 	import Dropdown from '@/Components/UI/Dropdown.svelte'
-	import Heading  from '@/Components/UI/Heading.svelte'
 	import Icon     from '@/Components/UI/Icon.svelte'
 	import Input    from '@/Components/UI/Input.svelte'
 	import PageHeader  from '@/Components/UI/PageHeader.svelte'
 	import Section  from '@/Components/UI/Section.svelte'
 
 	const activeProject = $page.props.activeProject.data
+	const customFields  = $page.props.customFields?.data
 	const characters    = activeProject?.characters
 	const factions      = activeProject?.factions
 	const locations     = activeProject?.locations
-	const customFields  = $page.props.customFields?.data
 
 	let columns   = $state(['name', 'faction', 'relationships', 'location'])
 	let filter    = $state('')
@@ -73,13 +71,12 @@
 		<PageHeader
 			breadcrumbs={[]}
 			back={route('dashboard')}
-			title="Character List"
+			title="Characters"
 			actions={[
-				{ icon: "Plus",     theme: "accent",  href: route('characters.create') },
+				{ icon: "Plus",     theme: "accent" },
 				{ icon: "GearFine", theme: "neutral", href: route('characters.settings') },
 			]}
 		>
-
 			<Flex align="start" gap={3}>
 
 				<!-- Search -->
@@ -170,14 +167,33 @@
 	{/snippet}
 
 	{#snippet article()}
-		<Section gap={6} size="7xl" class="py-6">
+		<Section gap={6} class="p-12">
 			{#if activeProject && characters.length > 0}
+
+
+				<!-- Graph -->
+
 				{#if layout === 'graph'}
 					<p class="font-style-placeholder">This layout type isn't working yet. Try again later.</p>
+				
+
+				<!-- Grid -->
+
 				{:else if layout === 'grid'}
-					<CharacterGrid characters={characterList} cols={gridRows} showItemControls />
+					<CharacterGrid
+						characters={characterList}
+						cols={gridRows}
+					/>
+				
+			
+				<!-- Table -->
+
 				{:else if layout === 'table'}
-					<CharacterTable characters={characterList} />
+					<CharacterTable
+						characters={characterList}
+					/>
+
+
 				{/if}
 			{:else}
 				<p class="mt-12 font-style-placeholder">There are no characters for this project yet. <Link href={route('characters.create')}>Create one?</Link></p>

@@ -72,7 +72,7 @@
 
     function submit(e) {
         e.preventDefault()
-		if (character) { updateCharacter(character.slug) }
+		if (character) { updateCharacter() }
 		else           { createCharacter() }
     }
 
@@ -100,8 +100,8 @@
 		$form.post(route('characters.store'))
 	}
 
-	function updateCharacter(slug) {
-		$form.patch(route('characters.update', {character: slug}))
+	function updateCharacter() {
+		$form.patch(route('characters.update', {character: character.slug}))
 	}
 
 	function openRelationshipModal(e, rel) {

@@ -1,11 +1,10 @@
 <script>
-
-	import Box     from '@/Components/Core/Box.svelte'
+	import Stack     from '@/Components/Core/Stack.svelte'
 
 	let {
         children,
 		class: className,
-		size = 'full',
+		size = 'none',
 		...restProps
     } = $props()
 
@@ -17,6 +16,6 @@
 
 
 
-<Box class="container max-w-{size} w-full {className}" {...restProps}>
+<Stack class="container max-w-{size} w-full {className}" {...restProps}>
 	{@render children?.()}
-</Box>
+</Stack>

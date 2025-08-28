@@ -1,24 +1,25 @@
 <script>
-	import { setContext } from "svelte";
+	import { getContext, setContext } from "svelte";
 	import { writable } from "svelte/store";
 	import { useForm } from '@inertiajs/svelte';
 	import { route } from 'momentum-trail';
 
-	// State for uploaded files
-	const files = writable([]);
+	const { form, setData } = getContext("form");
 
 	let {
 		children,
 		class: className,
 		multiple = false,
-		preview,
-		value = $bindable(),
+		type = 'upload',
+		value = $bindable()
 	} = $props();
 
 	let uploadForm = useForm({
-		files: [],
-		value: value
+		files: []
 	});
+
+	// State for uploaded files
+	const files = writable([]);
 
 	// Method to handle file upload
 	async function handleFileUpload(event) {
@@ -28,40 +29,50 @@
 			$uploadForm.files = input.files;
 		}
 
+		// console.log('UploadContext.handleFileUpload():', $uploadForm)
+
 		await axios.post(
 			route('upload.temp'),
 			$uploadForm,
 			{ headers: { 'Content-Type': 'multipart/form-data' } }
 		).then(response => {
-			console.log(response)
+			let responseData = multiple ? response.data.files : response.data.files?.[0]
+			value = responseData
 			$uploadForm = { ...$uploadForm,
-				...response.data.files.map(f => f.temp_path)
+				files: response.data.files
 			}
-			if (multiple) {
-				value = response.data.files?.map(f => f.temp_path)
-			} else {
-				value = response.data.files?.[0]?.temp_path
-			}
+			$form.media = [ ...$form.media, {
+				type: type,
+				...responseData
+			}]
 		});
+	}
+
+	function isMultiple() {
+		return multiple
+	}
+
+	function getFiles() {
+		return $uploadForm.files
 	}
 
 	// Method to clear files
 	function clearFiles() {
 		files.set([]);
+		$uploadForm.files = []
 	}
 
 	// Expose state and methods via context
 	setContext("file-upload-context", {
 		files,
-		preview,
-		multiple,
-		value,
+		isMultiple,
 		handleFileUpload,
+		getFiles,
 		clearFiles,
 	});
 
 </script>
 
-<div class="upload-context {className}">
+<div class="upload-context overflow-hidden {className}">
 	{@render children(files, clearFiles)}
 </div>

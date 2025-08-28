@@ -9,9 +9,7 @@
 
 	import { Flex, Inline, Stack } from '@/Components/Core'
 
-	import Back       from '@/Components/UI/Back.svelte';
 	import Dropdown   from '@/Components/UI/Dropdown.svelte'
-	import Heading    from '@/Components/UI/Heading.svelte'
 	import Icon       from '@/Components/UI/Icon.svelte'
 	import Input      from '@/Components/UI/Input.svelte'
 	import Modal      from '@/Components/UI/Modal.svelte'
@@ -114,12 +112,11 @@
 
 	{#snippet header()}
 		<PageHeader
-			breadcrumbs={[
-			]}
+			breadcrumbs={[]}
 			back={route('dashboard')}
 			title={layout == 'map' ? "World Map" : "Location List"}
 			actions={[
-				{ icon: "Plus",     theme: "accent",  href: route('locations.create') },
+				{ icon: "Plus",     theme: "accent" },
 				{ icon: "GearFine", theme: "neutral", href: route('locations.settings') },
 			]}
 		>
@@ -200,15 +197,17 @@
 	{/snippet}
 
 	{#snippet article()}
-		<Section class="overflow-y-auto py-12">
+		<Section gap={6} class="p-12">
 			{#if activeProject && locations?.length > 0}
 
 
 				<!-- Table -->
 
-				{#if layout == 'table'}
-					<LocationTable
-						locations={locationList}
+				{#if layout == 'map'}
+					<Map
+						constrain={false}
+						class="bg-black/50 max-h-full rounded-lg"
+						location={worldTree}
 					/>
 					
 
@@ -224,23 +223,17 @@
 
 				<!-- Map -->
 				
-				{:else if layout == 'map'}
-					<Map
-						constrain={false}
-						class="bg-black/50 max-h-full rounded-lg"
-						location={worldTree}
+				{:else if layout == 'table'}
+					<LocationTable
+						locations={locationList}
 					/>
 
 
 				{/if}
 			{:else}
-				<p class="mt-12">There are no locations for this project yet. <Link href={route('locations.create')}>Create one?</Link></p>
+				<p class="mt-12 font-style-placeholder">There are no locations for this project yet. <Link href={route('locations.create')}>Create one?</Link></p>
 			{/if}
 		</Section>
 	{/snippet}
     
 </AuthenticatedLayout>
-
-<Modal title="Add Location" show={locationModalOpen} onclose={closeModal}>
-	<NewLocationForm oncancel={closeModal} />
-</Modal>

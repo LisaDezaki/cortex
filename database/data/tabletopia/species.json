@@ -1,4 +1,13 @@
 {
+	
+	"aarakocra": {
+		"name": "Aarakocra",
+		"desc": "Sequestered in high mountains atop tall trees, the aarakocra, sometimes called birdfolk, evoke fear and wonder. Many aarakocra aren't even native to the Material Plane. They hail from a world beyond — from the boundless vistas of the Elemental Plane of Air. They are immigrants, refugees, scouts, and explorers, their outposts functioning as footholds in a world both strange and alien."
+	},
+	"batfolk": {
+		"name": "Batfolk",
+		"desc": "In the hush of moonlit caverns and the silent heights of gothic treetops, the Batfolk emerge. Anthropomorphic humanoid bats whose presence blends grace with uncanny stillness. Draped in soft fur and wings that fold into lithe, hand-like appendages, Batfolk stand tall with keen, echoing senses that betray their silent, nocturnal nature. Their eyes glint with quiet intelligence, capable of piercing darkness where others falter."
+	},
 	"bearfolk": {
 		"name": "Bearfolk",
 		"desc": "The hulking bearfolk make up an intimidating visage. Brutish and powerful, they combine features of a bipedal humanoid with the raw strength of a mighty bear. Their heads appear to be entirely ursine, and their muscled bodies are covered in thick fur. They are most often seen in Keefe, but can also be found in northern Velea."
@@ -11,9 +20,13 @@
 		"name": "Caoraa",
 		"desc": "The caoraa are humanoid sheep, standing on a pair of hoofed feet and sheep-like hind legs. They have 4 groups of people in their species, the first called sheepkin have heads like human females except with slightly animalistic facial features and sheep-like ears. They are smaller then their male counterparts, they have very fluffy puffy hair on their heads like sheep wool, that tends to get matted if not brushed often. Their lower and upper bodies resemble that of human females, although with most of their body covered in wool-like curly and puffy hair. Except for their upper arms, a bit of their stomach, their inner thighs having no hair, they also have a pair of small horns and a tail."
 	},
+	"centaur": {
+		"name": "Centaur",
+		"desc": "Centaurs are a strong and proud race. Although they typically strive to find peace and balance with nature, they can act with violence when the need arises. Despite this desire for balance, centaurs have to eat a lot to fuel their large bodies and are known to overindulge, especially with wine and ale. A drunken centaur is much more prone to aggressive and violent behavior."
+	},
 	"dragonborn": {
 		"name": "Dragonborn",
-		"desc": "The ancestors of dragonborn hatched from the eggs of chromatic and metallic dragons. One story holds that these eggs were blessed by the dragon gods Bahamut and Tiamat, who wanted to populate the multiverse with people created in their image. Another story claims that dragons created the first dragonborn without the gods’ blessings. Whatever their origin, dragonborn have made homes for themselves on the Material Plane."
+		"desc": "The ancestors of dragonborn hatched from the eggs of chromatic and metallic dragons. One story holds that these eggs were blessed by the dragon gods Bahamut and Tiamat, who wanted to populate the multiverse with people created in their image. Another story claims that dragons created the first dragonborn without the gods' blessings. Whatever their origin, dragonborn have made homes for themselves on the Material Plane."
 	},
 	"dwarf": {
 		"name": "Dwarf",
@@ -22,6 +35,10 @@
 	"elf": {
 		"name": "Elf",
 		"desc": "Elves are a magical people of otherworldly grace, living in the world but not entirely part of it. They live in places of ethereal beauty, in the midst of ancient forests or in silvery spires glittering with faerie light, where soft music drifts through the air and gentle fragrances waft on the breeze. Elves love nature and magic, art and artistry, music and poetry, and the good things of the world."
+	},
+	"firbolg": {
+		"name": "Firbolg",
+		"desc": "Although they are giants, firbolgs are crafty, cautious, and reclusive. They have learned to distrust most other humanoids except elves, and dwell only in remote places far from civilization's encroaching grasp, amidst fey and spirits of nature. They live in small, close-knit clans that tend to occupy one large, wooden house surrounded by a field kept for harvest. To supplement the food they grow, they wander the surrounding territory in small gangs hunting and gathering. In their normal form, firbolgs look like oversized humans. They wear their hair long and free, and many decorate their skin with intricate designs picked out in blue woad."
 	},
 	"gnoll": {
 		"name": "Gnoll",

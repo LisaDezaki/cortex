@@ -2,7 +2,7 @@
 	import { page, useForm } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
-	import { Form }   from '@/Components/Core'
+	import { Flex, Form }   from '@/Components/Core'
 
 	import Button  from '@/Components/UI/Button.svelte'
 	import Field   from '@/Components/UI/Field.svelte'
@@ -17,40 +17,44 @@
         oncancel = () => {}
     } = $props()
 
-	const form = useForm({
-		enabled: true,
-        subheading: ''
-    })
+	// const form = useForm({
+	// 	enabled: true,
+    //     subheading: ''
+    // })
 	
-	function updateSettings() {
-		console.log('update settings');
-	}
+	// function updateSettings() {
+	// 	console.log('update settings');
+	// }
 
 </script>
 
-<Form onsubmit={updateSettings} class={className}>
+<Form {oncancel}
+	class={className}
+	method="patch"
+	initialData={{
+		enabled: true,
+        subheading: ''
+	}}
+>
 
-	<Heading is="h4" as="h6" class="mb-6"
-		heading="Overview"
-		subheading="The most important settings for the Character entity."
-	/>
+	<Flex align="center" class="mb-6 max-w-[32ch]">
+		<Heading is="h3" as="h5">Overview</Heading>
+	</Flex>
 
-	<Input
+	<Input name="enabled"
 		type="switch"
 		label="Enable Characters"
-		bind:checked={$form.enabled}
-		errors={$form.errors.enabled}
 	/>
 
-	<Field layout="block" inputClass="w-full"
+	<Field name="subheading"
+		layout="block"
+		inputClass="w-full"
 		type="select"
 		label="Character subheading"
 		description="Which field would you like to show under the character's name when viewing them?"
 		options={customFields.map((field) => {
 			return { value: field.name, label: field.label }
 		})}
-		bind:value={$form.subheading}
-		errors={$form.errors.subheading}
 	/>
 
 	{#snippet actions()}
@@ -63,7 +67,6 @@
 			type="submit"
 			label="Save changes"
 			onclick={updateSettings}
-			disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
 		/>
 	{/snippet}
 

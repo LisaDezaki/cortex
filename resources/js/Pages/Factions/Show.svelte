@@ -1,31 +1,35 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { page, router } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import FactionsPanel from '@/Partials/FactionsPanel.svelte'
 	import DeleteFactionForm from '@/Forms/Faction/Delete.svelte'
 
-	import { Flex, Grid, Stack, Tabs } from '@/Components/Core'
+	import { Flex, Grid, Stack } from '@/Components/Core'
 
-	import ArticleBanner	from '@/Components/UI/ArticleBanner.svelte'
-	import ArticleTabs		from '@/Components/UI/ArticleTabs.svelte'
-	import Back				from '@/Components/UI/Back.svelte'
-	import Button			from '@/Components/UI/Button.svelte'
-	import Card				from '@/Components/UI/Card.svelte'
-	import Container		from '@/Components/UI/Container.svelte'
-	import Heading			from '@/Components/UI/Heading.svelte'
-	import Icon				from '@/Components/UI/Icon.svelte'
-	import Modal			from '@/Components/UI/Modal.svelte'
-	import PageHeader		from '@/Components/UI/PageHeader.svelte'
-	import PageMenu			from '@/Components/UI/PageMenu.svelte'
-	import Section			from '@/Components/UI/Section.svelte'
-	import Thumbnail			from '@/Components/UI/Section.svelte'
+	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
+	import Button		 from '@/Components/UI/Button.svelte'
+	import Card			 from '@/Components/UI/Card.svelte'
+	import CardNew       from '@/Components/UI/CardNew.svelte'
+	import Chip			 from '@/Components/UI/Chip.svelte'
+	import Container	 from '@/Components/UI/Container.svelte'
+	import Field    	 from '@/Components/UI/Field.svelte'
+	import Heading		 from '@/Components/UI/Heading.svelte'
+	import MediaGrid	 from '@/Components/UI/MediaGrid.svelte'
+	import Modal		 from '@/Components/UI/Modal.svelte'
+	import PageHeader	 from '@/Components/UI/PageHeader.svelte'
+	import PageMenu		 from '@/Components/UI/PageMenu.svelte'
+	import Section		 from '@/Components/UI/Section.svelte'
+	import SetMedia		 from '@/Components/UI/SetMedia.svelte'
+	import Thumbnail	 from '@/Components/UI/Section.svelte'
 
-	const activeProject = $page.props.activeProject.data
-	const faction = $page.props.faction.data
+	import Map      	 from '@/Components/Features/Location/Map.svelte'
+
+	const faction 	   = $page.props.faction?.data
+	const customFields = $page.props.customFields?.data
 
 	let deletingFaction = $state(false)
+	let editMode = $state(false)
 
 	function deleteFaction() {
         deletingFaction = true
@@ -50,66 +54,144 @@
 			back={route('factions')}
 			title={faction.name}
 			actions={[
-				{ icon: "Pen",   href: route('factions.edit', {faction: faction.slug}) },
-				{ icon: "Trash", onclick: deleteFaction, theme: "danger" }
+				// { icon: "Pen",   href: route('factions.edit', {faction: faction.slug}) },
+				// { icon: "Trash", onclick: deleteFaction, theme: "danger" }
 			]}
 		/>
 	{/snippet}
 
 	{#snippet article()}
-		<Section gap={6} size="7xl" class="py-12">
+		<Flex justify="center" gap={12} class="py-12">
+			<PageMenu items={[
+				{ icon: "Info",      	label: "Details",    	href: "#details"	},
+				{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
+				{ icon: "MapPinArea", 	label: "Headquarters", 	href: "#hq"			},
+				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
+				{ icon: "Textbox",      label: "Custom Fields", href: "#fields" 	}
+			]} />
+			<Container size="4xl">
 
-			<ArticleTabs value="details" tabs={[
-				{ icon: "Info",      	label: "Details",    	value: "details"	},
-				{ icon: "MapPinArea", 	label: "Headquarters", 	value: "hq"			},
-				{ icon: "UsersFour", 	label: "Membership", 	value: "members"	},
-				{ icon: "ImagesSquare", label: "Media",         value: "media" 		},
-				{ icon: "Textbox",      label: "Custom Fields", value: "fields" 	}
-			]}>
-
+				
 				<!-- Details -->
 		
-				<Tabs.Content value="details">
+				<Section id="details" class="pb-12">
 		
-					<ArticleBanner class="relative" image={faction.emblem?.url}>
+					<ArticleBanner class="relative" image={faction.banner?.url}>
+						
+						<SetMedia
+							aspect="aspect-square"
+							class="absolute bg-slate-200 border border-slate-300 top-0 left-0 h-full w-full rounded-lg overflow-hidden"
+							endpoint={route('factions.update', { faction: faction.slug })}
+							method="patch"
+							media={faction.banner}
+							mediaType="faction_banner"
+							requestKey="banner"
+							onSuccess={(res) => {
+								router.visit(route('factions.show', { faction: faction.slug }), {
+									only: ['faction.banner'],
+								})
+							}}
+							onFinish={(req) => {
+								console.log('Finish:', req)
+							}}
+						/>
+						<SetMedia
+							aspect="aspect-square"
+							class="absolute bg-slate-200/10 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-24 rounded-lg overflow-hidden w-48 transition-all"
+							endpoint={route('factions.update', { faction: faction.slug })}
+							method="patch"
+							media={faction.emblem}
+							mediaType="faction_emblem"
+							requestKey="emblem"
+							onSuccess={(res) => {
+								router.visit(route('factions.show', { faction: faction.slug }), {
+									only: ['faction.emblem'],
+								})
+							}}
+							onFinish={(req) => {
+								console.log('Finish:', req)
+							}}
+						/>
+
 						<Heading is="h1" as="h3" class="mt-auto z-10 {faction.emblem ? 'text-white' : ''}"
 							heading={faction.name}
 							subheading={faction.type}
 						/>
-						<Thumbnail class="absolute right-12 -bottom-16 w-40" src={faction.emblem?.url} />
+
 					</ArticleBanner>
 		
-					<Heading is="h3" as="h5" heading="Description" class="mt-12 mb-6" />
+					<Heading is="h3" as="h5" heading="Description" class="mx-6 mt-12 mb-6" />
 		
-					<p class="font-style-large max-w-[64ch] whitespace-pre-wrap">
+					<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
 						{faction.description}
 					</p>
 			
-				</Tabs.Content>
+				</Section>
 
-				<Tabs.Content value="hq">
-					<Heading is="h3" as="h5">Headquarters</Heading>
-					<!-- <Map /> -->
-				</Tabs.Content>
 
-				<Tabs.Content value="members">
-					<Heading is="h3" as="h5">Membership</Heading>
-					Ranks
-					<!-- <CharacterGrid /> -->
-				</Tabs.Content>
+				<!-- Membership -->
+	
+				<Section id="members" class="px-6 py-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Membership</Heading>
+					</Flex>
+					<Stack gap={3}>
+						{#each faction.members as member, i}
+							<Chip aspect="square"
+								icon="User"
+								image={member.portrait?.url}
+								title={member.name}
+								subtitle={member.role}
+							/>
+						{/each}
+						<!-- <CardNew aspect="square"
+							onclick={() => {}}
+						/> -->
+					</Stack>
+					<!-- {#if faction.ranks}
+						Ranks.Members
+					{:else}
+						<p class="font-style-placeholder">{faction.name} doesn't have any members yet.</p>
+					{/if} -->
+					
+				</Section>
 
-				<Tabs.Content value="media">
-					<Heading is="h3" as="h5">Media</Heading>
-					<!-- <MediaGrid /> -->
-				</Tabs.Content>
 
-				<Tabs.Content value="fields">
-					<Heading is="h3" as="h5">Custom Field</Heading>
-					<!-- CustomFields />-->
-				</Tabs.Content>
+				<!-- Headquarters -->
+	
+				<Section id="hq" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Headquarters</Heading>
+					{#if faction.headquarters}
+						Faction: {faction.headquarters}
+						<!-- <Map /> -->
+					{:else}
+						<p class="font-style-placeholder">{faction.name} doesn't have a headquarters yet.</p>
+					{/if}
+				</Section>
 
-			</ArticleTabs>
 
+				<!-- Media -->
+	
+				<Section id="gallery" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
+					<MediaGrid cols={4} media={[{},{},{},{}]} />
+				</Section>
+
+
+				<!-- Custom Fields -->
+	
+				<Section id="fields" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Custom Field</Heading>
+					{#if faction.customFields}
+						Custom Fields
+						<!-- CustomFields />-->
+					{:else}
+						<p class="font-style-placeholder">There aren't any Custom Fields for Factions yet.</p>
+					{/if}
+				</Section>
+	
+			</Container>
+	
 			<!-- <Stack gap={12}>
 				<Section id="#details">
 					<Heading is="h2" as="h3" class="my-12"
@@ -119,7 +201,7 @@
 					/>
 					<p>{faction.description}</p>
 				</Section>
-
+	
 				{#if faction.ranks.length > 0}
 					<Section id="membership">
 						<Heading is="h4" as="h6" class="mb-6"
@@ -145,52 +227,12 @@
 					</Section>
 				{/if}
 			</Stack> -->
-
-		</Section>
-	{/snippet}
-
-	<!-- {#snippet sidebar()}
-
-		<Flex align="center" justify="center" class="aspect-square bg-slate-900/10 rounded-lg  border-slate-900/15 overflow-hidden max-w-64 mx-auto w-[80%]">
-			{#if faction.emblem}
-				<img src={faction.emblem.url} alt={faction.slug} class="w-full rounded-t-lg" />
-			{:else}
-				<Icon name="FlagBannerFold" size="xl" weight="thin" />
-			{/if}
+			
 		</Flex>
-
-		<Stack gap={1.5} class="py-3">
-
-			{#if faction.headquarters}
-				<Flex gap={3}>
-					<span class="font-bold w-20">HQ</span>
-					<Link class="line-clamp-1 text-emerald-500 hover:underline"
-						href={route('locations.show', {location: faction.headquarters.slug})}
-					>{faction.headquarters.name}</Link>
-				</Flex>
-			{/if}
-
-			<Flex gap={3}>
-				<span class="font-bold w-20">Leader</span>
-				<Link class="line-clamp-1 text-emerald-500 hover:underline"
-					href
-				></Link>
-			</Flex>
-
-			{#if location.customFieldValues?.length > 0}
-				{#each location.customFieldValues as field}
-					<Flex gap={3}>
-						<span class="font-bold w-20">{field.field.label}</span>
-						<span class="line-clamp-1">{field.value}</span>
-					</Flex>
-				{/each}
-			{/if}
-		</Stack>
-
-	{/snippet} -->
+	{/snippet}
 	
 </AuthenticatedLayout>
 
-<Modal title="Delete {faction.name}?" show={deletingFaction} onclose={closeModal}>
+<!-- <Modal title="Delete {faction.name}?" show={deletingFaction} onclose={closeModal}>
 	<DeleteFactionForm {faction} oncancel={closeModal} />
-</Modal>
+</Modal> -->

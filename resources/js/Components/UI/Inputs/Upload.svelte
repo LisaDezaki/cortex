@@ -10,7 +10,7 @@
 	import Icon          from '@/Components/UI/Icon.svelte';
 
 	let {
-		aspect = "square",
+		aspect = "aspect-square",
 		class: className,
 		altText = '',
 		accept = 'image/*',
@@ -29,7 +29,7 @@
 	// 	value: value
 	// });
 
-	let input
+	// let input
 	// let hasFocus = $state(false)
 
 	// function checkFocus() {
@@ -71,25 +71,25 @@
 	// 	});
 	// }
 
-	onMount(() => {
+	// onMount(() => {
         // if (restProps.autofocus && input) {
 		// 	hasFocus = true
         //     input.focus()
         // }
-    })
+    // })
 
-	onDestroy(() => {
+	// onDestroy(() => {
 		// if ($uploadForm.blob) {
 		// 	URL.revokeObjectURL($uploadForm.blob);
 		// }
-	});
+	// });
 
 </script>
 
 <UploadContext bind:value={value}>
 	<UploadTrigger label="Upload Portrait" class="input flex-col p-2 {className}">
 
-		<UploadPreview class="aspect-{aspect} rounded-md overflow-hidden" />
+		<UploadPreview class="{aspect} rounded-md overflow-hidden" />
 
 		<Flex align="center" gap={2} class="p-1 w-full">
 			<Icon name={icon || "File"} size="md" />

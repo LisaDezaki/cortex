@@ -10,7 +10,7 @@
 	import Field           from '@/Components/UI/Field.svelte'
 	import Icon            from '@/Components/UI/Icon.svelte'
 	import Input           from '@/Components/UI/Input.svelte'
-	import Label           from '@/Components/UI/Form/Label.svelte'
+	import Label           from '@/Components/UI/Inputs/Label.svelte'
 
 	//  Props
     let {

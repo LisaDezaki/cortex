@@ -51,6 +51,7 @@ class HandleInertiaRequests extends Middleware
 				'characters.location.parent',
 				'characters.factions.emblem',
 				'characters.factions.members',
+				'characters.banner',
 				'characters.portrait',
 				'characters.relationships',
 				'characters.customFieldValues.customField',

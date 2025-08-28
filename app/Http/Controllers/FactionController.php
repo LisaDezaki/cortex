@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CustomFieldResource;
 use App\Http\Resources\FactionResource;
-use App\Http\Requests\StoreFactionRequest;
-use App\Http\Requests\UpdateFactionRequest;
 use App\Models\CustomField;
 use App\Models\Faction;
 use App\Services\MediaService;
@@ -26,15 +24,32 @@ class FactionController extends Controller
 		$this->mediaService = $mediaService;
 	}
 
+	/**
+	 * VALIDATION
+	 * 
+	 * Validate the incoming requests.
+	 * Validation will fail if the incoming request includes any fields that are not
+	 * included in this list.
+	 */
+
 	protected $validationRules = [
-		'name'          	  	=> ['required', 'string'],
-		'description'   	  	=> ['nullable', 'string'],
-		'emblem'        	  	=> ['nullable', 'string'],
+		'name'          	  	=> ['sometimes', 'string'],
+		'description'   	  	=> ['nullable',  'string'],
+		'banner'        	  	=> ['nullable',  'string'],
+		'emblem'        	  	=> ['nullable',  'string'],
+		'hq'					=> ['nullable',  'string'],
+
 		'custom_fields' 	  	=> ['sometimes', 'array'],
         'custom_fields.*'     	=> ['present'],
 		'custom_fields.*.id'    => ['required', 'distinct', 'exists:custom_fields,id'],
 		'custom_fields.*.value' => ['nullable', 'string']
 	];
+
+	/**
+	 * INDEX
+	 * 
+	 * Show the list of Factions
+	 */
 
     public function index()
     {
@@ -53,38 +68,51 @@ class FactionController extends Controller
 		]);
     }
 
-    public function create()
-    {
-		$active_project = Auth::user()->active_project;
-		if (!$active_project) {
-			return Redirect::route('projects');
-		}
 
-		$customFields = CustomField::where([
-			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'faction'
-		])->with('options')->get();
+	/**
+	 * CREATE / STORE
+	 * 
+	 * When a FactionCreateRequest is received, it will be handled by the Store
+	 * method in the FactionController. The user will likely only be submitting
+	 * a name to initially create a Faction.
+	 */
 
-        return Inertia::render('Factions/Create', [
-			'customFields' => CustomFieldResource::collection($customFields)
-		]);
-    }
-
+    public function create() {}
     public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate($this->validationRules);
 		$faction = Auth::user()->activeProject()->factions()->create($validatedData);
-		$this->handleEmblem($request, $faction);
+
+		if ($request->has('emblem')) {
+			$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
+			unset($validatedData['emblem']);
+		}
+
+		if ($request->has('banner')) {
+			$this->mediaService->attachMedia($faction, 'banner', $request->banner);
+			unset($validatedData['banner']);
+		}
+
 		// $this->handleCustomFields($validatedData['custom_fields'], $character);
+
 		$faction->save();
+
 		return Redirect::route("factions.show", [
 			'faction' => $faction->slug
 		]);
     }
 
+
+	/**
+	 * SHOW
+	 * 
+	 * Render the Character entity page for the requested Character.
+	 */
+
     public function show(Faction $faction)
     {
 		$faction->load([
+			'banner',
 			'emblem',
 			'members.portrait',
 			'ranks',
@@ -95,47 +123,48 @@ class FactionController extends Controller
 		]);
     }
 
-    public function edit(Faction $faction)
-    {
-        $faction->load([
-			'emblem',
-			'members.portrait',
-			'ranks'
-		]);
 
-		$active_project = Auth::user()->active_project;
-		if (!$active_project) {
-			return Redirect::route('projects');
-		}
+	/**
+	 * EDIT / UPDATE
+	 * 
+	 * When a FactionUpdateRequest is received, it will be handled by the Update
+	 * method in the FactionController. The user may submit any piece of
+	 * Faction model to update, and so it must be updated on a per-item basis.
+	 */
 
-		$customFields = CustomField::where([
-			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'faction'
-		])->with('options')->get();
-
-        return Inertia::render('Factions/Edit', [
-			'faction' => new FactionResource($faction),
-			'customFields' => CustomFieldResource::collection($customFields)
-		]);
-    }
-
+    public function edit(Faction $faction) {}
     public function update(Request $request, Faction $faction)
     {
 		$validatedData = $request->validate($this->validationRules);
-		$faction->fill($validatedData);
-		$this->handleEmblem($request, $faction);
-		// $this->handleCustomFields($validatedData['custom_fields'], $faction);
+
+		if ($request->has('emblem')) {
+			$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
+			unset($validatedData['emblem']);
+		}
+
+		if ($request->has('banner')) {
+			$this->mediaService->attachMedia($faction, 'banner', $request->banner);
+			unset($validatedData['banner']);
+		}
+
 		if ($request->has('headquarters_id')) {
 			$faction->headquarters()->associate($validatedData['headquarters_id']);
 		}
-
-		unset($faction->emblem);
-
+		
+		$faction->fill($validatedData);
 		$faction->update();
 		return Redirect::route("factions.show", [
 			'faction' => $faction->slug
 		]);
     }
+
+
+	/**
+	 * DELETE
+	 * 
+	 * Remove the entity and all associated data from the database.
+	 * Factions have soft-deletes, meaning they can be restored.
+	 */
 
     public function destroy(Faction $faction)
     {
@@ -147,21 +176,31 @@ class FactionController extends Controller
     	return Inertia::render('Factions/Settings');
     }
 
-	public function handleEmblem(Request $request, Faction $faction)
-	{
-		$request->validate([
-			'emblem' => 'string|nullable',
-		]);
+	// public function handleBanner(Request $request, Faction $faction)
+	// {
+	// 	$user = Auth::user();
+	// 	$userDir    = "user_"   .substr($user->id, 0, 8);
+	// 	$projectDir = "project_".substr($user->active_project, 0, 8);
 
-		$user = Auth::user();
-		$userDir    = "user_"   .substr($user->id, 0, 8);
-		$projectDir = "project_".substr($user->active_project, 0, 8);
+	// 	$this->mediaService->updateImage(
+	// 		$faction,
+	// 		$faction->banner(),
+	// 		$request->banner,
+	// 		"$userDir/$projectDir/factions"
+	// 	);
+	// }
 
-		$this->mediaService->updateImage(
-			$faction,
-			$faction->emblem(),
-			$request->emblem,
-			"$userDir/$projectDir/factions"
-		);
-	}
+	// public function handleEmblem(Request $request, Faction $faction)
+	// {
+	// 	$user = Auth::user();
+	// 	$userDir    = "user_"   .substr($user->id, 0, 8);
+	// 	$projectDir = "project_".substr($user->active_project, 0, 8);
+
+	// 	$this->mediaService->updateImage(
+	// 		$faction,
+	// 		$faction->emblem(),
+	// 		$request->emblem,
+	// 		"$userDir/$projectDir/factions"
+	// 	);
+	// }
 }

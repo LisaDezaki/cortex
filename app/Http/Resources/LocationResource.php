@@ -22,10 +22,12 @@ class LocationResource extends JsonResource
 			'type'        => $this->type,
 			'icon'        => $this->icon,
 			'description' => $this->description,
-			'banner'      => new MediaResource($this->whenLoaded('banner')),
-			'map'         => new MediaResource($this->whenLoaded('map')),
-
 			'isWorldMap'  => $this->is_world_map,
+
+			'media'		  => MediaResource::collection($this->whenLoaded('media')),
+			'banner'      => new MediaResource($this->whenLoaded('banner')),
+			'gallery'     => MediaResource::collection($this->whenLoaded('gallery')),
+			'map'         => new MediaResource($this->whenLoaded('map')),
 			'parent'      => new LocationResource($this->whenLoaded('parent')),
 			'children'    => LocationResource::collection($this->whenLoaded('children')),
 			'descendants' => LocationResource::collection($this->whenLoaded('descendants')),

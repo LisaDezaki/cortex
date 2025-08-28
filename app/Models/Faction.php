@@ -81,22 +81,27 @@ class Faction extends Model
 	}
 
 	/**
-	 * Set up media relationships.
-	 *
+	 * Media relationships.
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
 
+	public function media(): MorphMany
+	{
+		return $this->morphMany(Media::class, 'mediable');
+	}
 	public function emblem(): MorphOne
 	{
-		return $this->morphOne(Media::class, 'mediable')
-			->where('type', 'faction_emblem');
+		return $this->morphOne(Media::class, 'mediable')->where('type', 'emblem');
 	}
-
+	public function banner(): MorphOne
+	{
+		return $this->morphOne(Media::class, 'mediable')->where('type', 'banner');
+	}
 	public function gallery(): MorphMany
 	{
-		return $this->morphMany(Media::class, 'mediable')
-			->where('type', 'faction_gallery');
+		return $this->morphMany(Media::class, 'mediable')->where('type', 'gallery');
 	}
+	
 
 
 

@@ -30,7 +30,7 @@
 
 <GuestLayout>
 	
-	<div class="bg-surface p-6 rounded-lg w-96">
+	<div class="bg-surface p-3 rounded-lg w-96">
 		<Heading is="h1" as="h4" class="mb-6">Login</Heading>
 		{#if status}
 			<div class="text-sm font-medium text-accent mb-6">

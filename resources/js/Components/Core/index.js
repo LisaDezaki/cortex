@@ -1,7 +1,7 @@
 export { default as Box }     from './Box.svelte';
 export { default as Dialog }  from './Dialog.svelte';
 export { default as Flex }    from './Flex.svelte';
-export { default as Form }    from './Form/Form.svelte';
+export { default as Form }    from './Form.svelte';
 export { default as Grid }    from './Grid.svelte';
 export { default as Inline }  from './Inline.svelte';
 export { default as PanZoom } from './PanZoom.svelte';

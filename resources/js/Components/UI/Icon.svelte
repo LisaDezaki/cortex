@@ -7,8 +7,11 @@
 	import Backpack from "phosphor-svelte/lib/Backpack"
 	import Bag from "phosphor-svelte/lib/Bag"
 	import Bank from "phosphor-svelte/lib/Bank"
+	import Barbell from "phosphor-svelte/lib/Barbell"
 	import BeerStein from "phosphor-svelte/lib/BeerStein"
 	import Books from "phosphor-svelte/lib/Books"
+	import BoxingGlove from "phosphor-svelte/lib/BoxingGlove"
+	import Bread from "phosphor-svelte/lib/Bread"
 	import BuildingApartment from "phosphor-svelte/lib/BuildingApartment"
 	import Butterfly from "phosphor-svelte/lib/Butterfly"
 	import CalendarDots from "phosphor-svelte/lib/CalendarDots"
@@ -66,6 +69,7 @@
 	import MagnifyingGlassPlus from "phosphor-svelte/lib/MagnifyingGlassPlus"
 	import MapPin from "phosphor-svelte/lib/MapPin"
 	import MapPinArea from "phosphor-svelte/lib/MapPinArea"
+	import MapPinSimpleArea from "phosphor-svelte/lib/MapPinSimpleArea"
 	import MapTrifold from "phosphor-svelte/lib/MapTrifold"
 	import Minus from "phosphor-svelte/lib/Minus"
 	import Moon from "phosphor-svelte/lib/Moon"
@@ -85,6 +89,7 @@
 	import Speedometer from "phosphor-svelte/lib/Speedometer"
 	import Student from "phosphor-svelte/lib/Student"
 	import Sun from "phosphor-svelte/lib/Sun"
+	import Sword from "phosphor-svelte/lib/Sword"
 	import Table from "phosphor-svelte/lib/Table"
 	import TagSimple from "phosphor-svelte/lib/TagSimple"
 	import Tent from "phosphor-svelte/lib/Tent"
@@ -120,8 +125,11 @@
 		'Backpack': Backpack,
 		'Bag': Bag,
 		'Bank': Bank,
+		'Barbell': Barbell,
 		'BeerStein': BeerStein,
 		'Books': Books,
+		'BoxingGlove': BoxingGlove,
+		'Bread': Bread,
 		'BuildingApartment': BuildingApartment,
 		'Butterfly': Butterfly,
 		'CalendarDots': CalendarDots,
@@ -177,9 +185,10 @@
 		'MagnifyingGlass': MagnifyingGlass,
 		'MagnifyingGlassMinus': MagnifyingGlassMinus,
 		'MagnifyingGlassPlus': MagnifyingGlassPlus,
-		'MapTrifold': MapTrifold,
 		'MapPin': MapPin,
 		'MapPinArea': MapPinArea,
+		'MapPinSimpleArea': MapPinSimpleArea,
+		'MapTrifold': MapTrifold,
 		'Minus': Minus,
 		'Moon': Moon,
 		'Password': Password,
@@ -198,6 +207,7 @@
 		'Speedometer': Speedometer,
 		'Student': Student,
 		'Sun': Sun,
+		'Sword': Sword,
 		'Table': Table,
 		'TagSimple': TagSimple,
 		'Tent': Tent,

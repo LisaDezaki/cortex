@@ -91,22 +91,27 @@ class Character extends Model
 	}
 
 	/**
-	 * Set up media relationships.
-	 *
+	 * Media relationships.
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
 
+	public function media(): MorphMany
+	{
+		return $this->morphMany(Media::class, 'mediable');
+	}
 	public function portrait(): MorphOne
 	{
-		return $this->morphOne(Media::class, 'mediable')
-			->where('type', 'character_portrait');
+		return $this->morphOne(Media::class, 'mediable')->where('type', 'portrait');
 	}
-
+	public function banner(): MorphOne
+	{
+		return $this->morphOne(Media::class, 'mediable')->where('type', 'banner');
+	}
 	public function gallery(): MorphMany
 	{
-		return $this->morphMany(Media::class, 'mediable')
-			->where('type', 'character_gallery');
+		return $this->morphMany(Media::class, 'mediable')->where('type', 'gallery');
 	}
+	
 
 
 	/**

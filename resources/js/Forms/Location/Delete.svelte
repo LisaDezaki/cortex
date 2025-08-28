@@ -14,20 +14,23 @@
 	const form = useForm({
 		confirm_name: ''
 	});
-	function deleteLocation(e) {
-		e.preventDefault();
-		$form.delete(route('locations.destroy', { location: location.slug}), {
-			onSuccess: () => {
-				oncancel();
-			}
-		} );
-	}
+	// function deleteLocation(e) {
+	// 	e.preventDefault();
+	// 	$form.delete(route('locations.destroy', { location: location.slug}), {
+	// 		onSuccess: () => {
+	// 			oncancel();
+	// 		}
+	// 	} );
+	// }
 
 </script>
 
 <Form
 	class="max-w-lg"
 	enctype="multipart/form-data"
+	endpoint={route('locations.destroy', { location: location.slug})}
+	form={form}
+	method="delete"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
@@ -37,10 +40,8 @@
 		<p>Please type the name of the location ('<strong>{location.name}</strong>') to confirm deletion.</p>
 	
 		<Field type="text"
-			id="confirm_name"
+			name="confirm_name"
 			label="Location name"
-			bind:value={$form.confirm_name}
-			errors={$form.errors.confirm_name}
 			required
 			autofocus
 		/>
@@ -55,7 +56,6 @@
 		<Button style="hard" theme="danger" class="border-none rounded-none w-1/2"
 			type="submit"
 			label="Yes, Delete this location"
-			onclick={deleteLocation}
 		/>
 	</Flex>
 

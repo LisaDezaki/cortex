@@ -1,89 +1,55 @@
 <script>
-	import { inertia, page } from '@inertiajs/svelte'
+	import { setContext } from "svelte";
 
-	import Flex    from '@/Components/Core/Flex.svelte';
-	import Heading from '@/Components/UI/Heading.svelte';
-
-	const user = $page.props.auth.user
-
-    let {
-		actions,
+	let {
 		children,
 		class: className,
-		mustVerifyEmail,
-        onsubmit,
+		endpoint = '/',
+		form,
+		method = 'post',
+		onsubmit,
+		onSuccess,
+		onFinish,
+		onError,
 		oncancel,
-		processing,
-		recentlySuccessful,
-		status,
-		submitLabel,
-		title,
-		subtitle,
-        ...restProps
-    } = $props()
+		submitText = 'Save',
+		...restProps
+	} = $props()
+
+	function handleSubmit(e) {
+		if (onsubmit) {
+			onsubmit(e)
+		} else {
+			e.preventDefault()
+			if ($form && typeof $form[method] === 'function') {
+				console.log('Form.handleSubmit', $form)
+				$form[ method ]( endpoint, { onSuccess, onFinish, onError })
+			} else {
+				console.error(`Form method ${method} is not a function`)
+			}
+		}
+	}
+
+	function setData(key, value) {
+		$form[key] = value
+		console.log('Form.setData():', key, value, $form)
+	}
+	
+	function clearData(key) {
+		$form[key] = undefined
+		console.log('Form.clearData():', key, $form)
+	}
+
+	setContext("form", { form, setData, clearData, method, endpoint });
 
 </script>
 
-<form class="form {className}" {onsubmit} {...restProps}>
 
-	{#if title}
-		<Heading is="h4" as="h5"
-			heading={title}
-			subheading={subtitle}
-		/>
-	{/if}
 
+
+
+
+
+<form class={className} onsubmit={handleSubmit} {...restProps}>
 	{@render children?.()}
-
-	{#if mustVerifyEmail && user.email_verified_at === null}
-		<p class="mt-2 text-sm text-gray-800 dark:text-gray-200">
-			Your email address is unverified.
-			<button
-				use:inertia={{ href: route('verification.send'), method: 'post' }}
-				class="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:text-gray-400 dark:hover:text-gray-100 dark:focus:ring-offset-gray-800"
-			>
-				Click here to re-send the verification email.
-			</button>
-		</p>
-
-		{#if status === 'verification-link-sent'}
-			<div class="mt-2 text-sm font-medium text-green-600 dark:text-green-400">
-				A new verification link has been sent to your email address.
-			</div>
-		{/if}
-	{/if}
-
-	{#if actions}
-		<Flex align="center" justify="center" gap={3} class="mt-4 col-span-full">
-			{@render actions()}
-		</Flex>
-	{/if}
-
 </form>
-
-<style lang="postcss">
-
-	.form {
-		background-color: var(--surface);
-	}
-
-	.form-styles {
-		@apply border p-6 rounded-lg;
-	}
-
-	.form-highlight {
-		@apply rounded-lg;
-		background: repeating-linear-gradient(
-						-45deg,
-						rgba(16, 185, 129, 0.15),
-						rgba(16, 185, 129, 0.15) 10px,
-						rgba(16, 185, 129, 0.05) 10px,
-						rgba(16, 185, 129, 0.05) 20px
-					);
-	}
-
-	.form-title {
-		@apply text-slate-400 mb-2 col-span-full w-full;
-	}
-
-</style>

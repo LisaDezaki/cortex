@@ -3,7 +3,7 @@
     import { route } from 'momentum-trail'
 
 	import {
-		Form,
+		Flex, Form,
 		UploadContext,
 		UploadPreview,
 		UploadTrigger
@@ -18,48 +18,54 @@
 		project
 	} = $props()
 
-	const form = useForm({
-		banner: project?.banner?.id || null,
-        name: project?.name || null,
-        description: project?.description || null,
-    });
-	const deleteForm = useForm({});
+	// const form = useForm({
+	// 	banner: project?.banner?.path || null,
+    //     name: project?.name || null,
+    //     description: project?.description || null,
+    // });
+	// const deleteForm = useForm({});
 
-    function submit(e) {
-        e.preventDefault();
-		if (project) { updateProject() }
-		else         { createProject() }
-    }
+    // function submit(e) {
+    //     e.preventDefault();
+	// 	if (project) { updateProject() }
+	// 	else         { createProject() }
+    // }
 
-	function createProject() {
-		$form.post(route('projects.store'), {
-			onSuccess: () => {
-				oncancel();
-			}
-		})
-	}
-	function updateProject() {
-		$form.patch(route('projects.update', {project: project.id}), {
-			onSuccess: () => {
-				oncancel();
-			}
-		})
-	}
-	function deleteProject(e) {
-		e.preventDefault();
-		$deleteForm.delete(route('projects.destroy', { project: project.id}) );
-	}
+	// function createProject() {
+	// 	$form.post(route('projects.store'), {
+	// 		onSuccess: () => {
+	// 			oncancel();
+	// 		}
+	// 	})
+	// }
+	// function updateProject() {
+	// 	$form.patch(route('projects.update', {project: project.id}), {
+	// 		onSuccess: () => {
+	// 			oncancel();
+	// 		}
+	// 	})
+	// }
+	// function deleteProject(e) {
+	// 	e.preventDefault();
+	// 	$deleteForm.delete(route('projects.destroy', { project: project.id}) );
+	// }
 
 </script>
 
 <Form
 	enctype="multipart/form-data"
-	processing={$form.processing}
-	recentlySuccessful={$form.recentlySuccessful}
+	endpoint={project ? route('projects.update', {project: project.id}) : route('projects.store')}
+	method={project ? 'patch' : 'post'}
+	initialData={{
+		banner: project?.banner?.path || null,
+        name: project?.name || null,
+        description: project?.description || null,
+	}}
+
 >
 	<div class="w-[80vh] max-w-2xl">
 
-		<UploadContext class="border-b aspect-[21/9] relative w-full">
+		<UploadContext name="banner" preview={project.banner?.url} class="border-b aspect-[21/9] relative w-full">
 			<UploadPreview class="flex items-center justify-center h-full w-full">
 				<UploadTrigger icon="Image" label="Upload banner" />
 			</UploadPreview>
@@ -67,37 +73,33 @@
 	
 		<Section class="p-6">
 		
-			<Field type="text" id="name"
-				class="w-1/2"
+			<Field name="name" class="w-1/2"
+				type="text" 
 				label="Name"
 				description="Give this project a short, memorable name."
-				bind:value={$form.name}
-				errors={$form.errors.name}
 				required
 				autofocus
 			/>
 		
-			<Field type="textarea" id="description"
+			<Field name="description"
+				type="textarea"
 				label="Description"
-				bind:value={$form.description}
-				errors={$form.errors.description}
 				rows={5}
 			/>
 		</Section>
 	</div>
 
 
-	<div class="border-t flex items-center min-h-12">
-		<Button style="hard" theme="neutral" class="border-none h-12 rounded-none w-1/2"
-			label="Cancel"
+	<Flex gap={3} class="p-3">
+		<Button style="soft" theme="neutral" class="rounded-full"
 			type="button"
+			icon="X"
 			onclick={oncancel}
 		/>
-		<Button style="hard" theme="accent" class="border-none h-12 rounded-none w-1/2"
-			label={project ? "Update project" : "Create project"}
+		<Button style="soft" theme="accent" class="rounded-full"
 			type="submit"
-			onclick={submit}
+			icon="Check"
 		/>
-	</div>
+	</Flex>
 
 </Form>

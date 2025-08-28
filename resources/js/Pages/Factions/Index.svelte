@@ -8,9 +8,7 @@
 
 	import { Flex, Inline, Stack } from '@/Components/Core'
 
-	import Back         from '@/Components/UI/Back.svelte'
 	import Dropdown     from '@/Components/UI/Dropdown.svelte'
-	import Heading      from '@/Components/UI/Heading.svelte'
 	import Icon         from '@/Components/UI/Icon.svelte'
 	import Input        from '@/Components/UI/Input.svelte'
 	import PageHeader  from '@/Components/UI/PageHeader.svelte'
@@ -67,13 +65,11 @@
 
 	{#snippet header()}
 		<PageHeader
-			breadcrumbs={[
-				{ label: "Factions",   href: route('factions') },
-			]}
+			breadcrumbs={[]}
 			back={route('dashboard')}
-			title="Faction List"
+			title="Factions"
 			actions={[
-				{ icon: "Plus",     theme: "accent",  href: route('factions.create') },
+				{ icon: "Plus",     theme: "accent" },
 				{ icon: "GearFine", theme: "neutral", href: route('factions.settings') },
 			]}
 		>
@@ -159,15 +155,30 @@
 	{/snippet}
 	
 	{#snippet article()}
-		<Section gap={6} size="7xl" class="py-6">
+		<Section gap={6} class="p-12">
 			{#if activeProject && factions?.length > 0}
+
+
+				<!-- Grid -->
+
 				{#if layout == 'grid'}
-					<FactionGrid factions={factionList} cols={gridRows} showItemControls />
+					<FactionGrid
+						factions={factionList}
+						cols={gridRows}
+					/>
+				
+
+				<!-- Table -->
+
 				{:else if layout == 'table'}
-					<FactionTable factions={factionList} />
+					<FactionTable
+						factions={factionList}
+					/>
+
+
 				{/if}
 			{:else}
-				<p class="mt-12">There are no factions for this project yet. <Link href={route('factions.create')}>Create one?</Link></p>
+				<p class="mt-12 font-style-placeholder">There are no factions for this project yet. <Link href={route('factions.create')}>Create one?</Link></p>
 			{/if}
 		</Section>
 	{/snippet}

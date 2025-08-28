@@ -1,6 +1,6 @@
 <script>
 	import { Link } from '@inertiajs/svelte'
-	import { Flex, Stack } from '@/Components/Core'
+	import { Flex, Inline, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
 
@@ -12,6 +12,7 @@
 		eyebrow,
 		eyebrowIcon,
 		heading,
+		headingClass,
 		subheading,
 		subheadingClass,
 		subheadingLink,
@@ -20,9 +21,9 @@
     } = $props()
 </script>
 
-<Flex as="header" align="center" class="heading {className}" {...restProps}>
+<Inline as="header" align="center" class="heading {className}" {...restProps}>
 
-	<Stack>
+	<Flex direction="col" align="start" justify="start" gap={0}>
 		{#if eyebrow}
 			<Flex align="center" gap={1} class="italic mb-1.5 text-accent">
 				{#if eyebrowIcon}
@@ -32,7 +33,7 @@
 			</Flex>
 		{/if}
 
-		<svelte:element this={is} class="heading-head font-style-{as}">
+		<svelte:element this={is} class="heading-head font-style-{as} {headingClass}">
 			{heading}
 			{@render children?.()}
 		</svelte:element>
@@ -46,7 +47,7 @@
 				{subheading}
 			</div>
 		{/if}
-	</Stack>
+	</Flex>
 
 	{#if actions}
 		<Flex gap={3} class="ml-auto">
@@ -56,4 +57,4 @@
 		</Flex>
 	{/if}
 
-</Flex>
+</Inline>

@@ -24,7 +24,7 @@
     }
 </script>
 
-<Form
+<Form form={form}
 	class="mt-6 space-y-2"
 	mustVerifyEmail={mustVerifyEmail}
 	onsubmit={submit}
@@ -32,20 +32,16 @@
 >
 
 	<Field type="text"
-		id="name"
+		name="name"
 		label="Name"
-		bind:value={$form.name}
-		errors={$form.errors.name}
 		autocomplete="name"
 		autofocus
 		required
 	/>
 
 	<Field type="email"
-		id="email"
+		name="email"
 		label="Email"
-		bind:value={$form.email}
-		errors={$form.errors.email}
 		autocomplete="username"
 		required
 	/>

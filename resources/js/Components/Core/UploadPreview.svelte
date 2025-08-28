@@ -1,52 +1,63 @@
 <script>
 	import { getContext } from "svelte";
 
-	const { files, preview, clearFiles } = getContext("file-upload-context");
+	const { files, getFiles, clearFiles } = getContext("file-upload-context");
+
+	import { Box, Flex, Grid }      from '@/Components/Core'
+	import UploadTrigger from './UploadTrigger.svelte'
+	import Button		 from '@/Components/UI/Button.svelte'
+	import Icon		 	 from '@/Components/UI/Icon.svelte'
+	import MediaGrid	 from '@/Components/UI/MediaGrid.svelte'
 
 	let {
 		children,
 		class: className,
-		layoutClass,
 		imageClass,
+		index
 	} = $props();
 
-	function getPreviewUrl(file) {
-		return URL.createObjectURL(file);
-	}
+	// let previewUrl = $derived(media?.url || `/storage/${media?.path}` || null)
+
+	// function getPreviewUrl(file) {
+	// 	return URL.createObjectURL(file);
+	// }
 </script>
 
 
 
+{#if index !== null}
+	<div class="upload-preview bg-neutral-softest min-h-40 {className}">
 
+		 <!-- getFiles()[index] -->
 
-<style lang="postcss">
-	.upload-preview {
-		@apply min-h-16 min-w-16 overflow-hidden w-full;
-		background-color: var(--bg-neutral-softest);
-
-		.preview-image {
-			@apply object-cover min-h-full min-w-full;
-		}
-	}
-</style>
-
-
-
-
-
-<div class="upload-preview relative {className}">
-
-	<div class="absolute inset-0 grid grid-cols-{$files.length || 1} gap-1.5 justify-center {layoutClass}">
-		{#if preview}
-			<img src={preview} alt="Preview" class="preview-image {imageClass}" />
+		{#if getFiles()[index]}
+			<img src={getFiles()[index].url} alt={getFiles()[index].url} class={imageClass} />
+		{:else}
+			<div class={imageClass}>
+				<Icon name="Image" size="xl" weight="light" />
+			</div>
 		{/if}
-		{#if files}
-			{#each $files as file}
-				<img src={preview || getPreviewUrl(file)} alt={file.name} class="preview-image {imageClass}" />
-			{/each}
-		{/if}
+
+		<!-- {#if isMultiple()}
+			<MediaGrid addable cols={4} media={getValue()}>
+				{#snippet add()}
+					<UploadTrigger class="aspect-square bg-accent-softest border border-accent-softest text-accent w-full"
+						icon="Plus"
+					/>
+				{/snippet}
+			</MediaGrid>
+		{:else}
+			<Box>
+				<img class="preview-image {imageClass}"
+					src="/storage/{getValue()}" alt="Preview"
+				/>
+				<UploadTrigger class="aspect-square bg-accent-softest border border-accent-softest rounded-lg text-accent w-full"
+					icon="UploadSimple"
+				/>
+			</Box>
+		{/if} -->
+
+		{@render children?.(files, clearFiles)}
+
 	</div>
-
-	{@render children?.(files, clearFiles)}
-
-</div>
+{/if}

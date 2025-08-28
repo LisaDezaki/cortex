@@ -25,6 +25,9 @@ class CharacterResource extends JsonResource
 			'motivations' => $this->motivations,
 			'flaws'       => $this->flaws,
 
+			'media'		  => MediaResource::collection($this->whenLoaded('media')),
+
+			'banner'      => new MediaResource($this->whenLoaded('banner')),
 			'portrait'    => new MediaResource($this->whenLoaded('portrait')),
 			'location'    => new LocationResource($this->whenLoaded('location')),
 			'factions'    => FactionResource::collection($this->whenLoaded('factions')),
