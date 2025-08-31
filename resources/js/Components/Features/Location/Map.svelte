@@ -117,7 +117,7 @@
 	{/snippet}
 
 	<Box class="absolute map">
-		<img class="h-full w-full" src={media_map.url} alt={media_map?.name} />
+		<img class="h-full w-full" src={media_map?.url} alt={media_map?.name} />
 
 		{#if location?.children}
 			{#each location?.children as location,i}

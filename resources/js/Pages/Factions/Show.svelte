@@ -15,12 +15,12 @@
 	import Container	 from '@/Components/UI/Container.svelte'
 	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading		 from '@/Components/UI/Heading.svelte'
+	import Media     	 from '@/Components/UI/Media.svelte'
 	import MediaGrid	 from '@/Components/UI/MediaGrid.svelte'
 	import Modal		 from '@/Components/UI/Modal.svelte'
 	import PageHeader	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu		 from '@/Components/UI/PageMenu.svelte'
 	import Section		 from '@/Components/UI/Section.svelte'
-	import SetMedia		 from '@/Components/UI/SetMedia.svelte'
 	import Thumbnail	 from '@/Components/UI/Section.svelte'
 
 	import Map      	 from '@/Components/Features/Location/Map.svelte'
@@ -29,7 +29,20 @@
 	const customFields = $page.props.customFields?.data
 
 	let deletingFaction = $state(false)
-	let editMode = $state(false)
+
+	let mediaUploadProps  = $derived({
+		endpoint: route('factions.update', { faction: faction.slug }),
+		method: 'patch',
+		onSuccess: (res) => {
+			router.visit( $page.url, {
+				only: ['faction.media'],
+			})
+		}
+	})
+
+	let media_banner	= $derived(faction.media.filter(m => m.type === 'banner')?.[0])
+	let media_emblem	= $derived(faction.media.filter(m => m.type === 'emblem')?.[0])
+	let media_gallery	= $derived(faction.media)
 
 	function deleteFaction() {
         deletingFaction = true
@@ -48,15 +61,9 @@
 
 	{#snippet header()}
 		<PageHeader
-			breadcrumbs={[
-				{ label: "Factions",   href: route('factions') },
-			]}
+			breadcrumbs={[{ label: "Factions", href: route('factions') }]}
 			back={route('factions')}
 			title={faction.name}
-			actions={[
-				// { icon: "Pen",   href: route('factions.edit', {faction: faction.slug}) },
-				// { icon: "Trash", onclick: deleteFaction, theme: "danger" }
-			]}
 		/>
 	{/snippet}
 
@@ -67,50 +74,32 @@
 				{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
 				{ icon: "MapPinArea", 	label: "Headquarters", 	href: "#hq"			},
 				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
-				{ icon: "Textbox",      label: "Custom Fields", href: "#fields" 	}
+				{ icon: "Textbox",      label: "Custom Fields", href: "#fields" 	},
+				{ icon: "Trash", 		label: "Delete",		onclick: deleteFaction, theme: "danger" }
 			]} />
 			<Container size="4xl">
 
-				
+
 				<!-- Details -->
 		
 				<Section id="details" class="pb-12">
 		
-					<ArticleBanner class="relative" image={faction.banner?.url}>
-						
-						<SetMedia
-							aspect="aspect-square"
-							class="absolute bg-slate-200 border border-slate-300 top-0 left-0 h-full w-full rounded-lg overflow-hidden"
-							endpoint={route('factions.update', { faction: faction.slug })}
-							method="patch"
-							media={faction.banner}
-							mediaType="faction_banner"
-							requestKey="banner"
-							onSuccess={(res) => {
-								router.visit(route('factions.show', { faction: faction.slug }), {
-									only: ['faction.banner'],
-								})
-							}}
-							onFinish={(req) => {
-								console.log('Finish:', req)
-							}}
+					<ArticleBanner>
+
+						<Media replaceable
+							aspect="aspect-[7/3]"
+							class="absolute inset-0 rounded-lg overflow-hidden"
+							media={media_banner}
+							type="banner"
+							uploadProps={mediaUploadProps}
 						/>
-						<SetMedia
+
+						<Media replaceable
 							aspect="aspect-square"
-							class="absolute bg-slate-200/10 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-24 rounded-lg overflow-hidden w-48 transition-all"
-							endpoint={route('factions.update', { faction: faction.slug })}
-							method="patch"
-							media={faction.emblem}
-							mediaType="faction_emblem"
-							requestKey="emblem"
-							onSuccess={(res) => {
-								router.visit(route('factions.show', { faction: faction.slug }), {
-									only: ['faction.emblem'],
-								})
-							}}
-							onFinish={(req) => {
-								console.log('Finish:', req)
-							}}
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
+							media={media_emblem}
+							type="emblem"
+							uploadProps={mediaUploadProps}
 						/>
 
 						<Heading is="h1" as="h3" class="mt-auto z-10 {faction.emblem ? 'text-white' : ''}"
@@ -126,6 +115,19 @@
 						{faction.description}
 					</p>
 			
+				</Section>
+
+
+				<!-- Custom Fields -->
+	
+				<Section id="fields" class="px-6 py-12">
+					<Heading is="h3" as="h5" class="mb-6">Custom Field</Heading>
+					{#if faction.customFields}
+						Custom Fields
+						<!-- CustomFields />-->
+					{:else}
+						<p class="font-style-placeholder">There aren't any Custom Fields for Factions yet.</p>
+					{/if}
 				</Section>
 
 
@@ -176,19 +178,6 @@
 					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
 					<MediaGrid cols={4} media={[{},{},{},{}]} />
 				</Section>
-
-
-				<!-- Custom Fields -->
-	
-				<Section id="fields" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Custom Field</Heading>
-					{#if faction.customFields}
-						Custom Fields
-						<!-- CustomFields />-->
-					{:else}
-						<p class="font-style-placeholder">There aren't any Custom Fields for Factions yet.</p>
-					{/if}
-				</Section>
 	
 			</Container>
 	
@@ -233,6 +222,11 @@
 	
 </AuthenticatedLayout>
 
-<!-- <Modal title="Delete {faction.name}?" show={deletingFaction} onclose={closeModal}>
+<Modal
+	title="Delete {faction.name}?"
+	maxWidth="lg"
+	show={deletingFaction}
+	onclose={closeModal}
+>
 	<DeleteFactionForm {faction} oncancel={closeModal} />
-</Modal> -->
+</Modal>

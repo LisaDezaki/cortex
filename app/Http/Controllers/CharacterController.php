@@ -128,6 +128,7 @@ class CharacterController extends Controller
 	{
 		$character->load([
 			'location',
+			'media',
 			'factions',
 			'banner',
 			'portrait',

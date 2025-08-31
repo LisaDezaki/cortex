@@ -15,12 +15,12 @@
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
+	import Media     	 from '@/Components/UI/Media.svelte'
 	import MediaGrid     from '@/Components/UI/MediaGrid.svelte'
 	import Modal      	 from '@/Components/UI/Modal.svelte'
 	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
-	import SetMedia    	 from '@/Components/UI/SetMedia.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 
 	import Map      	 from '@/Components/Features/Location/Map.svelte'
@@ -30,6 +30,20 @@
 
 	let deletingCharacter = $state(false)
 	let editMode = $state(false)
+
+	let mediaUploadProps  = $derived({
+		endpoint: route('characters.update', { character: character.slug }),
+		method: 'patch',
+		onSuccess: (res) => {
+			router.visit( $page.url, {
+				only: ['character.media'],
+			})
+		}
+	})
+
+	let media_banner	= $derived(character.media.filter(m => m.type === 'banner')?.[0])
+	let media_portrait	= $derived(character.media.filter(m => m.type === 'portrait')?.[0])
+	let media_gallery	= $derived(character.media)
 
 	function deleteCharacter() {
         deletingCharacter = true
@@ -57,15 +71,9 @@
 
 	{#snippet header()}
 		<PageHeader
-			breadcrumbs={[
-				{ label: "Characters",   href: route('characters') },
-			]}
+			breadcrumbs={[{ label: "Characters", href: route('characters') }]}
 			back={route('characters')}
 			title={character.name}
-			actions={[
-				// { icon: "Pen",   onclick: toggleEditMode },
-				// { icon: "Trash", onclick: deleteCharacter, theme: "danger" }
-			]}
 		/>
 	{/snippet}
 
@@ -78,7 +86,8 @@
 				{ icon: "Backpack",         label: "Inventory",     href: "#items"         },
 				{ icon: "MapPinSimpleArea", label: "Location",      href: "#location"      },
 				{ icon: "ImagesSquare",     label: "Gallery",       href: "#gallery"       },
-				{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        }
+				{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        },
+				{ icon: "Trash", 			label: "Delete", 		onclick: deleteCharacter, theme: "danger" }
 			]} />
 			<Container size="4xl">
 
@@ -87,63 +96,37 @@
 			
 				<Section id="details" class="pb-12">
 
-					<ArticleBanner class="relative" image={character.banner?.url}>
+					<ArticleBanner>
+
+						<Media replaceable
+							aspect="aspect-[7/3]"
+							class="absolute inset-0 rounded-lg overflow-hidden"
+							media={media_banner}
+							type="banner"
+							uploadProps={mediaUploadProps}
+						/>
+
+						<Media replaceable
+							aspect="aspect-square"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
+							media={media_portrait}
+							type="portrait"
+							uploadProps={mediaUploadProps}
+						/>
 						
-						<SetMedia
-							aspect="aspect-square"
-							class="absolute bg-slate-200 border border-slate-300 top-0 left-0 h-full w-full rounded-lg overflow-hidden"
-							endpoint={route('characters.update', { character: character.slug })}
-							method="patch"
-							media={character.banner}
-							mediaType="character_banner"
-							requestKey="banner"
-							onSuccess={(res) => {
-								router.visit(route('characters.show', { character: character.slug }), {
-									only: ['character.banner'],
-								})
-							}}
-							onFinish={(req) => {
-								console.log('Finish:', req)
-							}}
-						/>
-						<SetMedia
-							aspect="aspect-square"
-							class="absolute bg-slate-200/10 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-24 rounded-lg overflow-hidden w-48 transition-all"
-							endpoint={route('characters.update', { character: character.slug })}
-							method="patch"
-							media={character.portrait}
-							mediaType="character_portrait"
-							requestKey="portrait"
-							onSuccess={(res) => {
-								router.visit(route('characters.show', { character: character.slug }), {
-									only: ['character.portrait'],
-								})
-							}}
-							onFinish={(req) => {
-								console.log('Finish:', req)
-							}}
-						/>
-						<Heading is="h1" as="h3" class="mt-auto z-10 {character.banner ? 'text-white' : ''}"
+						<Heading is="h1" as="h3"
+							class="mt-auto z-10 {media_banner ? 'text-white' : ''}"
 							heading={character.name}
+							headingClass="whitespace-pre-wrap"
 							subheading={character.alias}
 						/>
 					</ArticleBanner>
 		
 					<Heading is="h3" as="h5" class="mx-6 mt-9 mb-6">Description</Heading>
 		
-					{#if editMode}
-						<Field
-							class="max-w-[64ch]"
-							type="textarea"
-							name="description"
-							value={character.description}
-							rows={12}
-						/>
-					{:else}
-						<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
-							{character.description}
-						</p>
-					{/if}
+					<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
+						{character.description}
+					</p>
 			
 				</Section>
 		
@@ -203,7 +186,7 @@
 							<Card aspect="square"
 								icon="User"
 								title={fac.name}
-								subtitle={fac}
+								subtitle={fac.type}
 							/>
 						{/each}
 						<CardNew aspect="square"
@@ -312,6 +295,11 @@
 	
 </AuthenticatedLayout>
 
-<!-- <Modal title="Delete {character.name}?" show={deletingCharacter} onclose={closeModal}>
+<Modal
+	title="Delete {character.name}?"
+	maxWidth="lg"
+	show={deletingCharacter}
+	onclose={closeModal}
+>
 	<DeleteCharacterForm {character} oncancel={closeModal} />
-</Modal> -->
+</Modal>

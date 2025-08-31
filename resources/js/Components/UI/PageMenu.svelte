@@ -24,7 +24,7 @@
 {#snippet menuItem(item)}
 	<Inline as="li" class="page-menu-item">
 		<svelte:element this={item.href ? 'a' : 'button'}
-			class="flex items-center gap-3 px-3 py-1.5 rounded w-full hover:bg-neutral-softest"
+			class="flex items-center gap-3 px-3 py-1.5 rounded w-full {item.theme == "danger" ? 'hover:bg-danger-softest' : 'hover:bg-neutral-softest'}"
 			class:text-accent={item.active}
 			class:text-danger={item.theme == "danger"}
 		{...item}>

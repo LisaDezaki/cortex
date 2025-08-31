@@ -26,6 +26,7 @@
 	import Map			 from '@/Components/Features/Location/Map.svelte'
 
 	const location 	   = $page.props.location?.data
+	const customFields = $page.props.customFields?.data
 
 	let deletingLocation  = $state(false)
 
@@ -68,9 +69,8 @@
 
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="py-12">
-
 			<PageMenu items={[
-				{ icon: "MapPinArea",   	label: "Details",       	href: "#details"	},
+				{ icon: "Info",   			label: "Details",       	href: "#details"	},
 				{ icon: "Textbox",      	label: "Custom Fields", 	href: "#custom"		},
 				{ icon: "Compass",      	label: "Map",           	href: "#map"		},
 				{ icon: "MapPinSimpleArea", label: "Points of Interest", href: "#points"	},
@@ -78,8 +78,8 @@
 				{ icon: "ImagesSquare", 	label: "Gallery",         	href: "#gallery"	},
 				{ icon: "Trash", 			label: "Delete", 			onclick: deleteLocation, theme: "danger" }
 			]} />
-
 			<Container size="4xl">
+
 
 				<!-- Details -->
 
@@ -97,7 +97,7 @@
 
 						<Media replaceable
 							aspect="aspect-square"
-							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-24 rounded-lg overflow-hidden w-48 transition-all"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
 							media={media_map}
 							type="map"
 							uploadProps={mediaUploadProps}
@@ -120,13 +120,16 @@
 						/>
 					</ArticleBanner>
 		
-					<Heading is="h3" as="h5" heading="Description" class="mx-6 mt-9 mb-6" />
+					<Heading is="h3" as="h5" class="mx-6 mt-9 mb-6">Description</Heading>
 
 					<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
 						{location.description}
 					</p>
 		
 				</Section>
+
+
+				<!-- Custom Fields -->
 
 				<Section id="fields" class="px-6 py-12">
 					<Heading is="h3" as="h5" class="mb-6">Custom Fields</Heading>
@@ -137,6 +140,9 @@
 					{/if}
 				</Section>
 
+
+				<!-- Map -->
+
 				<Section id="map" class="px-6 py-12">
 					<Heading is="h3" as="h5" class="mb-6">Map</Heading>
 					{#if media_map || location.children?.length > 0 || location.descendants?.length > 0}
@@ -145,6 +151,9 @@
 						<p class="font-style-placeholder">{location.name} doesn't have a map or any child locations yet.</p>
 					{/if}
 				</Section>
+
+
+				<!-- Points of Interest -->
 
 				<Section id="points" class="px-6 py-12">
 					<Heading is="h3" as="h5" class="mb-6">Points of Interest</Heading>
@@ -164,6 +173,9 @@
 						<p class="font-style-placeholder">{location.name} doesn't have any points of interest yet.</p>
 					{/if}
 				</Section>
+
+
+				<!-- Characters -->
 		
 				<Section id="characters" class="px-6 py-12">
 					<Heading is="h3" as="h5" class="mb-6">Characters</Heading>
@@ -184,6 +196,9 @@
 					{/if}
 				</Section>
 
+
+				<!-- Gallery -->
+
 				<Section id="gallery" class="px-6 py-12">
 					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
 					<MediaGrid cols={6}
@@ -199,6 +214,11 @@
 
 </AuthenticatedLayout>
 
-<Modal title="Delete {location.name}?" maxWidth="lg" show={deletingLocation} onclose={closeModal}>
+<Modal
+	title="Delete {location.name}?"
+	maxWidth="lg"
+	show={deletingLocation}
+	onclose={closeModal}
+>
 	<DeleteLocationForm {location} oncancel={closeModal} />
 </Modal>

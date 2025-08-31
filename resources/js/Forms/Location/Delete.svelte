@@ -14,30 +14,21 @@
 	const form = useForm({
 		confirm_name: ''
 	});
-	// function deleteLocation(e) {
-	// 	e.preventDefault();
-	// 	$form.delete(route('locations.destroy', { location: location.slug}), {
-	// 		onSuccess: () => {
-	// 			oncancel();
-	// 		}
-	// 	} );
-	// }
 
 </script>
 
-<Form
+<Form {form}
 	class="max-w-lg"
 	enctype="multipart/form-data"
 	endpoint={route('locations.destroy', { location: location.slug})}
-	form={form}
 	method="delete"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
 	<Stack class="p-6">
-		<p class="mb-4">Clicking 'Yes' will <strong>delete</strong> this location and all associated data. Are you <strong>absolutely</strong> sure you want to delete this location? </p>
+		<p class="mb-3">This process will remove this location and all associated data from the database. Are you sure you want to delete this location?</p>
 	
-		<p>Please type the name of the location ('<strong>{location.name}</strong>') to confirm deletion.</p>
+		<p>Please type the name of the location ("<strong>{location.name}</strong>") to confirm deletion.</p>
 	
 		<Field type="text"
 			name="confirm_name"

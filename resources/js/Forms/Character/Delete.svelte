@@ -14,34 +14,26 @@
 	const form = useForm({
 		confirm_name: ''
 	});
-	function deleteCharacter(e) {
-		e.preventDefault();
-		$form.delete(route('characters.destroy', { character: character.slug}), {
-			onSuccess: () => {
-				oncancel();
-			}
-		} );
-	}
 
 </script>
 
 <Form
 	class="max-w-lg"
 	enctype="multipart/form-data"
+	endpoint={route('characters.destroy', { character: character.slug})}
+	form={form}
+	method="delete"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
 	<Stack class="p-6">
-		<p class="mb-3">This process will remove this character and all associated data from the database. Are you sure you want to delete this character? </p>
+		<p class="mb-3">This process will remove this character and all associated data from the database. Are you sure you want to delete this character?</p>
 	
 		<p>Please type the name of the character ("<strong>{character.name}</strong>") to confirm deletion.</p>
 	
-		<Field
-			id="confirm_name"
-			type="text"
+		<Field type="text"
+			name="confirm_name"
 			label="Character name"
-			bind:value={$form.confirm_name}
-			errors={$form.errors.confirm_name}
 			required
 			autofocus
 		/>
@@ -56,7 +48,6 @@
 		<Button style="hard" theme="danger" class="border-none rounded-none w-1/2"
 			type="submit"
 			label="Yes, Delete this character"
-			onclick={deleteCharacter}
 		/>
 	</Flex>
 

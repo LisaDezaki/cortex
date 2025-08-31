@@ -114,6 +114,7 @@ class FactionController extends Controller
 		$faction->load([
 			'banner',
 			'emblem',
+			'media',
 			'members.portrait',
 			'ranks',
 			'headquarters'

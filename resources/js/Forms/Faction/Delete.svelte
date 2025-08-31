@@ -14,33 +14,25 @@
 	const form = useForm({
 		confirm_name: ''
 	});
-	function deleteFaction(e) {
-		e.preventDefault();
-		$form.delete(route('factions.destroy', { faction: faction.slug}), {
-			onSuccess: () => {
-				oncancel();
-			}
-		} );
-	}
 
 </script>
 
-<Form
+<Form {form}
 	class="max-w-lg"
 	enctype="multipart/form-data"
+	endpoint={route('factions.destroy', { faction: faction.slug})}
+	method="delete"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
 	<Stack class="p-6">
-		<p class="mb-4">Clicking 'Yes' will <strong>delete</strong> this faction and all associated data. Are you <strong>absolutely</strong> sure you want to delete this faction? </p>
+		<p class="mb-3">This process will remove this faction and all associated data from the database. Are you sure you want to delete this faction?</p>
 	
-		<p>Please type the name of the faction ('<strong>{faction.name}</strong>') to confirm deletion.</p>
+		<p>Please type the name of the faction ("<strong>{faction.name}</strong>") to confirm deletion.</p>
 	
 		<Field type="text"
-			id="confirm_name"
+			name="confirm_name"
 			label="Faction name"
-			bind:value={$form.confirm_name}
-			errors={$form.errors.confirm_name}
 			required
 			autofocus
 		/>
@@ -55,7 +47,6 @@
 		<Button style="hard" theme="danger" class="border-none rounded-none w-1/2"
 			type="submit"
 			label="Yes, Delete this faction"
-			onclick={deleteFaction}
 		/>
 	</Flex>
 
