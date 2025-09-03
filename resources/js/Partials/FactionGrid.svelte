@@ -1,24 +1,46 @@
 <script>
-	import { route } from 'momentum-trail'
-
 	import Grid from '@/Components/Core/Grid.svelte'
-    import Card from '@/Components/UI/Card.svelte'
+	import FactionCard from '@/Components/Features/Faction/FactionCard.svelte'
 
 	let {
 		factions,
 		class: className,
 		cols,
+		gridItem,
 		...restProps
 	} = $props()
 
 </script>
 
+
+
+
+
+
+
 <Grid
 	cols={cols}
 	gap={2}
 {...restProps}>
+
+	{#if factions}
+		{#each factions as faction}
+			{#if gridItem}
+				{@render gridItem(faction)}
+			{:else}
+				<FactionCard {faction} />
+			{/if}
+		{/each}
+	{/if}
+	
+</Grid>
+
+<!-- <Grid
+	cols={cols}
+	gap={2}
+{...restProps}>
 	{#each factions as faction}
-		<Card aspect="square"
+		<FactionCard aspect="square"
 			image={faction.emblem?.url}
 			icon="FlagBannerFold"
 			title={faction.name}
@@ -26,4 +48,4 @@
 			href={route('factions.show', {faction: faction.slug})}
 		/>
 	{/each}
-</Grid>
+</Grid> -->

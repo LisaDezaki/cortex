@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CollectionResource;
 use App\Http\Resources\CustomFieldResource;
 use App\Http\Resources\FactionResource;
+use App\Models\Collection;
 use App\Models\CustomField;
 use App\Models\Faction;
 use App\Services\MediaService;
@@ -11,6 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -53,20 +56,32 @@ class FactionController extends Controller
 
     public function index()
     {
-		$active_project = Auth::user()->active_project;
-		if (!$active_project) {
-			return Redirect::route('projects');
-		}
+		$collections = Collection::where([
+			'project_id' => Auth::user()->active_project,
+			'collection_type' => Faction::class
+		])->with(['items'])->get();
 
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'faction'
+			'fieldable_type' => Faction::class
 		])->with('options')->get();
 
 		return Inertia::render('Factions/Index', [
+			'collections'	=> CollectionResource::collection($collections),
 			'customFields' => CustomFieldResource::collection($customFields)
 		]);
     }
+	public function collections()
+	{
+		$collections = Collection::where([
+			'project_id' => Auth::user()->active_project,
+			'collection_type' => Faction::class
+		])->with(['items'])->get();
+
+		return Inertia::render('Factions/Collections', [
+			'collections'	=> CollectionResource::collection($collections),
+		]);
+	}
 
 
 	/**

@@ -64,6 +64,11 @@ class Project extends Model
 		return $this->belongsTo(User::class);
 	}
 
+	public function collections(): HasMany
+	{
+		return $this->hasMany(Collection::class);
+	}
+
 	public function customFields(): HasMany
 	{
 		return $this->hasMany(CustomField::class);

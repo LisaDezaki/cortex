@@ -4,10 +4,8 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharacterSettingsForm from '@/Forms/Character/Settings.svelte'
-	import CustomFieldsPanel from '@/Partials/CustomFieldsPanel.svelte'
 
 	import { Flex }   from '@/Components/Core'
-	import Back       from '@/Components/UI/Back.svelte'
 	import Container  from '@/Components/UI/Container.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
@@ -27,11 +25,12 @@
 
 	{#snippet header()}
 		<PageHeader
-			breadcrumbs={[
-				{ label: "Characters",   href: route('characters') },
-			]}
-			back={route('characters')}
 			title="Character Settings"
+			tabs={[
+				{ icon: "ListBullets",	label: "List",			href: route('characters') },
+				{ icon: "SquaresFour",	label: "Collections", 	href: route('characters.collections') },
+				{ icon: "GearFine",		label: "Settings", 		active: true },
+			]}
 		/>
 	{/snippet}
 

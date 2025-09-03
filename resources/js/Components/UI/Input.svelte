@@ -143,7 +143,7 @@
 
 	:global(.input) {
 		@apply relative inline-flex items-center min-h-10 p-1 rounded-lg;
-		background-color: var(--bg-white);
+		background-color: var(--bg-input);
 		border: none;
 		color: var(--text-input);
 		box-shadow: 0 1px 0 var(--shadow-lowlight);
@@ -230,7 +230,7 @@
 	:global(.input-content) {
 		@apply block max-h-96 overflow-y-auto py-1 z-10;
 		@apply border rounded-lg shadow-lg;
-		background-color: var(--bg-white);
+		background-color: var(--bg-input);
 		border-color: var(--border-accent);
 		color: var(--text-neutral);
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;

@@ -72,14 +72,13 @@
 	.input-slider-track {
 		@apply relative h-4 w-full grow overflow-hidden;
 		@apply border-none rounded-full;
-		background-color: var(--bg-white);
 		border: none;
 		box-shadow: 0 1px 0 var(--shadow-lowlight);
 		&.accent {
 			background: var(--bg-accent-gradient);
 		}
 		&.neutral {
-			background-color: var(--bg-white);
+			background-color: var(--bg-input);
 		}
 	}
 
@@ -90,7 +89,7 @@
 			background: var(--bg-accent-gradient);
 		}
 		&.neutral {
-			background-color: var(--bg-white);
+			background-color: var(--bg-input);
 		}
 	}
 

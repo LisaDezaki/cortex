@@ -31,6 +31,7 @@
 	import DotsThreeOutline from "phosphor-svelte/lib/DotsThreeOutline"
 	import DotsThreeOutlineVertical from "phosphor-svelte/lib/DotsThreeOutlineVertical"
 	import DotsThreeVertical from "phosphor-svelte/lib/DotsThreeVertical"
+	import Eye from "phosphor-svelte/lib/Eye"
 	import File from "phosphor-svelte/lib/File"
 	import FileAudio from "phosphor-svelte/lib/FileAudio"
 	import FileImage from "phosphor-svelte/lib/FileImage"
@@ -40,6 +41,7 @@
 	import Fish from "phosphor-svelte/lib/Fish"
 	import FlagBannerFold from "phosphor-svelte/lib/FlagBannerFold"
 	import FolderSimple from "phosphor-svelte/lib/FolderSimple"
+	import FolderSimplePlus from "phosphor-svelte/lib/FolderSimplePlus"
 	import Funnel from "phosphor-svelte/lib/Funnel"
 	import FunnelSimple from "phosphor-svelte/lib/FunnelSimple"
 	import FunnelSimpleX from "phosphor-svelte/lib/FunnelSimpleX"
@@ -64,6 +66,7 @@
 	import LineVertical from "phosphor-svelte/lib/LineVertical"
 	import Link from "phosphor-svelte/lib/Link"
 	import List from "phosphor-svelte/lib/List"
+	import ListBullets from "phosphor-svelte/lib/ListBullets"
 	import MagnifyingGlass from "phosphor-svelte/lib/MagnifyingGlass"
 	import MagnifyingGlassMinus from "phosphor-svelte/lib/MagnifyingGlassMinus"
 	import MagnifyingGlassPlus from "phosphor-svelte/lib/MagnifyingGlassPlus"
@@ -84,9 +87,11 @@
 	import Sailboat from "phosphor-svelte/lib/Sailboat"
 	import SignOut from "phosphor-svelte/lib/SignOut"
 	import Siren from "phosphor-svelte/lib/Siren"
+	import SmileySad from "phosphor-svelte/lib/SmileySad"
 	import SortAscending from "phosphor-svelte/lib/SortAscending"
 	import SortDescending from "phosphor-svelte/lib/SortDescending"
 	import Speedometer from "phosphor-svelte/lib/Speedometer"
+	import SquaresFour from "phosphor-svelte/lib/SquaresFour"
 	import Student from "phosphor-svelte/lib/Student"
 	import Sun from "phosphor-svelte/lib/Sun"
 	import Sword from "phosphor-svelte/lib/Sword"
@@ -149,6 +154,7 @@
 		'DotsThreeOutline': DotsThreeOutline,
 		'DotsThreeOutlineVertical': DotsThreeOutlineVertical,
 		'DotsThreeVertical': DotsThreeVertical,
+		'Eye': Eye,
 		'File': File,
 		'FileAudio': FileAudio,
 		'FileImage': FileImage,
@@ -158,6 +164,7 @@
 		'Fish': Fish,
 		'FlagBannerFold': FlagBannerFold,
 		'FolderSimple': FolderSimple,
+		'FolderSimplePlus': FolderSimplePlus,
 		'Funnel': Funnel,
 		'FunnelSimple': FunnelSimple,
 		'FunnelSimpleX': FunnelSimpleX,
@@ -182,6 +189,7 @@
 		'LineVertical': LineVertical,
 		'Link': Link,
 		'List': List,
+		'ListBullets': ListBullets,
 		'MagnifyingGlass': MagnifyingGlass,
 		'MagnifyingGlassMinus': MagnifyingGlassMinus,
 		'MagnifyingGlassPlus': MagnifyingGlassPlus,
@@ -202,9 +210,11 @@
 		'Sailboat': Sailboat,
 		'SignOut': SignOut,
 		'Siren': Siren,
+		'SmileySad': SmileySad,
 		'SortAscending': SortAscending,
 		'SortDescending': SortDescending,
 		'Speedometer': Speedometer,
+		'SquaresFour': SquaresFour,
 		'Student': Student,
 		'Sun': Sun,
 		'Sword': Sword,

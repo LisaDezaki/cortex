@@ -39,8 +39,10 @@
 		--bg-neutral-soft:      	rgb(from var(--bg-neutral) r g b / 50%);
 		--bg-neutral-softer:		rgb(from var(--bg-neutral) r g b / 25%);
 		--bg-neutral-softest:      	rgb(from var(--bg-neutral) r g b / 10%);
-		--bg-neutral-gradient:		linear-gradient(theme(colors.slate.100), theme(colors.slate.200));
-		--bg-neutral-gradient-alt: 	linear-gradient(theme(colors.slate.200), theme(colors.slate.300));
+		--bg-neutral-gradient:			linear-gradient(theme(colors.slate.100), theme(colors.slate.200));
+		--bg-neutral-gradient-flip:		linear-gradient(theme(colors.slate.200), theme(colors.slate.100));
+		--bg-neutral-gradient-alt: 		linear-gradient(theme(colors.slate.200), theme(colors.slate.300));
+		--bg-neutral-gradient-alt-flip: linear-gradient(theme(colors.slate.300), theme(colors.slate.200));
 
 		--bg-danger:            	theme(colors.rose.500);
 		--bg-danger-soft:			rgb(from var(--bg-danger) r g b / 50%);
@@ -126,85 +128,55 @@
 
 	[data-theme="dark"] {
 
-		/* Surfaces */
 
-		--surface:				theme(colors.slate.900);
-		--background: 			theme(colors.slate.950);
-		/* --background: 				theme(colors.slate.950);
-		--background-alt: 			theme(colors.slate.900);
-		--surface:					theme(colors.slate.900); */
-
-		/*	Background colors  |  Primitive  */
+		/**
+		 * Background colors
+		 */
 
 		--bg-white:					theme(colors.white);
-
-		/*	Background colors  |  Semantic  */
 
 		--bg-accent:				theme(colors.emerald.500);
 		--bg-accent-strong:			theme(colors.emerald.800);
 		--bg-accent-soft:       	rgb(from var(--bg-accent) r g b / 50%);
 		--bg-accent-softer: 		rgb(from var(--bg-accent) r g b / 25%);
 		--bg-accent-softest: 		rgb(from var(--bg-accent) r g b / 10%);
-		--bg-accent-gradient:		linear-gradient(
-										theme(colors.emerald.500),
-										theme(colors.emerald.600)
-									);
-		--bg-accent-gradient-alt: 	linear-gradient(
-										theme(colors.emerald.600),
-										theme(colors.emerald.700)
-									);
+		--bg-accent-gradient:		linear-gradient(theme(colors.emerald.600), theme(colors.emerald.700));
+		--bg-accent-gradient-alt: 	linear-gradient(theme(colors.emerald.500), theme(colors.emerald.600));
 		
 		--bg-neutral:				theme(colors.slate.600);
 		--bg-neutral-soft:      	rgb(from var(--bg-neutral) r g b / 50%);
 		--bg-neutral-softer:		rgb(from var(--bg-neutral) r g b / 25%);
 		--bg-neutral-softest:      	rgb(from var(--bg-neutral) r g b / 10%);
-		--bg-neutral-gradient:		linear-gradient(
-										theme(colors.slate.100),
-										theme(colors.slate.200)
-									);
-		--bg-neutral-gradient-alt: 	linear-gradient(
-										theme(colors.slate.200),
-										theme(colors.slate.300)
-									);
+		--bg-neutral-gradient:		linear-gradient(theme(colors.slate.900), theme(colors.slate.950));
+		--bg-neutral-gradient-flip:	linear-gradient(theme(colors.slate.950), theme(colors.slate.900));
+		--bg-neutral-gradient-alt: 	linear-gradient(theme(colors.slate.800), theme(colors.slate.900));
+		--bg-neutral-gradient-alt-flip: linear-gradient(theme(colors.slate.900), theme(colors.slate.800));
 
 		--bg-danger:            	theme(colors.rose.500);
 		--bg-danger-soft:			rgb(from var(--bg-danger) r g b / 50%);
 		--bg-danger-softer: 		rgb(from var(--bg-danger) r g b / 25%);
 		--bg-danger-softest:		rgb(from var(--bg-danger) r g b / 10%);
-		--bg-danger-gradient:		linear-gradient(
-										theme(colors.rose.500),
-										theme(colors.rose.600)
-									);
-		--bg-danger-gradient-alt:	linear-gradient(
-										theme(colors.rose.600),
-										theme(colors.rose.700)
-									);
+		--bg-danger-gradient:		linear-gradient(theme(colors.rose.600), theme(colors.rose.700));
+		--bg-danger-gradient-alt:	linear-gradient(theme(colors.rose.500), theme(colors.rose.600));
 
-		/*	Background colors  |  Component  */
-
-		--bg-card:					theme(colors.slate.800);
-		--bg-nav:					var(--surface);
-		--bg-nav-active:			var(--bg-neutral-softest);
-
-		/* --bg-accent:				theme(colors.emerald.500);
-		--bg-danger: 				theme(colors.rose.200);
-		--bg-disabled:				theme(colors.slate.800);
-		--bg-input:					theme(colors.slate.800);
-		--bg-nav:					theme(colors.slate.900);
-		--bg-nav-link:				theme(colors.slate.900);
-		--bg-nav-link-hover: 		theme(colors.slate.800);
-		--bg-white:					theme(colors.white); */
+		--background: 			theme(colors.slate.950);
+		--surface:				theme(colors.slate.950);
+		--bg-card:				var(--bg-neutral-softer);
+		--bg-card-hover:		var(--bg-neutral-soft);
+		--bg-input:             theme(colors.slate.800);
+		--bg-modal:				var(--surface);
+		--bg-nav:				var(--surface);
+		--bg-nav-active:		var(--bg-neutral-softest);
 
 
-
-		/*	Border colors  |  Primitive  */
+		/**
+		 * Border colors
+		 */
 
 		--border-white:				theme(colors.white);
 
-		/*	Border colors  |  Semantic  */
-
 		--border-accent:			theme(colors.emerald.500);
-		--border-accent-strong:		theme(colors.emerald.300);
+		--border-accent-strong:		theme(colors.emerald.600);
 		--border-accent-soft: 		rgb(from var(--border-accent) r g b / 45%);
 		--border-accent-softer:		rgb(from var(--border-accent) r g b / 30%);
 		--border-accent-softest:	rgb(from var(--border-accent) r g b / 15%);
@@ -221,31 +193,14 @@
 		--border-danger-softer:		rgb(from var(--border-danger) r g b / 30%);
 		--border-danger-softest:	rgb(from var(--border-danger) r g b / 15%);
 
-		/*	Border colors  |  Component  */
-
 		--border-nav:				var(--border-neutral-softest);
 
-		/* --border-accent: 			theme(colors.emerald.400);
-		--border-danger: 			theme(colors.rose.500);
-		--border-disabled: 			theme(colors.slate.700);
-		--border-divider: 			theme(colors.slate.700);
-		--border-input: 			theme(colors.slate.800);
-		--border-input-hover: 		theme(colors.slate.700);
-		--border-focus: 			theme(colors.emerald.400);
-		--border-nav:				theme(colors.slate.800);
-		--border-primary:			theme(colors.emerald.950);
-		--border-secondary: 		theme(colors.slate.950);
-		--border-soft:				theme(colors.slate.800); */
 
-
-
-
-
-		/*	Text colors  |  Primitive  */
+		/**
+		 * Text colors
+		 */
 
 		--text-white:				theme(colors.white);
-
-		/*	Text colors  |  Semantic  */
 
 		--text-accent: 				theme(colors.emerald.500);
 		--text-accent-strong:		theme(colors.emerald.700);
@@ -253,8 +208,8 @@
 		--text-accent-softer:   	rgb(from var(--text-accent) r g b / 45%);
 		--text-accent-softest:  	rgb(from var(--text-accent) r g b / 30%);
 
-		--text-neutral:				theme(colors.slate.500);
-		--text-neutral-strong:		theme(colors.slate.700);
+		--text-neutral:				theme(colors.slate.200);
+		--text-neutral-strong:		theme(colors.slate.100);
 		--text-neutral-soft:    	rgb(from var(--text-neutral) r g b / 60%);
 		--text-neutral-softer:  	rgb(from var(--text-neutral) r g b / 45%);
 		--text-neutral-softest: 	rgb(from var(--text-neutral) r g b / 30%);
@@ -265,9 +220,7 @@
 		--text-danger-softer:  		rgb(from var(--text-danger) r g b / 45%);
 		--text-danger-softest: 		rgb(from var(--text-danger) r g b / 30%);
 
-		/*	Text colors  |  Component  */
-
-		--text-disabled:			rgba(0,0,0, 0.2);
+		--text-disabled:			rgba(255,255,255, 0.2);
 		--text-nav-link: 			theme(colors.emerald.400);
 		--text-nav-link-hover: 		theme(colors.white);
 		--text-placeholder:			theme(colors.slate.400);
@@ -343,16 +296,20 @@
 	.bg-accent-soft 		{ background-color: var(--bg-accent-soft); }
 	.bg-accent-softer 		{ background-color: var(--bg-accent-softer); }
 	.bg-accent-softest 		{ background-color: var(--bg-accent-softest); }
+	.bg-accent-gradient		{ background: 		var(--bg-accent-gradient); }
 	.bg-neutral 			{ background-color: var(--bg-neutral); }
 	.bg-neutral-strong 		{ background-color: var(--bg-neutral-strong); }
 	.bg-neutral-soft 		{ background-color: var(--bg-neutral-soft); }
 	.bg-neutral-softer 		{ background-color: var(--bg-neutral-softer); }
 	.bg-neutral-softest 	{ background-color: var(--bg-neutral-softest); }
+	.bg-neutral-gradient	{ background:		var(--bg-neutral-gradient); }
+	.bg-neutral-gradient-alt { background:		var(--bg-neutral-gradient-alt); }
 	.bg-danger 				{ background-color: var(--bg-danger); }
 	.bg-danger-strong 		{ background-color: var(--bg-danger-strong); }
 	.bg-danger-soft 		{ background-color: var(--bg-danger-soft); }
 	.bg-danger-softer 		{ background-color: var(--bg-danger-softer); }
 	.bg-danger-softest 		{ background-color: var(--bg-danger-softest); }
+	.bg-danger-gradient		{ background:		var(--bg-danger-gradient); }
 
 	.border-accent 			{ border-color: var(--border-accent); }
 	.border-accent-strong 	{ border-color: var(--border-accent-strong); }

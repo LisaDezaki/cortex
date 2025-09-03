@@ -5,7 +5,7 @@
 
     let {
 		class: className,
-		character,
+		faction,
 		href,
 		onclick,
 		options,
@@ -15,7 +15,7 @@
 	const handleClick = (e) => {
 		if (onclick) {
 			e.preventDefault()
-			onclick(e, character)
+			onclick(e, faction)
 		}
 	}
 </script>
@@ -23,10 +23,10 @@
 <Card
 	aspect="square"
 	icon="User"
-	image={character.portrait?.url}
-	title={character.name}
-	subtitle={character.alias}
+	image={faction.portrait?.url}
+	title={faction.name}
+	subtitle={faction.alias}
 	onclick={handleClick || null}
-	href={onclick ? null : route('characters.show', {character: character.slug})}
+	href={onclick ? null : route('factions.show', {faction: faction.slug})}
 	options={options}
 {...restProps} />

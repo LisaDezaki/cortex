@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CharacterController;
+use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CustomFieldController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\FactionController;
@@ -70,26 +71,32 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post(  '/deactivate-project', 			[ProjectController::class, 'deactivate'])->name('projects.deactivate');
 
 
+	/*	Collections */
+
+	Route::get(		'/collections/{collection}',	[CollectionController::class, 'show'   	])->name('collections.show');
+	Route::post(	'/collections', 				[CollectionController::class, 'store'  	])->name('collections.store');
+	Route::patch(	'/collections/{collection}',	[CollectionController::class, 'update' 	])->name('collections.update');
+	Route::delete(	'/collections/{collection}',	[CollectionController::class, 'destroy'	])->name('collections.destroy');
+
+
 	/*	Characters  */
 
-	Route::get(   '/characters',						[CharacterController::class, 'index'   ])->name('characters');
-	// Route::get(   '/characters/create',					[CharacterController::class, 'create'  ])->name('characters.create');
-	Route::get(   '/characters/settings',				[CharacterController::class, 'settings'])->name('characters.settings');
-	Route::get(   '/characters/{character}',			[CharacterController::class, 'show'    ])->name('characters.show');
-	// Route::get(   '/characters/{character}/edit',		[CharacterController::class, 'edit'    ])->name('characters.edit');
-	Route::post(  '/characters',						[CharacterController::class, 'store'   ])->name('characters.store');
-	Route::patch( '/characters/{character}',			[CharacterController::class, 'update'  ])->name('characters.update');
-	Route::delete('/characters/{character}',			[CharacterController::class, 'destroy' ])->name('characters.destroy');
-	Route::get(   '/characters/custom-fields',			[CharacterController::class, 'customfields' ])->name('characters.customfields');
+	Route::get(   '/characters',				[CharacterController::class, 'index'   		])->name('characters');
+	Route::get(   '/characters/collections',	[CharacterController::class, 'collections' 	])->name('characters.collections');
+	Route::get(   '/characters/settings',		[CharacterController::class, 'settings'		])->name('characters.settings');
+	Route::get(   '/characters/custom-fields',	[CharacterController::class, 'customfields' ])->name('characters.customfields');
+	Route::get(   '/characters/{character}',	[CharacterController::class, 'show'    		])->name('characters.show');
+	Route::post(  '/characters',				[CharacterController::class, 'store'   		])->name('characters.store');
+	Route::patch( '/characters/{character}',	[CharacterController::class, 'update'  		])->name('characters.update');
+	Route::delete('/characters/{character}',	[CharacterController::class, 'destroy' 		])->name('characters.destroy');
 
 
 	/*	Factions  */
 
 	Route::get(   '/factions',					[FactionController::class, 'index'   ])->name('factions');
-	// Route::get(   '/factions/create',			[FactionController::class, 'create'  ])->name('factions.create');
+	Route::get(   '/factions/collections',		[FactionController::class, 'collections'])->name('factions.collections');
 	Route::get(   '/factions/settings',			[FactionController::class, 'settings'])->name('factions.settings');
 	Route::get(   '/factions/{faction}',		[FactionController::class, 'show'    ])->name('factions.show');
-	// Route::get(   '/factions/{faction}/edit',	[FactionController::class, 'edit'    ])->name('factions.edit');
 	Route::post(  '/factions',					[FactionController::class, 'store'   ])->name('factions.store');
 	Route::patch( '/factions/{faction}',		[FactionController::class, 'update'  ])->name('factions.update');
 	Route::delete('/factions/{faction}',		[FactionController::class, 'destroy' ])->name('factions.destroy');

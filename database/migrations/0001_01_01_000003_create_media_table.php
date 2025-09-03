@@ -20,7 +20,7 @@ return new class extends Migration
 			// $table->string('mime_type');
 			// $table->unsignedInteger('size');
 			$table->string('type')->nullable(); // 'avatar', 'character_portrait', etc.
-			$table->morphs('mediable'); // Polymorphic relationship
+			$table->uuidMorphs('mediable'); // Polymorphic relationship
 			$table->json('metadata')->nullable(); // Dimensions, colors, etc.
 			$table->timestamps();
 			$table->index('type');

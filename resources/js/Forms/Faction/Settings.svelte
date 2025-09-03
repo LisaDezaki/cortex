@@ -27,7 +27,7 @@
 <Form {form} {oncancel}
 	class={className}
 	enctype="multipart/form-data"
-	endpoint={route('characters.settings')}
+	endpoint={route('factions.settings')}
 	method="patch"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
@@ -39,7 +39,7 @@
 
 	<Input name="enabled"
 		type="switch"
-		label="Enable Characters"
+		label="Enable Factions"
 	/>
 
 	<Field name="subheading"
@@ -47,7 +47,7 @@
 		inputClass="w-full"
 		type="select"
 		label="Character subheading"
-		description="Which field would you like to show under the character's name when viewing them?"
+		description="Which field would you like to show under the faction's name when viewing them?"
 		options={customFields?.map((field) => {
 			return { value: field.name, label: field.label }
 		})}

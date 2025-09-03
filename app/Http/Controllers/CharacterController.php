@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CharacterResource;
+use App\Http\Resources\CollectionResource;
 use App\Http\Resources\CustomFieldResource;
 use App\Models\Character;
+use App\Models\Collection;
 use App\Models\CustomField;
 use App\Services\MediaService;
 use Illuminate\Http\RedirectResponse;
@@ -33,10 +35,17 @@ class CharacterController extends Controller
 	 */
 
 	protected $validationRules = [
-		'name'                  => ['sometimes', 'string'],
+		'name'                  => ['sometimes', 'required', 'string'],
 		'description'           => ['nullable',  'string'],
 		'banner'                => ['nullable',  'string'],
 		'portrait'              => ['nullable',  'string'],
+
+		'media'					=> ['sometimes', 'array'],
+		'media.*'				=> ['present'],
+		'media.*.name'			=> ['string', 'nullable'],
+		'media.*.path'			=> ['string', 'nullable'],
+		'media.*.type'			=> ['string', 'required', 'in:banner,emblem,gallery,map,portrait'],
+		'media.*.url'			=> ['string', 'nullable'],
 
 		'faction_id'            => ['nullable',  'exists:factions,id'],
 		'location_id'           => ['nullable',  'exists:locations,id'],
@@ -60,18 +69,30 @@ class CharacterController extends Controller
 
 	public function index()
 	{
-		$active_project = Auth::user()->active_project;
-		if (!$active_project) {
-			return Redirect::route('projects');
-		}
+		$collections = Collection::where([
+			'project_id' => Auth::user()->active_project,
+			'collection_type' => Character::class
+		])->with(['items'])->get();
 
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'character'
+			'fieldable_type' => Character::class
 		])->with('options')->get();
 
 		return Inertia::render('Characters/Index', [
-			'customFields' => CustomFieldResource::collection($customFields)
+			'collections'	=> CollectionResource::collection($collections),
+			'customFields'	=> CustomFieldResource::collection($customFields)
+		]);
+	}
+	public function collections()
+	{
+		$collections = Collection::where([
+			'project_id' => Auth::user()->active_project,
+			'collection_type' => Character::class
+		])->with(['items'])->get();
+
+		return Inertia::render('Characters/Collections', [
+			'collections'	=> CollectionResource::collection($collections),
 		]);
 	}
 
@@ -111,7 +132,10 @@ class CharacterController extends Controller
 			$character->relationships()->sync($validatedData['relationships']);
 		}
 
-		$this->handleCustomFields($validatedData['custom_fields'], $character);
+		if ($request->has('custom_fields')) {
+			$this->handleCustomFields($validatedData['custom_fields'], $character);
+		}
+
 		$character->save();
 		return Redirect::route("characters.show", [
 			'character' => $character->slug
@@ -127,6 +151,7 @@ class CharacterController extends Controller
 	public function show(Character $character): Response
 	{
 		$character->load([
+			'collections.items',
 			'location',
 			'media',
 			'factions',
@@ -162,15 +187,21 @@ class CharacterController extends Controller
 	{
 		$validatedData = $request->validate($this->validationRules);
 
-		if ($request->has('banner')) {
-			$this->mediaService->attachMedia($character, 'banner', $request->banner);
-			unset($validatedData['banner']);
+		if ($request->has('media')) {
+			foreach ($request['media'] as $media) {
+				$this->mediaService->attachMedia($character, $media['type'], $media);
+			}
 		}
 
-		if ($request->has('portrait')) {
-			$this->mediaService->attachMedia($character, 'portrait', $request->portrait);
-			unset($validatedData['portrait']);
-		}
+		// if ($request->has('banner')) {
+		// 	$this->mediaService->attachMedia($character, 'banner', $request->banner);
+		// 	unset($validatedData['banner']);
+		// }
+
+		// if ($request->has('portrait')) {
+		// 	$this->mediaService->attachMedia($character, 'portrait', $request->portrait);
+		// 	unset($validatedData['portrait']);
+		// }
 
 		if ($request->has('custom_fields')) {
 			$this->handleCustomFields($validatedData['custom_fields'], $character);
@@ -179,11 +210,18 @@ class CharacterController extends Controller
 		if ($request->has('location_id')) {
 			$character->location()->associate($validatedData['location_id']);
 		}
+
+		unset($validatedData['media']);
 		
 		$character->fill($validatedData);
 		$character->update();
-		return Redirect::route("characters.show", [
-			'character' => $character->slug
+		// return Redirect::route("characters.show", [
+		// 	'character' => $character->slug
+		// ]);
+
+		return back()->with([
+			'success' => 'Character updated successfully!',
+			'character' => $character
 		]);
 	}
 
@@ -207,7 +245,7 @@ class CharacterController extends Controller
 			]);
 		}
 		
-		Session::flash('message', "<strong>{$character->name}</strong> has been deleted.");
+		Session::flash('success', "$character->name has been deleted.");
 		$character->delete();
 		 
 		return Redirect::route("characters");

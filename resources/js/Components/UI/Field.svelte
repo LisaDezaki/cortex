@@ -23,6 +23,7 @@
     } = $props()
 
 	if (!name) { console.error(`The Field component requires a "name" field. You may have mistakenly used "id", which is set to ${restProps.id}`) }
+	if (!$form[name]) { $form[name] = null }
 
 </script>
 
@@ -51,8 +52,6 @@
 {#snippet errorBlock()}
 	<Error message={errors} />
 {/snippet}
-
-<!-- <pre>{JSON.stringify($form, null, 3)}</pre> -->
 
 <div class="form-field {className} {layout}">
 

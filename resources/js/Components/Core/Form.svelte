@@ -1,5 +1,6 @@
 <script>
 	import { setContext } from "svelte";
+	import { page, router } from '@inertiajs/svelte'
 
 	let {
 		children,
@@ -7,6 +8,7 @@
 		endpoint = '/',
 		form,
 		method = 'post',
+		reloadPageProps,
 		onsubmit,
 		onSuccess,
 		onFinish,
@@ -22,8 +24,19 @@
 		} else {
 			e.preventDefault()
 			if ($form && typeof $form[method] === 'function') {
-				console.log('Form.handleSubmit', $form)
-				$form[ method ]( endpoint, { onSuccess, onFinish, onError })
+				$form[ method ]( endpoint, {
+					onSuccess: (res) => {
+						onSuccess?.(res)
+						console.log('Form.handleSubmit.onSuccess()', res)
+						if (reloadPageProps) {
+							router.visit( $page.url, {
+								only: reloadPageProps,
+							})
+						}
+					},
+					onFinish,
+					onError
+				})
 			} else {
 				console.error(`Form method ${method} is not a function`)
 			}
@@ -32,12 +45,10 @@
 
 	function setData(key, value) {
 		$form[key] = value
-		console.log('Form.setData():', key, value, $form)
 	}
 	
 	function clearData(key) {
 		$form[key] = undefined
-		console.log('Form.clearData():', key, $form)
 	}
 
 	setContext("form", { form, setData, clearData, method, endpoint });

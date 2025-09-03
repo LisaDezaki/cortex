@@ -110,8 +110,8 @@ class MediaService
 	public function updateImage(
 		Model $entity,
 		MorphOne|MorphMany $relationship,
-		mixed $temp_path,
-		string|array $folder,
+		string $temp_path,
+		string $folder,
 	) {
 
 		//	If there is no relationship or if the value is already a media ID that matches this type, do nothing.
@@ -140,9 +140,9 @@ class MediaService
 
 	public function updateMany(
 		Model $entity,
-		MorphMany $relationship,
+		MorphOne|MorphMany $relationship,
 		array $paths,
-		string|array $folder,
+		string $folder,
 	) {
 		
 		//	If there is no relationship or if the value is already a media ID that matches this type, do nothing.

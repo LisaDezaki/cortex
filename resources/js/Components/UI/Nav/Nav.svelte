@@ -42,11 +42,9 @@
 	nav ul.nav-list {
 		@apply flex flex-col gap-1 w-full;
 
-		&:not(:last-of-type) {
-			@apply border-b border-emerald-950/30;
-		}
 		&:not(:first-of-type) {
-			@apply border-t border-emerald-500/20;
+			@apply border-t;
+			border-color: var(--border-neutral-softest);
 		}
 		&.scrollable {
 			@apply overflow-y-auto;
@@ -56,7 +54,6 @@
 			}
 			&::-webkit-scrollbar-thumb {
 				background: var(--border-accent);
-				/* border-radius: 2px; */
 			}
 		}
 	}

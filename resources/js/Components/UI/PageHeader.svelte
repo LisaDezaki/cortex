@@ -28,30 +28,33 @@
 
 
 
-<Stack as="header" align="start" gap={0} class="bg-surface border-b p-2 w-full">
+<Stack as="header" align="start" gap={0} class="bg-surface border-b border-neutral-softest px-12 py-2 w-full">
 
-	<Flex justify="center" class="w-full">
+	<Flex align="center" justify="center" class="w-full">
 
 		<!-- Breadcrumbs and page name  -->
-		<Stack align="start" gap={0} class="flex-1 pb-2 w-full">
-			{#if breadcrumbs}
+		<Stack align="start" gap={0} class="flex-1 w-full">
+			<!-- {#if breadcrumbs}
 				<Breadcrumbs data={breadcrumbs} />
-			{/if}
-			<Inline gap={3} class="px-3 w-full">
-				<Heading is="h1" as="h4"
-					heading={title}
-				/>
-			</Inline>
+			{/if} -->
+			<Heading is="h1" as="h4"
+				heading={title}
+			/>
 		</Stack>
 
 		<!-- Tabs -->
 		 {#if tabs}
 			<Stack align="center" justify="center" gap={1.5} class="flex-0 flex-shrink-0 min-w-48 w-auto">
-				<Inline gap={0.5} class="bg-neutral-softer p-0.5 rounded-lg overflow-hidden">
+				<Inline gap={0.5} class="bg-neutral-gradient border border-neutral-softest p-0.5 rounded-lg overflow-hidden">
 					{#each tabs as tab}
-						<Button style={tab.active ? 'hard' : 'plain'} theme={tab.active ? 'accent' : 'neutral'}
-							{...tab}
-						/>
+						{#if !tab.hasOwnProperty('if') || tab.if === true}
+							<Button
+								class="w-40"
+								style={tab.active ? 'hard' : 'plain'}
+								theme={tab.active ? 'accent' : 'neutral'}
+								{...tab}
+							/>
+						{/if}
 					{/each}
 				</Inline>
 			</Stack>
@@ -60,9 +63,9 @@
 		<!-- Actions  -->
 		<Stack align="end" justify="center" class="flex-1 w-full">
 			{#if actions}
-				<Inline gap={3} class="px-3 py-1.5">
+				<Inline gap={3} class="px-3">
 					{#each actions as action}
-						<Button type="button" style={action.style || "soft"} {...action} class="h-10 w-10 rounded-full" />
+						<Button type="button" style={action.style || "soft"} {...action} class="rounded-full" />
 					{/each}
 				</Inline>
 			{/if}

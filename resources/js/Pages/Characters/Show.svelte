@@ -35,14 +35,15 @@
 		endpoint: route('characters.update', { character: character.slug }),
 		method: 'patch',
 		onSuccess: (res) => {
+			console.log('success', res)
 			router.visit( $page.url, {
 				only: ['character.media'],
 			})
 		}
 	})
 
-	let media_banner	= $derived(character.media.filter(m => m.type === 'banner')?.[0])
-	let media_portrait	= $derived(character.media.filter(m => m.type === 'portrait')?.[0])
+	let media_banner	= $derived(character.media?.filter(m => m.type === 'banner')?.[0])
+	let media_portrait	= $derived(character.media?.filter(m => m.type === 'portrait')?.[0])
 	let media_gallery	= $derived(character.media)
 
 	function deleteCharacter() {
@@ -55,10 +56,10 @@
 		editMode = !editMode
 	}
 	function findDisplayValue(fieldId) {
-		return character.customFieldValues.find(v => v.customFieldId == fieldId).displayValue || null
+		return character.customFieldValues?.find(v => v.customFieldId == fieldId)?.displayValue || null
 	}
 	function findValue(fieldId) {
-		return character.customFieldValues.find(v => v.customFieldId == fieldId).value || null
+		return character.customFieldValues?.find(v => v.customFieldId == fieldId)?.value || null
 	}
 
 </script>
@@ -81,16 +82,19 @@
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
 				{ icon: "Info",         	label: "Details",       href: "#details"       },
+				{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        },
 				{ icon: "Handshake",        label: "Relationships", href: "#relationships" },
 				{ icon: "FlagBannerFold",   label: "Factions",      href: "#factions"      },
 				{ icon: "Backpack",         label: "Inventory",     href: "#items"         },
 				{ icon: "MapPinSimpleArea", label: "Location",      href: "#location"      },
 				{ icon: "ImagesSquare",     label: "Gallery",       href: "#gallery"       },
-				{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        },
+				{ icon: "FolderSimple",     label: "Collections",  	href: "#collections"   },
 				{ icon: "Trash", 			label: "Delete", 		onclick: deleteCharacter, theme: "danger" }
 			]} />
 			<Container size="4xl">
 
+
+				<!-- <pre>{JSON.stringify(character.collections,null,3)}</pre> -->
 
 				<!-- Details -->
 			
@@ -128,6 +132,40 @@
 						{character.description}
 					</p>
 			
+				</Section>
+
+
+				<!-- Custom Fields -->
+		
+				<Section id="custom" class="px-6 py-12">
+
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Custom Fields</Heading>
+					</Flex>
+
+					{#if customFields && customFields.length > 0}
+						{#each customFields as field, i}
+
+							{#if editMode}
+								<Field layout="block" inputClass="w-full" {...field} />
+
+							{:else}
+								<Flex gap={3}>
+									<span class="font-bold w-20">{field.label}:</span>
+									<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
+								</Flex>
+
+							{/if}
+						{/each}
+						
+					{:else}
+						<p class="font-style-placeholder">There are no custom fields for Characters yet.</p>
+						
+					{/if}
+					<!-- <CustomFieldsForm
+						fields={customFields}
+						values={character.customFieldValues}
+					/> -->
 				</Section>
 		
 
@@ -181,7 +219,7 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h5">Factions</Heading>
 					</Flex>
-					<Grid cols={8}>
+					<Grid cols={6}>
 						{#each character.factions as fac, i}
 							<Card aspect="square"
 								icon="User"
@@ -207,7 +245,7 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h5">Inventory</Heading>
 					</Flex>
-					<Grid cols={8}>
+					<Grid cols={6}>
 						{#each character.inventory as item, i}
 							<Card aspect="square"
 								icon="User"
@@ -254,39 +292,28 @@
 					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
 					<MediaGrid cols={4} media={[{},{},{},{}]} />
 				</Section>
+
+
+				<!-- Collections -->
 		
-				
-				<!-- Custom Fields -->
-		
-				<Section id="custom" class="px-6 py-12">
-
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Custom Fields</Heading>
-					</Flex>
-
-					{#if customFields && customFields.length > 0}
-						{#each customFields as field, i}
-
-							{#if editMode}
-								<Field layout="block" inputClass="w-full" {...field} />
-
-							{:else}
-								<Flex gap={3}>
-									<span class="font-bold w-20">{field.label}:</span>
-									<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
-								</Flex>
-
-							{/if}
+				<Section id="collections" class="px-6 py-12">
+					<Stack class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h5">Collections</Heading>
+						<p>{character.name} is in these collections.</p>
+					</Stack>
+					<Grid cols={6}>
+						{#each character.collections as collection, i}
+							<Card aspect="square"
+								icon="FolderSimple"
+								href={route("collections.show", { collection: collection.slug })}
+								title={collection.name}
+								subtitle={collection.items_count}
+							/>
 						{/each}
-						
-					{:else}
-						<p class="font-style-placeholder">There are no custom fields for Characters yet.</p>
-						
-					{/if}
-					<!-- <CustomFieldsForm
-						fields={customFields}
-						values={character.customFieldValues}
-					/> -->
+						<CardNew aspect="square"
+							onclick={() => {}}
+						/>
+					</Grid>
 				</Section>
 				
 			</Container>

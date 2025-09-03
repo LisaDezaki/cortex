@@ -3,15 +3,18 @@
 
 	import { Flex, Popover, Stack }  from '@/Components/Core';
 	
-	import Button   from '@/Components/UI/Button.svelte';
-	import Dropdown from '@/Components/UI/Dropdown.svelte';
-	import Icon     from '@/Components/UI/Icon.svelte';
+	import Button		from '@/Components/UI/Button.svelte';
+	import ContextMenu	from '@/Components/UI/ContextMenu.svelte'
+	import Dropdown		from '@/Components/UI/Dropdown.svelte';
+	import Icon			from '@/Components/UI/Icon.svelte';
 
     let {
 		aspect,
+		children,
 		class: className,
 		href,
 		image,
+		imageClass,
 		icon,
 		onclick,
 		options,
@@ -27,8 +30,10 @@
 
 <Stack class="card {clickable ? "cursor-pointer" : null} {className}" onclick={onclick} {...restProps}>
 
-	<div class="card-visual aspect-{aspect}">
-		{#if image}
+	<div class="card-visual aspect-{aspect} {imageClass}">
+		{#if children}
+			{@render children()}
+		{:else if image}
 			<img class="card-image" src={image} alt={title} />
 		{:else if icon}
 			<Icon class="card-icon" name={icon} size={32} />
@@ -42,31 +47,17 @@
 				<span class="font-style-tiny line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
 			{/if}
 		</div>
-		{#if options}
-
-			<!-- <Dropdown class="card-dropdown"
-				icon="DotsThreeOutlineVertical"
-				options={options}
-			/> -->
-	
-			<Popover class="card-dropdown">
-				<Button style="plain" theme="neutral" class="card-item-options-button rounded-full" icon="DotsThreeOutlineVertical" iconSize={16} iconWeight="fill" />
-				{#snippet content()}
-					<Stack class="py-1">
-						{#each options as option}
-							<Link class="flex gap-2 px-2 py-1 hover:bg-slate-500/10" {...option}>
-								<Icon class="mt-[2px]" name={option.icon} />
-								{option.label}
-							</Link>
-						{/each}
-					</Stack>
-				{/snippet}
-			</Popover>
-		{/if}
 	</Flex>
 
 	{#if href}
 		<Link class="card-link" href={href}></Link>
+	{/if}
+
+	{#if options}
+		<ContextMenu
+			class="absolute inset-0 z-10"
+			options={options}
+		/>
 	{/if}
 
 </Stack>
@@ -77,7 +68,12 @@
 		@apply relative flex flex-col flex-shrink-0 gap-1.5 min-w-24 mb-3 rounded-lg overflow-hidden;
 		&:hover {
 			.card-visual {
-				background-color: var(--bg-card-hover);
+				background: var(--bg-neutral-gradient-alt)!important;
+				border-color: var(--border-accent)!important;
+			}
+			:global(.card-icon) {
+				background: var(--bg-neutral-gradient-alt-flip)!important;
+				color: var(--text-accent)!important;
 			}
 			.card-image {
 				mix-blend-mode: multiply;
@@ -100,16 +96,20 @@
 		}
 
 		.card-visual {
-			@apply flex-shrink-0 flex items-center justify-center rounded-lg overflow-hidden w-full;
-			background-color: var(--bg-card);
+			@apply border flex-shrink-0 rounded-lg overflow-hidden p-1.5 w-full;
+			background: var(--bg-neutral-gradient);
+			border-color: var(--border-neutral-softest);
+			&:not(.grid) {
+				@apply flex items-center justify-center;
+			}
 
 			.card-image {
 				@apply min-h-full min-w-full object-cover;
 			}
 
 			:global(.card-icon) {
-				@apply aspect-square p-6 rounded-full;
-				background-color: var(--bg-neutral-softest);
+				@apply aspect-square p-6 rounded-full max-h-[60%] max-w-[60%] h-full w-full;
+				background: var(--bg-neutral-gradient-flip);
 				color: var(--text-neutral-softest);
 			}
 		}

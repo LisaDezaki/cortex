@@ -8,37 +8,30 @@
 
     let {
 		oncancel = () => {},
-		faction
+		collection
 	} = $props()
 
 	const form = useForm({
-		confirm_name: ''
+		name: collection?.name || ''
 	});
 
 </script>
 
+{#if collection && collection.slug}
 
-
-
-
-{#if faction && faction.slug}
-
-	<Form {form}
+	<Form form={form}
 		class="max-w-lg"
 		enctype="multipart/form-data"
-		endpoint={route('factions.destroy', { faction: faction.slug})}
-		method="delete"
+		endpoint={route('collections.update', { collection: collection.slug})}
+		method="patch"
+		reloadPageProps={['collections']}
 		processing={$form.processing}
 		recentlySuccessful={$form.recentlySuccessful}
 	>
-		<Stack class="p-6">
-			<p class="mb-3">This process will remove this faction and all associated data from the database. Are you sure you want to delete this faction?</p>
-		
-			<p>Please type the name of the faction ("<strong>{faction.name}</strong>") to confirm deletion.</p>
-		
+		<Stack class="p-3">
 			<Field type="text"
-				name="confirm_name"
-				label="Faction name"
+				name="name"
+				placeholder="New name"
 				required
 				autofocus
 			/>
@@ -50,12 +43,18 @@
 				label="Cancel"
 				onclick={oncancel}
 			/>
-			<Button style="hard" theme="danger" class="border-none rounded-none w-1/2"
+			<Button style="hard" theme="accent" class="border-none rounded-none w-1/2"
 				type="submit"
-				label="Yes, Delete this faction"
+				label="Update name"
 			/>
 		</Flex>
 
 	</Form>
+
+{:else}
+
+	<div class="p-3">
+		<p class="font-style-placeholder">The form couldn't display correctly because no Character entity was provided.</p>
+	</div>
 
 {/if}

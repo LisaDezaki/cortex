@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\CollectionItem;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -70,6 +71,18 @@ class Character extends Model
     	return $this->relationships->merge($this->inverseRelationships);
 	}
 
+	public function collections()
+    {
+        return $this->hasManyThrough(
+            Collection::class,
+            CollectionItem::class,
+            'collectionable_id', // Foreign key on collection_items table
+            'id', // Foreign key on collections table
+            'id', // Local key on characters table
+            'collection_id' // Local key on collection_items table
+        )->where('collection_items.collectionable_type', 'App\Models\Character');
+    }
+
 	public function customFields()
 	{
 		return $this->morphMany(CustomField::class, 'fieldable');
@@ -95,6 +108,10 @@ class Character extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
 
+	public function image()
+	{
+		return $this->portrait();
+	}
 	public function media(): MorphMany
 	{
 		return $this->morphMany(Media::class, 'mediable');

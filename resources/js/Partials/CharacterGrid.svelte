@@ -7,8 +7,10 @@
 		children,
 		class: className,
 		cols,
-		showControls = false,
-		showItemControls = false,
+		gridItem,
+		// itemOptions,
+		// showControls = false,
+		// showItemControls = false,
 		...restProps
 	} = $props()
 
@@ -22,7 +24,15 @@
 	cols={cols}
 	gap={2}
 {...restProps}>
-	{#each characters as character}
-		<CharacterCard {character} />
-	{/each}
+
+	{#if characters}
+		{#each characters as character}
+			{#if gridItem}
+				{@render gridItem(character)}
+			{:else}
+				<CharacterCard {character} />
+			{/if}
+		{/each}
+	{/if}
+	
 </Grid>
