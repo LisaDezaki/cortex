@@ -93,20 +93,20 @@ class CollectionController extends Controller
 		$validatedData = $request->validate($this->validationRules);
 
 		if ($request->has('items')) {
-			foreach ($request['items'] as $item) {		
-				$type = $request->collectionable_type;
-				$typeMap = [
+			foreach ($request['items'] as $item) {
+
+				$collectionableType = match ($item['type']) {
 					'characters'	=> Character::class,
 					'factions'		=> Faction::class,
 					'locations'		=> Location::class
-				];
+				};
 		
 				CollectionItem::create([
 					'collection_id' 	  => $collection->id,
-					'collectionable_type' => $typeMap[$type],
-					'collectionable_id'   => $request->collectionable_id,
-					'order'				  => $request->order ?? 0,
-					'notes'				  => $request->notes
+					'collectionable_id'   => $item['id'],
+					'collectionable_type' => $collectionableType,
+					'order'				  => $item['order'] ?? 0,
+					'notes'				  => $item['notes'] ?? ''
 				]);
 			}
 		}

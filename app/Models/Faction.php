@@ -85,6 +85,10 @@ class Faction extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
 
+	public function image()
+	{
+		return $this->emblem();
+	}
 	public function media(): MorphMany
 	{
 		return $this->morphMany(Media::class, 'mediable');

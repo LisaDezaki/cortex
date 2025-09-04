@@ -4,9 +4,6 @@
 
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import CharacterGrid 		from '@/Partials/CharacterGrid.svelte'
-	import CharacterTable		from '@/Partials/CharacterTable.svelte'
-
 	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
 	import CreateCharacterForm 	from '@/Forms/Character/Create.svelte'
 	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
@@ -14,14 +11,16 @@
 	import RenameCharacterForm 	from '@/Forms/Character/Rename.svelte'
 	
 	import { Flex, Grid, Stack } from '@/Components/Core'
-	import Dropdown				from '@/Components/UI/Dropdown.svelte'
-	import Icon					from '@/Components/UI/Icon.svelte'
-	import Input				from '@/Components/UI/Input.svelte'
-	import Modal				from '@/Components/UI/Modal.svelte'
-	import PageHeader			from '@/Components/UI/PageHeader.svelte'
-	import Section				from '@/Components/UI/Section.svelte'
-
-	import CharacterCard 		from '@/Components/Features/Character/CharacterCard.svelte'
+	import Dropdown		from '@/Components/UI/Dropdown.svelte'
+	import Icon			from '@/Components/UI/Icon.svelte'
+	import Input		from '@/Components/UI/Input.svelte'
+	import Modal		from '@/Components/UI/Modal.svelte'
+	import PageHeader	from '@/Components/UI/PageHeader.svelte'
+	import Section		from '@/Components/UI/Section.svelte'
+	
+	import CharacterCard 	from '@/Components/Features/Character/CharacterCard.svelte'
+	import CharacterGrid 	from '@/Components/Features/Character/CharacterGrid.svelte'
+	import CharacterTable	from '@/Components/Features/Character/CharacterTable.svelte'
 
 	//	Page props
 	const activeProject	= $page.props.activeProject.data
@@ -65,28 +64,17 @@
 
 	//	Add Character to Collection
 	const addToCollectionForm = useForm({
-		'collectionable_id': null,
-		'collectionable_type': 'characters'
+		items: [{ id: null, type: 'characters' }]
 	})
 	const addToCollection = (char, coll) => {
-
-		console.log(char.id, coll.items.map(i => i.collectionable_id))
-
-		$addToCollectionForm.collectionable_id  = char.id
+		$addToCollectionForm.items[0]  = { id: char.id, type: 'characters' }
 		$addToCollectionForm.patch(
-			route('collections.update', { collection: coll.slug }),
-			{
-				onSuccess: (res) => {
-					router.visit(route('characters'), {
-						only: ['collections'],
-					})
-				}
-			}
+			route('collections.update', { collection: coll.slug })
 		)
 	}
 
 	//	Derived
-	let gridRows = $derived(16-rowSize)
+	let gridCols = $derived(16-rowSize)
 	let hasFilter     = $derived(Boolean(filter))
 	let characterList = $derived(
 		characters
@@ -245,7 +233,7 @@
 				{:else if layout === 'grid'}
 					<CharacterGrid
 						characters={characterList}
-						cols={gridRows}
+						cols={gridCols}
 					>
 						{#snippet gridItem(character)}
 							<CharacterCard
@@ -297,47 +285,32 @@
 
 </AuthenticatedLayout>
 
-<Modal
-	title="Apply Tags"
-	maxWidth="lg"
-	show={applyingTags}
-	onclose={closeModal}
->
-	<ApplyTagsForm type="characters" entity={selectedCharacter || null} oncancel={closeModal} />
+<Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
+	onclose={closeModal}>
+	<ApplyTagsForm type="characters" entity={selectedCharacter || null}
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>
 
-<Modal
-	title="Create a new character"
-	maxWidth="lg"
-	show={creatingCharacter}
-	onclose={closeModal}
->
-	<CreateCharacterForm oncancel={closeModal} />
+<Modal title="Create a new character" show={creatingCharacter} maxWidth="lg"
+	onclose={closeModal}>
+	<CreateCharacterForm
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>
 
-<Modal
-	title="Rename {selectedCharacter?.name}?"
-	maxWidth="lg"
-	show={renamingCharacter}
-	onclose={closeModal}
->
-	<RenameCharacterForm character={selectedCharacter || null} oncancel={closeModal} />
+<Modal title="Rename {selectedCharacter?.name}?" show={renamingCharacter} maxWidth="lg"
+	onclose={closeModal}>
+	<RenameCharacterForm character={selectedCharacter || null}
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>
 
-<Modal
-	title="Delete {selectedCharacter?.name}?"
-	maxWidth="lg"
-	show={deletingCharacter}
-	onclose={closeModal}
->
-	<DeleteCharacterForm character={selectedCharacter || null} oncancel={closeModal} />
+<Modal title="Delete {selectedCharacter?.name}?" show={deletingCharacter} maxWidth="lg"
+	onclose={closeModal}>
+	<DeleteCharacterForm character={selectedCharacter || null}
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>
 
-<Modal
-	title="Create Collection"
-	maxWidth="lg"
-	show={creatingCollection}
-	onclose={closeModal}
->
-	<CreateCollectionForm type="characters" entity={selectedCharacter || null} oncancel={closeModal} />
+<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
+	onclose={closeModal}>
+	<CreateCollectionForm type="characters" entity={selectedCharacter || null}
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>

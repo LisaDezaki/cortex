@@ -43,27 +43,39 @@
 
 	const form = useForm(startData)
 
-    function submit(e) {
-        e.preventDefault()
-		if (locationData) {
-			updateLocation(locationData.slug)
-		} else              {
-			createLocation()
-		}
-    }
+    // function submit(e) {
+    //     e.preventDefault()
+	// 	if (locationData) {
+	// 		updateLocation(locationData.slug)
+	// 	} else              {
+	// 		createLocation()
+	// 	}
+    // }
 
-	function createLocation() {
-		$form.post(route('locations.store'))
-	}
+	// function createLocation() {
+	// 	$form.post(route('locations.store'))
+	// }
 
-	function updateLocation(slug) {
-		$form.patch(route('locations.update', {location: slug}))
-	}
+	// function updateLocation(slug) {
+	// 	$form.patch(route('locations.update', {location: slug}))
+	// }
 	
 </script>
 
 
-<Form class="grid grid-cols-2 overflow-hidden max-w-[86vw]">
+
+
+
+<Form
+	class="grid grid-cols-2 overflow-hidden max-w-[86vw]"
+	enctype="multipart/form-data"
+	endpoint={route('locations.store')}
+	form={form}
+	method="post"
+	processing={$form.processing}
+	recentlySuccessful={$form.recentlySuccessful}
+	onFinish={oncancel}
+>
 
 	<!-- MAP -->
 
@@ -96,12 +108,10 @@
 				<div class="grid grid-cols-2 gap-6 mt-6 mb-6 px-3">
 					<Input class="col-span-1" inputClass="w-full"
 						type="select"
-						id="parent"
+						name="parent"
 						label="Parent"
 						description="Which location this location is found within."
 						placeholder="Select parent location..."
-						bind:value={$form.parent}
-						errors={$form.errors.parent}
 						options={locations?.map(r => {
 							return { label: r.name, value: r.slug }
 						})}
@@ -109,10 +119,8 @@
 					/>
 					<Input class="col-span-1"
 						type="checkbox"
-						id="worldMap"
+						name="worldMap"
 						labelText="World Map"
-						bind:checked={$form.is_world_map}
-						errors={$form.errors.is_world_map}
 						required
 					/>
 				</div>
@@ -120,23 +128,19 @@
 
 				<Field layout="inline" class="px-3" inputClass="w-full"
 					type="text"
-					id="name"
+					name="name"
 					label="Name"
 					description="The name of this location."
 					placeholder="Name"
-					bind:value={$form.name}
-					errors={$form.errors.name}
 					required
 				/>
 
 				<Field class="px-3" inputClass="w-full"
 					type="textarea"
-					id="description"
+					name="description"
 					label="Description"
 					placeholder="Description..."
-					bind:value={$form.description}
 					description="A detailed description of the location."
-					errors={$form.errors.description}
 					rows={4}
 				/>
 			</Tabs.Content>
@@ -184,6 +188,5 @@
 		type="submit"
 		disabled={!$form.isDirty || $form.processing || $form.recentlySuccessful}
 		label="{locationData ? "Update" : "Create"} Location"
-		onclick={submit}
 	/>
 </Section>

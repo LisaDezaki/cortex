@@ -1,11 +1,10 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { Link, page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import FactionGrid from '@/Partials/FactionGrid.svelte'
-	import FactionTable from '@/Partials/FactionTable.svelte'
+	
 
 	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
 	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
@@ -21,7 +20,9 @@
 	import PageHeader	from '@/Components/UI/PageHeader.svelte'
 	import Section      from '@/Components/UI/Section.svelte'
 
-	import FactionCard 		from '@/Components/Features/Faction/FactionCard.svelte'
+	import FactionCard 	from '@/Components/Features/Faction/FactionCard.svelte'
+	import FactionGrid 	from '@/Components/Features/Faction/FactionGrid.svelte'
+	import FactionTable from '@/Components/Features/Faction/FactionTable.svelte'
 
 	//	Page props
 	const activeProject = $page.props.activeProject.data
@@ -63,11 +64,18 @@
 										renamingFaction	= false
 									}
 
+	//	Add faction to Collection
+	const addToCollectionForm = useForm({
+		items: [{ id: null, type: 'factions' }]
+	})
+	const addToCollection = (char, coll) => {
+		$addToCollectionForm.items[0]  = { id: char.id, type: 'factions' }
+		$addToCollectionForm.patch(
+			route('collections.update', { collection: coll.slug })
+		)
+	}
 
-
-	let filteredFactions = $state(factions)
-	let selectedFactions = $state([])
-
+	//	Derived
 	let gridRows    = $derived( 16-rowSize )
 	let hasFilter   = $derived( Boolean(filter.name && filter.value) )
 	let factionList = $derived(

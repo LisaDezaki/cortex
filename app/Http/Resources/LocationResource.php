@@ -24,6 +24,7 @@ class LocationResource extends JsonResource
 			'description' => $this->description,
 			'isWorldMap'  => $this->is_world_map,
 
+			'image'		  => new MediaResource($this->whenLoaded('image')),
 			'media'		  => MediaResource::collection($this->whenLoaded('media')),
 			'banner'      => new MediaResource($this->whenLoaded('banner')),
 			'gallery'     => MediaResource::collection($this->whenLoaded('gallery')),

@@ -17,7 +17,7 @@ class ProjectPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+    	return false;
     }
 
     /**
@@ -25,7 +25,7 @@ class ProjectPolicy
      */
     public function view(User $user, Project $project): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -33,7 +33,7 @@ class ProjectPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -59,7 +59,7 @@ class ProjectPolicy
      */
     public function restore(User $user, Project $project): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -67,6 +67,6 @@ class ProjectPolicy
      */
     public function forceDelete(User $user, Project $project): bool
     {
-        //
+        return false;
     }
 }

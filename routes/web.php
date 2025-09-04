@@ -105,6 +105,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	/*	Locations  */
 	
 	Route::get(   '/locations',					[LocationController::class, 'index'   ])->name('locations');
+	Route::get(   '/locations/collections',		[LocationController::class, 'collections' ])->name('locations.collections');
 	// Route::get(   '/locations/create',			[LocationController::class, 'create'  ])->name('locations.create');
 	Route::get(   '/locations/settings',		[LocationController::class, 'settings'])->name('locations.settings');
 	Route::get(   '/locations/{location}', 		[LocationController::class, 'show'    ])->name('locations.show');

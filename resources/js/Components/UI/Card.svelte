@@ -108,7 +108,7 @@
 			}
 
 			:global(.card-icon) {
-				@apply aspect-square p-6 rounded-full max-h-[60%] max-w-[60%] h-full w-full;
+				@apply aspect-square opacity-50 p-6 rounded-full max-h-[60%] max-w-[60%] h-full w-full;
 				background: var(--bg-neutral-gradient-flip);
 				color: var(--text-neutral-softest);
 			}

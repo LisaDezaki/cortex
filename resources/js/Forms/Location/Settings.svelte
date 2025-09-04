@@ -27,27 +27,26 @@
 <Form {form} {oncancel}
 	class={className}
 	enctype="multipart/form-data"
-	endpoint={route('factions.settings')}
+	endpoint={route('locations.settings')}
 	method="patch"
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
-
 	<Flex align="center" class="mb-6 max-w-[32ch]">
 		<Heading is="h3" as="h5">Overview</Heading>
 	</Flex>
 
 	<Input name="enabled"
 		type="switch"
-		label="Enable Factions"
+		label="Enable Locations"
 	/>
 
 	<Field name="subheading"
 		layout="block"
 		inputClass="w-full"
 		type="select"
-		label="Faction subheading"
-		description="Which field would you like to show under the faction's name when viewing them?"
+		label="Location subheading"
+		description="Which field would you like to show under the location's name when viewing them?"
 		options={customFields?.map((field) => {
 			return { value: field.name, label: field.label }
 		})}

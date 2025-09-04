@@ -5,33 +5,29 @@
 
     let {
 		class: className,
-		character,
 		href,
+		location,
 		onclick,
 		options,
         ...restProps
     } = $props()
 
 	const handleClick = (e) => {
-
-		//	TODO: Make sure left click is normal
-		//	right click should open context menu
-		console.log(e)
-
 		if (onclick) {
 			e.preventDefault()
-			onclick(e, character)
+			onclick(e, location)
 		}
 	}
 </script>
 
 <Card
-	aspect="square"
-	icon="User"
-	image={character.portrait?.url}
-	title={character.name}
-	subtitle={character.alias}
+	aspect="video"
+	icon="MapPinArea"
+	image={location.banner?.url}
+	title={location.name}
+	subtitle={location.parent?.name}
+	subtitleClass={location.isWorldMap ? 'text-accent' : ''}
 	onclick={handleClick || null}
-	href={onclick ? null : route('characters.show', {character: character.slug})}
+	href={onclick ? null : route('locations.show', {location: location.slug})}
 	options={options}
 {...restProps} />

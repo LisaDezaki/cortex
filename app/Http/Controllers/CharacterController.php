@@ -41,7 +41,7 @@ class CharacterController extends Controller
 		'portrait'              => ['nullable',  'string'],
 
 		'media'					=> ['sometimes', 'array'],
-		'media.*'				=> ['present'],
+		'media.*'				=> ['present', 'distinct'],
 		'media.*.name'			=> ['string', 'nullable'],
 		'media.*.path'			=> ['string', 'nullable'],
 		'media.*.type'			=> ['string', 'required', 'in:banner,emblem,gallery,map,portrait'],
@@ -193,22 +193,12 @@ class CharacterController extends Controller
 			}
 		}
 
-		// if ($request->has('banner')) {
-		// 	$this->mediaService->attachMedia($character, 'banner', $request->banner);
-		// 	unset($validatedData['banner']);
-		// }
-
-		// if ($request->has('portrait')) {
-		// 	$this->mediaService->attachMedia($character, 'portrait', $request->portrait);
-		// 	unset($validatedData['portrait']);
-		// }
+		if ($request->has('location_id')) {
+			$character->location()->associate($validatedData['location_id']);
+		}
 
 		if ($request->has('custom_fields')) {
 			$this->handleCustomFields($validatedData['custom_fields'], $character);
-		}
-
-		if ($request->has('location_id')) {
-			$character->location()->associate($validatedData['location_id']);
 		}
 
 		unset($validatedData['media']);
@@ -235,19 +225,10 @@ class CharacterController extends Controller
 
 	public function destroy(Request $request, Character $character)
 	{
-		$request->validate([
-			'confirm_name' => 'required|string'
-		]);
-	
-		if ($request->confirm_name !== $character->name) {
-			return Redirect::back()->withErrors([
-				'confirm_name' => 'The entered name does not match the character you\'re trying to delete.'
-			]);
-		}
-		
+		//	TODO:	Make sure logged in user is authorized before proceeding.
+
 		Session::flash('success', "$character->name has been deleted.");
 		$character->delete();
-		 
 		return Redirect::route("characters");
 	}
 

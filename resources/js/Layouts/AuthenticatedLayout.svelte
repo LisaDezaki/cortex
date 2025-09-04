@@ -2,14 +2,14 @@
 	import { page } from '@inertiajs/svelte';
 	import { Pane, Splitpanes } from 'svelte-splitpanes'
 
-	import Navigation from '@/Partials/Navigation.svelte'
 	import { Flex, Stack } from '@/Components/Core'
-    import Article    from '@/Components/UI/Article.svelte'
-    import Container  from '@/Components/UI/Container.svelte'
-	import Toast				from '@/Components/UI/Toast.svelte'
-    import Main       from '@/Components/UI/Main.svelte'
-    import Page       from '@/Components/UI/Page.svelte'
-    import Sidebar    from '@/Components/UI/Sidebar.svelte'
+    import Article    	from '@/Components/UI/Article.svelte'
+    import Container  	from '@/Components/UI/Container.svelte'
+	import Navigation 	from '@/Components/UI/Navigation.svelte'
+    import Main       	from '@/Components/UI/Main.svelte'
+    import Page       	from '@/Components/UI/Page.svelte'
+    import Sidebar    	from '@/Components/UI/Sidebar.svelte'
+	import Toast		from '@/Components/UI/Toast.svelte'
 
 	const activeProject = $page.props.activeProject.data;
 

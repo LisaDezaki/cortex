@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
@@ -22,4 +22,4 @@
 			}
 		})
 	]}
-/>
+/> -->

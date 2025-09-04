@@ -2,15 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CollectionResource;
 use App\Http\Resources\CustomFieldResource;
 use App\Http\Resources\LocationResource;
 use App\Http\Requests\StoreLocationRequest;
+use App\Models\Collection;
 use App\Models\CustomField;
 use App\Models\Location;
 use App\Services\MediaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -23,6 +26,15 @@ class LocationController extends Controller
 		$this->mediaService = $mediaService;
 	}
 
+
+	/**
+	 * VALIDATION
+	 * 
+	 * Validate the incoming requests.
+	 * Validation will fail if the incoming request includes any fields that are not
+	 * included in this list.
+	 */
+
 	protected $validationRules = [
 		'name'			=> ['sometimes', 'string'],
 		'description'	=> ['nullable',  'string'],
@@ -32,8 +44,10 @@ class LocationController extends Controller
 
 		'media'  		=> ['sometimes', 'array'],
 		'media.*'		=> ['present',   'distinct'],
-		'media.*.path'	=> ['required'],
-		'media.*.type'	=> ['required',  'string', 'in:banner,icon,map'],
+		'media.*.name'	=> ['string', 'nullable'],
+		'media.*.path'	=> ['string', 'nullable'],
+		'media.*.type'	=> ['string', 'required', 'in:banner,emblem,gallery,icon,map,portrait'],
+		'media.*.url'	=> ['string', 'nullable'],
 
 		'custom_fields' 	  	=> ['sometimes', 'array'],
         'custom_fields.*'     	=> ['present', 'distinct'],
@@ -41,31 +55,59 @@ class LocationController extends Controller
 		'custom_fields.*.value' => ['nullable', 'string']
 	];
 
+
+	/**
+	 * INDEX
+	 * 
+	 * Show the list of Characters
+	 */
+
     public function index()
     {
-		$active_project = Auth::user()->active_project;
-		if (!$active_project) {
-			return Redirect::route('dashboard');
-		}
-
-		$worldTree = Location::where([
-			'project_id'   => Auth::user()->active_project,
-			'is_world_map' => true
-		])->with(['map', 'descendants.map'])->first();
+		$collections = Collection::where([
+			'project_id' => Auth::user()->active_project,
+			'collection_type' => Location::class
+		])->with(['items'])->get();
 		
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => 'faction'
 		])->with('options')->get();
 
+		$worldTree = Location::where([
+			'project_id'   => Auth::user()->active_project,
+			'is_world_map' => true
+		])->with(['map', 'descendants.map'])->first();
+
         return Inertia::render('Locations/Index', [
-			'customFields' => CustomFieldResource::collection($customFields),
-			'worldTree'  => new LocationResource($worldTree)
+			'collections'	=> CollectionResource::collection($collections),
+			'customFields'	=> CustomFieldResource::collection($customFields),
+			'worldTree'		=> new LocationResource($worldTree)
 		]);
     }
+	public function collections()
+	{
+		$collections = Collection::where([
+			'project_id' => Auth::user()->active_project,
+			'collection_type' => Location::class
+		])->with(['items'])->get();
+
+		return Inertia::render('Locations/Collections', [
+			'collections'	=> CollectionResource::collection($collections),
+		]);
+	}
+
+
+	/**
+	 * CREATE / STORE
+	 * 
+	 * When a LocationCreateRequest is received, it will be handled by the Store
+	 * method in the LocationController. The user will likely only be submitting
+	 * a name to initially create a Location.
+	 */
 
     public function create() {}
-    public function store(StoreLocationRequest $request)
+    public function store(Request $request)
     {
         $validatedData = $request->validate($this->validationRules);
 		$location = Auth::user()->activeProject()->locations()->create($validatedData);
@@ -87,6 +129,13 @@ class LocationController extends Controller
 		]);
     }
 
+
+	/**
+	 * SHOW
+	 * 
+	 * Render the Location entity page for the requested Location.
+	 */
+
 	public function show(Location $location)
 	{
 		$location->load([
@@ -101,31 +150,55 @@ class LocationController extends Controller
 		]);
     }
 
+
+	/**
+	 * EDIT / UPDATE
+	 * 
+	 * When a LocationUpdateRequest is received, it will be handled by the Update
+	 * method in the LocationController. The user may submit any piece of
+	 * Location model to update, and so it must be updated on a per-item basis.
+	 */
+
     public function edit(Location $location) {}
     public function update(Request $request, Location $location)
     {
 		$validatedData = $request->validate($this->validationRules);
 		
 		//	Handle media
-		if ($validatedData['media']) {
-			foreach ($validatedData['media'] as $media) {
-				$this->mediaService->attachMedia($location, $media['type'], $media['path']);
+		if ($request->has('media')) {
+			foreach ($request['media'] as $media) {
+				$this->mediaService->attachMedia($location, $media['type'], $media);
 			}
-			unset($validatedData['media']);
 		}
 
-		// $this->handleCustomFields($validatedData['custom_fields'], $location);
+		if ($request->has('custom_fields')) {
+			// $this->handleCustomFields($validatedData['custom_fields'], $character);
+		}
+
+		unset($validatedData['media']);
 
 		$location->fill($validatedData);
 		$location->update();
-		return Redirect::route("locations.show", [
-			'location' => $location->slug
-		]);
+
+		Session::flash('success', "$location->name was updated.");
+		return Redirect::back();
     }
 
-    public function destroy(Location $location)
+
+	/**
+	 * DELETE
+	 * 
+	 * Remove the entity and all associated data from the database.
+	 * Locations have soft-deletes, meaning they can be restored.
+	 */
+
+    public function destroy(Request $request, Location $location)
     {
-        //
+		//	TODO:	Make sure logged in user is authorized before proceeding.
+
+		Session::flash('success', "$location->name has been deleted.");
+		$location->delete();
+		return Redirect::back();
     }
 
 	public function settings(Request $request): Response

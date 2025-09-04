@@ -31,11 +31,10 @@
 
 	//	Form
 	const addToCollectionForm = useForm({
-		'collectionable_id': null,
-		'collectionable_type': 'characters'
+		items: [{ id: null, type: 'locations' }]
 	})
-	const addToCollection = (char, coll) => {
-		$addToCollectionForm.collectionable_id  = char.id
+	const addToCollection = (loc, coll) => {
+		$addToCollectionForm.items[0]  = { id: loc.id, type: 'locations' }
 		$addToCollectionForm.patch(
 			route('collections.update', { collection: coll.slug })
 		)
@@ -60,65 +59,31 @@
 										renamingCollection	= false
 									}
 
+	
+	
+
 	//	State
-	let activeTab = $state('list')
-	let selectedCollection = $state(null)
-	let columns   = $state(['name', 'faction', 'relationships', 'location'])
-	let filter    = $state('')
-	let layout    = $state('grid')
-	let query     = $state('')
-	let rowSize   = $state(8)
-	let sortBy    = $state('name')
-	let sortOrder = $state('asc')
+	let selectedCollection	= $state(null)
+	let rowSize				= $state(8)
 
 	//	Derived
 	let gridRows = $derived(16-rowSize)
-	// let hasFilter     = $derived(Boolean(filter))
-	// let characterList = $derived(
-	// 	characters
-	// 		.filter(c => {
-	// 			if (query.length > 0 && !c.name.toLowerCase().includes(query.toLowerCase())) { return false }
-	// 			if (filter === 'faction' && c.factions[0]?.name !== filter.value) { return false }
-	// 			if (filter === 'location' && c.location?.name !== filter.value) { return false }
-	// 			if (filter === 'relationship' && !c.relationships?.map(r => r.name).includes(filter.value)) { return false }
-	// 			if (!['Faction', 'Location', 'Relationship'].includes(filter.name) && filter.value && c.customFieldValues?.find(f => f.field?.label === filter.name)?.value !== filter.value) { return false }
-	// 			return true
-	// 		}).sort((a, b) => {
-	// 			if (sortBy === 'name')       { return a.name                 < b.name                 ? -1 : 1 }
-	// 			if (sortBy === 'alias')      { return a.alias                < b.alias                ? -1 : 1 }
-	// 			if (sortBy === 'popularity') { return a.relationships.length > b.relationships.length ? -1 : 1 }
-	// 			if (sortBy === 'faction')    { return a.factions?.[0]?.name  < b.factions?.[0]?.name  ? -1 : 1 }
-	// 			if (sortBy === 'location')   { return a.location?.name       < b.location?.name       ? -1 : 1 }
-	// 			if (sortBy === 'created_at') { return a.meta.createdAt       < b.meta.createdAt       ? -1 : 1 }
-	// 			if (sortBy === 'updated_at') { return a.meta.updatedAt       < b.meta.updatedAt       ? -1 : 1 }
-	// 			if (sortBy === 'random')     { return Math.random()          < 0.5                    ? -1 : 1 }
-	// 		})
-	// )
-	// let characterListSorted = $derived( sortOrder == 'asc' ? characterList : characterList.reverse())
-
-	// function mapToFilterItem(item) {
-	// 	return {
-	// 		label: (item.label || item.name),
-	// 		value: (item.slug || item.value)
-	// 	}
-	// }
 
 </script>
 
 <svelte:head>
-    <title>Faction Collections</title>
+    <title>Location Collections</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 
 	{#snippet header()}
 		<PageHeader
-			back={route('dashboard')}
-			title="Faction Collections"
+			title="Location Collections"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			href: route('factions') },
+				{ icon: "ListBullets",	label: "List",			href: route('locations') },
 				{ icon: "SquaresFour",	label: "Collections", 	active: true },
-				{ icon: "GearFine",		label: "Settings", 		href: route('factions.settings') },
+				{ icon: "GearFine",		label: "Settings", 		href: route('locations.settings') },
 			]}
 		/>
 	{/snippet}
@@ -136,14 +101,14 @@
 							icon="User"
 							href={route('collections.show', {collection: collection.slug})}
 							title={collection.name}
-							subtitle="{collection.items_count} faction{collection.items_count !== 1 ? "s" : ""}"
+							subtitle="{collection.items_count} location{collection.items_count !== 1 ? "s" : ""}"
 							options={[
-								{ label: "View",   icon: "Eye", href: route('collections.show', {collection: collection.slug}) },
-								{ label: "Rename", icon: "Textbox", onclick: () => renameCollection(collection) },
+								{ icon: "Eye", 		 label: "View", 			 href: route('collections.show', {collection: collection.slug}) },
+								{ icon: "Textbox", 	 label: "Rename", 			 onclick: () => renameCollection(collection) },
 								{ separator: true },
-								{ label: "Add Tags", icon: "TagSimple", onclick: () => applyTags(collection) },
+								{ icon: "TagSimple", label: "Add Tags", 		 onclick: () => applyTags(collection) },
 								{ separator: true },
-								{ label: "Delete Collection", icon: "Trash",		onclick: () => deleteCollection(collection), theme: "danger" }
+								{ icon: "Trash", 	 label: "Delete Collection", onclick: () => deleteCollection(collection), theme: "danger" }
 							]}
 						/>
 					{/each}
@@ -153,11 +118,11 @@
 						onclick={createCollection}
 					/>
 				</Grid>
-				
+
 			{:else}
 				<Stack align="center" class="w-full">
-					<p class="mt-12 font-style-placeholder">There are no faction collections for this project yet.</p>
-					<button class="mt-3 px-3 py-1.5 rounded-md text-accent hover:bg-accent-softest hover:underline" onclick={createCollection}>Create one?</button>
+					<p class="mt-12 font-style-placeholder">There are no location collections for this project yet.</p>
+					<button class="mt-3 px-2 py-1 rounded text-accent hover:bg-accent-softest hover:underline" onclick={createCollection}>Create one?</button>
 				</Stack>
 			{/if}
 		</Section>
@@ -169,12 +134,12 @@
 <!-- <Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
 	onclose={closeModal}>
 	<ApplyTagsForm type="collections" entity={selectedCollection || null}
-		onSuccess={closeModal} reloadPageProps={['tags']} />
+		onSuccess={closeModal} />
 </Modal> -->
 
 <Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
 	onclose={closeModal}>
-	<CreateCollectionForm type="factions"
+	<CreateCollectionForm type="locations" entity={selectedCollection || null}
 		onSuccess={closeModal} reloadPageProps={['collections']} />
 </Modal>
 

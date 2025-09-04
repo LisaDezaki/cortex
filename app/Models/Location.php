@@ -131,6 +131,10 @@ class Location extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
 
+	public function image()
+	{
+		return $this->banner();
+	}
 	public function media(): MorphMany
 	{
 		return $this->morphMany(Media::class, 'mediable');

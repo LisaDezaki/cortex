@@ -4,13 +4,9 @@
 
 	let {
 		characters,
-		children,
 		class: className,
 		cols,
 		gridItem,
-		// itemOptions,
-		// showControls = false,
-		// showItemControls = false,
 		...restProps
 	} = $props()
 
@@ -21,10 +17,10 @@
 
 
 <Grid
+	class={className}
 	cols={cols}
 	gap={2}
 {...restProps}>
-
 	{#if characters}
 		{#each characters as character}
 			{#if gridItem}
@@ -34,5 +30,4 @@
 			{/if}
 		{/each}
 	{/if}
-	
 </Grid>

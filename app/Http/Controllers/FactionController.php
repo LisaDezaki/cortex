@@ -184,7 +184,11 @@ class FactionController extends Controller
 
     public function destroy(Faction $faction)
     {
-        //
+		//	TODO:	Make sure logged in user is authorized before proceeding.
+		
+		Session::flash('success', "$faction->name has been deleted.");
+        $faction->delete();
+		return Redirect::route("factions");
     }
 
 	public function settings(Request $request): Response

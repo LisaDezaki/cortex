@@ -12,7 +12,7 @@
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
 
-	const activeProject = $page.props.activeProject.data
+	// const activeProject = $page.props.activeProject.data
 	const settings = $page.props.settings?.characters?.data
 
 </script>
@@ -66,5 +66,4 @@
 			</Container>
 		</Flex>
 	{/snippet}
-
 </AuthenticatedLayout>

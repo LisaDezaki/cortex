@@ -30,26 +30,15 @@
 	const locations     = activeProject?.locations
 
 	//	Form
-	// const addToCollectionForm = useForm({
-	// 	'collectionable_id': null,
-	// 	'collectionable_type': 'characters'
-	// })
-	// const addToCollection = (char, coll) => {
-	// 	$addToCollectionForm.collectionable_id  = char.id
-	// 	$addToCollectionForm.patch(
-	// 		route('collections.update', { collection: coll.slug }),
-	// 		{
-	// 			onSuccess: (res) => {
-	// 				router.visit(route('characters'), {
-	// 					only: ['collections'],
-	// 				})
-	// 			},
-	// 			onFinish: (res) => {
-	// 				console.log(res)
-	// 			}
-	// 		}
-	// 	)
-	// }
+	const addToCollectionForm = useForm({
+		items: [{ id: null, type: 'characters' }]
+	})
+	const addToCollection = (char, coll) => {
+		$addToCollectionForm.items[0]  = { id: char.id, type: 'characters' }
+		$addToCollectionForm.patch(
+			route('collections.update', { collection: coll.slug })
+		)
+	}
 
 	//	Modals
 	let addingToCollection	= $state(false)
@@ -90,7 +79,6 @@
 
 	{#snippet header()}
 		<PageHeader
-			back={route('dashboard')}
 			title="Character Collections"
 			tabs={[
 				{ icon: "ListBullets",	label: "List",			href: route('characters') },
@@ -115,12 +103,12 @@
 							title={collection.name}
 							subtitle="{collection.items_count} character{collection.items_count !== 1 ? "s" : ""}"
 							options={[
-								{ label: "View",   icon: "Eye", href: route('collections.show', {collection: collection.slug}) },
-								{ label: "Rename", icon: "Textbox", onclick: () => renameCollection(collection) },
+								{ icon: "Eye", 		 label: "View", 			 href: route('collections.show', {collection: collection.slug}) },
+								{ icon: "Textbox", 	 label: "Rename", 			 onclick: () => renameCollection(collection) },
 								{ separator: true },
-								{ label: "Add Tags", icon: "TagSimple", onclick: () => applyTags(collection) },
+								{ icon: "TagSimple", label: "Add Tags", 		 onclick: () => applyTags(collection) },
 								{ separator: true },
-								{ label: "Delete Collection", icon: "Trash",		onclick: () => deleteCollection(collection), theme: "danger" }
+								{ icon: "Trash", 	 label: "Delete Collection", onclick: () => deleteCollection(collection), theme: "danger" }
 							]}
 						/>
 					{/each}
@@ -143,38 +131,26 @@
 
 </AuthenticatedLayout>
 
-<Modal
-	title="Apply Tags"
-	maxWidth="lg"
-	show={applyingTags}
-	onclose={closeModal}
->
-	<ApplyTagsForm type="collections" entity={selectedCollection || null} oncancel={closeModal} />
+<!-- <Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
+	onclose={closeModal}>
+	<ApplyTagsForm type="collections" entity={selectedCollection || null}
+		onSuccess={closeModal} />
+</Modal> -->
+
+<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
+	onclose={closeModal}>
+	<CreateCollectionForm type="characters" entity={selectedCollection || null}
+		onSuccess={closeModal} reloadPageProps={['collections']} />
 </Modal>
 
-<Modal
-	title="Create Collection"
-	maxWidth="lg"
-	show={creatingCollection}
-	onclose={closeModal}
->
-	<CreateCollectionForm type="characters" entity={selectedCollection || null} oncancel={closeModal} />
+<Modal title="Delete {selectedCollection?.name}?" show={deletingCollection} maxWidth="lg"
+	onclose={closeModal}>
+	<DeleteCollectionForm collection={selectedCollection || null}
+		onSuccess={closeModal} reloadPageProps={['collections']} />
 </Modal>
 
-<Modal
-	title="Delete {selectedCollection?.name}?"
-	maxWidth="lg"
-	show={deletingCollection}
-	onclose={closeModal}
->
-	<DeleteCollectionForm collection={selectedCollection || null} onFinish={closeModal} />
-</Modal>
-
-<Modal
-	title="Rename {selectedCollection?.name}?"
-	maxWidth="lg"
-	show={renamingCollection}
-	onclose={closeModal}
->
-	<RenameCollectionForm collection={selectedCollection || null} oncancel={closeModal} />
+<Modal title="Rename {selectedCollection?.name}?" show={renamingCollection} maxWidth="lg"
+	onclose={closeModal}>
+	<RenameCollectionForm collection={selectedCollection || null}
+		onSuccess={closeModal} reloadPageProps={['collections']} />
 </Modal>
