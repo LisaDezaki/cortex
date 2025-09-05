@@ -26,6 +26,7 @@
 	const characters    	= activeProject?.characters
 
 	//	State
+	let filteredCharacters  = $state(characters)
 	let characterList 		= $state(characters)
 	let selectedCharacter 	= $state(null)
 	let layout    			= $state('grid')
@@ -65,10 +66,10 @@
 		)
 	}
 
-	function updateControls(filteredList, controls) {
-		characterList = filteredList
-		layout = controls.layout
-	}
+	// function updateControls(filteredList, controls) {
+	// 	characterList = filteredList
+	// 	layout = controls.layout
+	// }
 
 </script>
 
@@ -100,8 +101,8 @@
 
 		<CharacterControlBar
 			data={characters}
+			bind:filteredData={filteredCharacters}
 			project={activeProject}
-			onUpdate={updateControls}
 		/>
 
 		<Section gap={6} class="px-12 py-6">
@@ -112,7 +113,7 @@
 
 				{#if layout === 'grid'}
 					<CharacterGrid
-						characters={characterList}
+						characters={filteredCharacters}
 						cols={gridCols}
 					>
 						{#snippet gridItem(character)}

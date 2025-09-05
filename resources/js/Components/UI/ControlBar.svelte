@@ -5,11 +5,13 @@
 	import Input	from '@/Components/UI/Input.svelte'
 
 	let {
-		data 	= $bindable(),
-		query 	= $bindable(),
-		filter 	= $bindable(),
-		sort 	= $bindable(),
-		layout 	= $bindable(),
+		data,
+		filteredData = $bindable(),
+		query 	= $bindable(''),
+		filter 	= $bindable(''),
+		sort 	= $bindable('name'),
+		sortDir = $bindable('asc'),
+		layout 	= $bindable('grid'),
 		size 	= $bindable(),
 
 		searchable 	= true,
@@ -33,20 +35,53 @@
 		...restProps
 	} = $props()
 
-	function applyQuery(e) {
-		console.log('query', e.target.value)
-		onUpdate(data.filter(x => x.name.toLowerCase().includes(e.target.value)))
-	}
-	function applyFilter(f) {
-		console.log('filter', f)
-	}
-	function applySort(s) {
-		console.log('sort', s)
-		let sortFunction = sortOptions?.find(opt => opt.value === s)?.sortFunction
-		onUpdate(data.sort(sortFunction))
-	}
-	function applyLayout(l) {
-		console.log('layout', l)
+	// function applyQuery(e) {
+	// 	console.log('query', e.target.value)
+	// 	onUpdate(data.filter(x => x.name.toLowerCase().includes(e.target.value)))
+	// }
+	// function applyFilter(f) {
+	// 	console.log('filter', f)
+	// }
+	// function applySort(s) {
+	// 	console.log('sort', s)
+	// 	let sortFunction = sortOptions?.find(opt => opt.value === s)?.sortFunction
+	// 	onUpdate(data.sort(sortFunction))
+	// }
+	// function applyLayout(l) {
+	// 	console.log('layout', l)
+	// }
+
+	$effect(() => {
+		filteredData = processData(data, query, filter, sort, sortDir)
+	})
+
+	function processData(data, query, filter, sort, sortDir) {
+
+		//	TODO:	Test and optimize the filter logic here
+		//			A smart dot notation convention (e.g, "factions.*.cold-bloods")
+		//			should make most filter types work without needing custom logic
+		//			Sort options should be similar (e.g, "name.asc") with both as
+		//			options in the dropdown (i.e, both "alias.asc" and "alias.desc")
+
+		// 1. Filter by search term
+		let filtered = data.filter(item => 
+			Object.values(item).some(value => 
+				String(value).toLowerCase().includes(query.toLowerCase())
+			)
+		);
+		
+		// 2. Filter by department
+		if (filter !== 'all') {
+			let fil = filter.split('.')
+			filtered = filtered.filter(item => item[fil[0]] === fil[1])
+		}
+		
+		// 3. Sort data
+		return [...filtered].sort((a, b) => {
+			if (a[sort] < b[sort]) return sortDir === 'asc' ? -1 : 1;
+			if (a[sort] > b[sort]) return sortDir === 'asc' ? 1 : -1;
+			return 0;
+		});
 	}
 
 </script>
@@ -65,7 +100,6 @@
 			icon="MagnifyingGlass"
 			name="search"
 			placeholder="Search..."
-			oninput={applyQuery}
 		/>
 	{/if}
 	
@@ -78,7 +112,6 @@
 			contentClass="w-48"
 			icon="FunnelSimple"
 			options={filterOptions}
-			onValueChange={applyFilter}
 		/>
 	{/if}
 
@@ -92,7 +125,6 @@
 			icon="SortAscending"
 			placeholder="Sort by"
 			options={sortOptions}
-			onValueChange={applySort}
 		/>
 	{/if}
 
@@ -119,7 +151,6 @@
 		type="select"
 		class="w-36"
 		options={layoutOptions}
-		onValueChange={applyLayout}
 	/>
 
 	

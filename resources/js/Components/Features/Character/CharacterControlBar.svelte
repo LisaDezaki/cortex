@@ -1,10 +1,12 @@
 <script>
 	//	Imports
+	import { Flex, Inline } from '@/Components/Core'
 	import ControlBar from '@/Components/UI/ControlBar.svelte'
 
 	//	Props
 	let {
-		data = $bindable(),
+		data,
+		filteredData = $bindable(data),
 		project,
 		onUpdate,
 		...restProps
@@ -14,26 +16,21 @@
 	let query	= $state('')
 	let filter	= $state('')
 	let sort	= $state('name')
+	let sortDir = $state('asc')
 	let layout	= $state('grid')
 	let size	= $state(8)
 	const min	= $state(4)
 	const max	= $state(12)
 
-	let searchFunction 	= $state((ch) => query.length === 0 || ch.name.toLowerCase().includes(query.toLowerCase()))
-	let filterFunction 	= $state((ch) => ch)
-	let sortFunction 	= $derived( sortOptions.find((opt) => opt.value === sort)?.sortFunction )
-
-	let filteredCharacters = $derived(data?.filter(filterFunction).filter(searchFunction).sort(sortFunction))
-
 	//	Submenu Options
 	let factionOptions = project.factions?.map(f => {
-		return { label: f.name, value: `faction.${f.slug}`, image: f.image?.url, filterFunction: (ch) => { return ch.factions[0].slug == f.slug } }
+		return { label: f.name, value: `factions.*.${f.slug}`, image: f.image?.url, filterFunction: (ch) => { return ch.factions[0].slug == f.slug } }
 	})
 	let locationOptions = project.locations?.map(l => {
 		return { label: l.name, value: `location.${l.slug}`, image: l.image?.url, filterFunction: (ch) => { return ch.location.slug == l.slug } }
 	})
 	let relationshipOptions = project.characters?.map(c => {
-		return { label: c.name, value: `relationship.${c.slug}`, image: c.image?.url, filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
+		return { label: c.name, value: `relationship.*.${c.slug}`, image: c.image?.url, filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
 	})
 	let customFieldOptions = (field) => {
 		return field.options?.map(opt => {
@@ -41,10 +38,14 @@
 		})
 	}
 
+	//	TODO:	Hopefully the filterFunction and sortFunction properties will
+	// 			not be necessary after refactoring the ControlBar component,
+	//			but specific examples may remain like "random"
+
 	//	Menu Options
 	const filterOptions = $state([
-		{ label: 'All Characters', 	value: '',			filterFunction: (ch) => { return ch } },
-		{ label: 'Nameless',   		value: 'noname',	filterFunction: (ch) => { return ch.name === ''} },
+		{ label: 'All Characters', 	value: '',		filterFunction: (ch) => { return ch } },
+		{ label: 'Nameless',   		value: 'name',	filterFunction: (ch) => { return ch.name === ''} },
 		{ separator: true },
 		{ label: 'In Faction...',			children: factionOptions },
 		{ label: 'At Location...',			children: locationOptions },
@@ -55,35 +56,39 @@
 		})
 	])
 	const sortOptions = $state([
-		{ value: 'name',       label: "By name",		sortFunction: (a,b) => { return a.name 					< b.name					? -1 : 1 } },
-		{ value: 'alias',      label: "By alias",		sortFunction: (a,b) => { return a.alias             	< b.alias					? -1 : 1 } },
-		{ value: 'popularity', label: "By popularity",	sortFunction: (a,b) => { return a.relationships.length 	> b.relationships.length 	? -1 : 1 } },
-		{ value: 'location',   label: "By location",	sortFunction: (a,b) => { return a.location?.name       	< b.location?.name 			? -1 : 1 } },
-		{ value: 'faction',    label: "By faction",		sortFunction: (a,b) => { return a.factions?.[0]?.name  	< b.factions?.[0]?.name 	? -1 : 1 } },
+		{ label: "By name",			value: 'name',       sortFunction: (a,b) => { return a.name 				< b.name					? -1 : 1 } },
+		{ label: "By alias",		value: 'alias',      sortFunction: (a,b) => { return a.alias             	< b.alias					? -1 : 1 } },
+		{ label: "By popularity",	value: 'popularity', sortFunction: (a,b) => { return a.relationships.length > b.relationships.length 	? -1 : 1 } },
+		{ label: "By location",		value: 'location',   sortFunction: (a,b) => { return a.location?.name       < b.location?.name 			? -1 : 1 } },
+		{ label: "By faction",		value: 'faction',    sortFunction: (a,b) => { return a.factions?.[0]?.name  < b.factions?.[0]?.name 	? -1 : 1 } },
 		{ separator: true },
-		{ value: 'created_at', label: "Date Created",	sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
-		{ value: 'updated_at', label: "Date Updated",	sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
-		{ value: 'random',     label: "Randomly",		sortFunction: (a,b) => { return Math.random()          	< 0.5 						? -1 : 1 } },
+		{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
+		{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
+		{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } },
 	])
 	const layoutOptions = $state([
-		{ icon: "Graph",    label: "As Graph",  value: "graph" },
-		{ icon: "GridFour", label: "As Grid",   value: "grid"  },
-		{ icon: "Table",    label: "As Table",  value: "table" }
+		{ label: "As Graph",  value: "graph",	icon: "Graph"	 },
+		{ label: "As Grid",   value: "grid",	icon: "GridFour" },
+		{ label: "As Table",  value: "table",	icon: "Table"	 }
 	])
-
-	const handleUpdate = (query,filter,sort,layout) => {
-		onUpdate(filteredCharacters, {query,filter,sort,layout})
-	}
 
 </script>
 
 <ControlBar
-	bind:data	onUpdate={handleUpdate}
+	{data} bind:filteredData
 	bind:query	
 	bind:filter	filterOptions={filterOptions}
-	bind:sort	sortOptions={sortOptions}
+	bind:sort bind:sortDir	sortOptions={sortOptions}
 	bind:layout	layoutOptions={layoutOptions}
 	bind:size	{min} {max}
 {...restProps} />
 
-<pre>{JSON.stringify(sortOptions.find((opt) => opt.value === sort),null,3)}</pre>
+<Flex align="center" gap={3} class="px-12 pt-6">
+	<span class="font-bold text-lg">Controls:</span>
+	<Inline justify="center" class="bg-neutral-softer px-3 py-1.5 rounded-full w-32">Query: "{query}"</Inline>
+	<Inline justify="center" class="bg-neutral-softer px-3 py-1.5 rounded-full w-32">Filter: "{filter}"</Inline>
+	<Inline justify="center" class="bg-neutral-softer px-3 py-1.5 rounded-full w-32">Sort: "{sort}"</Inline>
+	<Inline justify="center" class="bg-neutral-softer px-3 py-1.5 rounded-full w-32">Layout: "{layout}"</Inline>
+</Flex>
+
+<!-- <pre>{JSON.stringify(filteredData.map(ch => ch.name))}</pre> -->
