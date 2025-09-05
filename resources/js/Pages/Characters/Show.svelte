@@ -31,17 +31,6 @@
 	let deletingCharacter = $state(false)
 	let editMode = $state(false)
 
-	let mediaUploadProps  = $derived({
-		endpoint: route('characters.update', { character: character.slug }),
-		method: 'patch',
-		onSuccess: (res) => {
-			console.log('success', res)
-			router.visit( $page.url, {
-				only: ['character.media'],
-			})
-		}
-	})
-
 	let media_banner	= $derived(character.media?.filter(m => m.type === 'banner')?.[0])
 	let media_portrait	= $derived(character.media?.filter(m => m.type === 'portrait')?.[0])
 	let media_gallery	= $derived(character.media)
@@ -103,11 +92,13 @@
 					<ArticleBanner>
 
 						<Media replaceable
-							aspect="aspect-[7/3]"
+							aspect="aspect-[3/1]"
 							class="absolute inset-0 rounded-lg overflow-hidden"
 							media={media_banner}
 							type="banner"
-							uploadProps={mediaUploadProps}
+							endpoint={route('characters.update', { character: character.slug })}
+							method={'patch'}
+							reloadPageProps={['character.media']}
 						/>
 
 						<Media replaceable
@@ -115,7 +106,9 @@
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
 							media={media_portrait}
 							type="portrait"
-							uploadProps={mediaUploadProps}
+							endpoint={route('characters.update', { character: character.slug })}
+							method={'patch'}
+							reloadPageProps={['character.media']}
 						/>
 						
 						<Heading is="h1" as="h3"

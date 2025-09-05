@@ -9,7 +9,8 @@
 
 	let {
 		class: className,
-        oncancel = () => {}
+        oncancel = () => {},
+		...restProps
     } = $props()
 
 	const form = useForm({

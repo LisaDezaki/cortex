@@ -25,21 +25,22 @@ class ProjectResource extends JsonResource
 			'type'        => $this->type,
 			'description' => $this->description,
 
-			'banner' => new MediaResource($this->whenLoaded('banner')),
+			'banner' 		=> new MediaResource($this->whenLoaded('banner')),
+			'media' 		=> MediaResource::collection($this->whenLoaded('media')),
 
-			'characters'  => CharacterResource::collection($this->whenLoaded('characters', function() {
+			'characters'	=> CharacterResource::collection($this->whenLoaded('characters', function() {
 				return $this->characters->sortBy('name');
 			})),
 
-			'factions'    => FactionResource::collection(  $this->whenLoaded('factions', function() {
+			'factions'		=> FactionResource::collection(  $this->whenLoaded('factions', function() {
 				return $this->factions->sortBy('name');
 			})),
 
-			'locations'   => LocationResource::collection( $this->whenLoaded('locations', function() {
+			'locations'		=> LocationResource::collection( $this->whenLoaded('locations', function() {
 				return $this->locations->sortBy('name');
 			})),
 
-			'customFields' => CustomFieldResource::collection($this->whenLoaded('customFields')),
+			'customFields'	=> CustomFieldResource::collection($this->whenLoaded('customFields')),
 			
 			'meta' => [
 				'created_at' => $this->created_at,

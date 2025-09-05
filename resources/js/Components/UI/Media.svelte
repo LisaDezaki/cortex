@@ -38,7 +38,7 @@
 
 
 
-<Flex align="center" justify="center" class="media {className}" {...restProps}>
+<Flex align="center" justify="center" class="media {aspect} {className}">
 	{#if media}
 		<img class="min-h-full min-w-full object-cover" src={media.url} alt={media.name} />
 	{:else}
@@ -66,11 +66,8 @@
 			{aspect}
 			{media}
 			{type}
-			onFinish={(res) => {
-				closeModal()
-				uploadProps.onFinish?.(res)
-			}}
-			{...uploadProps}
+			onFinish={closeModal}
+			{...restProps}
 		/>
 	</Modal>
 

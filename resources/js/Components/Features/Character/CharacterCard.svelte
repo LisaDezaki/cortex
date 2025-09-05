@@ -6,23 +6,11 @@
     let {
 		class: className,
 		character,
-		href,
+		href = route('characters.show', {character: character.slug}),
 		onclick,
 		options,
         ...restProps
     } = $props()
-
-	const handleClick = (e) => {
-
-		//	TODO: Make sure left click is normal
-		//	right click should open context menu
-		console.log(e)
-
-		if (onclick) {
-			e.preventDefault()
-			onclick(e, character)
-		}
-	}
 </script>
 
 <Card
@@ -31,7 +19,6 @@
 	image={character.portrait?.url}
 	title={character.name}
 	subtitle={character.alias}
-	onclick={handleClick || null}
-	href={onclick ? null : route('characters.show', {character: character.slug})}
+	href={href}
 	options={options}
 {...restProps} />

@@ -6,6 +6,7 @@
 		href,
 		image,
 		icon,
+		options,
 		title,
 		subtitle,
         ...restProps
@@ -18,4 +19,5 @@
 	title={title}
 	subtitle={subtitle}
 	href={href}
+	options={options}
 {...restProps} />

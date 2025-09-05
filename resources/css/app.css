@@ -310,6 +310,22 @@
 	.bg-danger-softer 		{ background-color: var(--bg-danger-softer); }
 	.bg-danger-softest 		{ background-color: var(--bg-danger-softest); }
 	.bg-danger-gradient		{ background:		var(--bg-danger-gradient); }
+	.bg-stripes				{ background: repeating-linear-gradient( -45deg,
+								var(--bg-neutral),  var(--bg-neutral) 8px,
+								transparent 8px, transparent 16px
+							); }
+	.bg-stripes-soft		{ background: repeating-linear-gradient( -45deg,
+								var(--bg-neutral-soft),  var(--bg-neutral-soft) 8px,
+								transparent 8px, transparent 16px
+							); }
+	.bg-stripes-softer		{ background: repeating-linear-gradient( -45deg,
+								var(--bg-neutral-softer),  var(--bg-neutral-softer) 8px,
+								transparent 8px, transparent 16px
+							); }
+	.bg-stripes-softest		{ background: repeating-linear-gradient( -45deg,
+								var(--bg-neutral-softest),  var(--bg-neutral-softest) 8px,
+								transparent 8px, transparent 16px
+							); }
 
 	.border-accent 			{ border-color: var(--border-accent); }
 	.border-accent-strong 	{ border-color: var(--border-accent-strong); }
@@ -346,9 +362,9 @@
 	.font-style-h1 			{ @apply font-semibold text-8xl tracking-tighter; }
 	.font-style-h2 			{ @apply font-semibold text-7xl tracking-tighter; }
 	.font-style-h3 			{ @apply font-semibold text-5xl tracking-tighter; }
-	.font-style-h4 			{ @apply font-semibold text-3xl tracking-tighter; }
-	.font-style-h5 			{ @apply font-semibold text-2xl tracking-tighter; }
-	.font-style-h6 			{ @apply font-semibold text-xl  tracking-tighter; }
+	.font-style-h4 			{ @apply font-bold text-3xl tracking-tighter; }
+	.font-style-h5 			{ @apply font-bold text-2xl tracking-tighter; }
+	.font-style-h6 			{ @apply font-bold text-xl  tracking-tighter; }
 	
 	.font-style-large		{ @apply text-lg; }
 	.font-style-regular		{ @apply text-base; }

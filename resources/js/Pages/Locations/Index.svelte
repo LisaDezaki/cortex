@@ -12,6 +12,7 @@
 
 	import { Flex, Inline, Stack } from '@/Components/Core'
 	import Dropdown   from '@/Components/UI/Dropdown.svelte'
+	import Empty   from '@/Components/UI/Empty.svelte'
 	import Icon       from '@/Components/UI/Icon.svelte'
 	import Input      from '@/Components/UI/Input.svelte'
 	import Modal      from '@/Components/UI/Modal.svelte'
@@ -284,7 +285,14 @@
 
 				{/if}
 			{:else}
-				<p class="mt-12 font-style-placeholder">There are no locations for this project yet. <Link href={route('locations.create')}>Create one?</Link></p>
+
+				<Empty
+					icon="MapPin"
+					message="There are no locations for this project yet."
+					buttonLabel="Create one?"
+					buttonClick={createLocation}
+				/>
+
 			{/if}
 		</Section>
 	{/snippet}

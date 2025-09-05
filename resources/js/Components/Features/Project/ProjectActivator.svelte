@@ -26,7 +26,7 @@
 		$form.post(
 			formRoute,
 			{ onSuccess: (res) => {
-				router.visit(route('dashboard'), {
+				router.visit($page.url, {
 					only: ['activeProject'],
 				})
 			}}

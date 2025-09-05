@@ -4,19 +4,20 @@
 	import { route } from 'momentum-trail'
 	
     import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
-	import ProjectForm         	from '@/Forms/Project/Project.svelte'
 	import MediaUploadForm 		from '@/Forms/Media/Upload.svelte'
+	import CreateProjectForm   	from '@/Forms/Project/Create.svelte'
 	import DeleteProjectForm   	from '@/Forms/Project/Delete.svelte'
+	import RenameProjectForm    from '@/Forms/Project/Rename.svelte'
 
-	import { Flex, Grid } from '@/Components/Core'
+	import { Flex, Grid, Stack } from '@/Components/Core'
 
 	import Card 	  from '@/Components/UI/Card.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
 	import Icon       from '@/Components/UI/Icon.svelte'
+	import Media  	  from '@/Components/UI/Media.svelte'
 	import Modal      from '@/Components/UI/Modal.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
-	import SetMedia   from '@/Components/UI/SetMedia.svelte'
 
 	import ProjectCard from '@/Components/Features/Project/ProjectCard.svelte'
 
@@ -28,38 +29,33 @@
         project: null,
     })
 
+	let media_banner	= $derived(activeProject.media?.filter(m => m.type === 'banner')?.[0])
+	// let media_gallery	= $derived(activeProject.media)
+
+	let selectedProject = $state(null)
 	let creatingProject = $state(false)
-	let updatingProject = $state(false)
+	let renamingProject = $state(false)
 	let deletingProject = $state(false)
 	let settingBanner   = $state(false)
 
-	function createProject() {
-        creatingProject = true
-    }
-	function setBanner() {
-		settingBanner   = true
-	}
-	function updateProject() {
-		updatingProject = true
-    }
-	function deleteProject() {
-		deletingProject = true
-    }
-	function closeModal() {
-		creatingProject = false
-		settingBanner   = false
-        updatingProject = false
-		deletingProject = false
-    }
+	function createProject(e, project) 	{	creatingProject = true; selectedProject = project }
+	function renameProject(e, project)	{	renamingProject = true; selectedProject = project }
+	function deleteProject(e, project)	{	deletingProject = true; selectedProject = project }
+	function closeModal() 				{	creatingProject = false
+											settingBanner   = false
+											renamingProject = false
+											deletingProject = false
+											selectedProject = null
+										}
 
-	function activateProject(e, id) {
+	function activateProject(e, proj) {
 		e.preventDefault();
-		$form.project = id
+		$form.project = proj.id
 		$form.post(
-			route('projects.activate', { project: id }),
+			route('projects.activate', { project: proj.id }),
 			{
 				onSuccess: (res) => {
-					router.visit(route('dashboard'), {
+					router.visit($page.url, {
 						only: ['activeProject'],
 					})
 				}
@@ -73,7 +69,7 @@
 			route('projects.deactivate'),
 			{
 				onSuccess: (res) => {
-					router.visit(route('dashboard'), {
+					router.visit($page.url, {
 						only: ['activeProject'],
 					})
 				}
@@ -91,12 +87,14 @@
 
 	{#snippet header()}
 		<PageHeader
-			breadcrumbs={[]}
 			title={activeProject ? "Dashboard" : "Select a Project"}
+			tabs={ activeProject ? [
+				{ icon: 'Speedometer',	label: 'Dashboard', active: true },
+				{ icon: 'GearFine',		label: 'Settings', 	href: route('projects.settings') }
+			] : undefined }
 			actions={[
-				{ icon: "GlobeStand", theme: "neutral", onclick: deactivateProject },
-				// { icon: "Pen",        theme: "neutral", onclick: updateProject },
-				{ icon: "GearFine",   theme: "neutral", href: route('projects.settings') }
+				{ icon: "X", 	label: "Deactivate",	theme: "danger", onclick: deactivateProject, if: !!activeProject },
+				{ icon: "Plus", label: "Create",		theme: "accent", onclick: createProject,	 if: !activeProject }
 			]}
 		/>
 	{/snippet}
@@ -106,75 +104,67 @@
 		{#if activeProject}
 
 			<Section>
-				<!-- <button class="flex items-center justify-center h-[50vh] min-h-96 overflow-hidden w-full" type="button" onclick={setBanner}>
-					<img src={activeProject.banner?.url} alt="Project Banner" />
-				</button> -->
-
-
-				<SetMedia
-					class="relative h-[50vh] min-h-96 overflow-hidden w-full"
+				<Media replaceable
+					class="relative bg-neutral-softest h-[50vh] min-h-96 overflow-hidden w-full"
 					endpoint={route('projects.update', { project: activeProject.id })}
 					method="patch"
-					media={activeProject.banner}
-					mediaType="project_banner"
-					requestKey="banner"
-					onSuccess={(res) => {
-						router.visit(route('dashboard'), {
-							only: ['activeProject.banner'],
-						})
-					}}
-					onFinish={(req) => {
-						console.log('Finish:', req)
-					}}
+					media={media_banner}
+					type="banner"
+					reloadPageProps={['activeProject.banner', 'activeProject.media']}
 				/>
 			</Section>
 
 			<Section size="7xl" class="relative pt-12">
-				<Heading is="h1" as="h2" heading={activeProject.name} />
-				<p class="max-w-[65ch] my-6">{activeProject.description}</p>
-				<Flex justify="center" gap={3} class="my-12 w-full">
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('characters')}>
-						<span class="font-style-h3 opacity-60">{activeProject.characters?.length || 0}</span>
-						<span class="font-style-large">Characters</span>
-					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-						<span class="font-style-h3 opacity-60">{activeProject.dialogue?.length || 0}</span>
-						<span class="font-style-large">Dialogues</span>
-					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-						<span class="font-style-h3 opacity-60">{activeProject.events?.length || 0}</span>
-						<span class="font-style-large">Events</span>
-					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('factions')}>
-						<span class="font-style-h3 opacity-60">{activeProject.factions?.length || 0}</span>
-						<span class="font-style-large">Factions</span>
-					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-						<span class="font-style-h3 opacity-60">{activeProject.items?.length || 0}</span>
-						<span class="font-style-large">Items</span>
-					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('locations')}>
-						<span class="font-style-h3 opacity-60">{activeProject.locations?.length || 0}</span>
-						<span class="font-style-large">Locations</span>
-					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-						<span class="font-style-h3 opacity-60">{activeProject.mechanics?.length || 0}</span>
-						<span class="font-style-large">Mechanics</span>
-					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-						<span class="font-style-h3 opacity-60">{activeProject.quests?.length || 0}</span>
-						<span class="font-style-large">Quests</span>
-					</Link>
-					<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-						<span class="font-style-h3 opacity-60">{activeProject.wildlife?.length || 0}</span>
-						<span class="font-style-large">Wildlife</span>
-					</Link>
-				</Flex>
+				<Grid cols={2} gap={12}>
+					<Stack>
+						<Heading is="h1" as="h2" heading={activeProject.name} />
+						<p class="font-style-large italic max-w-[65ch] text-neutral-soft">{activeProject.type}</p>
+						<p class="max-w-[65ch] mt-6">{activeProject.description}</p>
+					</Stack>
+					<Grid cols={4} justify="center" gap={3} class="w-full">
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('characters')}>
+							<span class="font-style-h3 opacity-60">{activeProject.characters?.length || 0}</span>
+							<span class="font-style-large">Characters</span>
+						</Link>
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
+							<span class="font-style-h3 opacity-60">{activeProject.dialogue?.length || 0}</span>
+							<span class="font-style-large">Dialogues</span>
+						</Link>
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
+							<span class="font-style-h3 opacity-60">{activeProject.events?.length || 0}</span>
+							<span class="font-style-large">Events</span>
+						</Link>
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('factions')}>
+							<span class="font-style-h3 opacity-60">{activeProject.factions?.length || 0}</span>
+							<span class="font-style-large">Factions</span>
+						</Link>
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
+							<span class="font-style-h3 opacity-60">{activeProject.items?.length || 0}</span>
+							<span class="font-style-large">Items</span>
+						</Link>
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('locations')}>
+							<span class="font-style-h3 opacity-60">{activeProject.locations?.length || 0}</span>
+							<span class="font-style-large">Locations</span>
+						</Link>
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
+							<span class="font-style-h3 opacity-60">{activeProject.mechanics?.length || 0}</span>
+							<span class="font-style-large">Mechanics</span>
+						</Link>
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
+							<span class="font-style-h3 opacity-60">{activeProject.quests?.length || 0}</span>
+							<span class="font-style-large">Quests</span>
+						</Link>
+						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
+							<span class="font-style-h3 opacity-60">{activeProject.wildlife?.length || 0}</span>
+							<span class="font-style-large">Wildlife</span>
+						</Link>
+					</Grid>
+				</Grid>
 			</Section>
 
 			{#if activeProject.characters?.length > 0}
 				<Section size="7xl" class="py-6">
-					<Heading is="h3" as="h5" heading="Recent Characters" />
+					<Heading is="h3" as="h5" class="mb-3" heading="Recent Characters" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each activeProject.characters as character}
 							<Card
@@ -193,7 +183,7 @@
 
 			{#if activeProject.factions?.length > 0}
 				<Section size="7xl" class="py-6">
-					<Heading is="h3" as="h5" heading="Recent Factions" />
+					<Heading is="h3" as="h5" class="mb-3" heading="Recent Factions" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each activeProject.factions as faction}
 							<Card
@@ -212,7 +202,7 @@
 
 			{#if activeProject.locations?.length > 0}
 				<Section size="7xl" class="py-6">
-					<Heading is="h3" as="h5" heading="Recent Locations" />
+					<Heading is="h3" as="h5" class="mb-3" heading="Recent Locations" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each activeProject.locations as location}
 							<Card
@@ -235,14 +225,16 @@
 						{#each projects as project}
 							<ProjectCard
 								class="aspect-video"
+								project={project}
 								title={project.name}
 								subtitle={project.type}
 								image={project?.banner?.url}
-								onclick={
-									project.id == activeProject?.id
-										? (e) => deactivateProject(e)
-										: (e) => activateProject(e, project.id)
-								}
+								onclick={(e) => activateProject(e, project)}
+								options={[
+									{ icon: 'Check', 	label: 'Activate',			onclick: (e) => activateProject(e, project), theme: 'accent' },
+									{ icon: 'Textbox', 	label: 'Rename', 			onclick: (e) => renameProject(e, project) },
+									{ icon: 'Trash', 	label: 'Delete Project',	onclick: (e) => deleteProject(e, project), theme: 'danger' },
+								]}
 							/>
 						{/each}
 					</Grid>
@@ -257,15 +249,28 @@
 </AuthenticatedLayout>
 
 
+<Modal title="Create a new Project" maxWidth="lg" show={creatingProject}
+	onclose={closeModal}>
+	<CreateProjectForm
+		onFinish={closeModal} oncancel={closeModal} />
+</Modal>
 
-<!-- <Modal show={creatingProject || updatingProject} onclose={closeModal}>
-	<ProjectForm project={activeProject} oncancel={closeModal} />
-</Modal> -->
-{#if activeProject}
-	<Modal maxWidth="2xl" show={settingBanner} onclose={closeModal}>
-		<MediaUploadForm aspect="aspect-[7/3]" media={activeProject.banner} oncancel={closeModal} />
+<Modal title="Delete Project" maxWidth="lg" show={deletingProject}
+	onclose={closeModal}>
+	<DeleteProjectForm project={selectedProject}
+		onFinish={closeModal} oncancel={closeModal} />
+</Modal>
+
+<Modal title="Rename Project" maxWidth="lg" show={renamingProject}
+	onclose={closeModal}>
+	<RenameProjectForm project={selectedProject}
+		onFinish={closeModal} oncancel={closeModal} />
+</Modal>
+
+<!-- {#if activeProject}
+	<Modal maxWidth="xl" show={settingBanner}
+		onclose={closeModal}>
+		<MediaUploadForm aspect="aspect-[7/3]" media={activeProject.banner}
+			onFinish={closeModal} oncancel={closeModal} />
 	</Modal>
-	<!-- <Modal title="Delete {activeProject.name}" show={deletingProject} onclose={closeModal}>
-		<DeleteProjectForm project={activeProject} oncancel={closeModal} />
-	</Modal> -->
-{/if}
+{/if} -->

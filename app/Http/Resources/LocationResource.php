@@ -29,6 +29,7 @@ class LocationResource extends JsonResource
 			'banner'      => new MediaResource($this->whenLoaded('banner')),
 			'gallery'     => MediaResource::collection($this->whenLoaded('gallery')),
 			'map'         => new MediaResource($this->whenLoaded('map')),
+			
 			'parent'      => new LocationResource($this->whenLoaded('parent')),
 			'children'    => LocationResource::collection($this->whenLoaded('children')),
 			'descendants' => LocationResource::collection($this->whenLoaded('descendants')),

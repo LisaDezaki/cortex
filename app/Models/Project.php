@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Project extends Model
 {
@@ -22,6 +24,7 @@ class Project extends Model
 	 */
 	protected $fillable = [
 		'name',
+		'type',
 		'description',
 	];
 
@@ -48,6 +51,7 @@ class Project extends Model
 	 */
 	protected $casts = [
 		'name' => 'string',
+		'type' => 'string',
 		'description' => 'string'
 	];
 
@@ -89,13 +93,18 @@ class Project extends Model
 		return $this->hasMany(Location::class)->orderBy('slug', 'ASC');
 	}
 
-	public function banner()
+
+
+	public function media(): MorphMany
     {
-        return $this->morphOne(Media::class, 'mediable')->where('type', 'project_banner');
+        return $this->morphMany(Media::class, 'mediable');
     }
-	
-	public function gallery()
+	public function banner(): MorphOne
+    {
+        return $this->morphOne(Media::class, 'mediable')->where('type', 'banner');
+    }
+	public function gallery(): MorphMany
 	{
-		return $this->morphMany(Media::class, 'mediable')->where('type', 'project_gallery');
+		return $this->morphMany(Media::class, 'mediable')->where('type', 'gallery');
 	}
 }

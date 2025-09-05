@@ -57,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', 		[UserController::class,    'destroy'     ])->name('profile.destroy');
 	Route::get(   '/projects',		[ProjectController::class, 'index'       ])->name('projects');
 	Route::get(   '/settings',		[UserController::class,    'settings'    ])->name('settings');
+	// Route::patch( '/settings',		[UserController::class,    'updateSettings'])->name('settings.update');
 
 
 	/*	Projects */

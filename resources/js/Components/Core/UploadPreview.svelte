@@ -1,7 +1,7 @@
 <script>
 	import { getContext } from "svelte";
 
-	const { files, getFiles, clearFiles } = getContext("file-upload-context");
+	const { files, getFiles, clearFiles, media } = getContext("file-upload-context");
 
 	import { Box, Flex, Grid }      from '@/Components/Core'
 	import UploadTrigger from './UploadTrigger.svelte'
@@ -30,8 +30,8 @@
 
 		 <!-- getFiles()[index] -->
 
-		{#if getFiles()[index]}
-			<img src={getFiles()[index].url} alt={getFiles()[index].url} class={imageClass} />
+		{#if media || getFiles()[index]}
+			<img src={getFiles()[index]?.url || media?.url} class={imageClass} alt="Preview of the uploaded file" />
 		{:else}
 			<div class={imageClass}>
 				<Icon name="Image" size="xl" weight="light" />

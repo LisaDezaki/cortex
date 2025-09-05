@@ -26,7 +26,6 @@ class LocationController extends Controller
 		$this->mediaService = $mediaService;
 	}
 
-
 	/**
 	 * VALIDATION
 	 * 
@@ -36,25 +35,19 @@ class LocationController extends Controller
 	 */
 
 	protected $validationRules = [
-		'name'			=> ['sometimes', 'string'],
-		'description'	=> ['nullable',  'string'],
-		'banner'		=> ['nullable',  'string'],
-		'icon'			=> ['nullable',  'string'],
-		'map'			=> ['nullable',  'string'],
+		'name'					=> ['sometimes', 'string'],
+		'description'			=> ['nullable',  'string'],
 
-		'media'  		=> ['sometimes', 'array'],
-		'media.*'		=> ['present',   'distinct'],
-		'media.*.name'	=> ['string', 'nullable'],
-		'media.*.path'	=> ['string', 'nullable'],
-		'media.*.type'	=> ['string', 'required', 'in:banner,emblem,gallery,icon,map,portrait'],
-		'media.*.url'	=> ['string', 'nullable'],
+		'media'  				=> ['sometimes', 'array'],
+		'media.*.name'			=> ['nullable',	 'string'],
+		'media.*.path'			=> ['nullable',	 'string'],
+		'media.*.type'			=> ['required',	 'string', 'in:banner,gallery,icon,map'],
+		'media.*.url'			=> ['nullable',	 'string'],
 
 		'custom_fields' 	  	=> ['sometimes', 'array'],
-        'custom_fields.*'     	=> ['present', 'distinct'],
-		'custom_fields.*.id'    => ['required', 'distinct', 'exists:custom_fields,id'],
-		'custom_fields.*.value' => ['nullable', 'string']
+		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'custom_fields.*.value' => ['nullable',  'string']
 	];
-
 
 	/**
 	 * INDEX
@@ -74,15 +67,15 @@ class LocationController extends Controller
 			'fieldable_type' => 'faction'
 		])->with('options')->get();
 
-		$worldTree = Location::where([
-			'project_id'   => Auth::user()->active_project,
-			'is_world_map' => true
-		])->with(['map', 'descendants.map'])->first();
+		// $worldTree = Location::where([
+		// 	'project_id'   => Auth::user()->active_project,
+		// 	'is_world_map' => true
+		// ])->with(['map', 'descendants.map'])->first();
 
         return Inertia::render('Locations/Index', [
 			'collections'	=> CollectionResource::collection($collections),
 			'customFields'	=> CustomFieldResource::collection($customFields),
-			'worldTree'		=> new LocationResource($worldTree)
+			// 'worldTree'		=> new LocationResource($worldTree)
 		]);
     }
 	public function collections()
@@ -96,7 +89,6 @@ class LocationController extends Controller
 			'collections'	=> CollectionResource::collection($collections),
 		]);
 	}
-
 
 	/**
 	 * CREATE / STORE
@@ -112,21 +104,25 @@ class LocationController extends Controller
         $validatedData = $request->validate($this->validationRules);
 		$location = Auth::user()->activeProject()->locations()->create($validatedData);
 
-		if ($request->has('banner')) {
-			$this->mediaService->attachMedia($location, 'banner', $request->banner);
-			unset($validatedData['banner']);
-		}
+		// if ($request->has('banner')) {
+		// 	$this->mediaService->attachMedia($location, 'banner', $request->banner);
+		// 	unset($validatedData['banner']);
+		// }
 
-		if ($request->has('map')) {
-			$this->mediaService->attachMedia($location, 'map', $request->map);
-			unset($validatedData['map']);
-		}
+		// if ($request->has('map')) {
+		// 	$this->mediaService->attachMedia($location, 'map', $request->map);
+		// 	unset($validatedData['map']);
+		// }
 
 		// $this->handleCustomFields($validatedData['custom_fields'], $location);
 		$location->save();
+		Session::flash('success', "$location->name created successfully.");
 		return Redirect::route("locations.show", [
 			'location' => $location->slug
 		]);
+		// return Redirect::route("locations.show", [
+		// 	'location' => $location->slug
+		// ]);
     }
 
 

@@ -60,7 +60,7 @@
 		{/if}
 
 		{#if item.onclick}
-			<button class="absolute inset-0 text-transparent" onclick={item.onclick}>{item.label}</button>
+			<button class="absolute inset-0 text-transparent" onclick={(e) => item.onclick(e, item)}>{item.label}</button>
 		{:else if item.href}
 			<Link class="absolute inset-0 text-transparent" href={item.href}>{item.label}</Link>
 		{/if}
@@ -107,52 +107,6 @@
 				{/if}
 
 			{/each}
-
-				<!-- <ContextMenu.Sub>
-					<ContextMenu.SubTrigger class="rounded-button data-highlighted:bg-muted data-[state=open]:bg-muted flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-medium focus-visible:outline-none">
-						<div class="flex items-center">Add</div>
-					</ContextMenu.SubTrigger>
-					<ContextMenu.SubContent
-						class="border-muted bg-background shadow-popover z-100 ring-0! ring-transparent! w-[209px] rounded-xl border px-1 py-1.5"
-						sideOffset={10}
-					>
-					<ContextMenu.Item
-						class="rounded-button data-highlighted:bg-muted flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-normal focus-visible:outline-none"
-					>
-						Header
-					</ContextMenu.Item>
-					<ContextMenu.Item
-						class="rounded-button data-highlighted:bg-muted flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-normal focus-visible:outline-none"
-					>
-						Paragraph
-					</ContextMenu.Item>
-					<ContextMenu.Item
-						class="rounded-button data-highlighted:bg-muted flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-normal focus-visible:outline-none"
-					>
-						Codeblock
-					</ContextMenu.Item>
-					<ContextMenu.Item
-						class="rounded-button data-highlighted:bg-muted flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-normal focus-visible:outline-none"
-					>
-						List
-					</ContextMenu.Item>
-					<ContextMenu.Item
-						class="rounded-button data-highlighted:bg-muted flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-normal focus-visible:outline-none"
-					>
-						Task
-					</ContextMenu.Item>
-					</ContextMenu.SubContent>
-				</ContextMenu.Sub>
-
-				<ContextMenu.Item class="rounded-button data-highlighted:bg-muted flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-medium focus-visible:outline-none">
-					<div class="flex items-center">Duplicate</div>
-				</ContextMenu.Item>
-
-				<ContextMenu.Separator class="bg-muted -mx-1 my-1 block h-px" />
-
-				<ContextMenu.Item class="rounded-button data-highlighted:bg-muted flex h-10 select-none items-center py-3 pl-3 pr-1.5 text-sm font-medium focus-visible:outline-none">
-					<div class="flex items-center">Delete</div>
-				</ContextMenu.Item> -->
 
 		</ContextMenu.Content>
 	</ContextMenu.Portal>

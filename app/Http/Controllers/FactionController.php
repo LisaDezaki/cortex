@@ -19,7 +19,6 @@ use Inertia\Response;
 
 class FactionController extends Controller
 {
-
 	protected $mediaService;
 
 	public function __construct(MediaService $mediaService)
@@ -36,16 +35,18 @@ class FactionController extends Controller
 	 */
 
 	protected $validationRules = [
-		'name'          	  	=> ['sometimes', 'string'],
-		'description'   	  	=> ['nullable',  'string'],
-		'banner'        	  	=> ['nullable',  'string'],
-		'emblem'        	  	=> ['nullable',  'string'],
-		'hq'					=> ['nullable',  'string'],
+		'name'                  => ['sometimes', 'string', 'max:255'],
+		'description'           => ['sometimes', 'string'],
+
+		'media'					=> ['sometimes', 'array'],
+		'media.*.name'			=> ['nullable',	 'string'],
+		'media.*.path'			=> ['nullable',	 'string'],
+		'media.*.type'			=> ['required',	 'string', 'in:banner,emblem,gallery'],
+		'media.*.url'			=> ['nullable',	 'string'],
 
 		'custom_fields' 	  	=> ['sometimes', 'array'],
-        'custom_fields.*'     	=> ['present'],
-		'custom_fields.*.id'    => ['required', 'distinct', 'exists:custom_fields,id'],
-		'custom_fields.*.value' => ['nullable', 'string']
+		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'custom_fields.*.value' => ['nullable',  'string']
 	];
 
 	/**
@@ -98,20 +99,21 @@ class FactionController extends Controller
         $validatedData = $request->validate($this->validationRules);
 		$faction = Auth::user()->activeProject()->factions()->create($validatedData);
 
-		if ($request->has('emblem')) {
-			$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
-			unset($validatedData['emblem']);
-		}
+		// if ($request->has('emblem')) {
+		// 	$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
+		// 	unset($validatedData['emblem']);
+		// }
 
-		if ($request->has('banner')) {
-			$this->mediaService->attachMedia($faction, 'banner', $request->banner);
-			unset($validatedData['banner']);
-		}
+		// if ($request->has('banner')) {
+		// 	$this->mediaService->attachMedia($faction, 'banner', $request->banner);
+		// 	unset($validatedData['banner']);
+		// }
 
 		// $this->handleCustomFields($validatedData['custom_fields'], $character);
 
 		$faction->save();
 
+		Session::flash('success', "$faction->name created successfully.");
 		return Redirect::route("factions.show", [
 			'faction' => $faction->slug
 		]);
@@ -153,15 +155,22 @@ class FactionController extends Controller
     {
 		$validatedData = $request->validate($this->validationRules);
 
-		if ($request->has('emblem')) {
-			$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
-			unset($validatedData['emblem']);
+		if ($request->has('media')) {
+			foreach ($request['media'] as $media) {
+				$this->mediaService->attachMedia($faction, $media['type'], $media);
+			}
+			unset($validatedData['media']);
 		}
 
-		if ($request->has('banner')) {
-			$this->mediaService->attachMedia($faction, 'banner', $request->banner);
-			unset($validatedData['banner']);
-		}
+		// if ($request->has('emblem')) {
+		// 	$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
+		// 	unset($validatedData['emblem']);
+		// }
+
+		// if ($request->has('banner')) {
+		// 	$this->mediaService->attachMedia($faction, 'banner', $request->banner);
+		// 	unset($validatedData['banner']);
+		// }
 
 		if ($request->has('headquarters_id')) {
 			$faction->headquarters()->associate($validatedData['headquarters_id']);

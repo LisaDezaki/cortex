@@ -45,9 +45,11 @@
 
     {#snippet header()}
 		<PageHeader
-			breadcrumbs={[{ label: "Profile" }]}
-			back={route('dashboard')}
-			title="Account Profile"
+			title="User Profile"
+			tabs={[
+				{ icon: "UserList",		label: "Profile",		active: true },
+				{ icon: "GearFine",		label: "Settings",		href: route('settings') },
+			]}
 		/>
 	{/snippet}
 
@@ -59,27 +61,39 @@
 				{ icon: "Trash",    label: "Delete Account",  onclick: confirmUserDeletion, theme: "danger" }
 			]} />
 
-			<Container size="4xl">
+			<Container gap={12} size="2xl">
 				<Section id="profile">
-					<Heading is="h4" as="h6" class="mt-9 mb-6"
+					<Stack>
+						<Heading is="h1" as="h5">Profile Information</Heading>
+						<p>Update your account's profile information and email address.</p>
+					</Stack>
+					<!-- <Heading is="h4" as="h6" class="mt-9 mb-6"
 						heading="Profile Information"
 						subheading="Update your account's profile information and email address."
-					/>
+					/> -->
 					<UpdateProfileInformationForm {mustVerifyEmail} {status} />
 				</Section>
 				<Section id="password">
-					<Heading is="h4" as="h6" class="mt-9 mb-6"
+					<Stack>
+						<Heading is="h3" as="h6">Update Password</Heading>
+						<p>Ensure your account is using a long, random password to stay secure.</p>
+					</Stack>
+					<!-- <Heading is="h4" as="h6" class="mt-9 mb-6"
 						heading="Update Password"
 						subheading="Ensure your account is using a long, random password to stay secure."
-					/>
+					/> -->
 					<UpdatePasswordForm />
 				</Section>
 				<Section id="delete">
-					<Heading is="h4" as="h6" class="mt-9 mb-6"
+					<Stack>
+						<Heading is="h3" as="h6">Delete Account</Heading>
+						<p>Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.</p>
+					</Stack>
+					<!-- <Heading is="h4" as="h6" class="mt-9 mb-6"
 						heading="Delete Account"
 						subheading="Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
 					your account, please download any data or information that you wish to retain."
-					/>
+					/> -->
 					<Button style="hard" theme="danger"
 						label="Delete Account"
 						onclick={confirmUserDeletion}

@@ -35,30 +35,25 @@ class CharacterController extends Controller
 	 */
 
 	protected $validationRules = [
-		'name'                  => ['sometimes', 'required', 'string'],
-		'description'           => ['nullable',  'string'],
-		'banner'                => ['nullable',  'string'],
-		'portrait'              => ['nullable',  'string'],
+		'name'                  => ['sometimes', 'string', 'max:255'],
+		'description'           => ['sometimes', 'string'],
+		'faction_id'            => ['sometimes', 'string', 'uuid', 'exists:factions,id'],
+		'location_id'           => ['sometimes', 'string', 'uuid', 'exists:locations,id'],
 
 		'media'					=> ['sometimes', 'array'],
-		'media.*'				=> ['present', 'distinct'],
-		'media.*.name'			=> ['string', 'nullable'],
-		'media.*.path'			=> ['string', 'nullable'],
-		'media.*.type'			=> ['string', 'required', 'in:banner,emblem,gallery,map,portrait'],
-		'media.*.url'			=> ['string', 'nullable'],
+		'media.*.name'			=> ['nullable',	 'string'],
+		'media.*.path'			=> ['nullable',  'string'],
+		'media.*.type'			=> ['required',  'string', 'in:banner,gallery,portrait'],
+		'media.*.url'			=> ['nullable',  'string'],
 
-		'faction_id'            => ['nullable',  'exists:factions,id'],
-		'location_id'           => ['nullable',  'exists:locations,id'],
-		'relationships'         => ['sometimes',  'array'],
-		'relationships.*'		=> ['present'],
-		'relationships.*.id'    => ['required',  'distinct', 'exists:characters,id'],
-		'relationships.*.role'  => ['required', 'string'],
-		'relationships.*.related_role' => ['required', 'string'],
+		'relationships'         => ['sometimes', 'array'],
+		'relationships.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:characters,id'],
+		'relationships.*.role'  => ['required',  'string'],
+		'relationships.*.related_role' 	=> ['required',  'string'],
 
 		'custom_fields'			=> ['sometimes', 'array'],
-        'custom_fields.*'       => ['present'],
-		'custom_fields.*.id'    => ['required', 'distinct', 'exists:custom_fields,id'],
-		'custom_fields.*.value' => ['nullable', 'string']
+		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'custom_fields.*.value' => ['nullable',  'string']
 	];
 
 	/**
@@ -110,33 +105,34 @@ class CharacterController extends Controller
 		$validatedData = $request->validate($this->validationRules);
 		$character = Auth::user()->activeProject()->characters()->create($validatedData);
 	
-		if ($request->has('portrait')) {
-			$this->mediaService->attachMedia($character, 'portrait', $request->portrait);
-			unset($validatedData['portrait']);
-		}
+		// if ($request->has('portrait')) {
+		// 	$this->mediaService->attachMedia($character, 'portrait', $request->portrait);
+		// 	unset($validatedData['portrait']);
+		// }
 
-		if ($request->has('banner')) {
-			$this->mediaService->attachMedia($character, 'banner', $request->banner);
-			unset($validatedData['banner']);
-		}
+		// if ($request->has('banner')) {
+		// 	$this->mediaService->attachMedia($character, 'banner', $request->banner);
+		// 	unset($validatedData['banner']);
+		// }
 
-		if ($request->has('faction_id')) {
-			$character->faction()->associate($validatedData['faction_id']);
-		}
+		// if ($request->has('faction_id')) {
+		// 	$character->faction()->associate($validatedData['faction_id']);
+		// }
 
-		if ($request->has('location_id')) {
-			$character->location()->associate($validatedData['location_id']);
-		}
+		// if ($request->has('location_id')) {
+		// 	$character->location()->associate($validatedData['location_id']);
+		// }
 
-		if ($request->has('relationships')) {
-			$character->relationships()->sync($validatedData['relationships']);
-		}
+		// if ($request->has('relationships')) {
+		// 	$character->relationships()->sync($validatedData['relationships']);
+		// }
 
-		if ($request->has('custom_fields')) {
-			$this->handleCustomFields($validatedData['custom_fields'], $character);
-		}
+		// if ($request->has('custom_fields')) {
+		// 	$this->handleCustomFields($validatedData['custom_fields'], $character);
+		// }
 
 		$character->save();
+		Session::flash('success', "$character->name created successfully.");
 		return Redirect::route("characters.show", [
 			'character' => $character->slug
 		]);
@@ -173,7 +169,6 @@ class CharacterController extends Controller
 		]);
 	}
 
-
 	/**
 	 * EDIT / UPDATE
 	 * 
@@ -191,6 +186,7 @@ class CharacterController extends Controller
 			foreach ($request['media'] as $media) {
 				$this->mediaService->attachMedia($character, $media['type'], $media);
 			}
+			unset($validatedData['media']);
 		}
 
 		if ($request->has('location_id')) {
@@ -201,18 +197,16 @@ class CharacterController extends Controller
 			$this->handleCustomFields($validatedData['custom_fields'], $character);
 		}
 
-		unset($validatedData['media']);
-		
 		$character->fill($validatedData);
 		$character->update();
-		// return Redirect::route("characters.show", [
-		// 	'character' => $character->slug
-		// ]);
 
-		return back()->with([
-			'success' => 'Character updated successfully!',
-			'character' => $character
-		]);
+		Session::flash('success', "$character->name updated successfully.");
+        return Redirect::back();
+
+		// return back()->with([
+		// 	'success' => 'Character updated successfully!',
+		// 	'character' => $character
+		// ]);
 	}
 
 

@@ -9,6 +9,7 @@
 	let {
 		children,
 		class: className,
+		media,
 		multiple = false,
 		type = 'upload',
 		value = $bindable()
@@ -67,6 +68,7 @@
 		files,
 		isMultiple,
 		handleFileUpload,
+		media,
 		getFiles,
 		clearFiles,
 	});

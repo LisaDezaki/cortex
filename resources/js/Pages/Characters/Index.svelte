@@ -12,6 +12,7 @@
 	
 	import { Flex, Grid, Stack } from '@/Components/Core'
 	import Dropdown		from '@/Components/UI/Dropdown.svelte'
+	import Empty		from '@/Components/UI/Empty.svelte'
 	import Icon			from '@/Components/UI/Icon.svelte'
 	import Input		from '@/Components/UI/Input.svelte'
 	import Modal		from '@/Components/UI/Modal.svelte'
@@ -96,14 +97,6 @@
 				if (sortBy === 'random')     { return Math.random()          < 0.5                    ? -1 : 1 }
 			})
 	)
-	let characterListSorted = $derived( sortOrder == 'asc' ? characterList : characterList.reverse())
-
-	function mapToFilterItem(item) {
-		return {
-			label: (item.label || item.name),
-			value: (item.slug || item.value)
-		}
-	}
 
 </script>
 
@@ -276,7 +269,14 @@
 
 				{/if}
 			{:else}
-				<p class="mt-12 font-style-placeholder">There are no characters for this project yet. <Link>Create one?</Link></p>
+
+				<Empty
+					icon="User"
+					message="There are no characters for this project yet."
+					buttonLabel="Create one?"
+					buttonClick={createCharacter}
+				/>
+
 			{/if}
 		</Section>
 

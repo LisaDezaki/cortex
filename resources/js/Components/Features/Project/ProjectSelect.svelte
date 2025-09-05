@@ -6,19 +6,22 @@
 	// import Icon from '@/Components/Icon.svelte'
 	// import Thumbnail from '@/Components/Thumbnail.svelte'
 
+	
+
 	const projects = $page.props.projects.data
 	const activeProject = $page.props.activeProject?.data
 	const form = useForm({
         project: null,
     })
+	let media_banner = $derived(activeProject.media?.filter(m => m.type === 'banner')?.[0])
 
 </script>
 
 
 {#if activeProject}
 	<Link class="project-select" href="/">
-		{#if activeProject.banner}
-			<img class="project-image min-h-full min-w-full object-cover" src={activeProject.banner.url} alt={activeProject.name} />
+		{#if media_banner}
+			<img class="project-image min-h-full min-w-full object-cover" src={media_banner.url} alt={activeProject.name} />
 		{/if}
 		<div class="project-details">
 			<div class="project-details-text text-left -space-y-1">
@@ -29,12 +32,12 @@
 	</Link>
 {:else if projects.length >= 1}
 	<Link class="project-select text-sm" href={route('dashboard')}>
-		No project selected.
+		No project selected.<br/>
 		Activate one?
 	</Link>
 {:else if projects.length == 0}
 	<Link class="project-select text-sm" href={route('projects.create')}>
-		No projects.
+		No projects.<br/>
 		Create one?
 	</Link>
 {/if}

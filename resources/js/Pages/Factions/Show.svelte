@@ -33,11 +33,12 @@
 	let mediaUploadProps  = $derived({
 		endpoint: route('factions.update', { faction: faction.slug }),
 		method: 'patch',
-		onSuccess: (res) => {
-			router.visit( $page.url, {
-				only: ['faction.media'],
-			})
-		}
+		reloadPageProps: ['factions.media'],
+		// onSuccess: (res) => {
+		// 	router.visit( $page.url, {
+		// 		only: ['faction.media'],
+		// 	})
+		// }
 	})
 
 	let media_banner	= $derived(faction.media.filter(m => m.type === 'banner')?.[0])
@@ -87,11 +88,13 @@
 					<ArticleBanner>
 
 						<Media replaceable
-							aspect="aspect-[7/3]"
+							aspect="aspect-[3/1]"
 							class="absolute inset-0 rounded-lg overflow-hidden"
 							media={media_banner}
 							type="banner"
-							uploadProps={mediaUploadProps}
+							endpoint={route('factions.update', { faction: faction.slug })}
+							method={'patch'}
+							reloadPageProps={['factions.media']}
 						/>
 
 						<Media replaceable
@@ -99,11 +102,15 @@
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
 							media={media_emblem}
 							type="emblem"
-							uploadProps={mediaUploadProps}
+							endpoint={route('factions.update', { faction: faction.slug })}
+							method={'patch'}
+							reloadPageProps={['factions.media']}
 						/>
 
-						<Heading is="h1" as="h3" class="mt-auto z-10 {faction.emblem ? 'text-white' : ''}"
+						<Heading is="h1" as="h3"
+							class="mt-auto z-10 {faction.banner ? 'text-white' : ''}"
 							heading={faction.name}
+							headingClass="whitespace-pre-wrap"
 							subheading={faction.type}
 						/>
 

@@ -12,6 +12,8 @@
         ...restProps
     } = $props()
 
+	let media_emblem = $derived(faction.media.filter(m => m.type === 'emblem')?.[0])
+
 	const handleClick = (e) => {
 		if (onclick) {
 			e.preventDefault()
@@ -23,7 +25,7 @@
 <Card
 	aspect="square"
 	icon="User"
-	image={faction.portrait?.url}
+	image={media_emblem?.url}
 	title={faction.name}
 	subtitle={faction.alias}
 	onclick={handleClick || null}

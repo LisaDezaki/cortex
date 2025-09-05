@@ -19,7 +19,6 @@
 		media,
 		method = 'post',
 		multiple = false,
-		onsubmit,
 		oncancel,
 		type = 'gallery',
 		...restProps
@@ -42,7 +41,7 @@
 	method={method}
 {...restProps}>
 
-	<UploadContext class="p-3" {type} {multiple}>
+	<UploadContext class="p-3" {media} {type} {multiple}>
 
 		{#if !multiple}
 

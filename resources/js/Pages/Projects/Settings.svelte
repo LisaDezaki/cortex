@@ -3,17 +3,17 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import ProjectForm         from '@/Forms/Project/Project.svelte'
-	import ProjectSettingsForm from '@/Forms/Project/Settings.svelte'
-	import DeleteProjectForm   from '@/Forms/Project/Delete.svelte'
+	// import ProjectForm         from '@/Forms/Project/Project.svelte'
+	// import ProjectSettingsForm from '@/Forms/Project/Settings.svelte'
+	// import DeleteProjectForm   from '@/Forms/Project/Delete.svelte'
 
 	import { Flex, Grid, Stack } from '@/Components/Core'
 	
-	import Back        from '@/Components/UI/Back.svelte'
-	import Button      from '@/Components/UI/Button.svelte'
+	// import Back        from '@/Components/UI/Back.svelte'
+	// import Button      from '@/Components/UI/Button.svelte'
 	import Container   from '@/Components/UI/Container.svelte'
 	import Heading     from '@/Components/UI/Heading.svelte'
-	import Modal       from '@/Components/UI/Modal.svelte'
+	// import Modal       from '@/Components/UI/Modal.svelte'
 	import PageHeader  from '@/Components/UI/PageHeader.svelte'
 	import PageMenu    from '@/Components/UI/PageMenu.svelte'
 	import Section     from '@/Components/UI/Section.svelte'
@@ -35,16 +35,19 @@
 </script>
 
 <svelte:head>
-    <title>{activeProject.name} / Project Settings</title>
+    <title>Project Settings</title>
 </svelte:head>
 
 <AuthenticatedLayout>
 
 	{#snippet header()}
 		<PageHeader
-			breadcrumbs={[]}
-			back={route('dashboard')}
 			title="Project Settings"
+			tabs={ activeProject ? [
+				{ icon: 'Speedometer',	label: 'Dashboard', href: route('dashboard') },
+				{ icon: 'GearFine',		label: 'Settings', 	active: true }
+			] : undefined }
+			
 		/>
 	{/snippet}
 
@@ -66,19 +69,27 @@
 				<!-- Details -->
 
 				<Section id="details" class="pb-12">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
+					<!-- <Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h5">Overview</Heading>
-					</Flex>
-					<ProjectForm project={activeProject} />
+					</Flex> -->
+					<Stack>
+						<Heading is="h3" as="h5">Overview</Heading>
+						<p>Adjust your project settings here.</p>
+					</Stack>
+					<!-- <ProjectForm project={activeProject} /> -->
 				</Section>
 
 
 				<!-- Settings -->
 
 				<Section id="settings" class="pb-12">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Settings</Heading>
-					</Flex>
+					<!-- <Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h6">Settings</Heading>
+					</Flex> -->
+					<Stack>
+						<Heading is="h3" as="h6">Settings</Heading>
+						<p>Adjust your various other settings here.</p>
+					</Stack>
 					<!-- <ProjectSettingsForm /> -->
 				</Section>
 
@@ -86,18 +97,26 @@
 				<!-- Media -->
 
 				<Section id="media" class="pb-12">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Media</Heading>
-					</Flex>
+					<!-- <Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h6">Media</Heading>
+					</Flex> -->
+					<Stack>
+						<Heading is="h3" as="h6">Media</Heading>
+						<p>Manage the media settings for your project here.</p>
+					</Stack>
 					<!-- <ProjectSettingsForm /> -->
 				</Section>
 
 				<!-- Media -->
 
 				<Section id="custom" class="pb-12">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
+					<!-- <Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h5">Custom Fields</Heading>
-					</Flex>
+					</Flex> -->
+					<Stack>
+						<Heading is="h3" as="h6">Custom Fields</Heading>
+						<p>Manage the custom fields for this project.</p>
+					</Stack>
 					<!-- <ProjectSettingsForm /> -->
 				</Section>
 
@@ -107,6 +126,6 @@
 
 </AuthenticatedLayout>
 
-<Modal class="p-6" show={deletingProject} onclose={closeModal}>
+<!-- <Modal class="p-6" show={deletingProject} onclose={closeModal}>
 	<DeleteProjectForm project={activeProject} oncancel={closeModal} />
-</Modal>
+</Modal> -->

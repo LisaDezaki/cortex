@@ -30,16 +30,6 @@
 
 	let deletingLocation  = $state(false)
 
-	let mediaUploadProps  = $derived({
-		endpoint: route('locations.update', { location: location.slug }),
-		method: 'patch',
-		onSuccess: (res) => {
-			router.visit( $page.url, {
-				only: ['location.media'],
-			})
-		}
-	})
-
 	let media_banner	= $derived(location.media.filter(m => m.type === 'banner')?.[0])
 	let media_map		= $derived(location.media.filter(m => m.type === 'map')?.[0])
 	let media_gallery	= $derived(location.media)
@@ -88,11 +78,13 @@
 					<ArticleBanner>
 
 						<Media replaceable
-							aspect="aspect-[7/3]"
+							aspect="aspect-[3/1]"
 							class="absolute inset-0 rounded-lg overflow-hidden"
 							media={media_banner}
 							type="banner"
-							uploadProps={mediaUploadProps}
+							endpoint={route('locations.update', { location: location.slug })}
+							method={'patch'}
+							reloadPageProps={['location.media']}
 						/>
 
 						<Media replaceable
@@ -100,7 +92,9 @@
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
 							media={media_map}
 							type="map"
-							uploadProps={mediaUploadProps}
+							endpoint={route('locations.update', { location: location.slug })}
+							method={'patch'}
+							reloadPageProps={['location.media']}
 						/>
 
 						{#if location.parent}

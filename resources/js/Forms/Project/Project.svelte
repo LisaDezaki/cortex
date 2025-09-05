@@ -15,7 +15,8 @@
 
     let {
 		oncancel = () => {},
-		project
+		project,
+		...restProps
 	} = $props()
 
 	// const form = useForm({

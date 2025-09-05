@@ -24,7 +24,7 @@
         ...restProps
     } = $props()
 
-	const clickable = $derived(href || onclick) 
+	const clickable = $derived(href || onclick)
 
 </script>
 
@@ -50,7 +50,7 @@
 	</Flex>
 
 	{#if href}
-		<Link class="card-link" href={href}></Link>
+		<Link class="card-link absolute inset-0 z-10" href={href}></Link>
 	{/if}
 
 	{#if options}
@@ -90,13 +90,13 @@
 			pointer-events: none;
 		}
 
-		:global(.card-link) {
+		/* :global(.card-link) {
 			@apply absolute inset-0;
 			z-index: 1;
-		}
+		} */
 
 		.card-visual {
-			@apply border flex-shrink-0 rounded-lg overflow-hidden p-1.5 w-full;
+			@apply border flex-shrink-0 rounded-lg overflow-hidden w-full;
 			background: var(--bg-neutral-gradient);
 			border-color: var(--border-neutral-softest);
 			&:not(.grid) {
@@ -108,7 +108,7 @@
 			}
 
 			:global(.card-icon) {
-				@apply aspect-square opacity-50 p-6 rounded-full max-h-[60%] max-w-[60%] h-full w-full;
+				@apply aspect-square p-6 rounded-full max-h-[60%] max-w-[60%] h-full w-full;
 				background: var(--bg-neutral-gradient-flip);
 				color: var(--text-neutral-softest);
 			}

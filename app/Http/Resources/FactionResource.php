@@ -25,6 +25,7 @@ class FactionResource extends JsonResource
 			'media'		  => MediaResource::collection($this->whenLoaded('media')),
 			'banner'       => new MediaResource($this->whenLoaded('banner')),
 			'emblem'       => new MediaResource($this->whenLoaded('emblem')),
+			
 			'headquarters' => new LocationResource($this->whenLoaded('headquarters')),
 			'members'      => FactionMemberResource::collection($this->whenLoaded('members')),
 			'ranks'        => FactionRankResource::collection($this->whenLoaded('ranks')),

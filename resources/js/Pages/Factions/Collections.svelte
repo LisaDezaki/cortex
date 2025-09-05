@@ -10,15 +10,16 @@
 	import RenameCollectionForm from '@/Forms/Collection/Rename.svelte'
 	
 	import { Flex, Grid, Stack } from '@/Components/Core'
-	import Card					from '@/Components/UI/Card.svelte'
-	import CardNew				from '@/Components/UI/CardNew.svelte'
-	import CollectionCard		from '@/Components/UI/CollectionCard.svelte'
-	import Dropdown				from '@/Components/UI/Dropdown.svelte'
-	import Icon					from '@/Components/UI/Icon.svelte'
-	import Input				from '@/Components/UI/Input.svelte'
-	import Modal				from '@/Components/UI/Modal.svelte'
-	import PageHeader			from '@/Components/UI/PageHeader.svelte'
-	import Section				from '@/Components/UI/Section.svelte'
+	import Card				from '@/Components/UI/Card.svelte'
+	import CardNew			from '@/Components/UI/CardNew.svelte'
+	import CollectionCard	from '@/Components/UI/CollectionCard.svelte'
+	import Dropdown			from '@/Components/UI/Dropdown.svelte'
+	import Empty			from '@/Components/UI/Empty.svelte'
+	import Icon				from '@/Components/UI/Icon.svelte'
+	import Input			from '@/Components/UI/Input.svelte'
+	import Modal			from '@/Components/UI/Modal.svelte'
+	import PageHeader		from '@/Components/UI/PageHeader.svelte'
+	import Section			from '@/Components/UI/Section.svelte'
 
 	//	Page props
 	const activeProject	= $page.props.activeProject.data
@@ -155,10 +156,14 @@
 				</Grid>
 				
 			{:else}
-				<Stack align="center" class="w-full">
-					<p class="mt-12 font-style-placeholder">There are no faction collections for this project yet.</p>
-					<button class="mt-3 px-3 py-1.5 rounded-md text-accent hover:bg-accent-softest hover:underline" onclick={createCollection}>Create one?</button>
-				</Stack>
+
+				<Empty
+					icon="FolderSimple"
+					message="There are no faction collections for this project yet."
+					buttonLabel="Create one?"
+					buttonClick={createCollection}
+				/>
+
 			{/if}
 		</Section>
 

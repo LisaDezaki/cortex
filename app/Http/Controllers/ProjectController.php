@@ -10,6 +10,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Inertia\Inertia;
@@ -24,22 +25,56 @@ class ProjectController extends Controller
 		$this->mediaService = $mediaService;
 	}
 
+	/**
+	 * VALIDATION
+	 * 
+	 * Validate the incoming requests.
+	 * Validation will fail if the incoming request includes any fields that are not
+	 * included in this list.
+	 */
+
+	public function validate(Request $request)
+	{
+		$rules = [
+            'name' 		  	=> ['sometimes', 'string', 'max:255'],
+			'type' 		  	=> ['nullable',  'string'],
+			'description' 	=> ['nullable',  'string'],
+
+			'media'			=> ['sometimes', 'array'],
+			'media.*.name'	=> ['nullable',	 'string'],
+			'media.*.path'	=> ['nullable',  'string'],
+			'media.*.type'	=> ['required',  'string', 'in:banner,gallery,map'],
+			'media.*.url'	=> ['nullable',  'string']
+        ];
+		return $request->validate($rules);
+	}
+
+	/**
+	 * INDEX
+	 * 
+	 * Show the list of Characters
+	 */
+
 	public function index(): Response
     {
         return Inertia::render('Projects/Index');
     }
 
-	public function create()
-	{
-		//
-	}
+	/**
+	 * CREATE / STORE
+	 * 
+	 * When a LocationCreateRequest is received, it will be handled by the Store
+	 * method in the LocationController. The user will likely only be submitting
+	 * a name to initially create a Location.
+	 */
 
+	public function create() {}
 	public function store(Request $request): RedirectResponse
     {
         $validatedData = $this->validate($request);
 		$project = Auth::user()->projects()->create($validatedData);
-		$this->handleBanner($request, $project);
 		$project->save();
+		Session::flash('success', "$request->name created successfully.");
 		return Redirect::route("dashboard");
     }
 
@@ -56,27 +91,40 @@ class ProjectController extends Controller
 		]);
 	}
 
-	public function edit()
-	{
-		//
-	}
+	/**
+	 * EDIT / UPDATE
+	 * 
+	 * When a CharacterUpdateRequest is received, it will be handled by the Update
+	 * method in the CharacterController. The user may submit any piece of
+	 * Character model to update, and so it must be updated on a per-item basis.
+	 */
 
+	public function edit(Project $project) {}
     public function update(Request $request, Project $project)
     {
-        $validatedData = $this->validate($request);
+		$validatedData = $this->validate($request);
+
+		if ($request->has('media')) {
+			foreach ($request['media'] as $media) {
+				$this->mediaService->attachMedia($project, $media['type'], $media);
+			}
+			unset($validatedData['media']);
+		}
+
 		$project->fill($validatedData);
-		$this->handleBanner($request, $project);
 		$project->update();
+
+		Session::flash('success', "$project->name updated successfully.");
         return Redirect::route("dashboard");
     }
 
+	/**
+	 * DESTROY
+	 * 
+	 */
+
 	public function destroy(Request $request, Project $project): RedirectResponse
     {
-		//	Authorization
-		// if (! $request->user()->can('delete', $project)) {
-		// 	abort(403, 'Unauthorized to delete this project.');
-		// }
-
 		$validator = Validator::make($request->all(), [
 			'confirm_name' => ['required', 'string', 'in:'.$project->name],
 		], [
@@ -87,20 +135,15 @@ class ProjectController extends Controller
 		if ($validator->fails()) {
 			return Redirect::back()->withErrors($validator)->withInput();
 		}
-	
-		// if ($request->confirm_name !== $project->name) {
-		// 	return Redirect::back()->withErrors([
-		// 		'confirm_name' => 'The entered name does not match the project you\'re trying to delete.'
-		// 	]);
-		// }
 
-		//	Remove image
-		// $this->deleteImage($project);
-
-		// Delete project
 		$project->delete();
+		Session::flash('success', "$project->name project deleted successfully.");
+        return Redirect::route('dashboard');
+    }
 
-        return Redirect::route('projects');
+	public function dashboard(): Response
+    {
+        return Inertia::render('Dashboard');
     }
 
 	public function settings()
@@ -108,36 +151,22 @@ class ProjectController extends Controller
 		return Inertia::render('Projects/Settings');
 	}
 
-	public function handleBanner(Request $request, Project $project)
-	{
-
-		$request->validate([
-			'banner' => 'string|nullable',
-		]);
-
-		$user = Auth::user();
-		$userFolder    = "user_"   .substr($user->id, 0, 8);
-		$projectFolder = "project_".substr($user->active_project, 0, 8);
-
-		$this->mediaService->updateImage(
-			$project,
-			$project->banner(),
-			$request->banner,
-			"$userFolder/$projectFolder"
-		);
-	}
-
 	public function activate(Project $project)
 	{
 		$user = Auth::user();
-		if ($project->user_id = $user->id) {
+		if ($user->id === $project->user_id) {
 			$user->active_project = $project->id;
 			$user->update();
 		}
 
-		return redirect()->back()->with([
+		Session::flash('success', "$project->name activated.");
+        return Redirect::back()->with([
         	'test' => new ProjectResource($project)
     	]);
+
+		// return redirect()->back()->with([
+        // 	'test' => new ProjectResource($project)
+    	// ]);
 	}
 	
 	public function deactivate()
@@ -145,42 +174,9 @@ class ProjectController extends Controller
 		$user = Auth::user();
 		$user->active_project = null;
 		$user->update();
-		// return Redirect::route("dashboard");
-		return redirect()->back();
+		Session::flash('success', "Project deactivated.");
+        return Redirect::back();
 	}
 
-	public function validate(Request $request)
-	{
-
-		$rules = [
-            'name' 		  => ['nullable', 'max:255'],
-            'description' => ['nullable'],
-            'banner'      => ['nullable',
-				function ($attribute, $value, $fail) {
-
-					if (Media::where('id', $value)->exists()) {
-						$fail('The ID belongs to existing media.');
-						return;
-					}
-					
-					if ($value) {
-						if (!Storage::disk('public')->exists($value)) {
-							$fail('The temporary file was lost.');
-						}
-						return;
-					}
-					
-					$fail('The banner must be either a valid Media ID or an image file.');
-            	}
-			],
-        ];
-
-		return $request->validate($rules);
-
-	}
-
-	public function dashboard(): Response
-    {
-        return Inertia::render('Dashboard');
-    }
+	
 }

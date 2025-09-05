@@ -46,7 +46,7 @@ class HandleInertiaRequests extends Middleware
 		//	Fetch the active project (deep fetch) for the authenticated user, if they are logged in and have an active project.
 		$activeProject = $user && $user->active_project
 			? $user->projects()->with([
-				'banner',
+				// 'banner',
 				'characters.location.banner',
 				'characters.location.parent',
 				'characters.factions.emblem',
@@ -55,7 +55,7 @@ class HandleInertiaRequests extends Middleware
 				'characters.portrait',
 				'characters.relationships',
 				'characters.customFieldValues.customField',
-				'factions.emblem',
+				'factions.media',
 				'factions.headquarters.banner',
 				'factions.ranks',
 				'factions.members.portrait',
@@ -63,6 +63,7 @@ class HandleInertiaRequests extends Middleware
 				'locations.characters.portrait',
 				'locations.map',
 				'locations.parent',
+				'media',
 				'customFields.options'
 			])->find($user->active_project)
 			: null;

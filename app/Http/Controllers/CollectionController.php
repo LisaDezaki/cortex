@@ -6,13 +6,11 @@ use App\Http\Resources\CollectionResource;
 use App\Models\Character;
 use App\Models\Collection;
 use App\Models\CollectionItem;
-use App\Models\CustomField;
-use App\Models\CustomFieldOption;
 use App\Models\Faction;
 use App\Models\Location;
+use App\Services\MediaService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
@@ -23,20 +21,37 @@ use \Cviebrock\EloquentSluggable\Services\SlugService;
 
 class CollectionController extends Controller
 {
+	protected $mediaService;
+
+	public function __construct(MediaService $mediaService)
+	{
+		$this->mediaService = $mediaService;
+	}
+
+	/**
+	 * VALIDATION
+	 * 
+	 * Validate the incoming requests.
+	 * Validation will fail if the incoming request includes any fields that are not
+	 * included in this list.
+	 */
+
 	protected $validationRules = [
-		'collection_type'	=> ['nullable',  'string'],
-		'name'				=> ['sometimes', 'required', 'string'],
+		'name'				=> ['sometimes', 'string', 'max:255'],
 		'description'		=> ['nullable',  'string'],
-		'items'				=> ['sometimes', 'array' ],
-		'items.*'			=> ['present'],
+		'collection_type'	=> ['nullable',  'string', 'in:'.Character::class.','.Faction::class.','.Location::class],
+
+		'items'				=> ['sometimes', 'array'],
 		'items.*.id'		=> ['required',  'string'],
 		'items.*.type'		=> ['required',  'string']
 	];
 
-
 	/**
-     * Display a listing of the characters.
+	 * INDEX
+	 * 
+	 * Show the list of Characters
 	 */
+
 	public function index()
 	{
 		//
@@ -60,10 +75,12 @@ class CollectionController extends Controller
 		$collection = Auth::user()->activeProject()->collections()->create($validatedData);
 		$collection->collection_type = $typeMap[$type];
 		$collection->save();
-		return back()->with([
-			'success' => 'Collection was saved successfully!',
-			'collection' => $collection,
-		]);
+		Session::flash('success', "$collection->name collection created successfully.");
+		return Redirect::back();
+		// return back()->with([
+		// 	'success' => 'Collection was saved successfully!',
+		// 	'collection' => $collection,
+		// ]);
 	}
 
 
@@ -113,7 +130,7 @@ class CollectionController extends Controller
 
 		$collection->fill($validatedData);
 		$collection->update();
-		Session::flash('success', "$collection->name updated successfully");
+		Session::flash('success', "$collection->name collection updated successfully");
 		return Redirect::back();
 
 	}
@@ -127,7 +144,7 @@ class CollectionController extends Controller
 	 public function destroy(Request $request, Collection $collection): RedirectResponse
 	 {		
 		$collection->delete();
-		Session::flash('success', "$collection->name has been deleted.");
+		Session::flash('success', "$collection->name collection has been deleted.");
 		return Redirect::back();
 	 }
 

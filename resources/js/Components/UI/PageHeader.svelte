@@ -65,7 +65,9 @@
 			{#if actions}
 				<Inline gap={3} class="px-3">
 					{#each actions as action}
-						<Button type="button" style={action.style || "soft"} {...action} class="rounded-full" />
+						{#if !action.hasOwnProperty('if') || action.if === true}
+							<Button type="button" style={action.style || "soft"} {...action} class="rounded-full" />
+						{/if}
 					{/each}
 				</Inline>
 			{/if}

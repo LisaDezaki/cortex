@@ -27,7 +27,6 @@
 				$form[ method ]( endpoint, {
 					onSuccess: (res) => {
 						onSuccess?.(res)
-						console.log('Form.handleSubmit.onSuccess()', res)
 						if (reloadPageProps) {
 							router.visit( $page.url, {
 								only: reloadPageProps,

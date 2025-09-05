@@ -14,6 +14,7 @@
 	import CardNew				from '@/Components/UI/CardNew.svelte'
 	import CollectionCard		from '@/Components/UI/CollectionCard.svelte'
 	import Dropdown				from '@/Components/UI/Dropdown.svelte'
+	import Empty				from '@/Components/UI/Empty.svelte'
 	import Icon					from '@/Components/UI/Icon.svelte'
 	import Input				from '@/Components/UI/Input.svelte'
 	import Modal				from '@/Components/UI/Modal.svelte'
@@ -120,10 +121,14 @@
 				</Grid>
 
 			{:else}
-				<Stack align="center" class="w-full">
-					<p class="mt-12 font-style-placeholder">There are no location collections for this project yet.</p>
-					<button class="mt-3 px-2 py-1 rounded text-accent hover:bg-accent-softest hover:underline" onclick={createCollection}>Create one?</button>
-				</Stack>
+			
+				<Empty
+					icon="FolderSimple"
+					message="There are no location collections for this project yet."
+					buttonLabel="Create one?"
+					buttonClick={createCollection}
+				/>
+
 			{/if}
 		</Section>
 
