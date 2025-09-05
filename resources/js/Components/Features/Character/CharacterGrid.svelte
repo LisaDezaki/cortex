@@ -1,5 +1,6 @@
 <script>
-    import Grid          from '@/Components/Core/Grid.svelte'
+    import { Grid } from '@/Components/Core'
+    import Empty from '@/Components/UI/Empty.svelte'
     import CharacterCard from '@/Components/Features/Character/CharacterCard.svelte'
 
 	let {
@@ -15,13 +16,13 @@
 
 
 
+{#if characters && characters.length > 0}
 
-<Grid
-	class={className}
-	cols={cols}
-	gap={2}
-{...restProps}>
-	{#if characters}
+	<Grid
+		class={className}
+		cols={cols}
+		gap={2}
+	{...restProps}>
 		{#each characters as character}
 			{#if gridItem}
 				{@render gridItem(character)}
@@ -29,5 +30,12 @@
 				<CharacterCard {character} />
 			{/if}
 		{/each}
-	{/if}
-</Grid>
+	</Grid>
+
+{:else}
+
+	<Empty
+		message="There were no results."
+	/>
+
+{/if}
