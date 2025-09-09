@@ -2,7 +2,7 @@
     import { onMount } from 'svelte'
 	import { Select } from "bits-ui";
 
-	import Flex      from '@/Components/Core/Flex.svelte'
+	import { Flex, Stack } from '@/Components/Core'
 	import Icon      from '@/Components/UI/Icon.svelte'
 	import Separator from '@/Components/UI/Separator.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
@@ -55,7 +55,34 @@
 
 
 
-{#snippet option(item)}
+
+
+{#snippet selectedValue()}
+	{#if !multiple}
+		{@render optionContent(selection)}
+	{:else if multiple}
+		<Flex justify="start" gap={1} wrap class="overflow-hidden">
+			{#each selection as selectionValue}
+				<Flex align="center" gap={1} class="bg-slate-500/5 flex-shrink-0 h-8 px-1.5 py-0.5 rounded">
+					{@render optionContent(selectionValue)}
+				</Flex>
+			{/each}
+		</Flex>
+	{/if}
+{/snippet}
+
+{#snippet optionItem(item)}
+	<Select.Item
+		class="input-option"
+		label={item?.label}
+		value={item?.value}
+		disabled={item?.disabled}
+	>
+		{@render optionContent(item)}
+	</Select.Item>
+{/snippet}
+
+{#snippet optionContent(item)}
 	{#if item?.image}
 		<Thumbnail class="rounded-full w-6" src={item.image} />
 	{/if}
@@ -64,20 +91,6 @@
 	{/if}
 	{#if item?.label}
 		<span class="line-clamp-1">{item.label}</span>
-	{/if}
-{/snippet}
-
-{#snippet selectedValue()}
-	{#if !multiple}
-		{@render option(selection)}
-	{:else if multiple}
-		<Flex justify="start" gap={1} wrap class="overflow-hidden">
-			{#each selection as selectionValue}
-				<Flex align="center" gap={1} class="bg-slate-500/5 flex-shrink-0 h-8 px-1.5 py-0.5 rounded">
-					{@render option(selectionValue)}
-				</Flex>
-			{/each}
-		</Flex>
 	{/if}
 {/snippet}
 
@@ -134,27 +147,24 @@
 			</Select.ScrollUpButton>
 
 			<Select.Viewport>
-				{#each options as opt, i (i + opt.value)}
-					{#if opt.separator}
-						<Separator class="my-1" />
+				<Stack>
+					{#each options as option, i}
+						{#if option.separator}
+							<Separator class="my-1" />
+						{:else if option.options}
+							<div class="font-medium opacity-50 px-2 py-1 text-sm">{option.label}</div>
+							{#each option.options as opt}
+								{@render optionItem(opt)}
+							{/each}
+						{:else}
+							{@render optionItem(option)}
+						{/if}
 					{:else}
-						<Select.Item
-							class="input-option"
-							label={opt?.label}
-							value={opt?.value}
-							disabled={opt?.disabled}
-						>
-							{@render option(opt)}
-							{#if value == opt.value}
-								<Icon class="ml-auto" name="Check" size="sm" />
-							{/if}
-						</Select.Item>
-					{/if}
-				{:else}
-					<span class="block px-5 py-2 text-sm text-muted-foreground">
-						No results found, try again.
-					</span>
-				{/each}
+						<span class="block px-5 py-2 text-sm text-muted-foreground">
+							No results found, try again.
+						</span>
+					{/each}
+				</Stack>
 			</Select.Viewport>
 
 			<Select.ScrollDownButton class="flex w-full items-center justify-center opacity-50">

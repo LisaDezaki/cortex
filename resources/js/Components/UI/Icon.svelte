@@ -27,6 +27,7 @@
 	import Compass from "phosphor-svelte/lib/Compass"
 	import CompassRose from "phosphor-svelte/lib/CompassRose"
 	import Crane from "phosphor-svelte/lib/Crane"
+	import DiamondsFour from "phosphor-svelte/lib/DiamondsFour"
 	import DotsSixVertical from "phosphor-svelte/lib/DotsSixVertical"
 	import DotsThreeOutline from "phosphor-svelte/lib/DotsThreeOutline"
 	import DotsThreeOutlineVertical from "phosphor-svelte/lib/DotsThreeOutlineVertical"
@@ -150,6 +151,7 @@
 		'Crane': Crane,
 		'Compass': Compass,
 		'CompassRose': CompassRose,
+		'DiamondsFour': DiamondsFour,
 		'DotsSixVertical': DotsSixVertical,
 		'DotsThreeOutline': DotsThreeOutline,
 		'DotsThreeOutlineVertical': DotsThreeOutlineVertical,

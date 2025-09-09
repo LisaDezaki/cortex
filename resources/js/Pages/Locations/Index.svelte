@@ -28,7 +28,7 @@
 	const locations     = activeProject?.locations  || []
 
 	//	State
-	let locationList		= $state(locations)
+	let filteredLocations   = $state(locations)
 	let selectedLocation 	= $state(null)
 	let layout    			= $state('grid')
 	let rowSize   			= $state(5)
@@ -67,10 +67,10 @@
 		)
 	}
 
-	function updateControls(filteredList, controls) {
-		locationList = filteredList
-		layout = controls.layout
-	}
+	// function updateControls(filteredList, controls) {
+	// 	locationList = filteredList
+	// 	layout = controls.layout
+	// }
 
 </script>
 
@@ -100,12 +100,15 @@
 
 	{#snippet article()}
 
-		<LocationControlBar
-			data={locations}
-			onUpdate={updateControls}
-		/>
+		{#if activeProject}
+			<LocationControlBar
+				data={locations}
+				bind:filteredData={filteredLocations}
+				project={activeProject}
+			/>
+		{/if}
 
-		<Section gap={6} class="px-12 py-6">
+		<Section gap={6} class="px-12">
 			{#if activeProject && locations?.length > 0}
 
 			
@@ -113,7 +116,7 @@
 
 				{#if layout == 'grid'}
 					<LocationGrid
-						locations={locationList}
+						locations={filteredLocations}
 						cols={gridCols}
 					>
 						{#snippet gridItem(location)}
@@ -149,7 +152,7 @@
 				
 				{:else if layout == 'table'}
 					<LocationTable
-						locations={locationList}
+						locations={filteredLocations}
 					/>
 
 				

@@ -1,6 +1,6 @@
 <script>
 
-	import { Flex } from '@/Components/Core'
+	import { Flex, Inline } from '@/Components/Core'
 	import Dropdown	from '@/Components/UI/Dropdown.svelte'
 	import Input	from '@/Components/UI/Input.svelte'
 
@@ -64,14 +64,13 @@
 		//			options in the dropdown (i.e, both "alias.asc" and "alias.desc")
 
 		// 1. Filter by search term
-		let filtered = data.filter(item => 
-			Object.values(item).some(value => 
-				String(value).toLowerCase().includes(query.toLowerCase())
-			)
-		);
+		let filtered = data.filter(item =>
+			item.name.toLowerCase().includes(query.toLowerCase())
+		)
 		
 		// 2. Filter by department
 		if (filter !== 'all') {
+			console.log('filter:', filter)
 			let fil = filter.split('.')
 			filtered = filtered.filter(item => item[fil[0]] === fil[1])
 		}
@@ -102,9 +101,13 @@
 			placeholder="Search..."
 		/>
 	{/if}
-	
+
 
 	<!-- Filter -->
+
+	<!-- TODO:	Dropdown component subitem selection doesn't behave as an input.
+	 			Probably requires a custom component that updates the value
+				even when clicking items in submenus. -->
 
 	{#if filterable}
 		<Dropdown bind:value={filter}
@@ -186,3 +189,12 @@
 
 	
 </Flex>
+
+<!-- Debug -->
+ 
+<!-- <Flex align="center" gap={3} class="px-12">
+	<Inline justify="center" class="border border-danger line-clamp-1 text-sm truncate px-3 py-1.5 rounded-full w-48">Query: "{query}"</Inline>
+	<Inline justify="center" class="border border-danger line-clamp-1 text-sm truncate px-3 py-1.5 rounded-full w-48">Filter: "{filter}"</Inline>
+	<Inline justify="center" class="border border-danger line-clamp-1 text-sm truncate px-3 py-1.5 rounded-full w-48">Sort: "{sort}"</Inline>
+	<Inline justify="center" class="border border-danger line-clamp-1 text-sm truncate px-3 py-1.5 rounded-full w-36 ml-auto">Layout: "{layout}"</Inline>
+</Flex> -->

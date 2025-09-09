@@ -1,6 +1,6 @@
 <script>
 	import { Link } from '@inertiajs/svelte'
-	import { DropdownMenu } from "bits-ui";
+	import { Menubar } from "bits-ui";
 
 	import Icon      from '@/Components/UI/Icon.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
@@ -28,6 +28,10 @@
 		e.preventDefault()
 	}
 
+	function selectItem(value) {
+		console.log('Dropdown.selectValue()', value)
+	}
+
 </script>
 
 
@@ -52,58 +56,62 @@
 {/snippet}
 
 
-<DropdownMenu.Root class="dropdown" onOpenChange={checkFocus} {...restProps}>
+<Menubar.Root class="dropdown" onOpenChange={checkFocus} {...restProps}>
+	<Menubar.Menu>
 
-	<DropdownMenu.Trigger class="input input-dropdown-trigger {className}">
+	<Menubar.Trigger class="input input-dropdown-trigger {className}">
 		{#if icon}
 			<Icon class="input-icon" name={icon} size="md" />
 		{/if}
-		{#if !label && placeholder}
+		<!-- {#if !label && placeholder}
 			<span class="font-style-placeholder input-value line-clamp-1 truncate {icon ? "pl-icon" : ""}">{placeholder}</span>
-		{/if}
-		{#if label}
-			<span class="input-value line-clamp-1 truncate {icon ? "pl-icon" : ""}">{label}</span>
+		{/if} -->
+		{#if value}
+			<span class="input-value line-clamp-1 truncate {icon ? "pl-icon" : ""}">{value}</span>
 		{/if}
 		{#if options}
 			<Icon class="input-action ml-auto" name="CaretUpDown" size="sm" weight="light" />
 		{/if}
-	</DropdownMenu.Trigger>
+	</Menubar.Trigger>
  
-	<DropdownMenu.Portal>
-		<DropdownMenu.Content class="input-content {contentClass}" sideOffset={-1}>
-			<DropdownMenu.RadioGroup bind:value>
+	<Menubar.Portal>
+		<Menubar.Content class="input-content {contentClass}" sideOffset={-1}>
+			<Menubar.RadioGroup bind:value>
 				{#if options}
 					{#each options as option}
 
 						{#if option.separator}
-							<DropdownMenu.Separator />
+							<Menubar.Separator />
 						{:else if option.children}
-							<DropdownMenu.Sub>
-								<DropdownMenu.SubTrigger>
+							<Menubar.Sub>
+								<Menubar.SubTrigger>
 									{@render item(option)}
-								</DropdownMenu.SubTrigger>
-								<DropdownMenu.Portal>
-									<DropdownMenu.SubContent class="input-content w-52" align="start" alignOffset={-4} sideOffset={0}>
+								</Menubar.SubTrigger>
+								<Menubar.Portal>
+									<Menubar.SubContent class="input-content w-52" align="start" alignOffset={-4} sideOffset={0}>
 										{#each option.children as child}
-											<DropdownMenu.Item>
-												{@render item(child)}
-											</DropdownMenu.Item>
+											<Menubar.Item onSelect={selectItem}>
+												<!-- <button class="w-full" onclick={selectItem}> -->
+													{@render item(child)}
+												<!-- </button> -->
+											</Menubar.Item>
 										{/each}
-									</DropdownMenu.SubContent>
-								</DropdownMenu.Portal>
-							</DropdownMenu.Sub>
+									</Menubar.SubContent>
+								</Menubar.Portal>
+							</Menubar.Sub>
 						{:else}
-							<DropdownMenu.Item>
+							<Menubar.Item onSelect={selectItem}>
 								{@render item(option)}
-							</DropdownMenu.Item>
+							</Menubar.Item>
 						{/if}
 
 					{/each}
 				{/if}
-			</DropdownMenu.RadioGroup>
-		</DropdownMenu.Content>
-	</DropdownMenu.Portal>
-</DropdownMenu.Root>
+			</Menubar.RadioGroup>
+		</Menubar.Content>
+	</Menubar.Portal>
+	</Menubar.Menu>
+</Menubar.Root>
 
 <style lang="postcss">
 

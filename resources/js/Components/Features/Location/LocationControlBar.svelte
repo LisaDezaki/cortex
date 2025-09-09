@@ -1,68 +1,83 @@
 <script>
+	//	Imports
+	import { page } from '@inertiajs/svelte'
+	import { Flex, Inline } from '@/Components/Core'
 	import ControlBar from '@/Components/UI/ControlBar.svelte'
 
+	const customFields = $page.props.customFields?.data
+
+	//	Props
 	let {
 		data = $bindable(),
+		filteredData = $bindable(),
+		project,
 		onUpdate,
 		...restProps
 	} = $props()
 
-	const handleUpdate = (query,filter,sort,layout) => {
-		let filteredList = data
-			.filter(c => {
-				if (query.length > 0 && !c.name.toLowerCase().includes(query.toLowerCase())) { return false }
-				if (filter === 'faction' && c.factions[0]?.name !== filter.value) { return false }
-				if (filter === 'location' && c.location?.name !== filter.value) { return false }
-				if (filter === 'relationship' && !c.relationships?.map(r => r.name).includes(filter.value)) { return false }
-				if (!['Faction', 'Location', 'Relationship'].includes(filter.name) && filter.value && c.customFieldValues?.find(f => f.field?.label === filter.name)?.value !== filter.value) { return false }
-				return true
-			}).sort((a, b) => {
-				if (sort === 'name')       { return a.name                 < b.name                 ? -1 : 1 }
-				if (sort === 'alias')      { return a.alias                < b.alias                ? -1 : 1 }
-				if (sort === 'popularity') { return a.relationships.length > b.relationships.length ? -1 : 1 }
-				if (sort === 'faction')    { return a.factions?.[0]?.name  < b.factions?.[0]?.name  ? -1 : 1 }
-				if (sort === 'location')   { return a.location?.name       < b.location?.name       ? -1 : 1 }
-				if (sort === 'created_at') { return a.meta.createdAt       < b.meta.createdAt       ? -1 : 1 }
-				if (sort === 'updated_at') { return a.meta.updatedAt       < b.meta.updatedAt       ? -1 : 1 }
-				if (sort === 'random')     { return Math.random()          < 0.5                    ? -1 : 1 }
-			})
+	//	Default values
+	let query	= $state('')
+	let filter	= $state('')
+	let sort	= $state('name')
+	let sortDir = $state('asc')
+	let layout	= $state('grid')
+	let size	= $state(8)
+	const min	= $state(4)
+	const max	= $state(12)
 
-		onUpdate(filteredList, {query,filter,sort,layout})
+	//	Submenu Options
+	// let factionOptions = project.factions?.map(f => {
+	// 	return { label: f.name, value: `factions.*.${f.slug}`, image: f.image?.url, filterFunction: (ch) => { return ch.factions[0].slug == f.slug } }
+	// })
+	let locationOptions = project?.locations?.map(l => {
+		return { label: l.name, value: `location.${l.slug}`, image: l.image?.url, filterFunction: (ch) => { return ch.location.slug == l.slug } }
+	})
+	// let relationshipOptions = project.characters?.map(c => {
+	// 	return { label: c.name, value: `relationship.*.${c.slug}`, image: c.image?.url, filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
+	// })
+	let customFieldOptions = (field) => {
+		return field.options?.map(opt => {
+			return { label: opt.label, value: `${field.name}.${opt.value}`, filterFunction: (ch) => { return ch.customFieldValues.find(f => f.field?.label === filter.name)?.value !== filter.value } }
+		})
 	}
+
+	//	Menu Options
+	const filterOptions = $state([
+		{ label: 'All Locations', 	value: '',		filterFunction: (ch) => { return ch } },
+		{ 	separator: true },
+		{ label: 'Parent location...',	children: locationOptions },
+		{ label: 'Child location...',	children: locationOptions },
+		{ 	separator: true },
+		...customFields?.map(f => {
+			return { label: `${f.label}...`, children: customFieldOptions(f) }
+		})
+	])
+	const sortOptions = $state([
+		{ label: "By name",			value: 'name',      sortFunction: (a,b) => { return a.name 				< b.name					? -1 : 1 } },
+		{ label: "By type",			value: 'type',      sortFunction: (a,b) => { return a.type             	< b.alias					? -1 : 1 } },
+		...customFields?.map(f => {
+			return { label: `By ${f.label.toLowerCase()}`, value: f.name }
+		}),
+		{ 	separator: true },
+		{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
+		{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
+		{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } },
+	])
+	const layoutOptions = $state([
+		{ label: "As Maps",  		value: "map",		icon: "Compass"	 },
+		{ label: "As Grid",   		value: "grid",		icon: "GridFour" },
+		{ label: "As Table",  		value: "table",		icon: "Table"	 }
+	])
 
 </script>
 
 
 
 <ControlBar
-	bind:data
-	filterOptions={[
-		{ label: 'All Locations', 	value: '' },
-		{ label: 'Nameless',   		value: 'noname' },
-		{ label: 'Incomplete', 		value: 'incomplete' },
-		{ separator: true },
-		// { label: 'Has character...', children: characters.map(c => {
-		// 	return { label: c.name, value: `character.${c.slug}`, image: c.portrait?.url }
-		// }) },
-		// ...customFields.filter(f => f.type == 'select').map(f => {
-		// 	return { label: `${f.label}...`, children: f.options.map(o => {
-		// 		return { label: o.label, value: `${f.name}.${o.value}` }
-		// 	})}
-		// })
-	]}
-	sortOptions={[
-		{ value: 'name',   label: "By location name" },
-		{ value: 'type',   label: "By location type" },
-		{ value: 'parent', label: "By parent name" },
-		{ separator: true },
-		{ value: 'created', label: "Date Created" },
-		{ value: 'updated', label: "Date Updated" },
-		{ value: 'random',  label: "Randomly" },
-	]}
-	layoutOptions={[
-		{ icon: "Compass",  label: "As Maps",  value: "map"   },
-		{ icon: "GridFour", label: "As Grid",  value: "grid"  },
-		{ icon: "Table",    label: "As Table", value: "table" }
-	]}
-	onUpdate={handleUpdate}
+	bind:filteredData data={data}
+	bind:query
+	bind:filter	filterOptions={filterOptions}
+	bind:sort bind:sortDir sortOptions={sortOptions}
+	bind:layout	layoutOptions={layoutOptions}
+	bind:size	{min} {max}
 {...restProps} />

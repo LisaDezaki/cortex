@@ -27,7 +27,6 @@
 
 	//	State
 	let filteredCharacters  = $state(characters)
-	let characterList 		= $state(characters)
 	let selectedCharacter 	= $state(null)
 	let layout    			= $state('grid')
 	let rowSize   			= $state(8)
@@ -41,18 +40,18 @@
 	let creatingCollection	= $state(false)
 	let applyingTags		= $state(false)
 
-	const applyTags			= (c) => { applyingTags 		= true, selectedCharacter = c; }
-	const createCharacter	= (c) => { creatingCharacter 	= true }
-	const createCollection	= (c) => { creatingCollection 	= true,	selectedCharacter = c; }
-	const deleteCharacter	= (c) => { deletingCharacter 	= true,	selectedCharacter = c; }
-	const renameCharacter	= (c) => { renamingCharacter 	= true,	selectedCharacter = c; }
+	const createCharacter	= ( ) => { 	creatingCharacter 	= true }
+	const deleteCharacter	= (c) => { 	deletingCharacter 	= true,	selectedCharacter = c; }
+	const renameCharacter	= (c) => { 	renamingCharacter 	= true,	selectedCharacter = c; }
+	const createCollection	= (c) => { 	creatingCollection 	= true,	selectedCharacter = c; }
+	const applyTags			= (c) => { 	applyingTags 		= true, selectedCharacter = c; }
 	const closeModal		= ( ) => {  selectedCharacter	= null
-										applyingTags 		= false
 										creatingCharacter	= false
-										creatingCollection	= false
 										deletingCharacter	= false
 										renamingCharacter	= false
-									}
+										creatingCollection	= false
+										applyingTags 		= false
+																	}
 
 	//	Add Character to Collection
 	const addToCollectionForm = useForm({
@@ -99,13 +98,15 @@
 
 	{#snippet article()}
 
-		<CharacterControlBar
-			data={characters}
-			bind:filteredData={filteredCharacters}
-			project={activeProject}
-		/>
+		{#if activeProject}
+			<CharacterControlBar
+				data={characters}
+				bind:filteredData={filteredCharacters}
+				project={activeProject}
+			/>
+		{/if}
 
-		<Section gap={6} class="px-12 py-6">
+		<Section gap={6} class="px-12">
 			{#if activeProject && characters.length > 0}
 
 
@@ -151,7 +152,7 @@
 
 				{:else if layout === 'table'}
 					<CharacterTable
-						characters={characterList}
+						characters={filteredCharacters}
 					/>
 
 				<!-- Graph -->
@@ -180,11 +181,7 @@
 
 </AuthenticatedLayout>
 
-<Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
-	onclose={closeModal}>
-	<ApplyTagsForm type="characters" entity={selectedCharacter || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
+
 
 <Modal title="Create a new character" show={creatingCharacter} maxWidth="lg"
 	onclose={closeModal}>
@@ -207,5 +204,11 @@
 <Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
 	onclose={closeModal}>
 	<CreateCollectionForm type="characters" entity={selectedCharacter || null}
+		onSuccess={closeModal} oncancel={closeModal} />
+</Modal>
+
+<Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
+	onclose={closeModal}>
+	<ApplyTagsForm type="characters" entity={selectedCharacter || null}
 		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>

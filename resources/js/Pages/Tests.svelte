@@ -1,13 +1,12 @@
 <script>
 
 	import { page, useForm } from '@inertiajs/svelte'
-	import { route } from 'momentum-trail'
 	
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
 	import {
-		Form,
-		PanZoom,
+		Form, Inline,
+		PanZoom, Stack,
 		UploadContext,
 		UploadPreview,
 		UploadTrigger
@@ -15,28 +14,27 @@
 
 	import Avatar      from '@/Components/UI/Avatar.svelte'
 	import Badge       from '@/Components/UI/Badge.svelte'
-	import Breadcrumbs from '@/Components/UI/Breadcrumbs.svelte'
 	import Button      from '@/Components/UI/Button.svelte'
 	import Checkbox    from '@/Components/UI/Inputs/Checkbox.svelte'
 	import Dropdown    from '@/Components/UI/Dropdown.svelte'
 	import Field       from '@/Components/UI/Field.svelte'
 	import Heading     from '@/Components/UI/Heading.svelte'
-	import Input       from '@/Components/UI/Input.svelte'
 	import PageHeader  from '@/Components/UI/PageHeader.svelte'
 	import Section     from '@/Components/UI/Section.svelte'
 	import Table       from '@/Components/UI/Table'
-	import Tabs        from '@/Components/UI/Tabs'
 	import Thumbnail   from '@/Components/UI/Thumbnail.svelte'
+
+	let activeTab = $state('general')
 
 	const activeProject = $page.props.activeProject?.data
 
 	const form = useForm({
-		input: 'Input',
-		text: 'Text input',
-		icon: 'Input with icon',
-		email: 'email',
-		password: 'password',
-		number: 123,
+		input: '',
+		text: '',
+		icon: '',
+		email: '',
+		password: '',
+		number: null,
 		url: '',
 		search: '',
 		textarea: '',
@@ -47,10 +45,6 @@
 		select_multi_1: [],
 		select_multi_2: [],
 		select_multi_3: [],
-
-		// combobox: '',
-		// combobox_icons: '',
-		// combobox_images: '',
 
 		upload: null,
 		upload_multi: [],
@@ -92,104 +86,89 @@
 
 	{#snippet header()}
 		<PageHeader
-			back={route('dashboard')}
 			title="Tests"
+			tabs={[
+				{ icon: 'DiamondsFour',	label: 'General',		active: activeTab === 'general',	onclick: () => activeTab = 'general'	},
+				{ icon: 'Textbox',		label: 'Forms',			active: activeTab === 'forms',		onclick: () => activeTab = 'forms'		},
+				{ icon: 'Table',		label: 'Table',			active: activeTab === 'table',		onclick: () => activeTab = 'table'		},
+				{ icon: 'TextAa',		label: 'Typography',	active: activeTab === 'typography',	onclick: () => activeTab = 'typography'	}
+			]}
 		/>
 	{/snippet}
 
 	{#snippet article()}
 		<Section size="5xl" class="overflow-y-auto">
-			<Tabs value="tab2" class="py-12">
 
-				<Tabs.List class="max-w-4xl">
-					<Tabs.Trigger value="tab1">General</Tabs.Trigger>
-					<Tabs.Trigger value="tab2">Forms</Tabs.Trigger>
-					<Tabs.Trigger value="tab3">Table</Tabs.Trigger>
-					<Tabs.Trigger value="tab4">Typography</Tabs.Trigger>
-				</Tabs.List>
+				{#if activeTab === 'general'}
 
-				<Tabs.Content value="tab1" class="space-y-6 mt-6">
-
-					<Heading is="h2" as="h3"
+					<Heading is="h2" as="h4"
 						heading="General Components"
 						class="mt-12 mb-12"
 					/>
-
-					<PanZoom debug constrain class="flex items-center justify-center h-96">
-						<img src="/img/world-4.png" alt="world map" />
-					</PanZoom>
-
-					<!-- <UploadContext bind:value={$form.upload}>
-						<UploadTrigger />
-						<UploadPreview class="aspect-square h-48 w-72" />
-					</UploadContext>
-
-					<UploadContext bind:value={$form.upload_multi} multiple>
-						<UploadTrigger />
-						<UploadPreview class="aspect-square h-48 w-72" />
-					</UploadContext> -->
 					
 					<!-- Avatar -->
 
-					<div>
-						<Heading is="h2" as="h5">Avatar</Heading>
+					<Stack gap={1.5} class="mb-12">
+						<Heading is="h3" as="h6">Avatar</Heading>
 						<p class="max-w-[72ch]">Avatars are used to represent users or entities in your application. They can be images or initials, and can be used in various sizes.</p>
-						<div class="flex items-center justify-start gap-6 px-3 py-6">
+						<Inline gap={6} class="mt-3">
 							<Avatar class="w-20" src="/img/avatar.jpg" alt="@username" fallback="AB" />
 							<Avatar class="w-16" src="/img/avatar.png" alt="@username" fallback="CD" />
 							<Avatar class="w-12" src="/img/avatar.jpg" alt="@username" fallback="EF" />
 							<Avatar class="w-8"  src="/img/avatar.png" alt="@username" fallback="GH" />
-						</div>
-					</div>
+						</Inline>
+					</Stack>
 
 					<!-- Badge -->
 
-					<div>
-						<Heading is="h2" as="h5">Badge</Heading>
+					<Stack gap={1.5} class="mb-12">
+						<Heading is="h3" as="h6">Badge</Heading>
 						<p class="max-w-[72ch]">The Badge component is used to display small counts or notifications. It can be used in various contexts, such as with buttons or avatars.</p>
-						<div class="flex items-center justify-start gap-6 px-3 py-6">
+						<Inline gap={6} class="mt-3">
 							<Badge label="9" primary />
 							<Badge label="99" secondary />
 							<Badge label="999" disabled />
 							<Badge />
-						</div>
-					</div>
+						</Inline>
+					</Stack>
 
 					<!-- Button -->
 
-					<div>
-						<Heading is="h2" as="h5">Button</Heading>
+					<Stack gap={1.5} class="mb-12">
+						<Heading is="h3" as="h6">Button</Heading>
 						<p class="max-w-[72ch]">Buttons are used to trigger actions in your application. They can be styled in various ways, such as primary, secondary, danger, and disabled.</p>
-						<div class="flex flex-wrap items-center justify-start gap-6 px-3 py-6">
+						<Inline gap={6} class="mt-3">
 							<Button style="hard" theme="accent"  icon="Check" label="Primary"    />
 							<Button style="hard" theme="neutral" icon="List"  label="Secondary"  />
 							<Button style="hard" theme="danger"  icon="Trash" label="Danger"     />
 							<Button style="hard" theme="accent"  icon="Check" />
 							<Button style="hard" theme="neutral" icon="List" />
 							<Button style="hard" theme="danger"  icon="Trash" />
-
+						</Inline>
+						<Inline gap={6} class="mt-3">
 							<Button style="soft" theme="accent"  icon="Check" label="Primary" />
 							<Button style="soft" theme="neutral" icon="List"  label="Secondary" />
 							<Button style="soft" theme="danger"  icon="Trash" label="Danger" />
 							<Button style="soft" theme="accent"  icon="Check" />
 							<Button style="soft" theme="neutral" icon="List" />
 							<Button style="soft" theme="danger"  icon="Trash" />
-
+						</Inline>
+						<Inline gap={6} class="mt-3">
 							<Button style="plain" theme="accent"  icon="Check" label="Primary" />
 							<Button style="plain" theme="neutral" icon="List"  label="Secondary" />
 							<Button style="plain" theme="danger"  icon="Trash" label="Danger" />
 							<Button style="plain" theme="accent"  icon="Check" />
 							<Button style="plain" theme="neutral" icon="List" />
 							<Button style="plain" theme="danger"  icon="Trash" />
-						</div>
-					</div>
+						</Inline>
+					</Stack>
 
 					<!-- Dropdown -->
 
-					<div>
-						<Heading is="h2" as="h5">Dropdown</Heading>
+					<Stack gap={1.5} class="mb-12">
+						<Heading is="h3" as="h6">Dropdown</Heading>
 						<p class="max-w-[72ch]">The Dropdown component is used to display a list of options that can be selected. It can be used with buttons or other elements to trigger the dropdown menu.</p>
-						<div class="flex items-center justify-start gap-6 px-3 py-6">
+						<Inline gap={6} class="mt-3">
 							<Dropdown>
 								<Button primary>Dropdown</Button>
 								{#snippet content()}
@@ -201,15 +180,25 @@
 									<Dropdown.Link href="/">Link 6</Dropdown.Link>
 								{/snippet}
 							</Dropdown>
-						</div>
-					</div>
+						</Inline>
+					</Stack>
+
+
+
+					<Stack gap={1.5} class="mb-12">
+						<Heading is="h3" as="h6">PanZoom</Heading>
+						<p class="max-w-[72ch]">The PanZoom component is used to display a large area of content within a smaller area, allowing users to click and drag to navigate around.</p>
+						<PanZoom debug constrain class="flex items-center justify-center h-96 mt-3 rounded-lg">
+							<img src="/img/world-4.png" alt="world map" />
+						</PanZoom>
+					</Stack>
 
 					<!-- Thumbnail -->
 
-					<div>
-						<Heading is="h2" as="h5">Thumbnail</Heading>
+					<Stack gap={1.5} class="mb-12">
+						<Heading is="h3" as="h6">Thumbnail</Heading>
 						<p class="max-w-[72ch]">Thumbnails are used to display images in a compact format. They can be used to represent users, products, or any other visual content.</p>
-						<div class="flex flex-wrap items-start justify-start gap-6 px-3 py-6">
+						<Inline gap={6} class="mt-3">
 							<Thumbnail class="w-20" src="/img/avatar.jpg" alt="User" />
 							<Thumbnail class="w-16" src="/img/avatar.jpg" alt="User" />
 							<Thumbnail class="w-14" src="/img/avatar.jpg" alt="User" />
@@ -217,85 +206,66 @@
 							<Thumbnail class="w-10" src="/img/avatar.jpg" alt="User" />
 							<Thumbnail class="w-9" src="/img/avatar.jpg" alt="User" />
 							<Thumbnail class="w-8" src="/img/avatar.jpg" alt="User" />
-						</div>
-					</div>
+						</Inline>
+					</Stack>
 
-				</Tabs.Content>
-				<Tabs.Content value="tab2">
-					<Heading is="h2" as="h3"
+				{:else if activeTab === 'forms'}
+
+					<Heading is="h2" as="h4"
 						heading="Form Components"
 						class="mt-12 mb-12"
 					/>
+
 					<Form class="grid grid-cols-4 gap-6" form={form}>
 						<div class="col-span-1 space-y-3">
 							
 							<!-- Input -->
 
-							<!-- <Input type="text"
-								name="text"
-								class="w-full"
-								placeholder="Input"
-							/> -->
+							<Heading is="h3" as="h6">Input</Heading>
 
 							<Field type="text"
 								name="text"
-								label="Name"
-								class="w-full"
 								placeholder="Input"
 							/>
 
-							<!-- <Input type="text"
+							<Field type="text"
 								name="icon"
-								class="w-full"
 								icon="TextAa"
 								placeholder="Input with icon"
-							/> -->
-
-							<Field type="text"
-								name="icon"
-								label="Name"
-								class="w-full"
-								placeholder="Input with icon"
 							/>
 
-							<Input type="email"
+							<Field type="email"
 								name="email"
-								class="w-full"
 								icon="At"
 								placeholder="user@email.com"
 							/>
 
-							<Input type="password"
+							<Field type="password"
 								name="password"
-								class="w-full"
 								icon="Password"
 								placeholder="Input with icon"
 							/>
 
-							<Input type="number"
+							<Field type="number"
 								name="number"
-								class="w-full"
 								icon="Hash"
 								placeholder={0}
 							/>
 
-							<Input type="url"
+							<Field type="url"
 								name="url"
-								class="w-full"
 								icon="Link"
 								placeholder="URL input"
 							/>
 
-							<Input type="search"
+							<Field type="search"
 								name="search"
-								class="w-full"
 								icon="MagnifyingGlass"
 								placeholder="Search..."
 							/>
 
-							<Input type="textarea"
+							<Field type="textarea"
 								name="textarea"
-								class="w-full"
 								placeholder="Textarea"
 								rows={3}
 							/>
@@ -326,12 +296,12 @@
 						</div>
 						<div class="col-span-1 space-y-3">
 
-
+							<Heading is="h3" as="h6">Select</Heading>
 
 							<!-- Select -->
 
-							<!-- <Input type="select"
-								id="select"
+							<Field type="select"
+								name="select"
 								class="w-full"
 								placeholder="Select..."
 								bind:value={$form.select}
@@ -344,8 +314,8 @@
 								]}
 							/>
 
-							<Input type="select"
-								id="select"
+							<Field type="select"
+								name="select"
 								class="w-full"
 								icon="FolderSimple"
 								placeholder="Select with icons..."
@@ -359,8 +329,8 @@
 								]}
 							/>
 
-							<Input type="select"
-								id="select"
+							<Field type="select"
+								name="select"
 								class="w-full"
 								icon="UserCircle"
 								placeholder="Select with images..."
@@ -374,8 +344,8 @@
 								]}
 							/>
 
-							<Input type="select"
-								id="select_multi"
+							<!-- <Field type="select"
+								name="select_multi"
 								class="w-full"
 								placeholder="Select multi..."
 								bind:value={$form.select_multi_1}
@@ -387,10 +357,10 @@
 									{ value: 'option5', label: 'Option 5' }
 								]}
 								multiple
-							/>
+							/> -->
 
-							<Input type="select"
-								id="select_multi"
+							<!-- <Field type="select"
+								name="select_multi"
 								class="w-full"
 								icon="FolderSimple"
 								placeholder="Multi with icons..."
@@ -645,8 +615,7 @@
 							
 					</Form>
 
-				</Tabs.Content>
-				<Tabs.Content value="tab3">
+				{:else if activeTab === 'table'}
 
 					<Heading is="h2" as="h3"
 						heading="Table example"
@@ -673,8 +642,7 @@
 						{ id: 3, name: 'McCoy', role: 'Doctor', color: 'Blue' }
 					]} />
 						
-				</Tabs.Content>
-				<Tabs.Content value="tab4">
+				{:else if activeTab === 'typography'}
 
 					<Heading is="h2" as="h3"
 						heading="Typography"
@@ -721,8 +689,9 @@
 					<div class="grid grid-cols-11"></div>
 					<div class="grid grid-cols-12"></div>
 		
-				</Tabs.Content>
-			</Tabs>
+				{/if}
+
+			<!-- </Tabs> -->
 		</Section>
 	{/snippet}
 	

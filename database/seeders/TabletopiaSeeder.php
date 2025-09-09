@@ -23,13 +23,19 @@ class TabletopiaSeeder extends Seeder
 		 * Create Custom Fields
 		 */
 
+		$classMap = [
+			'character' => Character::class,
+			'faction'	=> Faction::class,
+			'location'	=> Location::class
+		];
+
 		$fields = [];
 		$json = File::get(database_path('data/tabletopia/custom_fields.json'));
 		$json_fields = json_decode($json, true);
 		foreach($json_fields as $slug => $field) {
 			$fields[$slug] = CustomField::create([
 				'project_id' => $projects['tabletopia']->id,
-				'fieldable_type' => $field['fieldable_type'],
+				'fieldable_type' => $classMap[$field['fieldable_type']],	//	Needs to be class
 				'type' => $field['type'],
 				'name' => $field['name'],
 				'label' => $field['label'],

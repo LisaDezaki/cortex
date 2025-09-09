@@ -12,7 +12,7 @@
 </script>
 
 {#if showIf}
-	<Avatar.Root class="avatar {className} {restProps.square ? 'square' : ''}" {...restProps}>
+	<Avatar.Root class="avatar aspect-square {className} {restProps.square ? 'square' : ''}" {...restProps}>
 		<Avatar.Image class="avatar-image" src={src} alt={alt}></Avatar.Image>
 		<Avatar.Fallback class="avatar-fallback">{fallback}</Avatar.Fallback>
 	</Avatar.Root>

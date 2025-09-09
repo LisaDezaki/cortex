@@ -4,11 +4,11 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
-	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
 	import CreateFactionForm 	from '@/Forms/Faction/Create.svelte'
 	import DeleteFactionForm 	from '@/Forms/Faction/Delete.svelte'
 	import RenameFactionForm 	from '@/Forms/Faction/Rename.svelte'
+	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
+	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
 
 	import Empty     	from '@/Components/UI/Empty.svelte'
 	import Modal		from '@/Components/UI/Modal.svelte'
@@ -21,15 +21,17 @@
 	import FactionTable from '@/Components/Features/Faction/FactionTable.svelte'
 
 	//	Page props
-	const activeProject = $page.props.activeProject.data
-	const collections	= $page.props.collections?.data
-	const factions      = activeProject?.factions
-
+	const activeProject 	= $page.props.activeProject.data
+	const collections		= $page.props.collections?.data
+	const factions      	= activeProject?.factions
+	
 	//	State
-	let factionList 	= $state(factions)
-	let selectedFaction = $state(null)
-	let layout    		= $state('grid')
-	let rowSize   		= $state(8)
+	let filteredFactions 	= $state(factions)
+	let selectedFaction 	= $state(null)
+	let layout    			= $state('grid')
+	let rowSize   			= $state(8)
+
+	let gridCols    		= $derived( 16-rowSize )
 
 	//	State > Modals
 	let creatingFaction		= $state(false)
@@ -38,37 +40,35 @@
 	let creatingCollection	= $state(false)
 	let applyingTags		= $state(false)
 
-	let gridRows    		= $derived( 16-rowSize )
-
-	const applyTags			= (f) => { applyingTags = true,			selectedFaction = f; }
-	const createFaction		= ( ) => { creatingFaction 	= true }
-	const createCollection	= (f) => { creatingCollection = true,	selectedFaction = f; }
-	const deleteFaction		= (f) => { deletingFaction = true,		selectedFaction = f; }
-	const renameFaction		= (f) => { renamingFaction = true,		selectedFaction = f; }
-	const closeModal		= ( ) => {  selectedFaction	= null
-										applyingTags = false
-										creatingFaction	= false
-										creatingCollection = false
-										deletingFaction	= false
-										renamingFaction	= false
-									}
+	const createFaction		= ( ) => { 	creatingFaction 	= true }
+	const deleteFaction		= (f) => { 	deletingFaction 	= true,	selectedFaction = f; }
+	const renameFaction		= (f) => { 	renamingFaction 	= true,	selectedFaction = f; }
+	const createCollection	= (f) => { 	creatingCollection 	= true,	selectedFaction = f; }
+	const applyTags			= (f) => { 	applyingTags 		= true,	selectedFaction = f; }
+	const closeModal		= ( ) => {  selectedFaction		= null
+										creatingFaction		= false
+										deletingFaction		= false
+										renamingFaction		= false
+										creatingCollection 	= false
+										applyingTags 		= false
+																	}
 
 	//	Add faction to Collection
 	const addToCollectionForm = useForm({
 		items: [{ id: null, type: 'factions' }]
 	})
 
-	function addToCollection(char, coll) {
-		$addToCollectionForm.items[0]  = { id: char.id, type: 'factions' }
+	function addToCollection(fac, coll) {
+		$addToCollectionForm.items[0]  = { id: fac.id, type: 'factions' }
 		$addToCollectionForm.patch(
 			route('collections.update', { collection: coll.slug })
 		)
 	}
 
-	function updateControls(filteredList, controls) {
-		factionList = filteredList
-		layout = controls.layout
-	}
+	// function updateControls(filteredList, controls) {
+	// 	factionList = filteredList
+	// 	layout = controls.layout
+	// }
 
 </script>
 
@@ -100,10 +100,11 @@
 
 		<FactionControlBar
 			data={factions}
-			onUpdate={updateControls}
+			bind:filteredData={filteredFactions}
+			project={activeProject}
 		/>
 
-		<Section gap={6} class="px-12 py-6">
+		<Section gap={6} class="px-12">
 			{#if activeProject && factions?.length > 0}
 
 
@@ -111,8 +112,8 @@
 
 				{#if layout == 'grid'}
 					<FactionGrid
-						factions={factionList}
-						cols={gridRows}
+						factions={filteredFactions}
+						cols={gridCols}
 					>
 						{#snippet gridItem(faction)}
 							<FactionCard
@@ -124,7 +125,13 @@
 									{ label: "Add to Collection",	icon: "FolderSimple",
 										options: [
 											...collections.map(c => {
-												return { label: c.name, icon: "FolderSimple", onclick: () => addToCollection(faction, c) }
+												return {
+													label: c.name,
+													icon: "FolderSimple",
+													onclick: () => addToCollection(faction, f),
+													disabled: f.items.map(i => i.collectionable_id).includes(character.id),
+													iconWeight: f.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light' }
+												// return { label: c.name, icon: "FolderSimple", onclick: () => addToCollection(faction, c) }
 											}),
 											{ label: "New Collection", icon: "Plus", onclick: () => createCollection(faction), theme: "accent" }
 										]
@@ -144,7 +151,7 @@
 
 				{:else if layout == 'table'}
 					<FactionTable
-						factions={factionList}
+						factions={filteredFactions}
 					/>
 
 
@@ -164,47 +171,34 @@
     
 </AuthenticatedLayout>
 
-<Modal
-	title="Apply Tags"
-	maxWidth="lg"
-	show={applyingTags}
-	onclose={closeModal}
->
-	<ApplyTagsForm type="characters" entity={selectedFaction || null} oncancel={closeModal} />
+
+
+<Modal title="Create a new faction" show={creatingFaction} maxWidth="lg"
+	onclose={closeModal}>
+	<CreateFactionForm
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>
 
-<Modal
-	title="Create a new character"
-	maxWidth="lg"
-	show={creatingFaction}
-	onclose={closeModal}
->
-	<CreateFactionForm oncancel={closeModal} />
+<Modal title="Rename {selectedFaction?.name}?" show={renamingFaction} maxWidth="lg"
+	onclose={closeModal}>
+	<RenameFactionForm faction={selectedFaction || null}
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>
 
-<Modal
-	title="Rename {selectedFaction?.name}?"
-	maxWidth="lg"
-	show={renamingFaction}
-	onclose={closeModal}
->
-	<RenameFactionForm faction={selectedFaction || null} oncancel={closeModal} />
+<Modal title="Delete {selectedFaction?.name}?" show={deletingFaction} maxWidth="lg"
+	onclose={closeModal}>
+	<DeleteFactionForm faction={selectedFaction || null}
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>
 
-<Modal
-	title="Delete {selectedFaction?.name}?"
-	maxWidth="lg"
-	show={deletingFaction}
-	onclose={closeModal}
->
-	<DeleteFactionForm faction={selectedFaction || null} oncancel={closeModal} />
+<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
+	onclose={closeModal}>
+	<CreateCollectionForm type="factions" entity={selectedFaction || null}
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>
 
-<Modal
-	title="Create Collection"
-	maxWidth="lg"
-	show={creatingCollection}
-	onclose={closeModal}
->
-	<CreateCollectionForm type="characters" entity={selectedFaction || null} oncancel={closeModal} />
+<Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
+	onclose={closeModal}>
+	<ApplyTagsForm type="factions" entity={selectedFaction || null}
+		onSuccess={closeModal} oncancel={closeModal} />
 </Modal>

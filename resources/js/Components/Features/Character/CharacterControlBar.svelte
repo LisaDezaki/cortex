@@ -1,12 +1,15 @@
 <script>
 	//	Imports
+	import { page } from '@inertiajs/svelte'
 	import { Flex, Inline } from '@/Components/Core'
 	import ControlBar from '@/Components/UI/ControlBar.svelte'
+
+	const customFields = $page.props.customFields?.data
 
 	//	Props
 	let {
 		data,
-		filteredData = $bindable(data),
+		filteredData = $bindable(),
 		project,
 		onUpdate,
 		...restProps
@@ -45,14 +48,13 @@
 	//	Menu Options
 	const filterOptions = $state([
 		{ label: 'All Characters', 	value: '',		filterFunction: (ch) => { return ch } },
-		{ label: 'Nameless',   		value: 'name',	filterFunction: (ch) => { return ch.name === ''} },
-		{ separator: true },
-		{ label: 'In Faction...',			children: factionOptions },
-		{ label: 'At Location...',			children: locationOptions },
-		{ label: 'With Relationships...',	children: relationshipOptions },
-		{ separator: true },
-		...project.customFields?.map(f => {
-			return { label: `${f.label}...`, children: customFieldOptions(f)}
+		{ 	separator: true },
+		{ label: 'Faction...',		children: factionOptions },
+		{ label: 'Location...',		children: locationOptions },
+		{ label: 'Relationship...',	children: relationshipOptions },
+		{ 	separator: true },
+		...customFields?.map(f => {
+			return { label: `${f.label}...`, children: customFieldOptions(f) }
 		})
 	])
 	const sortOptions = $state([
@@ -61,34 +63,27 @@
 		{ label: "By popularity",	value: 'popularity', sortFunction: (a,b) => { return a.relationships.length > b.relationships.length 	? -1 : 1 } },
 		{ label: "By location",		value: 'location',   sortFunction: (a,b) => { return a.location?.name       < b.location?.name 			? -1 : 1 } },
 		{ label: "By faction",		value: 'faction',    sortFunction: (a,b) => { return a.factions?.[0]?.name  < b.factions?.[0]?.name 	? -1 : 1 } },
-		{ separator: true },
+		...customFields?.map(f => {
+			return { label: `By ${f.label.toLowerCase()}`, value: f.name }
+		}),
+		{ 	separator: true },
 		{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
 		{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
 		{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } },
 	])
 	const layoutOptions = $state([
-		{ label: "As Graph",  value: "graph",	icon: "Graph"	 },
-		{ label: "As Grid",   value: "grid",	icon: "GridFour" },
-		{ label: "As Table",  value: "table",	icon: "Table"	 }
+		{ label: "As Graph",  		value: "graph",		icon: "Graph"	 },
+		{ label: "As Grid",   		value: "grid",		icon: "GridFour" },
+		{ label: "As Table",  		value: "table",		icon: "Table"	 }
 	])
 
 </script>
 
 <ControlBar
-	{data} bind:filteredData
-	bind:query	
+	bind:filteredData data={data}
+	bind:query
 	bind:filter	filterOptions={filterOptions}
-	bind:sort bind:sortDir	sortOptions={sortOptions}
+	bind:sort bind:sortDir sortOptions={sortOptions}
 	bind:layout	layoutOptions={layoutOptions}
 	bind:size	{min} {max}
 {...restProps} />
-
-<Flex align="center" gap={3} class="px-12 pt-6">
-	<span class="font-bold text-lg">Controls:</span>
-	<Inline justify="center" class="bg-neutral-softer px-3 py-1.5 rounded-full w-32">Query: "{query}"</Inline>
-	<Inline justify="center" class="bg-neutral-softer px-3 py-1.5 rounded-full w-32">Filter: "{filter}"</Inline>
-	<Inline justify="center" class="bg-neutral-softer px-3 py-1.5 rounded-full w-32">Sort: "{sort}"</Inline>
-	<Inline justify="center" class="bg-neutral-softer px-3 py-1.5 rounded-full w-32">Layout: "{layout}"</Inline>
-</Flex>
-
-<!-- <pre>{JSON.stringify(filteredData.map(ch => ch.name))}</pre> -->
