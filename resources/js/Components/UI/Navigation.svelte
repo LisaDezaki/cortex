@@ -23,7 +23,7 @@
 		<Stack align="center" gap={2} class="px-2 pt-2 w-full">
 			<Flex align="center" justify="between" class="w-full">
 				<Nav.Logo />
-				<Navatar src={user.avatar?.url} fallback={user.name?.toUpperCase().substr(0,2)} />
+				<Navatar src={user.avatar?.url} fallback={user.name?.toUpperCase().substr(0,2)} href={route('profile.edit')} />
 			</Flex>
 			<ProjectSelect projects={projects} active={activeProject?.id} />
 		</Stack>

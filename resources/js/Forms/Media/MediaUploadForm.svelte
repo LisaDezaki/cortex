@@ -41,7 +41,7 @@
 	method={method}
 {...restProps}>
 
-	<UploadContext class="p-3" {media} {type} {multiple}>
+	<UploadContext {media} {type} {multiple}>
 
 		{#if !multiple}
 

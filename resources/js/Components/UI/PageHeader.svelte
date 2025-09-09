@@ -49,7 +49,7 @@
 					{#each tabs as tab}
 						{#if !tab.hasOwnProperty('if') || tab.if === true}
 							<Button
-								class="w-40"
+								class="w-32"
 								style={tab.active ? 'hard' : 'plain'}
 								theme={tab.active ? 'accent' : 'neutral'}
 								{...tab}

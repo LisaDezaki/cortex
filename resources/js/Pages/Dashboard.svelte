@@ -89,8 +89,8 @@
 		<PageHeader
 			title={activeProject ? "Dashboard" : "Select a Project"}
 			tabs={ activeProject ? [
-				{ icon: 'Speedometer',	label: 'Dashboard', active: true },
-				{ icon: 'GearFine',		label: 'Settings', 	href: route('projects.settings') }
+				{ label: 'Dashboard', active: true },
+				{ label: 'Settings', 	href: route('projects.settings') }
 			] : undefined }
 			actions={[
 				{ icon: "X", 	label: "Deactivate",	theme: "danger", onclick: deactivateProject, if: !!activeProject },

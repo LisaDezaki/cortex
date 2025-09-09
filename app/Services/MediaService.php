@@ -23,6 +23,13 @@ class MediaService
     protected string $tempFolder = 'tmp';
     protected string $permDisk   = 'public';
 
+	/*
+	 * StoreTempFile
+	 * 
+	 * Store a file temporarily in the temp disk and folder.
+	 * Returns the path, url, and original name of the file.
+	 */
+
 	public function storeTempFile($file)
     {
         $fileName = $this->generateFileName($file);
@@ -34,6 +41,13 @@ class MediaService
             'name' => $file->getClientOriginalName(),
         ];
     }
+
+	/*
+	 * MoveToPermanent
+	 * 
+	 * Move a file from the temp disk and folder to a permanent location.
+	 * Returns the new path and other info about the move.
+	 */
 
 	public function moveToPermanent(string|array|null $tempPath, string $destinationFolder)
     {
@@ -72,10 +86,13 @@ class MediaService
 		}
 
     }
-    
 
-
-
+	/*
+	 * attachMedia
+	 * 
+	 * Attach media to a model via a morphOne or morphMany relationship.
+	 * Moves the file from temp to permanent storage and creates the Media record.
+	 */
 
 	public function attachMedia( Model $entity, string $type, mixed $filepath )
 	{
@@ -88,6 +105,10 @@ class MediaService
 		$relationship = $entity->$type();
 		$entityName   = $entity->getMorphClass();
 		$newpath      = "$userDir/$projectDir/$entityName";
+
+		if ($relationship) {
+			$this->deleteImage($relationship);
+		}
 
 		if (gettype($filepath) == 'string') {
 			$this->updateImage(
@@ -106,6 +127,12 @@ class MediaService
 		}
 	}
 
+	/*
+	 * updateImage
+	 * 
+	 * Update a single image for a model via a morphOne or morphMany relationship.
+	 * Moves the file from temp to permanent storage and creates the Media record.
+	 */
 
 	public function updateImage(
 		Model $entity,
@@ -137,6 +164,13 @@ class MediaService
 			]);
 		}
 	}
+
+	/*
+	 * updateMany
+	 * 
+	 * Update multiple images for a model via a morphOne or morphMany relationship.
+	 * Moves the files from temp to permanent storage and creates the Media records.
+	 */
 
 	public function updateMany(
 		Model $entity,
@@ -176,6 +210,13 @@ class MediaService
 		return $response;
 
 	}
+
+	/*
+	 * deleteImage
+	 * 
+	 * Delete an image associated with a model via a morphOne or morphMany relationship.
+	 * Deletes the file from storage and the Media record.
+	 */
 
 	public function deleteImage(MorphOne|MorphMany $relationship)
 	{

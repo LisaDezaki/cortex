@@ -27,9 +27,9 @@
 		<PageHeader
 			title="Character Settings"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			href: route('characters') },
-				{ icon: "SquaresFour",	label: "Collections", 	href: route('characters.collections') },
-				{ icon: "GearFine",		label: "Settings", 		active: true },
+				{ label: "List",			href: route('characters') },
+				{ label: "Collections", 	href: route('characters.collections') },
+				{ label: "Settings", 		active: true },
 			]}
 		/>
 	{/snippet}

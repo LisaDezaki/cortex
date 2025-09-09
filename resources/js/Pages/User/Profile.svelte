@@ -47,8 +47,8 @@
 		<PageHeader
 			title="User Profile"
 			tabs={[
-				{ icon: "UserList",		label: "Profile",		active: true },
-				{ icon: "GearFine",		label: "Settings",		href: route('settings') },
+				{ label: "Profile",		active: true },
+				{ label: "Settings",		href: route('settings') },
 			]}
 		/>
 	{/snippet}
@@ -63,7 +63,7 @@
 
 			<Container gap={12} size="2xl">
 				<Section id="profile">
-					<Stack>
+					<Stack gap={1.5}>
 						<Heading is="h1" as="h5">Profile Information</Heading>
 						<p>Update your account's profile information and email address.</p>
 					</Stack>
@@ -74,7 +74,7 @@
 					<UpdateProfileInformationForm {mustVerifyEmail} {status} />
 				</Section>
 				<Section id="password">
-					<Stack>
+					<Stack gap={1.5}>
 						<Heading is="h3" as="h6">Update Password</Heading>
 						<p>Ensure your account is using a long, random password to stay secure.</p>
 					</Stack>
@@ -85,7 +85,7 @@
 					<UpdatePasswordForm />
 				</Section>
 				<Section id="delete">
-					<Stack>
+					<Stack gap={1.5}>
 						<Heading is="h3" as="h6">Delete Account</Heading>
 						<p>Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.</p>
 					</Stack>
@@ -94,7 +94,7 @@
 						subheading="Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting
 					your account, please download any data or information that you wish to retain."
 					/> -->
-					<Button style="hard" theme="danger"
+					<Button style="hard" theme="danger" class="mt-3"
 						label="Delete Account"
 						onclick={confirmUserDeletion}
 					/>

@@ -8,7 +8,7 @@
 
 </script>
 
-<article class="h-full w-full space-y-3 {noscroll ? 'overflow-hidden' : 'overflow-y-auto'} {className}" {...restProps}>
+<article class="h-full w-full {noscroll ? 'overflow-hidden' : 'overflow-y-auto'} {className}" {...restProps}>
 	{#if children}
 		{@render children()}
 	{:else}

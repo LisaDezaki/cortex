@@ -27,9 +27,9 @@
 		<PageHeader
 			title="Faction Settings"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			href: route('factions') },
-				{ icon: "SquaresFour",	label: "Collections", 	href: route('factions.collections') },
-				{ icon: "GearFine",		label: "Settings", 		active: true },
+				{ label: "List",			href: route('factions') },
+				{ label: "Collections", 	href: route('factions.collections') },
+				{ label: "Settings", 		active: true },
 			]}
 		/>
 	{/snippet}

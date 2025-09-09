@@ -88,12 +88,12 @@
 		<PageHeader
 			title="Location List"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			active: true },
-				{ icon: "SquaresFour",	label: "Collections",	href: route('locations.collections') },
-				{ icon: "GearFine",		label: "Settings",		href: route('locations.settings') },
+				{ label: "List",			active: true },
+				{ label: "Collections",	href: route('locations.collections') },
+				{ label: "Settings",		href: route('locations.settings') },
 			]}
 			actions={[
-				{ icon: "Plus",			label: "Create", 		onclick: createLocation, theme: "accent" },
+				{ icon: "Plus",			label: "Create Location", onclick: createLocation, theme: "accent" },
 			]}
 		/>
 	{/snippet}
@@ -108,7 +108,7 @@
 			/>
 		{/if}
 
-		<Section gap={6} class="px-12">
+		<Section gap={6} class="px-12 py-6">
 			{#if activeProject && locations?.length > 0}
 
 			

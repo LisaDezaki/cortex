@@ -104,33 +104,6 @@ class CharacterController extends Controller
 	{
 		$validatedData = $request->validate($this->validationRules);
 		$character = Auth::user()->activeProject()->characters()->create($validatedData);
-	
-		// if ($request->has('portrait')) {
-		// 	$this->mediaService->attachMedia($character, 'portrait', $request->portrait);
-		// 	unset($validatedData['portrait']);
-		// }
-
-		// if ($request->has('banner')) {
-		// 	$this->mediaService->attachMedia($character, 'banner', $request->banner);
-		// 	unset($validatedData['banner']);
-		// }
-
-		// if ($request->has('faction_id')) {
-		// 	$character->faction()->associate($validatedData['faction_id']);
-		// }
-
-		// if ($request->has('location_id')) {
-		// 	$character->location()->associate($validatedData['location_id']);
-		// }
-
-		// if ($request->has('relationships')) {
-		// 	$character->relationships()->sync($validatedData['relationships']);
-		// }
-
-		// if ($request->has('custom_fields')) {
-		// 	$this->handleCustomFields($validatedData['custom_fields'], $character);
-		// }
-
 		$character->save();
 		Session::flash('success', "$character->name created successfully.");
 		return Redirect::route("characters.show", [

@@ -98,7 +98,7 @@
 							type="banner"
 							endpoint={route('characters.update', { character: character.slug })}
 							method={'patch'}
-							reloadPageProps={['character.media']}
+							reloadPageProps={['characters.media', 'character.media']}
 						/>
 
 						<Media replaceable
@@ -108,7 +108,7 @@
 							type="portrait"
 							endpoint={route('characters.update', { character: character.slug })}
 							method={'patch'}
-							reloadPageProps={['character.media']}
+							reloadPageProps={['characters.media', 'character.media']}
 						/>
 						
 						<Heading is="h1" as="h3"

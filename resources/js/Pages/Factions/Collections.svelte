@@ -117,9 +117,9 @@
 			back={route('dashboard')}
 			title="Faction Collections"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			href: route('factions') },
-				{ icon: "SquaresFour",	label: "Collections", 	active: true },
-				{ icon: "GearFine",		label: "Settings", 		href: route('factions.settings') },
+				{ label: "List",			href: route('factions') },
+				{ label: "Collections", 	active: true },
+				{ label: "Settings", 		href: route('factions.settings') },
 			]}
 		/>
 	{/snippet}

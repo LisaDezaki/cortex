@@ -26,8 +26,8 @@
 		<PageHeader
 			title="User Settings"
 			tabs={[
-				{ icon: "UserList",		label: "Profile",		href: route('profile.edit') },
-				{ icon: "GearFine",		label: "Settings",		active: true },
+				{ label: "Profile",		href: route('profile.edit') },
+				{ label: "Settings",		active: true },
 			]}
 		/>
 	{/snippet}

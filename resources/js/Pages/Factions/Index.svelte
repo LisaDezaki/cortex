@@ -86,12 +86,12 @@
 		<PageHeader
 			title="Faction List"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			active: true },
-				{ icon: "SquaresFour",	label: "Collections",	href: route('factions.collections') },
-				{ icon: "GearFine",		label: "Settings",		href: route('factions.settings') },
+				{ label: "List",			active: true },
+				{ label: "Collections",	href: route('factions.collections') },
+				{ label: "Settings",		href: route('factions.settings') },
 			]}
 			actions={[
-				{ icon: "Plus",			label: "Create", 		onclick: createFaction, theme: "accent" },
+				{ icon: "Plus",			label: "Create Faction", onclick: createFaction, theme: "accent" },
 			]}
 		/>
 	{/snippet}
@@ -104,7 +104,7 @@
 			project={activeProject}
 		/>
 
-		<Section gap={6} class="px-12">
+		<Section gap={6} class="px-12 py-6">
 			{#if activeProject && factions?.length > 0}
 
 

@@ -82,9 +82,9 @@
 		<PageHeader
 			title="Character Collections"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			href: route('characters') },
-				{ icon: "SquaresFour",	label: "Collections", 	active: true },
-				{ icon: "GearFine",		label: "Settings", 		href: route('characters.settings') },
+				{ label: "List",			href: route('characters') },
+				{ label: "Collections", 	active: true },
+				{ label: "Settings", 		href: route('characters.settings') },
 			]}
 		/>
 	{/snippet}

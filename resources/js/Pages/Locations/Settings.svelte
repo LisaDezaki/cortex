@@ -27,9 +27,9 @@
 		<PageHeader
 			title="Location Settings"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			href: route('locations') },
-				{ icon: "SquaresFour",	label: "Collections", 	href: route('locations.collections') },
-				{ icon: "GearFine",		label: "Settings", 		active: true },
+				{ label: "List",			href: route('locations') },
+				{ label: "Collections", 	href: route('locations.collections') },
+				{ label: "Settings", 		active: true },
 			]}
 		/>
 	{/snippet}

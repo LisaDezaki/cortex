@@ -86,12 +86,12 @@
 		<PageHeader
 			title="Character List"
 			tabs={[
-				{ icon: "ListBullets",	label: "List",			active: true },
-				{ icon: "SquaresFour",	label: "Collections",	href: route('characters.collections') },
-				{ icon: "GearFine",		label: "Settings",		href: route('characters.settings') },
+				{ label: "List",			active: true },
+				{ label: "Collections",	href: route('characters.collections') },
+				{ label: "Settings",		href: route('characters.settings') },
 			]}
 			actions={[
-				{ icon: "Plus",			label: "Create", 		onclick: createCharacter, theme: "accent" },
+				{ icon: "Plus",			label: "Create Character", onclick: createCharacter, theme: "accent" },
 			]}
 		/>
 	{/snippet}
@@ -106,7 +106,7 @@
 			/>
 		{/if}
 
-		<Section gap={6} class="px-12">
+		<Section gap={6} class="px-12 py-6">
 			{#if activeProject && characters.length > 0}
 
 

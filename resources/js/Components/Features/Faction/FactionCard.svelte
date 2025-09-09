@@ -27,7 +27,7 @@
 	icon="User"
 	image={media_emblem?.url}
 	title={faction.name}
-	subtitle={faction.alias}
+	subtitle="{faction.members.length} member{faction.members.length === 1 ? '' : 's'}"
 	onclick={handleClick || null}
 	href={onclick ? null : route('factions.show', {faction: faction.slug})}
 	options={options}

@@ -44,8 +44,8 @@
 		<PageHeader
 			title="Project Settings"
 			tabs={ activeProject ? [
-				{ icon: 'Speedometer',	label: 'Dashboard', href: route('dashboard') },
-				{ icon: 'GearFine',		label: 'Settings', 	active: true }
+				{ label: 'Dashboard', href: route('dashboard') },
+				{ label: 'Settings', 	active: true }
 			] : undefined }
 			
 		/>
