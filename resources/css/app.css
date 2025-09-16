@@ -85,6 +85,8 @@
 		--border-danger-softer:		rgb(from var(--border-danger) r g b / 30%);
 		--border-danger-softest:	rgb(from var(--border-danger) r g b / 15%);
 
+		--border-background: 		theme(colors.slate.200);
+		--border-surface:			theme(colors.slate.100);
 		--border-nav:				theme(colors.emerald.900);
 		
 		
@@ -342,6 +344,8 @@
 	.border-danger-soft 	{ border-color: var(--border-danger-soft); }
 	.border-danger-softer 	{ border-color: var(--border-danger-softer); }
 	.border-danger-softest 	{ border-color: var(--border-danger-softest); }
+	.border-surface 		{ border-color: var(--border-surface); }
+	.border-background 		{ border-color: var(--border-background); }
 
 	.text-accent 			{ color: var(--text-accent); }
 	.text-accent-strong 	{ color: var(--text-accent-strong); }

@@ -47,18 +47,20 @@
 	const createCollection	= (l) => { creatingCollection 	= true,	selectedLocation = l; }
 	const deleteLocation	= (l) => { deletingLocation 	= true,	selectedLocation = l; }
 	const renameLocation	= (l) => { renamingLocation 	= true,	selectedLocation = l; }
-	const closeModal		= ( ) => {  selectedLocation	= null
-										applyingTags 		= false
+	const closeModal		= ( ) => {  applyingTags 		= false
 										creatingLocation	= false
 										creatingCollection	= false
 										deletingLocation	= false
 										renamingLocation	= false
+										setTimeout(() => selectedLocation = null, 300)
 									}
 
 	//	Add Character to Collection
 	const addToCollectionForm = useForm({
 		items: [{ id: null, type: 'locations' }]
 	})
+
+	let selectedLocationName = $derived(selectedLocation?.name ||'')
 
 	function addToCollection (loc, coll) {
 		$addToCollectionForm.items[0]  = { id: loc.id, type: 'locations' }
@@ -122,26 +124,31 @@
 						{#snippet gridItem(location)}
 							<LocationCard
 								location={location}
-								options={[
-									{ label: "View",   icon: "Eye", href: route('locations.show', {location: location.slug}) },
-									{ label: "Rename", icon: "Textbox", onclick: () => renameLocation(location) },
-									{ separator: true },
-									{ label: "Add to Collection",	icon: "FolderSimple",
-										options: collections?.length > 0 ? [
-											...collections.map(c => {
-												return {
-													label: c.name,
-													icon: "FolderSimple",
-													onclick: () => addToCollection(location, c),
-													disabled: c.items.map(i => i.collectionable_id).includes(location.id),
-													iconWeight: c.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light' }
-											}),
-											{ label: "New Collection", icon: "Plus", onclick: () => createCollection(location), theme: "accent" }
-										] : undefined
-									},
-									{ label: "Add Tags", icon: "TagSimple", onclick: () => applyTags(location) },
-									{ separator: true },
-									{ label: "Delete Location", icon: "Trash",		onclick: () => deleteLocation(location), theme: "danger" }
+								iconOptions={[
+									{ icon: "Eye", 		href: route('locations.show', {location: location.slug}) },
+									{ icon: "Textbox", 	onclick: () => renameLocation(location) },
+									{ icon: "Star", 	onclick: () => renameLocation(location) },
+									{ icon: "Trash", 	onclick: () => deleteLocation(location), theme: "danger" },
+								]}
+								options={[{
+									label: "Add to Collection",
+									create: () => createCollection(location),
+									options: [ ...collections.map(c => ({
+										label: c.name,
+										onclick: () => addToCollection(location, c),
+										disabled: c.items.map(i => i.collectionable_id).includes(location.id),
+										iconWeight: c.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
+									}))]
+								},{
+									label: "Add Tags",
+									onclick: () => applyTags(location)
+								},{
+									separator: true
+								},{
+									label: "Delete Location",
+									onclick: () => deleteLocation(location),
+									theme: "danger"
+								}
 								]}
 							/>
 						{/snippet}
@@ -182,32 +189,28 @@
     
 </AuthenticatedLayout>
 
-<Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
-	onclose={closeModal}>
-	<ApplyTagsForm type="locations" entity={selectedLocation || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Create a new location" show={creatingLocation} maxWidth="lg"
-	onclose={closeModal}>
-	<CreateLocationForm
-		onSuccess={closeModal} />
-</Modal>
 
-<Modal title="Rename {selectedLocation?.name}?" show={renamingLocation} maxWidth="lg"
-	onclose={closeModal}>
-	<RenameLocationForm location={selectedLocation || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Delete {selectedLocation?.name}?" show={deletingLocation} maxWidth="lg"
-	onclose={closeModal}>
-	<DeleteLocationForm location={selectedLocation || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<CreateCollectionForm type="locations" entity={selectedLocation || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
+
+
+
+
+
+
+<CreateLocationForm isOpen={creatingLocation}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<RenameLocationForm isOpen={renamingLocation} location={selectedLocation}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<DeleteLocationForm isOpen={deletingLocation} location={selectedLocation}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<CreateCollectionForm isOpen={creatingCollection} entity={selectedLocation} type="locations"
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<ApplyTagsForm isOpen={applyingTags} entity={selectedLocation} type="locations"
+	onSuccess={closeModal} oncancel={closeModal}
+/>

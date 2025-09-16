@@ -52,12 +52,9 @@
 		e.preventDefault();
 		$form.project = proj.id
 		$form.post(
-			route('projects.activate', { project: proj.id }),
-			{
+			route('projects.activate', { project: proj.id }), {
 				onSuccess: (res) => {
-					router.visit($page.url, {
-						only: ['activeProject'],
-					})
+					router.visit($page.url, { only: ['activeProject'] })
 				}
 			}
 		)
@@ -66,12 +63,9 @@
 	function deactivateProject(e) {
 		e.preventDefault();
 		$form.post(
-			route('projects.deactivate'),
-			{
+			route('projects.deactivate'), {
 				onSuccess: (res) => {
-					router.visit($page.url, {
-						only: ['activeProject'],
-					})
+					router.visit($page.url, { only: ['activeProject'] })
 				}
 			}
 		)
@@ -93,8 +87,8 @@
 				{ label: 'Settings', 	href: route('projects.settings') }
 			] : undefined }
 			actions={[
-				{ icon: "X", 	label: "Deactivate",	theme: "danger", onclick: deactivateProject, if: !!activeProject },
-				{ icon: "Plus", label: "Create",		theme: "accent", onclick: createProject,	 if: !activeProject }
+				{ icon: "X", 	label: "Deactivate",	 theme: "danger", onclick: deactivateProject, if: !!activeProject },
+				{ icon: "Plus", label: "Create Project", theme: "accent", onclick: createProject,	  if: !activeProject }
 			]}
 		/>
 	{/snippet}
@@ -103,14 +97,14 @@
 
 		{#if activeProject}
 
-			<Section>
+			<Section class="pb-12">
 				<Media replaceable
 					class="relative bg-neutral-softest h-[50vh] min-h-96 overflow-hidden w-full"
 					endpoint={route('projects.update', { project: activeProject.id })}
 					method="patch"
-					media={media_banner}
+					media={activeProject.image}
+					reloadPageProps={['activeProject.image', 'activeProject.media']}
 					type="banner"
-					reloadPageProps={['activeProject.banner', 'activeProject.media']}
 				/>
 			</Section>
 
@@ -170,7 +164,7 @@
 							<Card
 								class="flex-shrink-0 w-32"
 								aspect="square"
-								image={character.portrait?.url}
+								image={character.image?.url}
 								icon="User"
 								title={character.name}
 								subtitle={character.subtitle}
@@ -189,7 +183,7 @@
 							<Card
 								aspect="square"
 								class="flex-shrink-0 w-32"
-								image={faction.emblem?.url}
+								image={faction.image?.url}
 								icon="FlagBannerFold"
 								title={faction.name}
 								subtitle={faction.subtitle}
@@ -208,7 +202,7 @@
 							<Card
 								aspect="video"
 								class="flex-shrink-0 w-56"
-								image={location.banner?.url}
+								image={location.image?.url}
 								icon="MapPinArea"
 								title={location.name}
 								subtitle={location.subtitle}
@@ -228,7 +222,7 @@
 								project={project}
 								title={project.name}
 								subtitle={project.type}
-								image={project?.banner?.url}
+								image={project?.image?.url}
 								onclick={(e) => activateProject(e, project)}
 								options={[
 									{ icon: 'Check', 	label: 'Activate',			onclick: (e) => activateProject(e, project), theme: 'accent' },
@@ -249,28 +243,15 @@
 </AuthenticatedLayout>
 
 
-<Modal title="Create a new Project" maxWidth="lg" show={creatingProject}
-	onclose={closeModal}>
-	<CreateProjectForm
-		onFinish={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Delete Project" maxWidth="lg" show={deletingProject}
-	onclose={closeModal}>
-	<DeleteProjectForm project={selectedProject}
-		onFinish={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Rename Project" maxWidth="lg" show={renamingProject}
-	onclose={closeModal}>
-	<RenameProjectForm project={selectedProject}
-		onFinish={closeModal} oncancel={closeModal} />
-</Modal>
 
-<!-- {#if activeProject}
-	<Modal maxWidth="xl" show={settingBanner}
-		onclose={closeModal}>
-		<MediaUploadForm aspect="aspect-[7/3]" media={activeProject.banner}
-			onFinish={closeModal} oncancel={closeModal} />
-	</Modal>
-{/if} -->
+<CreateProjectForm isOpen={creatingProject}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<DeleteProjectForm isOpen={deletingProject} project={selectedProject}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<RenameProjectForm isOpen={renamingProject} project={selectedProject}
+	onSuccess={closeModal} oncancel={closeModal}
+/>

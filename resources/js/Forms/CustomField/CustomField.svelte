@@ -210,8 +210,6 @@
 	
 			{#if inputType == 'select'}
 
-				<!-- <pre>{JSON.stringify($form.options)}</pre> -->
-
 				<div>
 					<Field
 						label="Field options"

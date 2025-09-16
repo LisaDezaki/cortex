@@ -16,7 +16,7 @@
 <Card
 	aspect="square"
 	icon="User"
-	image={character.portrait?.url}
+	image={character.image?.url}
 	title={character.name}
 	subtitle={character.alias}
 	href={href}

@@ -10,6 +10,7 @@
 	let {
 		children,
 		class: className,
+		defaultValue,
 		description = null,
 		errors,
 		inputClass,
@@ -23,7 +24,7 @@
     } = $props()
 
 	if (!name) { console.error(`The Field component requires a "name" field. You may have mistakenly used "id", which is set to ${restProps.id}`) }
-	if (!$form[name]) { $form[name] = null }
+	if (!$form[name]) { $form[name] = defaultValue || null }
 
 </script>
 
@@ -43,7 +44,7 @@
 {#snippet inputBlock()}
 	{#if type}
 		<Input {name} {type}
-			class="{inputClass} my-1"
+			class={inputClass}
 			bind:value={$form[name]}
 		{...restProps} />
 	{/if}
@@ -72,18 +73,6 @@
 	{/if}
 
 	{@render children?.()}
-
-	<!-- {#if type}
-		<Input class="mt-0.5" {...restProps} />
-	{/if}
-
-	{#if layout == 'inline' && description}
-		<p class="field-description">{description}</p>
-	{/if}
-
-	{#if errors}
-		<Error message={errors} />
-	{/if} -->
 
 </div>
 

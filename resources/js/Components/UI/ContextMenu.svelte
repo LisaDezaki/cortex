@@ -2,7 +2,8 @@
 	import { Link } from '@inertiajs/svelte'
 	import { ContextMenu } from "bits-ui";
 
-	import { Flex } from '@/Components/Core';
+	import { Flex, Grid, Stack } from '@/Components/Core';
+	import Button from '@/Components/UI/Button.svelte';
 	import Icon from '@/Components/UI/Icon.svelte';
 
   let {
@@ -10,7 +11,8 @@
 	class: className,
 	icon,
 	iconSize = 16,
-	iconWeight = 'light',
+	iconWeight = 'regular',
+	iconOptions,
 	label,
 	options,
 	...restProps
@@ -30,11 +32,11 @@
 {#snippet item(item)}
 	<Flex
 		align="center" gap={2}
-		class="relative cursor-pointer px-3 py-1.5 w-full
+		class="relative cursor-pointer px-3 py-1.5 rounded w-full
 			{item.disabled			 ? 'text-neutral-softest'	:	'' }
-			{item.theme === 'accent' ? 'text-accent hover:bg-accent-softest' : '' }
-			{item.theme === 'danger' ? 'text-danger hover:bg-danger-softest' : '' }
-			{item.theme === undefined ? 'text-neutral-strong active:text-accent hover:bg-neutral-softest' : '' }
+			{item.theme === 'accent' ? 'text-accent' : '' }
+			{item.theme === 'danger' ? 'text-danger' : '' }
+			{item.theme === undefined ? 'text-neutral-strong active:text-accent' : '' }
 		">
 
 		{#if item.icon}
@@ -44,11 +46,11 @@
 		{/if}
 		
 		{#if item.label}
-			<span class="font-style-small">{item.label}</span>
+			<span class="font-style-small line-clamp-1 truncate">{item.label}</span>
 		{/if}
 
 		{#if item.options}
-			<Icon name="CaretRight" size="sm" class="ml-auto text-neutral-softer" />
+			<Icon name="CaretRight" size="sm" class="ml-auto -mr-2 text-neutral-softer" />
 		{/if}
 
 		{#if item.active}
@@ -79,35 +81,70 @@
 		{@render children?.()}
 	</ContextMenu.Trigger>
 	<ContextMenu.Portal>
-		<ContextMenu.Content class="bg-surface border border-accent outline-none py-1 rounded-lg shadow-xl w-48 focus-visible:outline-none">
+		<ContextMenu.Content class="bg-white border border-neutral-softer max-h-96 outline-none overflow-y-auto p-1 rounded-lg shadow-xl w-48 focus-visible:outline-none">
+
+			{#if iconOptions}
+				<Grid cols={iconOptions.length} gap={0} class="w-full">
+					{#each iconOptions.map(opt => ({...opt, iconSize: "md", iconWeight: "regular" })) as iconOption}
+						<ContextMenu.Item class="grow rounded hover:bg-{iconOption.theme || 'neutral'}-softest">
+							{@render item(iconOption)}
+						</ContextMenu.Item>
+					{/each}
+				</Grid>
+				<ContextMenu.Separator class="block border-t border-neutral-softest my-1" />
+			{/if}
+
 			{#each options as option}
 
-				{#if option.separator}
+				{#if option.hasOwnProperty('hideIf') && option.hideIf === true}
+					<!-- Skip rendering this option -->
+				{:else if option.separator}
 					<ContextMenu.Separator class="block border-t border-neutral-softest my-1" />
 				{:else if option.options}
 					<ContextMenu.Sub>
-						<ContextMenu.SubTrigger>
+						<ContextMenu.SubTrigger class="data-[state=open]:bg-neutral-softest rounded">
 							{@render item(option)}
 						</ContextMenu.SubTrigger>
 						<ContextMenu.SubContent
-							class="bg-surface border border-accent outline-none py-1 rounded-lg shadow-xl w-48 z-100 ring-0! ring-transparent!"
-							sideOffset={0}
+							class="bg-white border border-neutral-softer outline-none rounded-lg shadow-xl w-48 z-100 ring-0! ring-transparent!"
+							sideOffset={4}
 						>
-							{#each option.options as opt}
-								<ContextMenu.Item>
-									{@render item(opt)}
+							<Flex align="center" class="border-b border-neutral-softest p-1 text-neutral-soft w-full z-10">
+								<span class="line-clamp-1 px-3 truncate">{option.label}</span>
+								<!-- <Button style="soft" theme="accent" class="h-8 w-8 ml-auto"
+									icon="Plus" size="sm"
+									onclick={option.create}
+								/> -->
+								<ContextMenu.Item class="h-8 w-8 ml-auto">
+									<Button style="plain" theme="accent" class="h-8 w-8 ml-auto"
+										icon="Plus" size="sm"
+										onclick={option.create}
+									/>
 								</ContextMenu.Item>
-							{/each}
+							</Flex>
+							{#if option.options.length > 0}
+								<Stack class="max-h-96 overflow-y-auto p-1" gap={0}>
+									{#each option.options as opt}
+										<ContextMenu.Item class="hover:bg-{opt.theme || 'neutral'}-softest rounded">
+											{@render item(opt)}
+										</ContextMenu.Item>
+									
+									{/each}
+								</Stack>
+							{:else}
+								<div class="text-center font-style-placeholder px-4 py-2">
+									No options
+								</div>
+							{/if}
 						</ContextMenu.SubContent>
 					</ContextMenu.Sub>
 				{:else}
-					<ContextMenu.Item>
+					<ContextMenu.Item class="hover:bg-{option.theme || 'neutral'}-softest rounded">
 						{@render item(option)}
 					</ContextMenu.Item>
 				{/if}
 
 			{/each}
-
 		</ContextMenu.Content>
 	</ContextMenu.Portal>
 </ContextMenu.Root>

@@ -1,5 +1,5 @@
 <script>
-	import { page, router } from '@inertiajs/svelte'
+	import { Link, page, router } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
@@ -22,6 +22,7 @@
 	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section  	 from '@/Components/UI/Section.svelte'
+	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
 
 	import Map			 from '@/Components/Features/Location/Map.svelte'
 
@@ -61,7 +62,7 @@
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
 				{ icon: "Info",   			label: "Details",       	href: "#details"	},
-				{ icon: "Textbox",      	label: "Custom Fields", 	href: "#custom"		},
+				{ icon: "Textbox",      	label: "Custom Fields", 	href: "#fields"		},
 				{ icon: "Compass",      	label: "Map",           	href: "#map"		},
 				{ icon: "MapPinSimpleArea", label: "Points of Interest", href: "#points"	},
 				{ icon: "UsersThree",   	label: "Characters",        href: "#characters"	},
@@ -76,7 +77,6 @@
 				<Section id="details" class="pb-12">
 
 					<ArticleBanner>
-
 						<Media replaceable
 							aspect="aspect-[3/1]"
 							class="absolute inset-0 rounded-lg overflow-hidden"
@@ -86,7 +86,6 @@
 							method={'patch'}
 							reloadPageProps={['location.media']}
 						/>
-
 						<Media replaceable
 							aspect="aspect-square"
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
@@ -96,7 +95,6 @@
 							method={'patch'}
 							reloadPageProps={['location.media']}
 						/>
-
 						{#if location.parent}
 							<Inline class="relative">
 								<Button style="glass" class="rounded-full"
@@ -105,7 +103,6 @@
 								/>
 							</Inline>
 						{/if}
-			
 						<Heading is="h1" as="h3"
 							class="mt-auto z-10 {media_banner ? 'text-white' : ''}"
 							heading={location.name}
@@ -114,7 +111,7 @@
 						/>
 					</ArticleBanner>
 		
-					<Heading is="h3" as="h5" class="mx-6 mt-9 mb-6">Description</Heading>
+					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
 
 					<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
 						{location.description}
@@ -126,7 +123,7 @@
 				<!-- Custom Fields -->
 
 				<Section id="fields" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Custom Fields</Heading>
+					<Heading is="h3" as="h6" class="mb-6">Custom Fields</Heading>
 					{#if location.customFields}
 						Custom Fields
 					{:else}
@@ -138,7 +135,7 @@
 				<!-- Map -->
 
 				<Section id="map" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Map</Heading>
+					<Heading is="h3" as="h6" class="mb-6">Map</Heading>
 					{#if media_map || location.children?.length > 0 || location.descendants?.length > 0}
 						<Map class="aspect-video rounded-lg" location={location} />
 					{:else}
@@ -150,7 +147,7 @@
 				<!-- Points of Interest -->
 
 				<Section id="points" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Points of Interest</Heading>
+					<Heading is="h3" as="h6" class="mb-6">Points of Interest</Heading>
 					{#if location.children.length > 0}
 						<Grid cols={3}>
 							{#each location.children as loc}
@@ -172,17 +169,30 @@
 				<!-- Characters -->
 		
 				<Section id="characters" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Characters</Heading>
+					<Heading is="h3" as="h6" class="mb-6">Characters</Heading>
 					{#if location.characters.length > 0}
-						<Grid cols={6}>
-							{#each location.characters as character}
-								<Card aspect="square" class="w-full"
+						<Grid cols={4} gap={3}>
+							{#each location.characters as char}
+								<!-- <Card aspect="square" class="w-full"
 									icon="User"
 									image={character.portrait?.url}
 									title={character.name}
 									subtitle={character.subtitle}
 									href={route('characters.show', {character: character.slug})}
-								/>
+								/> -->
+								<Link
+									class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
+									href={route("characters.show", { character: char.slug})}>
+									<Thumbnail
+										class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
+										icon="User"
+										src={char.image?.url}
+									/>
+									<Stack justify="center">
+										<div class="font-bold leading-[1.125rem] line-clamp-1">{char.name}</div>
+										<div class="text-sm leading-[1.125rem] line-clamp-1">{char.alias}</div>
+									</Stack>
+								</Link>
 							{/each}
 						</Grid>
 					{:else}
@@ -194,7 +204,7 @@
 				<!-- Gallery -->
 
 				<Section id="gallery" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
+					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
 					<MediaGrid cols={6}
 						media={media_gallery}
 						type="gallery"

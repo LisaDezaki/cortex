@@ -23,6 +23,7 @@ class UploadController extends Controller
 			'files' => 'array',
 			'files.*' => 'image|mimes:jpeg,png,jpg,gif',
         ]);
+
 		$filesData = [];
 		$files = $request->file('files');
 		foreach ($files as $file) {
@@ -37,7 +38,6 @@ class UploadController extends Controller
 
 	public function moveToPermanent(Request $request)
 	{
-
 		$request->validate([
 			'files' => 'string',
 			'type' => 'required|in:project_banner,character_portrait'

@@ -1,23 +1,17 @@
 <script>
-	import { Link, page, router, useForm } from '@inertiajs/svelte'
+	import { page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
 	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
 	import DeleteCollectionForm from '@/Forms/Collection/Delete.svelte'
 	import RenameCollectionForm from '@/Forms/Collection/Rename.svelte'
 	
-	import { Flex, Grid, Stack } from '@/Components/Core'
-	import Card					from '@/Components/UI/Card.svelte'
+	import { Grid } from '@/Components/Core'
 	import CardNew				from '@/Components/UI/CardNew.svelte'
 	import CollectionCard		from '@/Components/UI/CollectionCard.svelte'
-	import Dropdown				from '@/Components/UI/Dropdown.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
-	import Icon					from '@/Components/UI/Icon.svelte'
-	import Input				from '@/Components/UI/Input.svelte'
-	import Modal				from '@/Components/UI/Modal.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
 	import Section				from '@/Components/UI/Section.svelte'
 
@@ -138,20 +132,14 @@
 
 
 
-<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<CreateCollectionForm type="characters" entity={selectedCollection || null}
-		onSuccess={closeModal} reloadPageProps={['collections']} />
-</Modal>
 
-<Modal title="Delete {selectedCollection?.name}?" show={deletingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<DeleteCollectionForm collection={selectedCollection || null}
-		onSuccess={closeModal} reloadPageProps={['collections']} />
-</Modal>
 
-<Modal title="Rename {selectedCollection?.name}?" show={renamingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<RenameCollectionForm collection={selectedCollection || null}
-		onSuccess={closeModal} reloadPageProps={['collections']} />
-</Modal>
+<CreateCollectionForm isOpen={creatingCollection} entity={selectedCollection} type="characters"
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>
+<DeleteCollectionForm isOpen={deletingCollection} collection={selectedCollection}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>
+<RenameCollectionForm isOpen={renamingCollection} collection={selectedCollection}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>

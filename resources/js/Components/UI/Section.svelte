@@ -7,6 +7,7 @@
 		class: className,
 		direction = 'col',
 		size,
+		...restProps
     } = $props()
 
 </script>
@@ -15,7 +16,7 @@
 
 
 
-<Flex as="section" {direction} class="section w-full {className}">
+<Flex as="section" {direction} class="section w-full {className}" {...restProps}>
 	{#if size}
 		<Container {size} {direction} class="mx-auto">
 			{@render children?.()}

@@ -11,7 +11,6 @@
 	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
 	
 	import Empty		from '@/Components/UI/Empty.svelte'
-	import Modal		from '@/Components/UI/Modal.svelte'
 	import PageHeader	from '@/Components/UI/PageHeader.svelte'
 	import Section		from '@/Components/UI/Section.svelte'
 	
@@ -24,6 +23,8 @@
 	const activeProject		= $page.props.activeProject.data
 	const collections		= $page.props.collections?.data
 	const characters    	= activeProject?.characters
+	const factions    		= activeProject?.factions
+	const locations    		= activeProject?.locations
 
 	//	State
 	let filteredCharacters  = $state(characters)
@@ -41,22 +42,35 @@
 	let applyingTags		= $state(false)
 
 	const createCharacter	= ( ) => { 	creatingCharacter 	= true }
-	const deleteCharacter	= (c) => { 	deletingCharacter 	= true,	selectedCharacter = c; }
-	const renameCharacter	= (c) => { 	renamingCharacter 	= true,	selectedCharacter = c; }
-	const createCollection	= (c) => { 	creatingCollection 	= true,	selectedCharacter = c; }
-	const applyTags			= (c) => { 	applyingTags 		= true, selectedCharacter = c; }
-	const closeModal		= ( ) => {  selectedCharacter	= null
-										creatingCharacter	= false
+	const deleteCharacter	= (c) => { 	selectedCharacter = c; deletingCharacter 	= true; }
+	const renameCharacter	= (c) => { 	selectedCharacter = c; renamingCharacter 	= true; }
+	const createCollection	= (c) => { 	selectedCharacter = c; creatingCollection 	= true; }
+	const applyTags			= (c) => { 	selectedCharacter = c; applyingTags 		= true; }
+	const closeModal		= ( ) => {  creatingCharacter	= false
 										deletingCharacter	= false
 										renamingCharacter	= false
 										creatingCollection	= false
 										applyingTags 		= false
-																	}
+										setTimeout(() => selectedCharacter = null, 300)
+									 }
+
+	const createFaction		= ( ) 	 => { /* TODO */ }
+	const setFaction		= (c, f) => { /* TODO */ }
+	const removeFaction		= (c) 	 => { /* TODO */ }
+
+	const createLocation	= ( ) 	 => { /* TODO */ }
+	const setLocation		= (c, l) => { /* TODO */ }
+	const removeLocation	= (c) 	 => { /* TODO */ }
 
 	//	Add Character to Collection
+	// const renameCharacterForm = useForm({
+	// 	name: ''
+	// })
 	const addToCollectionForm = useForm({
 		items: [{ id: null, type: 'characters' }]
 	})
+
+	let selectedCharacterName = $derived(selectedCharacter?.name ||'')
 
 	function addToCollection(char, coll) {
 		$addToCollectionForm.items[0]  = { id: char.id, type: 'characters' }
@@ -86,9 +100,9 @@
 		<PageHeader
 			title="Character List"
 			tabs={[
-				{ label: "List",			active: true },
+				{ label: "List",		active: true },
 				{ label: "Collections",	href: route('characters.collections') },
-				{ label: "Settings",		href: route('characters.settings') },
+				{ label: "Settings",	href: route('characters.settings') },
 			]}
 			actions={[
 				{ icon: "Plus",			label: "Create Character", onclick: createCharacter, theme: "accent" },
@@ -120,28 +134,55 @@
 						{#snippet gridItem(character)}
 							<CharacterCard
 								character={character}
-								options={[
-									{ label: "View",   icon: "Eye", href: route('characters.show', {character: character.slug}) },
-									{ label: "Rename", icon: "Textbox", onclick: () => renameCharacter(character) },
-									{ separator: true },
-									{ label: "Add to Collection",	icon: "FolderSimple",
-										options: [
-											...collections.map(c => {
-												return {
-													label: c.name,
-													icon: "FolderSimple",
-													onclick: () => addToCollection(character, c),
-													disabled: c.items.map(i => i.collectionable_id).includes(character.id),
-													iconWeight: c.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light' }
-											}),
-											{ label: "New Collection", icon: "Plus", onclick: () => createCollection(character), theme: "accent" }
-										]
-									},
-									{ label: "Add Tags", icon: "TagSimple", onclick: () => applyTags(character) },
-									{ label: "Set Faction", icon: "FlagBannerFold" },
-									{ label: "Set Location", icon: "MapPinArea" },
-									{ separator: true },
-									{ label: "Delete Character", icon: "Trash",		onclick: () => deleteCharacter(character), theme: "danger" }
+								iconOptions={[
+									{ icon: "Eye", 		href: route('characters.show', {character: character.slug}) },
+									{ icon: "Textbox", 	onclick: () => renameCharacter(character) },
+									{ icon: "Star", 	onclick: () => renameCharacter(character) },
+									{ icon: "Trash", 	onclick: () => deleteCharacter(character), theme: "danger" },
+								]}
+								options={[{
+									label: "Add to Collection",
+									create: () => createCollection(character),
+									options: [ ...collections.map(c => ({
+										label: c.name,
+										onclick: () => addToCollection(character, c),
+										disabled: c.items.map(i => i.collectionable_id).includes(character.id),
+										iconWeight: c.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light'
+									}))]
+								},{
+									label: "Add Tags",
+									onclick: () => applyTags(character)
+								},{
+									label: "Remove Faction",
+									hideIf: character.factions.length == 0,
+									onclick: () => removeFaction(character)
+								},{
+									label: "Set Faction",
+									hideIf: character.factions.length  > 0,
+									create: () => createFaction(),
+									options: [ ...factions.map(f => ({
+										label: f.name,
+										onclick: () => setFaction(character, f)
+									})) ]
+								},{
+									label: "Remove Location",
+									hideIf: character.location == null,
+									onclick: () => removeLocation(character)
+								},{
+									label: "Set Location",
+									hideIf: character.location != null,
+									create: () => createLocation(),
+									options: [ ...locations.map(l => ({
+										label: l.name,
+										onclick: () => setLocation(character, l)
+									}))]
+								},{
+									separator: true
+								},{
+									label: "Delete Character",
+									onclick: () => deleteCharacter(character),
+									theme: "danger"
+								}
 								]}
 							/>
 						{/snippet}
@@ -183,32 +224,20 @@
 
 
 
-<Modal title="Create a new character" show={creatingCharacter} maxWidth="lg"
-	onclose={closeModal}>
-	<CreateCharacterForm
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Rename {selectedCharacter?.name}?" show={renamingCharacter} maxWidth="lg"
-	onclose={closeModal}>
-	<RenameCharacterForm character={selectedCharacter || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Delete {selectedCharacter?.name}?" show={deletingCharacter} maxWidth="lg"
-	onclose={closeModal}>
-	<DeleteCharacterForm character={selectedCharacter || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
-
-<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<CreateCollectionForm type="characters" entity={selectedCharacter || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
-
-<Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
-	onclose={closeModal}>
-	<ApplyTagsForm type="characters" entity={selectedCharacter || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
+<CreateCharacterForm isOpen={creatingCharacter}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<RenameCharacterForm isOpen={renamingCharacter} character={selectedCharacter}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['characters']}
+/>
+<DeleteCharacterForm isOpen={deletingCharacter} character={selectedCharacter}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['characters']}
+/>
+<CreateCollectionForm isOpen={creatingCollection} entity={selectedCharacter} type="characters"
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['characters.collections', 'collections']}
+/>
+<ApplyTagsForm isOpen={applyingTags} entity={selectedCharacter} type="characters"
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['characters.tags', 'tags']}
+/>

@@ -9,6 +9,7 @@
 
 	import Card       	 from '@/Components/UI/Card.svelte'
 	import CardNew       from '@/Components/UI/CardNew.svelte'
+	import CollectionCard from '@/Components/UI/CollectionCard.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
 	import Modal    	 from '@/Components/UI/Modal.svelte'
@@ -56,13 +57,23 @@
 				<Section id="details" class="pb-12">
 
 					<Flex>
-						<Thumbnail class="h-64 w-64 rounded-lg" src="/" />
+						<CollectionCard
+							collection={collection}
+							class="w-64 h-64 mr-12 flex-shrink-0"
+						/>
+						<!-- <Thumbnail class="bg-neutral-softest h-64 w-64 rounded-lg" src="/" /> -->
 						<Stack>
-							<Heading is="h3" as="h5" class="mx-6 mb-6">{collection.name}</Heading>
+							<Heading is="h3" as="h4" class="mx-6 mb-6" eyebrowIcon="FolderSimple" eyebrow="Collection">{collection.name}</Heading>
 		
-							<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
-								{collection.description}
-							</p>
+							{#if collection.description}
+								<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
+									{collection.description}
+								</p>
+							{:else}
+								<p class="max-w-[64ch] mx-6 whitespace-pre-wrap font-style-placeholder">
+									No description provided.
+								</p>
+							{/if}
 						</Stack>
 					</Flex>
 
@@ -111,8 +122,9 @@
 						{#each collection.items as item, i}
 							<Card
 								aspect="square"
-								title={item.name}
-								subtitle={item.alias}
+								image={item.item?.image?.url}
+								title={item.item?.name}
+								subtitle={item.item?.alias}
 							/>
 						{/each}
 						<CardNew

@@ -10,6 +10,7 @@
 	 } from '@/Components/Core'
 
 	import Button  from '@/Components/UI/Button.svelte'
+	import Icon    from '@/Components/UI/Icon.svelte'
 	import Heading from '@/Components/UI/Heading.svelte'
 
 	let {
@@ -24,9 +25,7 @@
 		...restProps
 	} = $props()
 
-	const mediaUploadForm = useForm({
-		media: []
-	})
+	const mediaUploadForm = useForm({ media })
 
 </script>
 
@@ -41,18 +40,18 @@
 	method={method}
 {...restProps}>
 
-	<UploadContext {media} {type} {multiple}>
+	<UploadContext name="media" {type} {multiple}>
 
 		{#if !multiple}
 
-			<UploadPreview index={0} class="relative flex items-center justify-center overflow-hidden rounded-lg w-full {aspect}">
+			<UploadPreview index={0} class="relative flex items-center justify-center overflow-hidden rounded-t-lg w-full {aspect}">
 				<UploadTrigger class="absolute top-0 left-0 h-full w-full" />
 			</UploadPreview>
 
 		{:else if multiple}
 
 			<Grid cols={4}>
-				{#each $mediaUploadForm.media.filter(m => m.type == media.type) as media, i}
+				{#each $mediaUploadForm.media?.filter(m => m.type == media.type) as media, i}
 					<UploadPreview index={i} />
 				{/each}
 				<UploadTrigger class="aspect-square bg-accent-softest border border-accent-softest text-accent w-full"
@@ -62,15 +61,18 @@
 
 		{/if}
 	</UploadContext>
+
 	<Flex class="border-t p-3">
 		<Heading heading="Upload Image{multiple ? 's' : ''}" />
 		<Flex gap={1.5} class="ml-auto">
 			<Button type="button"
-				style="hard" theme="neutral" class="rounded-full"
+				style="hard" theme="neutral"
+				class="rounded-full"
 				icon="X" onclick={oncancel}
 			/>
 			<Button type="submit"
-				style="hard" theme="accent" class="rounded-full"
+				style="hard" theme="accent"
+				class="rounded-full"
 				icon="Check"
 			/>
 		</Flex>

@@ -1,17 +1,18 @@
 <script>
-	import { page, router } from '@inertiajs/svelte'
+	import { Link, page, router } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
 	import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
 	import DeleteCharacterForm 	from '@/Forms/Character/Delete.svelte'
 	
-	import { Flex, Grid, Stack } from '@/Components/Core'
+	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
 
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
 	import Card       	 from '@/Components/UI/Card.svelte'
 	import CardNew       from '@/Components/UI/CardNew.svelte'
 	import Chip  	  	 from '@/Components/UI/Chip.svelte'
+	import Collapsible   from '@/Components/UI/Collapsible.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
@@ -21,6 +22,7 @@
 	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
+	import Separator     from '@/Components/UI/Separator.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 
 	import Map      	 from '@/Components/Features/Location/Map.svelte'
@@ -83,14 +85,11 @@
 			<Container size="4xl">
 
 
-				<!-- <pre>{JSON.stringify(character.collections,null,3)}</pre> -->
-
 				<!-- Details -->
 			
-				<Section id="details" class="pb-12">
+				<Section id="details" class="pb-6">
 
 					<ArticleBanner>
-
 						<Media replaceable
 							aspect="aspect-[3/1]"
 							class="absolute inset-0 rounded-lg overflow-hidden"
@@ -100,7 +99,6 @@
 							method={'patch'}
 							reloadPageProps={['characters.media', 'character.media']}
 						/>
-
 						<Media replaceable
 							aspect="aspect-square"
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
@@ -110,7 +108,6 @@
 							method={'patch'}
 							reloadPageProps={['characters.media', 'character.media']}
 						/>
-						
 						<Heading is="h1" as="h3"
 							class="mt-auto z-10 {media_banner ? 'text-white' : ''}"
 							heading={character.name}
@@ -119,21 +116,25 @@
 						/>
 					</ArticleBanner>
 		
-					<Heading is="h3" as="h5" class="mx-6 mt-9 mb-6">Description</Heading>
-		
-					<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
+					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
+
+					<Collapsible collapsed={true}
+						class="max-w-[64ch] mx-6"
+						collapsedClass="line-clamp-4 overflow-hidden">
 						{character.description}
-					</p>
+					</Collapsible>
 			
 				</Section>
+
+				<Separator class="mx-6 my-6 w-96" />
 
 
 				<!-- Custom Fields -->
 		
-				<Section id="custom" class="px-6 py-12">
+				<Section id="custom" class="p-6">
 
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Custom Fields</Heading>
+						<Heading is="h3" as="h6">Custom Fields</Heading>
 					</Flex>
 
 					{#if customFields && customFields.length > 0}
@@ -160,33 +161,36 @@
 						values={character.customFieldValues}
 					/> -->
 				</Section>
+
+				<Separator class="mx-6 my-6 w-96" />
 		
 
 				<!-- Relationships -->
 		
-				<Section id="relationships" class="px-6 py-12">
+				<Section id="relationships" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Relationships</Heading>
+						<Heading is="h3" as="h6">Relationships</Heading>
 					</Flex>
 					<Stack gap={3}>
 						{#each character.relationships as rel, i}
 
 							<Flex align="center" gap={3}>
 								<Stack align="end">
-									<div class="font-bold">{character.name}</div>
-									<div class="text-sm">{rel.parentRole}</div>
+									<div class="font-bold leading-[1.125rem]">{character.name}</div>
+									<div class="text-sm leading-[1.125rem]">{rel.parentRole}</div>
 								</Stack>
 								<Flex align="center" class="-space-x-6">
-									<Thumbnail class="aspect-square bg-slate-200 rounded-full w-12"
+									<Thumbnail
+										class="aspect-square bg-surface border border-surface rounded-full w-12"
 										src={character.portrait?.url}
 									/>
-									<Thumbnail class="aspect-square bg-slate-200 rounded-full w-12"
+									<Thumbnail class="aspect-square bg-surface border border-surface rounded-full w-12"
 										src={rel.portrait?.url}
 									/>
 								</Flex>
 								<Stack>
-									<div class="font-bold">{rel.name}</div>
-									<div class="text-sm">{rel.role}</div>
+									<div class="font-bold leading-[1.125rem]">{rel.name}</div>
+									<div class="text-sm leading-[1.125rem]">{rel.role}</div>
 								</Stack>
 							</Flex>
 							<!-- <Chip aspect="square"
@@ -204,25 +208,40 @@
 						{/each}
 					</Stack>
 				</Section>
+
+				<Separator class="mx-6 my-6 w-96" />
 		
 		
 				<!-- Factions -->
 		
-				<Section id="factions" class="px-6 py-12">
+				<Section id="factions" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Factions</Heading>
+						<Heading is="h3" as="h6">Factions</Heading>
 					</Flex>
-					<Grid cols={6}>
+					<Grid cols={4} gap={3}>
 						{#each character.factions as fac, i}
-							<Card aspect="square"
+							<Link
+								class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
+								href={route("factions.show", { faction: fac.slug})}>
+								<Thumbnail
+									class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
+									icon="FlagBannerFold"
+									src={fac.image?.url}
+								/>
+								<Stack justify="center">
+									<div class="font-bold leading-[1.125rem] line-clamp-1">{fac.name}</div>
+									<div class="text-sm leading-[1.125rem] line-clamp-1">{fac.type}</div>
+								</Stack>
+							</Link>
+							<!-- <Card aspect="square"
 								icon="User"
 								title={fac.name}
 								subtitle={fac.type}
-							/>
+							/> -->
 						{/each}
-						<CardNew aspect="square"
+						<!-- <CardNew aspect="square"
 							onclick={() => {}}
-						/>
+						/> -->
 					</Grid>
 					<!-- <FactionsForm
 						character={character}
@@ -230,13 +249,15 @@
 					/> -->
 					<!-- <FactionGrid /> -->
 				</Section>
+
+				<Separator class="mx-6 my-6 w-96" />
 		
 		
 				<!-- Inventory -->
 		
-				<Section id="items" class="px-6 py-12">
+				<Section id="items" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Inventory</Heading>
+						<Heading is="h3" as="h6">Inventory</Heading>
 					</Flex>
 					<Grid cols={6}>
 						{#each character.inventory as item, i}
@@ -256,13 +277,15 @@
 					/> -->
 					<!-- <ItemGrid /> -->
 				</Section>
+
+				<Separator class="mx-6 my-6 w-96" />
 		
 		
 				<!-- Location -->
 		
-				<Section id="location" class="px-6 py-12">
+				<Section id="location" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Location</Heading>
+						<Heading is="h3" as="h6">Location</Heading>
 					</Flex>
 					{#if location}
 						<Map class="aspect-video rounded-lg w-full"
@@ -277,22 +300,25 @@
 					/> -->
 					<!-- <Map /> -->
 				</Section>
+
+				<Separator class="mx-6 my-6 w-96" />
 		
 		
 				<!-- Media -->
 		
-				<Section id="gallery" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
+				<Section id="gallery" class="p-6">
+					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
 					<MediaGrid cols={4} media={[{},{},{},{}]} />
 				</Section>
+
+				<Separator class="mx-6 my-6 w-96" />
 
 
 				<!-- Collections -->
 		
-				<Section id="collections" class="px-6 py-12">
+				<Section id="collections" class="p-6">
 					<Stack class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Collections</Heading>
-						<p>{character.name} is in these collections.</p>
+						<Heading is="h3" as="h6">Collections</Heading>
 					</Stack>
 					<Grid cols={6}>
 						{#each character.collections as collection, i}

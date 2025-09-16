@@ -25,6 +25,7 @@ class ProjectResource extends JsonResource
 			'type'        => $this->type,
 			'description' => $this->description,
 
+			'image' 		=> new MediaResource($this->whenLoaded('image')),
 			'banner' 		=> new MediaResource($this->whenLoaded('banner')),
 			'media' 		=> MediaResource::collection($this->whenLoaded('media')),
 

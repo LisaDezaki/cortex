@@ -25,7 +25,7 @@
 <Card
 	aspect="square"
 	icon="User"
-	image={media_emblem?.url}
+	image={faction.image?.url}
 	title={faction.name}
 	subtitle="{faction.members.length} member{faction.members.length === 1 ? '' : 's'}"
 	onclick={handleClick || null}

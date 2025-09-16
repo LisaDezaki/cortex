@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
 
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
@@ -22,8 +22,13 @@
         if (restProps.autofocus && input) {
 			hasFocus = true
             input.focus()
+			input.click()
         }
     })
+
+	onDestroy(() => {
+		hasFocus = false
+	})
 
 </script>
 

@@ -158,12 +158,19 @@ class LocationController extends Controller
     public function edit(Location $location) {}
     public function update(Request $request, Location $location)
     {
+		
 		$validatedData = $request->validate($this->validationRules);
+
+		dd( empty($request['media']) );
 		
 		//	Handle media
 		if ($request->has('media')) {
-			foreach ($request['media'] as $media) {
-				$this->mediaService->attachMedia($location, $media['type'], $media);
+			if ( empty($request['media']) ) {
+				// If the media array is empty, remove all media from this location.
+			} else {
+				foreach ($request['media'] as $media) {
+					$this->mediaService->attachMedia($location, $media['type'], $media);
+				}
 			}
 		}
 

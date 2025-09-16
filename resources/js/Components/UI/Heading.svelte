@@ -25,11 +25,11 @@
 
 	<Flex direction="col" align="start" justify="start" gap={0}>
 		{#if eyebrow}
-			<Flex align="center" gap={1} class="italic mb-1.5 text-accent">
+			<Flex align="center" gap={2} class="text-neutral-soft">
 				{#if eyebrowIcon}
-					<Icon name={eyebrowIcon} size="sm" weight="regular" />
+					<Icon name={eyebrowIcon} size="sm" weight="bold" />
 				{/if}
-				<span>{eyebrow}</span>
+				<span class="text-medium">{eyebrow}</span>
 			</Flex>
 		{/if}
 

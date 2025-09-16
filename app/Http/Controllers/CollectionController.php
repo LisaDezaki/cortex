@@ -64,23 +64,18 @@ class CollectionController extends Controller
 	public function create() { }
 	public function store(Request $request)
 	{
-		$type = $request['collection_type'];
 		$typeMap = [
 			'characters'	=> Character::class,
 			'factions'		=> Faction::class,
 			'locations'		=> Location::class
 		];
-		
+
+		$request['collection_type'] = $typeMap[$request['collection_type']] ?? null;
 		$validatedData = $request->validate($this->validationRules);
 		$collection = Auth::user()->activeProject()->collections()->create($validatedData);
-		$collection->collection_type = $typeMap[$type];
 		$collection->save();
 		Session::flash('success', "$collection->name collection created successfully.");
 		return Redirect::back();
-		// return back()->with([
-		// 	'success' => 'Collection was saved successfully!',
-		// 	'collection' => $collection,
-		// ]);
 	}
 
 

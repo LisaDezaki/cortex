@@ -20,6 +20,8 @@ return new class extends Migration
 			$table->string('collection_type');
 		});
 
+		//	TODO:  When the collectionable is deleted, the collection item referencing it should also be deleted.
+
 		Schema::create('collection_items', function (Blueprint $table) {
 			$table->foreignUuid('collection_id')->constrained()->onDelete('cascade');
 			$table->nullableUuidMorphs('collectionable');

@@ -45,18 +45,20 @@
 	const renameFaction		= (f) => { 	renamingFaction 	= true,	selectedFaction = f; }
 	const createCollection	= (f) => { 	creatingCollection 	= true,	selectedFaction = f; }
 	const applyTags			= (f) => { 	applyingTags 		= true,	selectedFaction = f; }
-	const closeModal		= ( ) => {  selectedFaction		= null
-										creatingFaction		= false
+	const closeModal		= ( ) => {  creatingFaction		= false
 										deletingFaction		= false
 										renamingFaction		= false
 										creatingCollection 	= false
 										applyingTags 		= false
-																	}
+										setTimeout(() => selectedFaction = null, 300)
+									 }
 
 	//	Add faction to Collection
 	const addToCollectionForm = useForm({
 		items: [{ id: null, type: 'factions' }]
 	})
+
+	let selectedFactionName = $derived(selectedFaction?.name || '')
 
 	function addToCollection(fac, coll) {
 		$addToCollectionForm.items[0]  = { id: fac.id, type: 'factions' }
@@ -118,29 +120,35 @@
 						{#snippet gridItem(faction)}
 							<FactionCard
 								faction={faction}
-								options={[
-									{ label: "View",   icon: "Eye", href: route('factions.show', {faction: faction.slug}) },
-									{ label: "Rename", icon: "Textbox", onclick: () => renameFaction(faction) },
-									{ separator: true },
-									{ label: "Add to Collection",	icon: "FolderSimple",
-										options: [
-											...collections.map(c => {
-												return {
-													label: c.name,
-													icon: "FolderSimple",
-													onclick: () => addToCollection(faction, f),
-													disabled: f.items.map(i => i.collectionable_id).includes(character.id),
-													iconWeight: f.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light' }
-												// return { label: c.name, icon: "FolderSimple", onclick: () => addToCollection(faction, c) }
-											}),
-											{ label: "New Collection", icon: "Plus", onclick: () => createCollection(faction), theme: "accent" }
-										]
-									},
-									{ label: "Add Tags", icon: "TagSimple", onclick: () => applyTags(faction) },
-									{ label: "Add Character", icon: "UsersThree" },
-									{ label: "Set Location", icon: "MapPinArea" },
-									{ separator: true },
-									{ label: "Delete Faction", icon: "Trash",		onclick: () => deleteFaction(faction), theme: "danger" }
+								iconOptions={[
+									{ icon: "Eye", 		href: route('factions.show', {faction: faction.slug}) },
+									{ icon: "Textbox", 	onclick: () => renameFaction(faction) },
+									{ icon: "Star", 	onclick: () => renameFaction(faction) },
+									{ icon: "Trash", 	onclick: () => deleteFaction(character), theme: "danger" },
+								]}
+								options={[{
+									label: "Add to Collection",
+									create: () => createCollection(faction),
+									options: [ ...collections.map(c => ({
+										label: c.name,
+										onclick: () => addToCollection(faction, f),
+										disabled: f.items.map(i => i.collectionable_id).includes(character.id),
+										iconWeight: f.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light'
+									}))]
+								},{
+									label: "Add Tags",
+									onclick: () => applyTags(faction)
+								},{
+									label: "Add Character"
+								},{
+									label: "Set Location"
+								},{
+									separator: true
+								},{
+									label: "Delete Faction",
+									onclick: () => deleteFaction(faction),
+									theme: "danger"
+								}
 								]}
 							/>
 						{/snippet}
@@ -173,32 +181,20 @@
 
 
 
-<Modal title="Create a new faction" show={creatingFaction} maxWidth="lg"
-	onclose={closeModal}>
-	<CreateFactionForm
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Rename {selectedFaction?.name}?" show={renamingFaction} maxWidth="lg"
-	onclose={closeModal}>
-	<RenameFactionForm faction={selectedFaction || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
 
-<Modal title="Delete {selectedFaction?.name}?" show={deletingFaction} maxWidth="lg"
-	onclose={closeModal}>
-	<DeleteFactionForm faction={selectedFaction || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
-
-<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<CreateCollectionForm type="factions" entity={selectedFaction || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
-
-<Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
-	onclose={closeModal}>
-	<ApplyTagsForm type="factions" entity={selectedFaction || null}
-		onSuccess={closeModal} oncancel={closeModal} />
-</Modal>
+<CreateFactionForm isOpen={creatingFaction}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<RenameFactionForm isOpen={renamingFaction} faction={selectedFaction}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<DeleteFactionForm isOpen={deletingFaction} faction={selectedFaction}
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<CreateCollectionForm isOpen={creatingCollection} entity={selectedFaction} type="factions"
+	onSuccess={closeModal} oncancel={closeModal}
+/>
+<ApplyTagsForm isOpen={applyingTags} entity={selectedFaction} type="factions"
+	onSuccess={closeModal} oncancel={closeModal}
+/>

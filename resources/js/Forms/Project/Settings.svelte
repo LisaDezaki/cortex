@@ -23,8 +23,6 @@
 
 </script>
 
-<!-- <pre>{JSON.stringify($form,null,4)}</pre> -->
-
 <Form
 	class="mt-6 space-y-2 {className}"
 	onsubmit={updateSettings}

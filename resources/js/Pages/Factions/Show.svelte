@@ -1,17 +1,18 @@
 <script>
-	import { page, router } from '@inertiajs/svelte'
+	import { Link, page, router } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import DeleteFactionForm from '@/Forms/Faction/Delete.svelte'
 
-	import { Flex, Grid, Stack } from '@/Components/Core'
+	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
 
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button		 from '@/Components/UI/Button.svelte'
 	import Card			 from '@/Components/UI/Card.svelte'
 	import CardNew       from '@/Components/UI/CardNew.svelte'
 	import Chip			 from '@/Components/UI/Chip.svelte'
+	import Collapsible	 from '@/Components/UI/Collapsible.svelte'
 	import Container	 from '@/Components/UI/Container.svelte'
 	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading		 from '@/Components/UI/Heading.svelte'
@@ -72,10 +73,10 @@
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
 				{ icon: "Info",      	label: "Details",    	href: "#details"	},
+				{ icon: "Textbox",      label: "Custom Fields", href: "#fields" 	},
 				{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
 				{ icon: "MapPinArea", 	label: "Headquarters", 	href: "#hq"			},
 				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
-				{ icon: "Textbox",      label: "Custom Fields", href: "#fields" 	},
 				{ icon: "Trash", 		label: "Delete",		onclick: deleteFaction, theme: "danger" }
 			]} />
 			<Container size="4xl">
@@ -83,10 +84,9 @@
 
 				<!-- Details -->
 		
-				<Section id="details" class="pb-12">
+				<Section id="details" class="pb-6">
 		
 					<ArticleBanner>
-
 						<Media replaceable
 							aspect="aspect-[3/1]"
 							class="absolute inset-0 rounded-lg overflow-hidden"
@@ -96,7 +96,6 @@
 							method={'patch'}
 							reloadPageProps={['factions.media']}
 						/>
-
 						<Media replaceable
 							aspect="aspect-square"
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
@@ -106,21 +105,25 @@
 							method={'patch'}
 							reloadPageProps={['factions.media']}
 						/>
-
 						<Heading is="h1" as="h3"
 							class="mt-auto z-10 {faction.banner ? 'text-white' : ''}"
 							heading={faction.name}
 							headingClass="whitespace-pre-wrap"
 							subheading={faction.type}
 						/>
-
 					</ArticleBanner>
 		
-					<Heading is="h3" as="h5" heading="Description" class="mx-6 mt-12 mb-6" />
+					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
 		
-					<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
+					<!-- <p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
 						{faction.description}
-					</p>
+					</p> -->
+
+					<Collapsible collapsed={true}
+						class="max-w-[64ch] mx-6"
+						collapsedClass="line-clamp-4 overflow-hidden">
+						{faction.description}
+					</Collapsible>
 			
 				</Section>
 
@@ -128,7 +131,7 @@
 				<!-- Custom Fields -->
 	
 				<Section id="fields" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Custom Field</Heading>
+					<Heading is="h3" as="h6" class="mb-6">Custom Field</Heading>
 					{#if faction.customFields}
 						Custom Fields
 						<!-- CustomFields />-->
@@ -140,11 +143,28 @@
 
 				<!-- Membership -->
 	
-				<Section id="members" class="px-6 py-12">
+				<Section id="members" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Membership</Heading>
+						<Heading is="h3" as="h6">Membership</Heading>
 					</Flex>
-					<Stack gap={3}>
+					<Grid cols={4} gap={3}>
+						{#each faction.members as member, i}
+							<Link
+								class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
+								href={route("characters.show", { character: member.slug})}>
+								<Thumbnail
+									class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
+									icon="User"
+									src={member.image?.url}
+								/>
+								<Stack justify="center">
+									<div class="font-bold leading-[1.125rem] line-clamp-1">{member.name}</div>
+									<div class="text-sm leading-[1.125rem] line-clamp-1">{member.rank.name}</div>
+								</Stack>
+							</Link>
+						{/each}
+					</Grid>
+					<!-- <Stack gap={3}>
 						{#each faction.members as member, i}
 							<Chip aspect="square"
 								icon="User"
@@ -153,23 +173,14 @@
 								subtitle={member.role}
 							/>
 						{/each}
-						<!-- <CardNew aspect="square"
-							onclick={() => {}}
-						/> -->
-					</Stack>
-					<!-- {#if faction.ranks}
-						Ranks.Members
-					{:else}
-						<p class="font-style-placeholder">{faction.name} doesn't have any members yet.</p>
-					{/if} -->
-					
+					</Stack> -->
 				</Section>
 
 
 				<!-- Headquarters -->
 	
 				<Section id="hq" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Headquarters</Heading>
+					<Heading is="h3" as="h6" class="mb-6">Headquarters</Heading>
 					{#if faction.headquarters}
 						Faction: {faction.headquarters}
 						<!-- <Map /> -->
@@ -182,7 +193,7 @@
 				<!-- Media -->
 	
 				<Section id="gallery" class="px-6 py-12">
-					<Heading is="h3" as="h5" class="mb-6">Gallery</Heading>
+					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
 					<MediaGrid cols={4} media={[{},{},{},{}]} />
 				</Section>
 	

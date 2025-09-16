@@ -79,10 +79,6 @@
 		}
 	/>
 
-	<!-- <pre>{JSON.stringify(relationship,null,4)}</pre> -->
-	<!-- <pre>{JSON.stringify(relatedCharacter,null,4)}</pre> -->
-	<!-- <pre>{JSON.stringify($relationshipForm.related_character,null,4)}</pre> -->
-
 	{#if $relationshipForm.related == null}
 
 		<Grid cols={6}>

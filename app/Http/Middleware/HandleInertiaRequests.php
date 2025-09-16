@@ -40,30 +40,30 @@ class HandleInertiaRequests extends Middleware
 
 		//	Fetch all projects (shallow fetch) for the authenticated user, if they are logged in.
 		$projects = Auth::check() ? $user->projects()->with([
-			'banner', 'characters', 'factions', 'locations'
+			'image', 'characters', 'factions', 'locations'
 		])->get() : null;
 
 		//	Fetch the active project (deep fetch) for the authenticated user, if they are logged in and have an active project.
 		$activeProject = $user && $user->active_project
 			? $user->projects()->with([
-				// 'banner',
-				'characters.location.banner',
+				'image',
+				'media',
+				'characters.location.image',
 				'characters.location.parent',
-				'characters.factions.emblem',
+				'characters.factions.image',
 				'characters.factions.members',
-				'characters.banner',
-				'characters.portrait',
+				'characters.image',
+				'characters.media',
 				'characters.relationships',
 				'characters.customFieldValues.customField',
-				'factions.media',
-				'factions.headquarters.banner',
+				'factions.image',
+				'factions.headquarters.image',
 				'factions.ranks',
-				'factions.members.portrait',
-				'locations.banner',
-				'locations.characters.portrait',
+				'factions.members.image',
+				'locations.image',
+				'locations.characters.image',
 				'locations.map',
 				'locations.parent',
-				'media',
 				'customFields.options'
 			])->find($user->active_project)
 			: null;

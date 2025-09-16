@@ -142,7 +142,21 @@
 		onSuccess={closeModal} />
 </Modal> -->
 
-<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
+
+
+<CreateCollectionForm isOpen={creatingCollection} entity={selectedCollection} type="locations"
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>
+<DeleteCollectionForm isOpen={deletingCollection} collection={selectedCollection}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>
+<RenameCollectionForm isOpen={renamingCollection} collection={selectedCollection}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>
+
+
+
+<!-- <Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
 	onclose={closeModal}>
 	<CreateCollectionForm type="locations" entity={selectedCollection || null}
 		onSuccess={closeModal} reloadPageProps={['collections']} />
@@ -158,4 +172,4 @@
 	onclose={closeModal}>
 	<RenameCollectionForm collection={selectedCollection || null}
 		onSuccess={closeModal} reloadPageProps={['collections']} />
-</Modal>
+</Modal> -->

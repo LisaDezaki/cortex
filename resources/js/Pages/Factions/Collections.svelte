@@ -171,26 +171,15 @@
 
 </AuthenticatedLayout>
 
-<!-- <Modal title="Apply Tags" show={applyingTags} maxWidth="lg"
-	onclose={closeModal}>
-	<ApplyTagsForm type="collections" entity={selectedCollection || null}
-		onSuccess={closeModal} reloadPageProps={['tags']} />
-</Modal> -->
 
-<Modal title="Create Collection" show={creatingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<CreateCollectionForm type="factions"
-		onSuccess={closeModal} reloadPageProps={['collections']} />
-</Modal>
 
-<Modal title="Delete {selectedCollection?.name}?" show={deletingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<DeleteCollectionForm collection={selectedCollection || null}
-		onSuccess={closeModal} reloadPageProps={['collections']} />
-</Modal>
 
-<Modal title="Rename {selectedCollection?.name}?" show={renamingCollection} maxWidth="lg"
-	onclose={closeModal}>
-	<RenameCollectionForm collection={selectedCollection || null}
-		onSuccess={closeModal} reloadPageProps={['collections']} />
-</Modal>
+<CreateCollectionForm isOpen={creatingCollection} type="factions"
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>
+<DeleteCollectionForm isOpen={deletingCollection} collection={selectedCollection}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>
+<RenameCollectionForm isOpen={renamingCollection} collection={selectedCollection}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
+/>

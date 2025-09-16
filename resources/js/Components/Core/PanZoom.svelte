@@ -7,11 +7,11 @@
 		contentClass,
 		controls,
 		constrain = false,
-		debug   = false,
-		maxZoom = $bindable(3),
-		minZoom = $bindable(1),
-		position = $bindable({ x:0, y:0 }),
-		zoom    = $bindable(1),
+		debug     = false,
+		maxZoom   = $bindable(3),
+		minZoom   = $bindable(1),
+		position  = $bindable({ x:0, y:0 }),
+		zoom      = $bindable(1),
 		...restProps
 	} = $props();
 

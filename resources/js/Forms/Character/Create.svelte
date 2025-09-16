@@ -5,14 +5,15 @@
 	import { Flex, Form, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Field  from '@/Components/UI/Field.svelte'
+	import Modal  from '@/Components/UI/Modal.svelte'
 
     let {
-		oncancel = () => {},
+		isOpen = false,
+		oncancel = () => {}
 	} = $props()
 
 	const form = useForm({
-		name: '',
-		description: '',
+		name: ''
 	});
 </script>
 
@@ -20,39 +21,40 @@
 
 
 
-<Form
-	class="max-w-lg"
-	enctype="multipart/form-data"
-	endpoint={route('characters.store')}
-	form={form}
-	method="post"
-	processing={$form.processing}
-	recentlySuccessful={$form.recentlySuccessful}
-	onFinish={oncancel}
->
-	<Stack class="p-3">
-		<Field type="text"
-			name="name"
-			placeholder="Character name"
-			required
-			autofocus
-		/>
-		<Field type="textarea"
-			name="description"
-			placeholder="Character description"
-		/>
-	</Stack>
+<Modal title="Create a new character"
+	show={isOpen} maxWidth="lg" onclose={oncancel}>
+	<Form
+		class="max-w-lg"
+		enctype="multipart/form-data"
+		endpoint={route('characters.store')}
+		form={form}
+		method="post"
+		processing={$form.processing}
+		recentlySuccessful={$form.recentlySuccessful}
+		onFinish={oncancel}
+	>
+		<Stack class="p-3">
+			<Field type="text"
+				name="name"
+				placeholder="Character name"
+				required
+				autofocus
+			/>
+		</Stack>
 
-	<Flex gap={0} class="border-t flex-0 min-h-12">
-		<Button style="hard" theme="neutral" class="border-none rounded-none w-1/2"
-			type="button"
-			label="Cancel"
-			onclick={oncancel}
-		/>
-		<Button style="hard" theme="accent" class="border-none rounded-none w-1/2"
-			type="submit"
-			label="Create"
-		/>
-	</Flex>
+		<Flex gap={0} class="border-t flex-0 min-h-12">
+			<Button style="hard" theme="neutral"
+				class="border-none rounded-none w-1/2"
+				type="button"
+				label="Cancel"
+				onclick={oncancel}
+			/>
+			<Button style="hard" theme="accent"
+				class="border-none rounded-none w-1/2"
+				type="submit"
+				label="Create"
+			/>
+		</Flex>
 
-</Form>
+	</Form>
+</Modal>

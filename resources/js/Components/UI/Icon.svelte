@@ -9,6 +9,7 @@
 	import Bank from "phosphor-svelte/lib/Bank"
 	import Barbell from "phosphor-svelte/lib/Barbell"
 	import BeerStein from "phosphor-svelte/lib/BeerStein"
+	import BookmarkSimple from "phosphor-svelte/lib/BookmarkSimple"
 	import Books from "phosphor-svelte/lib/Books"
 	import BoxingGlove from "phosphor-svelte/lib/BoxingGlove"
 	import Bread from "phosphor-svelte/lib/Bread"
@@ -24,6 +25,7 @@
 	import Chats from "phosphor-svelte/lib/Chats"
 	import Check from "phosphor-svelte/lib/Check"
 	import CheckFat from "phosphor-svelte/lib/CheckFat"
+	import CircleNotch from "phosphor-svelte/lib/CircleNotch"
 	import Compass from "phosphor-svelte/lib/Compass"
 	import CompassRose from "phosphor-svelte/lib/CompassRose"
 	import Crane from "phosphor-svelte/lib/Crane"
@@ -93,6 +95,7 @@
 	import SortDescending from "phosphor-svelte/lib/SortDescending"
 	import Speedometer from "phosphor-svelte/lib/Speedometer"
 	import SquaresFour from "phosphor-svelte/lib/SquaresFour"
+	import Star from "phosphor-svelte/lib/Star"
 	import Student from "phosphor-svelte/lib/Student"
 	import Sun from "phosphor-svelte/lib/Sun"
 	import Sword from "phosphor-svelte/lib/Sword"
@@ -115,6 +118,7 @@
 	import X from "phosphor-svelte/lib/X"
 
     let {
+		animation,
 		class: className,
 		if: showIf = true,
         name,
@@ -133,6 +137,7 @@
 		'Bank': Bank,
 		'Barbell': Barbell,
 		'BeerStein': BeerStein,
+		'BookmarkSimple': BookmarkSimple,
 		'Books': Books,
 		'BoxingGlove': BoxingGlove,
 		'Bread': Bread,
@@ -148,6 +153,7 @@
 		'Chats': Chats,
 		'Check': Check,
 		'CheckFat': CheckFat,
+		'CircleNotch': CircleNotch,
 		'Crane': Crane,
 		'Compass': Compass,
 		'CompassRose': CompassRose,
@@ -217,6 +223,7 @@
 		'SortDescending': SortDescending,
 		'Speedometer': Speedometer,
 		'SquaresFour': SquaresFour,
+		'Star': Star,
 		'Student': Student,
 		'Sun': Sun,
 		'Sword': Sword,
@@ -263,7 +270,7 @@
 
 {#if showIf && Component}
 	<div class="icon {className}">
-		<Component size={iconSize} {...restProps} />
+		<Component class={animation} size={iconSize} {...restProps} />
 	</div>
 {/if}
 

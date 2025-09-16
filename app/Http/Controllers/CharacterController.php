@@ -123,7 +123,7 @@ class CharacterController extends Controller
 			'collections.items',
 			'location',
 			'media',
-			'factions',
+			'factions.image',
 			'banner',
 			'portrait',
 			'relationships.portrait',
@@ -133,7 +133,7 @@ class CharacterController extends Controller
 
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'character'
+			'fieldable_type' => Character::class
 		])->with('options')->get();
 
 		return Inertia::render('Characters/Show', [
@@ -172,14 +172,8 @@ class CharacterController extends Controller
 
 		$character->fill($validatedData);
 		$character->update();
-
 		Session::flash('success', "$character->name updated successfully.");
         return Redirect::back();
-
-		// return back()->with([
-		// 	'success' => 'Character updated successfully!',
-		// 	'character' => $character
-		// ]);
 	}
 
 

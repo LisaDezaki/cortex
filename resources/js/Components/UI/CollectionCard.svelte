@@ -25,6 +25,7 @@
 </script>
 
 <Card
+	class={className}
 	aspect="square"
 	icon="FolderSimple"
 	image={collection.image}

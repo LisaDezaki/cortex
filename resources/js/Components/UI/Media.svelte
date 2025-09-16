@@ -44,7 +44,6 @@
 	{:else}
 		<Icon name="Image" size="xl" weight="light" />
 	{/if}
-
 	{#if replaceable}
 		<Button
 			class="absolute inset-0"
@@ -53,22 +52,15 @@
 	{/if}
 </Flex>
 
-
-
-
-
-
-
 {#if replaceable}
-
 	<Modal show={uploadingMedia} onclose={closeModal} maxWidth={aspect === 'aspect-square' ? "lg" : "2xl"}>
 		<MediaUploadForm
 			{aspect}
 			{media}
 			{type}
 			onFinish={closeModal}
+			oncancel={closeModal}
 			{...restProps}
 		/>
 	</Modal>
-
 {/if}

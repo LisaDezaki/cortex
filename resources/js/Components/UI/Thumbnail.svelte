@@ -14,20 +14,28 @@
 
 </script>
 
-<Avatar.Root class="thumbnail {className}" {...restProps}>
+<!-- <Avatar.Root class="thumbnail {className}" {...restProps}>
 	<Avatar.Image class="thumbnail-image" src={src} alt={alt}></Avatar.Image>
 	<Avatar.Fallback class="thumbnail-fallback">
 		<Icon class="thumbnail-icon" name={icon || "ImageSquare"} size={20} weight="light" />
 	</Avatar.Fallback>
-</Avatar.Root>
+</Avatar.Root> -->
+
+<div class="thumbnail {className}" {...restProps}>
+	{#if src}
+		<img {src} alt={restProps.alt || ''} class="thumbnail-image" />
+	{:else}
+		<div class="thumbnail-fallback">
+			<Icon class="thumbnail-icon" name={icon || "ImageSquare"} size={20} weight="light" />
+		</div>
+	{/if}
+</div>
 
 <style lang="postcss">
 
 	:global(.thumbnail) {
 		@apply inline-flex items-center justify-center aspect-square overflow-hidden flex-shrink-0;
 		background-color: var(--bg-neutral-softest);
-		border-color: var(--border-neutral-softest);
-		
 	}
 
 	:global(.thumbnail:not([class*="rounded"])) {

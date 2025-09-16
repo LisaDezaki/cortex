@@ -35,8 +35,6 @@
 
 </script>
 
-<!-- <pre>{JSON.stringify(factions, null, 4)}</pre> -->
-
 {#snippet headRow()}
 	{#if selectionMode}
 		<Table.Head shrink><Form.Checkbox onclick={selectAll} /></Table.Head>

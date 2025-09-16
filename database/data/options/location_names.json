@@ -1,6 +1,7 @@
 {
 	"prefix": [
 		"Alder",
+		"Bay",
 		"Briar",
 		"Bright",
 		"Clear",
@@ -83,12 +84,14 @@
 		"rock",
 		"run",
 		"shore",
+		"side",
 		"spire",
 		"stead",
 		"stone",
 		"tower",
 		"town",
 		"vale",
+		"view",
 		"ville",
 		"wall",
 		"watch",

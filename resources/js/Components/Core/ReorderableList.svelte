@@ -153,15 +153,6 @@
 	<div bind:this={placeholderElement} class="reorderable-placeholder"></div>
 </div>
 
-<!-- <pre>
-{JSON.stringify({
-	"activeIndex": activeIndex,
-	"activeId": activeId,
-	"targetIndex": targetIndex,
-	"targetId": targetId
-},null,4)}
-</pre> -->
-
 <style lang="postcss">
 
 	.reorderable-list {

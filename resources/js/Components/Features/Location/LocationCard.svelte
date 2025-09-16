@@ -23,7 +23,7 @@
 <Card
 	aspect="video"
 	icon="MapPinArea"
-	image={location.banner?.url}
+	image={location.image?.url}
 	title={location.name}
 	subtitle={location.parent?.name}
 	subtitleClass={location.isWorldMap ? 'text-accent' : ''}

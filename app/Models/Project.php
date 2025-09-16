@@ -95,6 +95,10 @@ class Project extends Model
 
 
 
+	public function image()
+	{
+		return $this->banner();
+	}
 	public function media(): MorphMany
     {
         return $this->morphMany(Media::class, 'mediable');

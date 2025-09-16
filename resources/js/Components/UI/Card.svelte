@@ -16,6 +16,7 @@
 		image,
 		imageClass,
 		icon,
+		iconOptions,
 		onclick,
 		options,
 		title,
@@ -56,6 +57,7 @@
 	{#if options}
 		<ContextMenu
 			class="absolute inset-0 z-10"
+			iconOptions={iconOptions}
 			options={options}
 		/>
 	{/if}
@@ -70,10 +72,6 @@
 			.card-visual {
 				background: var(--bg-neutral-gradient-alt)!important;
 				border-color: var(--border-accent)!important;
-			}
-			:global(.card-icon) {
-				background: var(--bg-neutral-gradient-alt-flip)!important;
-				color: var(--text-accent)!important;
 			}
 			.card-image {
 				mix-blend-mode: multiply;
@@ -90,15 +88,11 @@
 			pointer-events: none;
 		}
 
-		/* :global(.card-link) {
-			@apply absolute inset-0;
-			z-index: 1;
-		} */
-
 		.card-visual {
-			@apply border flex-shrink-0 rounded-lg overflow-hidden w-full;
-			background: var(--bg-neutral-gradient);
-			border-color: var(--border-neutral-softest);
+			@apply flex-shrink-0 rounded-lg overflow-hidden w-full;
+			/* background: var(--bg-neutral-gradient); */
+			background-color: var(--bg-neutral-softest);
+			/* border-color: var(--border-neutral-softest); */
 			&:not(.grid) {
 				@apply flex items-center justify-center;
 			}
@@ -109,7 +103,6 @@
 
 			:global(.card-icon) {
 				@apply aspect-square p-6 rounded-full max-h-[60%] max-w-[60%] h-full w-full;
-				background: var(--bg-neutral-gradient-flip);
 				color: var(--text-neutral-softest);
 			}
 		}
@@ -119,19 +112,12 @@
 		}
 
 		:global(.card-dropdown) {
-			/* @apply absolute top-2 right-2; */
 			@apply absolute;
 			z-index: 5;
 		}
 
 		:global(.card-item-options-button) {
-			/* @apply backdrop-blur-sm h-8 w-8; */
-			/* background-color: rgba(0,0,0,0.15); */
-			/* color: var(--text-white); */
 			opacity: 0;
-			&:hover {
-				/* background-color: rgba(255,255,255,0.2); */
-			}
 		}
 	}
 
