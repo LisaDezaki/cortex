@@ -56,26 +56,11 @@
 						recentlySuccessful={$form.recentlySuccessful}
 						onFinish={oncancel}
 					>
-						<!-- <Field>
-							<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
-							<Error for="username" />
-						</Field>
-						<Field>
-							<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
-							<Error for="username" />
-						</Field>
-						<Field>
-							<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
-							<Error for="username" />
-						</Field>
-						<Field>
-							<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
-							<Error for="username" />
-						</Field>
-						<Field>
-							<Input type="switch" id="username" label="Enable or disabled some feature or whatever." />
-							<Error for="username" />
-						</Field> -->
+						<ul>
+							<li>Set theme colors</li>
+							<li>Light/dark preferences</li>
+							<li></li>
+						</ul>
 					</Form>
 				</Section>
 

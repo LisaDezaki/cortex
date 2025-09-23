@@ -691,7 +691,6 @@
 		
 				{/if}
 
-			<!-- </Tabs> -->
 		</Section>
 	{/snippet}
 	

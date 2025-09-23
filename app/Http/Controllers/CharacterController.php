@@ -36,6 +36,7 @@ class CharacterController extends Controller
 
 	protected $validationRules = [
 		'name'                  => ['sometimes', 'string', 'max:255'],
+		'alias'                 => ['sometimes', 'string', 'max:255'],
 		'description'           => ['sometimes', 'string'],
 		'faction_id'            => ['sometimes', 'string', 'uuid', 'exists:factions,id'],
 		'location_id'           => ['sometimes', 'string', 'uuid', 'exists:locations,id'],
@@ -46,10 +47,10 @@ class CharacterController extends Controller
 		'media.*.type'			=> ['required',  'string', 'in:banner,gallery,portrait'],
 		'media.*.url'			=> ['nullable',  'string'],
 
-		'relationships'         => ['sometimes', 'array'],
-		'relationships.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:characters,id'],
-		'relationships.*.role'  => ['required',  'string'],
-		'relationships.*.related_role' 	=> ['required',  'string'],
+		'relationships'         				 => ['sometimes', 'array'],
+		'relationships.*.character_role'  		 => ['required',  'string'],
+		'relationships.*.related_character_id'	 => ['required',  'string', 'uuid', 'distinct', 'exists:characters,id'],
+		'relationships.*.related_character_role' => ['required',  'string'],
 
 		'custom_fields'			=> ['sometimes', 'array'],
 		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
@@ -104,6 +105,14 @@ class CharacterController extends Controller
 	{
 		$validatedData = $request->validate($this->validationRules);
 		$character = Auth::user()->activeProject()->characters()->create($validatedData);
+
+		if ($request->has('media')) {
+			foreach ($request['media'] as $media) {
+				$this->mediaService->attachMedia($character, $media['type'], $media);
+			}
+			unset($validatedData['media']);
+		}
+		
 		$character->save();
 		Session::flash('success', "$character->name created successfully.");
 		return Redirect::route("characters.show", [
@@ -120,15 +129,16 @@ class CharacterController extends Controller
 	public function show(Character $character): Response
 	{
 		$character->load([
-			'collections.items',
 			'location',
+			'image',
 			'media',
 			'factions.image',
-			'banner',
-			'portrait',
-			'relationships.portrait',
-			'inverseRelationships.portrait',
-			'customFieldValues.customField'
+			// 'banner',
+			// 'portrait',
+			'relationships.image',
+			'inverseRelationships.image',
+			'customFieldValues.customField',
+			'collections.items',
 		]);
 
 		$customFields = CustomField::where([
@@ -153,7 +163,9 @@ class CharacterController extends Controller
 	public function edit(Character $character) {}
 	public function update(Request $request, Character $character): RedirectResponse
 	{
+		// dd($request->all());
 		$validatedData = $request->validate($this->validationRules);
+		// dd($validatedData);
 
 		if ($request->has('media')) {
 			foreach ($request['media'] as $media) {
@@ -161,6 +173,20 @@ class CharacterController extends Controller
 			}
 			unset($validatedData['media']);
 		}
+
+		if ($request->has('relationships')) {
+			foreach ($validatedData['relationships'] as $rel) {
+				$relatedCharacter = Character::find($rel['related_character_id']);
+				$character->relationships()->save($relatedCharacter, $rel);
+				// $character->relationships()->attach($relatedCharacter->id, $rel);
+			}
+			unset($validatedData['relationships']);
+		}
+
+
+
+
+
 
 		if ($request->has('location_id')) {
 			$character->location()->associate($validatedData['location_id']);

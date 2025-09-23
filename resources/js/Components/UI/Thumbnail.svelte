@@ -1,32 +1,32 @@
 <script>
 
 	import { Avatar } from "bits-ui"
-	import Icon from "@/Components/UI/Icon.svelte";
+	import Icon from '@/Components/UI/Icon.svelte'
 
 	let {
 		alt,
 		children,
 		class: className,
 		icon,
+		iconSize = 20,
 		src,
 		...restProps
 	} = $props()
 
 </script>
 
-<!-- <Avatar.Root class="thumbnail {className}" {...restProps}>
-	<Avatar.Image class="thumbnail-image" src={src} alt={alt}></Avatar.Image>
-	<Avatar.Fallback class="thumbnail-fallback">
-		<Icon class="thumbnail-icon" name={icon || "ImageSquare"} size={20} weight="light" />
-	</Avatar.Fallback>
-</Avatar.Root> -->
+
+
+
 
 <div class="thumbnail {className}" {...restProps}>
 	{#if src}
 		<img {src} alt={restProps.alt || ''} class="thumbnail-image" />
 	{:else}
 		<div class="thumbnail-fallback">
-			<Icon class="thumbnail-icon" name={icon || "ImageSquare"} size={20} weight="light" />
+			{#if icon}
+				<Icon class="thumbnail-icon" name={icon} size={iconSize} weight="light" />
+			{/if}
 		</div>
 	{/if}
 </div>

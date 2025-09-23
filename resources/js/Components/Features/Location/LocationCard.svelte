@@ -25,7 +25,7 @@
 	icon="MapPinArea"
 	image={location.image?.url}
 	title={location.name}
-	subtitle={location.parent?.name}
+	subtitle={location.type}
 	subtitleClass={location.isWorldMap ? 'text-accent' : ''}
 	onclick={handleClick || null}
 	href={onclick ? null : route('locations.show', {location: location.slug})}

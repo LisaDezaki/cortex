@@ -90,7 +90,7 @@
 		<Icon name={item.icon} size={20} weight="regular" />
 	{/if}
 	{#if item?.label}
-		<span class="line-clamp-1">{item.label}</span>
+		<span class="line-clamp-1 text-left w-full">{item.label}</span>
 	{/if}
 {/snippet}
 

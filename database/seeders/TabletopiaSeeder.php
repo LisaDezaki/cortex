@@ -187,7 +187,6 @@ class TabletopiaSeeder extends Seeder
 		$json_relationships = json_decode($json, true);
 		foreach ($json_relationships as $relationship) {
 			DB::table('character_relationships')->insert([
-				'id' => Str::uuid(),
 				'character_id' => $characters[$relationship['character']]->id,
 				'related_character_id' => $characters[$relationship['related_character']]->id,
 				'character_role' => $relationship['character_role'] ?? null,

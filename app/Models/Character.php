@@ -20,6 +20,7 @@ class Character extends Model
 
 	protected $fillable = [
 		'name',
+		'alias',
 		'subtitle',
 		'description',
 		'appearance',

@@ -3,63 +3,53 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
+	
+	import Empty				from '@/Components/UI/Empty.svelte'
+	import PageHeader			from '@/Components/UI/PageHeader.svelte'
+	import Section				from '@/Components/UI/Section.svelte'
+	import CharacterCard		from '@/Components/Features/Character/CharacterCard.svelte'
+	import CharacterControlBar 	from '@/Components/Features/Character/CharacterControlBar.svelte'
+	import CharacterGrid 		from '@/Components/Features/Character/CharacterGrid.svelte'
+	import CharacterTable		from '@/Components/Features/Character/CharacterTable.svelte'
 
-	import CreateCharacterForm 	from '@/Forms/Character/Create.svelte'
-	import DeleteCharacterForm 	from '@/Forms/Character/Delete.svelte'
-	import RenameCharacterForm 	from '@/Forms/Character/Rename.svelte'
-	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
-	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
-	
-	import Empty		from '@/Components/UI/Empty.svelte'
-	import PageHeader	from '@/Components/UI/PageHeader.svelte'
-	import Section		from '@/Components/UI/Section.svelte'
-	
-	import CharacterCard	from '@/Components/Features/Character/CharacterCard.svelte'
-	import CharacterControlBar from '@/Components/Features/Character/CharacterControlBar.svelte'
-	import CharacterGrid 	from '@/Components/Features/Character/CharacterGrid.svelte'
-	import CharacterTable	from '@/Components/Features/Character/CharacterTable.svelte'
 
 	//	Page props
+
 	const activeProject		= $page.props.activeProject.data
 	const collections		= $page.props.collections?.data
 	const characters    	= activeProject?.characters
 	const factions    		= activeProject?.factions
 	const locations    		= activeProject?.locations
 
-	//	State
+
+	//	State & Derived values
+
 	let filteredCharacters  = $state(characters)
 	let selectedCharacter 	= $state(null)
 	let layout    			= $state('grid')
 	let rowSize   			= $state(8)
-
 	let gridCols 			= $derived(16-rowSize)
 
-	//	State > Modals
-	let creatingCharacter	= $state(false)
-	let deletingCharacter	= $state(false)
-	let renamingCharacter	= $state(false)
-	let creatingCollection	= $state(false)
-	let applyingTags		= $state(false)
 
-	const createCharacter	= ( ) => { 	creatingCharacter 	= true }
-	const deleteCharacter	= (c) => { 	selectedCharacter = c; deletingCharacter 	= true; }
-	const renameCharacter	= (c) => { 	selectedCharacter = c; renamingCharacter 	= true; }
-	const createCollection	= (c) => { 	selectedCharacter = c; creatingCollection 	= true; }
-	const applyTags			= (c) => { 	selectedCharacter = c; applyingTags 		= true; }
-	const closeModal		= ( ) => {  creatingCharacter	= false
-										deletingCharacter	= false
-										renamingCharacter	= false
-										creatingCollection	= false
-										applyingTags 		= false
-										setTimeout(() => selectedCharacter = null, 300)
-									 }
+	//	Modal Management
 
-	const createFaction		= ( ) 	 => { /* TODO */ }
-	const setFaction		= (c, f) => { /* TODO */ }
+	import { modalActions } from '@/stores/modalStore';
+
+	function createCharacter() 		{ modalActions.open('createCharacter') 	}
+	function createFaction()		{ modalActions.open('createFaction') 	}
+	function createLocation()		{ modalActions.open('createLocation') 	}
+	function createCollection()		{ modalActions.open('createCollection') }
+    function deleteCharacter(char) 	{ modalActions.open('deleteCharacter', 	{ character: char 	}) }
+	function renameCharacter(char) 	{ modalActions.open('renameCharacter', 	{ character: char 	}) }
+	function setFaction(char)		{ modalActions.open('setCharacterFaction')  }
+	function setLocation(char)		{ modalActions.open('setCharacterLocation') }
+
+	// const createFaction		= ( ) 	 => { /* TODO */ }
+	// const setFaction		= (c, f) => { /* TODO */ }
 	const removeFaction		= (c) 	 => { /* TODO */ }
 
-	const createLocation	= ( ) 	 => { /* TODO */ }
-	const setLocation		= (c, l) => { /* TODO */ }
+	// const createLocation	= ( ) 	 => { /* TODO */ }
+	// const setLocation		= (c, l) => { /* TODO */ }
 	const removeLocation	= (c) 	 => { /* TODO */ }
 
 	//	Add Character to Collection
@@ -221,23 +211,3 @@
 	{/snippet}
 
 </AuthenticatedLayout>
-
-
-
-
-
-<CreateCharacterForm isOpen={creatingCharacter}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<RenameCharacterForm isOpen={renamingCharacter} character={selectedCharacter}
-	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['characters']}
-/>
-<DeleteCharacterForm isOpen={deletingCharacter} character={selectedCharacter}
-	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['characters']}
-/>
-<CreateCollectionForm isOpen={creatingCollection} entity={selectedCharacter} type="characters"
-	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['characters.collections', 'collections']}
-/>
-<ApplyTagsForm isOpen={applyingTags} entity={selectedCharacter} type="characters"
-	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['characters.tags', 'tags']}
-/>

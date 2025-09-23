@@ -1,7 +1,6 @@
 <script>
 	//	Imports
 	import { page } from '@inertiajs/svelte'
-	import { Flex, Inline } from '@/Components/Core'
 	import ControlBar from '@/Components/UI/ControlBar.svelte'
 
 	const customFields = $page.props.customFields?.data
@@ -27,13 +26,13 @@
 
 	//	Submenu Options
 	let factionOptions = project.factions?.map(f => {
-		return { label: f.name, value: `factions.*.${f.slug}`, image: f.image?.url, filterFunction: (ch) => { return ch.factions[0].slug == f.slug } }
+		return { label: f.name, value: `factions.*.${f.slug}`, 		imageIcon: 'FlagBannerFold',	image: f.image?.url || '', filterFunction: (ch) => { return ch.factions[0].slug == f.slug } }
 	})
 	let locationOptions = project.locations?.map(l => {
-		return { label: l.name, value: `location.${l.slug}`, image: l.image?.url, filterFunction: (ch) => { return ch.location.slug == l.slug } }
+		return { label: l.name, value: `location.${l.slug}`, 		imageIcon: 'MapPinArea',		image: l.image?.url || '', filterFunction: (ch) => { return ch.location.slug == l.slug } }
 	})
 	let relationshipOptions = project.characters?.map(c => {
-		return { label: c.name, value: `relationship.*.${c.slug}`, image: c.image?.url, filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
+		return { label: c.name, value: `relationship.*.${c.slug}`, 	imageIcon: 'User',			image: c.image?.url || '', filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
 	})
 	let customFieldOptions = (field) => {
 		return field.options?.map(opt => {
@@ -49,9 +48,9 @@
 	const filterOptions = $state([
 		{ label: 'All Characters', 	value: '',		filterFunction: (ch) => { return ch } },
 		{ 	separator: true },
-		{ label: 'Faction...',		children: factionOptions },
-		{ label: 'Location...',		children: locationOptions },
-		{ label: 'Relationship...',	children: relationshipOptions },
+		{ label: 'Faction...',		showImage: true, children: factionOptions },
+		{ label: 'Location...',		showImage: true, children: locationOptions },
+		{ label: 'Relationship...',	showImage: true, children: relationshipOptions },
 		{ 	separator: true },
 		...customFields?.map(f => {
 			return { label: `${f.label}...`, children: customFieldOptions(f) }

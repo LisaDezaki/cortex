@@ -70,7 +70,7 @@
 		
 		// 2. Filter by department
 		if (filter !== 'all') {
-			console.log('filter:', filter)
+			// console.log('filter:', filter)
 			let fil = filter.split('.')
 			filtered = filtered.filter(item => item[fil[0]] === fil[1])
 		}

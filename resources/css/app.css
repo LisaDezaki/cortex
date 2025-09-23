@@ -34,6 +34,7 @@
 		--bg-accent-softest: 		rgb(from var(--bg-accent) r g b / 10%);
 		--bg-accent-gradient:		linear-gradient(theme(colors.emerald.500), theme(colors.emerald.600));
 		--bg-accent-gradient-alt: 	linear-gradient(theme(colors.emerald.600), theme(colors.emerald.700));
+		--bg-accent-gradient-flip:	linear-gradient(theme(colors.emerald.600), theme(colors.emerald.500));
 
 		--bg-neutral:				theme(colors.slate.400);
 		--bg-neutral-soft:      	rgb(from var(--bg-neutral) r g b / 50%);
@@ -299,6 +300,7 @@
 	.bg-accent-softer 		{ background-color: var(--bg-accent-softer); }
 	.bg-accent-softest 		{ background-color: var(--bg-accent-softest); }
 	.bg-accent-gradient		{ background: 		var(--bg-accent-gradient); }
+	.bg-accent-gradient-flip{ background: 		var(--bg-accent-gradient-flip); }
 	.bg-neutral 			{ background-color: var(--bg-neutral); }
 	.bg-neutral-strong 		{ background-color: var(--bg-neutral-strong); }
 	.bg-neutral-soft 		{ background-color: var(--bg-neutral-soft); }

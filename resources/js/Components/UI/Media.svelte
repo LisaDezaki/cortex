@@ -1,38 +1,19 @@
 <script>
-	import { page, router } from '@inertiajs/svelte'
-	import { route } from 'momentum-trail'
+	import { modalActions } from '@/stores/modalStore';
 	
-	import MediaUploadForm from '@/Forms/Media/MediaUploadForm.svelte'
 	import { Flex } from '@/Components/Core'
-	import Button from '@/Components/UI/Button.svelte'
-	import Icon from '@/Components/UI/Icon.svelte'
-	import Modal from '@/Components/UI/Modal.svelte'
+	import Button 	from '@/Components/UI/Button.svelte'
+	import Icon 	from '@/Components/UI/Icon.svelte'
 
 	let {
-		aspect,
+		aspect = 'aspect-square',
 		class: className,
 		media,
-		onReplace = () => {},
 		replaceable = false,
-		type,
-		uploadProps,
 		...restProps
 	} = $props()
 
-	let uploadingMedia    = $state(false)
-	let uploadMultiple    = $derived(type == 'gallery')
-
-	function uploadMedia() {
-		uploadingMedia    = true
-	}
-	function closeModal() {
-		uploadingMedia    = false
-    }
-
 </script>
-
-
-
 
 
 
@@ -47,20 +28,7 @@
 	{#if replaceable}
 		<Button
 			class="absolute inset-0"
-			onclick={uploadMedia}
+			onclick={() => modalActions.open('uploadMedia', { aspect, media, ...restProps })}
 		/>
 	{/if}
 </Flex>
-
-{#if replaceable}
-	<Modal show={uploadingMedia} onclose={closeModal} maxWidth={aspect === 'aspect-square' ? "lg" : "2xl"}>
-		<MediaUploadForm
-			{aspect}
-			{media}
-			{type}
-			onFinish={closeModal}
-			oncancel={closeModal}
-			{...restProps}
-		/>
-	</Modal>
-{/if}

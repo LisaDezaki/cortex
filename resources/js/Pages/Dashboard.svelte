@@ -4,13 +4,10 @@
 	import { route } from 'momentum-trail'
 	
     import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
-	import MediaUploadForm 		from '@/Forms/Media/Upload.svelte'
-	import CreateProjectForm   	from '@/Forms/Project/Create.svelte'
-	import DeleteProjectForm   	from '@/Forms/Project/Delete.svelte'
-	import RenameProjectForm    from '@/Forms/Project/Rename.svelte'
 
 	import { Flex, Grid, Stack } from '@/Components/Core'
 
+	import Button 	  from '@/Components/UI/Button.svelte'
 	import Card 	  from '@/Components/UI/Card.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
 	import Icon       from '@/Components/UI/Icon.svelte'
@@ -29,24 +26,14 @@
         project: null,
     })
 
-	let media_banner	= $derived(activeProject.media?.filter(m => m.type === 'banner')?.[0])
-	// let media_gallery	= $derived(activeProject.media)
+	/**
+	 * Modal Management
+	 */
 
-	let selectedProject = $state(null)
-	let creatingProject = $state(false)
-	let renamingProject = $state(false)
-	let deletingProject = $state(false)
-	let settingBanner   = $state(false)
-
-	function createProject(e, project) 	{	creatingProject = true; selectedProject = project }
-	function renameProject(e, project)	{	renamingProject = true; selectedProject = project }
-	function deleteProject(e, project)	{	deletingProject = true; selectedProject = project }
-	function closeModal() 				{	creatingProject = false
-											settingBanner   = false
-											renamingProject = false
-											deletingProject = false
-											selectedProject = null
-										}
+	import { modalActions } from '@/stores/modalStore';
+	function createProject() 	{ modalActions.open('createProject') 	}
+    function deleteProject() 	{ modalActions.open('deleteProject', 	{ project: activeProject }) }
+	function renameProject() 	{ modalActions.open('renameProject', 	{ project: activeProject }) }
 
 	function activateProject(e, proj) {
 		e.preventDefault();
@@ -97,8 +84,9 @@
 
 		{#if activeProject}
 
-			<Section class="pb-12">
+			<Section class="mb-24">
 				<Media replaceable
+					aspect="aspect-[7/3]"
 					class="relative bg-neutral-softest h-[50vh] min-h-96 overflow-hidden w-full"
 					endpoint={route('projects.update', { project: activeProject.id })}
 					method="patch"
@@ -108,10 +96,14 @@
 				/>
 			</Section>
 
-			<Section size="7xl" class="relative pt-12">
+			<Section size="7xl" class="relative mt-24">
 				<Grid cols={2} gap={12}>
 					<Stack>
-						<Heading is="h1" as="h2" heading={activeProject.name} />
+						<Flex align="center">
+							<Heading is="h1" as="h2" heading={activeProject.name} />
+							<Button style="soft" theme="accent" icon="Pen"   onclick={renameProject} class="ml-auto" />
+							<Button style="soft" theme="danger" icon="Trash" onclick={deleteProject} />
+						</Flex>
 						<p class="font-style-large italic max-w-[65ch] text-neutral-soft">{activeProject.type}</p>
 						<p class="max-w-[65ch] mt-6">{activeProject.description}</p>
 					</Stack>
@@ -241,17 +233,3 @@
 	{/snippet}
 	
 </AuthenticatedLayout>
-
-
-
-
-
-<CreateProjectForm isOpen={creatingProject}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<DeleteProjectForm isOpen={deletingProject} project={selectedProject}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<RenameProjectForm isOpen={renamingProject} project={selectedProject}
-	onSuccess={closeModal} oncancel={closeModal}
-/>

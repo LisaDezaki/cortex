@@ -3,7 +3,6 @@
 	import { route } from 'momentum-trail'
 
 	import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
-	import AddToCollectionForm	from '@/Forms/Collection/AddTo.svelte'
 	
 	import { Flex, Grid, Stack } from '@/Components/Core'
 
@@ -12,10 +11,8 @@
 	import CollectionCard from '@/Components/UI/CollectionCard.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
-	import Modal    	 from '@/Components/UI/Modal.svelte'
 	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
-	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 
 	const collection    = $page.props.collection?.data
 
@@ -140,11 +137,11 @@
 	
 </AuthenticatedLayout>
 
-<Modal
+<!-- <Modal
 	title="Add to collection"
 	maxWidth="lg"
 	show={addingToCollection}
 	onclose={closeModal}
 >
 	<AddToCollectionForm collection={collection} oncancel={closeModal} />
-</Modal>
+</Modal> -->

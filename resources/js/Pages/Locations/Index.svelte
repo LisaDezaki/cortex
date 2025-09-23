@@ -4,63 +4,48 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import CreateLocationForm 	from '@/Forms/Location/Create.svelte'
-	import DeleteLocationForm 	from '@/Forms/Location/Delete.svelte'
-	import RenameLocationForm 	from '@/Forms/Location/Rename.svelte'
-	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
-	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
-
 	import Empty   from '@/Components/UI/Empty.svelte'
-	import Modal      from '@/Components/UI/Modal.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
-	
 	import LocationCard		from '@/Components/Features/Location/LocationCard.svelte'
 	import LocationControlBar from '@/Components/Features/Location/LocationControlBar.svelte'
 	import LocationGrid		from '@/Components/Features/Location/LocationGrid.svelte'
 	import LocationTable	from '@/Components/Features/Location/LocationTable.svelte'
 	import LocationMap		from '@/Components/Features/Location/Map.svelte'
 	
+
 	//	Page props
+
 	const activeProject = $page.props.activeProject.data
 	const collections	= $page.props.collections?.data
 	const worldTree     = $page.props.worldTree?.data
 	const locations     = activeProject?.locations  || []
 
-	//	State
+
+	//	State & Derived values
+
 	let filteredLocations   = $state(locations)
 	let selectedLocation 	= $state(null)
 	let layout    			= $state('grid')
 	let rowSize   			= $state(5)
-
 	let gridCols 			= $derived(10-rowSize)
 
-	//	State > Modals
-	let creatingLocation	= $state(false)
-	let deletingLocation	= $state(false)
-	let renamingLocation	= $state(false)
-	let creatingCollection	= $state(false)
-	let applyingTags		= $state(false)
 
-	const applyTags			= (l) => { applyingTags 		= true, selectedLocation = l; }
-	const createLocation	= ( ) => { creatingLocation 	= true }
-	const createCollection	= (l) => { creatingCollection 	= true,	selectedLocation = l; }
-	const deleteLocation	= (l) => { deletingLocation 	= true,	selectedLocation = l; }
-	const renameLocation	= (l) => { renamingLocation 	= true,	selectedLocation = l; }
-	const closeModal		= ( ) => {  applyingTags 		= false
-										creatingLocation	= false
-										creatingCollection	= false
-										deletingLocation	= false
-										renamingLocation	= false
-										setTimeout(() => selectedLocation = null, 300)
-									}
+	//	Modal Management
+
+	import { modalActions } from '@/stores/modalStore';
+
+	function createCollection() 	{ modalActions.open('createCollection') }
+	function createLocation() 		{ modalActions.open('createLocation') 	}
+	function deleteLocation(loc) 	{ modalActions.open('deleteLocation', { location: loc }) 	}
+	function renameLocation(loc) 	{ modalActions.open('renameLocation', { location: loc }) 	}
 
 	//	Add Character to Collection
 	const addToCollectionForm = useForm({
 		items: [{ id: null, type: 'locations' }]
 	})
 
-	let selectedLocationName = $derived(selectedLocation?.name ||'')
+	// let selectedLocationName = $derived(selectedLocation?.name ||'')
 
 	function addToCollection (loc, coll) {
 		$addToCollectionForm.items[0]  = { id: loc.id, type: 'locations' }
@@ -90,9 +75,9 @@
 		<PageHeader
 			title="Location List"
 			tabs={[
-				{ label: "List",			active: true },
+				{ label: "List",		active: true },
 				{ label: "Collections",	href: route('locations.collections') },
-				{ label: "Settings",		href: route('locations.settings') },
+				{ label: "Settings",	href: route('locations.settings') },
 			]}
 			actions={[
 				{ icon: "Plus",			label: "Create Location", onclick: createLocation, theme: "accent" },
@@ -136,7 +121,7 @@
 									options: [ ...collections.map(c => ({
 										label: c.name,
 										onclick: () => addToCollection(location, c),
-										disabled: c.items.map(i => i.collectionable_id).includes(location.id),
+										disabled:   c.items.map(i => i.collectionable_id).includes(location.id),
 										iconWeight: c.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
 									}))]
 								},{
@@ -188,29 +173,3 @@
 	{/snippet}
     
 </AuthenticatedLayout>
-
-
-
-
-
-
-
-
-
-
-
-<CreateLocationForm isOpen={creatingLocation}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<RenameLocationForm isOpen={renamingLocation} location={selectedLocation}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<DeleteLocationForm isOpen={deletingLocation} location={selectedLocation}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<CreateCollectionForm isOpen={creatingCollection} entity={selectedLocation} type="locations"
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<ApplyTagsForm isOpen={applyingTags} entity={selectedLocation} type="locations"
-	onSuccess={closeModal} oncancel={closeModal}
-/>

@@ -4,56 +4,43 @@
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import CreateFactionForm 	from '@/Forms/Faction/Create.svelte'
-	import DeleteFactionForm 	from '@/Forms/Faction/Delete.svelte'
-	import RenameFactionForm 	from '@/Forms/Faction/Rename.svelte'
-	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
-	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
-
 	import Empty     	from '@/Components/UI/Empty.svelte'
-	import Modal		from '@/Components/UI/Modal.svelte'
 	import PageHeader	from '@/Components/UI/PageHeader.svelte'
 	import Section      from '@/Components/UI/Section.svelte'
-
 	import FactionCard 	from '@/Components/Features/Faction/FactionCard.svelte'
 	import FactionControlBar from '@/Components/Features/Faction/FactionControlBar.svelte'
 	import FactionGrid 	from '@/Components/Features/Faction/FactionGrid.svelte'
 	import FactionTable from '@/Components/Features/Faction/FactionTable.svelte'
 
+
 	//	Page props
+
 	const activeProject 	= $page.props.activeProject.data
 	const collections		= $page.props.collections?.data
 	const factions      	= activeProject?.factions
 	
-	//	State
+
+	//	State & Derived values
+
 	let filteredFactions 	= $state(factions)
 	let selectedFaction 	= $state(null)
 	let layout    			= $state('grid')
 	let rowSize   			= $state(8)
-
 	let gridCols    		= $derived( 16-rowSize )
 
-	//	State > Modals
-	let creatingFaction		= $state(false)
-	let deletingFaction		= $state(false)
-	let renamingFaction		= $state(false)
-	let creatingCollection	= $state(false)
-	let applyingTags		= $state(false)
 
-	const createFaction		= ( ) => { 	creatingFaction 	= true }
-	const deleteFaction		= (f) => { 	deletingFaction 	= true,	selectedFaction = f; }
-	const renameFaction		= (f) => { 	renamingFaction 	= true,	selectedFaction = f; }
-	const createCollection	= (f) => { 	creatingCollection 	= true,	selectedFaction = f; }
-	const applyTags			= (f) => { 	applyingTags 		= true,	selectedFaction = f; }
-	const closeModal		= ( ) => {  creatingFaction		= false
-										deletingFaction		= false
-										renamingFaction		= false
-										creatingCollection 	= false
-										applyingTags 		= false
-										setTimeout(() => selectedFaction = null, 300)
-									 }
+	//	Modal Management
+
+	import { modalActions } from '@/stores/modalStore';
+
+	function createFaction()		{ modalActions.open('createFaction') 	}
+	function createCollection()		{ modalActions.open('createCollection') }
+	function deleteFaction(fac) 	{ modalActions.open('deleteFaction', 	{ faction: fac 		}) }
+	function renameFaction(fac) 	{ modalActions.open('renameFaction', 	{ faction: fac 		}) }
+
 
 	//	Add faction to Collection
+
 	const addToCollectionForm = useForm({
 		items: [{ id: null, type: 'factions' }]
 	})
@@ -66,11 +53,6 @@
 			route('collections.update', { collection: coll.slug })
 		)
 	}
-
-	// function updateControls(filteredList, controls) {
-	// 	factionList = filteredList
-	// 	layout = controls.layout
-	// }
 
 </script>
 
@@ -124,7 +106,7 @@
 									{ icon: "Eye", 		href: route('factions.show', {faction: faction.slug}) },
 									{ icon: "Textbox", 	onclick: () => renameFaction(faction) },
 									{ icon: "Star", 	onclick: () => renameFaction(faction) },
-									{ icon: "Trash", 	onclick: () => deleteFaction(character), theme: "danger" },
+									{ icon: "Trash", 	onclick: () => deleteFaction(faction), theme: "danger" },
 								]}
 								options={[{
 									label: "Add to Collection",
@@ -132,8 +114,8 @@
 									options: [ ...collections.map(c => ({
 										label: c.name,
 										onclick: () => addToCollection(faction, f),
-										disabled: f.items.map(i => i.collectionable_id).includes(character.id),
-										iconWeight: f.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light'
+										disabled:   f.items.map(i => i.collectionable_id).includes(faction.id),
+										iconWeight: f.items.map(i => i.collectionable_id).includes(faction.id) ? 'fill' : 'light'
 									}))]
 								},{
 									label: "Add Tags",
@@ -178,23 +160,3 @@
 	{/snippet}
     
 </AuthenticatedLayout>
-
-
-
-
-
-<CreateFactionForm isOpen={creatingFaction}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<RenameFactionForm isOpen={renamingFaction} faction={selectedFaction}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<DeleteFactionForm isOpen={deletingFaction} faction={selectedFaction}
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<CreateCollectionForm isOpen={creatingCollection} entity={selectedFaction} type="factions"
-	onSuccess={closeModal} oncancel={closeModal}
-/>
-<ApplyTagsForm isOpen={applyingTags} entity={selectedFaction} type="factions"
-	onSuccess={closeModal} oncancel={closeModal}
-/>

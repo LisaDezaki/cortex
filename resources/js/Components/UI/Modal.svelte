@@ -3,6 +3,9 @@
     import Portal from 'svelte-portal'
     import Transition from 'svelte-transition'
 
+	import { modalActions } from '@/stores/modalStore';
+	
+
     import { Flex, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Heading from '@/Components/UI/Heading.svelte'
@@ -14,9 +17,7 @@
         closeable = true,
 		footer,
         maxWidth = 'none',
-        onclose = () => {},
 		title,
-        show = false,
     } = $props()
 
     let maxWidthClass = $derived(
@@ -30,60 +31,64 @@
         }[maxWidth],
     )
 
-    $effect(() => {
-        document.body.style.overflow = show ? 'hidden' : 'visible'
-    })
+    // $effect(() => {
+    //     document.body.style.overflow = show ? 'hidden' : 'visible'
+    // })
 
     onDestroy(() => (document.body.style.overflow = 'visible'))
 
     function close() {
         if (closeable) {
-            onclose()
+			modalActions.close()
         }
     }
 
     function closeOnEscape(e) {
-        if (e.key === 'Escape' && show) {
-            onclose()
+        if (e.key === 'Escape') {
+			modalActions.close()
         }
     }
 </script>
 
 <svelte:window on:keydown={closeOnEscape} />
 
+
+
+
+
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <Portal target="body">
-    <Transition {show} leave="duration-200">
+    <!-- <Transition {show} leave="duration-200"> -->
         <Stack justify="center" class="fixed inset-0 z-50 overflow-y-auto px-4 py-6 sm:px-0" scroll-region>
-            <Transition
+            <!-- <Transition
                 enter="ease-out duration-300"
                 enterFrom="opacity-0"
                 enterTo="opacity-100"
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100"
                 leaveTo="opacity-0"
-            >
+            > -->
                 <!-- svelte-ignore a11y_no_static_element_interactions -->
-                <div class="overlay-wrap" onclick={close}>
+                <div class="overlay-wrap" onclick={modalActions.close}>
                     <div class="overlay"></div>
                 </div>
-            </Transition>
+            <!-- </Transition> -->
 
-            <Transition
+            <!-- <Transition
                 enter="ease-out duration-300"
                 enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 enterTo="opacity-100 translate-y-0 sm:scale-100"
                 leave="ease-in duration-200"
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            >
+            > -->
                 <div class="modal {maxWidthClass} {className}">
 					{#if title}
 						<Flex justify="between" class="modal-head">
-							<Heading heading={title} />
+							<Heading is="h3" as="h6" heading={title} />
 							<Flex gap={3}>
 								<Button style="plain" theme="danger" class="rounded-full"
-									icon="X" onclick={close}
+									icon="X" onclick={modalActions.close}
 								/>
 								<!-- <Button style="soft" theme="accent" class="rounded-full"
 									icon="Check"
@@ -100,33 +105,33 @@
 						</div>
 					{/if}
 					{#if footer}
-						<Flex align="center" justify="start" class="modal-foot">
+						<!-- <Flex align="center" justify="start" class="modal-foot">
 							{@render footer?.()}
-						</Flex>
+						</Flex> -->
 					{/if}
                 </div>
-            </Transition>
+            <!-- </Transition> -->
         </Stack>
-    </Transition>
+    <!-- </Transition> -->
 </Portal>
 
 <style lang="postcss">
 
 	.modal {
-		@apply mb-6 transform overflow-y-auto rounded-lg shadow-xl transition-all sm:mx-auto;
-		@apply flex flex-col items-stretch overflow-hidden w-full;
+		@apply max-h-full mb-6 rounded-lg transform shadow-xl transition-all sm:mx-auto overflow-hidden;
+		@apply flex flex-col items-stretch w-full;
 		background-color: var(--bg-modal);
 		color: var(--text-neutral);
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 
 		:global(.modal-head) {
-			@apply flex-shrink-0 border-b;
+			@apply sticky top-0 flex-shrink-0 border-b;
 			@apply p-2 pl-4 z-10;
 			background-color: var(--surface);
 		}
 
 		.modal-body {
-			@apply flex-grow overflow-y-hidden;
+			@apply flex-grow overflow-y-auto;
 		}
 
 		:global(.modal-foot) {

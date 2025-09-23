@@ -28,7 +28,7 @@ return new class extends Migration
 		});
 
 		Schema::create('character_relationships', function (Blueprint $table) {
-			$table->uuid('id')->primary()->index();
+			// $table->uuid('id')->primary()->index();
 			$table->foreignUuid('character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignUuid('related_character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->text('character_role')->nullable();

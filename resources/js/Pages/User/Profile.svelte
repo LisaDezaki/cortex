@@ -2,9 +2,8 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import AuthenticatedLayout          from '@/Layouts/AuthenticatedLayout.svelte'
+	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	
-    import DeleteUserForm               from '@/Forms/User/Delete.svelte'
     import UpdatePasswordForm           from '@/Forms/User/UpdatePassword.svelte'
     import UpdateProfileInformationForm from '@/Forms/User/UpdateProfile.svelte'
 
@@ -19,15 +18,8 @@
 	import PageMenu    from '@/Components/UI/PageMenu.svelte'
 	import Section     from '@/Components/UI/Section.svelte'
 
-	let confirmingUserDeletion = $state(false)
-
-	function closeModal() {
-        confirmingUserDeletion = false
-    }
-
-    function confirmUserDeletion() {
-        confirmingUserDeletion = true
-    }
+	import { modalActions } from '@/stores/modalStore';
+    function deleteUser(u) { modalActions.open('deleteUser', { user: u 	}) }
 
     let {
         mustVerifyEmail,
@@ -48,7 +40,7 @@
 			title="User Profile"
 			tabs={[
 				{ label: "Profile",		active: true },
-				{ label: "Settings",		href: route('settings') },
+				{ label: "Settings",	href: route('settings') },
 			]}
 		/>
 	{/snippet}
@@ -58,7 +50,7 @@
 			<PageMenu items={[
 				{ icon: "UserList", label: "Profile Info",    href: "#profile",  active: $page.url.endsWith('#profile') },
 				{ icon: "Password", label: "Update Password", href: "#password", active: $page.url.endsWith('#password') },
-				{ icon: "Trash",    label: "Delete Account",  onclick: confirmUserDeletion, theme: "danger" }
+				{ icon: "Trash",    label: "Delete Account",  onclick: deleteUser, theme: "danger" }
 			]} />
 
 			<Container gap={12} size="2xl">
@@ -96,7 +88,7 @@
 					/> -->
 					<Button style="hard" theme="danger" class="mt-3"
 						label="Delete Account"
-						onclick={confirmUserDeletion}
+						onclick={deleteUser}
 					/>
 				</Section>
 			</Container>
@@ -121,6 +113,6 @@
 
 </AuthenticatedLayout>
 
-<Modal show={confirmingUserDeletion} onclose={closeModal}>
+<!-- <Modal show={confirmingUserDeletion} onclose={closeModal}>
 	<DeleteUserForm oncancel={closeModal} />
-</Modal>
+</Modal> -->

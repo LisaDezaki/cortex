@@ -21,7 +21,7 @@ class FactionMemberResource extends JsonResource
 			'name'         => $this->name,
 			'description'  => $this->description,
 
-			'portrait'     => new MediaResource($this->whenLoaded('portrait')),
+			'image'        => new MediaResource($this->whenLoaded('image')),
 			'rank'         => new FactionRankResource($this->pivot->rank)
 		];
     }

@@ -2,7 +2,7 @@
 
 	import { Link } from '@inertiajs/svelte'
 	import { Avatar } from "bits-ui"
-	import Icon from "@/Components/Icon.svelte";
+	import Icon from '@/Components/Icon.svelte'
 
 	let {
 		alt,

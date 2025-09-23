@@ -30,7 +30,7 @@
 	// 	return { label: f.name, value: `factions.*.${f.slug}`, image: f.image?.url, filterFunction: (ch) => { return ch.factions[0].slug == f.slug } }
 	// })
 	let locationOptions = project?.locations?.map(l => {
-		return { label: l.name, value: `location.${l.slug}`, image: l.image?.url, filterFunction: (ch) => { return ch.location.slug == l.slug } }
+		return { label: l.name, value: `location.${l.slug}`, imageIcon: 'MapPin', image: l.image?.url || '', filterFunction: (ch) => { return ch.location.slug == l.slug } }
 	})
 	// let relationshipOptions = project.characters?.map(c => {
 	// 	return { label: c.name, value: `relationship.*.${c.slug}`, image: c.image?.url, filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
@@ -43,7 +43,7 @@
 
 	//	Menu Options
 	const filterOptions = $state([
-		{ label: 'All Locations', 	value: '',		filterFunction: (ch) => { return ch } },
+		{ label: 'All Locations', 	value: '', filterFunction: (ch) => { return ch } },
 		{ 	separator: true },
 		{ label: 'Parent location...',	children: locationOptions },
 		{ label: 'Child location...',	children: locationOptions },

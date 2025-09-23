@@ -29,7 +29,7 @@
 	}
 
 	function selectItem(value) {
-		console.log('Dropdown.selectValue()', value)
+		// console.log('Dropdown.selectValue()', value)
 	}
 
 </script>
@@ -40,14 +40,14 @@
 
 {#snippet item(itemProps, checked)}
 	<button class="input-option w-full {itemProps.className}" class:active={checked} onclick={updateValue}>
-		{#if itemProps.image}
-			<Thumbnail class="rounded-full w-6" src={itemProps.image} />
+		{#if itemProps.image !== undefined}
+			<Thumbnail class="border-[0.5px] rounded-full w-6" iconSize={16} src={itemProps.image} />
 		{/if}
-		{#if itemProps.icon}
+		{#if itemProps.icon !== undefined}
 			<Icon name={itemProps.icon} size="md" />
 		{/if}
 		{#if itemProps.label}
-			<span class="line-clamp-1">{itemProps.label}</span>
+			<span class="line-clamp-1 text-left w-full">{itemProps.label}</span>
 		{/if}
 		{#if checked}
 			<Icon class="ml-auto" name="Check" size="sm" />

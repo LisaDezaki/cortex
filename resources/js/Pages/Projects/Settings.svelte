@@ -3,17 +3,11 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	// import ProjectForm         from '@/Forms/Project/Project.svelte'
-	// import ProjectSettingsForm from '@/Forms/Project/Settings.svelte'
-	// import DeleteProjectForm   from '@/Forms/Project/Delete.svelte'
 
 	import { Flex, Grid, Stack } from '@/Components/Core'
 	
-	// import Back        from '@/Components/UI/Back.svelte'
-	// import Button      from '@/Components/UI/Button.svelte'
 	import Container   from '@/Components/UI/Container.svelte'
 	import Heading     from '@/Components/UI/Heading.svelte'
-	// import Modal       from '@/Components/UI/Modal.svelte'
 	import PageHeader  from '@/Components/UI/PageHeader.svelte'
 	import PageMenu    from '@/Components/UI/PageMenu.svelte'
 	import Section     from '@/Components/UI/Section.svelte'

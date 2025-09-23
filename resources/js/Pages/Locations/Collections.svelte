@@ -1,74 +1,34 @@
 <script>
-	import { Link, page, router, useForm } from '@inertiajs/svelte'
+	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
-
-	import ApplyTagsForm		from '@/Forms/Tags/Apply.svelte'
-	import CreateCollectionForm from '@/Forms/Collection/Create.svelte'
-	import DeleteCollectionForm from '@/Forms/Collection/Delete.svelte'
-	import RenameCollectionForm from '@/Forms/Collection/Rename.svelte'
 	
-	import { Flex, Grid, Stack } from '@/Components/Core'
-	import Card					from '@/Components/UI/Card.svelte'
+	import { Grid } from '@/Components/Core'
 	import CardNew				from '@/Components/UI/CardNew.svelte'
 	import CollectionCard		from '@/Components/UI/CollectionCard.svelte'
-	import Dropdown				from '@/Components/UI/Dropdown.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
-	import Icon					from '@/Components/UI/Icon.svelte'
-	import Input				from '@/Components/UI/Input.svelte'
-	import Modal				from '@/Components/UI/Modal.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
 	import Section				from '@/Components/UI/Section.svelte'
 
 	//	Page props
-	const activeProject	= $page.props.activeProject.data
+
 	const collections	= $page.props.collections?.data
-	const customFields	= $page.props.customFields?.data
-	const tags			= $page.props.tags?.data
-	const characters    = activeProject?.characters
-	const factions      = activeProject?.factions
-	const locations     = activeProject?.locations
 
 	//	Form
-	const addToCollectionForm = useForm({
-		items: [{ id: null, type: 'locations' }]
-	})
-	const addToCollection = (loc, coll) => {
-		$addToCollectionForm.items[0]  = { id: loc.id, type: 'locations' }
-		$addToCollectionForm.patch(
-			route('collections.update', { collection: coll.slug })
-		)
-	}
-
-	//	Modals
-	let addingToCollection	= $state(false)
-	let applyingTags		= $state(false)
-	let creatingCollection	= $state(false)
-	let deletingCollection	= $state(false)
-	let renamingCollection	= $state(false)
-
-	const applyTags			= (c) => { selectedCollection = c; applyingTags 	  = true }
-	const createCollection	= (c) => { selectedCollection = c; creatingCollection = true }
-	const deleteCollection	= (c) => { selectedCollection = c; deletingCollection = true }
-	const renameCollection	= (c) => { selectedCollection = c; renamingCollection = true }
-	const closeModal		= ( ) => { selectedCollection	= null
-										addingToCollection	= false
-										applyingTags 		= false
-										creatingCollection	= false
-										deletingCollection	= false
-										renamingCollection	= false
-									}
-
-	
-	
 
 	//	State
-	let selectedCollection	= $state(null)
-	let rowSize				= $state(8)
 
-	//	Derived
+	let rowSize	 = $state(8)
 	let gridRows = $derived(16-rowSize)
+
+
+	//	Modal Management
+
+	import { modalActions } from '@/stores/modalStore';
+	function createCollection()  { modalActions.open('createCollection') }
+	function deleteCollection(c) { modalActions.open('deleteCollection', { collection: c }) }
+	function renameCollection(c) { modalActions.open('renameCollection', { collection: c }) }
 
 </script>
 
@@ -144,7 +104,7 @@
 
 
 
-<CreateCollectionForm isOpen={creatingCollection} entity={selectedCollection} type="locations"
+<!-- <CreateCollectionForm isOpen={creatingCollection} entity={selectedCollection} type="locations"
 	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
 />
 <DeleteCollectionForm isOpen={deletingCollection} collection={selectedCollection}
@@ -152,7 +112,7 @@
 />
 <RenameCollectionForm isOpen={renamingCollection} collection={selectedCollection}
 	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['collections']}
-/>
+/> -->
 
 
 

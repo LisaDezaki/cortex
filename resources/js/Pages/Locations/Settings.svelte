@@ -3,7 +3,7 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import LocationSettingsForm from '@/Forms/Location/Settings.svelte'
+	import LocationSettingsForm from '@/Forms/Settings/LocationSettings.svelte'
 
 	import { Flex }   from '@/Components/Core'
 	import Container  from '@/Components/UI/Container.svelte'

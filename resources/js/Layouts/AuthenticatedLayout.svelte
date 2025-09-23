@@ -1,15 +1,88 @@
 <script>
 	import { page } from '@inertiajs/svelte';
-	import { Pane, Splitpanes } from 'svelte-splitpanes'
+	// import { Pane, Splitpanes } from 'svelte-splitpanes'
+
+	import { modalStore } from '@/stores/modalStore';
 
 	import { Flex, Stack } from '@/Components/Core'
     import Article    	from '@/Components/UI/Article.svelte'
-    import Container  	from '@/Components/UI/Container.svelte'
+    // import Container  	from '@/Components/UI/Container.svelte'
 	import Navigation 	from '@/Components/UI/Navigation.svelte'
     import Main       	from '@/Components/UI/Main.svelte'
     import Page       	from '@/Components/UI/Page.svelte'
-    import Sidebar    	from '@/Components/UI/Sidebar.svelte'
+    // import Sidebar    	from '@/Components/UI/Sidebar.svelte'
 	import Toast		from '@/Components/UI/Toast.svelte'
+
+
+	/**
+	 * Modal Management
+	 * 
+	 * 1. Import all modal components
+	 * 2. Create a modal registry map
+	 * 3. Initial state for active modal component and props
+	 * 4. Subscribe to modal store changes
+	 * 5. Derived computed value for the current modal component
+	 */
+
+	//	1. Import all modal components
+
+    import CreateCharacterModal  from '@/Modals/CreateCharacter.svelte';
+    import CreateCollectionModal from '@/Modals/CreateCollection.svelte';
+    import CreateFactionModal 	 from '@/Modals/CreateFaction.svelte';
+    import CreateLocationModal 	 from '@/Modals/CreateLocation.svelte';
+    import CreateProjectModal  	 from '@/Modals/CreateProject.svelte';
+
+	import DeleteCharacterModal  from '@/Modals/DeleteCharacter.svelte';
+    import DeleteCollectionModal from '@/Modals/DeleteCollection.svelte';
+    import DeleteFactionModal 	 from '@/Modals/DeleteFaction.svelte';
+    import DeleteLocationModal 	 from '@/Modals/DeleteLocation.svelte';
+    import DeleteProjectModal 	 from '@/Modals/DeleteProject.svelte';
+    import DeleteUserModal 	 from '@/Modals/DeleteUser.svelte';
+	
+    import RenameCharacterModal  from '@/Modals/RenameCharacter.svelte';
+    import RenameCollectionModal from '@/Modals/RenameCollection.svelte';
+    import RenameFactionModal 	 from '@/Modals/RenameFaction.svelte';
+    import RenameLocationModal 	 from '@/Modals/RenameLocation.svelte';
+    import RenameProjectModal 	 from '@/Modals/RenameProject.svelte';
+	
+    import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte';
+	
+    import UploadMediaModal 	from '@/Modals/UploadMedia.svelte';
+	
+	//	2. Create a modal registry map
+
+    const modals = {
+        createCharacter: 	CreateCharacterModal,
+        createCollection: 	CreateCollectionModal,
+        createFaction: 		CreateFactionModal,
+        createLocation: 	CreateLocationModal,
+		createProject:		CreateProjectModal,
+
+		deleteCharacter: 	DeleteCharacterModal,
+		deleteCollection:	DeleteCollectionModal,
+		deleteFaction:		DeleteFactionModal,
+		deleteLocation:		DeleteLocationModal,
+		deleteProject:		DeleteProjectModal,
+		deleteUser:			DeleteUserModal,
+
+		renameCharacter:	RenameCharacterModal,
+		renameCollection:	RenameCollectionModal,
+		renameFaction:		RenameFactionModal,
+		renameLocation:		RenameLocationModal,
+		renameProject:		RenameProjectModal,
+
+		setCharacterRelationship:	SetCharacterRelationshipModal,
+
+		uploadMedia:		UploadMediaModal
+    };
+
+	const CurrentModal = $derived(modals[$modalStore.activeModal])
+
+
+	/**
+	 * Page & Component Props
+	 * 
+	 */
 
 	const activeProject = $page.props.activeProject.data;
 
@@ -38,5 +111,8 @@
 		</Flex>
 	</Stack>
 
-
 </Page>
+
+{#if CurrentModal}
+	<CurrentModal {...$modalStore.modalProps} />
+{/if}

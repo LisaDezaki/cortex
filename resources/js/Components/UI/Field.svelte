@@ -18,7 +18,6 @@
 		labelSrOnly = false,
 		layout,
 		name,
-		required = false,
 		type,
         ...restProps
     } = $props()
@@ -32,7 +31,6 @@
 	<Label
 		for={name}
 		value={label}
-		required={required}
 		class="field-label {labelSrOnly ? 'sr-only' : ''}"
 	/>
 {/snippet}

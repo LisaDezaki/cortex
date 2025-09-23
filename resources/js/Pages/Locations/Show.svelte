@@ -3,7 +3,6 @@
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import DeleteLocationForm from '@/Forms/Location/Delete.svelte'
 
 	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
 
@@ -12,6 +11,7 @@
 	import Card     	 from '@/Components/UI/Card.svelte'
 	import CardNew       from '@/Components/UI/CardNew.svelte'
 	import Chip			 from '@/Components/UI/Chip.svelte'
+	import Collapsible	 from '@/Components/UI/Collapsible.svelte'
 	import Container	 from '@/Components/UI/Container.svelte'
 	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading  	 from '@/Components/UI/Heading.svelte'
@@ -29,18 +29,17 @@
 	const location 	   = $page.props.location?.data
 	const customFields = $page.props.customFields?.data
 
-	let deletingLocation  = $state(false)
-
 	let media_banner	= $derived(location.media.filter(m => m.type === 'banner')?.[0])
 	let media_map		= $derived(location.media.filter(m => m.type === 'map')?.[0])
 	let media_gallery	= $derived(location.media)
 
-	function deleteLocation() {
-        deletingLocation  = true
-    }
-	function closeModal() {
-		deletingLocation  = false
-    }
+
+	/**
+	 * Modal Management
+	 */
+
+	import { modalActions } from '@/stores/modalStore';
+    function deleteLocation(l) { modalActions.open('deleteLocation', { location: location 	}) }
 
 </script>
 
@@ -51,11 +50,7 @@
 <AuthenticatedLayout>
 
 	{#snippet header()}
-		<PageHeader
-			breadcrumbs={[{ label: "Locations", href: route('locations') }]}
-			back={route('locations')}
-			title={location.name}
-		/>
+		<PageHeader title={location.name} />
 	{/snippet}
 
 	{#snippet article()}
@@ -64,8 +59,8 @@
 				{ icon: "Info",   			label: "Details",       	href: "#details"	},
 				{ icon: "Textbox",      	label: "Custom Fields", 	href: "#fields"		},
 				{ icon: "Compass",      	label: "Map",           	href: "#map"		},
-				{ icon: "MapPinSimpleArea", label: "Points of Interest", href: "#points"	},
-				{ icon: "UsersThree",   	label: "Characters",        href: "#characters"	},
+				// { icon: "MapPinSimpleArea", label: "Points of Interest", href: "#points"	},
+				// { icon: "UsersThree",   	label: "Characters",        href: "#characters"	},
 				{ icon: "ImagesSquare", 	label: "Gallery",         	href: "#gallery"	},
 				{ icon: "Trash", 			label: "Delete", 			onclick: deleteLocation, theme: "danger" }
 			]} />
@@ -113,9 +108,15 @@
 		
 					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
 
-					<p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
+					<!-- <p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
 						{location.description}
-					</p>
+					</p> -->
+
+					<Collapsible collapsed={true}
+						class="max-w-[64ch] mx-6"
+						collapsedClass="line-clamp-4 overflow-hidden">
+						{location.description}
+					</Collapsible>
 		
 				</Section>
 
@@ -134,10 +135,19 @@
 
 				<!-- Map -->
 
+				<!-- <pre>{JSON.stringify(location.characters.map(c => ({ ...c, label: c.name })),null,3)}</pre> -->
+
 				<Section id="map" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Map</Heading>
 					{#if media_map || location.children?.length > 0 || location.descendants?.length > 0}
-						<Map class="aspect-video rounded-lg" location={location} />
+						<Map class="aspect-video rounded-lg shadow-lg"
+							location={location}
+							legend={[
+								// { icon: 'UsersThree', 	label: 'Characters', items: location.characters.map(c => ({ ...c, label: c.name })) },
+								// { icon: 'Backpack', 	label: 'Items', 	 items: location.characters.map(c => ({ ...c, label: c.name })) },
+								{ icon: 'MapPin', label: 'Locations', items: location.children.map(c => ({ ...c, label: c.name, icon: c.icon || 'MapPin' })) }
+							]}
+						/>
 					{:else}
 						<p class="font-style-placeholder">{location.name} doesn't have a map or any child locations yet.</p>
 					{/if}
@@ -146,7 +156,7 @@
 
 				<!-- Points of Interest -->
 
-				<Section id="points" class="px-6 py-12">
+				<!-- <Section id="points" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Points of Interest</Heading>
 					{#if location.children.length > 0}
 						<Grid cols={3}>
@@ -163,23 +173,16 @@
 					{:else}
 						<p class="font-style-placeholder">{location.name} doesn't have any points of interest yet.</p>
 					{/if}
-				</Section>
+				</Section> -->
 
 
 				<!-- Characters -->
 		
-				<Section id="characters" class="px-6 py-12">
+				<!-- <Section id="characters" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Characters</Heading>
 					{#if location.characters.length > 0}
 						<Grid cols={4} gap={3}>
 							{#each location.characters as char}
-								<!-- <Card aspect="square" class="w-full"
-									icon="User"
-									image={character.portrait?.url}
-									title={character.name}
-									subtitle={character.subtitle}
-									href={route('characters.show', {character: character.slug})}
-								/> -->
 								<Link
 									class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
 									href={route("characters.show", { character: char.slug})}>
@@ -198,7 +201,7 @@
 					{:else}
 						<p class="font-style-placeholder">There are no characters at {location.name} yet.</p>
 					{/if}
-				</Section>
+				</Section> -->
 
 
 				<!-- Gallery -->
@@ -217,12 +220,3 @@
 	{/snippet}
 
 </AuthenticatedLayout>
-
-<Modal
-	title="Delete {location.name}?"
-	maxWidth="lg"
-	show={deletingLocation}
-	onclose={closeModal}
->
-	<DeleteLocationForm {location} oncancel={closeModal} />
-</Modal>

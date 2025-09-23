@@ -25,20 +25,19 @@
         ...restProps
     } = $props()
 
-	const clickable = $derived(href || onclick)
+	const clickable = $derived(restProps.disabled ? false : (href || onclick))
 
 </script>
 
-<Stack class="card {clickable ? "cursor-pointer" : null} {className}" onclick={onclick} {...restProps}>
+<Stack class="card {clickable ? "cursor-pointer" : null} {className}" onclick={restProps.disabled ? undefined : onclick} {...restProps}>
 
 	<div class="card-visual aspect-{aspect} {imageClass}">
-		{#if children}
-			{@render children()}
-		{:else if image}
+		{#if image}
 			<img class="card-image" src={image} alt={title} />
 		{:else if icon}
 			<Icon class="card-icon" name={icon} size={32} />
 		{/if}
+		{@render children?.()}
 	</div>
 
 	<Flex justify="start" class="w-full">
@@ -51,7 +50,10 @@
 	</Flex>
 
 	{#if href}
-		<Link class="card-link absolute inset-0 z-10" href={href}></Link>
+		<Link
+			class="card-link absolute inset-0 z-10"
+			href={href}
+		></Link>
 	{/if}
 
 	{#if options}
@@ -68,7 +70,7 @@
 
 	:global(.card) {
 		@apply relative flex flex-col flex-shrink-0 gap-1.5 min-w-24 mb-3 rounded-lg overflow-hidden;
-		&:hover {
+		&:not([disabled="true"]):hover {
 			.card-visual {
 				background: var(--bg-neutral-gradient-alt)!important;
 				border-color: var(--border-accent)!important;
@@ -83,7 +85,10 @@
 				opacity: 1;
 			}
 		}
-		&[disabled="true"] {
+		&[disabled="true"] { cursor: not-allowed; }
+		&[disabled="true"] .card-image,
+		&[disabled="true"] .card-icon,
+		&[disabled="true"] .card-details {
 			opacity: 0.35;
 			pointer-events: none;
 		}

@@ -1,6 +1,7 @@
 <script>
     import { onDestroy, onMount } from 'svelte'
 
+	import { Inline, Popover, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
 
@@ -35,11 +36,8 @@
 
 
 
-<div
-	class="input {className}"
-	class:disabled={restProps.disabled}
-	class:focus={hasFocus}
->
+
+<div class="input {className} {restProps.disabled ? 'disabled' : ''} {hasFocus ? 'focus' : ''}">
 	{#if icon}
 		<Icon class="input-icon" name={icon} size={20} weight="regular" />
 	{/if}

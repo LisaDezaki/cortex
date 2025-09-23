@@ -57,6 +57,10 @@ class LocationController extends Controller
 
     public function index()
     {
+		$locationTypes = Location::where(
+			'project_id', Auth::user()->active_project
+		)->distinct()->orderBy('type')->pluck('type')->filter()->values()->all();
+
 		$collections = Collection::where([
 			'project_id' => Auth::user()->active_project,
 			'collection_type' => Location::class
@@ -73,6 +77,7 @@ class LocationController extends Controller
 		// ])->with(['map', 'descendants.map'])->first();
 
         return Inertia::render('Locations/Index', [
+			'locationTypes' => $locationTypes,
 			'collections'	=> CollectionResource::collection($collections),
 			'customFields'	=> CustomFieldResource::collection($customFields),
 			// 'worldTree'		=> new LocationResource($worldTree)
@@ -135,10 +140,11 @@ class LocationController extends Controller
 	public function show(Location $location)
 	{
 		$location->load([
+			'image',
 			'media',
 			'parent',
 			'children.banner',
-			'characters.portrait',
+			'characters.image',
 		]);
 
 		return Inertia::render('Locations/Show', [
@@ -161,8 +167,6 @@ class LocationController extends Controller
 		
 		$validatedData = $request->validate($this->validationRules);
 
-		dd( empty($request['media']) );
-		
 		//	Handle media
 		if ($request->has('media')) {
 			if ( empty($request['media']) ) {

@@ -21,7 +21,6 @@
 	 * 		to handle the button click. This only applies if 'addable' is true.
 	 */
 
-	import MediaUploadForm from '@/Forms/Media/MediaUploadForm.svelte'
 	import { Flex, Grid } from '@/Components/Core'
 	import Button	from '@/Components/UI/Button.svelte'
 	import Icon		from '@/Components/UI/Icon.svelte'
@@ -85,9 +84,9 @@
 </Grid>
 
 
-{#if addable}
+<!-- {#if addable} -->
 
-	<Modal show={uploadingMedia} onclose={closeModal} maxWidth={aspect === 'aspect-square' ? "lg" : "2xl"}>
+	<!-- <Modal show={uploadingMedia} onclose={closeModal} maxWidth={aspect === 'aspect-square' ? "lg" : "2xl"}>
 		<MediaUploadForm
 			{aspect}
 			{media}
@@ -99,6 +98,6 @@
 			}}
 			{...uploadProps}
 		/>
-	</Modal>
+	</Modal> -->
 
-{/if}
+<!-- {/if} -->

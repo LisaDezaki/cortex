@@ -23,7 +23,8 @@ class CharacterRelationshipResource extends JsonResource
 			'name'        => $this->name,
 			'description' => $this->description,
 			
-			'portrait'    => new MediaResource($this->whenLoaded('portrait')),
+			'image'    	  => new MediaResource($this->whenLoaded('image')),
+			// 'portrait'    => new MediaResource($this->whenLoaded('portrait')),
 
 			'role'		  => $this->whenLoaded('pivot', function() {
 				return $this->id === $this->pivot->character_id

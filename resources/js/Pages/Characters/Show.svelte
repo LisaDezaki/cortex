@@ -1,24 +1,21 @@
 <script>
-	import { Link, page, router } from '@inertiajs/svelte'
+	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
 	import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
-	import DeleteCharacterForm 	from '@/Forms/Character/Delete.svelte'
 	
-	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
+	import { Flex, Grid, Stack } from '@/Components/Core'
 
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
 	import Card       	 from '@/Components/UI/Card.svelte'
 	import CardNew       from '@/Components/UI/CardNew.svelte'
-	import Chip  	  	 from '@/Components/UI/Chip.svelte'
 	import Collapsible   from '@/Components/UI/Collapsible.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
 	import Media     	 from '@/Components/UI/Media.svelte'
 	import MediaGrid     from '@/Components/UI/MediaGrid.svelte'
-	import Modal      	 from '@/Components/UI/Modal.svelte'
 	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
@@ -30,27 +27,23 @@
 	const character    = $page.props.character?.data
 	const customFields = $page.props.customFields?.data
 
-	let deletingCharacter = $state(false)
-	let editMode = $state(false)
-
 	let media_banner	= $derived(character.media?.filter(m => m.type === 'banner')?.[0])
 	let media_portrait	= $derived(character.media?.filter(m => m.type === 'portrait')?.[0])
 	let media_gallery	= $derived(character.media)
 
-	function deleteCharacter() {
-        deletingCharacter = true
-    }
-	function closeModal() {
-		deletingCharacter = false
-    }
-	function toggleEditMode() {
-		editMode = !editMode
-	}
+
+	/**
+	 * Modal Management
+	 */
+
+	import { modalActions } from '@/stores/modalStore';
+    function deleteCharacter(c) { modalActions.open('deleteCharacter', 			{ character: character 	}) }
+    function addRelationship(c) { modalActions.open('setCharacterRelationship', { character: character 	}) }
+    function setFaction(c)		{  }
+    function setLocation(c)		{  }
+
 	function findDisplayValue(fieldId) {
 		return character.customFieldValues?.find(v => v.customFieldId == fieldId)?.displayValue || null
-	}
-	function findValue(fieldId) {
-		return character.customFieldValues?.find(v => v.customFieldId == fieldId)?.value || null
 	}
 
 </script>
@@ -62,11 +55,7 @@
 <AuthenticatedLayout>
 
 	{#snippet header()}
-		<PageHeader
-			breadcrumbs={[{ label: "Characters", href: route('characters') }]}
-			back={route('characters')}
-			title={character.name}
-		/>
+		<PageHeader title={character.name} />
 	{/snippet}
 
 	{#snippet article()}
@@ -92,7 +81,7 @@
 					<ArticleBanner>
 						<Media replaceable
 							aspect="aspect-[3/1]"
-							class="absolute inset-0 rounded-lg overflow-hidden"
+							class="absolute inset-0 rounded-lg overflow-hidden shadow-md"
 							media={media_banner}
 							type="banner"
 							endpoint={route('characters.update', { character: character.slug })}
@@ -101,7 +90,7 @@
 						/>
 						<Media replaceable
 							aspect="aspect-square"
-							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 shadow-md transition-all"
 							media={media_portrait}
 							type="portrait"
 							endpoint={route('characters.update', { character: character.slug })}
@@ -115,7 +104,7 @@
 							subheading={character.alias}
 						/>
 					</ArticleBanner>
-		
+
 					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
 
 					<Collapsible collapsed={true}
@@ -123,7 +112,7 @@
 						collapsedClass="line-clamp-4 overflow-hidden">
 						{character.description}
 					</Collapsible>
-			
+
 				</Section>
 
 				<Separator class="mx-6 my-6 w-96" />
@@ -139,27 +128,14 @@
 
 					{#if customFields && customFields.length > 0}
 						{#each customFields as field, i}
-
-							{#if editMode}
-								<Field layout="block" inputClass="w-full" {...field} />
-
-							{:else}
-								<Flex gap={3}>
-									<span class="font-bold w-20">{field.label}:</span>
-									<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
-								</Flex>
-
-							{/if}
+							<Flex gap={3}>
+								<span class="font-bold w-20">{field.label}:</span>
+								<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
+							</Flex>
 						{/each}
-						
 					{:else}
 						<p class="font-style-placeholder">There are no custom fields for Characters yet.</p>
-						
 					{/if}
-					<!-- <CustomFieldsForm
-						fields={customFields}
-						values={character.customFieldValues}
-					/> -->
 				</Section>
 
 				<Separator class="mx-6 my-6 w-96" />
@@ -171,41 +147,40 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h6">Relationships</Heading>
 					</Flex>
-					<Stack gap={3}>
-						{#each character.relationships as rel, i}
+					<Stack gap={0}>
+						{#if character.relationships?.length > 0}
+							{#each character.relationships as rel, i}
 
-							<Flex align="center" gap={3}>
-								<Stack align="end">
-									<div class="font-bold leading-[1.125rem]">{character.name}</div>
-									<div class="text-sm leading-[1.125rem]">{rel.parentRole}</div>
-								</Stack>
-								<Flex align="center" class="-space-x-6">
-									<Thumbnail
-										class="aspect-square bg-surface border border-surface rounded-full w-12"
-										src={character.portrait?.url}
-									/>
-									<Thumbnail class="aspect-square bg-surface border border-surface rounded-full w-12"
-										src={rel.portrait?.url}
-									/>
+								<Flex align="center" gap={3} class="p-1.5 w-96">
+									<Stack align="end" class="w-48">
+										<div class="font-bold leading-[1.125rem]">{character.name}</div>
+										<div class="text-sm leading-[1.125rem]">{rel.parentRole}</div>
+									</Stack>
+									<Flex align="center" class="-space-x-6">
+										<Thumbnail
+											class="aspect-square bg-surface border border-surface rounded-full w-12"
+											src={character.image?.url}
+										/>
+										<Thumbnail class="aspect-square bg-surface border border-surface rounded-full w-12"
+											src={rel.image?.url}
+										/>
+									</Flex>
+									<Stack class="w-48">
+										<div class="font-bold leading-[1.125rem]">{rel.name}</div>
+										<div class="text-sm leading-[1.125rem]">{rel.role}</div>
+									</Stack>
 								</Flex>
-								<Stack>
-									<div class="font-bold leading-[1.125rem]">{rel.name}</div>
-									<div class="text-sm leading-[1.125rem]">{rel.role}</div>
-								</Stack>
+
+							{/each}
+
+							<Flex justify="center" class="mt-3 w-96">
+								<Button style="soft" theme="accent" onclick={addRelationship}>Add another relationship?</Button>
 							</Flex>
-							<!-- <Chip aspect="square"
-								icon="User"
-								image={character.portrait?.url}
-								title={character.name}
-								subtitle={rel.parentRole}
-							/>
-							<Chip aspect="square"
-								icon="User"
-								image={rel.portrait?.url}
-								title={rel.name}
-								subtitle={rel.role}
-							/> -->
-						{/each}
+
+						{:else}
+							<p class="font-style-placeholder">{character.name} doesn't have any relationships yet.</p>
+							<p><button class="text-accent hover:underline" onclick={addRelationship}>Create one?</button></p>
+						{/if}
 					</Stack>
 				</Section>
 
@@ -218,36 +193,28 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h6">Factions</Heading>
 					</Flex>
-					<Grid cols={4} gap={3}>
-						{#each character.factions as fac, i}
-							<Link
-								class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
-								href={route("factions.show", { faction: fac.slug})}>
-								<Thumbnail
-									class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
-									icon="FlagBannerFold"
-									src={fac.image?.url}
-								/>
-								<Stack justify="center">
-									<div class="font-bold leading-[1.125rem] line-clamp-1">{fac.name}</div>
-									<div class="text-sm leading-[1.125rem] line-clamp-1">{fac.type}</div>
-								</Stack>
-							</Link>
-							<!-- <Card aspect="square"
-								icon="User"
-								title={fac.name}
-								subtitle={fac.type}
-							/> -->
-						{/each}
-						<!-- <CardNew aspect="square"
-							onclick={() => {}}
-						/> -->
-					</Grid>
-					<!-- <FactionsForm
-						character={character}
-						factions={character.factions}
-					/> -->
-					<!-- <FactionGrid /> -->
+					{#if character.factions.length > 0}
+						<Grid cols={4} gap={3}>
+							{#each character.factions as fac, i}
+								<Link
+									class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
+									href={route("factions.show", { faction: fac.slug})}>
+									<Thumbnail
+										class="aspect-square bg-neutral-softest rounded h-16 max-w-16"
+										icon="FlagBannerFold"
+										src={fac.image?.url}
+									/>
+									<Stack justify="center">
+										<div class="font-bold leading-[1.125rem] line-clamp-1">{fac.name}</div>
+										<div class="text-sm leading-[1.125rem] line-clamp-1">{fac.type}</div>
+									</Stack>
+								</Link>
+							{/each}
+						</Grid>
+					{:else}
+						<p class="font-style-placeholder">{character.name} isn't in any factions yet.</p>
+						<p><Link onclick={setFaction}>Add one?</Link></p>
+					{/if}
 				</Section>
 
 				<Separator class="mx-6 my-6 w-96" />
@@ -287,18 +254,14 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h6">Location</Heading>
 					</Flex>
-					{#if location}
-						<Map class="aspect-video rounded-lg w-full"
+					{#if character.location}
+						<Map class="aspect-video rounded-lg shadow w-full"
 							location={character.location}
 						/>
 					{:else}
 						<p class="font-style-placeholder">{character.name} hasn't been assigned a location yet.</p>
+						<p><Link onclick={setLocation}>Assign one?</Link></p>
 					{/if}
-					<!-- <LocationForm
-						character={character}
-						location={character.location}
-					/> -->
-					<!-- <Map /> -->
 				</Section>
 
 				<Separator class="mx-6 my-6 w-96" />
@@ -306,9 +269,13 @@
 		
 				<!-- Media -->
 		
-				<Section id="gallery" class="p-6">
+				<Section id="gallery" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
-					<MediaGrid cols={4} media={[{},{},{},{}]} />
+					<MediaGrid cols={6}
+						media={media_gallery}
+						type="gallery"
+						addable
+					/>
 				</Section>
 
 				<Separator class="mx-6 my-6 w-96" />
@@ -340,12 +307,3 @@
 	{/snippet}
 	
 </AuthenticatedLayout>
-
-<Modal
-	title="Delete {character.name}?"
-	maxWidth="lg"
-	show={deletingCharacter}
-	onclose={closeModal}
->
-	<DeleteCharacterForm {character} oncancel={closeModal} />
-</Modal>

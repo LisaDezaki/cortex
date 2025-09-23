@@ -12,6 +12,7 @@
 		class: className,
 		markerClass,
 		constrain = false,
+		legend,
 		location = $bindable(worldTree || null),
 		minZoom  = $bindable(0.5),
 		maxZoom  = $bindable(3),
@@ -90,44 +91,114 @@
 
 
 
+<Flex gap={0} class="bg-white overflow-hidden rounded w-full {className}">
+	
 
-<PanZoom
-	bind:position
-	bind:zoom
-	constrain={constrain}
-	class="map-container bg-neutral-soft {className}"
-	{minZoom} {maxZoom}
-	debug={{
-		location: location?.name
-	}}
-{...restProps}>
+	<PanZoom
+		bind:position
+		bind:zoom
+		constrain={constrain}
+		class="bg-neutral-soft aspect-square flex-grow"
+		backgroundImage="/img/grid.png"
+		{minZoom} {maxZoom}
+		debug={{ location: location?.name }}
+	{...restProps}>
 
-	{#snippet controls()}
-		<Flex class="absolute backdrop-blur-sm hover:backdrop-blur-md bg-white/10 border border-white/50 text-white top-3 left-3 z-10 px-3 rounded-full transition-all">
-			{#each history as item}
-				<Button style="plain" theme="neutral" label={item.name} onclick={() => undo(item.id)} />
-				<Icon name="CaretRight" size="sm" />
+
+		<!-- Controls -->
+	
+		{#snippet controls()}
+			<Flex class="absolute backdrop-blur-sm hover:backdrop-blur-md bg-white/10 border border-white/50 text-white top-3 left-3 z-10 px-2 rounded-full transition-all">
+				{#each history as item}
+					<Button style="plain" theme="neutral" label={item.name} onclick={() => undo(item.id)} />
+					<Icon name="CaretRight" size="sm" />
+				{/each}
+				<Button style="plain" theme="neutral" label={location?.name} />
+			</Flex>
+			<Flex gap={0.5} class="absolute top-3 right-3 z-10">
+				<Button class="w-10 rounded-l-full" style="glass" icon="MagnifyingGlassMinus" iconSize="sm" onclick={() => {zoom /= 1.2}} disabled={zoom <= minZoom} />
+				<Button class="w-10 rounded-r-full" style="glass" icon="MagnifyingGlassPlus"  iconSize="sm" onclick={() => {zoom *= 1.2}} disabled={zoom >= maxZoom} />
+			</Flex>
+		{/snippet}
+	
+	
+		<!-- Map Image -->
+	
+		<Box class="absolute map">
+			<img class="h-full w-full" src={media_map?.url} alt={media_map?.name} />
+	
+			{#if location?.children}
+				{#each location?.children as location,i}
+					{@render mapMarker(location,i)}
+				{/each}
+			{:else if location?.descendants}
+				{#each location?.descendants as location,i}
+					{@render mapMarker(location,i)}
+				{/each}
+			{/if}
+		</Box>
+	
+	</PanZoom>
+	
+	
+	<!-- Points of Interest -->
+
+	{#if legend}
+		<Stack class="h-full p-1 pr-1.5 rounded-r shrink-0 w-48 backdrop-blur-md overflow-y-auto">
+			{#each legend as item}
+				<Inline class="px-2 py-1.5 w-full pr-3">
+					<Icon name={item.icon} size="sm" weight="bold" />
+					<span class="font-style-small font-medium line-clamp-1">{item.label}</span>
+					<Icon name="CaretDown" size="xs" weight="fill" class="ml-auto" />
+				</Inline>
+				{#if item.items?.length > 0}
+					<Stack class="py-1">
+						{#each item.items as subitem}
+							<Inline class="cursor-pointer px-2 py-1 rounded w-full hover:bg-neutral-softest">
+								{#if subitem.image}
+									<Thumbnail class="h-6 w-6" src={subitem.image?.url} />
+								{:else}
+									<Icon class="h-6 w-6 text-accent" name={subitem.icon} size="md" />
+								{/if}
+								<span class="font-style-small font-medium line-clamp-1">{subitem.label}</span>
+							</Inline>
+						{/each}
+					</Stack>
+				{/if}
 			{/each}
-			<Button style="plain" theme="neutral" label={location?.name} />
-		</Flex>
-		<Flex gap={0.5} class="absolute top-3 right-3 z-10">
-			<Button class="w-12 rounded-l-full" style="glass" icon="MagnifyingGlassMinus" iconSize="lg" onclick={() => {zoom /= 1.2}} disabled={zoom <= minZoom} />
-			<Button class="w-12 rounded-r-full" style="glass" icon="MagnifyingGlassPlus"  iconSize="lg" onclick={() => {zoom *= 1.2}} disabled={zoom >= maxZoom} />
-		</Flex>
-	{/snippet}
+		</Stack>
+	{/if}
 
-	<Box class="absolute map">
-		<img class="h-full w-full" src={media_map?.url} alt={media_map?.name} />
+	<!-- {#snippet legend()}
+		<Stack class="absolute bg-white/10 border border-white/50 top-3 right-3 bottom-3 overflow-y-auto p-1 rounded w-40 backdrop-blur-md">
+	
+			{#if location.characters?.length > 0}
+				<Inline class="border-b border-white/10 px-2 py-1.5 text-white">
+					<Icon name="User" size="sm" weight="bold" />
+					<span class="font-style-small font-medium">Characters</span>
+					<Icon name="CaretDown" size="xs" weight="fill" class="ml-auto" />
+				</Inline>
+				{#each location.characters as character}
+					<Inline class="px-4 py-1">
+						<span class="font-style-small text-white">{character.name}</span>
+					</Inline>
+				{/each}
+			{/if}
+	
+			{#if location.children?.length > 0}
+				<Inline class="border-b border-white/10 px-2 py-1.5 text-white">
+					<Icon name="MapPin" size="sm" weight="bold" />
+					<span class="font-style-small text-white font-bold">Locations</span>
+					<Icon name="CaretDown" size="xs" weight="fill" class="ml-auto" />
+				</Inline>
+				{#each location.children as child}
+					<Inline class="px-4 py-1">
+						<span class="font-style-small text-white">{child.name}</span>
+					</Inline>
+				{/each}
+			{/if}
+	
+		</Stack>
+	{/snippet} -->
 
-		{#if location?.children}
-			{#each location?.children as location,i}
-				{@render mapMarker(location,i)}
-			{/each}
-		{:else if location?.descendants}
-			{#each location?.descendants as location,i}
-				{@render mapMarker(location,i)}
-			{/each}
-		{/if}
-	</Box>
-
-</PanZoom>
+</Flex>

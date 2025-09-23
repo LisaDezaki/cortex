@@ -1,7 +1,6 @@
 <script>
 	//	Imports
 	import { page } from '@inertiajs/svelte'
-	import { Flex, Inline } from '@/Components/Core'
 	import ControlBar from '@/Components/UI/ControlBar.svelte'
 
 	const customFields = $page.props.customFields?.data
@@ -27,10 +26,10 @@
 
 	//	Submenu Options
 	let locationOptions = project.locations?.map(l => {
-		return { label: l.name, value: `location.${l.slug}`, image: l.image?.url, filterFunction: (ch) => { return ch.location.slug == l.slug } }
+		return { label: l.name, value: `location.${l.slug}`,	imageIcon: 'MapPinArea', 	 image: l.image?.url || '', filterFunction: (ch) => { return ch.location.slug == l.slug } }
 	})
 	let characterOptions = project.characters?.map(c => {
-		return { label: c.name, value: `character.*.${c.slug}`, image: c.image?.url, filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
+		return { label: c.name, value: `character.*.${c.slug}`, imageIcon: 'FlagBannerFold', image: c.image?.url || '', filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
 	})
 	let customFieldOptions = (field) => {
 		return field.options?.map(opt => {

@@ -4,6 +4,9 @@
 	import { useForm } from '@inertiajs/svelte';
 	import { route } from 'momentum-trail';
 
+	import UploadPreview from './UploadPreview.svelte';
+	import UploadTrigger from './UploadTrigger.svelte';
+
 	const { form } = getContext("form");
 
 	let {
@@ -88,7 +91,12 @@
 </script>
 
 <div class="upload-context overflow-hidden {className}">
-	{@render children(files, clearFiles)}
+	{#if children}
+		{@render children(files, clearFiles)}
+	{:else}
+		<UploadPreview class="absolute inset-0" />
+		<UploadTrigger class="absolute inset-0" />
+	{/if}
 </div>
 
 <!-- <pre>{JSON.stringify(processing,null,3)}</pre> -->

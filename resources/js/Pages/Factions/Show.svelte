@@ -1,57 +1,44 @@
 <script>
-	import { Link, page, router } from '@inertiajs/svelte'
+	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import DeleteFactionForm from '@/Forms/Faction/Delete.svelte'
 
-	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
+	import { Flex, Grid, Stack } from '@/Components/Core'
 
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
-	import Button		 from '@/Components/UI/Button.svelte'
-	import Card			 from '@/Components/UI/Card.svelte'
+	import Button        from '@/Components/UI/Button.svelte'
+	import Card       	 from '@/Components/UI/Card.svelte'
 	import CardNew       from '@/Components/UI/CardNew.svelte'
-	import Chip			 from '@/Components/UI/Chip.svelte'
 	import Collapsible	 from '@/Components/UI/Collapsible.svelte'
 	import Container	 from '@/Components/UI/Container.svelte'
-	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading		 from '@/Components/UI/Heading.svelte'
 	import Media     	 from '@/Components/UI/Media.svelte'
 	import MediaGrid	 from '@/Components/UI/MediaGrid.svelte'
-	import Modal		 from '@/Components/UI/Modal.svelte'
 	import PageHeader	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu		 from '@/Components/UI/PageMenu.svelte'
 	import Section		 from '@/Components/UI/Section.svelte'
-	import Thumbnail	 from '@/Components/UI/Section.svelte'
+	import Separator	 from '@/Components/UI/Separator.svelte'
+	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
 
 	import Map      	 from '@/Components/Features/Location/Map.svelte'
 
 	const faction 	   = $page.props.faction?.data
 	const customFields = $page.props.customFields?.data
 
-	let deletingFaction = $state(false)
-
-	let mediaUploadProps  = $derived({
-		endpoint: route('factions.update', { faction: faction.slug }),
-		method: 'patch',
-		reloadPageProps: ['factions.media'],
-		// onSuccess: (res) => {
-		// 	router.visit( $page.url, {
-		// 		only: ['faction.media'],
-		// 	})
-		// }
-	})
-
 	let media_banner	= $derived(faction.media.filter(m => m.type === 'banner')?.[0])
 	let media_emblem	= $derived(faction.media.filter(m => m.type === 'emblem')?.[0])
 	let media_gallery	= $derived(faction.media)
 
-	function deleteFaction() {
-        deletingFaction = true
-    }
-	function closeModal() {
-		deletingFaction = false
-    }
+	
+	/**
+	 * Modal Management
+	 */
+
+	import { modalActions } from '@/stores/modalStore';
+
+    function deleteFaction(fac) { modalActions.open('deleteFaction', 		{ faction: faction 	}) }
+	function addMember(fac)		{ modalActions.open('addFactionMember', 	{ faction: faction	}) }
 
 </script>
 
@@ -62,11 +49,7 @@
 <AuthenticatedLayout>
 
 	{#snippet header()}
-		<PageHeader
-			breadcrumbs={[{ label: "Factions", href: route('factions') }]}
-			back={route('factions')}
-			title={faction.name}
-		/>
+		<PageHeader title={faction.name} />
 	{/snippet}
 
 	{#snippet article()}
@@ -74,8 +57,8 @@
 			<PageMenu items={[
 				{ icon: "Info",      	label: "Details",    	href: "#details"	},
 				{ icon: "Textbox",      label: "Custom Fields", href: "#fields" 	},
-				{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
 				{ icon: "MapPinArea", 	label: "Headquarters", 	href: "#hq"			},
+				{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
 				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
 				{ icon: "Trash", 		label: "Delete",		onclick: deleteFaction, theme: "danger" }
 			]} />
@@ -89,7 +72,7 @@
 					<ArticleBanner>
 						<Media replaceable
 							aspect="aspect-[3/1]"
-							class="absolute inset-0 rounded-lg overflow-hidden"
+							class="absolute inset-0 rounded-lg overflow-hidden shadow-md"
 							media={media_banner}
 							type="banner"
 							endpoint={route('factions.update', { faction: faction.slug })}
@@ -114,10 +97,6 @@
 					</ArticleBanner>
 		
 					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
-		
-					<!-- <p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
-						{faction.description}
-					</p> -->
 
 					<Collapsible collapsed={true}
 						class="max-w-[64ch] mx-6"
@@ -127,22 +106,62 @@
 			
 				</Section>
 
+				<Separator class="mx-6 my-6 w-96" />
+
 
 				<!-- Custom Fields -->
 	
-				<Section id="fields" class="px-6 py-12">
-					<Heading is="h3" as="h6" class="mb-6">Custom Field</Heading>
-					{#if faction.customFields}
-						Custom Fields
-						<!-- CustomFields />-->
+				<Section id="custom" class="p-6">
+
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h6">Custom Fields</Heading>
+					</Flex>
+
+					{#if customFields && customFields.length > 0}
+						{#each customFields as field, i}
+							<Flex gap={3}>
+								<span class="font-bold w-20">{field.label}:</span>
+								<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
+							</Flex>
+						{/each}
 					{:else}
-						<p class="font-style-placeholder">There aren't any Custom Fields for Factions yet.</p>
+						<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
 					{/if}
 				</Section>
 
+				<Separator class="mx-6 my-6 w-96" />
+
+
+				<!-- Headquarters -->
+	
+				<Section id="hq" class="px-6 py-12">
+					<Heading is="h3" as="h6" class="mb-6">Headquarters</Heading>
+					{#if faction.headquarters}
+
+						<!-- <pre>{JSON.stringify(faction.headquarters,null,3)}</pre> -->
+						
+						<!-- <Thumbnail src={faction.headquarters?.image?.url} class="max-h-[32ch] max-w-[64ch] mb-3 rounded-lg" /> -->
+
+						<!-- {#if faction.headquarters?.parent}
+							<p>
+								<Link href={route('locations.show', { location: faction.headquarters?.slug        })}>{faction.headquarters?.name}</Link>,
+								<Link href={route('locations.show', { location: faction.headquarters?.parent.slug })}>{faction.headquarters?.parent.name}</Link>
+							</p>
+						{/if} -->
+						
+						<!-- <Map /> -->
+						 <Map class="aspect-[2/1] max-w-[75%] rounded-lg" location={faction.headquarters?.parent} />
+
+					{:else}
+						<p class="font-style-placeholder">{faction.name} doesn't have a headquarters yet.</p>
+					{/if}
+				</Section>
+
+				<Separator class="mx-6 my-6 w-96" />
+
 
 				<!-- Membership -->
-	
+
 				<Section id="members" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h6">Membership</Heading>
@@ -164,37 +183,20 @@
 							</Link>
 						{/each}
 					</Grid>
-					<!-- <Stack gap={3}>
-						{#each faction.members as member, i}
-							<Chip aspect="square"
-								icon="User"
-								image={member.portrait?.url}
-								title={member.name}
-								subtitle={member.role}
-							/>
-						{/each}
-					</Stack> -->
 				</Section>
 
-
-				<!-- Headquarters -->
-	
-				<Section id="hq" class="px-6 py-12">
-					<Heading is="h3" as="h6" class="mb-6">Headquarters</Heading>
-					{#if faction.headquarters}
-						Faction: {faction.headquarters}
-						<!-- <Map /> -->
-					{:else}
-						<p class="font-style-placeholder">{faction.name} doesn't have a headquarters yet.</p>
-					{/if}
-				</Section>
+				<Separator class="mx-6 my-6 w-96" />
 
 
 				<!-- Media -->
 	
 				<Section id="gallery" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
-					<MediaGrid cols={4} media={[{},{},{},{}]} />
+					<MediaGrid cols={6}
+						media={media_gallery}
+						type="gallery"
+						addable
+					/>
 				</Section>
 	
 			</Container>
@@ -240,11 +242,6 @@
 	
 </AuthenticatedLayout>
 
-<Modal
-	title="Delete {faction.name}?"
-	maxWidth="lg"
-	show={deletingFaction}
-	onclose={closeModal}
->
-	<DeleteFactionForm {faction} oncancel={closeModal} />
-</Modal>
+<!-- <DeleteFactionForm isOpen={deletingFaction} faction={faction}
+	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['factions']}
+/> -->

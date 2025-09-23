@@ -2,12 +2,14 @@
 	import { onMount } from 'svelte';
 
 	let {
+		backgroundImage,
 		children,
 		class: className,
 		contentClass,
 		controls,
 		constrain = false,
 		debug     = false,
+		legend,
 		maxZoom   = $bindable(3),
 		minZoom   = $bindable(1),
 		position  = $bindable({ x:0, y:0 }),
@@ -126,10 +128,6 @@
 
 	}
 
-	
-
-	
-
 	onMount(() => {
 		setTimeout(applyConstraints,10)
 	});
@@ -155,40 +153,23 @@
 	class:cursor-grab={!isDragging}
 	class:cursor-grabbing={isDragging}
 	onpointerdown={dragStart}
-	
 	onwheel={handleScroll}
+	style="background-image: url('{backgroundImage}'); background-size: 24px; background-position: {position.x+transform.x}px {position.y+transform.y}px"
 {...restProps}>
+
 	{#if debug}
-		<ul class="absolute space-y-1 top-16 left-3 backdrop-blur-sm hover:backdrop-blur-md border border-white/40 bg-white/15 p-2 pointer-events-none rounded text-xs text-white z-10">
-			<!-- <li class="">
-				constraints: X:{Math.floor(constrainX.min)}-{Math.floor(constrainX.max)}, Y:{Math.floor(constrainY.min)}-{Math.floor(constrainY.max)}
-			</li> -->
-			<!-- <li class="">
-				isDragging: {isDragging}
-			</li> -->
-			<!-- <li class="">
-				clickStart: {Math.floor(clickStart.x)}, {Math.floor(clickStart.y)}
-			</li> -->
-			<li class="">
-				origin: {Math.floor(origin.x)}, {Math.floor(origin.y)}
-			</li>
-			<!-- <li class="">
-				dragVector: {Math.floor(dragVector.x)}, {Math.floor(dragVector.y)}
-			</li> -->
-			<li class="">
-				zoom: {Math.floor(zoom*100)}%
-			</li>
-			<li class="">
-				transform: {Math.floor(transform.x)}, {Math.floor(transform.y)}
-			</li>
-			<li class="">
-				position: {Math.floor(position.x)}, {Math.floor(position.y)}
-			</li>
+		<ul class="absolute space-y-1 bottom-3 left-3 backdrop-blur-sm hover:backdrop-blur-md border border-white/40 bg-white/15 p-2 pointer-events-none rounded text-xs text-white z-10">
+			<!-- <li>constraints: X:{Math.floor(constrainX.min)}-{Math.floor(constrainX.max)}, Y:{Math.floor(constrainY.min)}-{Math.floor(constrainY.max)}</li>
+			<li>isDragging: {isDragging}</li>
+			<li>clickStart: {Math.floor(clickStart.x)}, {Math.floor(clickStart.y)}</li> -->
+			<li>origin: {Math.floor(origin.x)}, {Math.floor(origin.y)}</li>
+			<!-- <li>dragVector: {Math.floor(dragVector.x)}, {Math.floor(dragVector.y)}</li> -->
+			<li>zoom: {Math.floor(zoom*100)}%</li>
+			<li>transform: {Math.floor(transform.x)}, {Math.floor(transform.y)}</li>
+			<li>position: {Math.floor(position.x)}, {Math.floor(position.y)}</li>
 			{#if typeof debug == "object"}
 				{#each Object.entries(debug) as [key,val]}
-					<li class="">
-						{key}: {val}
-					</li>
+					<li>{key}: {val}</li>
 				{/each}
 			{/if}
 		</ul>
@@ -204,5 +185,9 @@
 	>
 		{@render children?.()}
 	</div>
+
+	{#if legend}
+		{@render legend()}
+	{/if}
 
 </div>

@@ -141,6 +141,10 @@
 
 <style lang="postcss">
 
+	:global(.input:not([class*="w-"])) {
+		@apply w-full;
+	}
+
 	:global(.input) {
 		@apply relative inline-flex items-center min-h-10 p-1 rounded-lg;
 		background-color: var(--bg-input);
