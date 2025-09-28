@@ -141,8 +141,8 @@
 
 <style lang="postcss">
 
-	:global(.input:not([class*="w-"])) {
-		@apply w-full;
+	:global(.input:not([class*="max-w-"])) {
+		@apply max-w-96;
 	}
 
 	:global(.input) {

@@ -125,7 +125,7 @@
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 
 		:global(.modal-head) {
-			@apply sticky top-0 flex-shrink-0 border-b;
+			@apply sticky top-0 flex-shrink-0;
 			@apply p-2 pl-4 z-10;
 			background-color: var(--surface);
 		}

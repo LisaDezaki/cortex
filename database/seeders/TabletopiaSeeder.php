@@ -132,7 +132,9 @@ class TabletopiaSeeder extends Seeder
 				'alias'        => $character['alias'],
 				'slug'        => $slug,
 				'description' => $character['desc'],
-				'location_id' => isset($character['location']) ? $locations[$character['location']]->id : null,
+				'appearance'  => isset($character['appearance'])	? join(",", $character['appearance'])		: null,
+				'personality' => isset($character['personality'])	? join(",", $character['personality'])		: null,
+				'location_id' => isset($character['location'])		? $locations[$character['location']]->id	: null,
 			]);
 			if ($character['species']) {
 				CustomFieldValue::create([

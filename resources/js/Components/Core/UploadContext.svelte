@@ -47,7 +47,7 @@
 			$uploadForm,
 			{ headers: { 'Content-Type': 'multipart/form-data' } }
 		).then(response => {
-			console.log(response.data.files);
+			// console.log(response.data.files);
 			// let responseData = multiple ? response.data.files : response.data.files?.[0]
 			// value = responseData
 			$uploadForm = { ...$uploadForm,

@@ -65,22 +65,22 @@ class LocationController extends Controller
 			'project_id' => Auth::user()->active_project,
 			'collection_type' => Location::class
 		])->with(['items'])->get();
-		
+
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => 'faction'
 		])->with('options')->get();
 
-		// $worldTree = Location::where([
-		// 	'project_id'   => Auth::user()->active_project,
-		// 	'is_world_map' => true
-		// ])->with(['map', 'descendants.map'])->first();
+		$worldTree = Location::where([
+			'project_id'   => Auth::user()->active_project,
+			'is_world_map' => true
+		])->with(['image', 'media', 'descendants.image', 'descendants.media', 'descendants.descendants.image', 'descendants.descendants.media'])->first();
 
         return Inertia::render('Locations/Index', [
 			'locationTypes' => $locationTypes,
 			'collections'	=> CollectionResource::collection($collections),
 			'customFields'	=> CustomFieldResource::collection($customFields),
-			// 'worldTree'		=> new LocationResource($worldTree)
+			'worldTree'		=> new LocationResource($worldTree)
 		]);
     }
 	public function collections()
@@ -108,26 +108,11 @@ class LocationController extends Controller
     {
         $validatedData = $request->validate($this->validationRules);
 		$location = Auth::user()->activeProject()->locations()->create($validatedData);
-
-		// if ($request->has('banner')) {
-		// 	$this->mediaService->attachMedia($location, 'banner', $request->banner);
-		// 	unset($validatedData['banner']);
-		// }
-
-		// if ($request->has('map')) {
-		// 	$this->mediaService->attachMedia($location, 'map', $request->map);
-		// 	unset($validatedData['map']);
-		// }
-
-		// $this->handleCustomFields($validatedData['custom_fields'], $location);
 		$location->save();
 		Session::flash('success', "$location->name created successfully.");
 		return Redirect::route("locations.show", [
 			'location' => $location->slug
 		]);
-		// return Redirect::route("locations.show", [
-		// 	'location' => $location->slug
-		// ]);
     }
 
 

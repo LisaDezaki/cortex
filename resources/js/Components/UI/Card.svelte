@@ -19,6 +19,7 @@
 		iconOptions,
 		onclick,
 		options,
+		starred,
 		title,
 		subtitle,
 		subtitleClass,
@@ -29,7 +30,7 @@
 
 </script>
 
-<Stack class="card {clickable ? "cursor-pointer" : null} {className}" onclick={restProps.disabled ? undefined : onclick} {...restProps}>
+<Stack gap={1} class="card {clickable ? "cursor-pointer" : null} {className}" onclick={restProps.disabled ? undefined : onclick} {...restProps}>
 
 	<div class="card-visual aspect-{aspect} {imageClass}">
 		{#if image}
@@ -38,6 +39,9 @@
 			<Icon class="card-icon" name={icon} size={32} />
 		{/if}
 		{@render children?.()}
+		{#if starred}
+			<Icon class="absolute top-1.5 left-1.5 text-amber-400" name="Star" size="lg" weight="fill" />
+		{/if}
 	</div>
 
 	<Flex justify="start" class="w-full">
@@ -69,7 +73,7 @@
 <style lang="postcss">
 
 	:global(.card) {
-		@apply relative flex flex-col flex-shrink-0 gap-1.5 min-w-24 mb-3 rounded-lg overflow-hidden;
+		@apply relative flex flex-col flex-shrink-0 min-w-24 mb-3 rounded-lg overflow-hidden;
 		&:not([disabled="true"]):hover {
 			.card-visual {
 				background: var(--bg-neutral-gradient-alt)!important;

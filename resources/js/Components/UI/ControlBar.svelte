@@ -51,11 +51,11 @@
 	// 	console.log('layout', l)
 	// }
 
-	$effect(() => {
-		filteredData = processData(data, query, filter, sort, sortDir)
-	})
+	// $effect(() => {
+	// 	filteredData = processData(data, query, filter, sort, sortDir)
+	// })
 
-	function processData(data, query, filter, sort, sortDir) {
+	// function processData(data, query, filter, sort, sortDir) {
 
 		//	TODO:	Test and optimize the filter logic here
 		//			A smart dot notation convention (e.g, "factions.*.cold-bloods")
@@ -64,24 +64,24 @@
 		//			options in the dropdown (i.e, both "alias.asc" and "alias.desc")
 
 		// 1. Filter by search term
-		let filtered = data.filter(item =>
-			item.name.toLowerCase().includes(query.toLowerCase())
-		)
+		// let filtered = data.filter(item =>
+		// 	item.name.toLowerCase().includes(query.toLowerCase())
+		// )
 		
 		// 2. Filter by department
-		if (filter !== 'all') {
+		// if (filter !== 'all') {
 			// console.log('filter:', filter)
-			let fil = filter.split('.')
-			filtered = filtered.filter(item => item[fil[0]] === fil[1])
-		}
+			// let fil = filter.split('.')
+			// filtered = filtered.filter(item => item[fil[0]] === fil[1])
+		// }
 		
 		// 3. Sort data
-		return [...filtered].sort((a, b) => {
-			if (a[sort] < b[sort]) return sortDir === 'asc' ? -1 : 1;
-			if (a[sort] > b[sort]) return sortDir === 'asc' ? 1 : -1;
-			return 0;
-		});
-	}
+		// return [...filtered].sort((a, b) => {
+		// 	if (a[sort] < b[sort]) return sortDir === 'asc' ? -1 : 1;
+		// 	if (a[sort] > b[sort]) return sortDir === 'asc' ? 1 : -1;
+		// 	return 0;
+		// });
+	// }
 
 </script>
 

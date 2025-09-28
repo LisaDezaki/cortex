@@ -17,14 +17,14 @@
 
 
 
-<ModalForm title="Create a new project" size="lg"
+<ModalForm title="Create a new project" size="md"
 	endpoint={route('projects.store')}
 	form={form}
 	method="post"
 	reloadPageProps={['projects']}
 	submitProps={{ label: 'Create' }}
 >
-	<Flex align="center" gap={3} class="px-6 py-3">
+	<Flex align="center" gap={3} class="p-3 pt-0">
 		<UploadContext
 			name="media"
 			type="banner"

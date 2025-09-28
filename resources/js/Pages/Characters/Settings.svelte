@@ -2,20 +2,26 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import CharacterSettingsForm from '@/Forms/Settings/CharacterSettings.svelte'
 
-	import { Flex }   from '@/Components/Core'
+	//	Layout & Components
+
+    import AuthenticatedLayout	 from '@/Layouts/AuthenticatedLayout.svelte'
+	import CharacterSettingsForm from '@/Forms/Settings/CharacterSettings.svelte'
+	import Flex   	  from '@/Components/Core/Flex.svelte'
 	import Container  from '@/Components/UI/Container.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
 
-	// const activeProject = $page.props.activeProject.data
+	
+	//	Page props
+
 	const settings = $page.props.settings?.characters?.data
 
 </script>
+
+
 
 <svelte:head>
     <title>Character Settings</title>
@@ -51,14 +57,14 @@
 
 				<Section id="media" class="pb-12">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Media</Heading>
+						<Heading is="h4" as="h6">Media</Heading>
 					</Flex>
 					Media
 				</Section>
 
 				<Section id="custom" class="pb-12">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h5">Custom Fields</Heading>
+						<Heading is="h4" as="h6">Custom Fields</Heading>
 					</Flex>
 					Custom Fields
 				</Section>

@@ -19,26 +19,15 @@
 	import PageMenu		 from '@/Components/UI/PageMenu.svelte'
 	import Section		 from '@/Components/UI/Section.svelte'
 	import Separator	 from '@/Components/UI/Separator.svelte'
+	import Tag	 		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
 
 	import Map      	 from '@/Components/Features/Location/Map.svelte'
 
-	const faction 	   = $page.props.faction?.data
+	import FactionObject from '@/services/FactionObject';
+
+	const faction 	   = new FactionObject($page.props.faction?.data)
 	const customFields = $page.props.customFields?.data
-
-	let media_banner	= $derived(faction.media.filter(m => m.type === 'banner')?.[0])
-	let media_emblem	= $derived(faction.media.filter(m => m.type === 'emblem')?.[0])
-	let media_gallery	= $derived(faction.media)
-
-	
-	/**
-	 * Modal Management
-	 */
-
-	import { modalActions } from '@/stores/modalStore';
-
-    function deleteFaction(fac) { modalActions.open('deleteFaction', 		{ faction: faction 	}) }
-	function addMember(fac)		{ modalActions.open('addFactionMember', 	{ faction: faction	}) }
 
 </script>
 
@@ -56,40 +45,32 @@
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
 				{ icon: "Info",      	label: "Details",    	href: "#details"	},
-				{ icon: "Textbox",      label: "Custom Fields", href: "#fields" 	},
+				{ icon: "Textbox",      label: "Custom Fields", href: "#custom" 	},
 				{ icon: "MapPinArea", 	label: "Headquarters", 	href: "#hq"			},
 				{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
 				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
-				{ icon: "Trash", 		label: "Delete",		onclick: deleteFaction, theme: "danger" }
+				{ icon: "Trash", 		label: "Delete",		onclick: () => faction.delete(), theme: "danger" }
 			]} />
 			<Container size="4xl">
 
-
+				
 				<!-- Details -->
 		
 				<Section id="details" class="pb-6">
-		
+
 					<ArticleBanner>
-						<Media replaceable
-							aspect="aspect-[3/1]"
-							class="absolute inset-0 rounded-lg overflow-hidden shadow-md"
-							media={media_banner}
-							type="banner"
-							endpoint={route('factions.update', { faction: faction.slug })}
-							method={'patch'}
-							reloadPageProps={['factions.media']}
+						<Media
+							class="absolute inset-0 aspect-[3/1] rounded-lg overflow-hidden shadow-md"
+							media={faction.getBanner()}
+							onclick={() => faction.addBanner()}
 						/>
-						<Media replaceable
-							aspect="aspect-square"
+						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
-							media={media_emblem}
-							type="emblem"
-							endpoint={route('factions.update', { faction: faction.slug })}
-							method={'patch'}
-							reloadPageProps={['factions.media']}
+							media={faction.getEmblem()}
+							onclick={() => faction.addEmblem()}
 						/>
 						<Heading is="h1" as="h3"
-							class="mt-auto z-10 {faction.banner ? 'text-white' : ''}"
+							class="mt-auto z-10 {faction.getBanner() ? 'text-white' : ''}"
 							heading={faction.name}
 							headingClass="whitespace-pre-wrap"
 							subheading={faction.type}
@@ -100,13 +81,13 @@
 
 					<Collapsible collapsed={true}
 						class="max-w-[64ch] mx-6"
-						collapsedClass="line-clamp-4 overflow-hidden">
+						collapsedClass="line-clamp-3 overflow-hidden">
 						{faction.description}
 					</Collapsible>
 			
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 
 
 				<!-- Custom Fields -->
@@ -129,7 +110,7 @@
 					{/if}
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 
 
 				<!-- Headquarters -->
@@ -150,14 +131,14 @@
 						{/if} -->
 						
 						<!-- <Map /> -->
-						 <Map class="aspect-[2/1] max-w-[75%] rounded-lg" location={faction.headquarters?.parent} />
+						 <Map class="aspect-[2/1] max-w-[64ch] rounded-lg" location={faction.headquarters?.parent} />
 
 					{:else}
 						<p class="font-style-placeholder">{faction.name} doesn't have a headquarters yet.</p>
 					{/if}
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 
 
 				<!-- Membership -->
@@ -185,18 +166,18 @@
 					</Grid>
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 
 
 				<!-- Media -->
 	
 				<Section id="gallery" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
-					<MediaGrid cols={6}
+					<!-- <MediaGrid cols={6}
 						media={media_gallery}
 						type="gallery"
 						addable
-					/>
+					/> -->
 				</Section>
 	
 			</Container>
@@ -241,7 +222,3 @@
 	{/snippet}
 	
 </AuthenticatedLayout>
-
-<!-- <DeleteFactionForm isOpen={deletingFaction} faction={faction}
-	onSuccess={closeModal} oncancel={closeModal} reloadPageProps={['factions']}
-/> -->

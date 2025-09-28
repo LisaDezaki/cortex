@@ -1,16 +1,11 @@
 <script>
 	import { page } from '@inertiajs/svelte';
-	// import { Pane, Splitpanes } from 'svelte-splitpanes'
-
-	import { modalStore } from '@/stores/modalStore';
 
 	import { Flex, Stack } from '@/Components/Core'
     import Article    	from '@/Components/UI/Article.svelte'
-    // import Container  	from '@/Components/UI/Container.svelte'
 	import Navigation 	from '@/Components/UI/Navigation.svelte'
     import Main       	from '@/Components/UI/Main.svelte'
     import Page       	from '@/Components/UI/Page.svelte'
-    // import Sidebar    	from '@/Components/UI/Sidebar.svelte'
 	import Toast		from '@/Components/UI/Toast.svelte'
 
 
@@ -25,6 +20,8 @@
 	 */
 
 	//	1. Import all modal components
+
+	import { modalStore } from '@/stores/modalStore';
 
     import CreateCharacterModal  from '@/Modals/CreateCharacter.svelte';
     import CreateCollectionModal from '@/Modals/CreateCollection.svelte';
@@ -46,8 +43,7 @@
     import RenameProjectModal 	 from '@/Modals/RenameProject.svelte';
 	
     import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte';
-	
-    import UploadMediaModal 	from '@/Modals/UploadMedia.svelte';
+    import UploadMediaModal 			 from '@/Modals/UploadMedia.svelte';
 	
 	//	2. Create a modal registry map
 
@@ -72,8 +68,7 @@
 		renameProject:		RenameProjectModal,
 
 		setCharacterRelationship:	SetCharacterRelationshipModal,
-
-		uploadMedia:		UploadMediaModal
+		uploadMedia:				UploadMediaModal
     };
 
 	const CurrentModal = $derived(modals[$modalStore.activeModal])
@@ -93,11 +88,13 @@
 
 </script>
 
+
+
 <Page>
 
 	<Navigation project={activeProject} />
 
-	<Stack class="w-full">
+	<Stack class="relative w-full">
 		{@render header?.()}
 		<Flex class="relative flex-grow-0 h-screen overflow-hidden w-full">
 			<Main>

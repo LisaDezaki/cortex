@@ -44,7 +44,7 @@
 				size={item.iconSize || iconSize} weight={item.iconWeight || iconWeight}
 			/>
 		{/if}
-		
+
 		{#if item.label}
 			<span class="font-style-small line-clamp-1 truncate">{item.label}</span>
 		{/if}
@@ -85,7 +85,7 @@
 
 			{#if iconOptions}
 				<Grid cols={iconOptions.length} gap={0} class="w-full">
-					{#each iconOptions.map(opt => ({...opt, iconSize: "md", iconWeight: "regular" })) as iconOption}
+					{#each iconOptions.map(opt => ({...opt, iconSize: "md", iconWeight: opt.iconWeight || 'regular' })) as iconOption}
 						<ContextMenu.Item class="grow rounded hover:bg-{iconOption.theme || 'neutral'}-softest">
 							{@render item(iconOption)}
 						</ContextMenu.Item>

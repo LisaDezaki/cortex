@@ -2,72 +2,53 @@
 	import { page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import Empty   from '@/Components/UI/Empty.svelte'
+	//	Layout & Components
+
+    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import Grid   	  from '@/Components/Core/Grid.svelte'
+	import Button     from '@/Components/UI/Button.svelte'
+	import Empty   	  from '@/Components/UI/Empty.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
-	import LocationCard		from '@/Components/Features/Location/LocationCard.svelte'
-	import LocationControlBar from '@/Components/Features/Location/LocationControlBar.svelte'
-	import LocationGrid		from '@/Components/Features/Location/LocationGrid.svelte'
-	import LocationTable	from '@/Components/Features/Location/LocationTable.svelte'
-	import LocationMap		from '@/Components/Features/Location/Map.svelte'
+	import Separator  from '@/Components/UI/Separator.svelte'
+	import LocationCard			from '@/Components/Features/Location/LocationCard.svelte'
+	import LocationControlBar 	from '@/Components/Features/Location/LocationControlBar.svelte'
+	import LocationGrid			from '@/Components/Features/Location/LocationGrid.svelte'
+	import LocationTable		from '@/Components/Features/Location/LocationTable.svelte'
+	import LocationMap			from '@/Components/Features/Location/Map.svelte'
 	
 
 	//	Page props
 
-	const activeProject = $page.props.activeProject.data
-	const collections	= $page.props.collections?.data
-	const worldTree     = $page.props.worldTree?.data
-	const locations     = activeProject?.locations  || []
+	import ProjectObject 	from '@/services/ProjectObject'
+	import CollectionList 	from '@/services/CollectionList'
+	import LocationList 	from '@/services/LocationList'
+	import LocationObject 	from '@/services/LocationObject'
+	const activeProject   = $state(new ProjectObject($page.props.activeProject.data))
+	const collections	  = $state(new CollectionList($page.props.collections?.data))
+	const locations       = $state(new LocationList(activeProject?.locations)  || [])
+	const worldTree		  = $state(new LocationObject($page.props.worldTree.data))
+	// const worldTree     = $page.props.worldTree?.data
 
 
 	//	State & Derived values
 
-	let filteredLocations   = $state(locations)
-	let selectedLocation 	= $state(null)
-	let layout    			= $state('grid')
-	let rowSize   			= $state(5)
-	let gridCols 			= $derived(10-rowSize)
-
-
-	//	Modal Management
-
-	import { modalActions } from '@/stores/modalStore';
-
-	function createCollection() 	{ modalActions.open('createCollection') }
-	function createLocation() 		{ modalActions.open('createLocation') 	}
-	function deleteLocation(loc) 	{ modalActions.open('deleteLocation', { location: loc }) 	}
-	function renameLocation(loc) 	{ modalActions.open('renameLocation', { location: loc }) 	}
-
-	//	Add Character to Collection
-	const addToCollectionForm = useForm({
-		items: [{ id: null, type: 'locations' }]
-	})
-
-	// let selectedLocationName = $derived(selectedLocation?.name ||'')
-
-	function addToCollection (loc, coll) {
-		$addToCollectionForm.items[0]  = { id: loc.id, type: 'locations' }
-		$addToCollectionForm.patch(
-			route('collections.update', { collection: coll.slug })
-		)
-	}
-
-	// function updateControls(filteredList, controls) {
-	// 	locationList = filteredList
-	// 	layout = controls.layout
-	// }
+	let query	 = $state('')
+	let filter	 = $state('')
+	let sort	 = $state('name.asc')
+	let layout   = $state('grid')
+	let size	 = $state(8)
+	let rowSize  = $state(5)
+	let gridCols = $derived(10-rowSize)
 
 </script>
+
+
 
 <svelte:head>
     <title>Location List</title>
 </svelte:head>
-
-
-
-
 
 <AuthenticatedLayout>
 
@@ -80,7 +61,7 @@
 				{ label: "Settings",	href: route('locations.settings') },
 			]}
 			actions={[
-				{ icon: "Plus",			label: "Create Location", onclick: createLocation, theme: "accent" },
+				{ icon: "Plus", label: "Create Location", theme: "accent", onclick: () => locations.create(), },
 			]}
 		/>
 	{/snippet}
@@ -89,62 +70,110 @@
 
 		{#if activeProject}
 			<LocationControlBar
-				data={locations}
-				bind:filteredData={filteredLocations}
+				data={locations.items}
+				bind:query bind:filter
+				bind:sort  bind:layout
+				bind:size
 				project={activeProject}
 			/>
 		{/if}
 
 		<Section gap={6} class="px-12 py-6">
-			{#if activeProject && locations?.length > 0}
+			{#if activeProject && locations.items?.length > 0}
 
-			
+
 				<!-- Grid -->
 
 				{#if layout == 'grid'}
-					<LocationGrid
-						locations={filteredLocations}
+				
+					<Grid cols={4} gap={12} class="mt-6">
+						<LocationCard
+							class="col-span-1"
+							location={worldTree}
+							href={worldTree.routes.show}
+						/>
+						<LocationGrid
+							class="col-span-3"
+							cols={5}
+						>
+							{#each worldTree.descendants as loc}
+								<LocationCard
+									location={loc}
+								/>
+							{/each}
+							<Button style="soft" theme="accent" 
+								icon="Plus" class="aspect-video rounded-lg"
+							/>
+						</LocationGrid>
+					</Grid>
+					
+					{#each worldTree.descendants as loc, i}
+						<Separator class="ml-auto my-6 w-3/4" />
+						<Grid cols={4} gap={12}>
+							<LocationCard
+								class="col-span-1"
+								location={worldTree.descendants[i]}
+								href={loc.routes.show}
+							/>
+							<LocationGrid
+								class="col-span-3"
+								cols={5}
+							>
+								{#each worldTree.descendants[i].descendants as loc2}
+									<LocationCard
+										location={loc2}
+									/>
+								{/each}
+								<Button style="soft" theme="accent"
+									icon="Plus" class="aspect-video rounded-lg"
+								/>
+							</LocationGrid>
+						</Grid>
+					{/each}
+
+					<!-- <LocationGrid
+						locations={locations.items}
 						cols={gridCols}
 					>
 						{#snippet gridItem(location)}
 							<LocationCard
 								location={location}
+								href={location.routes.show}
 								iconOptions={[
-									{ icon: "Eye", 		href: route('locations.show', {location: location.slug}) },
-									{ icon: "Textbox", 	onclick: () => renameLocation(location) },
-									{ icon: "Star", 	onclick: () => renameLocation(location) },
-									{ icon: "Trash", 	onclick: () => deleteLocation(location), theme: "danger" },
+									{ icon: "Star", 	onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
+									{ icon: "Eye", 		href: location.routes.show },
+									{ icon: "Textbox", 	onclick: () => location.rename() },
+									{ icon: "Trash", 	onclick: () => location.delete(), theme: "danger" },
 								]}
 								options={[{
 									label: "Add to Collection",
-									create: () => createCollection(location),
-									options: [ ...collections.map(c => ({
-										label: c.name,
-										onclick: () => addToCollection(location, c),
-										disabled:   c.items.map(i => i.collectionable_id).includes(location.id),
-										iconWeight: c.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
+									create: () => collections.create('locations', [location]),
+									options: [ ...collections.items.map(collection => ({
+										label: collection.name,
+										onclick: 	collection.items.map(i => i.collectionable_id).includes(location.id) ? () => collection.removeItem(location) : () => collection.addItem(location),
+										disabled:   collection.items.map(i => i.collectionable_id).includes(location.id),
+										iconWeight: collection.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
 									}))]
 								},{
 									label: "Add Tags",
-									onclick: () => applyTags(location)
+									onclick: () => location.applyTags()
 								},{
 									separator: true
 								},{
 									label: "Delete Location",
-									onclick: () => deleteLocation(location),
+									onclick: () => location.delete(),
 									theme: "danger"
-								}
-								]}
+								}]}
 							/>
 						{/snippet}
-					</LocationGrid>
+					</LocationGrid> -->
 
 
 				<!-- Table -->
 				
 				{:else if layout == 'table'}
 					<LocationTable
-						locations={filteredLocations}
+						locations={locations.items}
 					/>
 
 				
@@ -165,7 +194,7 @@
 					icon="MapPin"
 					message="There are no locations for this project yet."
 					buttonLabel="Create one?"
-					buttonClick={createLocation}
+					buttonClick={() => location.create()}
 				/>
 
 			{/if}

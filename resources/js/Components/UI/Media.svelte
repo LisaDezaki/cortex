@@ -1,16 +1,13 @@
 <script>
-	import { modalActions } from '@/stores/modalStore';
-	
 	import { Flex } from '@/Components/Core'
 	import Button 	from '@/Components/UI/Button.svelte'
 	import Icon 	from '@/Components/UI/Icon.svelte'
 
 	let {
-		aspect = 'aspect-square',
 		class: className,
+		imageClass,
 		media,
-		replaceable = false,
-		...restProps
+		onclick,
 	} = $props()
 
 </script>
@@ -19,16 +16,16 @@
 
 
 
-<Flex align="center" justify="center" class="media {aspect} {className}">
+<Flex align="center" justify="center" class="media {className} overflow-hidden">
 	{#if media}
-		<img class="min-h-full min-w-full object-cover" src={media.url} alt={media.name} />
+		<img class="min-h-full min-w-full object-cover {imageClass}" src={media.url} alt={media.name} />
 	{:else}
 		<Icon name="Image" size="xl" weight="light" />
 	{/if}
-	{#if replaceable}
+	{#if onclick}
 		<Button
 			class="absolute inset-0"
-			onclick={() => modalActions.open('uploadMedia', { aspect, media, ...restProps })}
+			onclick={onclick}
 		/>
 	{/if}
 </Flex>

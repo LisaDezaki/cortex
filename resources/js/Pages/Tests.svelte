@@ -5,7 +5,7 @@
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
 	import {
-		Form, Inline,
+		Flex, Form, Grid, Inline,
 		PanZoom, Stack,
 		UploadContext,
 		UploadPreview,
@@ -137,30 +137,108 @@
 					<Stack gap={1.5} class="mb-12">
 						<Heading is="h3" as="h6">Button</Heading>
 						<p class="max-w-[72ch]">Buttons are used to trigger actions in your application. They can be styled in various ways, such as primary, secondary, danger, and disabled.</p>
-						<Inline gap={6} class="mt-3">
-							<Button style="hard" theme="accent"  icon="Check" label="Primary"    />
-							<Button style="hard" theme="neutral" icon="List"  label="Secondary"  />
-							<Button style="hard" theme="danger"  icon="Trash" label="Danger"     />
-							<Button style="hard" theme="accent"  icon="Check" />
-							<Button style="hard" theme="neutral" icon="List" />
-							<Button style="hard" theme="danger"  icon="Trash" />
+						<Grid cols="4" class="mt-3 w-[75%]">
+							<Flex justify="center" class="w-36"><Button size="xl" style="hard" theme="accent"  icon="Check" label="Primary XL"    /></Flex>
+							<Flex justify="center" class="w-36"><Button size="xl" style="hard" theme="neutral" icon="List"  label="Secondary XL"  /></Flex>
+							<Flex justify="center" class="w-36"><Button size="xl" style="hard" theme="danger"  icon="Trash" label="Danger XL"     /></Flex>
+							<Flex justify="center" class="w-36">
+								<Button size="xl" style="hard" theme="accent"  icon="Check" />
+								<Button size="xl" style="hard" theme="neutral" icon="List" />
+								<Button size="xl" style="hard" theme="danger"  icon="Trash" />
+							</Flex>
+						</Grid>
+						<Grid cols="4" class="mt-3 w-[75%]">
+							<Flex justify="center" class="w-36"><Button size="lg" style="hard" theme="accent"  icon="Check" label="Primary LG"    /></Flex>
+							<Flex justify="center" class="w-36"><Button size="lg" style="hard" theme="neutral" icon="List"  label="Secondary LG"  /></Flex>
+							<Flex justify="center" class="w-36"><Button size="lg" style="hard" theme="danger"  icon="Trash" label="Danger LG"     /></Flex>
+							<Flex justify="center" class="w-36">
+								<Button size="lg" style="hard" theme="accent"  icon="Check" />
+								<Button size="lg" style="hard" theme="neutral" icon="List" />
+								<Button size="lg" style="hard" theme="danger"  icon="Trash" />
+							</Flex>
+						</Grid>
+						<Grid cols="4" class="mt-3 w-[75%]">
+							<Flex justify="center" class="w-36"><Button size="md" style="hard" theme="accent"  icon="Check" label="Primary MD"    /></Flex>
+							<Flex justify="center" class="w-36"><Button size="md" style="hard" theme="neutral" icon="List"  label="Secondary MD"  /></Flex>
+							<Flex justify="center" class="w-36"><Button size="md" style="hard" theme="danger"  icon="Trash" label="Danger MD"     /></Flex>
+							<Flex justify="center" class="w-36">
+								<Button size="md" style="hard" theme="accent"  icon="Check" />
+								<Button size="md" style="hard" theme="neutral" icon="List" />
+								<Button size="md" style="hard" theme="danger"  icon="Trash" />
+							</Flex>
+						</Grid>
+						<Grid cols="4" class="mt-3 w-[75%]">
+							<Flex justify="center" class="w-36"><Button size="md" style="soft" theme="accent"  icon="Check" label="Primary MD"    /></Flex>
+							<Flex justify="center" class="w-36"><Button size="md" style="soft" theme="neutral" icon="List"  label="Secondary MD"  /></Flex>
+							<Flex justify="center" class="w-36"><Button size="md" style="soft" theme="danger"  icon="Trash" label="Danger MD"     /></Flex>
+							<Flex justify="center" class="w-36">
+								<Button size="md" style="soft" theme="accent"  icon="Check" />
+								<Button size="md" style="soft" theme="neutral" icon="List" />
+								<Button size="md" style="soft" theme="danger"  icon="Trash" />
+							</Flex>
+						</Grid>
+						<Grid cols="4" class="mt-3 w-[75%]">
+							<Flex justify="center" class="w-36"><Button size="md" style="plain" theme="accent"  icon="Check" label="Primary MD"    /></Flex>
+							<Flex justify="center" class="w-36"><Button size="md" style="plain" theme="neutral" icon="List"  label="Secondary MD"  /></Flex>
+							<Flex justify="center" class="w-36"><Button size="md" style="plain" theme="danger"  icon="Trash" label="Danger MD"     /></Flex>
+							<Flex justify="center" class="w-36">
+								<Button size="md" style="plain" theme="accent"  icon="Check" />
+								<Button size="md" style="plain" theme="neutral" icon="List" />
+								<Button size="md" style="plain" theme="danger"  icon="Trash" />
+							</Flex>
+						</Grid>
+						<Grid cols="4" class="mt-3 w-[75%]">
+							<Flex justify="center" class="w-36"><Button size="sm" style="hard" theme="accent"  icon="Check" label="Primary SM"    /></Flex>
+							<Flex justify="center" class="w-36"><Button size="sm" style="hard" theme="neutral" icon="List"  label="Secondary SM"  /></Flex>
+							<Flex justify="center" class="w-36"><Button size="sm" style="hard" theme="danger"  icon="Trash" label="Danger SM"     /></Flex>
+							<Flex justify="center" class="w-36">
+								<Button size="sm" style="hard" theme="accent"  icon="Check" />
+								<Button size="sm" style="hard" theme="neutral" icon="List" />
+								<Button size="sm" style="hard" theme="danger"  icon="Trash" />
+							</Flex>
+						</Grid>
+						<Grid cols="4" class="mt-3 w-[75%]">
+							<Flex justify="center" class="w-36"><Button size="xs" style="hard" theme="accent"  icon="Check" label="Primary XS"    /></Flex>
+							<Flex justify="center" class="w-36"><Button size="xs" style="hard" theme="neutral" icon="List"  label="Secondary XS"  /></Flex>
+							<Flex justify="center" class="w-36"><Button size="xs" style="hard" theme="danger"  icon="Trash" label="Danger XS"     /></Flex>
+							<Flex justify="center" class="w-36">
+								<Button size="xs" style="hard" theme="accent"  icon="Check" />
+								<Button size="xs" style="hard" theme="neutral" icon="List" />
+								<Button size="xs" style="hard" theme="danger"  icon="Trash" />
+							</Flex>
+						</Grid>
+						<!-- <Inline gap={6} class="mt-3">
+							<Button size="xl" style="hard" theme="accent"  icon="Check" label="Primary XL"    />
+							<Button size="xl" style="hard" theme="neutral" icon="List"  label="Secondary XL"  />
+							<Button size="xl" style="hard" theme="danger"  icon="Trash" label="Danger XL"     />
+							<Button size="xl" style="hard" theme="accent"  icon="Check" />
+							<Button size="xl" style="hard" theme="neutral" icon="List" />
+							<Button size="xl" style="hard" theme="danger"  icon="Trash" />
 						</Inline>
 						<Inline gap={6} class="mt-3">
-							<Button style="soft" theme="accent"  icon="Check" label="Primary" />
-							<Button style="soft" theme="neutral" icon="List"  label="Secondary" />
-							<Button style="soft" theme="danger"  icon="Trash" label="Danger" />
-							<Button style="soft" theme="accent"  icon="Check" />
-							<Button style="soft" theme="neutral" icon="List" />
-							<Button style="soft" theme="danger"  icon="Trash" />
+							<Button size="lg" style="soft" theme="accent"  icon="Check" label="Primary LG" />
+							<Button size="lg" style="soft" theme="neutral" icon="List"  label="Secondary LG" />
+							<Button size="lg" style="soft" theme="danger"  icon="Trash" label="Danger LG" />
+							<Button size="lg" style="soft" theme="accent"  icon="Check" />
+							<Button size="lg" style="soft" theme="neutral" icon="List" />
+							<Button size="lg" style="soft" theme="danger"  icon="Trash" />
 						</Inline>
 						<Inline gap={6} class="mt-3">
-							<Button style="plain" theme="accent"  icon="Check" label="Primary" />
-							<Button style="plain" theme="neutral" icon="List"  label="Secondary" />
-							<Button style="plain" theme="danger"  icon="Trash" label="Danger" />
-							<Button style="plain" theme="accent"  icon="Check" />
-							<Button style="plain" theme="neutral" icon="List" />
-							<Button style="plain" theme="danger"  icon="Trash" />
+							<Button size="md" style="soft" theme="accent"  icon="Check" label="Primary MD" />
+							<Button size="md" style="soft" theme="neutral" icon="List"  label="Secondary MD" />
+							<Button size="md" style="soft" theme="danger"  icon="Trash" label="Danger MD" />
+							<Button size="md" style="soft" theme="accent"  icon="Check" />
+							<Button size="md" style="soft" theme="neutral" icon="List" />
+							<Button size="md" style="soft" theme="danger"  icon="Trash" />
 						</Inline>
+						<Inline gap={6} class="mt-3">
+							<Button size="md" style="plain" theme="accent"  icon="Check" label="Primary" />
+							<Button size="md" style="plain" theme="neutral" icon="List"  label="Secondary" />
+							<Button size="md" style="plain" theme="danger"  icon="Trash" label="Danger" />
+							<Button size="md" style="plain" theme="accent"  icon="Check" />
+							<Button size="md" style="plain" theme="neutral" icon="List" />
+							<Button size="md" style="plain" theme="danger"  icon="Trash" />
+						</Inline> -->
 					</Stack>
 
 					<!-- Dropdown -->

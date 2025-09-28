@@ -20,7 +20,7 @@
 
 
 
-<ModalForm title="Create a new faction" size="lg"
+<ModalForm title="Creating faction" size="md"
 	endpoint={route('factions.store')}
 	form={form}
 	method="post"
@@ -28,7 +28,7 @@
 		label: 'Create'
 	}}
 >
-	<Flex align="center" gap={3} class="px-6 py-3">
+	<Flex align="center" gap={3} class="p-3 pt-0">
 		<UploadContext
 			name="media"
 			type="emblem"

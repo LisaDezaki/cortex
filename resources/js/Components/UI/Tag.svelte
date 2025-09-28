@@ -26,9 +26,8 @@
 <style lang="postcss">
 
 	.tag {
-		@apply inline-flex items-center justify-center min-h-2 min-w-2 px-1.5;
-		@apply border-none rounded-full;
-		@apply font-normal text-xs;
+		@apply inline-flex items-center justify-center min-h-2 min-w-2 px-2;
+		@apply rounded-full text-sm;
 		&:not(.plain) {
 			background: var(--bg-accent);
 		}

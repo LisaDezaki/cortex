@@ -1,4 +1,5 @@
 <script>
+
 	import { route } from 'momentum-trail'
 
 	import Card  from '@/Components/UI/Card.svelte'

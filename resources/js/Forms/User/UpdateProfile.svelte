@@ -30,7 +30,6 @@
 	onsubmit={submit}
 	submitLabel="Save Profile"
 >
-
 	<Field type="text"
 		name="name"
 		label="Name"

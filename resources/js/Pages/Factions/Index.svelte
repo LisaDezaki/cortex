@@ -1,68 +1,65 @@
 <script>
-	import { page, useForm } from '@inertiajs/svelte'
+	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import Empty     	from '@/Components/UI/Empty.svelte'
-	import PageHeader	from '@/Components/UI/PageHeader.svelte'
-	import Section      from '@/Components/UI/Section.svelte'
-	import FactionCard 	from '@/Components/Features/Faction/FactionCard.svelte'
-	import FactionControlBar from '@/Components/Features/Faction/FactionControlBar.svelte'
-	import FactionGrid 	from '@/Components/Features/Faction/FactionGrid.svelte'
-	import FactionTable from '@/Components/Features/Faction/FactionTable.svelte'
+	//	Layout & Components
+
+    import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
+	import Empty     		 	from '@/Components/UI/Empty.svelte'
+	import PageHeader		 	from '@/Components/UI/PageHeader.svelte'
+	import Section      	 	from '@/Components/UI/Section.svelte'
+	import FactionCard 		 	from '@/Components/Features/Faction/FactionCard.svelte'
+	import FactionControlBar 	from '@/Components/Features/Faction/FactionControlBar.svelte'
+	import FactionGrid 		 	from '@/Components/Features/Faction/FactionGrid.svelte'
+	import FactionTable 	 	from '@/Components/Features/Faction/FactionTable.svelte'
 
 
 	//	Page props
 
-	const activeProject 	= $page.props.activeProject.data
-	const collections		= $page.props.collections?.data
-	const factions      	= activeProject?.factions
+	import ProjectObject 	from '@/services/ProjectObject'
+	import CollectionList 	from '@/services/CollectionList'
+	import CharacterList 	from '@/services/CharacterList'
+	import FactionList 		from '@/services/FactionList'
+	import LocationList 	from '@/services/LocationList'
+	const activeProject   = new ProjectObject($page.props.activeProject.data)
+	const collections	  = new CollectionList($page.props.collections?.data)
+	const characters      = new CharacterList(activeProject?.characters)
+	const factions        = new FactionList(activeProject?.factions)
+	const locations    	  = new LocationList(activeProject?.locations)
 	
 
 	//	State & Derived values
 
-	let filteredFactions 	= $state(factions)
-	let selectedFaction 	= $state(null)
-	let layout    			= $state('grid')
-	let rowSize   			= $state(8)
-	let gridCols    		= $derived( 16-rowSize )
+	// let filteredFactions 	= $state(factions)
+	// let selectedFaction 	= $state(null)
+	// let layout    			= $state('grid')
+	let query	 = $state('')
+	let filter	 = $state('')
+	let sort	 = $state('name.asc')
+	let layout   = $state('grid')
+	let size	 = $state(8)
+	let rowSize  = $state(8)
+	let gridCols = $derived(16-rowSize)
 
 
 	//	Modal Management
 
 	import { modalActions } from '@/stores/modalStore';
-
+	// function createCharacter() 		{ modalActions.open('createCharacter') 	}
 	function createFaction()		{ modalActions.open('createFaction') 	}
-	function createCollection()		{ modalActions.open('createCollection') }
+	// function createLocation()		{ modalActions.open('createLocation') 	}
+	function createCollection(type)	{ modalActions.open('createCollection', { type }) }
 	function deleteFaction(fac) 	{ modalActions.open('deleteFaction', 	{ faction: fac 		}) }
 	function renameFaction(fac) 	{ modalActions.open('renameFaction', 	{ faction: fac 		}) }
 
-
-	//	Add faction to Collection
-
-	const addToCollectionForm = useForm({
-		items: [{ id: null, type: 'factions' }]
-	})
-
-	let selectedFactionName = $derived(selectedFaction?.name || '')
-
-	function addToCollection(fac, coll) {
-		$addToCollectionForm.items[0]  = { id: fac.id, type: 'factions' }
-		$addToCollectionForm.patch(
-			route('collections.update', { collection: coll.slug })
-		)
-	}
-
 </script>
+
+
 
 <svelte:head>
     <title>Faction List</title>
 </svelte:head>
-
-
-
-
 
 <AuthenticatedLayout>
 
@@ -70,65 +67,83 @@
 		<PageHeader
 			title="Faction List"
 			tabs={[
-				{ label: "List",			active: true },
+				{ label: "List",		active: true },
 				{ label: "Collections",	href: route('factions.collections') },
-				{ label: "Settings",		href: route('factions.settings') },
+				{ label: "Settings",	href: route('factions.settings') },
 			]}
 			actions={[
-				{ icon: "Plus",			label: "Create Faction", onclick: createFaction, theme: "accent" },
+				{ icon: "Plus", label: "Create Faction", onclick: () => factions.create(), theme: "accent" },
 			]}
 		/>
 	{/snippet}
 	
 	{#snippet article()}
 
-		<FactionControlBar
-			data={factions}
-			bind:filteredData={filteredFactions}
-			project={activeProject}
-		/>
+		{#if activeProject}
+			<FactionControlBar
+				data={factions}
+				bind:query bind:filter
+				bind:sort  bind:layout
+				bind:size
+				project={activeProject}
+			/>
+		{/if}
 
 		<Section gap={6} class="px-12 py-6">
-			{#if activeProject && factions?.length > 0}
+			{#if activeProject && factions.items?.length > 0}
 
 
 				<!-- Grid -->
 
 				{#if layout == 'grid'}
 					<FactionGrid
-						factions={filteredFactions}
+						factions={factions.items}
 						cols={gridCols}
 					>
 						{#snippet gridItem(faction)}
 							<FactionCard
 								faction={faction}
+								href={faction.routes.show}
 								iconOptions={[
-									{ icon: "Eye", 		href: route('factions.show', {faction: faction.slug}) },
-									{ icon: "Textbox", 	onclick: () => renameFaction(faction) },
-									{ icon: "Star", 	onclick: () => renameFaction(faction) },
-									{ icon: "Trash", 	onclick: () => deleteFaction(faction), theme: "danger" },
+									{ icon: "Star", 	onclick: () => faction.star(), iconWeight: faction.starred ? 'fill' : 'regular' },
+									{ icon: "Eye", 		href: faction.routes.show },
+									{ icon: "Textbox", 	onclick: () => faction.rename() },
+									{ icon: "Trash", 	onclick: () => faction.delete(), theme: "danger" },
 								]}
 								options={[{
 									label: "Add to Collection",
-									create: () => createCollection(faction),
-									options: [ ...collections.map(c => ({
+									create: () => collections.create(),
+									options: [ ...collections.items.map(c => ({
 										label: c.name,
-										onclick: () => addToCollection(faction, f),
-										disabled:   f.items.map(i => i.collectionable_id).includes(faction.id),
-										iconWeight: f.items.map(i => i.collectionable_id).includes(faction.id) ? 'fill' : 'light'
+										onclick: () => faction.addToCollection(c),
+										disabled:   c.items.map(i => i.collectionable_id).includes(faction.id),
+										iconWeight: c.items.map(i => i.collectionable_id).includes(faction.id) ? 'fill' : 'light'
 									}))]
 								},{
 									label: "Add Tags",
-									onclick: () => applyTags(faction)
+									onclick: () => faction.applyTags()
 								},{
-									label: "Add Character"
+									label: "Add Member",
+									options: [ ...characters.items.map(c => ({
+										label: c.name,
+										onclick: () => faction.addMember(c)
+									})) ]
 								},{
-									label: "Set Location"
+									label: "Set Headquarters",
+									hideIf: faction.headquarters != null,
+									options: [ ...locations.items.map(l => ({
+										label: l.name,
+										onclick: () => faction.setHeadquarters(l)
+									})) ]
+								},{
+									label: "Remove Headquarters",
+									hideIf: faction.headquarters == null,
+									onclick: () => faction.removeHeadquarters()
 								},{
 									separator: true
 								},{
 									label: "Delete Faction",
-									onclick: () => deleteFaction(faction),
+									onclick: () => faction.delete(),
 									theme: "danger"
 								}
 								]}
@@ -141,7 +156,7 @@
 
 				{:else if layout == 'table'}
 					<FactionTable
-						factions={filteredFactions}
+						factions={factions}
 					/>
 
 
@@ -152,7 +167,7 @@
 					icon="FlagBannerFold"
 					message="There are no factions for this project yet."
 					buttonLabel="Create one?"
-					buttonClick={createFaction}
+					buttonClick={() => factions.create()}
 				/>
 
 			{/if}

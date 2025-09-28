@@ -36,12 +36,13 @@ class CharacterController extends Controller
 
 	protected $validationRules = [
 		'name'                  => ['sometimes', 'string', 'max:255'],
-		'alias'                 => ['sometimes', 'string', 'max:255'],
-		'description'           => ['sometimes', 'string'],
-		'faction_id'            => ['sometimes', 'string', 'uuid', 'exists:factions,id'],
-		'location_id'           => ['sometimes', 'string', 'uuid', 'exists:locations,id'],
+		'alias'                 => ['sometimes', 'nullable', 'string', 'max:255'],
+		'description'           => ['sometimes', 'nullable', 'string'],
+		'starred'				=> ['sometimes', 'boolean'],
+		'faction_id'            => ['sometimes', 'nullable', 'string', 'uuid', 'exists:factions,id'],
+		'location_id'           => ['sometimes', 'nullable', 'string', 'uuid', 'exists:locations,id'],
 
-		'media'					=> ['sometimes', 'array'],
+		'media'					=> ['sometimes', 'nullable', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],
 		'media.*.path'			=> ['nullable',  'string'],
 		'media.*.type'			=> ['required',  'string', 'in:banner,gallery,portrait'],
@@ -100,13 +101,13 @@ class CharacterController extends Controller
 	 * a name to initially create a Character.
 	 */
 
-	public function create() {}
+	public function create() {}		//	Character creation is handled through a simple modal
 	public function store(Request $request): RedirectResponse
 	{
 		$validatedData = $request->validate($this->validationRules);
 		$character = Auth::user()->activeProject()->characters()->create($validatedData);
 
-		if ($request->has('media')) {
+		if ($request->has('media') && $request['media'] !== null) {
 			foreach ($request['media'] as $media) {
 				$this->mediaService->attachMedia($character, $media['type'], $media);
 			}
@@ -133,8 +134,6 @@ class CharacterController extends Controller
 			'image',
 			'media',
 			'factions.image',
-			// 'banner',
-			// 'portrait',
 			'relationships.image',
 			'inverseRelationships.image',
 			'customFieldValues.customField',
@@ -163,11 +162,9 @@ class CharacterController extends Controller
 	public function edit(Character $character) {}
 	public function update(Request $request, Character $character): RedirectResponse
 	{
-		// dd($request->all());
 		$validatedData = $request->validate($this->validationRules);
-		// dd($validatedData);
 
-		if ($request->has('media')) {
+		if ($request->has('media') && $request['media'] !== null) {
 			foreach ($request['media'] as $media) {
 				$this->mediaService->attachMedia($character, $media['type'], $media);
 			}
@@ -178,18 +175,16 @@ class CharacterController extends Controller
 			foreach ($validatedData['relationships'] as $rel) {
 				$relatedCharacter = Character::find($rel['related_character_id']);
 				$character->relationships()->save($relatedCharacter, $rel);
-				// $character->relationships()->attach($relatedCharacter->id, $rel);
 			}
 			unset($validatedData['relationships']);
 		}
 
-
-
-
-
-
 		if ($request->has('location_id')) {
-			$character->location()->associate($validatedData['location_id']);
+			if ($validatedData['location_id'] === null) {
+				$character->location()->dissociate();
+			} else {
+				$character->location()->associate($validatedData['location_id']);
+			}
 		}
 
 		if ($request->has('custom_fields')) {

@@ -16,13 +16,13 @@
 	
 	<p class="whitespace-pre-wrap {collapsed ? collapsedClass : ''}">{@render children?.()}</p>
 	
-	<Button style="plain" theme="accent" class="self-center mt-3 text-sm"
+	<button class="self-center -mx-2 mt-6 px-2 py-1 text-accent text-sm hover:underline"
 		onclick={() => collapsed = !collapsed}>
 		{#if collapsed}
 			Read more&hellip;
 		{:else}
 			Read less&hellip;
 		{/if}
-	</Button>
+	</button>
 
 </div>

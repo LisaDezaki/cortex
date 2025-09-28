@@ -2,20 +2,26 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
+
+	//	Layout & Components
+
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import FactionSettingsForm from '@/Forms/Settings/FactionSettings.svelte'
+	import Flex			from '@/Components/Core/Flex.svelte'
+	import Container	from '@/Components/UI/Container.svelte'
+	import Heading		from '@/Components/UI/Heading.svelte'
+	import PageHeader	from '@/Components/UI/PageHeader.svelte'
+	import PageMenu		from '@/Components/UI/PageMenu.svelte'
+	import Section		from '@/Components/UI/Section.svelte'
 
-	import { Flex }   from '@/Components/Core'
-	import Container  from '@/Components/UI/Container.svelte'
-	import Heading    from '@/Components/UI/Heading.svelte'
-	import PageHeader from '@/Components/UI/PageHeader.svelte'
-	import PageMenu   from '@/Components/UI/PageMenu.svelte'
-	import Section    from '@/Components/UI/Section.svelte'
 
-	const activeProject = $page.props.activeProject.data
+	//	Page props
+
 	const settings = $page.props.settings?.factions?.data
 
 </script>
+
+
 
 <svelte:head>
     <title>Faction Settings</title>
@@ -38,24 +44,31 @@
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu
 				items={[
-					{ icon: "UserList",       label: "Overview",      href: "#overview",      active: $page.url.endsWith('#overview') },
-					{ icon: "ImagesSquare",   label: "Media",         href: "#media",         active: $page.url.endsWith('#media') },
-					{ icon: "Textbox",        label: "Custom Fields", href: "#customfields",  active: $page.url.endsWith('#customfields') }
+					{ icon: "UserList",       label: "Overview",      href: "#overview"	},
+					{ icon: "ImagesSquare",   label: "Media",         href: "#media"	},
+					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"	}
 				]}
 			/>
 			<Container size="4xl">
 
 				<Section id="overview" class="pb-12">
 					<FactionSettingsForm />
-					<!-- <Form class="py-12">
-						<Field layout="block"
-							name="enable_factions"
-							type="switch"
-							label="Enable Factions"
-							description="Enable factions for this project?"
-						/>
-					</Form> -->
 				</Section>
+
+				<Section id="media" class="pb-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h4" as="h6">Media</Heading>
+					</Flex>
+					Media
+				</Section>
+
+				<Section id="custom" class="pb-12">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h4" as="h6">Custom Fields</Heading>
+					</Flex>
+					Custom Fields
+				</Section>
+				
 			</Container>
 		</Flex>
 	{/snippet}

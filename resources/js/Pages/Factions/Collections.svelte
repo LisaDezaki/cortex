@@ -1,10 +1,12 @@
 <script>
-	import { page, useForm } from '@inertiajs/svelte'
+	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-    import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
-	
-	import { Grid } from '@/Components/Core'
+
+	//	Layout & Components
+
+    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import Grid				from '@/Components/Core/Grid.svelte'
 	import CardNew			from '@/Components/UI/CardNew.svelte'
 	import CollectionCard	from '@/Components/UI/CollectionCard.svelte'
 	import Empty			from '@/Components/UI/Empty.svelte'
@@ -14,23 +16,18 @@
 	
 	//	Page props
 
-	const collections	= $page.props.collections?.data
+	import CollectionList from '@/services/CollectionList'
+	const collections = new CollectionList($page.props.collections?.data, 'factions')
 
 
-	//	State
+	//	State & derived states
 
-	let rowSize   = $state(8)
+	let rowSize   = $state(10)
 	let gridRows = $derived(16-rowSize)
 
-
-	//	Modal Management
-
-	import { modalActions } from '@/stores/modalStore';
-	function createCollection()  { modalActions.open('createCollection') }
-	function deleteCollection(c) { modalActions.open('deleteCollection', { collection: c }) }
-	function renameCollection(c) { modalActions.open('renameCollection', { collection: c }) }
-
 </script>
+
+
 
 <svelte:head>
     <title>Faction Collections</title>
@@ -52,10 +49,10 @@
 	{#snippet article()}
 
 		<Section gap={6} class="p-12">
-			{#if collections?.length > 0}
+			{#if collections.items?.length > 0}
 
-				<Grid cols={gridRows}>
-					{#each collections as collection}
+				<Grid cols={gridRows} gap={6}>
+					{#each collections.items as collection}
 						<CollectionCard
 							collection={collection}
 							aspect="square"
@@ -64,19 +61,19 @@
 							title={collection.name}
 							subtitle="{collection.items_count} faction{collection.items_count !== 1 ? "s" : ""}"
 							options={[
-								{ label: "View",   icon: "Eye", href: route('collections.show', {collection: collection.slug}) },
-								{ label: "Rename", icon: "Textbox", onclick: () => renameCollection(collection) },
+								{ label: "View",     icon: "Eye", 		href: collection.routes.show },
+								{ label: "Rename",   icon: "Textbox", 	onclick: () => collection.rename() },
 								{ separator: true },
-								{ label: "Add Tags", icon: "TagSimple", onclick: () => applyTags(collection) },
+								{ label: "Add Tags", icon: "TagSimple", onclick: () => collection.applyTags() },
 								{ separator: true },
-								{ label: "Delete Collection", icon: "Trash",		onclick: () => deleteCollection(collection), theme: "danger" }
+								{ label: "Delete",	 icon: "Trash",		onclick: () => collection.delete(), theme: "danger" }
 							]}
 						/>
 					{/each}
 					<CardNew
 						aspect="square"
 						icon="Plus"
-						onclick={createCollection}
+						onclick={() => collections.create()}
 					/>
 				</Grid>
 				
@@ -86,7 +83,7 @@
 					icon="FolderSimple"
 					message="There are no faction collections for this project yet."
 					buttonLabel="Create one?"
-					buttonClick={createCollection}
+					buttonClick={() => collections.create()}
 				/>
 
 			{/if}

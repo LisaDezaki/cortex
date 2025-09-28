@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -66,10 +67,16 @@ class UserController extends Controller
 
 	public function updateAvatar(Request $request)
 	{
-		return response()->json([
-			'success' => true,
-			'request' => $request
-		]);
+		$user = Auth::user();
+
+		if ($request->has('media')) {
+			foreach ($request['media'] as $media) {
+				$this->mediaService->attachMedia($user, $media['type'], $media);
+			}
+			unset($validatedData['media']);
+		}
+		Session::flash('success', "Avatar updated successfully.");
+        return Redirect::back();
 
 		// $request->validate([
 		// 	'temp_path' => 'string|nullable',

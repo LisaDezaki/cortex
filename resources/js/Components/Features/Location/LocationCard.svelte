@@ -20,7 +20,7 @@
 	}
 </script>
 
-<Card
+<Card class={className}
 	aspect="video"
 	icon="MapPinArea"
 	image={location.image?.url}

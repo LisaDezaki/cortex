@@ -19,7 +19,7 @@
 
 
 
-<ModalForm title="Rename {faction?.name}?" size="lg"
+<ModalForm title="Rename {faction?.name}?" size="sm"
 	endpoint={route('factions.update', { faction: faction.slug})}
 	form={form}
 	method="patch"
@@ -28,7 +28,7 @@
 		label: 'Update'
 	}}
 >
-	<Stack class="px-6 py-3">
+	<Stack class="p-3 pt-0">
 		<Field type="text"
 			name="name"
 			placeholder="New name"

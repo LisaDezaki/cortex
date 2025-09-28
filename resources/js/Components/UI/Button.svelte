@@ -9,12 +9,27 @@
 		iconWeight = 'regular',
 		label,
 		loading,
+		size  = "md",
 		style = 'plain',
 		theme = 'neutral',
         ...restProps
     } = $props()
 
 	let thisIcon = $derived(icon)
+
+	let sizes = children || label ? {
+		xs: "px-1 py-0.5",
+		sm: "px-1.5 py-1",
+		md: "px-2 py-1.5",
+		lg: "px-3 py-2",
+		xl: "px-4 py-3"
+	} : {
+		xs: "p-0.5",
+		sm: "p-1",
+		md: "p-1.5",
+		lg: "p-2",
+		xl: "p-3"
+	}
 
 	let styles = {
 		button: "button",
@@ -28,7 +43,7 @@
 
 {#if restProps.href}
 	<Link aria-disabled={restProps.disabled ? 'true' : undefined}
-		class="{styles.button} button-{theme} {styles[style]} {className}"
+		class="{styles.button} button-{theme} {sizes[size]} {styles[style]} {className}"
 	{...restProps}>
 
 		{#if thisIcon}
@@ -45,7 +60,7 @@
 {:else}
 	<button aria-disabled={restProps.disabled ? 'true' : undefined}
 		type={restProps.type || 'button'}
-		class="{styles.button} button-{theme} {styles[style]} {className}"
+		class="{styles.button} button-{theme} {sizes[size]} {styles[style]} {className}"
 	{...restProps}>
 
 		{#if thisIcon}
@@ -64,7 +79,7 @@
 <style lang="postcss">
 
 	:global(.button) {
-		@apply inline-flex items-center justify-center gap-1 flex-shrink-0 p-2;
+		@apply inline-flex items-center justify-center gap-1 flex-shrink-0;
 		@apply transition duration-300 ease-in-out flex-shrink-0;
 		&:focus {
 			outline: 1px solid var(--border-accent);
@@ -75,6 +90,9 @@
 		&:not([class*="rounded-"]) {
 			@apply rounded-md;
 		}
+		/* &:not([class*="max-w-"]) {
+			@apply max-w-64;
+		} */
 
 		&.button-hard.button-accent {
 			background: var(--bg-accent-gradient);
@@ -86,7 +104,7 @@
 		}
 		&.button-hard.button-neutral {
 			background: var(--bg-neutral-gradient);
-			border-color: var(--border-neutral-soft);
+			border-color: var(--border-neutral-softest);
 			color: var(--text-neutral);
 			&:hover {
 				background: var(--bg-neutral-gradient-alt);

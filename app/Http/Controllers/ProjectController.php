@@ -160,13 +160,7 @@ class ProjectController extends Controller
 		}
 
 		Session::flash('success', "$project->name activated.");
-        return Redirect::back()->with([
-        	'test' => new ProjectResource($project)
-    	]);
-
-		// return redirect()->back()->with([
-        // 	'test' => new ProjectResource($project)
-    	// ]);
+        return Redirect::back();
 	}
 	
 	public function deactivate()
@@ -174,9 +168,9 @@ class ProjectController extends Controller
 		$user = Auth::user();
 		$user->active_project = null;
 		$user->update();
+
 		Session::flash('success', "Project deactivated.");
         return Redirect::back();
 	}
-
 	
 }

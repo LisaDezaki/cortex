@@ -9,6 +9,7 @@
 
     let {
 		aspect,
+		children,
 		class: className,
 		href,
 		image,
@@ -39,7 +40,11 @@
 
 	<Flex class="w-full" justify="start">
 		<div class="chip-details -space-y-0.5">
-			<span class="font-semibold line-clamp-1 w-full">{title}</span>
+			{#if children}
+				<span class="font-semibold line-clamp-1 w-full">{@render children()}</span>
+			{:else if title}
+				<span class="font-semibold line-clamp-1 w-full">{title}</span>
+			{/if}
 			{#if subtitle}
 				<span class="font-style-small line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
 			{/if}

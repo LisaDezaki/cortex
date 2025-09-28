@@ -30,7 +30,7 @@ return new class extends Migration
 
 			$table->index(['collection_id', 'collectionable_id']);
 			// A collection can't have the same item twice
-			$table->unique(['collection_id', 'collectionable_id', 'collectionable_type']);
+			$table->unique(['collection_id', 'collectionable_id']);
 		});
     }
 

@@ -1,11 +1,15 @@
 <script>
-	import { Link, page, router } from '@inertiajs/svelte'
+	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
+
+	//	Layout & Components
+
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-
-	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
-
+	import Flex 		 from '@/Components/Core/Flex.svelte'
+	import Grid 		 from '@/Components/Core/Grid.svelte'
+	import Inline 		 from '@/Components/Core/Grid.svelte'
+	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button     	 from '@/Components/UI/Button.svelte'
 	import Card     	 from '@/Components/UI/Card.svelte'
@@ -22,11 +26,15 @@
 	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section  	 from '@/Components/UI/Section.svelte'
+	import Separator  	 from '@/Components/UI/Separator.svelte'
 	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
-
 	import Map			 from '@/Components/Features/Location/Map.svelte'
 
-	const location 	   = $page.props.location?.data
+
+	//	Page props
+
+	import LocationObject from '@/services/LocationObject';
+	const location 	   = new LocationObject($page.props.location?.data)
 	const customFields = $page.props.customFields?.data
 
 	let media_banner	= $derived(location.media.filter(m => m.type === 'banner')?.[0])
@@ -56,39 +64,29 @@
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
-				{ icon: "Info",   			label: "Details",       	href: "#details"	},
-				{ icon: "Textbox",      	label: "Custom Fields", 	href: "#fields"		},
-				{ icon: "Compass",      	label: "Map",           	href: "#map"		},
-				// { icon: "MapPinSimpleArea", label: "Points of Interest", href: "#points"	},
-				// { icon: "UsersThree",   	label: "Characters",        href: "#characters"	},
-				{ icon: "ImagesSquare", 	label: "Gallery",         	href: "#gallery"	},
-				{ icon: "Trash", 			label: "Delete", 			onclick: deleteLocation, theme: "danger" }
+				{ icon: "Info",   		label: "Details",       href: "#details"	},
+				{ icon: "Textbox",      label: "Custom Fields", href: "#custom"		},
+				{ icon: "Compass",      label: "Map",           href: "#map"		},
+				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery"	},
+				{ icon: "Trash", 		label: "Delete", 		onclick: () => location.delete(), theme: "danger" }
 			]} />
 			<Container size="4xl">
 
 
 				<!-- Details -->
 
-				<Section id="details" class="pb-12">
+				<Section id="details" class="pb-6">
 
 					<ArticleBanner>
-						<Media replaceable
-							aspect="aspect-[3/1]"
+						<Media
 							class="absolute inset-0 rounded-lg overflow-hidden"
-							media={media_banner}
-							type="banner"
-							endpoint={route('locations.update', { location: location.slug })}
-							method={'patch'}
-							reloadPageProps={['location.media']}
+							media={location.getBanner()}
+							onclick={() => location.addBanner()}
 						/>
-						<Media replaceable
-							aspect="aspect-square"
+						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
-							media={media_map}
-							type="map"
-							endpoint={route('locations.update', { location: location.slug })}
-							method={'patch'}
-							reloadPageProps={['location.media']}
+							media={location.getMap()}
+							onclick={() => location.addMap()}
 						/>
 						{#if location.parent}
 							<Inline class="relative">
@@ -99,31 +97,29 @@
 							</Inline>
 						{/if}
 						<Heading is="h1" as="h3"
-							class="mt-auto z-10 {media_banner ? 'text-white' : ''}"
+							class="mt-auto z-10 {location.getBanner() ? 'text-white' : ''}"
 							heading={location.name}
-							headingClass="whitespace-pre-wrap"
 							subheading={location.type}
 						/>
 					</ArticleBanner>
-		
-					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
 
-					<!-- <p class="max-w-[64ch] mx-6 whitespace-pre-wrap">
-						{location.description}
-					</p> -->
+					<Stack class="max-w-[64ch] mx-6">
 
-					<Collapsible collapsed={true}
-						class="max-w-[64ch] mx-6"
-						collapsedClass="line-clamp-4 overflow-hidden">
-						{location.description}
-					</Collapsible>
-		
+						<Heading is="h3" as="h6" class="mt-9 mb-6">Description</Heading>
+						<Collapsible collapsed={true}
+							collapsedClass="line-clamp-3 overflow-hidden">
+							{location.description}
+						</Collapsible>
+
+					</Stack>
 				</Section>
+
+				<Separator class="mx-6 my-6 w-[64ch]" />
 
 
 				<!-- Custom Fields -->
 
-				<Section id="fields" class="px-6 py-12">
+				<Section id="custom" class="p-6">
 					<Heading is="h3" as="h6" class="mb-6">Custom Fields</Heading>
 					{#if location.customFields}
 						Custom Fields
@@ -132,6 +128,8 @@
 					{/if}
 				</Section>
 
+				<Separator class="mx-6 my-6 w-[64ch]" />
+
 
 				<!-- Map -->
 
@@ -139,7 +137,7 @@
 
 				<Section id="map" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Map</Heading>
-					{#if media_map || location.children?.length > 0 || location.descendants?.length > 0}
+					{#if location.getMap() || location.children?.length > 0 || location.descendants?.length > 0}
 						<Map class="aspect-video rounded-lg shadow-lg"
 							location={location}
 							legend={[
@@ -152,6 +150,8 @@
 						<p class="font-style-placeholder">{location.name} doesn't have a map or any child locations yet.</p>
 					{/if}
 				</Section>
+
+				<Separator class="mx-6 my-6 w-[64ch]" />
 
 
 				<!-- Points of Interest -->
@@ -208,11 +208,11 @@
 
 				<Section id="gallery" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
-					<MediaGrid cols={6}
+					<!-- <MediaGrid cols={6}
 						media={media_gallery}
 						type="gallery"
 						addable
-					/>
+					/> -->
 				</Section>
 
 			</Container>

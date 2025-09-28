@@ -25,7 +25,7 @@
 
 
 
-<ModalForm title="Create a new location" size="lg"
+<ModalForm title="Create a new location" size="md"
 	endpoint={route('locations.store')}
 	form={form}
 	method="post"
@@ -34,7 +34,7 @@
 		label: 'Create'
 	}}
 >
-	<Flex align="center" gap={3} class="px-6 py-3">
+	<Flex align="center" gap={3} class="p-3 pt-0">
 		<UploadContext
 			name="media"
 			type="banner"

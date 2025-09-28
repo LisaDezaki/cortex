@@ -2,30 +2,30 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
-	
-	import { Flex, Grid, Stack } from '@/Components/Core'
 
-	import Card       	 from '@/Components/UI/Card.svelte'
-	import CardNew       from '@/Components/UI/CardNew.svelte'
+	//	Layout & Components
+
+	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import Flex 		  from '@/Components/Core/Flex.svelte'
+	import Grid 		  from '@/Components/Core/Grid.svelte'
+	import Stack 		  from '@/Components/Core/Stack.svelte'
+	import Card       	  from '@/Components/UI/Card.svelte'
+	import CardNew        from '@/Components/UI/CardNew.svelte'
 	import CollectionCard from '@/Components/UI/CollectionCard.svelte'
-	import Container  	 from '@/Components/UI/Container.svelte'
-	import Heading    	 from '@/Components/UI/Heading.svelte'
-	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
-	import Section    	 from '@/Components/UI/Section.svelte'
+	import Container  	  from '@/Components/UI/Container.svelte'
+	import Heading    	  from '@/Components/UI/Heading.svelte'
+	import PageHeader 	  from '@/Components/UI/PageHeader.svelte'
+	import Section    	  from '@/Components/UI/Section.svelte'
 
-	const collection    = $page.props.collection?.data
 
-	let addingToCollection = $state(false)
+	//	Layout & Components
 
-	function addToCollection() {
-		addingToCollection = true
-	}
-	function closeModal() {
-		addingToCollection = false
-	}
+	import CollectionObject from '@/services/CollectionObject';
+	const collection = new CollectionObject($page.props.collection?.data)
 
 </script>
+
+
 
 <svelte:head>
     <title>{collection.name}</title>
@@ -126,7 +126,7 @@
 						{/each}
 						<CardNew
 							aspect="square"
-							onclick={addToCollection}
+							onclick={collection.addItem()}
 						/>
 					</Grid>
 				</Section>
@@ -136,12 +136,3 @@
 	{/snippet}
 	
 </AuthenticatedLayout>
-
-<!-- <Modal
-	title="Add to collection"
-	maxWidth="lg"
-	show={addingToCollection}
-	onclose={closeModal}
->
-	<AddToCollectionForm collection={collection} oncancel={closeModal} />
-</Modal> -->

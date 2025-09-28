@@ -23,6 +23,7 @@ class Character extends Model
 		'alias',
 		'subtitle',
 		'description',
+		'starred',
 		'appearance',
 		'personality',
 		'motivations',

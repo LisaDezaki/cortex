@@ -1,64 +1,35 @@
 <script>
-
-	import { Link, page, router, useForm } from '@inertiajs/svelte'
+	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 	
     import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
 
 	import { Flex, Grid, Stack } from '@/Components/Core'
 
-	import Button 	  from '@/Components/UI/Button.svelte'
-	import Card 	  from '@/Components/UI/Card.svelte'
-	import Heading    from '@/Components/UI/Heading.svelte'
-	import Icon       from '@/Components/UI/Icon.svelte'
-	import Media  	  from '@/Components/UI/Media.svelte'
-	import Modal      from '@/Components/UI/Modal.svelte'
-	import PageHeader from '@/Components/UI/PageHeader.svelte'
-	import Section    from '@/Components/UI/Section.svelte'
+	import Button		from '@/Components/UI/Button.svelte'
+	import Card			from '@/Components/UI/Card.svelte'
+	import Collapsible	from '@/Components/UI/Collapsible.svelte'
+	import Heading		from '@/Components/UI/Heading.svelte'
+	import Media		from '@/Components/UI/Media.svelte'
+	import PageHeader	from '@/Components/UI/PageHeader.svelte'
+	import Section		from '@/Components/UI/Section.svelte'
+	import ProjectCard	from '@/Components/Features/Project/ProjectCard.svelte'
 
-	import ProjectCard from '@/Components/Features/Project/ProjectCard.svelte'
+	import ProjectList 	 from '@/services/ProjectList'
+	import ProjectObject from '@/services/ProjectObject'
 
 	let user     		= $state($page.props.auth.user.data)
 	let activeProject 	= $state($page.props.activeProject?.data)
 	let projects		= $state($page.props.projects.data)
 
-	let form = useForm({
-        project: null,
-    })
-
-	/**
-	 * Modal Management
-	 */
-
-	import { modalActions } from '@/stores/modalStore';
-	function createProject() 	{ modalActions.open('createProject') 	}
-    function deleteProject() 	{ modalActions.open('deleteProject', 	{ project: activeProject }) }
-	function renameProject() 	{ modalActions.open('renameProject', 	{ project: activeProject }) }
-
-	function activateProject(e, proj) {
-		e.preventDefault();
-		$form.project = proj.id
-		$form.post(
-			route('projects.activate', { project: proj.id }), {
-				onSuccess: (res) => {
-					router.visit($page.url, { only: ['activeProject'] })
-				}
-			}
-		)
-	}
-
-	function deactivateProject(e) {
-		e.preventDefault();
-		$form.post(
-			route('projects.deactivate'), {
-				onSuccess: (res) => {
-					router.visit($page.url, { only: ['activeProject'] })
-				}
-			}
-		)
-	}
+	let active			= $derived( activeProject ? new ProjectObject(activeProject) : null )
+	let projectList		= $derived( projects      ? new ProjectList(projects)		 : null )
 
 </script>
+
+
+
+
 
 <svelte:head>
     <title>Dashboard</title>
@@ -71,88 +42,87 @@
 			title={activeProject ? "Dashboard" : "Select a Project"}
 			tabs={ activeProject ? [
 				{ label: 'Dashboard', active: true },
-				{ label: 'Settings', 	href: route('projects.settings') }
+				{ label: 'Settings',  href: route('projects.settings') }
 			] : undefined }
 			actions={[
-				{ icon: "X", 	label: "Deactivate",	 theme: "danger", onclick: deactivateProject, if: !!activeProject },
-				{ icon: "Plus", label: "Create Project", theme: "accent", onclick: createProject,	  if: !activeProject }
+				{ icon: "X", 	label: "Deactivate",	 theme: "danger", onclick: () => active.deactivate(), 	if: !!activeProject },
+				{ icon: "Plus", label: "Create Project", theme: "accent", onclick: () => projectList.create(),	if: !activeProject }
 			]}
 		/>
 	{/snippet}
 
 	{#snippet article()}
+		{#if active}
 
-		{#if activeProject}
-
-			<Section class="mb-24">
-				<Media replaceable
-					aspect="aspect-[7/3]"
-					class="relative bg-neutral-softest h-[50vh] min-h-96 overflow-hidden w-full"
-					endpoint={route('projects.update', { project: activeProject.id })}
-					method="patch"
-					media={activeProject.image}
-					reloadPageProps={['activeProject.image', 'activeProject.media']}
-					type="banner"
+			<Section>
+				<Media
+					class="relative aspect-[3/1] bg-neutral-softest min-h-96 overflow-hidden w-full"
+					media={active.getBanner()}
+					onclick={() => active.addBanner()}
 				/>
 			</Section>
 
 			<Section size="7xl" class="relative mt-24">
 				<Grid cols={2} gap={12}>
-					<Stack>
+					<Stack gap={0}>
 						<Flex align="center">
-							<Heading is="h1" as="h2" heading={activeProject.name} />
-							<Button style="soft" theme="accent" icon="Pen"   onclick={renameProject} class="ml-auto" />
-							<Button style="soft" theme="danger" icon="Trash" onclick={deleteProject} />
+							<Heading is="h1" as="h2" heading={active.name} />
+							<Button size="lg" style="soft" theme="accent" icon="Pen"   iconSize="lg" onclick={() => active.rename()} class="ml-auto" />
+							<Button size="lg" style="soft" theme="danger" icon="Trash" iconSize="lg" onclick={() => active.destroy()} />
 						</Flex>
-						<p class="font-style-large italic max-w-[65ch] text-neutral-soft">{activeProject.type}</p>
-						<p class="max-w-[65ch] mt-6">{activeProject.description}</p>
+						<p class="font-style-large italic max-w-[65ch] text-neutral-soft">{active.type}</p>
+						<Collapsible collapsed={true}
+							class="max-w-[64ch] mt-6"
+							collapsedClass="line-clamp-3 overflow-hidden">
+							{active.description}
+						</Collapsible>
 					</Stack>
 					<Grid cols={4} justify="center" gap={3} class="w-full">
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('characters')}>
-							<span class="font-style-h3 opacity-60">{activeProject.characters?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.characters?.length || 0}</span>
 							<span class="font-style-large">Characters</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{activeProject.dialogue?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.dialogue?.length || 0}</span>
 							<span class="font-style-large">Dialogues</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{activeProject.events?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.events?.length || 0}</span>
 							<span class="font-style-large">Events</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('factions')}>
-							<span class="font-style-h3 opacity-60">{activeProject.factions?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.factions?.length || 0}</span>
 							<span class="font-style-large">Factions</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{activeProject.items?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.items?.length || 0}</span>
 							<span class="font-style-large">Items</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('locations')}>
-							<span class="font-style-h3 opacity-60">{activeProject.locations?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.locations?.length || 0}</span>
 							<span class="font-style-large">Locations</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{activeProject.mechanics?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.mechanics?.length || 0}</span>
 							<span class="font-style-large">Mechanics</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{activeProject.quests?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.quests?.length || 0}</span>
 							<span class="font-style-large">Quests</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{activeProject.wildlife?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.wildlife?.length || 0}</span>
 							<span class="font-style-large">Wildlife</span>
 						</Link>
 					</Grid>
 				</Grid>
 			</Section>
 
-			{#if activeProject.characters?.length > 0}
+			{#if active.characters?.length > 0}
 				<Section size="7xl" class="py-6">
 					<Heading is="h3" as="h5" class="mb-3" heading="Recent Characters" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
-						{#each activeProject.characters as character}
+						{#each active.characters as character}
 							<Card
 								class="flex-shrink-0 w-32"
 								aspect="square"
@@ -167,11 +137,11 @@
 				</Section>
 			{/if}
 
-			{#if activeProject.factions?.length > 0}
+			{#if active.factions?.length > 0}
 				<Section size="7xl" class="py-6">
 					<Heading is="h3" as="h5" class="mb-3" heading="Recent Factions" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
-						{#each activeProject.factions as faction}
+						{#each active.factions as faction}
 							<Card
 								aspect="square"
 								class="flex-shrink-0 w-32"
@@ -186,11 +156,11 @@
 				</Section>
 			{/if}
 
-			{#if activeProject.locations?.length > 0}
+			{#if active.locations?.length > 0}
 				<Section size="7xl" class="py-6">
 					<Heading is="h3" as="h5" class="mb-3" heading="Recent Locations" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
-						{#each activeProject.locations as location}
+						{#each active.locations as location}
 							<Card
 								aspect="video"
 								class="flex-shrink-0 w-56"
@@ -205,21 +175,17 @@
 				</Section>
 			{/if}
 		{:else}
+
 			<Section class="px-12 py-12">
 				{#if projects}
 					<Grid gap={3} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
-						{#each projects as project}
+						{#each projectList.items as project}
 							<ProjectCard
-								class="aspect-video"
 								project={project}
-								title={project.name}
-								subtitle={project.type}
-								image={project?.image?.url}
-								onclick={(e) => activateProject(e, project)}
+								onclick={() => project.activate()}
 								options={[
-									{ icon: 'Check', 	label: 'Activate',			onclick: (e) => activateProject(e, project), theme: 'accent' },
-									{ icon: 'Textbox', 	label: 'Rename', 			onclick: (e) => renameProject(e, project) },
-									{ icon: 'Trash', 	label: 'Delete Project',	onclick: (e) => deleteProject(e, project), theme: 'danger' },
+									{ icon: 'Textbox', 	label: 'Rename', 			onclick: () => renameProject(project) },
+									{ icon: 'Trash', 	label: 'Delete Project',	onclick: () => deleteProject(project), theme: 'danger' },
 								]}
 							/>
 						{/each}
@@ -228,8 +194,7 @@
 					No projects
 				{/if}
 			</Section>
-		{/if}
 
+		{/if}
 	{/snippet}
-	
 </AuthenticatedLayout>

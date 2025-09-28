@@ -7,17 +7,19 @@
 		image,
 		icon,
 		options,
+		project,
 		title,
 		subtitle,
         ...restProps
     } = $props()
 </script>
 
-<Card aspect="video"
+<Card
+	aspect="video"
 	icon="GlobeStand"
-	image={image}
-	title={title}
-	subtitle={subtitle}
+	image={project?.image?.url}
+	title={project?.name}
+	subtitle={project?.type}
 	href={href}
 	options={options}
 {...restProps} />

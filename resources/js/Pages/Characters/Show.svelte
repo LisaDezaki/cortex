@@ -2,17 +2,19 @@
 	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import AuthenticatedLayout 	from '@/Layouts/AuthenticatedLayout.svelte'
-	
-	import { Flex, Grid, Stack } from '@/Components/Core'
 
+	//	Layout & Components
+
+	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import Flex 		 from '@/Components/Core/Flex.svelte'
+	import Grid 		 from '@/Components/Core/Grid.svelte'
+	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
 	import Card       	 from '@/Components/UI/Card.svelte'
 	import CardNew       from '@/Components/UI/CardNew.svelte'
 	import Collapsible   from '@/Components/UI/Collapsible.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
-	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
 	import Media     	 from '@/Components/UI/Media.svelte'
 	import MediaGrid     from '@/Components/UI/MediaGrid.svelte'
@@ -20,33 +22,24 @@
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
 	import Separator     from '@/Components/UI/Separator.svelte'
+	import Tag     		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
-
 	import Map      	 from '@/Components/Features/Location/Map.svelte'
 
-	const character    = $page.props.character?.data
+
+	//	Page props
+
+	import CharacterObject from '@/services/CharacterObject';
+	const character    = new CharacterObject($page.props.character?.data)
 	const customFields = $page.props.customFields?.data
-
-	let media_banner	= $derived(character.media?.filter(m => m.type === 'banner')?.[0])
-	let media_portrait	= $derived(character.media?.filter(m => m.type === 'portrait')?.[0])
-	let media_gallery	= $derived(character.media)
-
-
-	/**
-	 * Modal Management
-	 */
-
-	import { modalActions } from '@/stores/modalStore';
-    function deleteCharacter(c) { modalActions.open('deleteCharacter', 			{ character: character 	}) }
-    function addRelationship(c) { modalActions.open('setCharacterRelationship', { character: character 	}) }
-    function setFaction(c)		{  }
-    function setLocation(c)		{  }
 
 	function findDisplayValue(fieldId) {
 		return character.customFieldValues?.find(v => v.customFieldId == fieldId)?.displayValue || null
 	}
 
 </script>
+
+
 
 <svelte:head>
     <title>{character.name}</title>
@@ -69,7 +62,7 @@
 				{ icon: "MapPinSimpleArea", label: "Location",      href: "#location"      },
 				{ icon: "ImagesSquare",     label: "Gallery",       href: "#gallery"       },
 				{ icon: "FolderSimple",     label: "Collections",  	href: "#collections"   },
-				{ icon: "Trash", 			label: "Delete", 		onclick: deleteCharacter, theme: "danger" }
+				{ icon: "Trash", 			label: "Delete", 		onclick: () => character.delete(), theme: "danger" }
 			]} />
 			<Container size="4xl">
 
@@ -79,43 +72,51 @@
 				<Section id="details" class="pb-6">
 
 					<ArticleBanner>
-						<Media replaceable
-							aspect="aspect-[3/1]"
-							class="absolute inset-0 rounded-lg overflow-hidden shadow-md"
-							media={media_banner}
-							type="banner"
-							endpoint={route('characters.update', { character: character.slug })}
-							method={'patch'}
-							reloadPageProps={['characters.media', 'character.media']}
+						<Media
+							class="absolute inset-0 aspect-[3/1] rounded-lg overflow-hidden shadow-md"
+							media={character.getBanner()}
+							onclick={() => character.addBanner()}
 						/>
-						<Media replaceable
-							aspect="aspect-square"
+						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 shadow-md transition-all"
-							media={media_portrait}
-							type="portrait"
-							endpoint={route('characters.update', { character: character.slug })}
-							method={'patch'}
-							reloadPageProps={['characters.media', 'character.media']}
+							media={character.getPortrait()}
+							onclick={() => character.addPortrait()}
 						/>
 						<Heading is="h1" as="h3"
-							class="mt-auto z-10 {media_banner ? 'text-white' : ''}"
+							class="mt-auto z-10 {character.getBanner() ? 'text-white' : ''}"
 							heading={character.name}
-							headingClass="whitespace-pre-wrap"
 							subheading={character.alias}
 						/>
 					</ArticleBanner>
 
-					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
+					<Stack class="max-w-[64ch] mx-6">
+						
+						<Heading is="h3" as="h6" class="mt-9 mb-6">Description</Heading>
+						<Collapsible collapsed={true}
+							collapsedClass="line-clamp-3 overflow-hidden">
+							{character.description}
+						</Collapsible>
 
-					<Collapsible collapsed={true}
-						class="max-w-[64ch] mx-6"
-						collapsedClass="line-clamp-4 overflow-hidden">
-						{character.description}
-					</Collapsible>
-
+						<Heading is="h3" as="h6" class="mt-9 mb-6">Appearance</Heading>
+						<Flex wrap>
+							{#each character.appearance?.split(',') as tag}
+								<Tag plain class="bg-neutral-softest border border-transparent hover:border-neutral-softest cursor-pointer text-neutral px-2 py-1">{tag}</Tag>
+							{/each}
+							<Button icon="Plus" size="xs" style="plain" theme="accent" class="rounded-full h-7 w-7" />
+						</Flex>
+	
+						<Heading is="h3" as="h6" class="mt-9 mb-6">Personality</Heading>
+						<Flex wrap>
+							{#each character.personality?.split(',') as tag}
+								<Tag plain class="bg-neutral-softest border border-transparent hover:border-neutral-softest cursor-pointer text-neutral px-2 py-1">{tag}</Tag>
+							{/each}
+							<Button icon="Plus" size="xs" style="plain" theme="accent" class="rounded-full h-7 w-7" />
+						</Flex>
+						
+					</Stack>
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 
 
 				<!-- Custom Fields -->
@@ -133,12 +134,15 @@
 								<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
 							</Flex>
 						{/each}
+						<Flex class="pt-3">
+							<Button size="md" style="soft" theme="accent" icon="Plus" iconSize="sm" iconWeight="regular" label="New custom field" onclick={() => {}} />
+						</Flex>
 					{:else}
 						<p class="font-style-placeholder">There are no custom fields for Characters yet.</p>
 					{/if}
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 		
 
 				<!-- Relationships -->
@@ -147,44 +151,38 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h6">Relationships</Heading>
 					</Flex>
-					<Stack gap={0}>
+					<Grid cols={4} gap={6}>
 						{#if character.relationships?.length > 0}
 							{#each character.relationships as rel, i}
 
-								<Flex align="center" gap={3} class="p-1.5 w-96">
-									<Stack align="end" class="w-48">
-										<div class="font-bold leading-[1.125rem]">{character.name}</div>
-										<div class="text-sm leading-[1.125rem]">{rel.parentRole}</div>
-									</Stack>
-									<Flex align="center" class="-space-x-6">
-										<Thumbnail
-											class="aspect-square bg-surface border border-surface rounded-full w-12"
-											src={character.image?.url}
-										/>
-										<Thumbnail class="aspect-square bg-surface border border-surface rounded-full w-12"
-											src={rel.image?.url}
-										/>
-									</Flex>
+								<Link href={route('characters.show', { character: rel.slug })} class="flex items-center gap-3 p-1 w-96 hover:text-accent">
+									<Thumbnail class="aspect-square bg-surface border border-surface rounded-full w-12"
+										src={rel.image?.url}
+									/>
 									<Stack class="w-48">
 										<div class="font-bold leading-[1.125rem]">{rel.name}</div>
 										<div class="text-sm leading-[1.125rem]">{rel.role}</div>
 									</Stack>
-								</Flex>
+								</Link>
 
 							{/each}
 
-							<Flex justify="center" class="mt-3 w-96">
-								<Button style="soft" theme="accent" onclick={addRelationship}>Add another relationship?</Button>
+							<Flex class="p-1.5">
+								<Button size="xl" style="soft" theme="accent" icon="Plus" onclick={() => character.addRelationship()} class="h-12 rounded-full w-12" />
 							</Flex>
+
+							<!-- <Flex justify="center" class="mt-3 w-96">
+								<Button style="soft" theme="accent" onclick={() => addRelationship(character)}>Add another relationship?</Button>
+							</Flex> -->
 
 						{:else}
 							<p class="font-style-placeholder">{character.name} doesn't have any relationships yet.</p>
-							<p><button class="text-accent hover:underline" onclick={addRelationship}>Create one?</button></p>
+							<p><button class="text-accent hover:underline" onclick={() => character.addRelationship()}>Create one?</button></p>
 						{/if}
-					</Stack>
+					</Grid>
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 		
 		
 				<!-- Factions -->
@@ -213,11 +211,11 @@
 						</Grid>
 					{:else}
 						<p class="font-style-placeholder">{character.name} isn't in any factions yet.</p>
-						<p><Link onclick={setFaction}>Add one?</Link></p>
+						<p><Link onclick={() => character.setFaction()}>Add one?</Link></p>
 					{/if}
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 		
 		
 				<!-- Inventory -->
@@ -238,16 +236,11 @@
 							onclick={() => {}}
 						/>
 					</Grid>
-					<!-- <InventoryForm
-						character={character}
-						items={character.inventory}
-					/> -->
-					<!-- <ItemGrid /> -->
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
-		
-		
+				<Separator class="mx-6 my-6 w-[64ch]" />
+
+
 				<!-- Location -->
 		
 				<Section id="location" class="p-6">
@@ -255,30 +248,30 @@
 						<Heading is="h3" as="h6">Location</Heading>
 					</Flex>
 					{#if character.location}
-						<Map class="aspect-video rounded-lg shadow w-full"
+						<Map class="aspect-video rounded-lg shadow w-[64ch]"
 							location={character.location}
 						/>
 					{:else}
 						<p class="font-style-placeholder">{character.name} hasn't been assigned a location yet.</p>
-						<p><Link onclick={setLocation}>Assign one?</Link></p>
+						<p><Link onclick={() => character.setLocation()}>Assign one?</Link></p>
 					{/if}
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 		
 		
 				<!-- Media -->
 		
 				<Section id="gallery" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
-					<MediaGrid cols={6}
+					<!-- <MediaGrid cols={6}
 						media={media_gallery}
 						type="gallery"
 						addable
-					/>
+					/> -->
 				</Section>
 
-				<Separator class="mx-6 my-6 w-96" />
+				<Separator class="mx-6 my-6 w-[64ch]" />
 
 
 				<!-- Collections -->

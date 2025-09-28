@@ -2,20 +2,26 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+
+	//	Layout & Components
+
+    import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import LocationSettingsForm from '@/Forms/Settings/LocationSettings.svelte'
+	import Flex			from '@/Components/Core/Flex.svelte'
+	import Container	from '@/Components/UI/Container.svelte'
+	import Heading		from '@/Components/UI/Heading.svelte'
+	import PageHeader	from '@/Components/UI/PageHeader.svelte'
+	import PageMenu		from '@/Components/UI/PageMenu.svelte'
+	import Section		from '@/Components/UI/Section.svelte'
 
-	import { Flex }   from '@/Components/Core'
-	import Container  from '@/Components/UI/Container.svelte'
-	import Heading       from '@/Components/UI/Heading.svelte'
-	import PageHeader from '@/Components/UI/PageHeader.svelte'
-	import PageMenu   from '@/Components/UI/PageMenu.svelte'
-	import Section       from '@/Components/UI/Section.svelte'
+	
+	//	Page props
 
-	// const activeProject = $page.props.activeProject.data
-	const settings = $page.props.settings?.factions?.data
+	const settings = $page.props.settings?.locations?.data
 
 </script>
+
+
 
 <svelte:head>
     <title>Location Settings</title>

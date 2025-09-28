@@ -161,6 +161,7 @@
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
 					class="h-9 w-9 rounded-lg"
+					onclick={() => character.addFaction()}
 				/>
 			{/if}
 		</Table.Cell>
@@ -180,6 +181,7 @@
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
 					class="h-9 w-9 rounded-full"
+					onclick={() => character.addRelationship()}
 				/>
 			{/if}
 		</Table.Cell>
@@ -202,6 +204,7 @@
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
 					class="h-9 w-9 rounded-lg"
+					onclick={() => character.addLocation()}
 				/>
 			{/if}
 		</Table.Cell>

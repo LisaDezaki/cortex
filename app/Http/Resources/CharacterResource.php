@@ -19,6 +19,7 @@ class CharacterResource extends JsonResource
 			'slug'        => $this->slug,
 			'name'        => $this->name,
 			'alias'       => $this->alias,
+			'starred'	  => $this->starred,
 			'description' => $this->description,
 			'appearance'  => $this->appearance,
 			'personality' => $this->personality,

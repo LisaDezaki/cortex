@@ -18,7 +18,7 @@
 
 
 
-<ModalForm title="Delete {character?.name}?" size="xl"
+<ModalForm title="Deleting {character?.name}" size="md"
 	endpoint={route('characters.destroy', { character: character.slug})}
 	form={form}
 	method="delete"
@@ -28,7 +28,7 @@
 		theme: 'danger'
 	}}
 >
-	<Flex align="center" gap={6} class="px-6 py-3">
+	<Flex align="center" gap={6} class="p-3 pt-0">
 		{#if character && character.image}
 			<Thumbnail class="aspect-square w-24" src={character.image?.url} />
 		{:else}

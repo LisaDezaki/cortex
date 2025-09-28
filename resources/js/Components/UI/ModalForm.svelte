@@ -38,15 +38,15 @@
 
 		{@render children?.()}
 
-		<Flex gap={0} class="border-t flex-0 min-h-12">
+		<Flex gap={0} class="flex-0 min-h-12">
 			<Button style="hard" theme="neutral"
-				class="border-none rounded-none w-1/2"
+				class="rounded-none grow"
 				type="button"
 				label="Cancel"
 				onclick={modalActions.close}
 			/>
 			<Button
-				class="border-none rounded-none w-1/2"
+				class="rounded-none grow"
 				type="submit"
 				{...updatedSubmitProps}
 			/>

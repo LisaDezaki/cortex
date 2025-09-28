@@ -90,7 +90,7 @@
 >
 	{#if relatedCharacter == null}
 
-		<Grid cols={5} class="px-6 py-3">
+		<Grid cols={5} class="p-3 pt-0">
 			{#each characters.filter(c => c.id !== character.id) as char}
 				<CharacterCard
 					character={char}
@@ -108,7 +108,7 @@
 
 		<Button icon="ArrowLeft" class="absolute top-3 left-3 rounded-full" onclick={() => relatedCharacter = null} />
 
-		<Flex justify="center" class="p-6 pb-3 -space-x-8 w-full">
+		<Flex justify="center" class="p-3 pt-0 -space-x-8 w-full">
 			<Stack gap={1.5}>
 				<Thumbnail class="rounded-full h-40 w-40" src={character?.image?.url} />
 			</Stack>

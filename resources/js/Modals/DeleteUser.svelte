@@ -36,31 +36,30 @@
 
 
 
-<ModalForm title="Deleting Account" size="sm"
+<ModalForm title="Deleting Account" size="md"
 	endpoint={route('profile.destroy')}
 	form={form}
 	method="delete"
 	reloadPageProps={['users']}
-	submitProps={{
-		label: 'Yes, Delete',
-		theme: 'danger'
-	}}
+	submitProps={{ label: 'Yes, Delete', theme: 'danger' }}
 {...restProps}>
 
-	<Stack align="center" gap={3} class="p-6">
+	<Stack align="center" gap={3} class="px-6 pb-6">
 
-		<Thumbnail class="aspect-square my-1.5 rounded-full w-40" src={user.avatar?.url} />
+		<Thumbnail class="aspect-square my-1.5 rounded-full w-32" src={user.avatar?.url} />
 
-		<p class="text-center">Once your account is deleted, all of its related data and resources will be permanently removed.</p>
-		<p class="text-center"><strong>Enter your password to delete your account?</strong></p>
-	
-		<Field type="password" class="mb-4"
+		<p class="font-style-small px-3 text-center">Once your account is deleted, all of projects and their related data will be permanently removed.</p>
+		
+		<Field type="password" class="w-full"
+			inputClass="max-w-full"
 			name="password"
 			label="Password" labelSrOnly
 			errors={$form.errors.password}
-			onkeyup={(e) => e.key === 'Enter' && deleteUser()}
 			required
 		/>
+
+		<p class="font-style-small text-center"><strong>Enter your password to delete your account</strong></p>
+
 	</Stack>
 
 

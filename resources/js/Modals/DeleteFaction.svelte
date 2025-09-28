@@ -18,7 +18,7 @@
 
 
 
-<ModalForm title="Delete {faction?.name}?" size="lg"
+<ModalForm title="Delete {faction?.name}" size="md"
 	endpoint={route('factions.destroy', { faction: faction.slug})}
 	form={form}
 	method="delete"
@@ -28,7 +28,7 @@
 		theme: 'danger'
 	}}
 >
-	<Flex align="start" gap={6} class="mb-1.5 px-6 py-3">
+	<Flex align="start" gap={6} class="mb-1.5 p-3 pt-0">
 		{#if faction && faction.image}
 			<Thumbnail class="aspect-square w-20" src={faction.image?.url} />
 		{:else}

@@ -33,7 +33,7 @@
 			</Flex>
 		{/if}
 
-		<svelte:element this={is} class="heading-head font-style-{as} {headingClass}">
+		<svelte:element this={is} class="heading-head whitespace-pre-wrap font-style-{as} {headingClass}">
 			{heading}
 			{@render children?.()}
 		</svelte:element>

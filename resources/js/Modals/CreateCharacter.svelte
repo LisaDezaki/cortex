@@ -20,7 +20,7 @@
 
 
 
-<ModalForm title="Create a new character" size="lg"
+<ModalForm title="Creating character" size="md"
 	endpoint={route('characters.store')}
 	form={form}
 	method="post"
@@ -28,7 +28,7 @@
 		label: 'Create'
 	}}
 >
-	<Flex align="center" gap={3} class="px-6 py-3">
+	<Flex align="center" gap={3} class="px-6 pb-3">
 		<UploadContext
 			name="media"
 			type="portrait"

@@ -23,8 +23,8 @@ class CharacterFactory extends Factory
 			'description' => fake()->text(500),
 			// 'appearance'  => fake()->text(500),
 			// 'personality' => fake()->text(500),
-			'motivations' => fake()->text(500),
-			'flaws'       => fake()->text(500)
+			// 'motivations' => fake()->text(500),
+			// 'flaws'       => fake()->text(500)
 		];
     }
 }

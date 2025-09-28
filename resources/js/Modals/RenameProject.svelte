@@ -22,14 +22,14 @@
 
 
 
-<ModalForm title="Renaming Project" size="lg"
+<ModalForm title="Renaming Project" size="sm"
 	endpoint={route('projects.update', { project: project.id})}
 	form={form}
 	method="patch"
 	reloadPageProps={['projects', 'project']}
 	submitProps={{ label: 'Update' }}
 {...restProps}>
-	<Stack gap={3} class="px-6 py-3">
+	<Stack gap={2} class="px-4 py-3 pt-0">
 		<Field type="text"
 			name="name"
 			placeholder="New name"

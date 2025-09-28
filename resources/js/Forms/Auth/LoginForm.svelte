@@ -3,9 +3,10 @@
 	import { inertia, useForm } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
-	import Form    from '@/Components/Core/Form.svelte'
-    import Button      from '@/Components/UI/Button.svelte'
-    import Field       from '@/Components/UI/Field.svelte'
+	import Form		from '@/Components/Core/Form.svelte'
+	import Stack	from '@/Components/Core/Stack.svelte'
+    import Button	from '@/Components/UI/Button.svelte'
+    import Field	from '@/Components/UI/Field.svelte'
 
     let {
         canResetPassword,
@@ -29,31 +30,34 @@
 	form={loginForm}
 	method="post"
 >
+	<Stack class="p-6" gap={3}>
+		<Field name="email"
+			type="email"
+			icon="At"
+			label="Email"
+			placeholder="Email"
+			autocomplete="username"
+			autofocus
+			required
+		/>
+	
+		<Field name="password"
+			type="password"
+			icon="Password"
+			label="Password"
+			placeholder="Password"
+			autocomplete="current-password"
+			required
+		/>
+	
+		<Field name="remember"
+			type="checkbox"
+			class="ml-3"
+			labelText="Remember me"
+		/>
+	</Stack>
 
-	<Field name="email"
-		type="email"
-		label="Email"
-		icon="At"
-		autocomplete="username"
-		autofocus
-		required
-	/>
-
-	<Field name="password"
-		type="password"
-		label="Password"
-		icon="Password"
-		autocomplete="current-password"
-		required
-	/>
-
-	<Field name="remember"
-		type="checkbox"
-		class="mt-2 ml-4"
-		labelText="Remember me"
-	/>
-
-	<div class="flex items-center justify-end gap-3 mt-6">
+	<div class="flex items-center justify-end gap-3 p-1.5">
 		{#if canResetPassword}
 			<a
 				use:inertia
@@ -64,7 +68,9 @@
 			</a>
 		{/if}
 
-		<Button style="hard" theme="accent" class="ml-4 w-full"
+		<Button style="hard" theme="accent"
+			class="ml-4 w-full"
+			size="lg"
 			type="submit" 
 			label="Log in"
 		/>

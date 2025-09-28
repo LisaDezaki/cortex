@@ -23,9 +23,7 @@
 
 
 
-
-
-<ModalForm title="Delete Project?" size="lg"
+<ModalForm title="Delete Project" size="sm"
 	endpoint={route('projects.destroy', { project: project.id })}
 	form={form}
 	method="delete"
@@ -33,25 +31,25 @@
 	submitProps={{ label: 'Yes, Delete', theme: 'danger' }}
 {...restProps}>
 
-	<Stack class="px-6 py-3">
+	<Stack gap={3} class="px-4 pb-3">
 
 		<Media
 			aspect="aspect-[7/3]"
-			class="bg-neutral-softest mb-3 rounded-md w-full"
+			class="bg-neutral-softest rounded-md w-full"
 			icon="GlobeStand"
 			media={project.image}
 		/>
 
-		<p class="mx-3 text-sm">Please type the name of the project ("<strong>{project.name}</strong>") to confirm deletion.</p>
-	
+		<p class="font-style-small">Are you sure you want to delete the {project.name} project?</p>
+		<p class="font-style-small">This process will remove this project and all associated data from the database.</p>
+		<p class="font-style-small">Please type the name of the project ("<strong>{project.name}</strong>") to confirm deletion.</p>
+		
 		<Field type="text"
 			name="confirm_name"
 			placeholder={project.name}
 			required
 			autofocus
 		/>
-
-		<p class="m-3 text-sm text-danger">This process will remove this project and all associated data from the database. Are you sure you want to delete this project?</p>
 
 	</Stack>
 

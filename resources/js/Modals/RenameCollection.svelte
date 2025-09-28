@@ -20,7 +20,7 @@
 
 
 
-<ModalForm title="Rename {collection?.name}?" size="lg"
+<ModalForm title="Rename {collection?.name}?" size="sm"
 	endpoint={route('collections.update', { collection: collection.slug})}
 	form={form}
 	method="patch"
@@ -29,7 +29,7 @@
 		label: 'Update'
 	}}
 >
-	<Stack class="px-6 py-3">
+	<Stack class="px-6 pb-3">
 		<Field type="text"
 			name="name"
 			placeholder="New name"

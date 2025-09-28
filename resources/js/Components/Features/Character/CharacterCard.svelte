@@ -2,13 +2,11 @@
 	import { route } from 'momentum-trail'
 
 	import Card  from '@/Components/UI/Card.svelte'
-	import Icon  from '@/Components/UI/Icon.svelte'
 
     let {
 		class: className,
 		character,
 		href = route('characters.show', {character: character.slug}),
-		onclick,
 		options,
         ...restProps
     } = $props()
@@ -21,7 +19,7 @@
 	image={character.image?.url}
 	title={character.name}
 	subtitle={character.alias}
-	href={onclick ? undefined : href}
+	href={href}
 	options={options}
-	onclick={onclick}
+	starred={character.starred}
 {...restProps} />
