@@ -145,8 +145,17 @@
 		@apply max-w-96;
 	}
 
+	:global(.input)::placeholder,
+	:global(input::placeholder),
+	:global(.input)[data-placeholder] .input-value,
+	:global(.input-placeholder) {
+		color: var(--text-neutral-softer);
+		font-style: italic;
+		opacity: 75%;
+	}
+
 	:global(.input) {
-		@apply relative inline-flex items-center min-h-10 p-1 rounded-lg;
+		@apply relative inline-flex items-center min-h-10 min-w-32 p-1 rounded-lg;
 		background-color: var(--bg-input);
 		border: none;
 		color: var(--text-input);
@@ -154,6 +163,10 @@
 
 		&.input-slider {
 			@apply min-h-4;
+		}
+
+		&.pl-icon {
+			@apply pl-8;
 		}
 
 
@@ -232,7 +245,7 @@
 	}
 
 	:global(.input-content) {
-		@apply block max-h-96 overflow-y-auto py-1 z-10;
+		@apply block max-h-96 min-w-32 overflow-y-auto z-10;
 		@apply border rounded-lg shadow-lg;
 		background-color: var(--bg-input);
 		border-color: var(--border-accent);
@@ -240,8 +253,8 @@
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 
 		:global(.input-option) {
-			@apply flex items-center gap-2 px-3 py-1.5;
-			@apply cursor-pointer;
+			@apply flex items-center gap-2 pl-2 py-1.5 pr-1 rounded;
+			@apply cursor-pointer text-sm;
 			&:hover,
 			&[data-highlighted] {
 				background-color: var(--bg-neutral-softest);

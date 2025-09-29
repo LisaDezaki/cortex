@@ -22,22 +22,23 @@
 	import CharacterList 	from '@/services/CharacterList'
 	import FactionList 		from '@/services/FactionList'
 	import LocationList 	from '@/services/LocationList'
-	const activeProject	  = new ProjectObject($page.props.activeProject.data)
-	const collections	  = new CollectionList($page.props.collections?.data)
-	const characters      = new CharacterList(activeProject?.characters)
-	const factions    	  = new FactionList(activeProject?.factions)
-	const locations    	  = new LocationList(activeProject?.locations)
+	const activeProject	  = $state(new ProjectObject($page.props.activeProject.data))
+	const collections	  = $state(new CollectionList($page.props.collections?.data))
+	const characters      = $state(new CharacterList(activeProject?.characters))
+	const factions    	  = $state(new FactionList(activeProject?.factions))
+	const locations    	  = $state(new LocationList(activeProject?.locations))
 
 
 	//	State & Derived values
 
 	let query	 = $state('')
 	let filter	 = $state('')
-	let sort	 = $state('name.asc')
-	let layout   = $state('grid')
+	let sort	 = $state('name')
 	let size	 = $state(8)
-	let rowSize  = $state(8)
-	let gridCols = $derived(16-rowSize)
+	let layout	 = $state('table')
+	let gridCols = $derived(16-size)
+
+	let results = $derived(characters.items)
 
 </script>
 
@@ -67,23 +68,21 @@
 
 		{#if activeProject}
 			<CharacterControlBar
-				data={characters}
-				bind:query bind:filter
-				bind:sort  bind:layout
-				bind:size
-				project={activeProject}
+				data={characters} project={activeProject}
+				bind:query bind:filter bind:sort
+				bind:results bind:size bind:layout
 			/>
 		{/if}
 
 		<Section gap={6} class="px-12 py-6">
-			{#if activeProject && characters.items.length > 0}
+			{#if activeProject && results.length > 0}
 
 
 				<!-- Grid -->
 
 				{#if layout === 'grid'}
 					<CharacterGrid
-						characters={characters.items}
+						characters={results}
 						cols={gridCols}
 					>
 						{#snippet gridItem(character)}
@@ -148,7 +147,7 @@
 
 				{:else if layout === 'table'}
 					<CharacterTable
-						characters={characters.items}
+						characters={results}
 					/>
 
 

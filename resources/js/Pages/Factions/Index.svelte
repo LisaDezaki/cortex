@@ -31,28 +31,15 @@
 
 	//	State & Derived values
 
-	// let filteredFactions 	= $state(factions)
-	// let selectedFaction 	= $state(null)
-	// let layout    			= $state('grid')
 	let query	 = $state('')
 	let filter	 = $state('')
-	let sort	 = $state('name.asc')
-	let layout   = $state('grid')
+	let sort	 = $state('name')
 	let size	 = $state(8)
-	let rowSize  = $state(8)
-	let gridCols = $derived(16-rowSize)
+	let layout   = $state('grid')
+	let gridCols = $derived(16-size)
 
-
-	//	Modal Management
-
-	import { modalActions } from '@/stores/modalStore';
-	// function createCharacter() 		{ modalActions.open('createCharacter') 	}
-	function createFaction()		{ modalActions.open('createFaction') 	}
-	// function createLocation()		{ modalActions.open('createLocation') 	}
-	function createCollection(type)	{ modalActions.open('createCollection', { type }) }
-	function deleteFaction(fac) 	{ modalActions.open('deleteFaction', 	{ faction: fac 		}) }
-	function renameFaction(fac) 	{ modalActions.open('renameFaction', 	{ faction: fac 		}) }
-
+	let results = $derived(factions.items)
+	
 </script>
 
 
@@ -72,7 +59,7 @@
 				{ label: "Settings",	href: route('factions.settings') },
 			]}
 			actions={[
-				{ icon: "Plus", label: "Create Faction", onclick: () => factions.create(), theme: "accent" },
+				{ icon: "Plus", label: "Create Faction", theme: "accent", onclick: () => factions.create() },
 			]}
 		/>
 	{/snippet}
@@ -81,23 +68,21 @@
 
 		{#if activeProject}
 			<FactionControlBar
-				data={factions}
-				bind:query bind:filter
-				bind:sort  bind:layout
-				bind:size
-				project={activeProject}
+				data={factions} project={activeProject}
+				bind:query bind:filter bind:sort
+				bind:results bind:size bind:layout
 			/>
 		{/if}
 
 		<Section gap={6} class="px-12 py-6">
-			{#if activeProject && factions.items?.length > 0}
+			{#if activeProject && results.length > 0}
 
 
 				<!-- Grid -->
 
 				{#if layout == 'grid'}
 					<FactionGrid
-						factions={factions.items}
+						factions={results}
 						cols={gridCols}
 					>
 						{#snippet gridItem(faction)}

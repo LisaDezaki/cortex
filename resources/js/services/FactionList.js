@@ -22,8 +22,9 @@ export default class FactionList {
 		modalActions.open('createFaction')
 	}
 
-	filter(query, filter) {
-		console.log('FactionList.filter()', query, filter)
+	filter(query, filter, sort) {
+		return this.items.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
+			.filter(filter).sort(sort)
 	}
 
 	// History/Undo

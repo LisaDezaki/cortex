@@ -25,7 +25,7 @@
 	{:else}
 		<div class="thumbnail-fallback">
 			{#if icon}
-				<Icon class="thumbnail-icon" name={icon} size={iconSize} weight="light" />
+				<Icon class="thumbnail-icon text-neutral-softest opacity-50" name={icon} size={iconSize} weight="fill" />
 			{/if}
 		</div>
 	{/if}

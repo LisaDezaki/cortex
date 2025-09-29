@@ -3,8 +3,9 @@
 	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
-	import Button        from '@/Components/UI/Button.svelte'
+	import Flex          from '@/Components/Core/Flex.svelte'
 	import Form          from '@/Components/Core/Form.svelte'
+	import Button        from '@/Components/UI/Button.svelte'
 	import Icon          from '@/Components/UI/Icon.svelte'
 	import Table         from '@/Components/UI/Table'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
@@ -134,7 +135,7 @@
 		<Link href={route('characters.show', {character: character.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
 				class="h-9 w-9 rounded-full"
-				src={character.portrait?.url}
+				src={character.image?.url}
 				icon="User"
 			/>
 			<div class="-space-y-0.5">
@@ -149,7 +150,7 @@
 				<Link href={route('factions.show', {faction: character?.factions[0]?.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 					<Thumbnail
 						class="h-9 w-9"
-						src={character?.factions[0]?.emblem?.url}
+						src={character?.factions[0]?.image?.url}
 						icon="FlagBannerFold"
 					/>
 					<div class="-space-y-0.5">
@@ -169,14 +170,15 @@
 	{#if columns.includes('relationships')}
 		<Table.Cell>
 			{#if character?.relationships.length > 0}
-				<div class="w-full -space-x-3">
+				<Flex class="w-full">
 					{#each character?.relationships as relationship, i}
 						<CharacterIcon
+							class="bg-white -mr-4"
 							href={route('characters.show', {character: relationship?.slug})}
-							src={relationship?.portrait?.url}
+							src={relationship?.image?.url}
 						/>
 					{/each}
-				</div>
+				</Flex>
 			{:else}
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
@@ -192,7 +194,7 @@
 				<Link href={route('locations.show', {location: character.location.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 					<Thumbnail
 						class="h-9 w-9"
-						src={character.location.banner?.url}
+						src={character.location.image?.url}
 						icon="MapPinArea"
 					/>
 					<div class="-space-y-0.5">

@@ -1,36 +1,53 @@
 <script>
-	//	Imports
 	import { page } from '@inertiajs/svelte'
+
+
+	//	Layout & Components
+
 	import ControlBar from '@/Components/UI/ControlBar.svelte'
+
+
+	//	Page & Component props
 
 	const customFields = $page.props.customFields?.data
 
-	//	Props
 	let {
-		data,
-		filteredData = $bindable(),
-		project,
-		onUpdate,
+		data, project,
+		results = $bindable([]),
+		query	= $bindable(''),
+		filter	= $bindable(''),
+		sort	= $bindable('name'),
+		size	= $bindable(8),
+		layout  = $bindable('grid'),
 		...restProps
 	} = $props()
 
+
 	//	Default values
-	let query	= $state('')
-	let filter	= $state('')
-	let sort	= $state('name')
-	let sortDir = $state('asc')
-	let layout	= $state('grid')
-	let size	= $state(8)
+
 	const min	= $state(4)
 	const max	= $state(12)
 
+	let filterFunction	= $derived((ch)  => { return ch })
+	let sortFunction	= $derived((a,b) => { return a.name < b.name ? -1 : 1})
+
+	function onUpdate(type, option) {
+		if (type === 'filter') 	{ filterFunction = option.filterFunction }
+		if (type === 'sort') 	{ sortFunction 	 = option.sortFunction   }
+		results = data.filter(query, filterFunction, sortFunction)
+	}
+
+
 	//	Submenu Options
+
 	let locationOptions = project.locations?.map(l => {
-		return { label: l.name, value: `location.${l.slug}`,	imageIcon: 'MapPinArea', 	 image: l.image?.url || '', filterFunction: (ch) => { return ch.location.slug == l.slug } }
+		return { label: l.name, value: `location.${l.slug}`,	imageIcon: 'MapPinArea', 	 image: l.image?.url || '', filterFunction: (fac) => { return fac.headquarters?.slug === l.slug } }
 	})
+	
 	let characterOptions = project.characters?.map(c => {
-		return { label: c.name, value: `character.*.${c.slug}`, imageIcon: 'FlagBannerFold', image: c.image?.url || '', filterFunction: (ch) => { return ch.relationships?.map(r => r.name).includes(filter.value) } }
+		return { label: c.name, value: `character.*.${c.slug}`, imageIcon: 'FlagBannerFold', image: c.image?.url || '', filterFunction: (fac) => { return fac.members?.map(m => m.slug).includes(filter.split('.')[2]) } }
 	})
+
 	let customFieldOptions = (field) => {
 		return field.options?.map(opt => {
 			return { label: opt.label, value: `${field.name}.${opt.value}`, filterFunction: (ch) => { return ch.customFieldValues.find(f => f.field?.label === filter.name)?.value !== filter.value } }
@@ -38,14 +55,15 @@
 	}
 
 	//	Menu Options
+
 	const filterOptions = $state([
 		{ label: 'All Locations', 	value: '',		filterFunction: (lo) => { return lo } },
 		{ 	separator: true },
-		{ label: 'Headquarters...',	children: locationOptions },
-		{ label: 'Member...',		children: characterOptions },
-		{ 	separator: true },
+		{ label: 'Headquarters...',	options: locationOptions },
+		{ label: 'Member...',		options: characterOptions },
+		{ 	separator: true, hideIf: !customFields || customFields.length === 0 },
 		...customFields?.map(f => {
-			return { label: `${f.label}...`, children: customFieldOptions(f) }
+			return { label: `${f.label}...`, options: customFieldOptions(f) }
 		}),
 	])
 	const sortOptions = $state([
@@ -70,10 +88,12 @@
 
 
 <ControlBar
-	bind:filteredData data={data}
-	bind:query
-	bind:filter filterOptions={filterOptions}
-	bind:sort bind:sortDir sortOptions={sortOptions}
-	bind:layout	layoutOptions={layoutOptions}
-	bind:size	{min} {max}
+	data={data.items}
+	bind:query bind:filter bind:sort
+	bind:results bind:size bind:layout
+	filterOptions={filterOptions}
+	sortOptions={sortOptions}
+	layoutOptions={layoutOptions}
+	onUpdate={onUpdate}
+	{min} {max}
 {...restProps} />

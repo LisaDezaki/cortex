@@ -1,8 +1,14 @@
 <script>
 	import { Link } from '@inertiajs/svelte'
-	import { Menubar } from "bits-ui";
+	import { Popover } from "bits-ui"
 
+	import Flex      from '@/Components/Core/Flex.svelte'
+	import Grid      from '@/Components/Core/Grid.svelte'
+	import Stack     from '@/Components/Core/Stack.svelte'
+	import Button    from '@/Components/UI/Button.svelte'
 	import Icon      from '@/Components/UI/Icon.svelte'
+	import Input     from '@/Components/UI/Input.svelte'
+	import Separator from '@/Components/UI/Separator.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
 	let {
@@ -16,108 +22,83 @@
 		options,
 		placeholder,
 		trigger,
-		value = $bindable(),
-        ...restProps
+		onUpdate = () => {},
+		value = $bindable()
     } = $props()
 
-	function checkFocus(open) {
-		isOpen = open
+	let suboptions = $state(null)
+
+	function selectItem(option) {
+		if (option.options) {
+			suboptions = option.options
+		} else {
+			value = option.value
+			selected = option
+			isOpen = false
+			onUpdate(option)
+		}
 	}
 
-	function updateValue(e) {
-		e.preventDefault()
-	}
-
-	function selectItem(value) {
-		// console.log('Dropdown.selectValue()', value)
-	}
+	let selected = $state(options.find(o => o.value === value) || {})
 
 </script>
 
 
 
-
-
 {#snippet item(itemProps, checked)}
-	<button class="input-option w-full {itemProps.className}" class:active={checked} onclick={updateValue}>
-		{#if itemProps.image !== undefined}
-			<Thumbnail class="border-[0.5px] rounded-full w-6" iconSize={16} src={itemProps.image} />
-		{/if}
+	<Flex gap={2} class="input-option px-1 w-full {itemProps.className} {checked ? 'active' : ''}" onclick={() => selectItem(itemProps)}>
 		{#if itemProps.icon !== undefined}
 			<Icon name={itemProps.icon} size="md" />
 		{/if}
+		{#if itemProps.image !== undefined}
+			<Thumbnail class="border-[0.5px] rounded-full w-6" iconSize={16} src={itemProps.image} />
+		{/if}
 		{#if itemProps.label}
 			<span class="line-clamp-1 text-left w-full">{itemProps.label}</span>
+		{:else if itemProps.placeholder}
+			<span class="line-clamp-1 text-left w-full font-style-placeholder">{itemProps.placeholder}</span>
+		{/if}
+		{#if itemProps.options}
+			<Icon name="CaretRight" size="sm" class="text-neutral-softest ml-auto" />
 		{/if}
 		{#if checked}
-			<Icon class="ml-auto" name="Check" size="sm" />
+			<Icon name="Check" size="sm" class="ml-auto" />
 		{/if}
-	</button>
+	</Flex>
 {/snippet}
 
-
-<Menubar.Root class="dropdown" onOpenChange={checkFocus} {...restProps}>
-	<Menubar.Menu>
-
-	<Menubar.Trigger class="input input-dropdown-trigger {className}">
-		{#if icon}
-			<Icon class="input-icon" name={icon} size="md" />
-		{/if}
-		<!-- {#if !label && placeholder}
-			<span class="font-style-placeholder input-value line-clamp-1 truncate {icon ? "pl-icon" : ""}">{placeholder}</span>
-		{/if} -->
-		{#if value}
-			<span class="input-value line-clamp-1 truncate {icon ? "pl-icon" : ""}">{value}</span>
-		{/if}
-		{#if options}
-			<Icon class="input-action ml-auto" name="CaretUpDown" size="sm" weight="light" />
-		{/if}
-	</Menubar.Trigger>
+<Popover.Root open={isOpen}>
+	<Popover.Trigger class="input {className}">
+		{@render item({ className, icon, ...selected })}
+	</Popover.Trigger>
  
-	<Menubar.Portal>
-		<Menubar.Content class="input-content {contentClass}" sideOffset={-1}>
-			<Menubar.RadioGroup bind:value>
-				{#if options}
+	<Popover.Portal>
+		<Popover.Content class="input-content overflow-hidden {className}">
+			<Grid cols={2} gap={0} class="w-[200%] {suboptions ? 'translate-x-[-50%]' : ''} transition-transform">
+				<Stack class="p-1">
 					{#each options as option}
-
-						{#if option.separator}
-							<Menubar.Separator />
-						{:else if option.children}
-							<Menubar.Sub>
-								<Menubar.SubTrigger>
-									{@render item(option)}
-								</Menubar.SubTrigger>
-								<Menubar.Portal>
-									<Menubar.SubContent class="input-content w-52" align="start" alignOffset={-4} sideOffset={0}>
-										{#each option.children as child}
-											<Menubar.Item onSelect={selectItem}>
-												<!-- <button class="w-full" onclick={selectItem}> -->
-													{@render item(child)}
-												<!-- </button> -->
-											</Menubar.Item>
-										{/each}
-									</Menubar.SubContent>
-								</Menubar.Portal>
-							</Menubar.Sub>
-						{:else}
-							<Menubar.Item onSelect={selectItem}>
+						{#if !option.hideIf}
+							{#if option.separator}
+								<Separator class="mx-2 my-1 w-auto" />
+							{:else}
 								{@render item(option)}
-							</Menubar.Item>
+							{/if}
 						{/if}
-
 					{/each}
-				{/if}
-			</Menubar.RadioGroup>
-		</Menubar.Content>
-	</Menubar.Portal>
-	</Menubar.Menu>
-</Menubar.Root>
-
-<style lang="postcss">
-
-	:global([data-dropdown-menu-separator]) {
-		@apply border-t my-1;
-		border-color: var(--border-neutral-softest);
-	}
-
-</style>
+				</Stack>
+				<Stack class="relative overflow-hidden">
+					<Flex align="center" gap={0} class="sticky top-0 bg-white border-b p-1 w-full">
+						<Button size="md" icon="CaretLeft" iconSize="sm" class="text-neutral-softest" onclick={() => suboptions = null} />
+						<input class="border-none px-0 py-0.5 rounded w-28" placeholder="Search" />
+						<Button size="sm" icon="Plus" theme="accent" class="ml-auto" />
+					</Flex>
+					<div class="overflow-y-auto p-1">
+						{#each suboptions as suboption}
+							{@render item(suboption)}
+						{/each}
+					</div>
+				</Stack>
+			</Grid>
+		</Popover.Content>
+	</Popover.Portal>
+</Popover.Root>

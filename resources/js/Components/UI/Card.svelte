@@ -111,7 +111,7 @@
 			}
 
 			:global(.card-icon) {
-				@apply aspect-square p-6 rounded-full max-h-[60%] max-w-[60%] h-full w-full;
+				@apply aspect-square h-full max-h-[60%] max-w-[60%] p-6 rounded-full w-full;
 				color: var(--text-neutral-softest);
 			}
 		}

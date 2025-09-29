@@ -20,7 +20,7 @@
 	<Avatar.Root class="charactericon" {...restProps}>
 		<Avatar.Image class="charactericon-image" src={src} alt={alt}></Avatar.Image>
 		<Avatar.Fallback class="charactericon-fallback">
-			<Icon size={20} name="User" class="charactericon-icon" />
+			<Icon name="User" size={20} weight="fill" class="charactericon-icon" />
 		</Avatar.Fallback>
 	</Avatar.Root>
 </Link>
@@ -28,9 +28,9 @@
 <style lang="postcss">
 
 	:global(.character_icon) {
-		@apply inline-flex items-center justify-center h-9 w-9 rounded-full overflow-hidden;
+		@apply inline-flex bg-slate-200 items-center justify-center h-9 w-9 rounded-full overflow-hidden;
 		/* @apply border; */
-		background-color: var(--bg-neutral-softest);
+		/* background-color: var(--bg-surface); */
 		/* border-color: var(--border-neutral-softest); */
 		&:hover {
 			@apply z-10;

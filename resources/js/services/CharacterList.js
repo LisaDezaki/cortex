@@ -9,12 +9,6 @@ export default class CharacterList {
 		Object.assign(this, {
 			items: Array.isArray(list) ? list.map(i => new CharacterObject(i)) : [list],
 			history: [], // Track changes for undo/redo
-			filters: {
-				query: '',
-				filter: '',
-				sort: 'name.asc',
-				layout: 'grid'
-			},
 			routes: {
 				store:	route('characters.store')
 			}
@@ -26,8 +20,9 @@ export default class CharacterList {
 		modalActions.open('createCharacter')
 	}
 
-	filter() {
-		console.log('CharacterList.filter()')
+	filter(query, filter, sort) {
+		return this.items.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
+			.filter(filter).sort(sort)
 	}
 
 	// History/Undo

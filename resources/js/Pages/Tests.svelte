@@ -29,6 +29,9 @@
 	const activeProject = $page.props.activeProject?.data
 
 	const form = useForm({
+
+		dropdown: '',
+
 		input: '',
 		text: '',
 		icon: '',
@@ -247,7 +250,7 @@
 						<Heading is="h3" as="h6">Dropdown</Heading>
 						<p class="max-w-[72ch]">The Dropdown component is used to display a list of options that can be selected. It can be used with buttons or other elements to trigger the dropdown menu.</p>
 						<Inline gap={6} class="mt-3">
-							<Dropdown>
+							<!-- <Dropdown label="Dropdown">
 								<Button primary>Dropdown</Button>
 								{#snippet content()}
 									<Dropdown.Link href="/">Link 1</Dropdown.Link>
@@ -257,7 +260,29 @@
 									<Dropdown.Link href="/">Link 5</Dropdown.Link>
 									<Dropdown.Link href="/">Link 6</Dropdown.Link>
 								{/snippet}
-							</Dropdown>
+							</Dropdown> -->
+							<Dropdown
+								bind:value={$form.dropdown}
+								icon="Plus"
+								label="Dropdown"
+								placeholder="Dropdown"
+								options={[
+									{ label: 'Value 1', value: 'dropdown1' },
+									{ label: 'Value 2', value: 'dropdown2' },
+									{ label: 'Value 3', value: 'dropdown3', options: [
+										{ label: 'Value 3.1', value: 'dropdown3.1' },
+										{ label: 'Value 3.2', value: 'dropdown3.2' },
+										{ label: 'Value 3.3', value: 'dropdown3.3' }
+									] },
+									{ label: 'Value 4', value: 'dropdown4' },
+									{ label: 'Value 5', value: 'dropdown5', options: [
+										{ label: 'Value 5.1', value: 'dropdown5.1' },
+										{ label: 'Value 5.2', value: 'dropdown5.2' },
+										{ label: 'Value 5.3', value: 'dropdown5.3' }
+									] },
+									{ label: 'Value 6', value: 'dropdown6' },
+								]}
+							/>
 						</Inline>
 					</Stack>
 

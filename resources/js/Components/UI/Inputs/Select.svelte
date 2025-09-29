@@ -16,6 +16,7 @@
 		options,
 		overrideLabel,
 		placeholder = "Select one...",
+		onUpdate = () => {},
 		value = $bindable(),
         ...restProps
     } = $props()
@@ -39,6 +40,7 @@
 		} else if (multiple) {
 			selection = val ? options.filter(o => val.includes(o.value) || val.includes(o.label)) : null
 		}
+		onUpdate(options.find(o => o.value === val))
 	}
 
     onMount(() => {

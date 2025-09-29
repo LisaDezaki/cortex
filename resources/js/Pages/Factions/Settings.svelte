@@ -68,9 +68,8 @@
 					</Flex>
 					Custom Fields
 				</Section>
-				
+
 			</Container>
 		</Flex>
 	{/snippet}
-
 </AuthenticatedLayout>
