@@ -141,7 +141,7 @@
 
 				{:else if layout == 'table'}
 					<FactionTable
-						factions={factions}
+						factions={results}
 					/>
 
 

@@ -311,7 +311,7 @@
 	},
 
 	"mine": {
-		"name": "Abandoned Mine",
+		"name": "Derelict Mine",
 		"type": "Dungeon",
 		"parent": "mountains",
 		"coordinates": { "x": "58", "y": "47" },

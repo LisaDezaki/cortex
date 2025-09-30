@@ -15,6 +15,8 @@
 		selectionMode
 	} = $props()
 
+	let columns = $state(['name', 'members', 'headquarters'])
+
 	function selectAll() {
 		// if (selected.length == characters.length) {
 		// 	selected = []
@@ -34,6 +36,8 @@
 	}
 
 </script>
+
+
 
 {#snippet headRow()}
 	{#if selectionMode}
@@ -55,7 +59,7 @@
 		<Link href={route('factions.show', {faction: faction.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
 				class="h-9 w-9"
-				src={faction.emblem?.url}
+				src={faction.image?.url}
 				icon="FlagBannerFold"
 			/>
 			<div class="-space-y-0.5">
@@ -71,7 +75,7 @@
 					<CharacterIcon
 						class="outline-emerald-500 outline-offset-2 hover:outline outline-1 {i !== 0 ? "-ml-3 " : ""}"
 						href={route('characters.show', {character: member.slug})}
-						src={member.portrait?.url}
+						src={member.image?.url}
 					/>
 				{/each}
 			</div>
@@ -87,7 +91,7 @@
 			<Link href={route('locations.show', {location: faction.headquarters.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 				<Thumbnail
 					class="h-9 w-9"
-					src={faction.headquarters.banner?.url}
+					src={faction.headquarters.image?.url}
 					icon="MapPinArea"
 				/>
 				<div class="-space-y-0.5">

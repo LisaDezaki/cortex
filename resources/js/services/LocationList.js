@@ -22,8 +22,9 @@ export default class LocationList {
 		modalActions.open('createLocation')
 	}
 
-	filter(query, filter) {
-		console.log('LocationList.filter()', query, filter)
+	filter(query, filter, sort) {
+		return this.items.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
+			.filter(filter).sort(sort)
 	}
 
 	getWorldMap() {

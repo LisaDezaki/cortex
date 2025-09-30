@@ -37,8 +37,7 @@
 	let size	 = $state(8)
 	let layout	 = $state('table')
 	let gridCols = $derived(16-size)
-
-	let results = $derived(characters.items)
+	let results  = $derived(characters.items)
 
 </script>
 

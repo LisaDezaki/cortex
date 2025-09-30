@@ -20,11 +20,7 @@
 		selectionMode
 	} = $props()
 
-	let filters 	= $state([{}])
-	let rowSize 	= $state(6)
-	let sortBy  	= $state(null)
-	let reverseSort = $state(false)
-	let columns     = $state(['name', 'faction', 'relationships', 'location'])
+	let columns = $state(['name', 'faction', 'relationships', 'location'])
 
 	function selectAll() {
 		// if (selected.length == characters.length) {
@@ -44,65 +40,9 @@
 		}
 	}
 
-	function addFilter() {
-		filters.push({})
-	}
-
-	function removeFilter(index) {
-		filters.splice(index,1)
-	}
-
-	function removeAllFilters() {
-		filters = [{}]
-	}
-
-	
-
 </script>
 
-<div class="flex gap-3">
 
-	<!-- Filter -->
-
-	<!-- <div class="flex gap-1.5">
-		<Button icon="Funnel" iconSize={24} onclick={removeAllFilters} />
-		{#each filters as filter, i}
-			<CharacterFilter bind:filter={filters[i]} onremove={() => removeFilter(i)} />
-		{/each}
-	</div> -->
-
-	<!-- Sort -->
-
-	<!-- <div class="flex gap-3">
-		<Form.Select class="max-w-40 ml-auto" placeholder={"Sort by"} bind:value={sortBy} options={[
-			{ value: 'name',  label: "Name" },
-			{ value: 'numRelationships', label: "Number of Relationships" },
-			{ value: 'location', label: "Location name" },
-			{ value: 'faction',  label: "Faction name" },
-			{ value: 'created-at', label: "Date Created" },
-			{ value: 'updated-at', label: "Date Updated" },
-		]} />
-	</div> -->
-
-	<!-- Advanced -->
-
-	<!-- <Button style="plain" theme="accent"
-		label="Advanced filters"
-	/> -->
-
-	<!-- Columns -->
-
-	<!-- <div class="flex justify-between gap-3 ml-auto">
-		<Form.Select class="ml-auto" type="multiple" overrideLabel="Columns" bind:value={columns} options={[
-			{ value: 'faction',       label: "Faction" },
-			{ value: 'relationships', label: "Relationships" },
-			{ value: 'location',      label: "Location" },
-			...customFields.map((field) => {
-				return { value: field.name, label: field.label }
-			})
-		]} />
-	</div> -->
-</div>
 
 {#snippet headRow()}
 	{#if selectionMode}

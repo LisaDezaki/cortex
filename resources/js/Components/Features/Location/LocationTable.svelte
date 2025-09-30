@@ -43,6 +43,7 @@
 		<Table.Head shrink><Form.Checkbox onclick={selectAll} /></Table.Head>
 	{/if}
 	<Table.Head sortable class="font-style-button">Name</Table.Head>
+	<Table.Head sortable class="font-style-button">Type</Table.Head>
 	<Table.Head sortable class="font-style-button">Regulars</Table.Head>
 {/snippet}
 
@@ -57,7 +58,7 @@
 			<Thumbnail
 				class="h-8 w-12 rounded"
 				icon="MapPinArea"
-				src={location.banner?.url}
+				src={location.image?.url}
 			/>
 			<div class="-space-y-0.5">
 				<div class="font-style-regular line-clamp-1">{location.name}</div>
@@ -66,12 +67,15 @@
 		</Link>
 	</Table.Cell>
 	<Table.Cell>
+		<div class="font-style-regular line-clamp-1">{location.type}</div>
+	</Table.Cell>
+	<Table.Cell>
 		{#if location.characters.length > 0}
 			<div class="w-full -space-x-3">
 				{#each location.characters as character, i}
 					<CharacterIcon
 						href={route('characters.show', {character: character.slug})}
-						src={character.portrait?.url}
+						src={character.image?.url}
 					/>
 				{/each}
 			</div>

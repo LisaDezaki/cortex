@@ -29,18 +29,17 @@
 	const collections	  = $state(new CollectionList($page.props.collections?.data))
 	const locations       = $state(new LocationList(activeProject?.locations)  || [])
 	const worldTree		  = $state(new LocationObject($page.props.worldTree.data))
-	// const worldTree     = $page.props.worldTree?.data
 
 
 	//	State & Derived values
 
 	let query	 = $state('')
 	let filter	 = $state('')
-	let sort	 = $state('name.asc')
+	let sort	 = $state('name')
+	let size	 = $state(5)
 	let layout   = $state('grid')
-	let size	 = $state(8)
-	let rowSize  = $state(5)
-	let gridCols = $derived(10-rowSize)
+	let gridCols = $derived(10-size)
+	let results  = $derived(locations.items)
 
 </script>
 
@@ -70,11 +69,9 @@
 
 		{#if activeProject}
 			<LocationControlBar
-				data={locations.items}
-				bind:query bind:filter
-				bind:sort  bind:layout
-				bind:size
-				project={activeProject}
+				data={locations} project={activeProject}
+				bind:query bind:filter bind:sort
+				bind:results bind:size bind:layout
 			/>
 		{/if}
 
@@ -86,7 +83,7 @@
 
 				{#if layout == 'grid'}
 				
-					<Grid cols={4} gap={12} class="mt-6">
+					<!-- <Grid cols={4} gap={12} class="mt-6">
 						<LocationCard
 							class="col-span-1"
 							location={worldTree}
@@ -129,10 +126,10 @@
 								/>
 							</LocationGrid>
 						</Grid>
-					{/each}
+					{/each} -->
 
-					<!-- <LocationGrid
-						locations={locations.items}
+					<LocationGrid
+						locations={results}
 						cols={gridCols}
 					>
 						{#snippet gridItem(location)}
@@ -166,14 +163,14 @@
 								}]}
 							/>
 						{/snippet}
-					</LocationGrid> -->
+					</LocationGrid>
 
 
 				<!-- Table -->
 				
 				{:else if layout == 'table'}
 					<LocationTable
-						locations={locations.items}
+						locations={results}
 					/>
 
 				

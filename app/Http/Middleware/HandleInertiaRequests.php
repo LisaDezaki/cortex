@@ -65,6 +65,7 @@ class HandleInertiaRequests extends Middleware
 				'locations.characters.image',
 				'locations.map',
 				'locations.parent',
+				'locations.children',
 				'customFields.options'
 			])->find($user->active_project)
 			: null;

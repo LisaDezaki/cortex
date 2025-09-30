@@ -32,6 +32,7 @@ class LocationResource extends JsonResource
 			
 			'parent'      => new LocationResource($this->whenLoaded('parent')),
 			'children'    => LocationResource::collection($this->whenLoaded('children')),
+			'ancestors' => LocationResource::collection($this->whenLoaded('ancestors')),
 			'descendants' => LocationResource::collection($this->whenLoaded('descendants')),
 
 			'coordinates' => [

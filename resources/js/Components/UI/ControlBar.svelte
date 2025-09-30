@@ -14,6 +14,9 @@
 		layout  = $bindable(),
 		results	= $bindable(),
 
+		min = 4,
+		max = 12,
+
 		searchable 	= true,
 		filterable 	= true,
 		sortable	= true,
@@ -110,7 +113,7 @@
 		class="ml-auto max-w-36"
 		style="none"
 		showValue={false}
-		min={4} max={12}
+		{min} {max}
 	/>
 	
 
