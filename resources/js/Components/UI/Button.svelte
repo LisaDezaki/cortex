@@ -81,10 +81,10 @@
 	:global(.button) {
 		@apply inline-flex items-center justify-center gap-1 flex-shrink-0;
 		@apply transition duration-300 ease-in-out flex-shrink-0;
-		&:focus {
+		/* &:focus {
 			outline: 1px solid var(--border-accent);
 			outline-offset: 1px;
-		}
+		} */
 		/* @apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2; */
 
 		&:not([class*="rounded-"]) {
@@ -185,9 +185,9 @@
 			}
 		}
 		&.button-plain.button-neutral {
-			&:hover {
+			/* &:hover {
 				background-color: var(--bg-neutral-softest);
-			}
+			} */
 		}
 		&.button-plain.button-danger {
 			color: var(--text-danger);

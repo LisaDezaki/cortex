@@ -1,25 +1,22 @@
 <script>
-	import { route } from 'momentum-trail'
-
 	import Card  from '@/Components/UI/Card.svelte'
 
     let {
 		class: className,
 		character,
-		href = route('characters.show', {character: character.slug}),
 		options,
         ...restProps
     } = $props()
 </script>
 
-<Card
-	aspect="square"
-	icon="User"
-	disabledIcon="Handshake"
+<Card class={className}
+	aspect="square" icon="UserCircle" iconWeight="fill"
 	image={character.image?.url}
 	title={character.name}
 	subtitle={character.alias}
-	href={href}
+	href={character.routes.show}
 	options={options}
 	starred={character.starred}
+	onStar={() => character.star()}
+	disabledIcon="Handshake"
 {...restProps} />

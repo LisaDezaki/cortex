@@ -34,9 +34,12 @@ class HandleInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-    public function share(Request $request): array
+    public function share(Request $request)
     {
-		$user = Auth::user();
+		if (!Auth::user()) { return; }
+		$user = Auth::user()->load(['image', 'media']);
+		// if ($user) { $user->load(['image', 'media']); }
+		// $user->load(['image', 'media']);
 
 		//	Fetch all projects (shallow fetch) for the authenticated user, if they are logged in.
 		$projects = Auth::check() ? $user->projects()->with([

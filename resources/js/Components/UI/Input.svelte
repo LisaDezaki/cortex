@@ -253,7 +253,7 @@
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 
 		:global(.input-option) {
-			@apply flex items-center gap-2 pl-2 py-1.5 pr-1 rounded;
+			@apply flex items-center gap-2 pl-2 py-1.5 pr-1 rounded-md;
 			@apply cursor-pointer text-sm;
 			&:hover,
 			&[data-highlighted] {

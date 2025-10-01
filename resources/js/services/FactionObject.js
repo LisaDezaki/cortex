@@ -73,8 +73,7 @@ export default class FactionObject {
 	}
 
 	star() {
-		console.log('star()')
-		// this._update({ starred: !Boolean(this.starred) })
+		this._update({ starred: !Boolean(this.starred) })
 	}
 
 	_update(data) {

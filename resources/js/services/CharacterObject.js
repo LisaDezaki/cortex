@@ -15,7 +15,7 @@ export default class CharacterObject {
 		})
     }
 
-	
+
 	/**
 	 * Modal methods
 	 */

@@ -57,7 +57,8 @@
 	//	Menu Options
 
 	const filterOptions = $state([
-		{ label: 'All Factions', 	value: '',		filterFunction: (lo) => { return lo } },
+		{ label: 'All Factions', 	value: '',		  filterFunction: (fac) => { return fac } },
+		{ label: 'Starred', 		value: 'starred', filterFunction: (fac) => { return fac.starred } },
 		{ 	separator: true },
 		{ label: 'Headquarters...',	options: locationOptions },
 		{ label: 'Member...',		options: characterOptions },

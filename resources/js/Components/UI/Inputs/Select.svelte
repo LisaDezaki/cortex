@@ -114,7 +114,7 @@
 
 	<!-- Trigger -->
 
-	<Select.Trigger class="{className} input-select min-w-24 {restProps.disabled ? "disabled" : ""} {hasFocus ? "focus" : ""}">
+	<Select.Trigger class="{className} input-option min-w-24 {restProps.disabled ? "disabled" : ""} {hasFocus ? "focus" : ""}">
 
 		{#if icon && !selection?.icon && !selection?.image}
 			<Icon class="input-icon" name={icon} size="md" weight="regular" />
@@ -140,9 +140,8 @@
 	 
 	<Select.Portal class="z-50">
 		<Select.Content
-			class="{contentClass} min-w-[var(--bits-select-anchor-width)] z-50"
-			align="start"
-			sideOffset={-1}
+			class="input-content {contentClass} min-w-[var(--bits-select-anchor-width)] p-0.5 z-50"
+			align="start" sideOffset={-1}
 		>
 			<Select.ScrollUpButton class="flex w-full items-center justify-center opacity-50">
 				<Icon name="CaretDoubleUp" size="xs" />
@@ -152,7 +151,7 @@
 				<Stack>
 					{#each options as option, i}
 						{#if option.separator}
-							<Separator class="my-1" />
+							<Separator class="mx-2 my-0.5 w-auto" />
 						{:else if option.options}
 							<div class="font-medium opacity-50 px-2 py-1 text-sm">{option.label}</div>
 							{#each option.options as opt}

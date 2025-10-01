@@ -3,8 +3,9 @@
 	import { ContextMenu } from "bits-ui";
 
 	import { Flex, Grid, Stack } from '@/Components/Core';
-	import Button from '@/Components/UI/Button.svelte';
-	import Icon from '@/Components/UI/Icon.svelte';
+	import Button 	 from '@/Components/UI/Button.svelte';
+	import Icon 	 from '@/Components/UI/Icon.svelte';
+	import Separator from '@/Components/UI/Separator.svelte';
 
   let {
 	children,
@@ -31,8 +32,8 @@
 
 {#snippet item(item)}
 	<Flex
-		align="center" gap={2}
-		class="relative cursor-pointer px-3 py-1.5 rounded w-full
+		align="center" justify="center" gap={2}
+		class="relative cursor-pointer px-2 py-1.5 rounded w-full
 			{item.disabled			 ? 'text-neutral-softest'	:	'' }
 			{item.theme === 'accent' ? 'text-accent' : '' }
 			{item.theme === 'danger' ? 'text-danger' : '' }
@@ -46,7 +47,7 @@
 		{/if}
 
 		{#if item.label}
-			<span class="font-style-small line-clamp-1 truncate">{item.label}</span>
+			<span class="font-style-small line-clamp-1 truncate grow">{item.label}</span>
 		{/if}
 
 		{#if item.options}
@@ -81,17 +82,17 @@
 		{@render children?.()}
 	</ContextMenu.Trigger>
 	<ContextMenu.Portal>
-		<ContextMenu.Content class="bg-white border border-neutral-softer max-h-96 outline-none overflow-y-auto p-1 rounded-lg shadow-xl w-48 focus-visible:outline-none">
+		<ContextMenu.Content class="bg-white border border-neutral-softer max-h-96 outline-none overflow-y-auto p-0.5 rounded-lg shadow-xl w-48 focus-visible:outline-none">
 
 			{#if iconOptions}
 				<Grid cols={iconOptions.length} gap={0} class="w-full">
-					{#each iconOptions.map(opt => ({...opt, iconSize: "md", iconWeight: opt.iconWeight || 'regular' })) as iconOption}
+					{#each iconOptions.map(opt => ({...opt, iconSize: 18, iconWeight: opt.iconWeight || 'regular' })) as iconOption}
 						<ContextMenu.Item class="grow rounded hover:bg-{iconOption.theme || 'neutral'}-softest">
 							{@render item(iconOption)}
 						</ContextMenu.Item>
 					{/each}
 				</Grid>
-				<ContextMenu.Separator class="block border-t border-neutral-softest my-1" />
+				<ContextMenu.Separator class="border-t border-neutral-softest mx-2 my-0.5 w-auto" />
 			{/if}
 
 			{#each options as option}
@@ -99,7 +100,7 @@
 				{#if option.hasOwnProperty('hideIf') && option.hideIf === true}
 					<!-- Skip rendering this option -->
 				{:else if option.separator}
-					<ContextMenu.Separator class="block border-t border-neutral-softest my-1" />
+					<ContextMenu.Separator class="border-t border-neutral-softest mx-2 my-0.5 w-auto" />
 				{:else if option.options}
 					<ContextMenu.Sub>
 						<ContextMenu.SubTrigger class="data-[state=open]:bg-neutral-softest rounded">
@@ -109,7 +110,7 @@
 							class="bg-white border border-neutral-softer outline-none rounded-lg shadow-xl w-48 z-100 ring-0! ring-transparent!"
 							sideOffset={4}
 						>
-							<Flex align="center" class="border-b border-neutral-softest p-1 text-neutral-soft w-full z-10">
+							<Flex align="center" class="border-b border-neutral-softest p-0.5 text-neutral-soft w-full z-10">
 								<span class="line-clamp-1 px-3 truncate">{option.label}</span>
 								<!-- <Button style="soft" theme="accent" class="h-8 w-8 ml-auto"
 									icon="Plus" size="sm"
@@ -123,7 +124,7 @@
 								</ContextMenu.Item>
 							</Flex>
 							{#if option.options.length > 0}
-								<Stack class="max-h-96 overflow-y-auto p-1" gap={0}>
+								<Stack class="max-h-96 overflow-y-auto p-0.5" gap={0}>
 									{#each option.options as opt}
 										<ContextMenu.Item class="hover:bg-{opt.theme || 'neutral'}-softest rounded">
 											{@render item(opt)}

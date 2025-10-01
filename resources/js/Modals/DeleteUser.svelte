@@ -23,7 +23,7 @@
     })
 
     function deleteUser() {
-        $form.delete(route('profile.destroy'), {
+        $form.delete(route('user.destroy'), {
             preserveScroll: true,
             onSuccess: () => oncancel(),
             onError: () => passwordInput?.focus(),
@@ -37,7 +37,7 @@
 
 
 <ModalForm title="Deleting Account" size="md"
-	endpoint={route('profile.destroy')}
+	endpoint={route('user.destroy')}
 	form={form}
 	method="delete"
 	reloadPageProps={['users']}

@@ -19,15 +19,17 @@
 	import PageMenu    from '@/Components/UI/PageMenu.svelte'
 	import Section     from '@/Components/UI/Section.svelte'
 
-	import { modalActions } from '@/stores/modalStore';
-    function deleteUser(u) { modalActions.open('deleteUser', { user: u 	}) }
+	// import { modalActions } from '@/stores/modalStore';
+    // function deleteUser(u) { modalActions.open('deleteUser', { user: u 	}) }
 
     let {
         mustVerifyEmail,
         status,
     } = $props()
 
-	const user = $page.props.auth.user.data
+	import UserObject from '@/services/UserObject';
+	const user = new UserObject($page.props.auth.user.data)
+
 </script>
 
 <svelte:head>
@@ -41,7 +43,7 @@
 			title="User Profile"
 			tabs={[
 				{ label: "Profile",		active: true },
-				{ label: "Settings",	href: route('settings') },
+				{ label: "Settings",	href: route('user.settings') },
 			]}
 		/>
 	{/snippet}
@@ -51,19 +53,15 @@
 			<PageMenu items={[
 				{ icon: "UserList", label: "Profile Info",    href: "#profile",  active: $page.url.endsWith('#profile') },
 				{ icon: "Password", label: "Update Password", href: "#password", active: $page.url.endsWith('#password') },
-				{ icon: "Trash",    label: "Delete Account",  onclick: deleteUser, theme: "danger" }
+				{ icon: "Trash",    label: "Delete Account",  onclick: () => user.delete(), theme: "danger" }
 			]} />
 
 			<Container gap={12} size="2xl">
 
-				<Media replaceable
-					aspect="aspect-square"
-					class="relative bg-neutral-softest rounded-full w-48"
-					endpoint={route('user.avatar.update', { user: user.id })}
-					method="patch"
-					media={user.avatar}
-					reloadPageProps={['auth.user.avatar']}
-					type="avatar"
+				<Media
+					class="relative aspect-square bg-neutral-softest rounded-full w-48"
+					media={user.getAvatar()}
+					onclick={() => user.addAvatar()}
 				/>
 
 				<Section id="profile" class="max-w-[64ch]">
@@ -100,7 +98,7 @@
 					/> -->
 					<Button style="hard" theme="danger" class="mt-3"
 						label="Delete Account"
-						onclick={deleteUser}
+						onclick={() => user.delete()}
 					/>
 				</Section>
 			</Container>

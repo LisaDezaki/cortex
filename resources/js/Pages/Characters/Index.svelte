@@ -35,7 +35,7 @@
 	let filter	 = $state('')
 	let sort	 = $state('name')
 	let size	 = $state(8)
-	let layout	 = $state('table')
+	let layout	 = $state('grid')
 	let gridCols = $derived(16-size)
 	let results  = $derived(characters.items)
 
@@ -89,10 +89,11 @@
 								character={character}
 								href={character.routes.show}
 								iconOptions={[
-									{ icon: "Star", 	onclick: () => character.star(), iconWeight: character.starred ? 'fill' : 'regular' },
-									{ icon: "Eye", 		href: character.routes.show },
-									{ icon: "Textbox", 	onclick: () => character.rename() },
-									{ icon: "Trash", 	onclick: () => character.delete(), theme: "danger" },
+									{ icon: "Star", 		onclick: () => character.star(), iconWeight: character.starred ? 'fill' : 'regular' },
+									{ icon: "Eye", 			href: character.routes.show },
+									{ icon: "Textbox", 		onclick: () => character.rename() },
+									{ icon: "UploadSimple", onclick: () => character.addPortrait() },
+									{ icon: "Trash", 		onclick: () => character.delete(), theme: "danger" },
 								]}
 								options={[{
 									label: "Add to Collection",

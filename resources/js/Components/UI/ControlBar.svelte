@@ -91,6 +91,7 @@
 		<Input bind:value={sort}
 			type="select"
 			class="w-48"
+			contentClass="w-48"
 			icon="SortAscending"
 			placeholder="Sort by"
 			options={sortOptions}

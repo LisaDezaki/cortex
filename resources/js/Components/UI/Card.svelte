@@ -1,12 +1,17 @@
 <script>
 	import { Link } from '@inertiajs/svelte'
 
-	import { Flex, Popover, Stack }  from '@/Components/Core';
-	
-	import Button		from '@/Components/UI/Button.svelte';
+
+	//	Components
+
+	import Flex			from '@/Components/Core/Flex.svelte';
+	import Stack		from '@/Components/Core/Stack.svelte';
+	import Button		from '@/Components/UI/Button.svelte'
 	import ContextMenu	from '@/Components/UI/ContextMenu.svelte'
-	import Dropdown		from '@/Components/UI/Dropdown.svelte';
 	import Icon			from '@/Components/UI/Icon.svelte';
+
+
+	//	Component props
 
     let {
 		aspect,
@@ -16,8 +21,11 @@
 		image,
 		imageClass,
 		icon,
+		iconSize = 32,
+		iconWeight = "fill",
 		iconOptions,
 		onclick,
+		onStar,
 		options,
 		starred,
 		title,
@@ -30,19 +38,19 @@
 
 </script>
 
-<Stack gap={1} class="card {clickable ? "cursor-pointer" : null} {className}" onclick={restProps.disabled ? undefined : onclick} {...restProps}>
+<Stack gap={1}
+	class="card {clickable ? "cursor-pointer" : null} {className}"
+	onclick={onclick}
+{...restProps}>
 
-	<div class="card-visual aspect-{aspect} {imageClass}">
+	<Flex class="card-visual aspect-{aspect} {imageClass}">
 		{#if image}
 			<img class="card-image" src={image} alt={title} />
 		{:else if icon}
-			<Icon class="card-icon" name={icon} size={32} />
+			<Icon class="card-icon opacity-35" name={icon} size={iconSize} weight={iconWeight} />
 		{/if}
 		{@render children?.()}
-		{#if starred}
-			<Icon class="absolute top-1.5 left-1.5 text-amber-400" name="Star" size="lg" weight="fill" />
-		{/if}
-	</div>
+	</Flex>
 
 	<Flex justify="start" class="w-full">
 		<div class="card-details -space-y-0.5">
@@ -55,22 +63,36 @@
 
 	{#if href}
 		<Link
-			class="card-link absolute inset-0 z-10"
+			class="card-link absolute inset-0 text-transparent z-10"
 			href={href}
-		></Link>
+		/>
 	{/if}
 
 	{#if options}
 		<ContextMenu
-			class="absolute inset-0 z-10"
+			class="flex items-center justify-center absolute bottom-1 right-0 h-7 w-7 show-on-hover hover:bg-neutral-softest rounded-full z-10"
+			icon="DotsThreeOutlineVertical" iconWeight="fill"
 			iconOptions={iconOptions}
 			options={options}
 		/>
 	{/if}
 
+	<Button
+		class="absolute top-0 left-0 z-10 {starred ? '' : 'show-on-hover'} {starred ? 'text-amber-400 hover:text-amber-300' : 'text-white hover:text-amber-400'}"
+		icon="Star" iconSize="lg" iconWeight={starred ? 'fill' : 'light'}
+		onclick={onStar}
+	/>
+
 </Stack>
 
 <style lang="postcss">
+
+	:global(.card .show-on-hover) {
+		@apply opacity-0 pointer-events-none;
+	}
+	:global(.card:hover .show-on-hover) {
+		@apply opacity-100 pointer-events-auto;
+	}
 
 	:global(.card) {
 		@apply relative flex flex-col flex-shrink-0 min-w-24 mb-3 rounded-lg overflow-hidden;
@@ -97,7 +119,7 @@
 			pointer-events: none;
 		}
 
-		.card-visual {
+		:global(.card-visual) {
 			@apply flex-shrink-0 rounded-lg overflow-hidden w-full;
 			/* background: var(--bg-neutral-gradient); */
 			background-color: var(--bg-neutral-softest);

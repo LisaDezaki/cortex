@@ -6,7 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-
     /**
      * Run the migrations.
      */
@@ -14,7 +13,8 @@ return new class extends Migration
     {
 		Schema::create('locations', function (Blueprint $table) {
 			$table->uuid('id')->primary()->index();
-			$table->foreignUuid('project_id')->nullable()->constrained('projects')->cascadeOnUpdate()->cascadeOnDelete();
+			$table->foreignUuid('project_id')->constrained('projects')->cascadeOnUpdate()->cascadeOnDelete();
+			$table->boolean('starred')->default(false);
 			$table->foreignUuid('parent_location_id')->nullable()->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('name');
 			$table->string('icon')->nullable();

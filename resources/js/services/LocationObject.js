@@ -86,7 +86,6 @@ export default class LocationObject {
 	}
 
 	star() {
-		console.log('LocationObject.star()')
 		this._update({ starred: !Boolean(this.starred) })
 	}
 

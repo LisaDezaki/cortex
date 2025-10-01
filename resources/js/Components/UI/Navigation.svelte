@@ -23,7 +23,7 @@
 		<Stack align="center" gap={2} class="px-2 pt-2 w-full">
 			<Flex align="center" justify="between" class="w-full">
 				<Nav.Logo />
-				<Navatar src={user.avatar?.url} fallback={user.name?.toUpperCase().substr(0,2)} href={route('profile.edit')} />
+				<Navatar src={user.image?.url} fallback={user.name?.toUpperCase().substr(0,2)} href={route('user.edit')} />
 			</Flex>
 			<ProjectSelect projects={projects} active={activeProject?.id} />
 		</Stack>
@@ -47,7 +47,7 @@
 	{#snippet footer()}
 		<Stack class="px-2">
 			<ThemeSwitch />
-			<Nav.Item icon="GearFine"   	 label="Settings"         href={route('settings')} 			active={$page.url.startsWith('user/settings')} />
+			<Nav.Item icon="GearFine"   	 label="Settings"         href={route('user.settings')} 			active={$page.url.startsWith('user/settings')} />
 			<Nav.Item icon="SignOut"    	 label="Log Out"          href={route('logout')} as="button" method="post" class="text-rose-400" />
 		</Stack>
 	{/snippet}

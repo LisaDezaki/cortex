@@ -20,7 +20,7 @@
 
     function submit(e) {
         e.preventDefault()
-        $form.patch(route('profile.update'))
+        $form.patch(route('user.update'))
     }
 </script>
 

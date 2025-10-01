@@ -25,8 +25,6 @@
 
 
 
-
-
 <Modal title={title} maxWidth={size}>
 	<Form
 		enctype="multipart/form-data"

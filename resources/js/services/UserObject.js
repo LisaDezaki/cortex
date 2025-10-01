@@ -1,19 +1,51 @@
 import { router } from '@inertiajs/svelte'
 import { route } from 'momentum-trail'
 
+import { modalActions } from '@/stores/modalStore';
+
 export default class UserObject {
 	constructor(userData) {
 		Object.assign(this, userData, {
 			routes: {
-				show:   route('users.show',   { user: userData.slug }),
-				update: route('users.update', { user: userData.slug })
+				update:  route('user.update'),
+				destroy: route('user.destroy')
 			}
 		})
 	}
 
-	test() {
-		console.log('test')
+
+	/**
+	 * Modal methods
+	 */
+
+	addAvatar() {
+		modalActions.open('uploadMedia', {
+			aspect: 'aspect-square',
+			endpoint: this.routes.update,
+			media: this.getAvatar(),
+			method: 'patch',
+			reloadPageProps: ['auth.user.image', 'auth.user.media'],
+			type: 'avatar',
+		})
 	}
+
+	delete() {
+		modalActions.open('deleteUser', { user: this })
+	}
+
+
+	/**
+	 * Media methods
+	 */
+
+	getAvatar() {
+		return this.media?.filter(m => m.type === 'avatar')?.[0] || null
+	}
+
+
+	/**
+	 * HTTP methods
+	 */
 
 	_update(data) {
 		router.patch(

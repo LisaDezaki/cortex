@@ -69,11 +69,12 @@
 	// }, []);
 
 	const filterOptions = $state([
-		{ label: 'All Locations', 	value: '', filterFunction: (ch) => { return ch } },
+		{ label: 'All Locations', 	value: '', 		  filterFunction: (loc) => { return loc } },
+		{ label: 'Starred', 		value: 'starred', filterFunction: (loc) => { return loc.starred } },
 		{ 	separator: true },
 		{ label: 'Parent location...',	options: parentLocationOptions },
 		// { label: 'Child location...',	options: childLocationOptions },
-		{ label: 'Type',				options: locationTypeOptions },
+		{ label: 'Type...',				options: locationTypeOptions },
 		{ 	separator: true, hideIf: !customFields || customFields.length === 0 },
 		...customFields?.map(f => {
 			return { label: `${f.label}...`, options: customFieldOptions(f) }

@@ -37,25 +37,30 @@ class UserController extends Controller
         ]);
     }
 
-	public function settings(Request $request): Response
-	{
-		return Inertia::render('User/Settings');
-	}
+
 
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $request->user()->fill($request->all());
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
 
+		if ($request->has('media') && $request['media'] !== null) {
+			foreach ($request['media'] as $media) {
+				$this->mediaService->attachMedia(Auth::user(), $media['type'], $media);
+			}
+			// unset($validatedData['media']);
+		}
+
         $request->user()->save();
 
-        return Redirect::route('profile.edit');
+		Session::flash('success', "User updated successfully.");
+        return Redirect::back();
     }
 
 
@@ -67,16 +72,16 @@ class UserController extends Controller
 
 	public function updateAvatar(Request $request)
 	{
-		$user = Auth::user();
+		// $user = Auth::user();
 
-		if ($request->has('media')) {
-			foreach ($request['media'] as $media) {
-				$this->mediaService->attachMedia($user, $media['type'], $media);
-			}
-			unset($validatedData['media']);
-		}
-		Session::flash('success', "Avatar updated successfully.");
-        return Redirect::back();
+		// if ($request->has('media')) {
+		// 	foreach ($request['media'] as $media) {
+		// 		$this->mediaService->attachMedia($user, $media['type'], $media);
+		// 	}
+		// 	unset($validatedData['media']);
+		// }
+		// Session::flash('success', "Avatar updated successfully.");
+        // return Redirect::back();
 
 		// $request->validate([
 		// 	'temp_path' => 'string|nullable',
@@ -138,7 +143,7 @@ class UserController extends Controller
 		// 			'userAvatar' => $user->avatar,
 		// 			'store' => $store,
 		// 			'media' => $media,
-		// 			'redirect' => route('profile.edit'),
+		// 			'redirect' => route('user.edit'),
 		// 			'flash' => [
 		// 				'success' => 'Avatar updated successfully!'
 		// 			]
@@ -158,6 +163,11 @@ class UserController extends Controller
 		// 	], 500);
 		// }
 		
+	}
+
+	public function settings(Request $request): Response
+	{
+		return Inertia::render('User/Settings');
 	}
 
     /**

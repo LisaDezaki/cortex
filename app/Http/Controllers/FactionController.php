@@ -37,6 +37,7 @@ class FactionController extends Controller
 	protected $validationRules = [
 		'name'                  => ['sometimes', 'string', 'max:255'],
 		'description'           => ['sometimes', 'string'],
+		'starred'				=> ['sometimes', 'boolean'],
 
 		'media'					=> ['sometimes', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],

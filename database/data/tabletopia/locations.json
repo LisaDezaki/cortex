@@ -356,7 +356,7 @@
 
 	"lighthouse": {
 		"icon": "Lighthouse",
-		"name": "The Lighthouse",
+		"name": "Empty Lighthouse",
 		"type": "Dungeon",
 		"parent": "island",
 		"coordinates": { "x": "54", "y": "18.5" },

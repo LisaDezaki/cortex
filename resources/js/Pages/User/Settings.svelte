@@ -49,7 +49,7 @@
 					<Form
 						class="max-w-lg"
 						enctype="multipart/form-data"
-						endpoint={route('settings')}
+						endpoint={route('user.settings')}
 						form={form}
 						method="post"
 						processing={$form.processing}

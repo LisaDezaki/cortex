@@ -12,21 +12,24 @@
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
 	let {
-		children,
         class: className,
-		contentClass,
-		content,
 		icon,
 		label,
-		isOpen = $bindable(),
+		isOpen = $bindable(false),
 		options,
 		placeholder,
-		trigger,
 		onUpdate = () => {},
 		value = $bindable()
     } = $props()
 
-	let suboptions = $state(null)
+	let suboptionQuery 		= $state('')
+	let suboptions	   		= $state(null)
+	let filteredSuboptions 	= $derived(suboptions?.filter(s => `${s.value} ${s.label}`.toLowerCase().includes(suboptionQuery.toLowerCase()) ))
+
+	function back() {
+		suboptionQuery = ''
+		suboptions = null
+	}
 
 	function selectItem(option) {
 		if (option.options) {
@@ -67,34 +70,37 @@
 	</Flex>
 {/snippet}
 
-<Popover.Root open={isOpen}>
+<Popover.Root bind:open={isOpen}>
 	<Popover.Trigger class="input {className}">
 		{@render item({ className, icon, ...selected })}
 	</Popover.Trigger>
  
 	<Popover.Portal>
 		<Popover.Content class="input-content overflow-hidden {className}">
-			<Grid cols={2} gap={0} class="w-[200%] {suboptions ? 'translate-x-[-50%]' : ''} transition-transform">
-				<Stack class="p-1">
+			<Grid cols={2} gap={0} class="max-h-96 w-[200%] {suboptions ? 'translate-x-[-50%]' : ''} transition-transform">
+				<Stack class="p-0.5">
 					{#each options as option}
 						{#if !option.hideIf}
 							{#if option.separator}
-								<Separator class="mx-2 my-1 w-auto" />
+								<Separator class="mx-2 my-0.5 w-auto" />
 							{:else}
 								{@render item(option)}
 							{/if}
 						{/if}
 					{/each}
 				</Stack>
-				<Stack class="relative overflow-hidden">
-					<Flex align="center" gap={0} class="sticky top-0 bg-white border-b p-1 w-full">
-						<Button size="md" icon="CaretLeft" iconSize="sm" class="text-neutral-softest" onclick={() => suboptions = null} />
-						<input class="border-none px-0 py-0.5 rounded w-28" placeholder="Search" />
+				<Stack class="relative max-h-full overflow-hidden">
+					<Flex align="center" gap={0} class="bg-white p-0.5 w-full">
+						<Button size="md" icon="CaretLeft" iconSize="sm" class="text-neutral-softest focus:outline-none border-none" onclick={back} />
+						<input bind:value={suboptionQuery} class="border-none px-1 py-1 rounded w-28" placeholder="Search" />
 						<Button size="sm" icon="Plus" theme="accent" class="ml-auto" />
 					</Flex>
-					<div class="overflow-y-auto p-1">
-						{#each suboptions as suboption}
+					<Separator class="mx-2 w-auto" />
+					<div class="overflow-y-auto p-0.5 max-h-80">
+						{#each filteredSuboptions as suboption}
 							{@render item(suboption)}
+						{:else}
+							<p class="font-style-placeholder text-center">0 results.</p>
 						{/each}
 					</div>
 				</Stack>

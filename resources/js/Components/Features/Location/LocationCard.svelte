@@ -1,33 +1,21 @@
 <script>
-	import { route } from 'momentum-trail'
-
 	import Card  from '@/Components/UI/Card.svelte'
 
     let {
 		class: className,
-		href,
 		location,
-		onclick,
 		options,
         ...restProps
     } = $props()
-
-	const handleClick = (e) => {
-		if (onclick) {
-			e.preventDefault()
-			onclick(e, location)
-		}
-	}
 </script>
 
-<Card class={className}
-	aspect="video"
-	icon="MapPinArea"
+<Card class={className} subtitleClass={location.isWorldMap ? 'text-accent' : ''}
+	aspect="video" icon="MapPinArea" iconWeight="fill"
 	image={location.image?.url}
 	title={location.name}
 	subtitle={location.type}
-	subtitleClass={location.isWorldMap ? 'text-accent' : ''}
-	onclick={handleClick || null}
-	href={onclick ? null : route('locations.show', {location: location.slug})}
+	href={location.routes.show}
 	options={options}
+	starred={location.starred}
+	onStar={() => location.star()}
 {...restProps} />

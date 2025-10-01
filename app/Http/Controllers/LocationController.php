@@ -37,6 +37,7 @@ class LocationController extends Controller
 	protected $validationRules = [
 		'name'					=> ['sometimes', 'string'],
 		'description'			=> ['nullable',  'string'],
+		'starred'				=> ['sometimes', 'boolean'],
 
 		'media'  				=> ['sometimes', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],

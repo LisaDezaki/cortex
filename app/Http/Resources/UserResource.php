@@ -24,7 +24,9 @@ class UserResource extends JsonResource
 			'name'   => $this->name,
 			'email'  => $this->email,
 
-			'avatar' => new MediaResource($this->whenLoaded('avatar')),
+			'image' => new MediaResource($this->whenLoaded('image')),
+			'media' => MediaResource::collection($this->whenLoaded('media')),
+
 			'projects' => ProjectResource::collection($this->whenLoaded('projects')),
 
 			'meta' => [

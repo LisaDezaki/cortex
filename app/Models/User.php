@@ -68,8 +68,15 @@ class User extends Authenticatable
 
 	public function avatar()
 	{
-		return $this->morphOne(Media::class, 'mediable')
-			->where('type', 'user_avatar');
+		return $this->morphOne(Media::class, 'mediable')->where('type', 'avatar');
+	}
+	public function image()
+	{
+		return $this->avatar();
+	}
+	public function media()
+	{
+		return $this->morphMany(Media::class, 'mediable');
 	}
 
 }
