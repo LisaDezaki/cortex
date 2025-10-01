@@ -61,6 +61,12 @@
 		--bg-nav:					var(--bg-accent-strong);
 		--bg-nav-active:			var(--bg-accent-softest);
 
+		--bg-tint-radial:			radial-gradient(
+										rgb(from theme(colors.slate.800) r g b / 25%) 0%,
+										transparent 66%
+									);
+									
+
 
 		/**
 		 * Border colors
@@ -330,6 +336,7 @@
 								var(--bg-neutral-softest),  var(--bg-neutral-softest) 8px,
 								transparent 8px, transparent 16px
 							); }
+	.bg-tint-radial			{ background: var(--bg-tint-radial); }
 
 	.border-accent 			{ border-color: var(--border-accent); }
 	.border-accent-strong 	{ border-color: var(--border-accent-strong); }

@@ -78,8 +78,8 @@
 	{/if}
 
 	<Button
-		class="absolute top-0 left-0 z-10 {starred ? '' : 'show-on-hover'} {starred ? 'text-amber-400 hover:text-amber-300' : 'text-white hover:text-amber-400'}"
-		icon="Star" iconSize="lg" iconWeight={starred ? 'fill' : 'light'}
+		class="absolute bg-tint-radial top-0 left-0 z-10 {starred ? '' : 'show-on-hover'} {starred ? 'text-amber-400 hover:text-amber-300' : 'text-white hover:text-amber-400'}"
+		icon="Star" iconSize="md" iconWeight={starred ? 'fill' : 'light'}
 		onclick={onStar}
 	/>
 
