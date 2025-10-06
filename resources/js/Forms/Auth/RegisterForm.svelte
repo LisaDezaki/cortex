@@ -8,43 +8,54 @@
     import Button	from '@/Components/UI/Button.svelte'
     import Field	from '@/Components/UI/Field.svelte'
 
-	let loginForm = useForm({
-		email: '',
+	let registerForm = useForm({
+        name: '',
+        email: '',
         password: '',
-        remember: false,
-	})
+        password_confirmation: '',
+    })
 
 </script>
 
 
 
 <Form
-	endpoint={route('login')}
-	form={loginForm}
+	endpoint={route('register')}
+	form={registerForm}
 	method="post"
 >
 	<Stack class="px-6 py-3" gap={3}>
+		<Field name="name"
+			type="text"
+			label="Name"
+			placeholder="Username"
+			autocomplete="name"
+			required
+			autofocus
+		/>
+	
 		<Field name="email"
 			type="email"
 			label="Email"
-			placeholder="Email"
+			icon="At"
 			autocomplete="email"
-			autofocus
 			required
 		/>
 	
 		<Field name="password"
 			type="password"
 			label="Password"
-			placeholder="Password"
+			icon="Password"
 			autocomplete="current-password"
 			required
 		/>
 	
-		<Field name="remember"
-			type="checkbox"
-			class="ml-3"
-			labelText="Remember me"
+		<Field name="password_confirmation"
+			type="password"
+			label="Confirm password"
+			icon="Password"
+			autocomplete="new-password"
+			required
 		/>
 	</Stack>
 
@@ -58,17 +69,10 @@
 
 		<Flex justify="center" gap={6} class="w-full">
 			<Link
-				href={route('password.request')}
+				href={route('login')}
 				class="place-self-center font-style-small text-accent hover:underline"
 			>
-				I forgot my password
-			</Link>
-	
-			<Link
-				href={route('register')}
-				class="place-self-center font-style-small text-accent hover:underline"
-			>
-				I don't have an account
+				I already have an account
 			</Link>
 		</Flex>
 

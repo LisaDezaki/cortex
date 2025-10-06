@@ -1,11 +1,13 @@
 <script>
 	import { getContext, setContext } from "svelte";
 	import { writable } from "svelte/store";
-	import { useForm } from '@inertiajs/svelte';
+	import { page, useForm } from '@inertiajs/svelte';
 	import { route } from 'momentum-trail';
 
 	import UploadPreview from './UploadPreview.svelte';
 	import UploadTrigger from './UploadTrigger.svelte';
+
+	const uploadedFiles = $page.props.uploadedFiles;
 
 	const { form } = getContext("form");
 
@@ -33,31 +35,44 @@
 	// let media = $derived(form && name ? $form[name] : [])
 
 	// Method to handle file upload
-	async function handleFileUpload(event) {
+	function handleFileUpload(event) {
 		processing.set(true)
-
 		const input = event.target;
 		if (input.files) {
 			files.set(Array.from(input.files));
 			$uploadForm.files = input.files;
 		}
 
-		await axios.post(
-			route('upload.temp'),
-			$uploadForm,
-			{ headers: { 'Content-Type': 'multipart/form-data' } }
-		).then(response => {
-			// console.log(response.data.files);
-			// let responseData = multiple ? response.data.files : response.data.files?.[0]
-			// value = responseData
-			$uploadForm = { ...$uploadForm,
-				files: response.data.files
+		$uploadForm.post( route('upload.temp'), {
+			forceFormData: true,
+			onSuccess: (res) => {
+				$uploadForm = { ...$uploadForm, files: res.props.flash.success }
+				if (form && name) {
+					$form[name] = { ...res.props.flash.success.map(f => ({ ...f, type })) }
+				}
+				processing.set(false)
+			},
+			onError: (errors) => {
+				console.log('Upload failed', errors)
+			},
+			onProgress: (event) => {
+				console.log('Upload progress:', event)
 			}
-			if (form && name) {
-				$form[name] = { ...response.data.files.map(f => ({ ...f, type })) }
-			}
-			processing.set(false)
-		});
+		})
+		
+		// await axios.post(
+		// 	route('upload.temp'),
+		// 	$uploadForm,
+		// 	{ headers: { 'Content-Type': 'multipart/form-data' } }
+		// ).then(response => {
+		// 	$uploadForm = { ...$uploadForm,
+		// 		files: response.data.files
+		// 	}
+		// 	if (form && name) {
+		// 		$form[name] = { ...response.data.files.map(f => ({ ...f, type })) }
+		// 	}
+		// 	processing.set(false)
+		// });
 	}
 
 	function isMultiple() {
@@ -99,4 +114,4 @@
 	{/if}
 </div>
 
-<!-- <pre>{JSON.stringify(processing,null,3)}</pre> -->
+<pre>{JSON.stringify(uploadedFiles,null,3)}</pre>

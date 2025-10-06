@@ -21,8 +21,6 @@
 
 
 
-
-
 <ModalForm title="Upload Media" size={aspect == "aspect-square" ? "md" : "xl"}
 	endpoint={endpoint}
 	form={mediaUploadForm}

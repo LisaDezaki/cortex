@@ -19,7 +19,7 @@
 <label
 	for={labelFor}
 	{...restProps}
-	class="label {className}"
+	class="label font-style-tiny {className}"
 	class:disabled={restProps.disabled}
 	class:inline={inline}
 >
@@ -49,7 +49,7 @@
 	label {
 		/* @apply flex gap-2; */
 		&:not(.inline) {
-			@apply text-sm;
+			/* @apply text-xs; */
 			&:not([class*="text-"]) {
 				color: var(--text-neutral);
 			}

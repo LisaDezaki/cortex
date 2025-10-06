@@ -7,6 +7,7 @@
 	
 	let {
 		error,
+		errors,
 		icon,
 		message,
 		success,
@@ -57,4 +58,14 @@
 		<span class="font-medium">{error}</span>
 		<Button onclick={dismiss} icon="X" iconSize="sm" iconWeight="light" style="plain" theme="danger" class="ml-3 rounded-full" />
 	</Inline>
+{/if}
+
+{#if visible && errors}
+	{#each errors as error}
+		<Inline class="toast bg-danger-gradient border border-danger-strong fixed bottom-8 left-1/2 p-1.5 pl-3 rounded-full shadow-xl text-white translate-x-[-50%] z-50">
+			<Icon name={icon || 'SmileySad'} size="md" weight="fill" />
+			<span class="font-medium">{error}</span>
+			<Button onclick={dismiss} icon="X" iconSize="sm" iconWeight="light" style="plain" theme="danger" class="ml-3 rounded-full" />
+		</Inline>
+	{/each}
 {/if}

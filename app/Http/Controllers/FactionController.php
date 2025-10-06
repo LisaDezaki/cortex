@@ -181,9 +181,11 @@ class FactionController extends Controller
 		
 		$faction->fill($validatedData);
 		$faction->update();
-		return Redirect::route("factions.show", [
-			'faction' => $faction->slug
-		]);
+		// return Redirect::route("factions.show", [
+		// 	'faction' => $faction->slug
+		// ]);
+		Session::flash('success', "$faction->name updated successfully.");
+        return Redirect::back();
     }
 
 

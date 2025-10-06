@@ -6,7 +6,10 @@ use App\Models\Project;
 use App\Services\MediaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class UploadController extends Controller
 {
@@ -19,21 +22,60 @@ class UploadController extends Controller
 
 	public function uploadTemp(Request $request)
 	{
-		$request->validate([
-			'files' => 'array',
-			'files.*' => 'image|mimes:jpeg,png,jpg,gif',
-        ]);
+		//	Check if files are actually uploaded
+		if (!$request->hasFile('files')) {
+			return back()->withErrors([
+				'error' => 'No files were uploaded.'
+			]);
+		}
 
+		//	Check if files are valid
+		foreach ($request->file('files') as $index => $file) {
+			if (!$file->isValid()) {
+				return back()->withErrors([
+					'error' => $file->getErrorMessage()
+				]);
+			}
+		}
+
+		//	Validation
+		$validator = Validator::make($request->all(), [
+			'files' => 'array',
+            'files.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max
+        ], [
+			'files.array' => 'Files must be provided as an array.',
+            'files.*.image' => 'The uploaded image is not valid.',
+            'files.*.mimes' => 'Only JPEG, PNG, JPG, and GIF files are allowed.',
+            'files.*.max' => 'The file size must not exceed 2MB.',
+        ]);
+        if ($validator->fails()) {
+			return back()->withErrors($validator->errors());
+		}
+
+		//	Store temporary files
 		$filesData = [];
 		$files = $request->file('files');
 		foreach ($files as $file) {
 			$fileInfo = $this->mediaService->storeTempFile($file);
 			$filesData[] = $fileInfo;
 		}
-		return response()->json([
-			'success' => true,
-			'files' => $filesData
-		]);
+
+		// return Redirect::back()->with([
+			// 'success' => true,
+			// 'uploadedFiles' => $filesData
+		// ]);
+
+		Session::flash('success', $filesData);
+		return Redirect::back();
+
+		// return [
+		// 	'success' => true,
+			// 'uploadedFiles' => $filesData
+		// ];
+		// return response()->json([
+		// 	'success' => true,
+		// 	'files' => $filesData
+		// ]);
 	}
 
 	public function moveToPermanent(Request $request)

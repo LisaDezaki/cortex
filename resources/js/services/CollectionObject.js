@@ -45,6 +45,8 @@ export default class CollectionObject {
 		modalActions.open('deleteCollection', { collection: this })
 	}
 
+	
+
 	removeItem(item) {
 		console.log('CollectionObject.removeItem()', item)
 		router.patch(

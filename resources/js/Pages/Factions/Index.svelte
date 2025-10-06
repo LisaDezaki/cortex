@@ -90,10 +90,11 @@
 								faction={faction}
 								href={faction.routes.show}
 								iconOptions={[
-									{ icon: "Star", 	onclick: () => faction.star(), iconWeight: faction.starred ? 'fill' : 'regular' },
-									{ icon: "Eye", 		href: faction.routes.show },
-									{ icon: "Textbox", 	onclick: () => faction.rename() },
-									{ icon: "Trash", 	onclick: () => faction.delete(), theme: "danger" },
+									{ icon: "Star", 		onclick: () => faction.star(), iconWeight: faction.starred ? 'fill' : 'regular' },
+									{ icon: "Eye", 			href: faction.routes.show },
+									{ icon: "Textbox", 		onclick: () => faction.rename() },
+									{ icon: "UploadSimple", onclick: () => faction.addEmblem() },
+									{ icon: "Trash", 		onclick: () => faction.delete(), theme: "danger" },
 								]}
 								options={[{
 									label: "Add to Collection",
