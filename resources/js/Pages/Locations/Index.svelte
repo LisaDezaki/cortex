@@ -140,6 +140,7 @@
 									{ icon: "Star", 	onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
 									{ icon: "Eye", 		href: location.routes.show },
 									{ icon: "Textbox", 	onclick: () => location.rename() },
+									{ icon: "UploadSimple", onclick: () => location.addBanner() },
 									{ icon: "Trash", 	onclick: () => location.delete(), theme: "danger" },
 								]}
 								options={[{

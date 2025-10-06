@@ -26,8 +26,8 @@
 		<PageHeader
 			title="User Settings"
 			tabs={[
-				{ label: "Profile",		href: route('profile.edit') },
-				{ label: "Settings",		active: true },
+				{ label: "Profile",		href: route('user.edit') },
+				{ label: "Settings",	active: true },
 			]}
 		/>
 	{/snippet}
