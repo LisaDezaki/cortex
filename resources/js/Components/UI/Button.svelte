@@ -42,19 +42,27 @@
 </script>
 
 {#if restProps.href}
-	<Link aria-disabled={restProps.disabled ? 'true' : undefined}
+	<Link as={!restProps.href ? 'button' : 'a'} aria-disabled={restProps.disabled ? 'true' : undefined}
 		class="{styles.button} button-{theme} {sizes[size]} {styles[style]} {className}"
 	{...restProps}>
 
-		{#if thisIcon}
-			<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
-		{/if}
+		{#if loading}
+			
+			<Icon name="CircleNotch" animation="animate-[spin_0.5s_linear_infinite]" />
 
-		{#if label}
-			<span class={styles.label}>{label}</span>
-		{/if}
+		{:else}
 
-		{@render children?.()}
+			{#if thisIcon}
+				<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
+			{/if}
+
+			{#if label}
+				<span class={styles.label}>{label}</span>
+			{/if}
+
+			{@render children?.()}
+
+		{/if}
 
 	</Link>
 {:else}
@@ -63,15 +71,23 @@
 		class="{styles.button} button-{theme} {sizes[size]} {styles[style]} {className}"
 	{...restProps}>
 
-		{#if thisIcon}
-			<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
-		{/if}
+		{#if loading}
+			
+			<Icon name="CircleNotch" animation="animate-[spin_0.5s_linear_infinite]" />
 
-		{#if label}
-			<span class={styles.label}>{label}</span>
-		{/if}
+		{:else}
 
-		{@render children?.()}
+			{#if thisIcon}
+				<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
+			{/if}
+
+			{#if label}
+				<span class={styles.label}>{label}</span>
+			{/if}
+
+			{@render children?.()}
+
+		{/if}
 
 	</button>
 {/if}

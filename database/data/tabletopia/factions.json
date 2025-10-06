@@ -148,7 +148,7 @@
 		"desc": "The students are a faction of burgeoning power and passionate, if sometimes naive, ideals. They are here to learn the art of adventure, but their education is increasingly happening outside the classroom as they react to the injustices in their town. This faction is less a unified body and more a collection of cliques and causes, often at odds with each other but capable of uniting around a common threat. They are the source of the town's newest heroes—and its biggest troublemakers. Their faction goal is to find their place in the world, whether by upholding the system, tearing it down, or simply surviving it."
 	},
 	"tavern-workers": {
-		"name": "Tavern Workers Union",
+		"name": "Tavern Union",
 		"type": "Union",
 		"hq": "tavern",
 		"ranks": [ "Landlord", "Bouncer", "Cook", "Bartender", "Server"],

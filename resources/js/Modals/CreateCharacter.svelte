@@ -18,8 +18,6 @@
 
 
 
-
-
 <ModalForm title="Creating character" size="md"
 	endpoint={route('characters.store')}
 	form={form}

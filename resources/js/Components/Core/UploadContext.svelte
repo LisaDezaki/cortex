@@ -113,5 +113,3 @@
 		<UploadTrigger class="absolute inset-0" />
 	{/if}
 </div>
-
-<pre>{JSON.stringify(uploadedFiles,null,3)}</pre>

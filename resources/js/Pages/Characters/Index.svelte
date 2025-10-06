@@ -39,6 +39,23 @@
 	let gridCols = $derived(16-size)
 	let results  = $derived(characters.items)
 
+	function getSubtitle(character) {
+		switch (sort) {
+			case 'popularity':
+				return character.relationships?.length + ' Relationships'
+			case 'location':
+				return character.location?.name || '--'
+			case 'faction':
+				return character.factions?.[0]?.name || '--'
+			case 'created_at':
+				return new Date(character.meta?.createdAt).toLocaleString() || '--'
+			case 'updated_at':
+				return new Date(character.meta?.updatedAt).toLocaleString() || '--'
+			default:
+				return character.alias
+		}
+	}
+
 </script>
 
 
@@ -87,10 +104,11 @@
 						{#snippet gridItem(character)}
 							<CharacterCard
 								character={character}
-								href={character.routes.show}
+								subtitle={getSubtitle(character)}
+								href={character.routes?.show}
 								iconOptions={[
 									{ icon: "Star", 		onclick: () => character.star(), iconWeight: character.starred ? 'fill' : 'regular' },
-									{ icon: "Eye", 			href: character.routes.show },
+									{ icon: "Eye", 			href: character.routes?.show },
 									{ icon: "Textbox", 		onclick: () => character.rename() },
 									{ icon: "UploadSimple", onclick: () => character.addPortrait() },
 									{ icon: "Trash", 		onclick: () => character.delete(), theme: "danger" },
@@ -108,7 +126,8 @@
 									label: "Add Tags",
 									onclick: () => character.addTags()
 								},{
-									label: "Remove Faction",
+									icon: 'FlagBannerFold', iconWeight: 'regular',
+									label: character.factions[0]?.name,
 									hideIf: character.factions.length == 0,
 									onclick: () => character.removeFaction()
 								},{
@@ -120,6 +139,7 @@
 										onclick: () => character.setFaction(f)
 									})) ]
 								},{
+									icon: 'MapPin', iconWeight: 'regular',
 									label: character.location?.name,
 									hideIf: character.location == null,
 									onclick: () => character.removeLocation()

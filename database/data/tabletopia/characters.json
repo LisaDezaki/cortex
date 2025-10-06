@@ -85,6 +85,15 @@
 		"desc": "A hulking, charismatic bugbear with a beard famously woven with iridescent beetle shells and trinkets from a hundred plundered voyages, Captain Bugbeard cuts an imposing figure, even while laying low.\n\nAs the master of the pirate vessel The Crimson Tide, his reputation precedes him—though it is a matter of fierce debate as to what that reputation truly is. To the wealthy merchant lords and the Dragon Council that backs them, he is a notorious criminal, a scourge upon lawful trade with a bounty on his head large enough to buy a manor. But to the common folk and the oppressed, he is a folk hero of the high seas, a scoundrel with a code.\n\nHis philosophy is one of \"righteous plunder\", targeting only the fat merchant cogs and corporate vessels he knows are carrying wealth stolen from native populations or squeezed from the working class.\n\nThis very specific brand of Robin Hood piracy has made him powerful enemies and forced him to seek refuge in New Miniport, his ship disguised and tucked away in a secluded cove. He hopes the town's independent spirit will provide a safe harbor while the heat from his latest exploit dies down.\n\nHis presence is a polarizing force; some citizens see only a dangerous fugitive who will bring the Council's wrath down upon them all, while others cheer his defiance and see his wealth-redistribution as the only true justice in a system rigged against them. Despite his fearsome appearance, Bugbeard is a shrewd and competent leader, fiercely loyal to his crew and unshakable in his belief that sometimes, you have to break the law to do what's right."
 	},
 
+	"cog": {
+		"name": "Cog",
+		"alias": "The Clockwork Assassin",
+		"species": "warforged",
+		"location": "tavern",
+		"personality": ["Perceptive"],
+		"desc": "Standing firm near the bar, quietly searching for potential clients."
+	},
+
 	"dirk": {
 		"name": "Dirk",
 		"alias": "The Private Investigator",
@@ -92,6 +101,15 @@
 		"location": "mall",
 		"personality": ["Analytical", "Chain-smoker", "Meticulous", "Perceptive"],
 		"desc": "In a dimly-lit office tucked between a defunct arcade and a candle shop in the New Miniport Galleria, you'll find Dirk. A hulking orc in a trench coat that's seen better days, he speaks in the gravelly, metaphor-laden drawl of a hardboiled noir detective, a style starkly at odds with his orcish accent. It's a dissonance that makes clients pause, but it never lasts long.\n\nBehind the world-weary act is the sharpest investigative mind in the region. Dirk can spot a misplaced fiber at a crime scene, read a micro-expression like a billboard, and piece together clues everyone else has trampled over. His methods are unorthodox, but his results are undeniable.\n\nHis greatest nemesis isn't a thug in a back alley, but the soul-crushing bureaucracy of the New Miniport PD. He's locked in a perpetual, grinding battle to access public records they are legally obligated to provide, a battle personified by Officer Laggard, a tortle cop whose deliberate pace makes molasses look speedy.\n\nWhile he handles the mundane cases that pay the rent (the Missing Hikers, the ever-present Graffitti, the infamous Stolen Bike), his real focus is his magnum opus: building an ironclad case against the Cold-Bloods syndicate. He's certain their operations are a front for something far darker, and he's determined to connect their crime boss, the seemingly respectable tavern owner Grenn, to the rot festering beneath New Miniport's streets. All he needs is one more break, and the patience to outlast Laggard's next delay tactic."
+	},
+
+	"drew": {
+		"name": "Drew",
+		"alias": "The Gym Rat",
+		"species": "goblin",
+		"location": "gym",
+		"personality": ["Aggressive", "Misogynistic", "Narcissistic"],
+		"desc": "This guy HATES women."
 	},
 
 	"duggan": {
@@ -145,6 +163,15 @@
 		"location": "tavern",
 		"personality": ["Backstabbing", "Conniving", "Deceitful", "Machiavellian"],
 		"desc": "In the shadowy underbelly of New Miniport, no one embodies the casual cruelty of greed quite like Grenn. A lizardfolk with calculating, cold eyes and a smile that never reaches them, he is the slithering heart of the Cold-Bloods syndicate.\n\nMore businessman than thug, his preferred weapons are not knives or spells, but predatory leases, crippling debt, and damning secrets. Thanks to a lucrative and deeply corrupt deal with the Dragon Council, he holds a near-monopoly on the city's low-cost housing, making him the de facto slum-lord of New Miniport. He is a master exploiter, a blackmailer, and a general slime-ball who views the entire town as a personal piggy bank to be cracked open.\n\nHis public face is the jovial proprietor of \"The Lucky Die,\" a raucous and popular tavern where citizens unwittingly line the pockets of their own oppressor with every pint of ale. But behind the bar, the real business is conducted: eviction notices signed for tenants who can't pay his suddenly spiking rents, and deals made to funnel ill-gotten gold back to his patrons on the Council.\n\nHe recently agreed to clear out a entire block of his own tenants—not because they were delinquent, but simply to improve the view for a new DragonCorp tower, an act of pure, profit-driven malice.\n\nProtected by his hulking bodyguard, Bogdan, Grenn operates with impunity, a perfectly tailored suit hiding the scales of a creature who would sell his own clan for a single, shiny coin."
+	},
+
+	"grizz": {
+		"name": "Grizz",
+		"alias": "The Wrestler",
+		"species": "bearfolk",
+		"location": "school",
+		"personality": ["Naive", "Polite"],
+		"desc": "Barry's son Grizz is a wrestling star at school."
 	},
 
 	"guilford": {
@@ -230,7 +257,7 @@
 	"lucas": {
 		"name": "Lucas",
 		"alias": "The Pick-Up Artist",
-		"species": "lucas",
+		"species": "tiefling",
 		"location": null,
 		"personality": ["Misogynistic"],
 		"desc": "Lucas is a pick-up artist who uses a combination of close-up magic and enchantment magic to seduce vulnerable young women."

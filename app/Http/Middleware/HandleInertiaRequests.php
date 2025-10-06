@@ -36,16 +36,22 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request)
     {
-		// if (!Auth::user()) { return; }
 		$user = Auth::user();
-		// $user = Auth::user()->load(['image', 'media']);
-		// if ($user) { $user->load(['image', 'media']); }
-		// $user->load(['image', 'media']);
+		if (!$user) {
+			return array_merge(parent::share($request), [
+				'appName' => config('app.name'),
+				'csrfToken' => csrf_token(),
+				'auth.user' => null,
+			]);
+		}
+
+		// Load user relationships safely
+    	$user->loadMissing(['image', 'media']);
 
 		//	Fetch all projects (shallow fetch) for the authenticated user, if they are logged in.
-		$projects = Auth::check() ? $user->projects()->with([
-			'image', 'characters', 'factions', 'locations'
-		])->get() : null;
+		$projects = $user->projects()
+			->with([ 'image', 'characters', 'factions', 'locations' ])
+			->get();
 
 		//	Fetch the active project (deep fetch) for the authenticated user, if they are logged in and have an active project.
 		$activeProject = $user && $user->active_project

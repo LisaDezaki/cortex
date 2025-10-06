@@ -46,6 +46,8 @@
 			<Button
 				class="rounded-none grow"
 				type="submit"
+				loading={$form.processing}
+				disabled={$form.processing}
 				{...updatedSubmitProps}
 			/>
 		</Flex>

@@ -57,7 +57,7 @@ class UserController extends Controller
 			// unset($validatedData['media']);
 		}
 
-        $request->user()->save();
+        $request->user()->update();
 
 		Session::flash('success', "User updated successfully.");
         return Redirect::back();
