@@ -1,14 +1,19 @@
 import { router } from '@inertiajs/svelte'
 import { route } from 'momentum-trail'
 
-import { modalActions } from '@/stores/modalStore';
+import CharacterList from '@/services/CharacterList'
+import FactionList from '@/services/FactionList'
+import LocationObject from '@/services/LocationObject'
+import { modalActions } from '@/stores/modalStore'
 
 export default class CharacterObject {
     constructor(characterData) {
         Object.assign(this, characterData, {
+			factions:		characterData.factions		? new FactionList(characterData.factions)		 : null,
+			location: 		characterData.location 		? new LocationObject(characterData.location) 	 : null,
+			relationships: 	characterData.relationships ? new CharacterList(characterData.relationships) : null,
 			routes: {
 				show:    route('characters.show',    { character: characterData.slug }),
-				store:   route('characters.store'),
 				update:  route('characters.update',  { character: characterData.slug }),
 				destroy: route('characters.destroy', { character: characterData.slug })
 			}

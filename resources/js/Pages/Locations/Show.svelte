@@ -37,18 +37,6 @@
 	const location 	   = new LocationObject($page.props.location?.data)
 	const customFields = $page.props.customFields?.data
 
-	let media_banner	= $derived(location.media.filter(m => m.type === 'banner')?.[0])
-	let media_map		= $derived(location.media.filter(m => m.type === 'map')?.[0])
-	let media_gallery	= $derived(location.media)
-
-
-	/**
-	 * Modal Management
-	 */
-
-	import { modalActions } from '@/stores/modalStore';
-    function deleteLocation(l) { modalActions.open('deleteLocation', { location: location 	}) }
-
 </script>
 
 <svelte:head>
@@ -65,7 +53,7 @@
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
 				{ icon: "Info",   		label: "Details",       href: "#details"	},
-				{ icon: "Textbox",      label: "Custom Fields", href: "#custom"		},
+				// { icon: "Textbox",      label: "Custom Fields", href: "#custom"		},
 				{ icon: "Compass",      label: "Map",           href: "#map"		},
 				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery"	},
 				{ icon: "Trash", 		label: "Delete", 		onclick: () => location.delete(), theme: "danger" }
@@ -103,29 +91,23 @@
 						/>
 					</ArticleBanner>
 
-					<Stack class="max-w-[64ch] mx-6">
-
+					<Stack class="max-w-[64ch] mx-6 mb-12">
 						<Heading is="h3" as="h6" class="mt-9 mb-6">Description</Heading>
 						<Collapsible collapsed={true}
 							collapsedClass="line-clamp-3 overflow-hidden">
 							{location.description}
 						</Collapsible>
-
 					</Stack>
-				</Section>
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
-
-
-				<!-- Custom Fields -->
-
-				<Section id="custom" class="p-6">
-					<Heading is="h3" as="h6" class="mb-6">Custom Fields</Heading>
-					{#if location.customFields}
-						Custom Fields
-					{:else}
-						<p class="font-style-placeholder">There aren't any Custom Fields for Locations yet.</p>
-					{/if}
+					<Stack class="max-w-[64ch] mx-6">
+						<Heading is="h3" as="h6" class="mb-6">Custom Fields</Heading>
+						{#if location.customFields}
+							Custom Fields
+						{:else}
+							<p class="font-style-placeholder">There aren't any Custom Fields for Locations yet.</p>
+						{/if}
+					</Stack>
+					
 				</Section>
 
 				<Separator class="mx-6 my-6 w-[64ch]" />
@@ -133,7 +115,7 @@
 
 				<!-- Map -->
 
-				<!-- <pre>{JSON.stringify(location.characters.map(c => ({ ...c, label: c.name })),null,3)}</pre> -->
+				<!-- <pre>{JSON.stringify(location.getMap(),null,3)}</pre> -->
 
 				<Section id="map" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Map</Heading>

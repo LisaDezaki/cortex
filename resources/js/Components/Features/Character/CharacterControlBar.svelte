@@ -40,16 +40,16 @@
 
 	//	Submenu Options
 
-	let factionOptions = project.factions?.map(f => {
+	let factionOptions = project.factions?.items?.map(f => {
 		return { label: f.name, value: `factions.*.${f.slug}`, 		imageIcon: 'FlagBannerFold',	image: f.image?.url || '', filterFunction: (ch) => { return ch.factions[0]?.slug == f.slug } }
 	})
 
-	let locationOptions = project.locations?.map(l => {
+	let locationOptions = project.locations?.items?.map(l => {
 		return { label: l.name, value: `location.${l.slug}`, 		imageIcon: 'MapPinArea',		image: l.image?.url || '', filterFunction: (ch) => { return ch.location?.slug == l.slug } }
 	})
 
-	let relationshipOptions = project.characters?.map(c => {
-		return { label: c.name, value: `relationship.*.${c.slug}`, 	imageIcon: 'User',			image: c.image?.url || '', filterFunction: (ch) => { return ch.relationships?.map(r => r.slug).includes(filter.split('.')[2]) } }
+	let relationshipOptions = project.characters?.items?.map(c => {
+		return { label: c.name, value: `relationship.*.${c.slug}`, 	imageIcon: 'User',			image: c.image?.url || '', filterFunction: (ch) => { return ch.relationships?.items?.map(r => r.slug).includes(filter.split('.')[2]) } }
 	})
 
 	let customFieldOptions = (field) => {
@@ -78,9 +78,9 @@
 	const sortOptions = $state([
 		{ label: "By name",			value: 'name',       sortFunction: (a,b) => { return a.name 				< b.name					? -1 : 1 } },
 		{ label: "By alias",		value: 'alias',      sortFunction: (a,b) => { return a.alias             	< b.alias					? -1 : 1 } },
-		{ label: "By popularity",	value: 'popularity', sortFunction: (a,b) => { return a.relationships.length > b.relationships.length 	? -1 : 1 } },
+		{ label: "By popularity",	value: 'popularity', sortFunction: (a,b) => { return a.relationships?.items?.length > b.relationships?.items?.length 	? -1 : 1 } },
 		{ label: "By location",		value: 'location',   sortFunction: (a,b) => { return a.location?.name       < b.location?.name 			? -1 : 1 } },
-		{ label: "By faction",		value: 'faction',    sortFunction: (a,b) => { return a.factions?.[0]?.name  < b.factions?.[0]?.name 	? -1 : 1 } },
+		{ label: "By faction",		value: 'faction',    sortFunction: (a,b) => { return a.factions?.items?.[0]?.name  < b.factions?.items?.[0]?.name 	? -1 : 1 } },
 		...customFields?.map(f => {
 			return { label: `By ${f.label.toLowerCase()}`, value: f.name }
 		}),

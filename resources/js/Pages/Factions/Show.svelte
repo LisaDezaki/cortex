@@ -31,6 +31,8 @@
 
 </script>
 
+
+
 <svelte:head>
     <title>{faction.name}</title>
 </svelte:head>
@@ -45,8 +47,8 @@
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
 				{ icon: "Info",      	label: "Details",    	href: "#details"	},
-				{ icon: "Textbox",      label: "Custom Fields", href: "#custom" 	},
-				{ icon: "MapPinArea", 	label: "Headquarters", 	href: "#hq"			},
+				// { icon: "Textbox",      label: "Custom Fields", href: "#custom" 	},
+				// { icon: "MapPinArea", 	label: "Headquarters", 	href: "#hq"			},
 				{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
 				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
 				{ icon: "Trash", 		label: "Delete",		onclick: () => faction.delete(), theme: "danger" }
@@ -76,38 +78,44 @@
 							subheading={faction.type}
 						/>
 					</ArticleBanner>
-		
-					<Heading is="h3" as="h6" class="mx-6 mt-9 mb-6">Description</Heading>
 
-					<Collapsible collapsed={true}
-						class="max-w-[64ch] mx-6"
-						collapsedClass="line-clamp-3 overflow-hidden">
-						{faction.description}
-					</Collapsible>
-			
-				</Section>
+					<Stack gap={6} class="px-6">
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
+						<Heading is="h3" as="h6" class="mt-9">Description</Heading>
+						<Collapsible collapsed={true}
+							class="max-w-[64ch]"
+							collapsedClass="line-clamp-3 overflow-hidden">
+							{faction.description}
+						</Collapsible>
 
-
-				<!-- Custom Fields -->
+						<Heading is="h3" as="h6" class="mt-9">Headquarters</Heading>
+						<Link
+							class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
+							href={route("locations.show", { location: faction.headquarters.slug})}>
+							<Thumbnail
+								class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
+								icon="User"
+								src={faction.headquarters.image?.url}
+							/>
+							<Stack justify="center">
+								<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
+								<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
+							</Stack>
+						</Link>
 	
-				<Section id="custom" class="p-6">
-
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h6">Custom Fields</Heading>
-					</Flex>
-
-					{#if customFields && customFields.length > 0}
-						{#each customFields as field, i}
-							<Flex gap={3}>
-								<span class="font-bold w-20">{field.label}:</span>
-								<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
-							</Flex>
-						{/each}
-					{:else}
-						<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
-					{/if}
+						<Heading is="h3" as="h6" class="mt-9">Custom Fields</Heading>
+						{#if customFields && customFields.length > 0}
+							{#each customFields as field, i}
+								<Flex gap={3}>
+									<span class="font-bold w-20">{field.label}:</span>
+									<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
+								</Flex>
+							{/each}
+						{:else}
+							<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
+						{/if}
+					</Stack>
+		
 				</Section>
 
 				<Separator class="mx-6 my-6 w-[64ch]" />
@@ -115,9 +123,9 @@
 
 				<!-- Headquarters -->
 	
-				<Section id="hq" class="px-6 py-12">
+				<!-- <Section id="hq" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Headquarters</Heading>
-					{#if faction.headquarters}
+					{#if faction.headquarters} -->
 
 						<!-- <pre>{JSON.stringify(faction.headquarters,null,3)}</pre> -->
 						
@@ -131,14 +139,14 @@
 						{/if} -->
 						
 						<!-- <Map /> -->
-						 <Map class="aspect-[2/1] max-w-[64ch] rounded-lg" location={faction.headquarters?.parent} />
+						 <!-- <Map class="aspect-[2/1] max-w-[64ch] rounded-lg" location={faction.headquarters} /> -->
 
-					{:else}
+					<!-- {:else}
 						<p class="font-style-placeholder">{faction.name} doesn't have a headquarters yet.</p>
 					{/if}
-				</Section>
+				</Section> -->
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
+				<!-- <Separator class="mx-6 my-6 w-[64ch]" /> -->
 
 
 				<!-- Membership -->
@@ -148,7 +156,7 @@
 						<Heading is="h3" as="h6">Membership</Heading>
 					</Flex>
 					<Grid cols={4} gap={3}>
-						{#each faction.members as member, i}
+						{#each faction.members?.items as member, i}
 							<Link
 								class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
 								href={route("characters.show", { character: member.slug})}>

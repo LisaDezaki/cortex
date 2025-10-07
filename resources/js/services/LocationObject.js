@@ -1,11 +1,13 @@
 import { router } from '@inertiajs/svelte'
 import { route } from 'momentum-trail'
 
+import LocationList from '@/services/LocationList'
 import { modalActions } from '@/stores/modalStore';
 
 export default class LocationObject {
 	constructor(locationData) {
 		Object.assign(this, locationData, {
+			descendants: locationData.descendants ? new LocationList(locationData.descendants) : null,
 			routes: {
 				show:    route('locations.show',    { location: locationData.slug }),
 				store:	 route('locations.store'),

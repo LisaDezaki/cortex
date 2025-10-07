@@ -24,7 +24,7 @@
 	import Table       from '@/Components/UI/Table'
 	import Thumbnail   from '@/Components/UI/Thumbnail.svelte'
 
-	let activeTab = $state('general')
+	let activeTab = $state('forms')
 
 	const activeProject = $page.props.activeProject?.data
 

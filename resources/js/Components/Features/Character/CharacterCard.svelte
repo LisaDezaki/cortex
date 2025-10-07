@@ -12,7 +12,7 @@
 </script>
 
 <Card class={className}
-	aspect="square" icon="UserCircle" iconWeight="fill"
+	aspect="square" thumbnailIcon="UserCircle"
 	image={character.image?.url}
 	title={title || character.name}
 	subtitle={subtitle || character.alias}

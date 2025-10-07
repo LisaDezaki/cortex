@@ -1,5 +1,5 @@
 <script>
-	import { page, useForm } from '@inertiajs/svelte'
+	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
 
@@ -23,12 +23,11 @@
 
 	import ProjectObject 	from '@/services/ProjectObject'
 	import CollectionList 	from '@/services/CollectionList'
-	import LocationList 	from '@/services/LocationList'
 	import LocationObject 	from '@/services/LocationObject'
 	const activeProject   = $state(new ProjectObject($page.props.activeProject.data))
 	const collections	  = $state(new CollectionList($page.props.collections?.data))
-	const locations       = $state(new LocationList(activeProject?.locations)  || [])
-	const worldTree		  = $state(new LocationObject($page.props.worldTree.data))
+	const locations       = $state(activeProject?.locations)
+	const worldTree		  = $state(new LocationObject($page.props.worldTree?.data))
 
 
 	//	State & Derived values
@@ -40,6 +39,17 @@
 	let layout   = $state('grid')
 	let gridCols = $derived(10-size)
 	let results  = $derived(locations.items)
+
+	function getSubtitle(location) {
+		switch (sort) {
+			case 'created_at':
+				return new Date(location.meta?.createdAt).toLocaleString() || '--'
+			case 'updated_at':
+				return new Date(location.meta?.updatedAt).toLocaleString() || '--'
+			default:
+				return location.type
+		}
+	}
 
 </script>
 
@@ -75,7 +85,7 @@
 			/>
 		{/if}
 
-		<Section gap={6} class="px-12 py-6">
+		<Section gap={6} class="px-20 py-6">
 			{#if activeProject && locations.items?.length > 0}
 
 
@@ -133,8 +143,9 @@
 						cols={gridCols}
 					>
 						{#snippet gridItem(location)}
-							<LocationCard
+							<LocationCard starrable
 								location={location}
+								subtitle={getSubtitle(location)}
 								href={location.routes.show}
 								iconOptions={[
 									{ icon: "Star", 	onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
@@ -144,6 +155,7 @@
 									{ icon: "Trash", 	onclick: () => location.delete(), theme: "danger" },
 								]}
 								options={[{
+									icon: 'FolderSimple', iconWeight: 'regular',
 									label: "Add to Collection",
 									create: () => collections.create('locations', [location]),
 									options: [ ...collections.items.map(collection => ({
@@ -153,11 +165,13 @@
 										iconWeight: collection.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
 									}))]
 								},{
+									icon: 'TagSimple', iconWeight: 'regular',
 									label: "Add Tags",
 									onclick: () => location.applyTags()
 								},{
 									separator: true
 								},{
+									icon: 'Trash', iconWeight: 'regular',
 									label: "Delete Location",
 									onclick: () => location.delete(),
 									theme: "danger"

@@ -10,10 +10,11 @@
 </script>
 
 <Card class={className}
-	aspect="square" icon="FlagBannerFold" iconWeight="fill"
+	aspect="square"
 	image={faction.image?.url}
+	thumbnailIcon="FlagBannerFold"
 	title={faction.name}
-	subtitle="{faction.members.length} member{faction.members.length === 1 ? '' : 's'}"
+	subtitle="{faction.members?.items.length} member{faction.members?.items.length === 1 ? '' : 's'}"
 	href={faction.routes.show}
 	options={options}
 	starred={faction.starred}

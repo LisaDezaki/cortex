@@ -50,7 +50,7 @@
 
 
 <Flex align="start" gap={3}
-	class="backdrop-blur-lg bg-white/50 border-b border-neutral-softest sticky top-0 px-12 py-3 w-full z-50"
+	class="bg-surface sticky top-0 px-20 pb-3 w-full z-50"
 {...restProps}>
 
 

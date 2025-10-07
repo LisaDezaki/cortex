@@ -19,14 +19,11 @@
 
 	import ProjectObject 	from '@/services/ProjectObject'
 	import CollectionList 	from '@/services/CollectionList'
-	import CharacterList 	from '@/services/CharacterList'
-	import FactionList 		from '@/services/FactionList'
-	import LocationList 	from '@/services/LocationList'
 	const activeProject	  = $state(new ProjectObject($page.props.activeProject.data))
 	const collections	  = $state(new CollectionList($page.props.collections?.data))
-	const characters      = $state(new CharacterList(activeProject?.characters))
-	const factions    	  = $state(new FactionList(activeProject?.factions))
-	const locations    	  = $state(new LocationList(activeProject?.locations))
+	const characters      = $state(activeProject?.characters)
+	const factions    	  = $state(activeProject?.factions)
+	const locations    	  = $state(activeProject?.locations)
 
 
 	//	State & Derived values
@@ -42,11 +39,11 @@
 	function getSubtitle(character) {
 		switch (sort) {
 			case 'popularity':
-				return character.relationships?.length + ' Relationships'
+				return character.relationships?.items?.length + ' Relationships'
 			case 'location':
 				return character.location?.name || '--'
 			case 'faction':
-				return character.factions?.[0]?.name || '--'
+				return character.factions?.items?.[0]?.name || '--'
 			case 'created_at':
 				return new Date(character.meta?.createdAt).toLocaleString() || '--'
 			case 'updated_at':
@@ -90,7 +87,7 @@
 			/>
 		{/if}
 
-		<Section gap={6} class="px-12 py-6">
+		<Section gap={6} class="px-20 py-6">
 			{#if activeProject && results.length > 0}
 
 
@@ -102,7 +99,7 @@
 						cols={gridCols}
 					>
 						{#snippet gridItem(character)}
-							<CharacterCard
+							<CharacterCard starrable
 								character={character}
 								subtitle={getSubtitle(character)}
 								href={character.routes?.show}
@@ -114,6 +111,29 @@
 									{ icon: "Trash", 		onclick: () => character.delete(), theme: "danger" },
 								]}
 								options={[{
+									icon: 'FlagBannerFold', iconWeight: 'regular',
+									label: "Factions...",
+									create: () => factions.create(),
+									options: [ ...factions.items.map(f => ({
+										...f,
+										active: f.id === character.factions?.items?.[0]?.id,
+										label: f.name,
+										onclick: () => character.setFaction(f)
+									})) ]
+								},{
+									icon: 'MapPin', iconWeight: 'regular',
+									label: "Location...",
+									create: () => locations.create(),
+									options: [ ...locations.items.map(l => ({
+										...l,
+										active: l.id === character.location?.id,
+										label: l.name,
+										onclick: () => character.setLocation(l)
+									}))]
+								},{
+									separator: true
+								},{
+									icon: 'FolderSimple', iconWeight: 'regular',
 									label: "Add to Collection",
 									create: () => collections.create('characters', [character]),
 									options: [ ...collections.items.map(collection => ({
@@ -123,37 +143,13 @@
 										iconWeight: collection.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light'
 									}))]
 								},{
+									icon: 'TagSimple', iconWeight: 'regular',
 									label: "Add Tags",
 									onclick: () => character.addTags()
 								},{
-									icon: 'FlagBannerFold', iconWeight: 'regular',
-									label: character.factions[0]?.name,
-									hideIf: character.factions.length == 0,
-									onclick: () => character.removeFaction()
-								},{
-									label: "Set Faction",
-									hideIf: character.factions.length  > 0,
-									create: () => factions.create(),
-									options: [ ...factions.items.map(f => ({
-										label: f.name,
-										onclick: () => character.setFaction(f)
-									})) ]
-								},{
-									icon: 'MapPin', iconWeight: 'regular',
-									label: character.location?.name,
-									hideIf: character.location == null,
-									onclick: () => character.removeLocation()
-								},{
-									label: "Set Location",
-									hideIf: character.location != null,
-									create: () => locations.create(),
-									options: [ ...locations.items.map(l => ({
-										label: l.name,
-										onclick: () => character.setLocation(l)
-									}))]
-								},{
 									separator: true
 								},{
+									icon: 'Trash', iconWeight: 'regular',
 									label: "Delete Character",
 									onclick: () => character.delete(),
 									theme: "danger"

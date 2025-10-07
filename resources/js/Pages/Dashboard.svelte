@@ -79,55 +79,55 @@
 					</Stack>
 					<Grid cols={4} justify="center" gap={3} class="w-full">
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('characters')}>
-							<span class="font-style-h3 opacity-60">{active.characters?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.characters?.items.length || 0}</span>
 							<span class="font-style-large">Characters</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{active.dialogue?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.dialogue?.items.length || 0}</span>
 							<span class="font-style-large">Dialogues</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{active.events?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.events?.items.length || 0}</span>
 							<span class="font-style-large">Events</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('factions')}>
-							<span class="font-style-h3 opacity-60">{active.factions?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.factions?.items.length || 0}</span>
 							<span class="font-style-large">Factions</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{active.items?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.items?.items.length || 0}</span>
 							<span class="font-style-large">Items</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route('locations')}>
-							<span class="font-style-h3 opacity-60">{active.locations?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.locations?.items.length || 0}</span>
 							<span class="font-style-large">Locations</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{active.mechanics?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.mechanics?.items.length || 0}</span>
 							<span class="font-style-large">Mechanics</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{active.quests?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.quests?.items.length || 0}</span>
 							<span class="font-style-large">Quests</span>
 						</Link>
 						<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
-							<span class="font-style-h3 opacity-60">{active.wildlife?.length || 0}</span>
+							<span class="font-style-h3 opacity-60">{active.wildlife?.items.length || 0}</span>
 							<span class="font-style-large">Wildlife</span>
 						</Link>
 					</Grid>
 				</Grid>
 			</Section>
 
-			{#if active.characters?.length > 0}
+			{#if active.characters?.items.length > 0}
 				<Section size="7xl" class="py-6">
 					<Heading is="h3" as="h5" class="mb-3" heading="Recent Characters" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
-						{#each active.characters as character}
+						{#each active.characters.items as character}
 							<Card
 								class="flex-shrink-0 w-32"
 								aspect="square"
 								image={character.image?.url}
-								icon="User"
+								thumbnailIcon="User"
 								title={character.name}
 								subtitle={character.subtitle}
 								href={route('characters.show', {character: character.slug})}
@@ -137,16 +137,16 @@
 				</Section>
 			{/if}
 
-			{#if active.factions?.length > 0}
+			{#if active.factions?.items.length > 0}
 				<Section size="7xl" class="py-6">
 					<Heading is="h3" as="h5" class="mb-3" heading="Recent Factions" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
-						{#each active.factions as faction}
+						{#each active.factions.items as faction}
 							<Card
 								aspect="square"
 								class="flex-shrink-0 w-32"
 								image={faction.image?.url}
-								icon="FlagBannerFold"
+								thumbnailIcon="FlagBannerFold"
 								title={faction.name}
 								subtitle={faction.subtitle}
 								href={route('factions.show', {faction: faction.slug})}
@@ -156,16 +156,16 @@
 				</Section>
 			{/if}
 
-			{#if active.locations?.length > 0}
+			{#if active.locations?.items.length > 0}
 				<Section size="7xl" class="py-6">
 					<Heading is="h3" as="h5" class="mb-3" heading="Recent Locations" />
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
-						{#each active.locations as location}
+						{#each active.locations.items as location}
 							<Card
 								aspect="video"
 								class="flex-shrink-0 w-56"
 								image={location.image?.url}
-								icon="MapPinArea"
+								thumbnailIcon="MapPinArea"
 								title={location.name}
 								subtitle={location.subtitle}
 								href={route('locations.show', {location: location.slug})}

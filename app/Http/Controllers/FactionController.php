@@ -39,6 +39,9 @@ class FactionController extends Controller
 		'description'           => ['sometimes', 'string'],
 		'starred'				=> ['sometimes', 'boolean'],
 
+		'parent_location'		=> ['sometimes', 'exists:locations,id'],
+		'coordinates'			=> ['sometimes', 'array'],
+
 		'media'					=> ['sometimes', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],
 		'media.*.path'			=> ['nullable',	 'string'],
@@ -156,7 +159,10 @@ class FactionController extends Controller
     public function edit(Faction $faction) {}
     public function update(Request $request, Faction $faction)
     {
+
+		// dd($request->all());
 		$validatedData = $request->validate($this->validationRules);
+		// dd($validatedData);
 
 		if ($request->has('media')) {
 			foreach ($request['media'] as $media) {

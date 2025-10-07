@@ -26,9 +26,7 @@
 
 
 
-
-
-<Stack as="header" align="start" gap={0} class="bg-surface border-b border-neutral-softest px-12 py-2 w-full z-10 {className}">
+<Stack as="header" align="start" gap={0} class="bg-surface px-20 py-2 w-full z-10 {className}">
 
 	<Flex align="center" justify="center" class="w-full">
 

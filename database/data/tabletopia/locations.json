@@ -3,6 +3,7 @@
 		"is_world_map": true,
 		"name": "New Miniport",
 		"type": "Overworld",
+		"icon": "GlobeStand",
 		"desc": "Nestled between the gentle, foam-capped waves of the Sapphire Bay and the looming, mysterious peaks of the Red Mountains, New Miniport exists as a picture-perfect diorama of coastal life. From above, it is a charming mosaic of cobblestone streets, brightly painted fishing shacks with shingle roofs, and a bustling dockyard where tiny, intricately painted vessels bob on the water. Miniature adventurers, no taller than a thumb, cross paths with mini-fishermen mending nets, mini-bakers delivering warm bread, and mini-citizens simply enjoying the sea breeze on quaint, bench-sized parks. For generations, it has been a peaceful, interconnected community where everyone knows their neighbor and a sense of shared purpose hums in the salt-tinged air.\n\nBut that harmony is beginning to fray at the edges. The influence of the Dragon Council, once a distant concern, now casts a long shadow over the miniature town. New, sleek structures of obsidian and steel—DragonCorp outposts—clash with the rustic wooden architecture. The air, once clean, occasionally carries the faint smog of industrial magic from the Hightown construction site.\n\nFor some residents, like Billy the Butcher seeing his customers dwindle, or families facing eviction notices from Grenn, the peaceful illusion has cracked. New Miniport remains a place of community and beauty, but a quiet anxiety now simmers beneath its picturesque surface, a sense that the simple, hard-won peace of this miniature world is under threat from forces far larger than itself."
 	},
 
@@ -11,6 +12,7 @@
 	"uptown": {
 		"name": "Hightown",
 		"type": "Region",
+		"icon": "Buildings",
 		"parent": "newminiport",
 		"coordinates": { "x": "56", "y": "38" },
 		"tags": ["Clean", "Judgemental", "Wealthy", "Well-funded"],
@@ -93,6 +95,7 @@
 	"downtown": {
 		"name": "Downtown",
 		"type": "Region",
+		"icon": "Building",
 		"tags": ["Crowded", "Dirty"],
 		"parent": "newminiport",
 		"coordinates": { "x": "52", "y": "48" },

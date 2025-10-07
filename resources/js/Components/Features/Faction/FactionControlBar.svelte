@@ -40,11 +40,11 @@
 
 	//	Submenu Options
 
-	let locationOptions = project.locations?.map(l => {
+	let locationOptions = project.locations?.items?.map(l => {
 		return { label: l.name, value: `location.${l.slug}`,	imageIcon: 'MapPinArea', 	 image: l.image?.url || '', filterFunction: (fac) => { return fac.headquarters?.slug === l.slug } }
 	})
 	
-	let characterOptions = project.characters?.map(c => {
+	let characterOptions = project.characters?.items?.map(c => {
 		return { label: c.name, value: `character.*.${c.slug}`, imageIcon: 'FlagBannerFold', image: c.image?.url || '', filterFunction: (fac) => { return fac.members?.map(m => m.slug).includes(filter.split('.')[2]) } }
 	})
 
@@ -68,9 +68,9 @@
 		}),
 	])
 	const sortOptions = $state([
-		{ label: "By name",			value: 'name',       sortFunction: (a,b) => { return a.name 				< b.name					? -1 : 1 } },
-		{ label: "By type",			value: 'type',       sortFunction: (a,b) => { return a.type             	< b.type					? -1 : 1 } },
-		{ label: "By member count",	value: 'members',    sortFunction: (a,b) => { return a.members?.length      > b.members?.length 		? -1 : 1 } },
+		{ label: "By name",			value: 'name',       sortFunction: (a,b) => { return a.name 				 < b.name					? -1 : 1 } },
+		{ label: "By type",			value: 'type',       sortFunction: (a,b) => { return a.type             	 < b.type					? -1 : 1 } },
+		{ label: "By member count",	value: 'members',    sortFunction: (a,b) => { return a.members?.items.length > b.members?.items.length	? -1 : 1 } },
 		...customFields?.map(f => {
 			return { label: `By ${f.label.toLowerCase()}`, value: f.name }
 		}),

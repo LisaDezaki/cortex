@@ -40,15 +40,15 @@
 
 	//	Submenu Options
 
-	let parentLocationOptions = project?.locations?.filter(l => l.children?.length > 0).map(l => {
+	let parentLocationOptions = project?.locations?.items?.filter(l => l.children?.length > 0).map(l => {
 		return { label: l.name, value: `parent.${l.slug}`, imageIcon: 'MapPin', image: l.image?.url || '', filterFunction: (loc) => { return loc.parent?.slug == filter.split('.')[1] } }
 	})
 
-	let childLocationOptions = project?.locations?.filter(l => l.parent !== null).map(l => {
+	let childLocationOptions = project?.locations?.items?.filter(l => l.parent !== null).map(l => {
 		return { label: l.name, value: `children.*.${l.slug}`, imageIcon: 'MapPin', image: l.image?.url || '', filterFunction: (loc) => { return loc.children?.map(i => i.slug).includes(filter.split('.')[2]) } }
 	})
 
-	let locationTypeOptions = project?.locations?.reduce((acc,item) => {
+	let locationTypeOptions = project?.locations?.items?.reduce((acc,item) => {
 		return acc.includes(item.type) ? acc : [...acc, item.type]
 	}, []).sort((a,b) => a<b ? -1:1).map(n => ({ label: n, value: n, filterFunction: l => l.type === n }))
 

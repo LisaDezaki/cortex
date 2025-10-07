@@ -2,23 +2,36 @@
 	import { Link } from '@inertiajs/svelte'
 	import { ContextMenu } from "bits-ui";
 
-	import { Flex, Grid, Stack } from '@/Components/Core';
+	import { Flex, Grid, Inline, Stack } from '@/Components/Core';
 	import Button 	 from '@/Components/UI/Button.svelte';
 	import Icon 	 from '@/Components/UI/Icon.svelte';
 	import Separator from '@/Components/UI/Separator.svelte';
+	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
-  let {
-	children,
-	class: className,
-	icon,
-	iconSize = 16,
-	iconWeight = 'regular',
-	iconOptions,
-	label,
-	options,
-	...restProps
-  } = $props()
+	let {
+		children,
+		class: className,
+		icon,
+		iconSize = 16,
+		iconWeight = 'regular',
+		iconOptions,
+		label,
+		options,
+		...restProps
+	} = $props()
 
+	let contextSearch   = $state('')
+	let lowerCaseSearch = $derived(contextSearch.toLowerCase())
+
+	function queried(opts) {
+		return opts.filter(o => {
+			return contextSearch === '' ? true : o.label?.toLowerCase().includes(contextSearch?.toLowerCase())
+		})
+	}
+
+	// {#each option.options.filter(o => {
+	// 	return contextSearch === '' ? true : o.label?.toLowerCase().includes(contextSearch?.toLowerCase())
+	// }) as opt}
   
 </script>
 
@@ -33,25 +46,31 @@
 {#snippet item(item)}
 	<Flex
 		align="center" justify="center" gap={2}
-		class="relative cursor-pointer px-2 py-1.5 rounded w-full
+		class="relative cursor-pointer h-8 px-1.5 py-1 rounded w-full
+			{item.active			 ? 'bg-accent-softest'		:	'' }
 			{item.disabled			 ? 'text-neutral-softest'	:	'' }
 			{item.theme === 'accent' ? 'text-accent' : '' }
 			{item.theme === 'danger' ? 'text-danger' : '' }
 			{item.theme === undefined ? 'text-neutral-strong active:text-accent' : '' }
 		">
 
-		{#if item.icon}
+		{#if item.image !== undefined}
+			<Thumbnail class="border p-[1px] rounded-full w-6 {item.active ? 'border-accent' : 'border-neutral-softest'}"
+				iconSize={16} src={item.image?.url}
+				imageClass="rounded-full"
+			/>
+		{:else if item.icon}
 			<Icon name={item.icon} class={item.active ? "text-accent": ""}
 				size={item.iconSize || iconSize} weight={item.iconWeight || iconWeight}
 			/>
 		{/if}
 
 		{#if item.label}
-			<span class="font-style-small line-clamp-1 truncate grow">{item.label}</span>
+			<span class="font-style-small line-clamp-1 py-0.5 truncate grow" class:text-accent={item.active}>{item.label}</span>
 		{/if}
 
 		{#if item.options}
-			<Icon name="CaretRight" size="sm" class="ml-auto -mr-2 text-neutral-softer" />
+			<Icon name="CaretRight" size="sm" class="ml-auto text-neutral-softer" />
 		{/if}
 
 		{#if item.active}
@@ -85,13 +104,13 @@
 		<ContextMenu.Content class="bg-white border border-neutral-softer max-h-96 outline-none overflow-y-auto p-0.5 rounded-lg shadow-xl w-48 focus-visible:outline-none">
 
 			{#if iconOptions}
-				<Grid cols={iconOptions.length} gap={0} class="w-full">
-					{#each iconOptions.map(opt => ({...opt, iconSize: 18, iconWeight: opt.iconWeight || 'regular' })) as iconOption}
+				<Inline gap={0} class="w-full">
+					{#each iconOptions.map(opt => ({...opt, iconSize: "sm", iconWeight: opt.iconWeight || 'regular' })) as iconOption}
 						<ContextMenu.Item class="grow rounded hover:bg-{iconOption.theme || 'neutral'}-softest">
 							{@render item(iconOption)}
 						</ContextMenu.Item>
 					{/each}
-				</Grid>
+				</Inline>
 				<ContextMenu.Separator class="border-t border-neutral-softest mx-2 my-0.5 w-auto" />
 			{/if}
 
@@ -111,25 +130,35 @@
 							sideOffset={4}
 						>
 							<Flex align="center" class="border-b border-neutral-softest p-0.5 text-neutral-soft w-full z-10">
-								<span class="line-clamp-1 px-3 truncate">{option.label}</span>
+								<!-- <span class="line-clamp-1 px-3 text-sm truncate">{option.label}</span> -->
+								<input bind:value={contextSearch} class="border-none pl-2 px-1 py-1 rounded font-style-input text-neutral w-28" placeholder="Search" />
 								<!-- <Button style="soft" theme="accent" class="h-8 w-8 ml-auto"
 									icon="Plus" size="sm"
 									onclick={option.create}
 								/> -->
-								<ContextMenu.Item class="h-8 w-8 ml-auto">
-									<Button style="plain" theme="accent" class="h-8 w-8 ml-auto"
-										icon="Plus" size="sm"
+
+								<!-- <ContextMenu.Item class="h-8 w-8 ml-auto"> -->
+									<!-- <Flex align="center" gap={0} class="bg-white p-0.5 w-full">
+										<Button size="md" icon="CaretLeft" iconSize="sm" class="text-neutral-softest focus:outline-none border-none" onclick={back} />
+										<input bind:value={suboptionQuery} class="border-none px-1 py-1 rounded text-sm w-28" placeholder="Search" />
+										<Button size="sm" icon="Plus" theme="accent" class="ml-auto" />
+									</Flex> -->
+									<Button style="plain" theme="accent" size="xs" class="h-7 w-7 ml-auto"
+										icon="Plus" iconSize="sm"
 										onclick={option.create}
 									/>
-								</ContextMenu.Item>
+									<!-- <Button style="plain" theme="accent" size="md" class="ml-auto"
+										 icon="Plus" iconSize="sm"
+									/> -->
+								<!-- </ContextMenu.Item> -->
 							</Flex>
 							{#if option.options.length > 0}
 								<Stack class="max-h-96 overflow-y-auto p-0.5" gap={0}>
-									{#each option.options as opt}
+									<!-- <pre>{JSON.stringify(contextSearch,null,3)}</pre> -->
+									{#each queried(option.options) as opt}
 										<ContextMenu.Item class="hover:bg-{opt.theme || 'neutral'}-softest rounded">
 											{@render item(opt)}
 										</ContextMenu.Item>
-									
 									{/each}
 								</Stack>
 							{:else}

@@ -1,11 +1,17 @@
 import { router } from '@inertiajs/svelte'
 import { route } from 'momentum-trail'
 
+import CharacterList from '@/services/CharacterList'
+import FactionList from '@/services/FactionList'
+import LocationList from '@/services/LocationList'
 import { modalActions } from '@/stores/modalStore';
 
 export default class ProjectObject {
 	constructor(projectData) {
 		Object.assign(this, projectData, {
+			characters: projectData.characters ? new CharacterList(projectData.characters)	: null,
+			factions:   projectData.factions   ? new FactionList(projectData.factions)		: null,
+			locations:  projectData.locations  ? new LocationList(projectData.locations)	: null,
 			routes: {
 				activate:	route('projects.activate',	{ project: projectData.id }),
 				deactivate: route('projects.deactivate'),

@@ -9,6 +9,7 @@
 		class: className,
 		icon,
 		iconSize = 20,
+		imageClass,
 		src,
 		...restProps
 	} = $props()
@@ -21,7 +22,7 @@
 
 <div class="thumbnail {className}" {...restProps}>
 	{#if src}
-		<img {src} alt={restProps.alt || ''} class="thumbnail-image" />
+		<img {src} alt={restProps.alt || ''} class="thumbnail-image {imageClass}" />
 	{:else}
 		<div class="thumbnail-fallback">
 			{#if icon}
@@ -35,7 +36,6 @@
 
 	:global(.thumbnail) {
 		@apply inline-flex items-center justify-center aspect-square overflow-hidden flex-shrink-0;
-		background-color: var(--bg-neutral-softest);
 	}
 
 	:global(.thumbnail:not([class*="rounded"])) {

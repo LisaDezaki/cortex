@@ -245,6 +245,15 @@
 		"desc": "In the bustling New Miniport PD precinct, where urgency is the currency of the day, Officer Laggard moves at a different, more… geological pace. A tortle with a shell polished to a dull sheen and a face permanently fixed in an expression of placid incomprehension, he is the living embodiment of bureaucratic inertia.\n\nFor the average citizen reporting a crime, Laggard is a study in frustration. He arrives at crime scenes long after the culprits have fled, takes statements at a speed that suggests his quill is dipped in molasses, and files paperwork into a void from which it never returns. His standard response to any request, from a stolen locket to a bar brawl, is a slow, drawn-out \"I'll, uhhh... get around to that.\"\n\nThis maddening slowness, however, vanishes when the request comes from on high. A directive from the Dragon Council sees him spring into action with a speed that defies his biology, his shell suddenly no impediment to efficiently carrying out their every whim, be it serving an unjust eviction notice or shutting down a protest.\n\nThis stark contrast has led most citizens to a grim conclusion: Officer Laggard isn't incompetent; he is selectively, and strategically, slow. He is not a defender of justice, but a carefully placed obstruction, a living barrier ensuring that the wheels of law only turn for those with the power and influence to grease them."
 	},
 
+	"leon": {
+		"name": "Leon",
+		"alias": "The Subterranian",
+		"species": "tortle",
+		"location": null,
+		"personality": ["Lonely"],
+		"desc": "Leon is a tortle fighter."
+	},
+
 	"leona": {
 		"name": "Leona",
 		"alias": "The Scrapper",

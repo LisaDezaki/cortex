@@ -152,8 +152,8 @@
 						<Heading is="h3" as="h6">Relationships</Heading>
 					</Flex>
 					<Grid cols={4} gap={6}>
-						{#if character.relationships?.length > 0}
-							{#each character.relationships as rel, i}
+						{#if character.relationships?.items?.length > 0}
+							{#each character.relationships.items as rel, i}
 
 								<Link href={route('characters.show', { character: rel.slug })} class="flex items-center gap-3 p-1 w-96 hover:text-accent">
 									<Thumbnail class="aspect-square bg-surface border border-surface rounded-full w-12"
@@ -191,9 +191,9 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h6">Factions</Heading>
 					</Flex>
-					{#if character.factions.length > 0}
+					{#if character.factions?.items?.length > 0}
 						<Grid cols={4} gap={3}>
-							{#each character.factions as fac, i}
+							{#each character.factions?.items as fac, i}
 								<Link
 									class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
 									href={route("factions.show", { faction: fac.slug})}>

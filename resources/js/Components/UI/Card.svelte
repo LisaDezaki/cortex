@@ -21,13 +21,13 @@
 		image,
 		imageClass,
 		icon,
-		iconSize = 32,
-		iconWeight = "fill",
 		iconOptions,
 		onclick,
 		onStar,
 		options,
+		starrable,
 		starred,
+		thumbnailIcon,
 		title,
 		subtitle,
 		subtitleClass,
@@ -39,26 +39,29 @@
 </script>
 
 <Stack gap={1}
-	class="card {clickable ? "cursor-pointer" : null} {className}"
+	class="card {clickable ? "cursor-pointer" : null} {className} hover:text-accent"
 	onclick={onclick}
 {...restProps}>
 
 	<Flex class="card-visual aspect-{aspect} {imageClass}">
 		{#if image}
 			<img class="card-image" src={image} alt={title} />
-		{:else if icon}
-			<Icon class="card-icon opacity-35" name={icon} size={iconSize} weight={iconWeight} />
+		{:else if thumbnailIcon}
+			<Icon class="card-icon opacity-35" name={thumbnailIcon} size={32} weight="fill" />
 		{/if}
 		{@render children?.()}
 	</Flex>
 
-	<Flex justify="start" class="w-full">
-		<div class="card-details -space-y-0.5">
+	<Flex align="center" justify="start" gap={2} class="px-1 w-full">
+		{#if icon}
+			<Icon name={icon} size="sm" class="border border-neutral-softest rounded-full h-8 w-8" />
+		{/if}
+		<Stack class="card-details -space-y-0.5">
 			<span class="font-style-small font-semibold line-clamp-1 w-full">{title}</span>
 			{#if subtitle}
 				<span class="font-style-tiny line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
 			{/if}
-		</div>
+		</Stack>
 	</Flex>
 
 	{#if href}
@@ -77,11 +80,13 @@
 		/>
 	{/if}
 
-	<Button
-		class="absolute bg-tint-radial top-0 left-0 z-10 {starred ? '' : 'show-on-hover'} {starred ? 'text-amber-400 hover:text-amber-300' : 'text-white hover:text-amber-400'}"
-		icon="Star" iconSize="md" iconWeight={starred ? 'fill' : 'light'}
-		onclick={onStar}
-	/>
+	{#if starrable}
+		<Button
+			class="absolute bg-tint-radial top-0 left-0 z-10 {starred ? '' : 'show-on-hover'} {starred ? 'text-amber-400 hover:text-amber-300' : 'text-white hover:text-amber-400'}"
+			icon="Star" iconSize="md" iconWeight={starred ? 'fill' : 'light'}
+			onclick={onStar}
+		/>
+	{/if}
 
 </Stack>
 

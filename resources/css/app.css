@@ -385,7 +385,9 @@
 	.font-style-tiny		{ @apply text-xs; }
 
 	.font-style-button		{ @apply font-medium text-xs uppercase tracking-wider; }
-	.font-style-input		{ @apply text-base; }
+	.font-style-input		{ @apply font-normal text-sm;
+		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
+	}
 	.font-style-placeholder	{
 		@apply text-base italic opacity-75;
 		color: var(--text-neutral-softer);

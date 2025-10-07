@@ -13,6 +13,8 @@
 	import Books from "phosphor-svelte/lib/Books"
 	import BoxingGlove from "phosphor-svelte/lib/BoxingGlove"
 	import Bread from "phosphor-svelte/lib/Bread"
+	import Building from "phosphor-svelte/lib/Building"
+	import Buildings from "phosphor-svelte/lib/Buildings"
 	import BuildingApartment from "phosphor-svelte/lib/BuildingApartment"
 	import Butterfly from "phosphor-svelte/lib/Butterfly"
 	import CalendarDots from "phosphor-svelte/lib/CalendarDots"
@@ -59,6 +61,7 @@
 	import Hamburger from "phosphor-svelte/lib/Hamburger"
 	import Handshake from "phosphor-svelte/lib/Handshake"
 	import Hash from "phosphor-svelte/lib/Hash"
+	import HouseLine from "phosphor-svelte/lib/HouseLine"
 	import Image from "phosphor-svelte/lib/Image"
 	import ImageSquare from "phosphor-svelte/lib/ImageSquare"
 	import ImagesSquare from "phosphor-svelte/lib/ImagesSquare"
@@ -75,6 +78,7 @@
 	import MagnifyingGlassPlus from "phosphor-svelte/lib/MagnifyingGlassPlus"
 	import MapPin from "phosphor-svelte/lib/MapPin"
 	import MapPinArea from "phosphor-svelte/lib/MapPinArea"
+	import MapPinSimple from "phosphor-svelte/lib/MapPinSimple"
 	import MapPinSimpleArea from "phosphor-svelte/lib/MapPinSimpleArea"
 	import MapTrifold from "phosphor-svelte/lib/MapTrifold"
 	import Minus from "phosphor-svelte/lib/Minus"
@@ -112,19 +116,11 @@
 	import User from "phosphor-svelte/lib/User"
 	import UserCircle from "phosphor-svelte/lib/UserCircle"
 	import UserList from "phosphor-svelte/lib/UserList"
+	import UserPlus from "phosphor-svelte/lib/UserPlus"
 	import UsersFour from "phosphor-svelte/lib/UsersFour"
 	import UsersThree from "phosphor-svelte/lib/UsersThree"
 	import Wrench from "phosphor-svelte/lib/Wrench"
 	import X from "phosphor-svelte/lib/X"
-
-    let {
-		animation,
-		class: className,
-		if: showIf = true,
-        name,
-		size = "lg",
-		...restProps
-    } = $props()
 
 	const icons = {
 		'ArrowElbowUpLeft': ArrowElbowUpLeft,
@@ -141,6 +137,8 @@
 		'Books': Books,
 		'BoxingGlove': BoxingGlove,
 		'Bread': Bread,
+		'Building': Building,
+		'Buildings': Buildings,
 		'BuildingApartment': BuildingApartment,
 		'Butterfly': Butterfly,
 		'CalendarDots': CalendarDots,
@@ -187,6 +185,7 @@
 		'Hamburger': Hamburger,
 		'Handshake': Handshake,
 		'Hash': Hash,
+		'HouseLine': HouseLine,
 		'Image': Image,
 		'ImageSquare': ImageSquare,
 		'ImagesSquare': ImagesSquare,
@@ -203,6 +202,7 @@
 		'MagnifyingGlassPlus': MagnifyingGlassPlus,
 		'MapPin': MapPin,
 		'MapPinArea': MapPinArea,
+		'MapPinSimple': MapPinSimple,
 		'MapPinSimpleArea': MapPinSimpleArea,
 		'MapTrifold': MapTrifold,
 		'Minus': Minus,
@@ -240,6 +240,7 @@
 		'User': User,
 		'UserCircle': UserCircle,
 		'UserList': UserList,
+		'UserPlus': UserPlus,
 		'UsersFour': UsersFour,
 		'UsersThree': UsersThree,
 		'Wrench': Wrench,
@@ -247,13 +248,22 @@
 	}
 
 	const sizes = {
-		'xs': 12,
-		'sm': 16,
-		'md': 20,
-		'lg': 24,
-		'xl': 28,
+		'xs':  12,
+		'sm':  16,
+		'md':  20,
+		'lg':  24,
+		'xl':  28,
 		'2xl': 32
 	}
+
+	let {
+		animation,
+		class: className,
+		if: showIf = true,
+        name,
+		size = "lg",
+		...restProps
+    } = $props()
 	
 	if (!name) {
 		console.log(name+' is not a valid icon name.')
@@ -269,7 +279,7 @@
 </script>
 
 {#if showIf && Component}
-	<div class="icon {className}">
+	<div class="icon {className}" style={restProps.style || null}>
 		<Component class={animation} size={iconSize} {...restProps} />
 	</div>
 {/if}

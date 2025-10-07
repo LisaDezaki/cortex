@@ -42,7 +42,9 @@
     import RenameLocationModal 	 from '@/Modals/RenameLocation.svelte';
     import RenameProjectModal 	 from '@/Modals/RenameProject.svelte';
 	
+    import SelectLocationModal 			 from '@/Modals/SelectLocation.svelte';
     import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte';
+    import SetLocationModal 			 from '@/Modals/SetLocation.svelte';
     import UploadMediaModal 			 from '@/Modals/UploadMedia.svelte';
 	
 	//	2. Create a modal registry map
@@ -67,7 +69,9 @@
 		renameLocation:		RenameLocationModal,
 		renameProject:		RenameProjectModal,
 
+		selectLocation:				SelectLocationModal,
 		setCharacterRelationship:	SetCharacterRelationshipModal,
+		setLocation:				SetLocationModal,
 		uploadMedia:				UploadMediaModal
     };
 

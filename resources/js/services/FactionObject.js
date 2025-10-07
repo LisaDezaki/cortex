@@ -1,11 +1,15 @@
 import { router } from '@inertiajs/svelte'
 import { route } from 'momentum-trail'
 
+import CharacterList from '@/services/CharacterList'
+import LocationObject from '@/services/LocationObject'
 import { modalActions } from '@/stores/modalStore';
 
 export default class FactionObject {
 	constructor(factionData) {
 		Object.assign(this, factionData, {
+			headquarters: factionData.headquarters ? new LocationObject(factionData.headquarters) : null,
+			members: factionData.members ? new CharacterList(factionData.members) : null,
 			routes: {
 				show:    route('factions.show',    { faction: factionData.slug }),
 				update:  route('factions.update',  { faction: factionData.slug }),
@@ -13,6 +17,11 @@ export default class FactionObject {
 			}
 		})
 	}
+
+
+	/**
+	 * Modal methods
+	 */
 	
 	addBanner() {
 		modalActions.open('uploadMedia', {
@@ -44,13 +53,27 @@ export default class FactionObject {
 		console.log('addTag()', tag)
 	}
 
-	// addToCollection(collection) {
-	// 	console.log('addToCollection', collection.name)
-	// }
-
 	delete() {
 		modalActions.open('deleteFaction', { faction: this })
 	}
+
+	rename() {
+		modalActions.open('renameFaction', { faction: this })
+	}
+
+	setHeadquarters() {
+		modalActions.open('selectLocation', {
+			endpoint: route('factions.update', { faction: this.slug }),
+			method: 'patch',
+			title: `Set ${this.name} Headquarters`
+		})
+	}
+
+
+
+	/**
+	 * 	Media methods
+	 */
 
 	getBanner() {
 		return this.media?.filter(m => m.type === 'banner')?.[0] || null
@@ -60,6 +83,10 @@ export default class FactionObject {
 		return this.media?.filter(m => m.type === 'emblem')?.[0] || null
 	}
 
+	/**
+	 * 	Update methods
+	 */
+
 	removeHeadquarters() {
 		console.log('removeHeadquarters()')
 	}
@@ -68,13 +95,14 @@ export default class FactionObject {
 		console.log('removeMember()', char?.name)
 	}
 
-	setHeadquarters(faction) {
-		console.log('setFaction()', faction?.name)
-	}
-
 	star() {
 		this._update({ starred: !Boolean(this.starred) })
 	}
+
+
+	/**
+	 * 	HTTP methods
+	 */
 
 	_update(data) {
 		router.patch(

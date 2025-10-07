@@ -28,6 +28,9 @@
             'lg':   'sm:max-w-lg',
             'xl':   'sm:max-w-xl',
             '2xl':  'sm:max-w-2xl',
+            '3xl':  'sm:max-w-3xl',
+            '4xl':  'sm:max-w-4xl',
+            '5xl':  'sm:max-w-5xl'
         }[maxWidth],
     )
 
@@ -58,61 +61,35 @@
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
 <Portal target="body">
-    <!-- <Transition {show} leave="duration-200"> -->
-        <Stack justify="center" class="fixed inset-0 z-50 overflow-y-auto px-4 py-6 sm:px-0" scroll-region>
-            <!-- <Transition
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-            > -->
-                <!-- svelte-ignore a11y_no_static_element_interactions -->
-                <div class="overlay-wrap" onclick={modalActions.close}>
-                    <div class="overlay"></div>
-                </div>
-            <!-- </Transition> -->
+	<Stack justify="center" class="fixed inset-0 z-50 overflow-y-auto px-4 py-6 sm:px-0" scroll-region>
 
-            <!-- <Transition
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-            > -->
-                <div class="modal {maxWidthClass} {className}">
-					{#if title}
-						<Flex justify="between" class="modal-head">
-							<Heading is="h3" as="h6" heading={title} />
-							<Flex gap={3}>
-								<Button style="plain" theme="danger" class="rounded-full"
-									icon="X" onclick={modalActions.close}
-								/>
-								<!-- <Button style="soft" theme="accent" class="rounded-full"
-									icon="Check"
-								/> -->
-							</Flex>
-						</Flex>
-					{/if}
-					<div class="modal-body">
-						{@render children()}
-					</div>
-					{#if actions}
-						<div class="modal-foot">
-							{@render actions()}
-						</div>
-					{/if}
-					{#if footer}
-						<!-- <Flex align="center" justify="start" class="modal-foot">
-							{@render footer?.()}
-						</Flex> -->
-					{/if}
-                </div>
-            <!-- </Transition> -->
-        </Stack>
-    <!-- </Transition> -->
+		<!-- svelte-ignore a11y_no_static_element_interactions -->
+		<div class="overlay-wrap" onclick={modalActions.close}>
+			<div class="overlay"></div>
+		</div>
+		
+		<div class="modal {maxWidthClass} {className}">
+			{#if title}
+				<Flex justify="between" class="modal-head">
+					<Heading is="h3" as="h6" heading={title} />
+					<Button style="plain" theme="danger" class="rounded-full"
+						icon="X" onclick={modalActions.close}
+					/>
+				</Flex>
+			{/if}
+			<div class="modal-body">
+				{@render children()}
+			</div>
+			{#if actions}
+				<Stack class="modal-foot">
+					{@render actions()}
+				</Stack>
+			{/if}
+			<!-- {#if footer}
+				{@render footer()}
+			{/if} -->
+		</div>
+	</Stack>
 </Portal>
 
 <style lang="postcss">
@@ -154,9 +131,11 @@
 	@keyframes blur-in {
 		from {
 			backdrop-filter: blur(0px);
+			background-color: rgba(0,0,0,0.0);
 		}
 		to {
-			backdrop-filter: blur(2px);
+			backdrop-filter: blur(8px);
+			background-color: rgba(0,0,0,0.4);
 		}
 	}
 

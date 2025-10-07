@@ -1,37 +1,44 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { Link } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 	import { Box, Flex, Inline, PanZoom, Preview, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon from '@/Components/UI/Icon.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
-
-	let worldTree = $page.props.worldTree?.data
 	
 	let {
 		class: className,
-		markerClass,
 		constrain = false,
+		coordinates = $bindable([null,null]),
+		debug,
+		markerClass,
 		legend,
-		location = $bindable(worldTree || null),
+		location = $bindable(null),
 		minZoom  = $bindable(0.5),
 		maxZoom  = $bindable(3),
 		position = $bindable({ x:0, y:0 }),
+		setCoordinates,
 		zoom     = $bindable(1),
         ...restProps
     } = $props()
 
-	let history = $state([])
+	let history    = $state([])
 
-	let media_map = $derived(location?.media?.filter(m => m.type === 'map')?.[0])
+	function hasMapAndChildren(location) {
+		return ( location.children?.length > 0 || location.descendants?.length > 0 ) && location.map
+	}
+
+	function mapClick(e) {
+		coordinates = [
+			e.offsetX/e.originalTarget.width*100,
+			e.offsetY/e.originalTarget.height*100
+		]
+		console.log(coordinates)
+	}
 
 	function setLocation(loc) {
 		history = [ ...history, location ]
 		location = loc
-	}
-
-	function hasMapAndChildren(location) {
-		return ( location.children?.length > 0 || location.descendants?.length > 0 ) && location.map
 	}
 
 	function undo(id) {
@@ -62,70 +69,75 @@
 
 
 {#snippet mapMarker(loc,i)}
-	<div style="position: absolute; left: {loc.coordinates.x}%; top: {loc.coordinates.y}%; transform: translate(-50%,-50%);">
+
+	<Flex
+		align="center"
+		class="bg-white cursor-pointer h-6 overflow-hidden p-1 rounded-full w-6 hover:w-auto transition-all"
+		style="position: absolute; left: {loc.coordinates.x}%; top: {loc.coordinates.y}%; transform: translate(-0.75rem,-50%);"
+	>
+		<Icon class="text-accent" name={loc.icon || "MapPin"} size="sm" weight="fill" />
+		<Link
+			href={route('locations.show', { location: loc.slug} )}
+			class="font-style-tiny line-clamp-1 pr-1.5 text-accent truncate hover:underline"
+		>{loc.name}</Link>
+	</Flex>
+
+
+	<!-- <div style="position: absolute; left: {loc.coordinates.x}%; top: {loc.coordinates.y}%; transform: translate(-50%,-50%);">
 		<Preview
-			triggerClass="flex items-center justify-center bg-white aspect-square cursor-pointer h-8 w-8 rounded-full {markerClass}"
+			triggerClass="flex items-center justify-center bg-white aspect-square h-6 w-6 rounded-full {markerClass}"
 			href={hasMapAndChildren(loc) ? undefined : route('locations.show', { location: loc.slug})}
 			icon={loc.icon || "MapPin"}
 		>
-			<Icon class="text-accent" name={loc.icon || "MapPin"} size="md" weight="fill" />
+			<Icon class="text-accent" name={loc.icon || "MapPin"} size="sm" weight="fill" />
 			{#snippet content()}
-				<Flex items="center" class="bg-white rounded-lg z-10">
-					<Thumbnail class="rounded-l-lg rounded-r-none w-20" src={loc.banner?.url} />
-					<Flex align="start" justify="center" gap={0} direction="col" class="px-2 py-1.5 pr-3 rounded-lg">
-						<span class="text-md">{loc.name}</span>
-						<span class="text-sm">{loc.alias}</span>
-						<Flex class="mt-auto" gap={2}>
-							<Link href={route('locations.show', { location: loc.slug} )} class="italic text-accent text-sm hover:underline">Go to Location</Link>
-							{#if loc.map}
-								<button onclick={() => setLocation(loc)} class="italic text-accent text-sm hover:underline">View Map</button>
-							{/if}
-						</Flex>
-					</Flex>
+				<Flex items="center" class="bg-white cursor-pointer px-1.5 py-1 rounded-sm z-10">
+					<Link
+						href={route('locations.show', { location: loc.slug} )}
+						class="font-style-tiny text-accent hover:underline"
+					>{loc.name}</Link>
 				</Flex>
 			{/snippet}
 		</Preview>
-	</div>
+	</div> -->
 {/snippet}
-
 
 
 
 <Flex gap={0} class="bg-white overflow-hidden rounded w-full {className}">
 	
-
 	<PanZoom
 		bind:position
 		bind:zoom
 		constrain={constrain}
-		class="bg-neutral-soft aspect-square flex-grow"
+		class="bg-neutral-soft aspect-square cursor-crosshair flex-grow"
 		backgroundImage="/img/grid.png"
 		{minZoom} {maxZoom}
-		debug={{ location: location?.name }}
+		{debug}
 	{...restProps}>
 
 
 		<!-- Controls -->
 	
 		{#snippet controls()}
-			<Flex class="absolute backdrop-blur-sm hover:backdrop-blur-md bg-white/10 border border-white/50 text-white top-3 left-3 z-10 px-2 rounded-full transition-all">
+			<Flex class="absolute backdrop-blur-sm hover:backdrop-blur-md bg-white/10 border border-white/50 text-white top-1.5 left-1.5 rounded-md transition-all z-10">
 				{#each history as item}
 					<Button style="plain" theme="neutral" label={item.name} onclick={() => undo(item.id)} />
 					<Icon name="CaretRight" size="sm" />
 				{/each}
-				<Button style="plain" theme="neutral" label={location?.name} />
+				<Button style="plain" theme="neutral" size="xs" label={location?.name} class="p-1 rounded-sm" />
 			</Flex>
-			<Flex gap={0.5} class="absolute top-3 right-3 z-10">
-				<Button class="w-10 rounded-l-full" style="glass" icon="MagnifyingGlassMinus" iconSize="sm" onclick={() => {zoom /= 1.2}} disabled={zoom <= minZoom} />
-				<Button class="w-10 rounded-r-full" style="glass" icon="MagnifyingGlassPlus"  iconSize="sm" onclick={() => {zoom *= 1.2}} disabled={zoom >= maxZoom} />
+			<Flex gap={0} class="absolute top-1.5 right-1.5 z-10">
+				<Button class="w-9 rounded-l-full" style="glass" icon="MagnifyingGlassMinus" iconSize="sm" onclick={() => {zoom /= 1.2}} disabled={zoom <= minZoom} />
+				<Button class="w-9 rounded-r-full" style="glass" icon="MagnifyingGlassPlus"  iconSize="sm" onclick={() => {zoom *= 1.2}} disabled={zoom >= maxZoom} />
 			</Flex>
 		{/snippet}
 	
 	
 		<!-- Map Image -->
 	
-		<Box class="absolute map">
-			<img class="h-full w-full" src={media_map?.url} alt={media_map?.name} />
+		<Box class="absolute map" onclick={mapClick}>
+			<img class="h-full w-full" src={location.getMap()?.url} alt={location?.name} />
 	
 			{#if location?.children}
 				{#each location?.children as location,i}
@@ -136,6 +148,17 @@
 					{@render mapMarker(location,i)}
 				{/each}
 			{/if}
+
+			{#if setCoordinates && coordinates[0] && coordinates[1]}
+				<Flex align="center" justify="center"
+					class="absolute pointer-events-none text-danger translate-x-[-50%] translate-y-[-50%] h-7 w-7 z-10"
+					style="left: {coordinates[0]}%; top: {coordinates[1]}%;"
+				>
+					<Icon name="MapPinSimple" size="xl" weight="fill" class="translate-y-[-50%]" />
+					<Box class="absolute inset-0 border border-danger rounded-full" />
+				</Flex>
+			{/if}
+
 		</Box>
 	
 	</PanZoom>
@@ -146,21 +169,21 @@
 	{#if legend}
 		<Stack class="h-full p-1 pr-1.5 rounded-r shrink-0 w-48 backdrop-blur-md overflow-y-auto">
 			{#each legend as item}
-				<Inline class="px-2 py-1.5 w-full pr-3">
+				<Inline class="cursor-pointer p-1.5 rounded w-full hover:bg-neutral-softest">
 					<Icon name={item.icon} size="sm" weight="bold" />
 					<span class="font-style-small font-medium line-clamp-1">{item.label}</span>
-					<Icon name="CaretDown" size="xs" weight="fill" class="ml-auto" />
+					<Icon name="CaretDown" size="xs" weight="fill" class="text-neutral-softer ml-auto" />
 				</Inline>
 				{#if item.items?.length > 0}
 					<Stack class="py-1">
 						{#each item.items as subitem}
-							<Inline class="cursor-pointer px-2 py-1 rounded w-full hover:bg-neutral-softest">
+							<Inline gap={2} class="cursor-pointer px-1.5 py-1 rounded w-full hover:bg-neutral-softest">
 								{#if subitem.image}
 									<Thumbnail class="h-6 w-6" src={subitem.image?.url} />
 								{:else}
-									<Icon class="h-6 w-6 text-accent" name={subitem.icon} size="md" />
+									<Icon class="text-accent" name={subitem.icon} size="sm" />
 								{/if}
-								<span class="font-style-small font-medium line-clamp-1">{subitem.label}</span>
+								<span class="font-style-small line-clamp-1">{subitem.label}</span>
 							</Inline>
 						{/each}
 					</Stack>

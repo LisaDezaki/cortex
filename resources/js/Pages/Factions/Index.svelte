@@ -9,6 +9,7 @@
 	import Empty     		 	from '@/Components/UI/Empty.svelte'
 	import PageHeader		 	from '@/Components/UI/PageHeader.svelte'
 	import Section      	 	from '@/Components/UI/Section.svelte'
+	import Thumbnail      	 	from '@/Components/UI/Thumbnail.svelte'
 	import FactionCard 		 	from '@/Components/Features/Faction/FactionCard.svelte'
 	import FactionControlBar 	from '@/Components/Features/Faction/FactionControlBar.svelte'
 	import FactionGrid 		 	from '@/Components/Features/Faction/FactionGrid.svelte'
@@ -19,14 +20,11 @@
 
 	import ProjectObject 	from '@/services/ProjectObject'
 	import CollectionList 	from '@/services/CollectionList'
-	import CharacterList 	from '@/services/CharacterList'
-	import FactionList 		from '@/services/FactionList'
-	import LocationList 	from '@/services/LocationList'
 	const activeProject   = new ProjectObject($page.props.activeProject.data)
 	const collections	  = new CollectionList($page.props.collections?.data)
-	const characters      = new CharacterList(activeProject?.characters)
-	const factions        = new FactionList(activeProject?.factions)
-	const locations    	  = new LocationList(activeProject?.locations)
+	const characters      = $state(activeProject?.characters)
+	const factions    	  = $state(activeProject?.factions)
+	const locations    	  = $state(activeProject?.locations)
 	
 
 	//	State & Derived values
@@ -37,8 +35,20 @@
 	let size	 = $state(8)
 	let layout   = $state('grid')
 	let gridCols = $derived(16-size)
-
 	let results = $derived(factions.items)
+
+	function getSubtitle(faction) {
+		switch (sort) {
+			case 'members':
+				return faction.members?.items.length + ' Members'
+			case 'created_at':
+				return new Date(faction.meta?.createdAt).toLocaleString() || '--'
+			case 'updated_at':
+				return new Date(faction.meta?.updatedAt).toLocaleString() || '--'
+			default:
+				return faction.type
+		}
+	}
 	
 </script>
 
@@ -74,7 +84,7 @@
 			/>
 		{/if}
 
-		<Section gap={6} class="px-12 py-6">
+		<Section gap={6} class="px-20 py-6">
 			{#if activeProject && results.length > 0}
 
 
@@ -86,8 +96,9 @@
 						cols={gridCols}
 					>
 						{#snippet gridItem(faction)}
-							<FactionCard
+							<FactionCard starrable
 								faction={faction}
+								subtitle={getSubtitle(faction)}
 								href={faction.routes.show}
 								iconOptions={[
 									{ icon: "Star", 		onclick: () => faction.star(), iconWeight: faction.starred ? 'fill' : 'regular' },
@@ -97,37 +108,45 @@
 									{ icon: "Trash", 		onclick: () => faction.delete(), theme: "danger" },
 								]}
 								options={[{
+									
+									icon: 'HouseLine', iconWeight: 'regular',
+									label: "Set Headquarters",
+									options: [ ...locations.items.map(l => ({
+										...l,
+										active: l.id === faction.headquarters?.id,
+										label: l.name,
+										onclick: () => faction.setHeadquarters(l)
+									})) ]
+								},{
+									icon: 'UserPlus', iconWeight: 'regular',
+									label: "Add Member",
+									options: [ ...characters.items.map(c => ({
+										...c,
+										active: faction.members?.items.map(m => m.name.toLowerCase()).includes(c.name.toLowerCase()),
+										label: c.name,
+										onclick: () => faction.addMember(c)
+									})) ]
+								},{
+									separator: true
+								},{
+									icon: 'FolderSimple', iconWeight: 'regular',
 									label: "Add to Collection",
 									create: () => collections.create(),
 									options: [ ...collections.items.map(c => ({
+										...c,
 										label: c.name,
 										onclick: () => faction.addToCollection(c),
 										disabled:   c.items.map(i => i.collectionable_id).includes(faction.id),
 										iconWeight: c.items.map(i => i.collectionable_id).includes(faction.id) ? 'fill' : 'light'
 									}))]
 								},{
+									icon: 'TagSimple', iconWeight: 'regular',
 									label: "Add Tags",
 									onclick: () => faction.applyTags()
 								},{
-									label: "Add Member",
-									options: [ ...characters.items.map(c => ({
-										label: c.name,
-										onclick: () => faction.addMember(c)
-									})) ]
-								},{
-									label: "Set Headquarters",
-									hideIf: faction.headquarters != null,
-									options: [ ...locations.items.map(l => ({
-										label: l.name,
-										onclick: () => faction.setHeadquarters(l)
-									})) ]
-								},{
-									label: "Remove Headquarters",
-									hideIf: faction.headquarters == null,
-									onclick: () => faction.removeHeadquarters()
-								},{
 									separator: true
 								},{
+									icon: 'Trash', iconWeight: 'regular',
 									label: "Delete Faction",
 									onclick: () => faction.delete(),
 									theme: "danger"

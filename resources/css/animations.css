@@ -1,0 +1,25 @@
+@theme {
+
+	--animate-ping2: ping2 1s linear infinite;
+	
+	@keyframes ping2 {
+		0% {
+			@apply h-3 w-3;
+		}
+		100% {
+			@apply h-9 w-9;
+		}
+	}
+
+	--animate-wiggle: wiggle 0.5s linear infinite;
+	
+	@keyframes wiggle {
+		0%, 100% {
+			transform: rotate(-3deg);
+		}
+		50% {
+			transform: rotate(3deg);
+		}
+	}
+
+}

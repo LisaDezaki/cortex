@@ -146,12 +146,11 @@
 
 
 
-
+	<!-- class:cursor-grab={!isDragging}
+	class:cursor-grabbing={isDragging} -->
 
 <div bind:this={containerRef}
 	class="relative overflow-hidden {className}"
-	class:cursor-grab={!isDragging}
-	class:cursor-grabbing={isDragging}
 	onpointerdown={dragStart}
 	onwheel={handleScroll}
 	style="background-image: url('{backgroundImage}'); background-size: 24px; background-position: {position.x+transform.x}px {position.y+transform.y}px"

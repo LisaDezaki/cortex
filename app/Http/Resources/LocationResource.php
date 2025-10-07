@@ -44,8 +44,9 @@ class LocationResource extends JsonResource
 			'characters'  => CharacterResource::collection($this->whenLoaded('characters')),
 
 			'meta' => [
-				'created_at' => $this->created_at,
-				'updated_at' => $this->updated_at
+				'projectId' => $this->project_id,
+				'createdAt' => $this->created_at,
+				'updatedAt' => $this->updated_at
 			]
 		];
     }
