@@ -10,6 +10,7 @@
 		class: className,
 		contentClass,
 		icon,
+		inputClass,
 		multiple = false,
 		options,
 		placeholder = "Select one...",
@@ -114,7 +115,7 @@
 
 	<!-- Trigger -->
 
-	<div class="{className} input-combobox" class:disabled={restProps.disabled} class:focus={hasFocus}>
+	<div class="{className} input-combobox {inputClass}" class:disabled={restProps.disabled} class:focus={hasFocus}>
 		{#if icon}
 			<Icon class="input-icon" name={icon} size={20} weight="regular" />
 		{/if}

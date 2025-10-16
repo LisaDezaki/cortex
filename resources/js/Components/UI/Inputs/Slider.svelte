@@ -1,9 +1,15 @@
 <script>
 	import { Slider } from "bits-ui";
+	import { Flex, Stack } from '@/Components/Core'
+	import Icon from '@/Components/UI/Icon.svelte'
+	import Label from '@/Components/UI/Inputs/Label.svelte'
 
 	let {
         class: className,
-        value = $bindable(),
+		icon,
+		iconSize,
+		label,
+		labelIcon,
 		min = 0,
 		max = 100,
 		step = 1,
@@ -12,6 +18,7 @@
 		showTicks = false,
 		multiple = false,
 		reverse = false,
+        value = $bindable(),
 		...restProps
     } = $props()
 
@@ -29,43 +36,57 @@
 
 
 
+<Stack gap={0} class="w-full {className}">
+	
+	{#if label}
+		<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft w-full">
+			{#if labelIcon}
+				<Icon name={labelIcon} size="xs" />
+			{/if}
+			<Label
+				class="font-style-label"
+				value={label}
+			/>
+		</Flex>
+	{/if}
+	
+	<Slider.Root
+		class="input-slider {restProps.disabled ? "style-disabled" : ""}"
+		type={multiple ? "multiple" : "single"}
+		bind:value
+		{min} {max} {step}
+		{...restProps}
+	>
+		{#snippet children({ ticks, thumbs })}
+			<span class="input-slider-track {["empty","both"].includes(style) ? "accent" : "neutral"}">
+				<Slider.Range class="slider-range {["fill","both"].includes(style) ? "accent" : "neutral"}" />
+			</span>
+	
+			{#each thumbs as thumb}
+				<Slider.Thumb index={thumb} class="slider-thumb">
+					{#if showValue}
+						{multiple ? value[thumb] : value}
+					{/if}
+				</Slider.Thumb>
+			{/each}
+	
+			{#if showTicks}
+				<div class="ticks">
+					{#each ticks as tick}
+						<Slider.Tick class="slider-tick" />
+					{/each}
+				</div>
+			{/if}
+	
+		{/snippet}
+	</Slider.Root>
+</Stack>
 
-
-<Slider.Root
-	class="{className} input-slider {restProps.disabled ? "style-disabled" : ""}"
-	type={multiple ? "multiple" : "single"}
-	bind:value
-	{min} {max} {step}
-	{...restProps}
->
-	{#snippet children({ ticks, thumbs })}
-		<span class="input-slider-track {["empty","both"].includes(style) ? "accent" : "neutral"}">
-			<Slider.Range class="slider-range {["fill","both"].includes(style) ? "accent" : "neutral"}" />
-		</span>
-
-		{#each thumbs as thumb}
-			<Slider.Thumb index={thumb} class="slider-thumb">
-				{#if showValue}
-					{multiple ? value[thumb] : value}
-				{/if}
-			</Slider.Thumb>
-		{/each}
-
-		{#if showTicks}
-			<div class="ticks">
-				{#each ticks as tick}
-					<Slider.Tick class="slider-tick" />
-				{/each}
-			</div>
-		{/if}
-
-	{/snippet}
-</Slider.Root>
 
 <style lang="postcss">
 
 	:global(.input-slider) {
-		@apply relative inline-flex items-center h-10 w-full;
+		@apply relative inline-flex items-center py-1 w-full;
 		@apply touch-none select-none;
 	}
 

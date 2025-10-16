@@ -19,6 +19,7 @@
 	import Dropdown    from '@/Components/UI/Dropdown.svelte'
 	import Field       from '@/Components/UI/Field.svelte'
 	import Heading     from '@/Components/UI/Heading.svelte'
+	import Input       from '@/Components/UI/Input.svelte'
 	import PageHeader  from '@/Components/UI/PageHeader.svelte'
 	import Section     from '@/Components/UI/Section.svelte'
 	import Table       from '@/Components/UI/Table'
@@ -89,12 +90,11 @@
 
 	{#snippet header()}
 		<PageHeader
-			title="Tests"
 			tabs={[
-				{ icon: 'DiamondsFour',	label: 'General',		active: activeTab === 'general',	onclick: () => activeTab = 'general'	},
-				{ icon: 'Textbox',		label: 'Forms',			active: activeTab === 'forms',		onclick: () => activeTab = 'forms'		},
-				{ icon: 'Table',		label: 'Table',			active: activeTab === 'table',		onclick: () => activeTab = 'table'		},
-				{ icon: 'TextAa',		label: 'Typography',	active: activeTab === 'typography',	onclick: () => activeTab = 'typography'	}
+				{ icon: 'DiamondsFour',	label: 'General',	active: activeTab === 'general',	onclick: () => activeTab = 'general'	},
+				{ icon: 'Textbox',		label: 'Forms',		active: activeTab === 'forms',		onclick: () => activeTab = 'forms'		},
+				{ icon: 'Table',		label: 'Table',		active: activeTab === 'table',		onclick: () => activeTab = 'table'		},
+				{ icon: 'TextAa',		label: 'Type',		active: activeTab === 'typography',	onclick: () => activeTab = 'typography'	}
 			]}
 		/>
 	{/snippet}
@@ -326,52 +326,53 @@
 
 							<Heading is="h3" as="h6">Input</Heading>
 
-							<Field type="text"
-								name="text"
+							<Input type="text" name="text"
+								size="xs"
+								icon="At"
 								placeholder="Input"
 							/>
 
-							<Field type="text"
-								name="icon"
+							<Input type="text" name="icon"
+								size="sm"
 								icon="TextAa"
 								placeholder="Input with icon"
 							/>
 
-							<Field type="email"
-								name="email"
+							<Input type="email" name="email"
+								size="md"
 								icon="At"
 								placeholder="user@email.com"
 							/>
 
-							<Field type="password"
-								name="password"
+							<Input type="password" name="password"
+								size="lg"
 								icon="Password"
 								placeholder="Input with icon"
 							/>
 
-							<Field type="number"
-								name="number"
+							<Input type="number" name="number"
+								size="xl"
 								icon="Hash"
 								placeholder={0}
 							/>
 
-							<Field type="url"
+							<!-- <Field type="url"
 								name="url"
 								icon="Link"
 								placeholder="URL input"
-							/>
+							/> -->
 
-							<Field type="search"
+							<!-- <Field type="search"
 								name="search"
 								icon="MagnifyingGlass"
 								placeholder="Search..."
-							/>
+							/> -->
 
-							<Field type="textarea"
+							<!-- <Field type="textarea"
 								name="textarea"
 								placeholder="Textarea"
 								rows={3}
-							/>
+							/> -->
 
 							<!-- <Field type="text"
 								id="text"
@@ -395,6 +396,85 @@
 									bind:value={$form.text}
 								/>
 							</Field> -->
+
+						</div>
+						<div class="col-span-1 space-y-3">
+							
+							<!-- Input -->
+
+							<Heading is="h3" as="h6">Input</Heading>
+
+							<Input type="text" name="text"
+								size="xs"
+								label="Label"
+								icon="At"
+								placeholder="Input"
+							/>
+
+							<Input type="text" name="icon"
+								size="sm"
+								label="Label"
+								icon="TextAa"
+								placeholder="Input with icon"
+							/>
+
+							<Input type="email" name="email"
+								size="md"
+								label="Label"
+								icon="At"
+								placeholder="user@email.com"
+							/>
+
+							<Input type="password" name="password"
+								size="lg"
+								label="Label"
+								icon="Password"
+								placeholder="Input with icon"
+							/>
+
+							<Input type="number" name="number"
+								size="xl"
+								label="Label"
+								icon="Hash"
+								placeholder={0}
+							/>
+
+						</div>
+						<div class="col-span-1 space-y-3">
+							
+							<!-- Input -->
+
+							<Heading is="h3" as="h6">Input</Heading>
+
+							<Input type="text" name="text"
+								size="xs"
+								label="Label"
+								placeholder="Input"
+							/>
+
+							<Input type="text" name="icon"
+								size="sm"
+								label="Label"
+								placeholder="Input with icon"
+							/>
+
+							<Input type="email" name="email"
+								size="md"
+								label="Label"
+								placeholder="user@email.com"
+							/>
+
+							<Input type="password" name="password"
+								size="lg"
+								label="Label"
+								placeholder="Input with icon"
+							/>
+
+							<Input type="number" name="number"
+								size="xl"
+								label="Label"
+								placeholder={0}
+							/>
 
 						</div>
 						<div class="col-span-1 space-y-3">
@@ -566,7 +646,7 @@
 							/> -->
 
 						</div>
-						<div class="col-span-1 space-y-3">
+						<!-- <div class="col-span-1 space-y-3"> -->
 
 							<!-- Slider -->
 						
@@ -660,9 +740,9 @@
 								label="Slider (disabled)"
 							/> -->
 
-						</div>
+						<!-- </div> -->
 
-						<div class="col-span-1 space-y-3">
+						<!-- <div class="col-span-1 space-y-3"> -->
 
 							<!-- Checkbox -->
 
@@ -714,7 +794,7 @@
 								label="Switch"
 							/> -->
 
-						</div>
+						<!-- </div> -->
 							
 					</Form>
 

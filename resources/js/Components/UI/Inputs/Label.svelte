@@ -51,7 +51,7 @@
 		&:not(.inline) {
 			/* @apply text-xs; */
 			&:not([class*="text-"]) {
-				color: var(--text-neutral);
+				color: var(--text-neutral-soft);
 			}
 		}
 	}

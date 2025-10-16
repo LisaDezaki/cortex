@@ -47,10 +47,6 @@
 
 <AuthenticatedLayout>
 
-	{#snippet header()}
-		<PageHeader title={character.name} />
-	{/snippet}
-
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
@@ -73,17 +69,17 @@
 
 					<ArticleBanner>
 						<Media
-							class="absolute inset-0 aspect-[3/1] rounded-lg overflow-hidden shadow-md"
+							class="absolute inset-0 aspect-[3/1] bg-slate-200 border border-neutral-softest hover:border-accent rounded-lg overflow-hidden text-neutral-softest w-full"
 							media={character.getBanner()}
 							onclick={() => character.addBanner()}
 						/>
 						<Media
-							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 shadow-md transition-all"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 hover:border-accent right-12 -bottom-16 rounded-lg overflow-hidden text-neutral-softest w-48"
 							media={character.getPortrait()}
 							onclick={() => character.addPortrait()}
 						/>
 						<Heading is="h1" as="h3"
-							class="mt-auto z-10 {character.getBanner() ? 'text-white' : ''}"
+							class="max-w-3/4 mt-auto z-10 {character.getBanner() ? 'text-white' : ''}"
 							heading={character.name}
 							subheading={character.alias}
 						/>

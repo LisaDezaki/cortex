@@ -3,6 +3,7 @@
 
     let {
         class: className,
+		inputClass,
         value = $bindable(),
         ...restProps
     } = $props()
@@ -40,7 +41,7 @@
 <textarea
 	bind:this={input}
 	aria-disabled={restProps.disabled ? true : undefined}
-	class="input-textarea {className}"
+	class="input-textarea {className} {inputClass}"
 	class:focus={hasFocus}
 	onfocus={checkFocus}
 	onblur={checkFocus}

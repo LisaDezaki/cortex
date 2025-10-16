@@ -25,8 +25,8 @@
 
 	//	Default values
 
-	const min	= $state(4)
-	const max	= $state(12)
+	const min	= $state(6)
+	const max	= $state(11)
 
 	let filterFunction	= $derived((ch)  => { return ch })
 	let sortFunction	= $derived((a,b) => { return a.name < b.name ? -1 : 1})

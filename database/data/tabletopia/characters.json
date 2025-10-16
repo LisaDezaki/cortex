@@ -64,7 +64,7 @@
 		"alias": "The Enforcer",
 		"species": "lizardfolk",
 		"location": "tavern",
-		"personality": ["Quiet"],
+		"personality": ["Intimidating", "Quiet"],
 		"desc": "Where Grenn is the calculating brain of the Cold-Bloods syndicate, Bogdan is its crushing tail. A mountain of muscle and scarred scales, this lizardfolk serves as the silent, imposing bouncer of \"The Lucky Die\" and Grenn's personal shadow.\n\nHe is less an employee and more a force of nature, a loyal instrument of violence whose presence alone is often enough to quell dissent. While patrons carouse inside the tavern, they are subconsciously comforted by the solid, unmoving wall of reptilian menace at the door, a walking advertisement for the consequences of causing trouble.\n\nBut his true work begins when the tavern closes. As Grenn's personal enforcer, Bogdan is the syndicate's blunt instrument. He is the one who \"collects\" on overdue debts, who \"convinces\" stubborn tenants to accept their eviction, and who ensures that anyone who crosses Grenn understands the physical cost of that mistake.\n\nHe rarely speaks, believing actions to be a far more universal language. His loyalty to Grenn is absolute and unthinking; he does not question the morality of an order, only the most efficient way to carry it out. To cross Grenn is to invite a visit from Bogdan, a visit that ends with broken bones and a very clear, very final message."
 	},
 

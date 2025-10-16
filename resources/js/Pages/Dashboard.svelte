@@ -37,9 +37,9 @@
 
 <AuthenticatedLayout>
 
-	{#snippet header()}
-		<PageHeader
-			title={activeProject ? "Dashboard" : "Select a Project"}
+	{#snippet article()}
+
+		<PageHeader class="absolute top-0 px-3" color="bg-transparent"
 			tabs={ activeProject ? [
 				{ label: 'Dashboard', active: true },
 				{ label: 'Settings',  href: route('projects.settings') }
@@ -49,14 +49,12 @@
 				{ icon: "Plus", label: "Create Project", theme: "accent", onclick: () => projectList.create(),	if: !activeProject }
 			]}
 		/>
-	{/snippet}
 
-	{#snippet article()}
 		{#if active}
 
 			<Section>
 				<Media
-					class="relative aspect-[3/1] bg-neutral-softest min-h-96 overflow-hidden w-full"
+					class="relative aspect-[7/3] bg-neutral-softest overflow-hidden text-neutral-softest w-full"
 					media={active.getBanner()}
 					onclick={() => active.addBanner()}
 				/>
@@ -73,7 +71,7 @@
 						<p class="font-style-large italic max-w-[65ch] text-neutral-soft">{active.type}</p>
 						<Collapsible collapsed={true}
 							class="max-w-[64ch] mt-6"
-							collapsedClass="line-clamp-3 overflow-hidden">
+							collapsedClass="line-clamp-5 overflow-hidden">
 							{active.description}
 						</Collapsible>
 					</Stack>
@@ -124,7 +122,7 @@
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each active.characters.items as character}
 							<Card
-								class="flex-shrink-0 w-32"
+								class="flex-shrink-0 w-40"
 								aspect="square"
 								image={character.image?.url}
 								thumbnailIcon="User"
@@ -144,7 +142,7 @@
 						{#each active.factions.items as faction}
 							<Card
 								aspect="square"
-								class="flex-shrink-0 w-32"
+								class="flex-shrink-0 w-40"
 								image={faction.image?.url}
 								thumbnailIcon="FlagBannerFold"
 								title={faction.name}

@@ -14,6 +14,7 @@
 	//	Component props
 
     let {
+		active,
 		aspect,
 		children,
 		class: className,
@@ -38,8 +39,8 @@
 
 </script>
 
-<Stack gap={1}
-	class="card {clickable ? "cursor-pointer" : null} {className} hover:text-accent"
+<Stack gap={0.5}
+	class="card hover:text-accent {clickable ? "cursor-pointer" : null} {active ? 'active' : ''} {className}"
 	onclick={onclick}
 {...restProps}>
 
@@ -53,10 +54,10 @@
 	</Flex>
 
 	<Flex align="center" justify="start" gap={2} class="px-1 w-full">
-		{#if icon}
+		<!-- {#if icon}
 			<Icon name={icon} size="sm" class="border border-neutral-softest rounded-full h-8 w-8" />
-		{/if}
-		<Stack class="card-details -space-y-0.5">
+		{/if} -->
+		<Stack class="card-details -space-y-0.5 pb-0.5" gap={0}>
 			<span class="font-style-small font-semibold line-clamp-1 w-full">{title}</span>
 			{#if subtitle}
 				<span class="font-style-tiny line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
@@ -71,18 +72,18 @@
 		/>
 	{/if}
 
-	{#if options}
+	<!-- {#if options}
 		<ContextMenu
 			class="flex items-center justify-center absolute bottom-1 right-0 h-7 w-7 show-on-hover hover:bg-neutral-softest rounded-full z-10"
 			icon="DotsThreeOutlineVertical" iconWeight="fill"
 			iconOptions={iconOptions}
 			options={options}
 		/>
-	{/if}
+	{/if} -->
 
 	{#if starrable}
 		<Button
-			class="absolute bg-tint-radial top-0 left-0 z-10 {starred ? '' : 'show-on-hover'} {starred ? 'text-amber-400 hover:text-amber-300' : 'text-white hover:text-amber-400'}"
+			class="absolute bottom-1 right-0 z-10 {starred ? '' : 'show-on-hover'} {starred ? 'text-amber-400 hover:text-amber-300' : 'text-neutral-softest hover:text-amber-400'}"
 			icon="Star" iconSize="md" iconWeight={starred ? 'fill' : 'light'}
 			onclick={onStar}
 		/>
@@ -100,7 +101,7 @@
 	}
 
 	:global(.card) {
-		@apply relative flex flex-col flex-shrink-0 min-w-24 mb-3 rounded-lg overflow-hidden;
+		@apply relative flex flex-col flex-shrink-0 min-w-24 mb-1 p-1 rounded-md overflow-hidden;
 		&:not([disabled="true"]):hover {
 			.card-visual {
 				background: var(--bg-neutral-gradient-alt)!important;
@@ -124,8 +125,19 @@
 			pointer-events: none;
 		}
 
+		&:not(.active) {
+			background-color: transparent;
+			border: 1px solid transparent;
+			color: var(--text-neutral);
+		}
+		&.active {
+			background-color: var(--bg-accent-softest);
+			border: 1px solid var(--border-accent-softest);
+			color: var(--text-accent);
+		}
+
 		:global(.card-visual) {
-			@apply flex-shrink-0 rounded-lg overflow-hidden w-full;
+			@apply flex-shrink-0 rounded overflow-hidden w-full;
 			/* background: var(--bg-neutral-gradient); */
 			background-color: var(--bg-neutral-softest);
 			/* border-color: var(--border-neutral-softest); */

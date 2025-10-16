@@ -15,7 +15,6 @@
 
 
 
-
 {#if characters && characters.length > 0}
 
 	<Grid

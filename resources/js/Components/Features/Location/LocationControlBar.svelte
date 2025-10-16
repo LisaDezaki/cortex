@@ -17,7 +17,7 @@
 		query	= $bindable(''),
 		filter	= $bindable(''),
 		sort	= $bindable('name'),
-		size	= $bindable(5),
+		size	= $bindable(3),
 		layout  = $bindable('grid'),
 		...restProps
 	} = $props()
@@ -25,8 +25,8 @@
 	
 	//	Default values
 
-	const min	= $state(3)
-	const max	= $state(7)
+	const min	= $state(1)
+	const max	= $state(5)
 
 	let filterFunction	= $derived((ch)  => { return ch })
 	let sortFunction	= $derived((a,b) => { return a.name < b.name ? -1 : 1})

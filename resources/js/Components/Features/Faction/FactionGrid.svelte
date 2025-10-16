@@ -14,16 +14,13 @@
 
 
 
+{#if factions && factions.length > 0}
 
-
-
-
-<Grid
-	cols={cols}
-	gap={2}
-{...restProps}>
-
-	{#if factions}
+	<Grid
+		class={className}
+		cols={cols}
+		gap={2}
+	{...restProps}>
 		{#each factions as faction}
 			{#if gridItem}
 				{@render gridItem(faction)}
@@ -31,9 +28,15 @@
 				<FactionCard {faction} />
 			{/if}
 		{/each}
-	{/if}
-	
-</Grid>
+	</Grid>
+
+{:else}
+
+	<Empty
+		message="There were no results."
+	/>
+
+{/if}
 
 <!-- <Grid
 	cols={cols}

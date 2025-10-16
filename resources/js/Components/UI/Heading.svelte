@@ -34,7 +34,7 @@
 		{/if}
 
 		<svelte:element this={is} class="heading-head whitespace-pre-wrap font-style-{as} {headingClass}">{heading}{@render children?.()}</svelte:element>
-		
+
 		{#if subheadingLink && subheading}
 			<Link class="italic text-accent hover:underline {subheadingClass}" href={subheadingLink}>
 				{subheading}

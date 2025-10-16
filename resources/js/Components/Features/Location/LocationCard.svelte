@@ -9,16 +9,13 @@
     } = $props()
 </script>
 
-<Card
-	class={className}
+<Card class={className}
 	subtitleClass={location.isWorldMap ? 'text-accent' : ''}
-	aspect="video"
+	aspect="video" thumbnailIcon="MapPinArea"
 	image={location.image?.url}
-	icon={location.icon || "MapPin"} iconWeight="fill"
-	thumbnailIcon="MapPinArea"
+	icon={location.icon || "MapPin"}
 	title={location.name}
 	subtitle={location.type}
-	href={location.routes.show}
 	options={options}
 	starred={location.starred}
 	onStar={() => location.star()}

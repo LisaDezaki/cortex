@@ -14,6 +14,7 @@
 		breadcrumbs,
 		children,
 		class: className,
+		color = 'bg-surface',
 		eyebrow,
 		eyebrowIcon,
 		subtitle,
@@ -26,7 +27,7 @@
 
 
 
-<Stack as="header" align="start" gap={0} class="bg-surface px-20 py-2 w-full z-10 {className}">
+<Stack as="header" align="start" justify="center" gap={0} class="{color} h-20 pb-3 w-full z-20 {className}">
 
 	<Flex align="center" justify="center" class="w-full">
 
@@ -36,6 +37,7 @@
 				<Breadcrumbs data={breadcrumbs} />
 			{/if} -->
 			<Heading is="h1" as="h4"
+				class="text-neutral-softest"
 				heading={title}
 			/>
 		</Stack>
@@ -43,12 +45,13 @@
 		<!-- Tabs -->
 		 {#if tabs}
 			<Stack align="center" justify="center" gap={1.5} class="flex-0 flex-shrink-0 min-w-48 w-auto">
-				<Inline gap={0.5} class="bg-neutral-gradient border border-neutral-softest p-0.5 rounded-lg overflow-hidden">
+				<Inline gap={0.5} class="bg-neutral-gradient border border-neutral-softest p-0.5 rounded-full overflow-hidden">
 					{#each tabs as tab}
 						{#if !tab.hasOwnProperty('if') || tab.if === true}
 							<Button
-								class="w-32"
-								style={tab.active ? 'hard' : 'plain'}
+								class="rounded-full w-32"
+								size="lg"
+								style={tab.active ? 'hard'   : 'plain'}
 								theme={tab.active ? 'accent' : 'neutral'}
 								{...tab}
 							/>
@@ -61,10 +64,10 @@
 		<!-- Actions  -->
 		<Stack align="end" justify="center" class="flex-1 w-full">
 			{#if actions}
-				<Inline gap={3} class="px-3">
+				<Inline gap={3}>
 					{#each actions as action}
 						{#if !action.hasOwnProperty('if') || action.if === true}
-							<Button size="lg" type="button" style={action.style || "soft"} {...action} class="rounded-full w-auto" />
+							<Button size="lg" type="button" style={action.style || "hard"} {...action} />
 						{/if}
 					{/each}
 				</Inline>

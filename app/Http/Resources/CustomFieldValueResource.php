@@ -15,10 +15,14 @@ class CustomFieldValueResource extends JsonResource
     public function toArray(Request $request): array
     {
 		return [
-			'customFieldId' => $this->custom_field_id,
-			'value' => $this->value,
-			'displayValue' => $this->getDisplayValue(),
-			'field' => new CustomFieldResource($this->whenLoaded('customField'))
+			'fieldId' 		=> $this->custom_field_id,
+			'name' 			=> $this->whenLoaded('customField', $this->customField->name),
+			'label' 		=> $this->whenLoaded('customField', $this->customField->label),
+			'description' 	=> $this->whenLoaded('customField', $this->customField->description),
+			'placeholder' 	=> $this->whenLoaded('customField', $this->customField->placeholder),
+			'value' 		=> $this->value,
+			'displayValue' 	=> $this->getDisplayValue(),
+			'options' 		=> CustomFieldOptionResource::collection($this->whenLoaded('customField', $this->customField->options)),
 		];
     }
 }

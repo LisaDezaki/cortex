@@ -49,8 +49,8 @@
 
 
 
-<Flex align="start" gap={3}
-	class="bg-surface sticky top-0 px-20 pb-3 w-full z-50"
+<Flex align="center" justify="start" gap={3}
+	class="bg-surface sticky top-20 pb-1.5 w-full z-50"
 {...restProps}>
 
 
@@ -59,8 +59,8 @@
 	{#if searchable}
 		<Input bind:value={query}
 			type="search"
-			class="w-48"
-			icon="MagnifyingGlass"
+			class="w-40" size="sm"
+			label="Search" labelIcon="MagnifyingGlass"
 			name="search"
 			placeholder="Search..."
 			oninput={onQuery}
@@ -76,9 +76,9 @@
 
 	{#if filterable}
 		<Dropdown bind:value={filter}
-			class="w-48"
-			contentClass="w-48"
-			icon="FunnelSimple"
+			class="w-40" size="sm"
+			contentClass="w-40"
+			label="Filter" labelIcon="FunnelSimple"
 			options={filterOptions}
 			onUpdate={onFilter}
 		/>
@@ -90,9 +90,9 @@
 	{#if sortable}
 		<Input bind:value={sort}
 			type="select"
-			class="w-48"
-			contentClass="w-48"
-			icon="SortAscending"
+			class="w-40" size="sm"
+			contentClass="w-40"
+			label="Sort" labelIcon="SortAscending"
 			placeholder="Sort by"
 			options={sortOptions}
 			onUpdate={onSort}
@@ -102,7 +102,7 @@
 
 	<!-- Result Count -->
 
-	<div class="bg-emerald-500/10 text-emerald-500 whitespace-nowrap rounded-lg px-3 p-2">
+	<div class="bg-emerald-500/10 text-emerald-500 whitespace-nowrap p-lg rounded-lg">
 		{results?.length} {results?.length !== 1 ? 'results' : 'result'}
 	</div>
 
@@ -111,60 +111,23 @@
 
 	<Input bind:value={size}
 		type="slider"
-		class="ml-auto max-w-36"
+		class="ml-auto max-w-40"
+		label="Size" labelIcon="Resize"
 		style="none"
+		showTicks={true}
 		showValue={false}
 		{min} {max}
 	/>
-	
+
 
 	<!-- Layout -->
 
 	<Input bind:value={layout}
 		type="select"
-		class="w-36"
+		class="w-40" size="sm"
+		contentClass="w-40"
+		label="Layout" labelIcon="Layout"
 		options={layoutOptions}
 	/>
-
-	
-	
-
-	<!-- Layout-specific Controls -->
-
-	<!-- <Flex gap={1.5} class="min-w-40 flex-shrink-0">
-		{#if layout === 'graph'}
-			<Icon name="MagnifyingGlass" size="md" />
-			<Input type="slider" style="none" class="" showValue={false} min={4} max={12} bind:value={rowSize} />
-		{:else if layout === 'grid'}
-			<Icon name="Resize" size="md" />
-			<Input type="slider" style="none" class="" showValue={false} min={4} max={12} bind:value={rowSize} />
-		{:else if layout === 'table'}
-			<Input type="select" multiple
-				class="ml-auto"
-				overrideLabel="Columns..."
-				bind:value={columns}
-				options={[
-					{ value: 'faction',       label: "Faction" },
-					{ value: 'relationships', label: "Relationships" },
-					{ value: 'location',      label: "Location" },
-					...customFields.map((field) => {
-						return { value: field.name, label: field.label }
-					})
-				]}
-			/>
-		{/if}
-	</Flex> -->
-
-	
-
 	
 </Flex>
-
-<!-- Debug -->
- 
-<!-- <Flex align="center" gap={3} class="px-12">
-	<Inline justify="center" class="border border-danger line-clamp-1 text-sm truncate px-3 py-1.5 rounded-full w-48">Query: "{query}"</Inline>
-	<Inline justify="center" class="border border-danger line-clamp-1 text-sm truncate px-3 py-1.5 rounded-full w-48">Filter: "{filter}"</Inline>
-	<Inline justify="center" class="border border-danger line-clamp-1 text-sm truncate px-3 py-1.5 rounded-full w-48">Sort: "{sort}"</Inline>
-	<Inline justify="center" class="border border-danger line-clamp-1 text-sm truncate px-3 py-1.5 rounded-full w-36 ml-auto">Layout: "{layout}"</Inline>
-</Flex> -->

@@ -143,8 +143,8 @@
 				{#each location?.children as location,i}
 					{@render mapMarker(location,i)}
 				{/each}
-			{:else if location?.descendants}
-				{#each location?.descendants as location,i}
+			{:else if location?.descendants?.items}
+				{#each location?.descendants?.items as location,i}
 					{@render mapMarker(location,i)}
 				{/each}
 			{/if}

@@ -68,6 +68,7 @@
 	import Island from "phosphor-svelte/lib/Island"
 	import Info from "phosphor-svelte/lib/Info"
 	import Key from "phosphor-svelte/lib/Key"
+	import Layout from "phosphor-svelte/lib/Layout"
 	import Lighthouse from "phosphor-svelte/lib/Lighthouse"
 	import LineVertical from "phosphor-svelte/lib/LineVertical"
 	import Link from "phosphor-svelte/lib/Link"
@@ -192,6 +193,7 @@
 		'Island': Island,
 		'Info': Info,
 		'Key': Key,
+		'Layout': Layout,
 		'Lighthouse': Lighthouse,
 		'LineVertical': LineVertical,
 		'Link': Link,

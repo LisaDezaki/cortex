@@ -18,6 +18,7 @@
 		labelSrOnly = false,
 		layout,
 		name,
+		size,
 		type,
         ...restProps
     } = $props()
@@ -27,11 +28,13 @@
 
 </script>
 
+
+
 {#snippet labelBlock()}
 	<Label
 		for={name}
 		value={label}
-		class="field-label {labelSrOnly ? 'sr-only' : ''}"
+		class="field-label font-style-label {labelSrOnly ? 'sr-only' : ''}"
 	/>
 {/snippet}
 
@@ -41,8 +44,9 @@
 
 {#snippet inputBlock()}
 	{#if type}
-		<Input {name} {type}
+		<Input {name} {type} {size}
 			class={inputClass}
+			label={label}
 			bind:value={$form[name]}
 		{...restProps} />
 	{/if}
@@ -64,7 +68,7 @@
 			{@render errorBlock()}
 		</div>
 	{:else}
-		{@render labelBlock()}
+		<!-- {@render labelBlock()} -->
 		{@render descriptionBlock()}
 		{@render inputBlock()}
 		{@render errorBlock()}
@@ -76,9 +80,10 @@
 
 <style lang="postcss">
 
-	.field-label {
-		@apply mt-1 px-1.5 text-sm;
-		color: var(--text-neutral-soft);
+	:global(.field-label) {
+		@apply absolute top-0 left-0 leading-3 z-10;
+		@apply mt-1 px-1.5;
+		color: var(--text-neutral-softest);
 	}
 
 	.form-field.block {
@@ -86,7 +91,7 @@
 	}
 
 	.form-field:not(.block) {
-		@apply flex flex-col;
+		@apply relative flex flex-col;
 	}
 
 	.field-description {

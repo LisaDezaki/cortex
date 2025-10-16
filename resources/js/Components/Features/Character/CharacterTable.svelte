@@ -74,7 +74,7 @@
 	<Table.Cell>
 		<Link href={route('characters.show', {character: character.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
-				class="h-9 w-9 rounded-full"
+				class="h-7 w-7 rounded-full"
 				src={character.image?.url}
 				icon="User"
 			/>
@@ -89,7 +89,7 @@
 			{#if character?.factions.length > 0}
 				<Link href={route('factions.show', {faction: character?.factions[0]?.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 					<Thumbnail
-						class="h-9 w-9"
+						class="h-7 w-7"
 						src={character?.factions[0]?.image?.url}
 						icon="FlagBannerFold"
 					/>
@@ -101,7 +101,7 @@
 			{:else}
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
-					class="h-9 w-9 rounded-lg"
+					class="h-7 w-7 rounded-lg"
 					onclick={() => character.addFaction()}
 				/>
 			{/if}
@@ -122,7 +122,7 @@
 			{:else}
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
-					class="h-9 w-9 rounded-full"
+					class="h-7 w-7 rounded-full"
 					onclick={() => character.addRelationship()}
 				/>
 			{/if}
@@ -133,7 +133,7 @@
 			{#if character?.location}
 				<Link href={route('locations.show', {location: character.location.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 					<Thumbnail
-						class="h-9 w-9"
+						class="h-7 w-7"
 						src={character.location.image?.url}
 						icon="MapPinArea"
 					/>
@@ -145,7 +145,7 @@
 			{:else}
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
-					class="h-9 w-9 rounded-lg"
+					class="h-7 w-7 rounded-lg"
 					onclick={() => character.addLocation()}
 				/>
 			{/if}

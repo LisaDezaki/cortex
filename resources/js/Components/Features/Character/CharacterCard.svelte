@@ -16,7 +16,6 @@
 	image={character.image?.url}
 	title={title || character.name}
 	subtitle={subtitle || character.alias}
-	href={character.routes?.show}
 	options={options}
 	starred={character.starred}
 	onStar={() => character.star()}

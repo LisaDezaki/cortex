@@ -375,21 +375,22 @@
 	.font-style-h1 			{ @apply font-semibold text-8xl tracking-tighter; }
 	.font-style-h2 			{ @apply font-semibold text-7xl tracking-tighter; }
 	.font-style-h3 			{ @apply font-semibold text-5xl tracking-tighter; }
-	.font-style-h4 			{ @apply font-bold text-3xl tracking-tighter; }
-	.font-style-h5 			{ @apply font-bold text-2xl tracking-tighter; }
-	.font-style-h6 			{ @apply font-bold text-xl  tracking-tighter; }
+	.font-style-h4 			{ @apply font-bold text-3xl leading-[2rem]    tracking-tighter; }
+	.font-style-h5 			{ @apply font-bold text-2xl leading-[1.75rem] tracking-tighter; }
+	.font-style-h6 			{ @apply font-bold text-xl  leading-[1.5rem]  tracking-tighter; }
 	
 	.font-style-large		{ @apply text-lg; }
 	.font-style-regular		{ @apply text-base; }
 	.font-style-small		{ @apply text-sm; }
 	.font-style-tiny		{ @apply text-xs; }
+	.font-style-label		{ @apply text-[0.675rem]; }
 
-	.font-style-button		{ @apply font-medium text-xs uppercase tracking-wider; }
+	.font-style-button		{ @apply font-medium text-xs uppercase leading-4 tracking-wider; }
 	.font-style-input		{ @apply font-normal text-sm;
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 	}
 	.font-style-placeholder	{
-		@apply text-base italic opacity-75;
+		@apply text-sm italic opacity-75;
 		color: var(--text-neutral-softer);
 	}
 
@@ -400,7 +401,7 @@
 
 	.input:focus {
 		/* @apply appearance-none focus:border-none focus:outline-none; */
-		@apply rounded-lg;
+		/* @apply rounded-lg; */
 		box-shadow: 0 1px 0 var(--bg-accent);
 		color: var(--text-accent);
 		outline: 1px solid var(--border-accent);
@@ -498,3 +499,16 @@ select:focus {
 .card-grid-10 { @apply grid grid-cols-10; }
 .card-grid-11 { @apply grid grid-cols-11; }
 .card-grid-12 { @apply grid grid-cols-12; } */
+
+
+/* .p-xs { @apply px-1   py-0;   }
+.p-sm { @apply px-1.5 py-0.5; }
+.p-md { @apply px-2   py-1;	  }
+.p-lg { @apply px-3   py-1.5; }
+.p-xl { @apply px-4   py-2;   } */
+
+.p-xs { @apply px-1   py-0;   }
+.p-sm { @apply px-1.5 py-0.5; }
+.p-md { @apply px-2   py-1;	  }
+.p-lg { @apply px-3   py-1.5; }
+.p-xl { @apply px-4   py-2;   }

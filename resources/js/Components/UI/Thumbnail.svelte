@@ -5,6 +5,7 @@
 
 	let {
 		alt,
+		aspect = "aspect-square",
 		children,
 		class: className,
 		icon,
@@ -20,7 +21,7 @@
 
 
 
-<div class="thumbnail {className}" {...restProps}>
+<div class="thumbnail {aspect} {className}" {...restProps}>
 	{#if src}
 		<img {src} alt={restProps.alt || ''} class="thumbnail-image {imageClass}" />
 	{:else}
@@ -35,7 +36,7 @@
 <style lang="postcss">
 
 	:global(.thumbnail) {
-		@apply inline-flex items-center justify-center aspect-square overflow-hidden flex-shrink-0;
+		@apply inline-flex items-center justify-center overflow-hidden flex-shrink-0;
 	}
 
 	:global(.thumbnail:not([class*="rounded"])) {
@@ -50,6 +51,7 @@
 		@apply flex items-center justify-center w-full h-full;
 		@apply font-black text-5xl tracking-tighter;
 		@apply rounded-md;
+		background-color: var(--bg-neutral-softest);
 		color: var(--text-neutral-softer);
 	}
 

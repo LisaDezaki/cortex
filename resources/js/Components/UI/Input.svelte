@@ -14,25 +14,41 @@
 	let {
 		checked = $bindable(false),
 		class: className,
-		label,
 		name,
 		options = [],
+		size = "md",
 		type = 'text',
 		value = $bindable(''),
         ...restProps
     } = $props()
-	
+
+	const iconSizes = {
+		xs: 12,
+		sm: 14,
+		md: 16,
+		lg: 18,
+		xl: 20,
+	}
+
+	const padSizes = {
+		xs: "py-0",
+		sm: "py-0.25",
+		md: "py-0.5",
+		lg: "py-1",
+		xl: "py-1.5"
+	}
+
 </script>
-
-
 
 
 
 {#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(type)}
 	<Input
 		id={name}
-		class="input {className}"
 		bind:value={value}
+		class="input {className}"
+		iconSize={iconSizes[size]}
+		inputClass={padSizes[size]}
 		type={type}
 		{...restProps}
 	/>
@@ -42,6 +58,8 @@
 	<Textarea
 		id={name}
 		class="input {className}"
+		iconSize={iconSizes[size]}
+		inputClass={padSizes[size]}
 		bind:value={value}
 		{...restProps}
 	/>
@@ -51,6 +69,8 @@
 	<Number
 		id={name}
 		class="input {className}"
+		iconSize={iconSizes[size]}
+		inputClass={padSizes[size]}
 		bind:value={value}
 		{...restProps}
 	/>
@@ -60,6 +80,8 @@
 	<Select
 		id={name}
 		class="input {className}"
+		iconSize={iconSizes[size]}
+		inputClass={padSizes[size]}
 		contentClass="input-content"
 		options={options}
 		bind:value={value}
@@ -71,6 +93,8 @@
 	<Combobox
 		id={name}
 		class="input {className}"
+		iconSize={iconSizes[size]}
+		inputClass={padSizes[size]}
 		contentClass="input-content"
 		options={options}
 		bind:value={value}
@@ -121,7 +145,6 @@
 		id={name}
 		class={className}
 		bind:checked={checked}
-		label={label}
 		{...restProps}
 	/>
 {/if}
@@ -155,7 +178,7 @@
 	}
 
 	:global(.input) {
-		@apply relative inline-flex items-center min-h-10 min-w-32 p-1 rounded-lg;
+		@apply relative inline-flex items-center min-w-32 rounded;
 		background-color: var(--bg-input);
 		border: none;
 		color: var(--text-input);
@@ -202,9 +225,9 @@
 			/* outline: 1px solid red;
 			outline-offset: -1px; */
 		}
-		
+
 		:global(.input-value) {
-			@apply bg-transparent border-none inline-flex items-center gap-2 line-clamp-1 pl-2 rounded text-left w-full;
+			@apply bg-transparent border-none inline-flex items-center gap-2 line-clamp-1 rounded text-left text-sm w-full;
 			&.pl-icon {
 				@apply pl-8;
 			}
@@ -212,7 +235,7 @@
 
 		:global(input),
 		:global(.input-element) {
-			@apply bg-transparent border-none h-full px-2 py-1 rounded w-full focus:appearance-none;
+			@apply bg-transparent border-none h-full px-1 rounded-sm text-sm w-full focus:appearance-none;
 			-moz-appearance: textfield;
 			&:outer-spin-button,
 			&:inner-spin-button {
@@ -246,15 +269,15 @@
 
 	:global(.input-content) {
 		@apply block max-h-96 min-w-32 overflow-y-auto z-10;
-		@apply border rounded-lg shadow-lg;
+		@apply border rounded shadow-lg;
 		background-color: var(--bg-input);
 		border-color: var(--border-accent);
 		color: var(--text-neutral);
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 
 		:global(.input-option) {
-			@apply flex items-center gap-2 h-8 px-2 rounded-md;
-			@apply cursor-pointer text-sm;
+			@apply flex items-center h-8 px-1 rounded-sm;
+			@apply cursor-pointer;
 			&:hover,
 			&[data-highlighted] {
 				background-color: var(--bg-neutral-softest);

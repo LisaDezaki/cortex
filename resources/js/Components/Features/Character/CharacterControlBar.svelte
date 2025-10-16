@@ -25,8 +25,8 @@
 
 	//	Default values
 
-	const min	= $state(4)
-	const max	= $state(12)
+	const min	= $state(6)
+	const max	= $state(11)
 
 	let filterFunction	= $derived((ch)  => { return ch })
 	let sortFunction	= $derived((a,b) => { return a.name < b.name ? -1 : 1})
@@ -35,6 +35,15 @@
 		if (type === 'filter') 	{ filterFunction = option.filterFunction }
 		if (type === 'sort') 	{ sortFunction 	 = option.sortFunction   }
 		results = data.filter(query, filterFunction, sortFunction)
+	}
+
+	function customFilterFunction(ch) {
+		// return ch.customFieldValues.find(cf => cf.field?.name === f.name)?.value === v
+		return ch.customFieldValues.find(f => f.field?.name === filter.split('.')[0])?.value === filter.split('.')[1]
+	}
+
+	function customSortFunction(a,b,f) {
+		return a.customFieldValues.find(v => v.field?.name === f.name)?.value < b.customFieldValues.find(v => v.field?.name === f.name)?.value ? -1 : 1
 	}
 
 
@@ -59,19 +68,18 @@
 	}
 
 
-
 	//	Menu Options
 
 	const filterOptions = $state([
-		{ label: 'All Characters', 	value: '',		  filterFunction: (ch) => { return ch } },
-		{ label: 'Starred', 		value: 'starred', filterFunction: (ch) => { return ch.starred } },
+		{ label: 'All characters', 	value: '',		  	filterFunction: (ch) => { return ch } },
+		{ label: 'Starred', 		value: 'starred', 	filterFunction: (ch) => { return ch.starred } },
 		{ 	separator: true },
-		{ label: 'Faction...',		showImage: true, options: factionOptions },
-		{ label: 'Location...',		showImage: true, options: locationOptions },
-		{ label: 'Relationship...',	showImage: true, options: relationshipOptions },
+		{ label: 'Faction',			showImage: true, 	options: factionOptions },
+		{ label: 'Location',		showImage: true, 	options: locationOptions },
+		{ label: 'Relationship',	showImage: true, 	options: relationshipOptions },
 		{ 	separator: true, hideIf: !customFields || customFields.length === 0 },
 		...customFields?.map(f => {
-			return { label: `${f.label}...`, options: customFieldOptions(f) }
+			return { label: f.label, options: customFieldOptions(f) }
 		})
 	])
 
@@ -82,7 +90,7 @@
 		{ label: "By location",		value: 'location',   sortFunction: (a,b) => { return a.location?.name       < b.location?.name 			? -1 : 1 } },
 		{ label: "By faction",		value: 'faction',    sortFunction: (a,b) => { return a.factions?.items?.[0]?.name  < b.factions?.items?.[0]?.name 	? -1 : 1 } },
 		...customFields?.map(f => {
-			return { label: `By ${f.label.toLowerCase()}`, value: f.name }
+			return { label: `By ${f.label.toLowerCase()}`, value: f.name, sortFunction: (a,b) => customSortFunction(a,b,f) }
 		}),
 		{ 	separator: true },
 		{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },

@@ -4,6 +4,8 @@
 
 	import { Flex, Stack } from '@/Components/Core'
 	import Icon      from '@/Components/UI/Icon.svelte'
+	import InputItem from '@/Components/UI/Inputs/InputItem.svelte'
+	import Label     from '@/Components/UI/Inputs/Label.svelte'
 	import Separator from '@/Components/UI/Separator.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
@@ -12,6 +14,10 @@
 		class: className,
 		contentClass,
 		icon,
+		iconSize,
+		inputClass,
+		label,
+		labelIcon,
 		multiple = false,
 		options,
 		overrideLabel,
@@ -59,7 +65,7 @@
 
 
 
-{#snippet selectedValue()}
+<!-- {#snippet selectedValue()}
 	{#if !multiple}
 		{@render optionContent(selection)}
 	{:else if multiple}
@@ -71,20 +77,19 @@
 			{/each}
 		</Flex>
 	{/if}
-{/snippet}
+{/snippet} -->
 
 {#snippet optionItem(item)}
 	<Select.Item
-		class="input-option"
 		label={item?.label}
 		value={item?.value}
 		disabled={item?.disabled}
 	>
-		{@render optionContent(item)}
+		<InputItem item={item} />
 	</Select.Item>
 {/snippet}
 
-{#snippet optionContent(item)}
+<!-- {#snippet optionContent(item)}
 	{#if item?.image}
 		<Thumbnail class="rounded-full w-6" src={item.image} />
 	{/if}
@@ -94,7 +99,7 @@
 	{#if item?.label}
 		<span class="line-clamp-1 text-left w-full">{item.label}</span>
 	{/if}
-{/snippet}
+{/snippet} -->
 
 
 
@@ -111,26 +116,37 @@
 {...restProps}>
 
 
-
 	<!-- Trigger -->
 
-	<Select.Trigger class="{className} input-option min-w-24 {restProps.disabled ? "disabled" : ""} {hasFocus ? "focus" : ""}">
-
-		{#if icon && !selection?.icon && !selection?.image}
-			<Icon class="input-icon" name={icon} size="md" weight="regular" />
+	<Select.Trigger class="input flex flex-col gap-0 -space-y-1 {className}">
+		{#if label}
+			<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft w-full">
+				{#if labelIcon}
+					<Icon name={labelIcon} size="xs" />
+				{/if}
+				<Label
+					class="font-style-label"
+					value={label}
+				/>
+			</Flex>
 		{/if}
 
-		<div class="input-value {icon ? "pl-icon" : ""}" class:font-style-placeholder={isEmpty}>
-			{#if isEmpty}
-				{placeholder}
-			{:else if overrideLabel}
-				{overrideLabel}
-			{:else}
-				{@render selectedValue()}
+		<Flex align="center" justify="start" class="p-1 w-full">
+			<InputItem item={selection} />
+			<!-- {#if icon && !selection?.icon && !selection?.image}
+				<Icon class="input-icon" name={icon} size={iconSize} weight="regular" />
 			{/if}
-		</div>
-
-		<Icon class="input-action" name="CaretUpDown" size="sm" weight="light" />
+			<div class="input-value {icon ? "pl-icon" : ""} {inputClass}" class:font-style-placeholder={isEmpty}>
+				{#if isEmpty}
+					{placeholder}
+				{:else if overrideLabel}
+					{overrideLabel}
+				{:else}
+					{@render selectedValue()}
+				{/if}
+			</div>
+			<Icon class="input-action" name="CaretUpDown" size="xs" weight="light" /> -->
+		</Flex>
 
 	</Select.Trigger>
 
@@ -155,10 +171,14 @@
 						{:else if option.options}
 							<div class="font-medium opacity-50 px-2 py-1 text-sm">{option.label}</div>
 							{#each option.options as opt}
+								<!-- {opt.icon} -->
 								{@render optionItem(opt)}
+								<!-- <InputItem item={opt} /> -->
 							{/each}
 						{:else}
+							<!-- {option.icon} -->
 							{@render optionItem(option)}
+							<!-- <InputItem item={option} /> -->
 						{/if}
 					{:else}
 						<span class="block px-5 py-2 text-sm text-muted-foreground">

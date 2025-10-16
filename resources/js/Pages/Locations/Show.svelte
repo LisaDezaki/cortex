@@ -85,7 +85,7 @@
 							</Inline>
 						{/if}
 						<Heading is="h1" as="h3"
-							class="mt-auto z-10 {location.getBanner() ? 'text-white' : ''}"
+							class="mt-auto w-3/4 z-10 {location.getBanner() ? 'text-white' : ''}"
 							heading={location.name}
 							subheading={location.type}
 						/>

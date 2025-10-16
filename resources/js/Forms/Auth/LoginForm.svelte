@@ -24,18 +24,16 @@
 	method="post"
 >
 	<Stack class="px-6 py-3" gap={3}>
-		<Field name="email"
-			type="email"
-			label="Email"
+		<Field name="email" type="email"
+			label="Email" labelIcon="At"
 			placeholder="Email"
 			autocomplete="email"
 			autofocus
 			required
 		/>
 	
-		<Field name="password"
-			type="password"
-			label="Password"
+		<Field name="password" type="password"
+			label="Password" labelIcon="Password"
 			placeholder="Password"
 			autocomplete="current-password"
 			required

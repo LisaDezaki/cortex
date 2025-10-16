@@ -7,6 +7,7 @@
     let {
         class: className,
 		icon,
+		inputClass,
         value = $bindable(),
         ...restProps
     } = $props()
@@ -53,7 +54,7 @@
 
 	<input type="number"
 		aria-disabled={restProps.disabled ? 'true' : undefined}
-		class="input-element {icon ? "pl-icon" : ""}"
+		class="input-element {icon ? "pl-icon" : ""} {inputClass}"
 		bind:value
 		bind:this={input}
 		onfocus={checkFocus}

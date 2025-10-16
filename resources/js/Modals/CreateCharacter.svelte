@@ -35,11 +35,13 @@
 		<Stack gap={3} class="w-full">
 			<Field type="text"
 				name="name"
+				label="Name"
 				placeholder="Character name"
 				required
 			/>
 			<Field type="text"
 				name="alias"
+				label="Alias"
 				placeholder="Character alias"
 			/>
 		</Stack>

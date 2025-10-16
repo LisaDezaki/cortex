@@ -18,12 +18,14 @@
 	let thisIcon = $derived(icon)
 
 	let sizes = children || label ? {
+		none: "p-0",
 		xs: "px-1 py-0.5",
 		sm: "px-1.5 py-1",
 		md: "px-2 py-1.5",
 		lg: "px-3 py-2",
 		xl: "px-4 py-3"
 	} : {
+		none: "p-0",
 		xs: "p-0.5",
 		sm: "p-1",
 		md: "p-1.5",
@@ -40,6 +42,8 @@
 		plain:  'button-plain',
 	}
 </script>
+
+
 
 {#if restProps.href}
 	<Link as={!restProps.href ? 'button' : 'a'} aria-disabled={restProps.disabled ? 'true' : undefined}
@@ -218,7 +222,7 @@
 		}
 
 		.button-label {
-			@apply leading-6 px-1;
+			@apply line-clamp-1 px-1 whitespace-pre;
 		}
 	}
 	

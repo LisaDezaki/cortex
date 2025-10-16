@@ -39,9 +39,9 @@
 
 <AuthenticatedLayout>
 
-	{#snippet header()}
+	<!-- {#snippet header()}
 		<PageHeader title={faction.name} />
-	{/snippet}
+	{/snippet} -->
 
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="py-12">
@@ -72,7 +72,7 @@
 							onclick={() => faction.addEmblem()}
 						/>
 						<Heading is="h1" as="h3"
-							class="mt-auto z-10 {faction.getBanner() ? 'text-white' : ''}"
+							class="mt-auto w-3/4 z-10 {faction.getBanner() ? 'text-white' : ''}"
 							heading={faction.name}
 							headingClass="whitespace-pre-wrap"
 							subheading={faction.type}
