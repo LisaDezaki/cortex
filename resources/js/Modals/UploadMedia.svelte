@@ -11,6 +11,7 @@
 		media,
 		method = 'post',
 		multiple = false,
+		title = "Upload Media",
 		type = 'gallery',
 		...restProps
 	} = $props()
@@ -21,7 +22,7 @@
 
 
 
-<ModalForm title="Upload Media" size={aspect == "aspect-square" ? "md" : "xl"}
+<ModalForm title={title} size={aspect == "aspect-square" ? "md" : "xl"}
 	endpoint={endpoint}
 	form={mediaUploadForm}
 	method={method}

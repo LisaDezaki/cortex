@@ -5,6 +5,7 @@
 	import Input	from '@/Components/UI/Input.svelte'
 
 	let {
+		class: className,
 		data,
 
 		query	= $bindable(),
@@ -27,7 +28,6 @@
 		sortOptions,
 		layoutOptions,
 
-		class: className,
 		onUpdate = () => {},
 		...restProps
 	} = $props()
@@ -50,7 +50,7 @@
 
 
 <Flex align="center" justify="start" gap={3}
-	class="bg-surface sticky top-20 pb-1.5 w-full z-50"
+	class="bg-surface sticky top-20 pb-1.5 w-full z-50 {className}"
 {...restProps}>
 
 
@@ -59,7 +59,7 @@
 	{#if searchable}
 		<Input bind:value={query}
 			type="search"
-			class="w-40" size="sm"
+			class="w-40" size="md"
 			label="Search" labelIcon="MagnifyingGlass"
 			name="search"
 			placeholder="Search..."
@@ -76,7 +76,7 @@
 
 	{#if filterable}
 		<Dropdown bind:value={filter}
-			class="w-40" size="sm"
+			class="w-40" size="md"
 			contentClass="w-40"
 			label="Filter" labelIcon="FunnelSimple"
 			options={filterOptions}
@@ -90,7 +90,7 @@
 	{#if sortable}
 		<Input bind:value={sort}
 			type="select"
-			class="w-40" size="sm"
+			class="w-40" size="md"
 			contentClass="w-40"
 			label="Sort" labelIcon="SortAscending"
 			placeholder="Sort by"
@@ -102,9 +102,9 @@
 
 	<!-- Result Count -->
 
-	<div class="bg-emerald-500/10 text-emerald-500 whitespace-nowrap p-lg rounded-lg">
+	<Inline class="bg-emerald-500/10 border-b border-accent-softest h-8 mt-auto text-accent text-sm whitespace-nowrap p-md rounded">
 		{results?.length} {results?.length !== 1 ? 'results' : 'result'}
-	</div>
+	</Inline>
 
 
 	<!-- Size -->
@@ -124,10 +124,10 @@
 
 	<Input bind:value={layout}
 		type="select"
-		class="w-40" size="sm"
+		class="w-40" size="md"
 		contentClass="w-40"
 		label="Layout" labelIcon="Layout"
 		options={layoutOptions}
 	/>
-	
+
 </Flex>

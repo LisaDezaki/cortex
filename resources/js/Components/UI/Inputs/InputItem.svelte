@@ -22,14 +22,14 @@
 </script>
 
 
-<Flex gap={0.5} onclick={onclick}
+<Flex align="center" gap={0.5} onclick={onclick}
 	class="input-option text-sm w-full {className} {active || checked ? 'active' : ''}"
 >
 	{#if icon || item?.icon}
 		<Icon name={icon || item?.icon} size="md" />
 	{:else if image || item?.image}
 		<Thumbnail
-			class="rounded-full w-5"
+			class="rounded-full p-[1px] w-6"
 			iconSize={16}
 			imageClass="rounded-full"
 			src={image || item?.image}

@@ -12,6 +12,7 @@
 	const customFields = $page.props.customFields?.data
 
 	let {
+		class: className,
 		data, project,
 		results = $bindable([]),
 		query	= $bindable(''),
@@ -68,7 +69,14 @@
 	}
 
 
-	//	Menu Options
+	/**
+	 *  Menu Options
+	 * 
+	 *  - Filter Options
+	 *  - Sort Options
+	 *  - Layout Options
+	 * 
+	 */
 
 	const filterOptions = $state([
 		{ label: 'All characters', 	value: '',		  	filterFunction: (ch) => { return ch } },
@@ -79,29 +87,37 @@
 		{ label: 'Relationship',	showImage: true, 	options: relationshipOptions },
 		{ 	separator: true, hideIf: !customFields || customFields.length === 0 },
 		...customFields?.map(f => {
-			return { label: f.label, options: customFieldOptions(f) }
+			return { label: f.label, options: customFieldOptions(f) || [] }
 		})
 	])
 
 	const sortOptions = $state([
-		{ label: "By name",			value: 'name',       sortFunction: (a,b) => { return a.name 				< b.name					? -1 : 1 } },
-		{ label: "By alias",		value: 'alias',      sortFunction: (a,b) => { return a.alias             	< b.alias					? -1 : 1 } },
-		{ label: "By popularity",	value: 'popularity', sortFunction: (a,b) => { return a.relationships?.items?.length > b.relationships?.items?.length 	? -1 : 1 } },
-		{ label: "By location",		value: 'location',   sortFunction: (a,b) => { return a.location?.name       < b.location?.name 			? -1 : 1 } },
-		{ label: "By faction",		value: 'faction',    sortFunction: (a,b) => { return a.factions?.items?.[0]?.name  < b.factions?.items?.[0]?.name 	? -1 : 1 } },
+		{ label: "By name", value: 'name', sortFunction: (a,b) => {
+			return a.name < b.name ? -1 : 1 } },
+		{ label: "By alias", value: 'alias', sortFunction: (a,b) => {
+			return a.alias < b.alias ? -1 : 1 } },
+		{ label: "By popularity", value: 'popularity', sortFunction: (a,b) => {
+			return a.relationships?.items?.length > b.relationships?.items?.length 	? -1 : 1 } },
+		{ label: "By location", value: 'location', sortFunction: (a,b) => {
+			return (a.location?.name || '_') < (b.location?.name || '_') ? -1 : 1 } },
+		{ label: "By faction", value: 'faction', sortFunction: (a,b) => {
+			return (a.factions?.items?.[0]?.name || '_') < (b.factions?.items?.[0]?.name || '_') ? -1 : 1 } },
 		...customFields?.map(f => {
 			return { label: `By ${f.label.toLowerCase()}`, value: f.name, sortFunction: (a,b) => customSortFunction(a,b,f) }
 		}),
-		{ 	separator: true },
-		{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
-		{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
-		{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } },
+		{ separator: true },
+		{ label: "Date Created", value: 'created_at', sortFunction: (a,b) => {
+			return a.meta.createdAt < b.meta.createdAt ? -1 : 1 } },
+		{ label: "Date Updated", value: 'updated_at', sortFunction: (a,b) => {
+			return a.meta.updatedAt < b.meta.updatedAt ? -1 : 1 } },
+		{ label: "Randomly", value: 'random',     sortFunction: (a,b) => {
+			return Math.random() < 0.5 ? -1 : 1 } },
 	])
 
 	const layoutOptions = $state([
-		{ label: "As Graph",  		value: "graph",		icon: "Graph"	 },
-		{ label: "As Grid",   		value: "grid",		icon: "GridFour" },
-		{ label: "As Table",  		value: "table",		icon: "Table"	 }
+		{ label: "As Graph", value: "graph", icon: "Graph"	  },
+		{ label: "As Grid",  value: "grid",	 icon: "GridFour" },
+		{ label: "As Table", value: "table", icon: "Table"	  }
 	])
 
 </script>
@@ -109,6 +125,7 @@
 
 
 <ControlBar
+	class={className}
 	data={data.items}
 	bind:query bind:filter bind:sort
 	bind:results bind:size bind:layout

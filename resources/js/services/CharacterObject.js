@@ -32,6 +32,7 @@ export default class CharacterObject {
 			media: this.getBanner(),
 			method: 'patch',
 			reloadPageProps: ['character.media', 'characters.media'],
+			title: 'Upload banner for ' + this.name,
 			type: 'banner',
 		})
 	}
@@ -55,6 +56,7 @@ export default class CharacterObject {
 			media: this.getPortrait(),
 			method: 'patch',
 			reloadPageProps: ['character.media', 'characters.media'],
+			title: 'Upload portrait for ' + this.name,
 			type: 'portrait',
 		})
 	}

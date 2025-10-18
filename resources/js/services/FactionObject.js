@@ -30,6 +30,7 @@ export default class FactionObject {
 			media: this.getBanner(),
 			method: 'patch',
 			reloadPageProps: ['faction.media', 'factions.media'],
+			title: "Add banner to " + this.name,
 			type: 'banner',
 		})
 	}
@@ -41,6 +42,7 @@ export default class FactionObject {
 			media: this.getEmblem(),
 			method: 'patch',
 			reloadPageProps: ['faction.media', 'factions.media'],
+			title: "Add emblem to " + this.name,
 			type: 'emblem',
 		})
 	}

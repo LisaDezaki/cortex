@@ -16,6 +16,7 @@
 	let {
         class: className,
 		icon,
+		inputClass,
 		label,
 		labelIcon,
 		isOpen = $bindable(false),
@@ -25,6 +26,14 @@
 		onUpdate = () => {},
 		value = $bindable()
     } = $props()
+
+	const padSizes = {
+		xs: "py-0",
+		sm: "py-0.25",
+		md: "py-0.5",
+		lg: "py-1",
+		xl: "py-1.5"
+	}
 
 	let suboptionQuery 		= $state('')
 	let suboptions	   		= $state(null)
@@ -75,7 +84,7 @@
 {/snippet} -->
 
 <Popover.Root bind:open={isOpen}>
-	<Popover.Trigger class="input flex flex-col gap-0 -space-y-1 {className}">
+	<Stack gap={0.5}>
 		{#if label}
 			<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft w-full">
 				{#if labelIcon}
@@ -87,13 +96,16 @@
 				/>
 			</Flex>
 		{/if}
-		<Flex align="center" justify="start" gap={0} class="p-1 w-full">
-			<InputItem item={selected} />
-		</Flex>
-	</Popover.Trigger>
+		<Popover.Trigger class="input p-1 {className}">
+			<InputItem item={selected} class={padSizes[size]} />
+		</Popover.Trigger>
+	</Stack>
 
 	<Popover.Portal>
-		<Popover.Content class="input-content overflow-hidden {className}">
+		<Popover.Content
+			class="input-content overflow-hidden {className}"
+			align="start" sideOffset={-1}
+		>
 			<Grid cols={2} gap={0} class="max-h-96 w-[200%] {suboptions ? 'translate-x-[-50%]' : ''} transition-transform">
 				<Stack class="p-0.5">
 					{#each options as option}

@@ -2,10 +2,14 @@
 	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
+
+	//	Layout & Components
+
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-
-	import { Flex, Grid, Stack } from '@/Components/Core'
-
+	import Flex 		 from '@/Components/Core/Flex.svelte'
+	import Grid 		 from '@/Components/Core/Grid.svelte'
+	import Inline 		 from '@/Components/Core/Inline.svelte'
+	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
 	import Card       	 from '@/Components/UI/Card.svelte'
@@ -13,21 +17,25 @@
 	import Collapsible	 from '@/Components/UI/Collapsible.svelte'
 	import Container	 from '@/Components/UI/Container.svelte'
 	import Heading		 from '@/Components/UI/Heading.svelte'
+	import Icon		 	 from '@/Components/UI/Icon.svelte'
 	import Media     	 from '@/Components/UI/Media.svelte'
-	import MediaGrid	 from '@/Components/UI/MediaGrid.svelte'
-	import PageHeader	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu		 from '@/Components/UI/PageMenu.svelte'
 	import Section		 from '@/Components/UI/Section.svelte'
 	import Separator	 from '@/Components/UI/Separator.svelte'
 	import Tag	 		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
-
 	import Map      	 from '@/Components/Features/Location/Map.svelte'
 
-	import FactionObject from '@/services/FactionObject';
 
+	//	Page props
+
+	import FactionObject from '@/services/FactionObject';
 	const faction 	   = new FactionObject($page.props.faction?.data)
 	const customFields = $page.props.customFields?.data
+
+	function findDisplayValue(fieldId) {
+		return character.customFieldValues?.find(v => v.customFieldId == fieldId)?.displayValue || null
+	}
 
 </script>
 
@@ -79,29 +87,88 @@
 						/>
 					</ArticleBanner>
 
-					<Stack gap={6} class="px-6">
+					<Stack gap={6} class="p-6">
+
+						<Grid cols={3} gap={6} class="w-3/4">
+							<Stack gap={1.5}>
+								<Inline class="font-light px-1.5 text-neutral-soft text-sm" gap={1.5}>
+									<Icon name="MapPin" size="sm" />
+									<span>Headquarters
+								</Inline>
+
+								{#if faction.headquarters}
+									<Link
+										class="bg-white border border-neutral-softest inline-flex gap-3 p-1 rounded-lg w-auto hover:bg-accent-softest hover:border-accent-softest hover:text-accent"
+										href={route("locations.show", { location: faction.headquarters?.slug})}>
+										<Thumbnail
+											class="aspect-square bg-neutral-softest rounded h-11 max-w-11"
+											icon="User"
+											src={faction.headquarters.image?.url}
+										/>
+										<Stack justify="center">
+											<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
+											<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
+										</Stack>
+									</Link>
+								{:else}
+									<p class="font-style-placeholder">There is no headquarters for this Faction yet.</p>
+								{/if}
+
+							</Stack>
+
+							<Stack gap={1.5}>
+								<Inline class="font-light text-neutral-soft text-sm" gap={1.5}>
+									<Icon name="UsersFour" size="sm" />
+									<span>Membership
+								</Inline>
+
+								<!-- {#if faction.headquarters}
+									<Link
+										class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
+										href={route("locations.show", { location: faction.headquarters?.slug})}>
+										<Thumbnail
+											class="aspect-square bg-neutral-softest rounded h-11 max-w-11"
+											icon="User"
+											src={faction.headquarters.image?.url}
+										/>
+										<Stack justify="center">
+											<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
+											<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
+										</Stack>
+									</Link>
+								{:else}
+									<p class="font-style-placeholder">There is no headquarters for this Faction yet.</p>
+								{/if} -->
+
+							</Stack>
+						</Grid>
 
 						<Heading is="h3" as="h6" class="mt-9">Description</Heading>
+
 						<Collapsible collapsed={true}
 							class="max-w-[64ch]"
 							collapsedClass="line-clamp-3 overflow-hidden">
 							{faction.description}
 						</Collapsible>
 
-						<Heading is="h3" as="h6" class="mt-9">Headquarters</Heading>
-						<Link
-							class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
-							href={route("locations.show", { location: faction.headquarters.slug})}>
-							<Thumbnail
-								class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
-								icon="User"
-								src={faction.headquarters.image?.url}
-							/>
-							<Stack justify="center">
-								<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
-								<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
-							</Stack>
-						</Link>
+						<!-- <Heading is="h3" as="h6" class="mt-9">Headquarters</Heading>
+						{#if faction.headquarters}
+							<Link
+								class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
+								href={route("locations.show", { location: faction.headquarters?.slug})}>
+								<Thumbnail
+									class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
+									icon="User"
+									src={faction.headquarters.image?.url}
+								/>
+								<Stack justify="center">
+									<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
+									<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
+								</Stack>
+							</Link>
+						{:else}
+							<p class="font-style-placeholder">There is no headquarters for this Faction yet.</p>
+						{/if} -->
 	
 						<Heading is="h3" as="h6" class="mt-9">Custom Fields</Heading>
 						{#if customFields && customFields.length > 0}
@@ -161,7 +228,7 @@
 								class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
 								href={route("characters.show", { character: member.slug})}>
 								<Thumbnail
-									class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
+									class="aspect-square bg-neutral-softest rounded h-11 max-w-11"
 									icon="User"
 									src={member.image?.url}
 								/>

@@ -1,7 +1,7 @@
 <script>
 	import { modalActions } from '@/stores/modalStore';
 
-	import { Flex, Form } from '@/Components/Core'
+	import { Form, Grid } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Modal  from '@/Components/UI/Modal.svelte'
 
@@ -36,7 +36,7 @@
 
 		{@render children?.()}
 
-		<Flex gap={0} class="flex-0 min-h-12">
+		<Grid cols={2} gap={0} class="flex-0 min-h-12">
 			<Button style="hard" theme="neutral"
 				class="rounded-none grow"
 				type="button"
@@ -50,6 +50,6 @@
 				disabled={$form.processing}
 				{...updatedSubmitProps}
 			/>
-		</Flex>
+		</Grid>
 	</Form>
 </Modal>

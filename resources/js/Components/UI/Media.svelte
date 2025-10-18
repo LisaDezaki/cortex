@@ -6,6 +6,9 @@
 	let {
 		class: className,
 		imageClass,
+		icon = "Image",
+		iconSize = "xl",
+		iconWeight = "light",
 		media,
 		onclick,
 	} = $props()
@@ -14,11 +17,11 @@
 
 
 
-<Flex align="center" justify="center" class="media overflow-hidden {className}">
+<Flex align="center" justify="center" class="media relative overflow-hidden {className}">
 	{#if media}
 		<img class="min-h-full min-w-full object-cover {imageClass}" src={media.url} alt={media.name} />
 	{:else}
-		<Icon name="Image" size="xl" weight="light" />
+		<Icon class="opacity-50 text-neutral-softest" name={icon} size={iconSize} weight={iconWeight} />
 	{/if}
 	{#if onclick}
 		<Button

@@ -7,6 +7,9 @@
 		icon = null,
 		iconSize = 20,
 		iconWeight = 'regular',
+		iconAfter = null,
+		iconAfterSize = "xs",
+		iconAfterWeight = "regular",
 		label,
 		loading,
 		size  = "md",
@@ -45,28 +48,39 @@
 
 
 
+
+{#snippet contents()}
+	{#if loading}
+		
+		<Icon name="CircleNotch" animation="animate-[spin_0.5s_linear_infinite]" />
+
+	{:else}
+
+		{#if thisIcon}
+			<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
+		{/if}
+
+		{#if label}
+			<span class={styles.label}>{label}</span>
+		{/if}
+
+		{@render children?.()}
+
+		{#if iconAfter}
+			<Icon class="text-neutral-softest" name="CaretDown" size="xs" weight="fill" />
+		{/if}
+
+	{/if}
+{/snippet}
+
+
+
 {#if restProps.href}
 	<Link as={!restProps.href ? 'button' : 'a'} aria-disabled={restProps.disabled ? 'true' : undefined}
 		class="{styles.button} button-{theme} {sizes[size]} {styles[style]} {className}"
 	{...restProps}>
 
-		{#if loading}
-			
-			<Icon name="CircleNotch" animation="animate-[spin_0.5s_linear_infinite]" />
-
-		{:else}
-
-			{#if thisIcon}
-				<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
-			{/if}
-
-			{#if label}
-				<span class={styles.label}>{label}</span>
-			{/if}
-
-			{@render children?.()}
-
-		{/if}
+		{@render contents()}
 
 	</Link>
 {:else}
@@ -75,23 +89,7 @@
 		class="{styles.button} button-{theme} {sizes[size]} {styles[style]} {className}"
 	{...restProps}>
 
-		{#if loading}
-			
-			<Icon name="CircleNotch" animation="animate-[spin_0.5s_linear_infinite]" />
-
-		{:else}
-
-			{#if thisIcon}
-				<Icon name={thisIcon} size={iconSize} weight={iconWeight} />
-			{/if}
-
-			{#if label}
-				<span class={styles.label}>{label}</span>
-			{/if}
-
-			{@render children?.()}
-
-		{/if}
+		{@render contents()}
 
 	</button>
 {/if}
@@ -108,7 +106,7 @@
 		/* @apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2; */
 
 		&:not([class*="rounded-"]) {
-			@apply rounded-md;
+			@apply rounded;
 		}
 		/* &:not([class*="max-w-"]) {
 			@apply max-w-64;

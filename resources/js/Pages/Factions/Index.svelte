@@ -15,6 +15,9 @@
 	import Collapsible			from '@/Components/UI/Collapsible.svelte'
 	import Empty     		 	from '@/Components/UI/Empty.svelte'
 	import Heading				from '@/Components/UI/Heading.svelte'
+	import Icon					from '@/Components/UI/Icon.svelte'
+	import Input				from '@/Components/UI/Input.svelte'
+	import Media				from '@/Components/UI/Media.svelte'
 	import PageHeader		 	from '@/Components/UI/PageHeader.svelte'
 	import Section      	 	from '@/Components/UI/Section.svelte'
 	import Skeleton				from '@/Components/UI/Skeleton.svelte'
@@ -32,6 +35,7 @@
 	import CollectionList 	from '@/services/CollectionList'
 	const activeProject   = new ProjectObject($page.props.activeProject.data)
 	const collections	  = new CollectionList($page.props.collections?.data)
+	const customFields	  = $state($page.props.customFields?.data)
 	const characters      = $state(activeProject?.characters)
 	const factions    	  = $state(activeProject?.factions)
 	const locations    	  = $state(activeProject?.locations)
@@ -87,7 +91,7 @@
 							{ label: "Settings",	href: route('factions.settings') },
 						]}
 						actions={[
-							{ icon: "Plus", theme: "accent", onclick: () => factions.create() },
+							{ icon: "Plus", label: "New", theme: "accent", onclick: () => factions.create() },
 						]}
 					/>
 
@@ -122,7 +126,6 @@
 											{ icon: "Trash", 		onclick: () => faction.delete(), theme: "danger" },
 										]}
 										options={[{
-											
 											icon: 'HouseLine', iconWeight: 'regular',
 											label: "Set Headquarters",
 											options: [ ...locations.items.map(l => ({
@@ -197,51 +200,82 @@
 					<Stack gap={3} class="sticky top-0 h-screen pt-16 pb-6">
 
 						{#if selected}
-							<Thumbnail src={selected.image?.url} />
 
-							<Flex align="start" justify="between">
-								<Stack gap={1}>
-									<Heading is="h3" as="h5">{selected.name}</Heading>
-									<p class="text-sm">{selected.type}</p>
-								</Stack>
-								<Button style="plain" theme="neutral" icon="DotsThreeOutlineVertical" iconSize="md" iconWeight="fill" class="rounded-full hover:bg-neutral-softest" />
-							</Flex>
+							<Stack align="center" justify="center">
+								<!-- <Thumbnail class="h-48 mb-3 rounded w-48" src={selected.image?.url} /> -->
+								<Media
+									class="bg-neutral-softest h-48 mb-3 rounded text-neutral-softest w-48"
+									icon="FlagBannerFold" iconWeight="fill"
+									media={selected.getEmblem()}
+									onclick={() => selected.addEmblem()}
+								/>
+								<Heading is="h3" as="h4">{selected.name}</Heading>
+								<p class="text-sm">{selected.type}</p>
+							</Stack>
+
+
+							<!-- <Stack>
+								<Flex align="start" justify="between">
+									<Heading is="h3" as="h4">{selected.name}</Heading>
+									{#if selected.starred}
+										<Button class="text-amber-400" size="none" icon="Star" iconSize="xl" iconWeight="fill" />
+									{:else}
+										<Button class="text-neutral-softest" size="none" icon="Star" iconSize="xl" iconWeight="light" />
+									{/if}
+								</Flex>
+								<p class="text-sm">{selected.alias}</p>
+							</Stack> -->
 
 							<Collapsible class="font-style-small mb-6" collapsed={true}>
 								{selected.description}
 							</Collapsible>
 
-							<Inline class="mb-1 text-sm" gap={0}>
-								<span class="font-bold mr-2 w-24">Headquarters:</span>
-								{#if selected.headquarters}
-									<Link class="inline-flex items-center gap-1.5 border pr-3 rounded-full hover:border-accent hover:text-accent" href={selected.headquarters?.routes?.show}>
-										<Thumbnail src={selected.headquarters?.image?.url} class="h-7 p-[1px] rounded-full w-7" imageClass="rounded-full" />
-										<span class="line-clamp-1 truncate">{selected.headquarters?.name}</span>
-									</Link>
-								{/if}
-							</Inline>
-	
-							<Inline class="mb-1 text-sm" gap={0}>
-								<span class="font-bold mr-2 w-24">Members:</span>
-								{#each selected.members.items as mem}
-									<Link class="rounded-full" href={mem.routes.show}>
-										<Thumbnail src={mem?.image?.url} class="border h-7 p-[1px] rounded-full w-7 hover:border-accent" imageClass="rounded-full" />
-									</Link>
-								{/each}
-							</Inline>
+							<Stack gap={3}>
+
+								<Inline align="start" gap={0} class="text-sm">
+									<span class="font-bold min-w-24 mr-2">Headquarters:</span>
+									{#if selected.headquarters}
+										<Link class="text-accent hover:underline" href={selected.headquarters?.routes.show}>{selected.headquarters?.name}</Link>
+									{:else}
+										<Link class="font-style-placeholder" onclick={() => selected.setHeadquarters()}>Not set</Link>
+									{/if}
+								</Inline>
+		
+								<Inline align="start" gap={0} class="text-sm">
+									<span class="font-bold min-w-24 mr-2">Members:</span>
+									{#if selected.members.items.length > 0}
+										{#each selected.members.items as rel, i}
+											<Link class="text-accent hover:underline" href={rel.routes.show}>{rel.name}</Link>
+											{#if i === selected.members.items.length - 1}{:else},&nbsp;{/if}
+										{/each}
+									{:else}
+										<Link class="font-style-placeholder" onclick={() => selected.setMembers()}>None</Link>
+									{/if}
+								</Inline>
+							</Stack>
+
 
 							<Button size="xl" style="hard" theme="accent" class="line-clamp-1 mt-auto"
 								icon="Eye" iconWeight="fill"
 								label="View {selected.name}"
 								href={selected.routes.show}
 							/>
+
 						{:else}
-							<Thumbnail class="mb-5" />
-							<Skeleton class="h-5 mb-1.5 w-1/2" />
-							<Skeleton class="h-3 mb-5 w-1/3" />
-							<Skeleton class="h-3 mb-1.5 mr-3" />
-							<Skeleton class="h-3 mb-1.5 mr-1" />
-							<Skeleton class="h-3 mb-1.5 mr-7" />
+							<Thumbnail class="mb-1" />
+							<Stack gap={2}>
+								<Flex align="center" justify="between">
+									<Skeleton class="h-6 w-1/3" />
+									<Skeleton class="h-6 w-6" />
+								</Flex>
+								<Skeleton class="h-3 mb-2.5 w-1/2" />
+							</Stack>
+							<Stack gap={2} class="mb-2">
+								<Skeleton class="h-3 mr-5" />
+								<Skeleton class="h-3 mr-1" />
+								<Skeleton class="h-3 mr-24" />
+							</Stack>
+							<Skeleton class="h-3 w-16" color="bg-accent-softest" />
 							<Inline class="mt-16 w-full">
 								<Skeleton class="h-3 w-16 mr-3" />
 								<Skeleton class="h-6 rounded-full w-6" />
@@ -258,6 +292,7 @@
 								<Skeleton class="h-6 rounded-full w-6" />
 								<Skeleton class="h-6 rounded-full w-6" />
 							</Inline>
+							<Skeleton class="h-[50px] mt-auto rounded-lg" />
 						{/if}
 
 					</Stack>

@@ -14,6 +14,7 @@
 	let {
 		checked = $bindable(false),
 		class: className,
+		contentClass,
 		name,
 		options = [],
 		size = "md",
@@ -82,7 +83,7 @@
 		class="input {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
-		contentClass="input-content"
+		contentClass="input-content {contentClass}"
 		options={options}
 		bind:value={value}
 		{...restProps}
@@ -95,7 +96,7 @@
 		class="input {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
-		contentClass="input-content"
+		contentClass="input-content {contentClass}"
 		options={options}
 		bind:value={value}
 		{...restProps}
@@ -192,7 +193,6 @@
 			@apply pl-8;
 		}
 
-
 		&::placeholder,
 		:global(input::placeholder),
 		&[data-placeholder] .input-value,
@@ -276,7 +276,7 @@
 		font-family: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif;
 
 		:global(.input-option) {
-			@apply flex items-center h-8 px-1 rounded-sm;
+			@apply flex items-center h-7 pl-1.5 pr-0.5 rounded-sm text-sm;
 			@apply cursor-pointer;
 			&:hover,
 			&[data-highlighted] {

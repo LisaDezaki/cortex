@@ -13,6 +13,7 @@
 		inputClass,
 		label,
 		labelIcon,
+		size = "md",
         value = $bindable(),
         ...restProps
     } = $props()
@@ -40,10 +41,10 @@
 
 
 
-<Stack gap={0} class="input {className} {restProps.disabled ? 'disabled' : ''} {hasFocus ? 'focus' : ''} -space-y-1">
+<Stack gap={0.5}>
 
 	{#if label}
-		<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft w-full">
+		<Flex align="center" justify="start" gap={1} class="font-light text-neutral-soft w-full">
 			{#if labelIcon}
 				<Icon name={labelIcon} size="xs" />
 			{/if}
@@ -54,7 +55,7 @@
 		</Flex>
 	{/if}
 
-	<Flex align="center" justify="start" class="p-1 w-full">
+	<Flex align="center" justify="start" class="input p-1 {className} {restProps.disabled ? 'disabled' : ''} {hasFocus ? 'focus' : ''}">
 		{#if icon}
 			<Icon name={icon} size={iconSize} weight="regular" />
 		{/if}

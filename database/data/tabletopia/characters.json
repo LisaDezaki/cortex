@@ -35,8 +35,8 @@
 		"alias": "The Butcher",
 		"species": "bearfolk",
 		"location": "docks",
-		"appearance": ["Big", "Friendly"],
-		"personality": ["Humble", "Proud", "Simple"],
+		"appearance": ["Beaming", "Big", "Friendly", "Jovial", "Kindly", "Solid", "Sturdy"],
+		"personality": ["Approachable", "Avuncular", "Gentle", "Humble", "Patient", "Proud", "Simple", "Unhurried", "Welcoming"],
 		"desc": "In the salty, bustling air of the Downtown Docks, you'll find Billy, a bearfolk of immense stature and even bigger heart, presiding over his stall with quiet contentment. For generations, his family has provided the town with the finest cuts of meat and the freshest daily catch, and Billy carries on this tradition with immense pride. He knows every customer by name, remembers their preferred cuts, and always has a friendly word or a bit of local gossip to share over the counter. To Billy, his trade is about more than commerce; it's about community, about sustaining the life of the town he loves, one perfectly trimmed steak or fillet of sunscale trout at a time.\n\nHowever, a shadow looms over his small stall in the form of DragonCorp's sleek, automated delivery wyverns. Billy has watched, with a sad confusion, as longtime patrons have begun to opt for the corporation's cheaper, pre-packaged goods. He doesn't understand the appeal of a frost-touched box over a personally selected cut from a beast he knew by river and field.\n\nWhile not an ambitious bear, Billy's simple dream is under threat. His aspiration isn't for wealth, but to remain the town's butcher, a familiar, friendly face who ensures that a family's supper is not just nourishing, but a product of care and craft. He represents a fading way of life, a piece of New Miniport's homegrown soul struggling against the tide of impersonal convenience."
 	},
 
@@ -55,7 +55,8 @@
 		"alias": "The Artist",
 		"species": "gnome",
 		"location": "alley",
-		"personality": ["Anarchic", "Artistic", "Political", "Rebellious"],
+		"appearance": ["Paint-splattered", "Slight", "Spiky", "Unkempt"],
+		"personality": ["Agile", "Anarchic", "Artistic", "Defiant", "Elusive", "Expressive", "Fidgety", "Fiery", "Incendiary", "Intense", "Keen", "Nimble", "Political", "Rebellious", "Restless", "Unpredictable", "Vibrant", "Wiry"],
 		"desc": "Lurking in the rain-slicked alleys of New Miniport, where the glow of the new DragonCorp neon signs doesn't quite reach, operates the city's most elusive and incendiary artist: a gnome known only as Binksy. More phantom than person, Binksy is a whirlwind of righteous anger and artistic genius, using the city's walls as their canvas for a relentless campaign against the Dragon Council's gentrification and DragonCorp's capitalist stranglehold.\n\nUsing custom-made magical spray paints, their graffiti can hypnotize passersby with swirling patterns, disorient guards with disconcerting illusions, or even leave temporary, immobilizing glyphs on the brickwork to trap their pursuers.\n\nDriven by a deep-seated hatred for the systemic oppression they see reshaping their home, Binksy is always trying to break the spell of complacency they believe has fallen over the citizens. They fight not for notoriety, but for the soul of New Miniport, defending the gritty, diverse, and chaotic character of the town against the sterile, draconic order being imposed from above. To the establishment, they're a dangerous nuisance. But to the discontented and the disillusioned living in the Council's shadow, Binksy is a folk hero, a voice of defiance painted in brilliant, magical color. Recruiting them means gaining a powerful and unpredictable ally, one who knows the city's underbelly and isn't afraid to paint a target on its back."
 	},
 
@@ -64,7 +65,8 @@
 		"alias": "The Enforcer",
 		"species": "lizardfolk",
 		"location": "tavern",
-		"personality": ["Intimidating", "Quiet"],
+		"appearance": ["Brawny", "Hulking"],
+		"personality": ["Implacable", "Intimidating", "Menacing", "Quiet", "Stoic", "Unnerving"],
 		"desc": "Where Grenn is the calculating brain of the Cold-Bloods syndicate, Bogdan is its crushing tail. A mountain of muscle and scarred scales, this lizardfolk serves as the silent, imposing bouncer of \"The Lucky Die\" and Grenn's personal shadow.\n\nHe is less an employee and more a force of nature, a loyal instrument of violence whose presence alone is often enough to quell dissent. While patrons carouse inside the tavern, they are subconsciously comforted by the solid, unmoving wall of reptilian menace at the door, a walking advertisement for the consequences of causing trouble.\n\nBut his true work begins when the tavern closes. As Grenn's personal enforcer, Bogdan is the syndicate's blunt instrument. He is the one who \"collects\" on overdue debts, who \"convinces\" stubborn tenants to accept their eviction, and who ensures that anyone who crosses Grenn understands the physical cost of that mistake.\n\nHe rarely speaks, believing actions to be a far more universal language. His loyalty to Grenn is absolute and unthinking; he does not question the morality of an order, only the most efficient way to carry it out. To cross Grenn is to invite a visit from Bogdan, a visit that ends with broken bones and a very clear, very final message."
 	},
 
@@ -73,7 +75,7 @@
 		"alias": "The Fly",
 		"species": "insectoid",
 		"location": "ruins",
-		"desc": "Brundle uses its compound eyes and many limbs to shoot in every direction simultaneously with ease."
+		"desc": "Brundle uses its compound eyes and many limbs to shoot in every direction simultaneously with ease. It is a master of reconnaissance and stealth, able to slip through cracks and crevices that would be impossible for larger adventurers. Its small size and agility make it an invaluable scout in the dangerous ruins surrounding New Miniport, where traps and ambushes lurk around every corner.\n\n"
 	},
 
 	"bugbeard": {
@@ -81,7 +83,8 @@
 		"alias": "The Pirate Captain",
 		"species": "bugbear",
 		"location": "pirate-ship",
-		"personality": ["Imposing", "Loud", "Rebellious"],
+		"appearance": ["Burly", "Grizzled", "Imposing", "Rugged", "Shaggy", "Weathered"],
+		"personality": ["Boisterous", "Charismatic", "Commanding", "Confident", "Imposing", "Loud", "Ornamented", "Principled", "Rebellious", "Unorthodox"],
 		"desc": "A hulking, charismatic bugbear with a beard famously woven with iridescent beetle shells and trinkets from a hundred plundered voyages, Captain Bugbeard cuts an imposing figure, even while laying low.\n\nAs the master of the pirate vessel The Crimson Tide, his reputation precedes him—though it is a matter of fierce debate as to what that reputation truly is. To the wealthy merchant lords and the Dragon Council that backs them, he is a notorious criminal, a scourge upon lawful trade with a bounty on his head large enough to buy a manor. But to the common folk and the oppressed, he is a folk hero of the high seas, a scoundrel with a code.\n\nHis philosophy is one of \"righteous plunder\", targeting only the fat merchant cogs and corporate vessels he knows are carrying wealth stolen from native populations or squeezed from the working class.\n\nThis very specific brand of Robin Hood piracy has made him powerful enemies and forced him to seek refuge in New Miniport, his ship disguised and tucked away in a secluded cove. He hopes the town's independent spirit will provide a safe harbor while the heat from his latest exploit dies down.\n\nHis presence is a polarizing force; some citizens see only a dangerous fugitive who will bring the Council's wrath down upon them all, while others cheer his defiance and see his wealth-redistribution as the only true justice in a system rigged against them. Despite his fearsome appearance, Bugbeard is a shrewd and competent leader, fiercely loyal to his crew and unshakable in his belief that sometimes, you have to break the law to do what's right."
 	},
 
@@ -99,7 +102,8 @@
 		"alias": "The Private Investigator",
 		"species": "orc",
 		"location": "mall",
-		"personality": ["Analytical", "Chain-smoker", "Meticulous", "Perceptive"],
+		"appearance": ["Grizzled", "Rugged", "Weathered"],
+		"personality": ["Analytical", "Chain-smoker", "Cynical", "Disillusioned", "Dogged", "Gruff", "Jaded", "Meticulous", "Observant", "Perceptive", "Tenacious", "World-weary"],
 		"desc": "In a dimly-lit office tucked between a defunct arcade and a candle shop in the New Miniport Galleria, you'll find Dirk. A hulking orc in a trench coat that's seen better days, he speaks in the gravelly, metaphor-laden drawl of a hardboiled noir detective, a style starkly at odds with his orcish accent. It's a dissonance that makes clients pause, but it never lasts long.\n\nBehind the world-weary act is the sharpest investigative mind in the region. Dirk can spot a misplaced fiber at a crime scene, read a micro-expression like a billboard, and piece together clues everyone else has trampled over. His methods are unorthodox, but his results are undeniable.\n\nHis greatest nemesis isn't a thug in a back alley, but the soul-crushing bureaucracy of the New Miniport PD. He's locked in a perpetual, grinding battle to access public records they are legally obligated to provide, a battle personified by Officer Laggard, a tortle cop whose deliberate pace makes molasses look speedy.\n\nWhile he handles the mundane cases that pay the rent (the Missing Hikers, the ever-present Graffitti, the infamous Stolen Bike), his real focus is his magnum opus: building an ironclad case against the Cold-Bloods syndicate. He's certain their operations are a front for something far darker, and he's determined to connect their crime boss, the seemingly respectable tavern owner Grenn, to the rot festering beneath New Miniport's streets. All he needs is one more break, and the patience to outlast Laggard's next delay tactic."
 	},
 
@@ -108,8 +112,9 @@
 		"alias": "The Gym Rat",
 		"species": "goblin",
 		"location": "gym",
-		"personality": ["Aggressive", "Misogynistic", "Narcissistic"],
-		"desc": "This guy HATES women."
+		"appearance": ["Oily", "Swole", "Veiny"],
+		"personality": ["Aggressive", "Belligerent", "Braggadocious", "Condescending", "Crass", "Insecure", "Misogynistic", "Narcissistic", "Obnoxious", "Patronizing", "Posturing", "Rude"],
+		"desc": "This guy HATES women. He constantly makes rude comments to female patrons and brags about his own strength and prowess. He is obsessed with being the biggest and strongest goblin in the gym, and will challenge anyone who he perceives as a threat to his ego.\n\nHe is extremely insecure about his short stature (even for a goblin)."
 	},
 
 	"duggan": {
@@ -117,7 +122,8 @@
 		"alias": "The Heavy",
 		"species": "troll",
 		"location": "pirate-ship",
-		"personality": ["Dumb", "Loyal", "Pyromaniac"],
+		"appearance": ["Grey-skinned", "Huge", "Imposing", "Scarred", "Thick-hided"],
+		"personality": ["Childlike", "Dumb", "Eager", "Explosive", "Loyal", "Powerful", "Protective", "Pyromaniac", "Simple-minded"],
 		"desc": "A mountain of mossy, grey-skinned muscle, the troll is the crew's undisputed heavy, a walking armory whose preferred solution to any problem, be it a locked door, an enemy ship, or a particularly stubborn crab, is overwhelming, percussive force.\n\nHis standard arsenal consists of a full-sized ship's cannon slung over his shoulder like a handbag and a pair of massive ship anchors he wields as dual axes, making him a one-troll boarding party and demolition crew all rolled into one.\n\nHe lives for the roar of the blast and the satisfying crunch of splintering timber, a simple soul with profoundly destructive tastes.\n\nHis loyalty to Captain Bugbeard is born of shared plunder and good fights, but his devotion to First Mate Abigail is absolute and unshakeable. She's the only one who can talk him down from a rampage or explain a complex plan in simple, action-oriented terms he understands (\"Duggan, see that wall? Make it not a wall.\"). Beyond the sea, he has a quieter connection to the land; his brother, Hugo, is a lumberjack, a profession Duggan vaguely respects for also involving hitting things with an axe, albeit in a much less exciting way. Their interactions are rare and awkward, two giants from the same clan who chose vastly different paths, one for the roar of the cannon and the other for the quiet fall of a tree."
 	},
 

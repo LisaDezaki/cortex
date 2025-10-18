@@ -56,6 +56,7 @@
 	import GlobeHemisphereEast from "phosphor-svelte/lib/GlobeHemisphereEast"
 	import GlobeHemisphereWest from "phosphor-svelte/lib/GlobeHemisphereWest"
 	import GlobeStand from "phosphor-svelte/lib/GlobeStand"
+	import GpsFix from "phosphor-svelte/lib/GpsFix"
 	import Graph from "phosphor-svelte/lib/Graph"
 	import GridFour from "phosphor-svelte/lib/GridFour"
 	import Hamburger from "phosphor-svelte/lib/Hamburger"
@@ -181,6 +182,7 @@
 		'GlobeHemisphereEast': GlobeHemisphereEast,
 		'GlobeHemisphereWest': GlobeHemisphereWest,
 		'GlobeStand': GlobeStand,
+		'GpsFix': GpsFix,
 		'Graph': Graph,
 		'GridFour': GridFour,
 		'Hamburger': Hamburger,

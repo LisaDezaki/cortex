@@ -27,7 +27,7 @@
 
 
 
-<Stack as="header" align="start" justify="center" gap={0} class="{color} h-20 pb-3 w-full z-20 {className}">
+<Stack as="header" align="start" justify="center" gap={0} class="{color} h-20 pb-1 w-full z-20 {className}">
 
 	<Flex align="center" justify="center" class="w-full">
 
@@ -67,7 +67,7 @@
 				<Inline gap={3}>
 					{#each actions as action}
 						{#if !action.hasOwnProperty('if') || action.if === true}
-							<Button size="lg" type="button" style={action.style || "hard"} {...action} />
+							<Button class="pr-3 rounded-full" size="md" type="button" style={action.style || "hard"} {...action} />
 						{/if}
 					{/each}
 				</Inline>

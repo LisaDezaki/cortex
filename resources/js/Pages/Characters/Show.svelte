@@ -17,8 +17,6 @@
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
 	import Media     	 from '@/Components/UI/Media.svelte'
-	import MediaGrid     from '@/Components/UI/MediaGrid.svelte'
-	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
 	import Separator     from '@/Components/UI/Separator.svelte'

@@ -1,5 +1,5 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { Link, page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
 
@@ -15,9 +15,11 @@
 	import Collapsible			from '@/Components/UI/Collapsible.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import Heading				from '@/Components/UI/Heading.svelte'
+	import Icon					from '@/Components/UI/Icon.svelte'
+	import Input				from '@/Components/UI/Input.svelte'
+	import Media				from '@/Components/UI/Media.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
 	import Section				from '@/Components/UI/Section.svelte'
-	import Separator			from '@/Components/UI/Separator.svelte'
 	import Skeleton				from '@/Components/UI/Skeleton.svelte'
 	import Tag					from '@/Components/UI/Tag.svelte'
 	import Thumbnail			from '@/Components/UI/Thumbnail.svelte'
@@ -38,6 +40,8 @@
 	const factions    	  = $state(activeProject?.factions)
 	const locations    	  = $state(activeProject?.locations)
 
+	
+
 
 	//	State & Derived values
 
@@ -49,6 +53,10 @@
 	let selected = $state(null)
 	let gridCols = $derived(14-size)
 	let results  = $derived(characters.items)
+
+	// let form = useForm({
+	// 	location: selected.location?.slug || ''
+	// })
 
 	function getSubtitle(character) {
 		switch (sort) {
@@ -81,11 +89,11 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section gap={6} class="px-20">
-			<Grid cols={4} gap={20} class="gap-20">
+		<Section gap={6}>
+			<Grid cols={4} gap={0}>
 				<Box class="col-span-3">
 
-					<PageHeader class="sticky top-0"
+					<PageHeader class="sticky top-0 px-20"
 						title="Character List"
 						tabs={[
 							{ label: "List",		active: true },
@@ -93,29 +101,27 @@
 							{ label: "Settings",	href: route('characters.settings') },
 						]}
 						actions={[
-							{ icon: "Plus", theme: "accent", onclick: () => characters.create() },
+							{ icon: "Plus", label: "New", theme: "accent", onclick: () => characters.create() },
 						]}
 					/>
 
-					<CharacterControlBar
+					<CharacterControlBar class="px-20"
 						data={characters} project={activeProject}
 						bind:query bind:filter bind:sort
 						bind:results bind:size bind:layout
 					/>
 
 					{#if activeProject && results.length > 0}
-		
-		
+
+
 						<!-- Grid -->
-		
+
 						{#if layout === 'grid'}
-
-							<!-- <pre>{JSON.stringify(customFields,null,2)}</pre> -->
-
 							<CharacterGrid
 								characters={results}
-								class="py-3"
+								class="-mx-1 px-20 py-3"
 								cols={gridCols}
+								gap={1.5}
 							>
 								{#snippet gridItem(character)}
 									<CharacterCard
@@ -207,106 +213,159 @@
 						/>
 		
 					{/if}
-				</Box>
 
-				<Stack class="col-span-1">
-					<Stack gap={3} class="sticky top-0 h-screen pt-16 pb-6">
+				</Box>
+				<Stack class="col-span-1 pr-20">
+					<Stack gap={3} class="sticky top-0 h-screen pt-9 pb-6">
 
 						{#if selected}
 
-							<!-- <pre>{JSON.stringify(selected.customFieldValues,null,2)}</pre> -->
-
-							<Thumbnail src={selected.image?.url} />
-
-							<Stack>
-								<Flex align="start" justify="between">
-									<Heading is="h3" as="h4">{selected.name}</Heading>
-									<!-- <Button style="plain" theme="neutral" icon="DotsThreeOutlineVertical" iconSize="md" iconWeight="fill" class="rounded-full hover:bg-neutral-softest" /> -->
-									{#if selected.starred}
-										<Button class="text-amber-400" size="none" icon="Star" iconSize="xl" iconWeight="fill" />
-									{:else}
-										<Button class="text-neutral-softest" size="none" icon="Star" iconSize="xl" iconWeight="light" />
-									{/if}
-								</Flex>
-								<p class="text-sm">{selected.alias}</p>
+							<Stack align="center" justify="center" gap={0} class="-space-y-0.5">
+								<Media
+									class="bg-neutral-softest h-48 mb-3 rounded text-neutral-softest w-48"
+									icon="UserCircle" iconWeight="fill"
+									media={selected.getPortrait()}
+									onclick={() => selected.addPortrait()}
+								/>
+								<Heading is="h3" as="h4">{selected.name}</Heading>
+								<p class="text-neutral-soft text-sm">{selected.alias}</p>
 							</Stack>
 
 							<Collapsible class="font-style-small mb-6" collapsed={true}>
 								{selected.description}
 							</Collapsible>
-
 							
 							<Stack gap={3}>
 
 								<Inline align="start" gap={0} class="text-sm">
-									<span class="font-bold min-w-24 mr-2">Appearance:</span>
+									<span class="font-medium min-w-24 mr-2">Appearance:</span>
 									<Flex wrap gap={0.5}>
 										{#if selected.appearance}
 											{#each selected.appearance.split(',') as trait}
 												<Tag plain class="bg-neutral-softest font-style-small py-0.5">{trait}</Tag>
 											{/each}
 										{:else}
-											<Link class="font-style-placeholder" onclick={() => selected.setAppearance()}>Not set</Link>
+											<Button style="plain" theme="accent" size="sm"
+												class="border border-neutral-softest font-style-placeholder"
+												onclick={() => selected.setAppearance()}
+												icon="Plus" iconSize="xs"
+											/>
 										{/if}
 									</Flex>
 								</Inline>
 	
 								<Inline align="start" gap={0} class="text-sm">
-									<span class="font-bold min-w-24 mr-2">Personality:</span>
+									<span class="font-medium min-w-24 mr-2">Personality:</span>
 									<Flex wrap gap={0.5}>
 										{#if selected.personality}
 											{#each selected.personality.split(',') as trait}
 												<Tag plain class="bg-neutral-softest font-style-small py-0.5">{trait}</Tag>
 											{/each}
 										{:else}
-											<Link class="font-style-placeholder" onclick={() => selected.setPersonality()}>Not set</Link>
+											<Link class="font-style-placeholder" onclick={() => selected.setPersonality()}>
+												<span>Unset</span>
+												<Icon class="ml-1.5 text-neutral-softest" name="CaretDown" size="xs" weight="fill" />
+											</Link>
 										{/if}
 									</Flex>
 								</Inline>
 
 								{#each customFields as field}
 									<Inline align="start" gap={0} class="text-sm">
-										<span class="font-bold min-w-24 mr-2">{field?.label}:</span>
-										{#if selected.customFieldValues.find(f => f.label === field.label)}
-											<span>{selected.customFieldValues.find(f => f.label === field.label).displayValue}</span>
-										{:else}
-											<Link class="font-style-placeholder" onclick={() => selected.setCustomValue()}>Not set</Link>
-										{/if}
+										<Inline class="font-medium h-7 min-w-24 mr-2">{field?.label}:</Inline>
+										<Stack>
+
+											{selected.customFieldValues.find(f => f.name === field.name)?.value || ''}
+
+											<select value={selected.customFieldValues.find(f => f.name === field.name).value}>
+												{#each field.options as option}
+													<option value={option.value}>{option.label}</option>
+												{/each}
+											</select>
+
+											<!-- {#if field?.options}
+												<Input type="select" class="w-full" contentClass="w-full"
+													placeholder="Unset"
+													value={selected.customFieldValues.find(f => f.name === field.name).value}
+													options={field.options?.map(o => ({
+														label: o.label,
+														value: o.value
+													}))}
+												/>
+											{/if} -->
+										</Stack>
 									</Inline>
 								{/each}
-		
+
 								<Inline align="start" gap={0} class="text-sm">
-									<span class="font-bold min-w-24 mr-2">Factions:</span>
+									<Inline class="font-medium h-7 min-w-24 mr-2">Factions:</Inline>
 									{#if selected.factions?.items.length > 0}
-										{#each selected.factions.items as rel, i}
-											<Link class="text-accent hover:underline" href={selected.factions?.items[0]?.routes.show}>
-												<span class="line-clamp-1 truncate">{selected.factions?.items[0]?.name}</span>
-											</Link>
-											{#if i === selected.factions.items.length - 1}{:else},&nbsp;{/if}
-										{/each}
-									{:else}
-										<Link class="font-style-placeholder" onclick={() => selected.setFactions()}>Not set</Link>
+										<Stack gap={1.5} class="w-full">
+											{#each selected.factions.items as rel, i}
+
+												{rel.slug}
+
+												<Input type="select" class="w-full" contentClass="w-full"
+													placeholder="Unset"
+													value={rel.slug || ''}
+													options={factions.items.map(f => ({
+														image: f.image?.url,
+														label: f.name,
+														value: f.slug
+													}))}
+												/>
+											{/each}
+										</Stack>
 									{/if}
+								</Inline>
+
+								<Inline align="start" gap={0} class="text-sm">
+									<Inline class="font-medium h-7 min-w-24 mr-2">Location:</Inline>
+									<Stack gap={1.5} class="w-full">
+
+										{selected.location?.slug}
+
+										<select value={selected.location?.slug}>
+											{#each locations.items as loc}
+												<option value={loc.value}>{loc.label}</option>
+											{/each}
+										</select>
+
+										<!-- <Input type="select" class="w-full" contentClass="w-full"
+											placeholder="Unset"
+											value={selected.location?.slug || ''}
+											options={locations.items.map(l => ({
+												image: l.image?.url,
+												label: l.name,
+												value: l.slug
+											}))}
+										/> -->
+									</Stack>
 								</Inline>
 		
 								<Inline align="start" gap={0} class="text-sm">
-									<span class="font-bold min-w-24 mr-2">Location:</span>
-									{#if selected.location}
-										<Link class="text-accent hover:underline" href={selected.location?.routes.show}>{selected.location?.name}</Link>
-									{:else}
-										<Link class="font-style-placeholder" onclick={() => selected.setLocation()}>Not set</Link>
-									{/if}
-								</Inline>
-		
-								<Inline align="start" gap={0} class="text-sm">
-									<span class="font-bold min-w-24 mr-2">Relationships:</span>
+									<Inline class="font-medium h-7 min-w-24 mr-2">Relationships:</Inline>
 									{#if selected.relationships?.items.length > 0}
-										{#each selected.relationships.items as rel, i}
-											<Link class="text-accent hover:underline" href={rel.routes.show}>{rel.name}</Link>
-											{#if i === selected.relationships.items.length - 1}{:else},&nbsp;{/if}
-										{/each}
-									{:else}
-										<Link class="font-style-placeholder" onclick={() => selected.setRelationships()}>Not set</Link>
+										<Stack gap={1.5} class="w-full">
+											{#each selected.relationships.items as rel, i}
+												{rel.slug}
+												<Input type="select" class="w-full" contentClass="w-full"
+													placeholder="Unset"
+													value={rel.slug}
+													options={characters.items?.map(c => ({
+														image: c.image?.url,
+														label: c.name,
+														value: c.slug
+													}))}
+												/>
+											{/each}
+										</Stack>
+									{:else if selected.relationships?.items.length === 0}
+										<button class="border border-neutral-softest flex items-center gap-1 p-1 rounded text-neutral-softest w-full"
+											onclick={() => selected.setRelationships()}>
+											<span class="line-clamp-1 px-0.5 truncate">Unset</span>
+											<Icon class="ml-auto" name="CaretDown" size="xs" weight="fill" />
+										</button>
 									{/if}
 								</Inline>
 							</Stack>
