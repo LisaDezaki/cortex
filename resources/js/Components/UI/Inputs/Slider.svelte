@@ -123,16 +123,17 @@
 	}
 
 	:global(.slider-thumb) {
-		@apply flex items-center justify-center min-h-6 min-w-6 z-10;
+		@apply flex items-center justify-center min-h-5 min-w-5 z-10;
 		@apply border rounded-full;
 		@apply cursor-pointer shadow-sm;
 		@apply text-sm;
 		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
-		background: var(--bg-accent-gradient);
-		border-color: var(--border-accent-strong);
+		background-color: var(--bg-white);
+		border-color: var(--border-neutral-soft);
 		color: var(--text-white);
 		&:hover {
 			@apply min-h-6 min-w-6;
+			border-color: var(--border-accent);
 		}
 	}
 

@@ -26,6 +26,7 @@
 	import CharacterCard		from '@/Components/Features/Character/CharacterCard.svelte'
 	import CharacterControlBar 	from '@/Components/Features/Character/CharacterControlBar.svelte'
 	import CharacterGrid 		from '@/Components/Features/Character/CharacterGrid.svelte'
+	import CharacterPanel 		from '@/Components/Features/Character/CharacterPanel.svelte'
 	import CharacterTable		from '@/Components/Features/Character/CharacterTable.svelte'
 
 
@@ -39,8 +40,6 @@
 	const characters      = $state(activeProject?.characters)
 	const factions    	  = $state(activeProject?.factions)
 	const locations    	  = $state(activeProject?.locations)
-
-	
 
 
 	//	State & Derived values
@@ -215,203 +214,10 @@
 					{/if}
 
 				</Box>
-				<Stack class="col-span-1 pr-20">
-					<Stack gap={3} class="sticky top-0 h-screen pt-9 pb-6">
-
-						{#if selected}
-
-							<Stack align="center" justify="center" gap={0} class="-space-y-0.5">
-								<Media
-									class="bg-neutral-softest h-48 mb-3 rounded text-neutral-softest w-48"
-									icon="UserCircle" iconWeight="fill"
-									media={selected.getPortrait()}
-									onclick={() => selected.addPortrait()}
-								/>
-								<Heading is="h3" as="h4">{selected.name}</Heading>
-								<p class="text-neutral-soft text-sm">{selected.alias}</p>
-							</Stack>
-
-							<Collapsible class="font-style-small mb-6" collapsed={true}>
-								{selected.description}
-							</Collapsible>
-							
-							<Stack gap={3}>
-
-								<Inline align="start" gap={0} class="text-sm">
-									<span class="font-medium min-w-24 mr-2">Appearance:</span>
-									<Flex wrap gap={0.5}>
-										{#if selected.appearance}
-											{#each selected.appearance.split(',') as trait}
-												<Tag plain class="bg-neutral-softest font-style-small py-0.5">{trait}</Tag>
-											{/each}
-										{:else}
-											<Button style="plain" theme="accent" size="sm"
-												class="border border-neutral-softest font-style-placeholder"
-												onclick={() => selected.setAppearance()}
-												icon="Plus" iconSize="xs"
-											/>
-										{/if}
-									</Flex>
-								</Inline>
-	
-								<Inline align="start" gap={0} class="text-sm">
-									<span class="font-medium min-w-24 mr-2">Personality:</span>
-									<Flex wrap gap={0.5}>
-										{#if selected.personality}
-											{#each selected.personality.split(',') as trait}
-												<Tag plain class="bg-neutral-softest font-style-small py-0.5">{trait}</Tag>
-											{/each}
-										{:else}
-											<Link class="font-style-placeholder" onclick={() => selected.setPersonality()}>
-												<span>Unset</span>
-												<Icon class="ml-1.5 text-neutral-softest" name="CaretDown" size="xs" weight="fill" />
-											</Link>
-										{/if}
-									</Flex>
-								</Inline>
-
-								{#each customFields as field}
-									<Inline align="start" gap={0} class="text-sm">
-										<Inline class="font-medium h-7 min-w-24 mr-2">{field?.label}:</Inline>
-										<Stack>
-
-											{selected.customFieldValues.find(f => f.name === field.name)?.value || ''}
-
-											<select value={selected.customFieldValues.find(f => f.name === field.name).value}>
-												{#each field.options as option}
-													<option value={option.value}>{option.label}</option>
-												{/each}
-											</select>
-
-											<!-- {#if field?.options}
-												<Input type="select" class="w-full" contentClass="w-full"
-													placeholder="Unset"
-													value={selected.customFieldValues.find(f => f.name === field.name).value}
-													options={field.options?.map(o => ({
-														label: o.label,
-														value: o.value
-													}))}
-												/>
-											{/if} -->
-										</Stack>
-									</Inline>
-								{/each}
-
-								<Inline align="start" gap={0} class="text-sm">
-									<Inline class="font-medium h-7 min-w-24 mr-2">Factions:</Inline>
-									{#if selected.factions?.items.length > 0}
-										<Stack gap={1.5} class="w-full">
-											{#each selected.factions.items as rel, i}
-
-												{rel.slug}
-
-												<Input type="select" class="w-full" contentClass="w-full"
-													placeholder="Unset"
-													value={rel.slug || ''}
-													options={factions.items.map(f => ({
-														image: f.image?.url,
-														label: f.name,
-														value: f.slug
-													}))}
-												/>
-											{/each}
-										</Stack>
-									{/if}
-								</Inline>
-
-								<Inline align="start" gap={0} class="text-sm">
-									<Inline class="font-medium h-7 min-w-24 mr-2">Location:</Inline>
-									<Stack gap={1.5} class="w-full">
-
-										{selected.location?.slug}
-
-										<select value={selected.location?.slug}>
-											{#each locations.items as loc}
-												<option value={loc.value}>{loc.label}</option>
-											{/each}
-										</select>
-
-										<!-- <Input type="select" class="w-full" contentClass="w-full"
-											placeholder="Unset"
-											value={selected.location?.slug || ''}
-											options={locations.items.map(l => ({
-												image: l.image?.url,
-												label: l.name,
-												value: l.slug
-											}))}
-										/> -->
-									</Stack>
-								</Inline>
-		
-								<Inline align="start" gap={0} class="text-sm">
-									<Inline class="font-medium h-7 min-w-24 mr-2">Relationships:</Inline>
-									{#if selected.relationships?.items.length > 0}
-										<Stack gap={1.5} class="w-full">
-											{#each selected.relationships.items as rel, i}
-												{rel.slug}
-												<Input type="select" class="w-full" contentClass="w-full"
-													placeholder="Unset"
-													value={rel.slug}
-													options={characters.items?.map(c => ({
-														image: c.image?.url,
-														label: c.name,
-														value: c.slug
-													}))}
-												/>
-											{/each}
-										</Stack>
-									{:else if selected.relationships?.items.length === 0}
-										<button class="border border-neutral-softest flex items-center gap-1 p-1 rounded text-neutral-softest w-full"
-											onclick={() => selected.setRelationships()}>
-											<span class="line-clamp-1 px-0.5 truncate">Unset</span>
-											<Icon class="ml-auto" name="CaretDown" size="xs" weight="fill" />
-										</button>
-									{/if}
-								</Inline>
-							</Stack>
-
-	
-							<Button size="xl" style="hard" theme="accent" class="line-clamp-1 mt-auto"
-								icon="Eye" iconWeight="fill"
-								label="View {selected.name}"
-								href={selected.routes.show}
-							/>
-
-						{:else}
-							<Thumbnail class="mb-1" />
-							<Stack gap={2}>
-								<Flex align="center" justify="between">
-									<Skeleton class="h-6 w-1/3" />
-									<Skeleton class="h-6 w-6" />
-								</Flex>
-								<Skeleton class="h-3 mb-2.5 w-1/2" />
-							</Stack>
-							<Stack gap={2} class="mb-2">
-								<Skeleton class="h-3 mr-5" />
-								<Skeleton class="h-3 mr-1" />
-								<Skeleton class="h-3 mr-24" />
-							</Stack>
-							<Skeleton class="h-3 w-16" color="bg-accent-softest" />
-							<Inline class="mt-16 w-full">
-								<Skeleton class="h-3 w-16 mr-3" />
-								<Skeleton class="h-6 rounded-full w-6" />
-								<Skeleton class="h-3 w-24" />
-							</Inline>
-							<Inline class="mt-2">
-								<Skeleton class="h-3 w-16 mr-3" />
-								<Skeleton class="h-6 rounded-full w-6" />
-								<Skeleton class="h-3 w-32" />
-							</Inline>
-							<Inline class="mt-2">
-								<Skeleton class="h-3 w-24"  />
-								<Skeleton class="h-6 rounded-full w-6" />
-								<Skeleton class="h-6 rounded-full w-6" />
-								<Skeleton class="h-6 rounded-full w-6" />
-							</Inline>
-							<Skeleton class="h-[50px] mt-auto rounded-lg" />
-						{/if}
-					</Stack>
-				</Stack>
+				
+				<CharacterPanel class="col-span-1 pr-20"
+					character={selected}
+				/>
 
 			</Grid>
 		</Section>

@@ -43,120 +43,97 @@
 
 
 
+
+<!-- <pre>{JSON.stringify(restProps)}</pre> -->
+
 {#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(type)}
-	<Input
-		id={name}
-		bind:value={value}
+	<Input id={name} bind:value={value}
 		class="input {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 		type={type}
-		{...restProps}
-	/>
+	{...restProps} />
 {/if}
+
 
 {#if type == 'textarea'}
-	<Textarea
-		id={name}
+	<Textarea id={name} bind:value={value}
 		class="input {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
-		bind:value={value}
-		{...restProps}
-	/>
+	{...restProps} />
 {/if}
+
 
 {#if type == 'number'}
-	<Number
-		id={name}
+	<Number id={name} bind:value={value}
 		class="input {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
-		bind:value={value}
-		{...restProps}
-	/>
+	{...restProps} />
 {/if}
+
 
 {#if type == 'select'}
-	<Select
-		id={name}
+	<Select id={name} bind:value={value}
 		class="input {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
-		contentClass="input-content {contentClass}"
-		options={options}
-		bind:value={value}
-		{...restProps}
-	/>
+		options={options} contentClass="input-content {contentClass}"
+	{...restProps} />
 {/if}
+
 
 {#if type == 'combobox'}
-	<Combobox
-		id={name}
+	<Combobox id={name} bind:value={value}
 		class="input {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
-		contentClass="input-content {contentClass}"
-		options={options}
-		bind:value={value}
-		{...restProps}
-	/>
+		options={options} contentClass="input-content {contentClass}"
+	{...restProps} />
 {/if}
 
+
 {#if type == 'slider'}
-	<Slider
-		id={name}
+	<Slider id={name} bind:value={value}
 		class={className}
-		bind:value={value}
-		{...restProps}
-	/>
+	{...restProps} />
 {/if}
+
 
 {#if type == 'checkbox'}
 	{#if options.length > 0}
-		<Checkboxes
-			id={name}
+		<Checkboxes id={name} bind:checked={checked}
 			class={className}
 			options={options}
-			bind:checked={checked}
-			{...restProps}
-		/>
+		{...restProps} />
 	{:else}
-		<Checkbox
-			id={name}
+		<Checkbox id={name} bind:checked={checked}
 			class={className}
-			bind:checked={checked}
-			{...restProps}
-		/>
+		{...restProps} />
 	{/if}
 {/if}
 
+
 {#if type == 'radio'}
-	<Radio
-		id={name}
+	<Radio id={name} bind:checked={checked}
 		class={className}
-		bind:checked={checked}
 		options={options}
-		{...restProps}
-	/>
+	{...restProps} />
 {/if}
+
 
 {#if type == 'switch'}
-	<Switch
-		id={name}
+	<Switch id={name} bind:checked={checked}
 		class={className}
-		bind:checked={checked}
-		{...restProps}
-	/>
+	{...restProps} />
 {/if}
 
+
 {#if type == 'file'}
-	<Upload
-		id={name}
-		bind:value={value}
+	<Upload id={name} bind:value={value}
 		class="input {className}"
-		{...restProps}
-	/>
+	{...restProps} />
 {/if}
 
 

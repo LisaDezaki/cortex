@@ -32,6 +32,8 @@
 	let selection = $state(null)
 	let isEmpty   = $derived(value == null || value == '' || value == [])
 
+	let selectedOption = $derived(options.find(o => o.value === value))
+
 	function checkFocus() {
 		hasFocus = document.activeElement === input;
 	}
@@ -40,22 +42,27 @@
         input?.focus()
     }
 
-	function updateSelection(val) {
-		if (!multiple) {
-			selection = val ? options.find(o => o.value === val || o.label === val) : null
-		} else if (multiple) {
-			selection = val ? options.filter(o => val.includes(o.value) || val.includes(o.label)) : null
-		}
-		onUpdate(options.find(o => o.value === val))
+	function getLabel(value) {
+		return options.find(o => o.value == value)?.label || ''
 	}
 
-    onMount(() => {
-        if (restProps.autofocus && input) {
-            input.focus()
-			checkFocus()
-        }
-		updateSelection(value)
-    })
+	function updateSelection() {
+		console.log(selectedOption, onUpdate)
+		// onUpdate(selectedOption)
+	// 	if (!multiple) {
+	// 		selection = val ? options.find(o => o.value === val || o.label === val) : null
+	// 	} else if (multiple) {
+	// 		selection = val ? options.filter(o => val.includes(o.value) || val.includes(o.label)) : null
+	// 	}
+	}
+
+    // onMount(() => {
+    //     if (restProps.autofocus && input) {
+    //         input.focus()
+	// 		checkFocus()
+    //     }
+	// 	updateSelection(value)
+    // })
 
 </script>
 
@@ -64,20 +71,6 @@
 
 
 
-
-<!-- {#snippet selectedValue()}
-	{#if !multiple}
-		{@render optionContent(selection)}
-	{:else if multiple}
-		<Flex justify="start" gap={1} wrap class="overflow-hidden">
-			{#each selection as selectionValue}
-				<Flex align="center" gap={1} class="bg-slate-500/5 flex-shrink-0 h-8 px-1.5 py-0.5 rounded">
-					{@render optionContent(selectionValue)}
-				</Flex>
-			{/each}
-		</Flex>
-	{/if}
-{/snippet} -->
 
 {#snippet optionItem(item)}
 	<Select.Item
@@ -88,21 +81,6 @@
 		<InputItem item={item} />
 	</Select.Item>
 {/snippet}
-
-<!-- {#snippet optionContent(item)}
-	{#if item?.image}
-		<Thumbnail class="rounded-full w-6" src={item.image} />
-	{/if}
-	{#if item?.icon}
-		<Icon name={item.icon} size={20} weight="regular" />
-	{/if}
-	{#if item?.label}
-		<span class="line-clamp-1 text-left w-full">{item.label}</span>
-	{/if}
-{/snippet} -->
-
-
-
 
 
 <Select.Root class="select"
@@ -134,15 +112,20 @@
 		<!-- Trigger -->
 	
 		<Select.Trigger class="input p-1 {className}">
-			<InputItem item={selection} class={inputClass} />
-			<Icon name="CaretUpDown" size="xs" />
+			{#if value !== ''}
+				<span class="font-style-input line-clamp-1 text-left">{getLabel(value)}</span>
+			{:else}
+				<span class="font-style-placeholder line-clamp-1 text-left">{placeholder}</span>
+			{/if}
+			<!-- <InputItem item={selection} class={inputClass} /> -->
+			<Icon class="ml-auto" name="CaretUpDown" size="xs" />
 		</Select.Trigger>
 	</Stack>
 
 
 	<!-- Content -->
 	 
-	<Select.Portal class="z-50">
+	<Select.Portal class="z-50 {contentClass}">
 		<Select.Content
 			class="input-content {contentClass} min-w-[var(--bits-select-anchor-width)] p-0.5 z-50"
 			align="start" sideOffset={-1}

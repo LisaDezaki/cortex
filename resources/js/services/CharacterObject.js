@@ -110,6 +110,10 @@ export default class CharacterObject {
 	 * 	Update methods
 	 */
 
+	updateFaction(i,opt) {
+		console.log('CharacterObject.updateFaction()', i, opt)
+	}
+
 	removeFaction() {
 		console.log('CharacterObject.removeFaction()')
 		this.setFaction()
