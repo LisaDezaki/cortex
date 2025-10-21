@@ -113,11 +113,11 @@
 	
 		<Select.Trigger class="input p-1 {className}">
 			{#if value !== ''}
-				<span class="font-style-input line-clamp-1 text-left">{getLabel(value)}</span>
+				<!-- <span class="font-style-input line-clamp-1 text-left">{getLabel(value)}</span> -->
+				<InputItem item={selectedOption} class={inputClass} />
 			{:else}
 				<span class="font-style-placeholder line-clamp-1 text-left">{placeholder}</span>
 			{/if}
-			<!-- <InputItem item={selection} class={inputClass} /> -->
 			<Icon class="ml-auto" name="CaretUpDown" size="xs" />
 		</Select.Trigger>
 	</Stack>
@@ -127,7 +127,7 @@
 	 
 	<Select.Portal class="z-50 {contentClass}">
 		<Select.Content
-			class="input-content {contentClass} min-w-[var(--bits-select-anchor-width)] p-0.5 z-50"
+			class="input-content {contentClass} min-w-[var(--bits-select-anchor-width)] px-0.5 py-1.5 z-50"
 			align="start" sideOffset={-1}
 		>
 			<Select.ScrollUpButton class="flex w-full items-center justify-center opacity-50">

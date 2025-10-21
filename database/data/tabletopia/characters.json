@@ -25,8 +25,8 @@
 		"alias": "The Historian",
 		"species": "goblin",
 		"location": "school",
-		"appearance": ["Dignified", "Short"],
-		"personality": ["Boring", "Talkative"],
+		"appearance": ["Dapper", "Dignified", "Short", "Older"],
+		"personality": ["Boring", "Monotonous", "Talkative"],
 		"desc": "In a dusty, dimly lit classroom that smells of old parchment and chalk dust, Professor Bak teaches the history of Diorama. A goblin with spectacles perpetually sliding down his nose and a tweed vest covered in ink stains, he is the Adventuring Academy's resident historian and lore-master. His knowledge of historical events, royal lineages, and epic battles is encyclopedic and utterly unimpeachable.\n\nHe is also, quite possibly, the most soul-crushingly boring orator in all of New Miniport. Professor Bak possesses the unique and tragic gift of transforming tales of legendary heroism, catastrophic dragon attacks, and world-shattering magical calamities into a monotonous recitation of dates, supply-line logistics, and agricultural impact reports.\n\nFor Professor Bak, the \"why\" of history is infinitely less interesting than the \"what,\" the \"when,\" and the \"how much it cost.\"\n\nHe will spend an entire hour detailing the tax reforms that preceded the Rise of the Serpent Kings, but only mention the ensuing century of tyrannical rule as a footnote on grain production.\n\nStudents quickly learn that his class is the ultimate test of endurance; a place where the most thrilling adventures go to die a slow, pedantic death. Yet, buried within his endless droning are gems of crucial information—the exact weakness of a long-dead lich, the secret entrance to a forgotten fortress, the true name of a demon lord—if anyone can manage to stay awake long enough to hear it. He is a living library, but one where the most exciting stories are locked in the driest, most verbose books on the shelf."
 	},
 

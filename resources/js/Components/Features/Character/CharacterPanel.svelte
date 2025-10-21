@@ -72,7 +72,7 @@
 			<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">{field?.label}:</Inline>
 			<Stack class="w-full">
 				{#if field?.options}
-					<Input type="select" class="w-full" contentClass="w-full"
+					<Input type="select" class="w-full" contentClass="w-44"
 						placeholder="Unset"
 						value={character.customFieldValues?.find(f => f.name === field.name)?.value}
 						options={field.options?.map(o => ({
@@ -94,7 +94,7 @@
 			<Stack gap={1.5} class="w-full">
 				{#each character.factions?.items as fac,i}
 	
-					<Input type="select" class="w-full" contentClass="w-full"
+					<Input type="select" class="w-full" contentClass="w-44"
 						placeholder="Unset"
 						value={fac.slug}
 						options={factions.items.map(f => ({
@@ -106,7 +106,7 @@
 					/>
 	
 				{/each}
-				<Input type="select" class="w-full" contentClass="w-full"
+				<Input type="select" class="w-full" contentClass="w-44"
 					placeholder="Unset"
 					value=""
 					options={factions.items.map(f => ({
@@ -125,7 +125,7 @@
 		<Flex>
 			<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Location:</Inline>
 			<Stack gap={1.5} class="w-full">
-				<Input type="select" class="w-full" contentClass="w-full"
+				<Input type="select" class="w-full" contentClass="w-44"
 					placeholder="Unset"
 					value={character.location?.slug}
 					options={locations.items.map(l => ({
@@ -145,7 +145,7 @@
 			{#if character.relationships?.items.length > 0}
 				<Stack gap={1} class="w-full">
 					{#each character.relationships?.items as rel, i}
-						<Input type="select" class="w-full" contentClass="w-full"
+						<Input type="select" class="w-full" contentClass="w-44"
 							placeholder="Unset"
 							value={character.relationships?.items[i].slug}
 							options={characters.items?.map(c => ({
@@ -157,7 +157,7 @@
 					{/each}
 				</Stack>
 			{:else if character.relationships?.items.length === 0}
-				<Input type="select" class="w-full" contentClass="w-full"
+				<Input type="select" class="w-full" contentClass="w-44"
 					placeholder="Unset"
 					value=""
 					options={characters.items?.map(c => ({
@@ -181,7 +181,7 @@
 						<Tag plain class="bg-neutral-softest font-style-small h-6 py-0.5">{trait}</Tag>
 					{/each}
 				{/if}
-				<Button style="soft" theme="accent" size="sm" class="h-6 w-6"
+				<Button style="plain" theme="accent" size="sm" class="bg-accent-softest h-6 w-6"
 					onclick={() => character.setAppearance()}
 					icon="Plus" iconSize="xs"
 				/>
@@ -200,7 +200,7 @@
 						<Tag plain class="bg-neutral-softest font-style-small h-6 py-0.5">{trait}</Tag>
 					{/each}
 				{/if}
-				<Button style="soft" theme="accent" size="sm" class="h-6 w-6"
+				<Button style="plain" theme="accent" size="sm" class="bg-accent-softest h-6 w-6"
 					onclick={() => character.setAppearance()}
 					icon="Plus" iconSize="xs"
 				/>

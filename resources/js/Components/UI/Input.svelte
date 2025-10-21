@@ -31,6 +31,14 @@
 		xl: 20,
 	}
 
+	const hSizes = {
+		xs: "h-6",
+		sm: "h-7",
+		md: "h-8",
+		lg: "h-9",
+		xl: "h-10"
+	}
+
 	const padSizes = {
 		xs: "py-0",
 		sm: "py-0.25",
@@ -48,7 +56,7 @@
 
 {#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(type)}
 	<Input id={name} bind:value={value}
-		class="input {className}"
+		class="input {hSizes[size]} {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 		type={type}
@@ -58,7 +66,7 @@
 
 {#if type == 'textarea'}
 	<Textarea id={name} bind:value={value}
-		class="input {className}"
+		class="input {hSizes[size]} {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 	{...restProps} />
@@ -67,7 +75,7 @@
 
 {#if type == 'number'}
 	<Number id={name} bind:value={value}
-		class="input {className}"
+		class="input {hSizes[size]} {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 	{...restProps} />
@@ -76,7 +84,7 @@
 
 {#if type == 'select'}
 	<Select id={name} bind:value={value}
-		class="input {className}"
+		class="input {hSizes[size]} {className}"
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 		options={options} contentClass="input-content {contentClass}"
@@ -148,7 +156,6 @@
 
 	:global(.input)::placeholder,
 	:global(input::placeholder),
-	:global(.input)[data-placeholder] .input-value,
 	:global(.input-placeholder) {
 		color: var(--text-neutral-softer);
 		font-style: italic;
@@ -172,7 +179,6 @@
 
 		&::placeholder,
 		:global(input::placeholder),
-		&[data-placeholder] .input-value,
 		:global(.input-placeholder) {
 			color: var(--text-neutral-softer);
 			font-style: italic;
