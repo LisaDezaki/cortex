@@ -17,7 +17,7 @@
 
 
 
-<Flex align="center" justify="center" class="media relative overflow-hidden {className}">
+<Flex align="center" justify="center" class="media overflow-hidden {className}">
 	{#if media}
 		<img class="min-h-full min-w-full object-cover {imageClass}" src={media.url} alt={media.name} />
 	{:else}

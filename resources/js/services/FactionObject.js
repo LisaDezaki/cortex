@@ -47,8 +47,13 @@ export default class FactionObject {
 		})
 	}
 
-	addMember(char) {
-		console.log('addMember()', char?.name)
+	addMember(opt) {
+		console.log('FactionObject.addMember()', opt)
+		this._update({
+			members: [
+				{ id: opt.id }
+			]
+		})
 	}
 
 	addTag(tag) {
@@ -88,6 +93,10 @@ export default class FactionObject {
 	/**
 	 * 	Update methods
 	 */
+
+	updateMember(opt) {
+		console.log('FactionObject.updateMember()', opt)
+	}
 
 	removeHeadquarters() {
 		console.log('removeHeadquarters()')

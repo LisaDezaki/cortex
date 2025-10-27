@@ -26,7 +26,7 @@
 
 
 <Modal title={title} maxWidth={size}>
-	<Form
+	<Form class="relative"
 		enctype="multipart/form-data"
 		form={form}
 		processing={$form.processing}

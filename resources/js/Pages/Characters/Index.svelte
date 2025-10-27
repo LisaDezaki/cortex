@@ -1,5 +1,5 @@
 <script>
-	import { Link, page, useForm } from '@inertiajs/svelte'
+	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
 
@@ -7,22 +7,10 @@
 
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import Box					from '@/Components/Core/Box.svelte'
-	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
-	import Inline				from '@/Components/Core/Inline.svelte'
-	import Stack				from '@/Components/Core/Stack.svelte'
-	import Button				from '@/Components/UI/Button.svelte'
-	import Collapsible			from '@/Components/UI/Collapsible.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
-	import Heading				from '@/Components/UI/Heading.svelte'
-	import Icon					from '@/Components/UI/Icon.svelte'
-	import Input				from '@/Components/UI/Input.svelte'
-	import Media				from '@/Components/UI/Media.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
 	import Section				from '@/Components/UI/Section.svelte'
-	import Skeleton				from '@/Components/UI/Skeleton.svelte'
-	import Tag					from '@/Components/UI/Tag.svelte'
-	import Thumbnail			from '@/Components/UI/Thumbnail.svelte'
 	import CharacterCard		from '@/Components/Features/Character/CharacterCard.svelte'
 	import CharacterControlBar 	from '@/Components/Features/Character/CharacterControlBar.svelte'
 	import CharacterGrid 		from '@/Components/Features/Character/CharacterGrid.svelte'
@@ -36,7 +24,6 @@
 	import CollectionList 	from '@/services/CollectionList'
 	const activeProject	  = $state(new ProjectObject($page.props.activeProject.data))
 	const collections	  = $state(new CollectionList($page.props.collections?.data))
-	const customFields	  = $state($page.props.customFields?.data)
 	const characters      = $state(activeProject?.characters)
 	const factions    	  = $state(activeProject?.factions)
 	const locations    	  = $state(activeProject?.locations)
@@ -47,15 +34,14 @@
 	let query	 = $state('')
 	let filter	 = $state('')
 	let sort	 = $state('name')
-	let size	 = $state(8)
+	let size	 = $state(6)
 	let layout	 = $state('grid')
 	let selected = $state(null)
-	let gridCols = $derived(14-size)
+	let gridCols = $derived(12-size)
 	let results  = $derived(characters.items)
 
-	// let form = useForm({
-	// 	location: selected.location?.slug || ''
-	// })
+
+	//	Page functions
 
 	function getSubtitle(character) {
 		switch (sort) {
@@ -92,7 +78,8 @@
 			<Grid cols={4} gap={0}>
 				<Box class="col-span-3">
 
-					<PageHeader class="sticky top-0 px-20"
+
+					<PageHeader class="sticky top-0 mx-6 px-6"
 						title="Character List"
 						tabs={[
 							{ label: "List",		active: true },
@@ -104,11 +91,14 @@
 						]}
 					/>
 
-					<CharacterControlBar class="px-20"
+
+					<CharacterControlBar class="mx-6 px-6"
 						data={characters} project={activeProject}
 						bind:query bind:filter bind:sort
 						bind:results bind:size bind:layout
+						min={4} max={8}
 					/>
+
 
 					{#if activeProject && results.length > 0}
 
@@ -131,9 +121,9 @@
 										iconOptions={[
 											{ icon: "Star", 		onclick: () => character.star(), iconWeight: character.starred ? 'fill' : 'regular' },
 											{ icon: "Eye", 			href: character.routes?.show },
-											{ icon: "Textbox", 		onclick: () => character.rename() },
-											{ icon: "UploadSimple", onclick: () => character.addPortrait() },
-											{ icon: "Trash", 		onclick: () => character.delete(), theme: "danger" },
+											{ icon: "Textbox", 		onclick: () => character.openModal('rename') },
+											{ icon: "UploadSimple", onclick: () => character.openModal('setPortrait') },
+											{ icon: "Trash", 		onclick: () => character.openModal('delete'), theme: "danger" },
 										]}
 										options={[{
 											icon: 'FlagBannerFold', iconWeight: 'regular',
@@ -143,7 +133,7 @@
 												...f,
 												active: f.id === character.factions?.items?.[0]?.id,
 												label: f.name,
-												onclick: () => character.setFaction(f)
+												onclick: () => character.addFaction(f)
 											})) ]
 										},{
 											icon: 'MapPin', iconWeight: 'regular',
@@ -153,7 +143,7 @@
 												...l,
 												active: l.id === character.location?.id,
 												label: l.name,
-												onclick: () => character.setLocation(l)
+												onclick: () => character.setLocation(l.id)
 											}))]
 										},{
 											separator: true
@@ -176,7 +166,7 @@
 										},{
 											icon: 'Trash', iconWeight: 'regular',
 											label: "Delete Character",
-											onclick: () => character.delete(),
+											onclick: () => character.openModal('delete'),
 											theme: "danger"
 										}]}
 									/>
@@ -187,20 +177,21 @@
 						<!-- Table -->
 		
 						{:else if layout === 'table'}
-							<CharacterTable
+							<CharacterTable class="px-20 py-6"
 								characters={results}
 							/>
-		
-		
+
+
 						<!-- Graph -->
-		
+
 						{:else if layout === 'graph'}
 							<Empty
+								containerClass="px-20 py-6"
 								icon="Graph"
 								message="This layout type isn't working yet. Try again later."
 							/>
-		
-		
+
+
 						{/if}
 					{:else}
 		
@@ -212,10 +203,9 @@
 						/>
 		
 					{/if}
-
 				</Box>
 				
-				<CharacterPanel class="col-span-1 pr-20"
+				<CharacterPanel class="col-span-1"
 					character={selected}
 				/>
 

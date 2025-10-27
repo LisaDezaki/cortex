@@ -5,7 +5,8 @@
 		align = 'center',
 		children,
 		class: className,
-		gap = 2
+		gap = 2,
+		...restProps
 	} = $props()
 </script>
 
@@ -14,6 +15,6 @@
 	{align} 
 	{gap} 
 	class={className}
->
+{...restProps}>
 	{@render children?.()}
 </Flex>

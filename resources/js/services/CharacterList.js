@@ -7,7 +7,9 @@ import CharacterObject from '@/services/CharacterObject'
 export default class CharacterList {
 	constructor(list) {
 		Object.assign(this, {
-			items: Array.isArray(list) ? list.map(i => new CharacterObject(i)) : [list],
+			items: Array.isArray(list)
+				? list.map(i => new CharacterObject(i))
+				: [list],
 			history: [], // Track changes for undo/redo
 			routes: {
 				store:	route('characters.store')
@@ -23,6 +25,10 @@ export default class CharacterList {
 	filter(query, filter, sort) {
 		return this.items.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
 			.filter(filter).sort(sort)
+	}
+
+	find(id) {
+		return this.items.find(item => item.id === id)
 	}
 
 	// History/Undo

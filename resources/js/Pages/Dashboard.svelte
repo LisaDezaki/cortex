@@ -29,8 +29,6 @@
 
 
 
-
-
 <svelte:head>
     <title>Dashboard</title>
 </svelte:head>
@@ -38,6 +36,8 @@
 <AuthenticatedLayout>
 
 	{#snippet article()}
+
+		<!-- <pre>{JSON.stringify(active,null,2)}</pre> -->
 
 		<PageHeader class="absolute top-0 px-3" color="bg-transparent"
 			tabs={ activeProject ? [

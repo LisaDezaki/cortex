@@ -23,11 +23,13 @@
 	{/if}
 </span>
 
+
+
 <style lang="postcss">
 
 	.tag {
 		@apply inline-flex items-center justify-center min-h-2 min-w-2 px-1;
-		@apply rounded-sm;
+		@apply rounded;
 		&:not(.plain) {
 			background: var(--bg-accent);
 		}

@@ -15,6 +15,7 @@
 
 	let {
         class: className,
+		contentClass,
 		icon,
 		inputClass,
 		label,
@@ -103,7 +104,7 @@
 
 	<Popover.Portal>
 		<Popover.Content
-			class="input-content overflow-hidden {className}"
+			class="input-content overflow-hidden {contentClass}"
 			align="start" sideOffset={-1}
 		>
 			<Grid cols={2} gap={0} class="max-h-96 w-[200%] {suboptions ? 'translate-x-[-50%]' : ''} transition-transform">

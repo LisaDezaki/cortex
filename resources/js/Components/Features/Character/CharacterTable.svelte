@@ -16,6 +16,7 @@
 
     let {
 		characters,
+		class: className,
 		selected = [],
 		selectionMode
 	} = $props()
@@ -123,7 +124,7 @@
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
 					class="h-7 w-7 rounded-full"
-					onclick={() => character.addRelationship()}
+					onclick={() => character.openModal('relationship')}
 				/>
 			{/if}
 		</Table.Cell>
@@ -146,7 +147,7 @@
 				<Button style="soft" theme="accent"
 					icon="Plus" iconSize={20} iconWeight="light"
 					class="h-7 w-7 rounded-lg"
-					onclick={() => character.addLocation()}
+					onclick={() => character.openModal('location')}
 				/>
 			{/if}
 		</Table.Cell>
@@ -161,4 +162,4 @@
 	{/each}
 {/snippet}
 
-<Table data={characters} {headRow} {bodyRow} />
+<Table class={className} data={characters} {headRow} {bodyRow} />

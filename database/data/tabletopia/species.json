@@ -40,6 +40,10 @@
 		"name": "Firbolg",
 		"desc": "Although they are giants, firbolgs are crafty, cautious, and reclusive. They have learned to distrust most other humanoids except elves, and dwell only in remote places far from civilization's encroaching grasp, amidst fey and spirits of nature. They live in small, close-knit clans that tend to occupy one large, wooden house surrounded by a field kept for harvest. To supplement the food they grow, they wander the surrounding territory in small gangs hunting and gathering. In their normal form, firbolgs look like oversized humans. They wear their hair long and free, and many decorate their skin with intricate designs picked out in blue woad."
 	},
+	"foxfolk": {
+		"name": "Foxfolk",
+		"desc": "Foxfolk live in hidden villages deep in forests. They typically avoid other races and only interact with them if necessary. They are seen as pickpockets and thieves to most others and are treated as such. Foxfolk hunt at night and only hunt what they need, never for sport. Foxfolk towns are filled to the brim with shops selling all sorts of goods. Foxfolks often have festivals at equinoxes and solstices that usually last for a week. Foxfolk worship the seasons and have gods according to such. At 13, all Foxfolk undergo a rite of passage, and if they succeed they are seen as an adult."
+	},
 	"frogfolk": {
 		"name": "Frogfolk",
 		"desc": "Living in the darkest of night, foggiest of lands and swamps and forests unpopulated by human-kind, the frogfolk dwell and live peacefully. They are usually kind, but being forced to live in one place forever, they usually don't know much. Frogfolk have lived for hundreds of years, but have never been spoken of in any written text. They are sometimes even called myths and if seen by someone, they are either granted good luck, or are are never seen again. Many have set out to find the frogfolk myth, but have failed. And those who have seen them are usually driven mad thinking they will get good luck."
@@ -119,6 +123,10 @@
 	"satyr": {
 		"name": "Satyr",
 		"desc": "Satyrs are humanoids with the lower bodies of goats and the upper bodies of humans. They are known for their love of music, revelry, and nature. Satyrs often live in forested areas, where they celebrate life and enjoy the pleasures of the natural world."
+	},
+	"tabaxi": {
+		"name": "Tabaxi",
+		"desc": ""
 	},
 	"tiefling": {
 		"name": "Tiefling",

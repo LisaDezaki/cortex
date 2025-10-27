@@ -1,488 +1,606 @@
 {
 	"abomination": {
 		"name": "Abomination",
-		"alias": "Emil Blonsky",
-		"type": "villain",
-		"team": null
+		"alias": "Emil Blonsky"
+	},
+	"absorbing-man": {
+		"name": "Absorbing Man",
+		"alias": "Carl \"Crusher\" Creel"
 	},
 	"adam-warlock": {
 		"name": "Adam Warlock",
-		"alias": "Adam Warlock",
-		"type": "hero",
-		"team": "guardians-of-the-galaxy"
+		"alias": "Adam Warlock"
+	},
+	"aero": {
+		"name": "Aero",
+		"alias": "Lei Ling"
+	},
+	"angel": {
+		"name": "Angel",
+		"alias": "Warren Worthington"
+	},
+	"angela": {
+		"name": "Angela",
+		"alias": "Aldrif Odinsdottir"
 	},
 	"ant-man": {
 		"name": "Ant-Man",
-		"alias": "Scott Lang",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Scott Lang"
+	},
+	"anti-man": {
+		"name": "Anti-Man",
+		"alias": "Conner Sims"
+	},
+	"apocalypse": {
+		"name": "Apocalypse",
+		"alias": "En Sabah Nur"
+	},
+	"baron-zemo": {
+		"name": "Baron Zemo",
+		"alias": "Helmut Zemo"
 	},
 	"beast": {
 		"name": "Beast",
-		"alias": "Henry McCoy",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Henry McCoy"
+	},
+	"bishop": {
+		"name": "Bishop",
+		"alias": "Lucas Bishop"
 	},
 	"black-bolt": {
 		"name": "Black Bolt",
-		"alias": "Blackagar Boltagon",
-		"type": "hero",
-		"team": null
+		"alias": "Blackagar Boltagon"
+	},
+	"black-cat": {
+		"name": "Black Cat",
+		"alias": "Felicia Hardy"
 	},
 	"black-panther": {
 		"name": "Black Panther",
-		"alias": "T'Challa",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "T'Challa"
 	},
 	"black-widow": {
 		"name": "Black Widow",
-		"alias": "Natalia Romanova",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Natalia Romanova"
 	},
 	"blade": {
 		"name": "Blade",
-		"alias": "Eric Brooks",
-		"type": "hero",
-		"team": null
+		"alias": "Eric Brooks"
+	},
+	"blue-marvel": {
+		"name": "Blue Marvel",
+		"alias": "Adam Brashear"
+	},
+	"brawn": {
+		"name": "Brawn",
+		"alias": "Amadeus Cho"
 	},
 	"bullseye": {
 		"name": "Bullseye",
-		"alias": "Lester",
-		"type": "villain",
-		"team": null
+		"alias": "Lester"
 	},
 	"cable": {
 		"name": "Cable",
-		"alias": "Nathan Summers",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Nathan Summers"
 	},
 	"captain-america": {
 		"name": "Captain America",
-		"alias": "Steve Rogers",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Steve Rogers"
 	},
 	"captain-marvel": {
 		"name": "Captain Marvel",
-		"alias": "Carol Danvers",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Carol Danvers"
+	},
+	"carnage": {
+		"name": "Carnage",
+		"alias": "Cletus Kasady"
 	},
 	"cloak": {
 		"name": "Cloak",
-		"alias": "Tyrone Johnson",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Tyrone Johnson"
 	},
 	"colossus": {
 		"name": "Colossus",
-		"alias": "Piotr Rasputin",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Piotr Rasputin"
+	},
+	"crescent": {
+		"name": "Crescent",
+		"alias": "Dan Bi"
+	},
+	"crossbones": {
+		"name": "Crossbones",
+		"alias": "Brock Rumlow"
+	},
+	"crystal": {
+		"name": "Crystal",
+		"alias": "Crystalia Amaquelin"
 	},
 	"cyclops": {
 		"name": "Cyclops",
-		"alias": "Scott Summers",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Scott Summers"
 	},
 	"dagger": {
 		"name": "Dagger",
-		"alias": "Tandy Bowen",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Tandy Bowen"
 	},
 	"daredevil": {
 		"name": "Daredevil",
-		"alias": "Matthew Murdock",
-		"type": "hero",
-		"team": null
+		"alias": "Matthew Murdock"
 	},
 	"darwin": {
 		"name": "Darwin",
-		"alias": "Armando Muñoz",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Armando Muñoz"
 	},
 	"deadpool": {
 		"name": "Deadpool",
-		"alias": "Wade Wilson",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Wade Wilson"
+	},
+	"deathlok": {
+		"name": "Deathlok",
+		"alias": "Luther Manning"
+	},
+	"doctor-doom": {
+		"name": "Doctor Doom",
+		"alias": "Victor von Doom"
+	},
+	"doctor-octopus": {
+		"name": "Doctor Octopus",
+		"alias": "Otto Octavius"
 	},
 	"doctor-strange": {
 		"name": "Doctor Strange",
-		"alias": "Steven Strange",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Dr. Steven Strange"
+	},
+	"doctor-voodoo": {
+		"name": "Doctor Voodoo",
+		"alias": "Jericho Drumm"
 	},
 	"domino": {
 		"name": "Domino",
-		"alias": "Neena Thurman",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Neena Thurman"
+	},
+	"dormammu": {
+		"name": "Dormammu",
+		"alias": "Dormammu"
 	},
 	"drax": {
 		"name": "Drax the Destroyer",
-		"alias": "Arthur Douglas",
-		"type": "hero",
-		"team": "guardians-of-the-galaxy"
+		"alias": "Arthur Douglas"
+	},
+	"echo": {
+		"name": "Echo",
+		"alias": "Maya Lopez"
+	},
+	"electro": {
+		"name": "Electro",
+		"alias": "Maxwell Dillon"
+	},
+	"elektra": {
+		"name": "Elektra",
+		"alias": "Elektra Natchios"
+	},
+	"falcon": {
+		"name": "Falcon",
+		"alias": "Sam Wilson"
 	},
 	"gambit": {
 		"name": "Gambit",
-		"alias": "Remy LaBeau",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Remy LaBeau"
 	},
 	"gamora": {
 		"name": "Gamora",
-		"alias": "Gamora",
-		"type": "hero",
-		"team": "guardians-of-the-galaxy"
+		"alias": "Gamora"
+	},
+	"ghost": {
+		"name": "Ghost",
+		"alias": "Unknown"
 	},
 	"ghost-rider": {
 		"name": "Ghost Rider",
-		"alias": "Johnny Blaze",
-		"type": "anti-hero",
-		"team": null
+		"alias": "Johnny Blaze"
 	},
 	"ghost-rider-2": {
 		"name": "Ghost Rider",
-		"alias": "Roberto 'Robbie' Reyes",
-		"type": "hero",
-		"team": null
+		"alias": "Roberto \"Robbie\" Reyes"
+	},
+	"ghost-spider": {
+		"name": "Ghost Spider",
+		"alias": "Gwen Stacy"
 	},
 	"goblin-queen": {
 		"name": "Goblin Queen",
-		"alias": "Madelyne Pryor",
-		"type": "villain",
-		"team": "x-men"
+		"alias": "Madelyne Pryor"
+	},
+	"green-goblin": {
+		"name": "Green Goblin",
+		"alias": "Norman Osborn"
 	},
 	"groot": {
 		"name": "Groot",
-		"alias": "Groot",
-		"type": "hero",
-		"team": "guardians-of-the-galaxy"
+		"alias": "Groot"
+	},
+	"gwenpool": {
+		"name": "Gwenpool",
+		"alias": "Gwendolyn Poole"
 	},
 	"hawkeye": {
 		"name": "Hawkeye",
-		"alias": "Clint Barton",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Clint Barton"
 	},
 	"hawkeye-2": {
 		"name": "Hawkeye",
-		"alias": "Kate Bishop",
-		"type": "hero",
-		"team": null
+		"alias": "Kate Bishop"
+	},
+	"hela": {
+		"name": "Hela",
+		"alias": "Hela"
+	},
+	"hobgoblin": {
+		"name": "Hobgoblin",
+		"alias": "Jason Macendale Jr."
 	},
 	"hulk": {
 		"name": "The Incredible Hulk",
-		"alias": "Bruce Banner",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Bruce Banner"
 	},
 	"human-torch": {
 		"name": "Human Torch",
-		"alias": "Johhny Storm",
-		"type": "hero",
-		"team": "fantastic-four"
+		"alias": "Johnny Storm"
 	},
 	"iceman": {
 		"name": "Iceman",
-		"alias": "Bobby Drake",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Bobby Drake"
 	},
 	"invisible-woman": {
 		"name": "Invisible Woman",
-		"alias": "Sue Storm",
-		"type": "hero",
-		"team": "fantastic-four"
+		"alias": "Sue Storm"
+	},
+	"iron-fist": {
+		"name": "Iron Fist",
+		"alias": "Danny Rand"
 	},
 	"iron-man": {
 		"name": "Iron Man",
-		"alias": "Tony Stark",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Tony Stark"
 	},
 	"ironheart": {
 		"name": "Ironheart",
-		"alias": "Riri Williams",
-		"type": "hero",
-		"team": null
-	},
-	"jean-grey": {
-		"name": "Phoenix",
-		"alias": "Jean Grey",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Riri Williams"
 	},
 	"jessica-jones": {
 		"name": "Jessica Jones",
-		"alias": "Jessica Jones",
-		"type": "hero",
-		"team": null
+		"alias": "Jessica Jones"
 	},
 	"jubilee": {
 		"name": "Jubilee",
-		"alias": "Jubilation Lee",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Jubilation Lee"
 	},
 	"juggernaut": {
 		"name": "Juggernaut",
-		"alias": "Cain Marko",
-		"type": "villain",
-		"team": "x-men"
+		"alias": "Cain Marko"
+	},
+	"kang": {
+		"name": "Kang the Conqueror",
+		"alias": "Nathaniel Richards"
+	},
+	"kingpin": {
+		"name": "Kingpin",
+		"alias": "Wilson Fisk"
+	},
+	"kraven": {
+		"name": "Kraven the Hunter",
+		"alias": "Sergei Kravinoff"
 	},
 	"legion": {
 		"name": "Legion",
-		"alias": "David Haller",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "David Haller"
+	},
+	"lizard": {
+		"name": "Lizard",
+		"alias": "Curtis Connors"
 	},
 	"loki": {
 		"name": "Loki",
-		"alias": "Loki",
-		"type": "hero",
-		"team": null
+		"alias": "Loki"
 	},
 	"luke-cage": {
 		"name": "Luke Cage",
-		"alias": "Luke Cage",
-		"type": "hero",
-		"team": null
+		"alias": "Luke Cage"
 	},
 	"luna-snow": {
 		"name": "Luna Snow",
-		"alias": "Seol Hee",
-		"type": "hero",
-		"team": null
+		"alias": "Seol Hee"
 	},
 	"magik": {
 		"name": "Magik",
-		"alias": "Illyana Rasputina",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Illyana Rasputina"
 	},
 	"magneto": {
 		"name": "Magneto",
-		"alias": "Max Eisenhardt",
-		"type": "villain",
-		"team": "x-men"
+		"alias": "Max Eisenhardt"
+	},
+	"man-thing": {
+		"name": "Man-Thing",
+		"alias": "Dr. Theodore Sallis"
 	},
 	"mantis": {
 		"name": "Mantis",
-		"alias": "Mantis",
-		"type": "hero",
-		"team": "guardians-of-the-galaxy"
+		"alias": "Mantis"
+	},
+	"medusa": {
+		"name": "Medusa",
+		"alias": "Medusalith Amaquelin"
+	},
+	"mister-sinister": {
+		"name": "Mister Sinister",
+		"alias": "Nathaniel Essex"
+	},
+	"modok": {
+		"name": "M.O.D.O.K",
+		"alias": "George Tarleton"
 	},
 	"moon-knight": {
-		"name": "Ghost Rider",
-		"alias": "Marc Spector / Jake Lockley / Steven Grant",
-		"type": "hero",
-		"team": null
+		"name": "Moon Knight",
+		"alias": "Marc Spector / Jake Lockley / Steven Grant"
+	},
+	"morbius": {
+		"name": "Morbius",
+		"alias": "Michael Morbius"
 	},
 	"mr-fantastic": {
 		"name": "Mr. Fantastic",
-		"alias": "Reed Richards",
-		"type": "hero",
-		"team": "fantastic-four"
+		"alias": "Reed Richards"
 	},
 	"ms-america": {
 		"name": "Ms. America",
-		"alias": "America Chavez",
-		"type": "hero",
-		"team": null
+		"alias": "America Chavez"
 	},
 	"ms-marvel": {
 		"name": "Ms. Marvel",
-		"alias": "Kamala Khan",
-		"type": "hero",
-		"team": null
+		"alias": "Kamala Khan"
+	},
+	"mysterio": {
+		"name": "Mysterio",
+		"alias": "Quentin Beck"
 	},
 	"mystique": {
 		"name": "Mystique",
-		"alias": "Raven Darkhölme",
-		"type": "villain",
-		"team": "x-men"
+		"alias": "Raven Darkhölme"
 	},
 	"namor": {
 		"name": "Sub-Mariner",
-		"alias": "Namor McKenzie",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Namor McKenzie"
 	},
 	"nebula": {
 		"name": "Nebula",
-		"alias": "Nebula",
-		"type": "villain",
-		"team": "guardians-of-the-galaxy"
+		"alias": "Nebula"
+	},
+	"negasonic-teenage-warhead": {
+		"name": "Negasonic Teenage Warhead",
+		"alias": "Eloise Phimister"
+	},
+	"nick-fury": {
+		"name": "Nick Fury",
+		"alias": "Nick Fury"
 	},
 	"nightcrawler": {
 		"name": "Nightcrawler",
-		"alias": "Kurt Wagner",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Kurt Wagner"
+	},
+	"polaris": {
+		"name": "Polaris",
+		"alias": "Lorna Dane"
+	},
+	"peni-parker": {
+		"name": "SP//dr",
+		"alias": "Peni Parker"
+	},
+	"phoenix": {
+		"name": "Phoenix",
+		"alias": "Jean Grey"
 	},
 	"professor-x": {
 		"name": "Professor X",
-		"alias": "Charles Xavier",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Charles Xavier"
 	},
 	"psylocke": {
 		"name": "Psylocke",
-		"alias": "Sai",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Elizabeth \"Betsy\" Braddock"
 	},
 	"punisher": {
 		"name": "Punisher",
-		"alias": "Frank Castle",
-		"type": "anti-hero",
-		"team": null
+		"alias": "Frank Castle"
+	},
+	"pyro": {
+		"name": "Pyro",
+		"alias": "Simon Lasker"
 	},
 	"quicksilver": {
 		"name": "Quicksilver",
-		"alias": "Pietro Maximoff",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Pietro Maximoff"
 	},
-	"red-bishop": {
-		"name": "RedBishop",
-		"alias": "Lucas Bishop",
-		"type": "hero",
-		"team": "x-men"
+	"red-hulk": {
+		"name": "Red Hulk",
+		"alias": "Thaddeus E. Ross"
+	},
+	"red-skull": {
+		"name": "Red Skull",
+		"alias": "Johann Shmidt"
+	},
+	"rescue": {
+		"name": "Rescue",
+		"alias": "Virginia \"Pepper\" Potts"
+	},
+	"rhino": {
+		"name": "Rhino",
+		"alias": "Aleksei Sytsevich"
 	},
 	"rocket-raccoon": {
 		"name": "Rocket Raccoon",
-		"alias": "Rocket Raccoon",
-		"type": "hero",
-		"team": "guardians-of-the-galaxy"
+		"alias": "Rocket Raccoon"
 	},
 	"rogue": {
 		"name": "Rogue",
-		"alias": "Anna Marie LeBeau",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Anna Marie LeBeau"
+	},
+	"sabretooth": {
+		"name": "Sabretooth",
+		"alias": "Victor Creed"
+	},
+	"sandman": {
+		"name": "Sandman",
+		"alias": "William Baker"
+	},
+	"scarlet-spider": {
+		"name": "Scarlet Spider",
+		"alias": "Ben Reilly"
 	},
 	"scarlet-witch": {
 		"name": "Scarlet Witch",
-		"alias": "Wanda Maximoff",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Wanda Maximoff"
+	},
+	"scorpion": {
+		"name": "Scorpion",
+		"alias": "MacDonald Gargan"
+	},
+	"scream": {
+		"name": "Scream",
+		"alias": "Donna Diego"
 	},
 	"sentry": {
 		"name": "Sentry",
-		"alias": "Robert 'Bob' Reynolds",
-		"type": "hero",
-		"team": null
+		"alias": "Robert 'Bob' Reynolds"
 	},
 	"shadowcat": {
 		"name": "Shadowcat",
-		"alias": "Kitty Pryde",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Kitty Pryde"
 	},
 	"shang-chi": {
 		"name": "Shang-Chi",
-		"alias": "Zheng Shang-Chi",
-		"type": "hero",
-		"team": null
+		"alias": "Zheng Shang-Chi"
 	},
 	"she-hulk": {
 		"name": "She-Hulk",
-		"alias": "Jennifer Walters",
-		"type": "hero",
-		"team": null
+		"alias": "Jennifer Walters"
+	},
+	"silk": {
+		"name": "Silk",
+		"alias": "Cindy Moon"
+	},
+	"silver-surfer": {
+		"name": "Silver Surfer",
+		"alias": "Norrin Radd"
+	},
+	"spectrum": {
+		"name": "Spectrum",
+		"alias": "Monica Rambeau"
 	},
 	"spider-man": {
 		"name": "Spider-Man",
-		"alias": "Peter Parker",
-		"type": "hero",
-		"team": "spiderverse"
+		"alias": "Peter Parker"
+	},
+	"spider-man-2": {
+		"name": "Spider-Man",
+		"alias": "Miles Morales"
+	},
+	"spider-man-2099": {
+		"name": "Spider-Man 2099",
+		"alias": "Miguel O'Hara"
 	},
 	"spider-woman": {
 		"name": "Spider-Woman",
-		"alias": "Gwen Stacy",
-		"type": "hero",
-		"team": "spiderverse"
+		"alias": "Jessica Drew"
+	},
+	"spot": {
+		"name": "Spot",
+		"alias": "Dr. Johnathon Ohnn"
 	},
 	"squirrel-girl": {
 		"name": "Squirrel Girl",
-		"alias": "Doreen Green",
-		"type": "hero",
-		"team": null
+		"alias": "Doreen Green"
 	},
 	"star-lord": {
 		"name": "Star-Lord",
-		"alias": "Peter Quill",
-		"type": "hero",
-		"team": "guardians-of-the-galaxy"
+		"alias": "Peter Quill"
+	},
+	"stinger": {
+		"name": "Stinger",
+		"alias": "Cassie Lang"
 	},
 	"storm": {
 		"name": "Storm",
-		"alias": "Ororo Munroe",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "Ororo Munroe"
+	},
+	"sunspot": {
+		"name": "Sunspot",
+		"alias": "Roberto Da Costa"
+	},
+	"taskmaster": {
+		"name": "Taskmaster",
+		"alias": "Anthony Masters"
 	},
 	"thanos": {
 		"name": "Thanos",
-		"alias": "Thanos",
-		"type": "villain",
-		"team": "avengers"
+		"alias": "Thanos"
 	},
 	"the-thing": {
 		"name": "The Thing",
-		"alias": "Ben Grimm",
-		"type": "hero",
-		"team": "fantastic-four"
+		"alias": "Ben Grimm"
 	},
 	"thor": {
 		"name": "Thor",
-		"alias": "Thor Odinson",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "Thor Odinson"
+	},
+	"ultron": {
+		"name": "Ultron",
+		"alias": "Ultron"
+	},
+	"us-agent": {
+		"name": "U.S. Agent",
+		"alias": "John Walker"
+	},
+	"valkyrie": {
+		"name": "Valkyrie",
+		"alias": "Brunnhilde"
 	},
 	"venom": {
 		"name": "Venom",
-		"alias": "Eddie Brock",
-		"type": "anti-hero",
-		"team": "spiderverse"
+		"alias": "Eddie Brock"
 	},
 	"vision": {
 		"name": "Vision",
-		"alias": "The Vision",
-		"type": "hero",
-		"team": "avengers"
+		"alias": "The Vision"
+	},
+	"vulture": {
+		"name": "Vulture",
+		"alias": "Adrian Toomes"
+	},
+	"war-machine": {
+		"name": "War Machine",
+		"alias": "James Rhodes"
 	},
 	"wasp": {
 		"name": "Wasp",
-		"alias": "Janet Van Dyne",
-		"type": "hero",
-		"team": null
+		"alias": "Janet Van Dyne"
 	},
 	"white-queen": {
 		"name": "White Queen",
-		"alias": "Emma Frost",
-		"type": "villain",
-		"team": "x-men"
+		"alias": "Emma Frost"
 	},
 	"winter-soldier": {
 		"name": "Winter Soldier",
-		"alias": "James 'Bucky' Barnes",
-		"type": "anti-hero",
-		"team": "avengers"
+		"alias": "James \"Bucky\" Barnes"
 	},
 	"wolverine": {
 		"name": "Wolverine",
-		"alias": "James 'Logan' Howlett",
-		"type": "hero",
-		"team": "x-men"
+		"alias": "James \"Logan\" Howlett"
+	},
+	"x-23": {
+		"name": "X-23",
+		"alias": "Laura Kinney"
+	},
+	"yellowjacket": {
+		"name": "Yellowjacket",
+		"alias": "Dr. Henry \"Hank\" Pym"
 	}
 }

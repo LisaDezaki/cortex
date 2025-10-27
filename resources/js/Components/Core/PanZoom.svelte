@@ -12,8 +12,10 @@
 		legend,
 		maxZoom   = $bindable(3),
 		minZoom   = $bindable(1),
+		pannable  = true,
 		position  = $bindable({ x:0, y:0 }),
 		zoom      = $bindable(1),
+		zoomable  = true,
 		...restProps
 	} = $props();
 
@@ -60,7 +62,7 @@
 	}
 
 	function dragUpdate(e) {
-		if (!isDragging) return
+		if (!pannable || !isDragging) return
 		dragVector.x = (e.clientX-clickStart.x)
 		dragVector.y = (e.clientY-clickStart.y)
 		transform.x = constrain ? clamp(constrainX.min, dragVector.x, constrainX.max) : dragVector.x
@@ -83,6 +85,7 @@
 
 	function handleScroll(e) {
 		e.preventDefault()
+		if (!zoomable) { return }
 		origin = { x: e.clientX - containerRect.left, y: e.clientY - containerRect.top }
 		if (e.deltaY !== null) {
 			zoom *= e.deltaY < 0 ? 1.05 : 0.95

@@ -1,4 +1,13 @@
 {
+	"agents-of-atlas": {
+		"name": "Agents of Atlas",
+		"type": "Heroes",
+		"desc": "",
+		"hq": "",
+		"founder": "",
+		"leader": "",
+		"members": [ "aero", "brawn", "luna-snow", "ms-marvel", "silk" ]
+	},
 	"avengers": {
 		"name": "The Avengers",
 		"type": "Heroes",
@@ -6,7 +15,16 @@
 		"hq": "The Avengers Tower",
 		"founder": "nick-fury",
 		"leader": "iron-man",
-		"members": [ "ant-man", "black-widow", "captain-america", "doctor-strange", "hawkeye", "hulk", "iron-man", "scarlet-witch", "thor" ]
+		"members": [ "ant-man", "black-widow", "captain-america", "doctor-strange", "falcon", "hawkeye", "hulk", "iron-man", "scarlet-witch", "thor" ]
+	},
+	"defenders": {
+		"name": "The Defenders",
+		"type": "Heroes",
+		"desc": "",
+		"hq": "",
+		"founder": "",
+		"leader": "",
+		"members": [ "daredevil", "iron-fist", "jessica-jones", "luke-cage", "punisher" ]
 	},
 	"fantastic-four": {
 		"name": "The Fantastic Four",
@@ -17,6 +35,42 @@
 		"leader": "cyclops",
 		"members": [ "human-torch", "invisible-woman", "mister-fantastic", "the-thing" ]
 	},
+	"guardians-of-the-galaxy": {
+		"name": "The Guardians of the Galaxy",
+		"type": "Heroes",
+		"desc": "",
+		"hq": "",
+		"founder": "starlord",
+		"leader": "starlord",
+		"members": [ "adam-warlock", "captain-marvel", "drax", "gamora", "groot", "mantis", "nebula", "rocket-raccoon", "starlord" ]
+	},
+	"sinister-six": {
+		"name": "Sinister Six",
+		"type": "Villains",
+		"desc": "",
+		"hq": "",
+		"founder": "hobgoblin",
+		"leader": "doctor-octopus",
+		"members": [ "doctor-octopus", "electro", "green-goblin", "hobgoblin", "kingpin", "kraven", "lizard", "morbius", "mysterio", "rhino", "sandman", "scorpion", "venom", "vulture" ]
+	},
+	"spider-verse": {
+		"name": "Spider-verse",
+		"type": "Heroes",
+		"desc": "",
+		"hq": "",
+		"founder": "",
+		"leader": "",
+		"members": [ "ghost-spider", "scarlet-spider", "silk", "spider-man", "spider-man-2", "spider-man-2099", "spider-woman" ]
+	},
+	"thunderbolts": {
+		"name": "Thunderbolts",
+		"type": "Heroes",
+		"desc": "",
+		"hq": "",
+		"founder": "",
+		"leader": "sentry",
+		"members": [ "baron-zemo", "black-widow", "ghost", "sentry", "taskmaster", "us-agent", "winter-soldier" ]
+	},
 	"x-men": {
 		"name": "X-Men",
 		"type": "Heroes",
@@ -24,6 +78,6 @@
 		"hq": "Xavier's Mansion",
 		"founder": "professor-x",
 		"leader": "cyclops",
-		"members": [ "beast", "cyclops", "gambit", "phoenix", "rogue", "wolverine" ]
+		"members": [ "angel", "beast", "bishop", "cable", "cloak", "colossus", "cyclops", "dagger", "darwin", "domino", "gambit", "iceman", "jubilee", "legion", "magik", "magneto", "ms-marvel", "mystique", "namor", "nightcrawler", "phoenix", "polaris", "professor-x", "psylocke", "pyro", "rogue", "sabretooth", "storm", "sunspot", "white-queen", "wolverine" ]
 	}
 }

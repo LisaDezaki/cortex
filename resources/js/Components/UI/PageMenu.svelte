@@ -2,11 +2,14 @@
 	import { Link } from '@inertiajs/svelte'
 	
 	import { Box, Inline, Stack } from '@/Components/Core'
+	import Button      from '@/Components/UI/Button.svelte'
 	import Icon      from '@/Components/UI/Icon.svelte'
 	import Input     from '@/Components/UI/Input.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
     let {
+		backTo,
+		backToLabel = "Back",
 		children,
 		class: className,
 		items,
@@ -41,6 +44,13 @@
 
 <Box class="sticky top-12 place-self-start {className}">
 	<Stack class="page-menu min-w-48 py-2 rounded-lg" {...restProps}>
+
+		{#if backTo}
+			<Link href={backTo} class="place-self-start border border-neutral-softest flex items-center gap-3 mb-3 pl-3 pr-5 py-1.5 rounded-full hover:border-accent hover:text-accent">
+				<Icon name="ArrowElbowUpLeft" size="md" />
+				<span>{backToLabel}</span>
+			</Link>
+		{/if}
 	
 		{#if restProps.searchable}
 			<div class="flex-shrink-0 px-1.5">

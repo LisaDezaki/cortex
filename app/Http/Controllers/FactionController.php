@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\CollectionResource;
 use App\Http\Resources\CustomFieldResource;
 use App\Http\Resources\FactionResource;
+use App\Models\Character;
 use App\Models\Collection;
 use App\Models\CustomField;
 use App\Models\Faction;
@@ -36,17 +37,23 @@ class FactionController extends Controller
 
 	protected $validationRules = [
 		'name'                  => ['sometimes', 'string', 'max:255'],
+		'type'                 => ['sometimes', 'nullable', 'string', 'max:255'],
 		'description'           => ['sometimes', 'string'],
 		'starred'				=> ['sometimes', 'boolean'],
 
-		'parent_location'		=> ['sometimes', 'exists:locations,id'],
-		'coordinates'			=> ['sometimes', 'array'],
+		// 'parent_location'		=> ['sometimes', 'exists:locations,id'],
+		// 'coordinates'			=> ['sometimes', 'array'],
 
-		'media'					=> ['sometimes', 'array'],
+		'media'					=> ['sometimes', 'nullable', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],
 		'media.*.path'			=> ['nullable',	 'string'],
 		'media.*.type'			=> ['required',	 'string', 'in:banner,emblem,gallery'],
 		'media.*.url'			=> ['nullable',	 'string'],
+
+		'members'				=> ['sometimes', 'nullable', 'array'],
+		'members.*.id'			=> ['required',	 'string', 'uuid', 'distinct', 'exists:characters,id'],
+		'members.*.name'		=> ['nullable',  'string'],
+		'members.*.rank'		=> ['nullable',	 'string'],
 
 		'custom_fields' 	  	=> ['sometimes', 'array'],
 		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
@@ -103,6 +110,13 @@ class FactionController extends Controller
         $validatedData = $request->validate($this->validationRules);
 		$faction = Auth::user()->activeProject()->factions()->create($validatedData);
 
+		if ($request->has('media') && $request['media'] !== null) {
+			foreach ($request['media'] as $media) {
+				$this->mediaService->attachMedia($faction, $media['type'], $media);
+			}
+			unset($validatedData['media']);
+		}
+
 		// if ($request->has('emblem')) {
 		// 	$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
 		// 	unset($validatedData['emblem']);
@@ -116,7 +130,6 @@ class FactionController extends Controller
 		// $this->handleCustomFields($validatedData['custom_fields'], $character);
 
 		$faction->save();
-
 		Session::flash('success', "$faction->name created successfully.");
 		return Redirect::route("factions.show", [
 			'faction' => $faction->slug
@@ -159,37 +172,43 @@ class FactionController extends Controller
     public function edit(Faction $faction) {}
     public function update(Request $request, Faction $faction)
     {
-
-		// dd($request->all());
+		//	Validate
 		$validatedData = $request->validate($this->validationRules);
-		// dd($validatedData);
 
-		if ($request->has('media')) {
+		//	Media
+		if ($request->has('media') && $request['media'] !== null) {
 			foreach ($request['media'] as $media) {
 				$this->mediaService->attachMedia($faction, $media['type'], $media);
 			}
 			unset($validatedData['media']);
 		}
 
-		// if ($request->has('emblem')) {
-		// 	$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
-		// 	unset($validatedData['emblem']);
-		// }
+		//	Members
+		if ($request->has('members')) {
+			foreach ($validatedData['members'] as $member) {
+				$member = Character::find($member['id']);
+				$faction->members()->attach($member);
+			}
+			unset($validatedData['members']);
+		}
 
-		// if ($request->has('banner')) {
-		// 	$this->mediaService->attachMedia($faction, 'banner', $request->banner);
-		// 	unset($validatedData['banner']);
-		// }
-
+		//	Headquarters
 		if ($request->has('headquarters_id')) {
-			$faction->headquarters()->associate($validatedData['headquarters_id']);
+			if ($validatedData['headquarters_id'] === null || $validatedData['headquarters_id'] === '') {
+				$faction->headquarters()->dissociate();
+			} else {
+				$faction->headquarters()->associate($validatedData['headquarters_id']);
+			}
 		}
 		
+		//	Custom Fields
+		// if ($request->has('custom_fields')) {
+		// 	$this->handleCustomFields($validatedData['custom_fields'], $faction);
+		// }
+
+		//	Update
 		$faction->fill($validatedData);
 		$faction->update();
-		// return Redirect::route("factions.show", [
-		// 	'faction' => $faction->slug
-		// ]);
 		Session::flash('success', "$faction->name updated successfully.");
         return Redirect::back();
     }

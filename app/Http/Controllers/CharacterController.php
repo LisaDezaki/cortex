@@ -8,6 +8,8 @@ use App\Http\Resources\CustomFieldResource;
 use App\Models\Character;
 use App\Models\Collection;
 use App\Models\CustomField;
+use App\Models\CustomFieldValue;
+use App\Models\Faction;
 use App\Services\MediaService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -48,7 +50,12 @@ class CharacterController extends Controller
 		'media.*.type'			=> ['required',  'string', 'in:banner,gallery,portrait'],
 		'media.*.url'			=> ['nullable',  'string'],
 
-		'relationships'         				 => ['sometimes', 'array'],
+		'factions'         		=> ['sometimes', 'nullable', 'array'],
+		'factions.*.id'  		=> ['required',  'string', 'uuid', 'distinct', 'exists:factions,id'],
+		'factions.*.slug'		=> ['nullable',  'string'],
+		'factions.*.name' 		=> ['nullable',  'string'],
+
+		'relationships'         				 => ['sometimes', 'nullable', 'array'],
 		'relationships.*.character_role'  		 => ['required',  'string'],
 		'relationships.*.related_character_id'	 => ['required',  'string', 'uuid', 'distinct', 'exists:characters,id'],
 		'relationships.*.related_character_role' => ['required',  'string'],
@@ -151,6 +158,7 @@ class CharacterController extends Controller
 		]);
 	}
 
+
 	/**
 	 * EDIT / UPDATE
 	 * 
@@ -162,8 +170,10 @@ class CharacterController extends Controller
 	public function edit(Character $character) {}
 	public function update(Request $request, Character $character): RedirectResponse
 	{
+		//	Validate
 		$validatedData = $request->validate($this->validationRules);
 
+		//	Media
 		if ($request->has('media') && $request['media'] !== null) {
 			foreach ($request['media'] as $media) {
 				$this->mediaService->attachMedia($character, $media['type'], $media);
@@ -171,6 +181,18 @@ class CharacterController extends Controller
 			unset($validatedData['media']);
 		}
 
+		//	Factions
+		if ($request->has('factions')) {
+			foreach ($validatedData['factions'] as $fac) {
+				// $character->factions()->save($faction);
+
+				$faction = Faction::find($fac['id']);
+				$faction->members()->attach($character);
+			}
+			unset($validatedData['factions']);
+		}
+
+		//	Relationships
 		if ($request->has('relationships')) {
 			foreach ($validatedData['relationships'] as $rel) {
 				$relatedCharacter = Character::find($rel['related_character_id']);
@@ -179,6 +201,7 @@ class CharacterController extends Controller
 			unset($validatedData['relationships']);
 		}
 
+		//	Location
 		if ($request->has('location_id')) {
 			if ($validatedData['location_id'] === null) {
 				$character->location()->dissociate();
@@ -187,15 +210,18 @@ class CharacterController extends Controller
 			}
 		}
 
+		//	Custom Fields
 		if ($request->has('custom_fields')) {
 			$this->handleCustomFields($validatedData['custom_fields'], $character);
 		}
 
+		//	Update
 		$character->fill($validatedData);
 		$character->update();
 		Session::flash('success', "$character->name updated successfully.");
         return Redirect::back();
 	}
+
 
 
 	/**
@@ -220,7 +246,7 @@ class CharacterController extends Controller
 	{
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'character'
+			'fieldable_type' => Character::class
 		])->with('options')->get();
 
 		return Inertia::render('Characters/Settings', [
@@ -230,48 +256,33 @@ class CharacterController extends Controller
 
 
 
-	public function handleCustomFields(array $custom_fields)
+	public function handleCustomFields(array $custom_fields, Character $character)
 	{
-		// foreach ($custom_fields as $field) {
-		// 	if (empty($field['value'])) { continue; }
+		//  Handle custom fields
+		foreach ($custom_fields as $field) {
+			if (empty($field['value'])) {
 
-		// 	//  Create the new custom field
-		// 	CustomFieldValue::updateOrCreate(
-		// 		[
-		// 			'fieldable_id' => $character->id,
-		// 			'custom_field_id' => $field['id']
-		// 		],
-		// 		[
-		// 			'value' => $field['value'],
-		// 		]
-		// 	);
-		// }
+				//  Delete custom field value
+				CustomFieldValue::where([
+					'fieldable_id' => $character->id,
+					'custom_field_id' => $field['id']
+				])->delete();
 
-		// //  Handle custom fields
-		// foreach ($validatedData['custom_fields'] as $field) {
-		// 	if (empty($field['value'])) {
+			} else {
 
-		// 		//  Delete custom field value
-		// 		CustomFieldValue::where([
-		// 			'fieldable_id' => $character->id,
-		// 			'custom_field_id' => $field['id']
-		// 		])->delete();
-
-		// 	} else {
-
-		// 		//  Create the new custom field
-		// 		CustomFieldValue::updateOrCreate(
-		// 			[
-		// 				'fieldable_id' => $character->id,
-		// 				'custom_field_id' => $field['id']
-		// 			],
-		// 			[
-		// 				'value' => $field['value']
-		// 			]
-		// 		);
+				//  Create the new custom field
+				CustomFieldValue::updateOrCreate(
+					[
+						'fieldable_id' => $character->id,
+						'custom_field_id' => $field['id']
+					],
+					[
+						'value' => $field['value']
+					]
+				);
 				
-		// 	}
-		// }
+			}
+		}
 	}
 
 }

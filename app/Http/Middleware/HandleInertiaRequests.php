@@ -8,6 +8,7 @@ use App\Models\Character;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use Inertia\Inertia;
 use Inertia\Middleware;
 use Tighten\Ziggy\Ziggy;
@@ -80,6 +81,11 @@ class HandleInertiaRequests extends Middleware
 			])->find($user->active_project)
 			: null;
 
+		$appearance = File::get(database_path('data/options/appearance.json'));
+		$appearance = json_decode($appearance, true);
+		$personality = File::get(database_path('data/options/personality.json'));
+		$personality = json_decode($personality, true);
+
         return array_merge(parent::share($request), [
 			'appName' => config('app.name'),
 			'csrfToken' => csrf_token(),
@@ -95,7 +101,9 @@ class HandleInertiaRequests extends Middleware
 				'message' => fn () => $request->session()->get('message')
 			],
 			'projects' => $projects ? ProjectResource::collection($projects) : [],
-			'activeProject' => $activeProject ? new ProjectResource($activeProject) : []
+			'activeProject' => $activeProject ? new ProjectResource($activeProject) : [],
+			'options.appearance' => $appearance,
+			'options.personality' => $personality
 		]);
     }
 }

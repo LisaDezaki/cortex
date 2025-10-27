@@ -45,6 +45,7 @@
     import SelectLocationModal 			 from '@/Modals/SelectLocation.svelte';
     import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte';
     import SetLocationModal 			 from '@/Modals/SetLocation.svelte';
+    import SetTagsModal 			 	 from '@/Modals/SetTags.svelte';
     import UploadMediaModal 			 from '@/Modals/UploadMedia.svelte';
 	
 	//	2. Create a modal registry map
@@ -72,6 +73,7 @@
 		selectLocation:				SelectLocationModal,
 		setCharacterRelationship:	SetCharacterRelationshipModal,
 		setLocation:				SetLocationModal,
+		setTags:					SetTagsModal,
 		uploadMedia:				UploadMediaModal
     };
 
@@ -102,7 +104,7 @@
 		{@render header?.()}
 		<Flex class="relative flex-grow-0 h-screen overflow-hidden w-full">
 			<Main>
-				<Article>
+				<Article noscroll>
 					{#if $page.props.flash}
 						<Toast {...$page.props.flash} />
 					{/if}

@@ -1,5 +1,6 @@
 <script>
 
+	import Box from '@/Components/Core/Box.svelte';
 	import Row from './Row.svelte';
 
     let {
@@ -13,22 +14,24 @@
 
 </script>
 
-<table class={className} {...restProps}>
-	{#if headRow}
-		<thead>
-			<Row>
-				{@render headRow()}
-			</Row>
-		</thead>
-	{/if}
-	<tbody>
-		{#each data as item}
-			<Row>
-				{@render bodyRow(item)}
-			</Row>
-		{/each}
-	</tbody>
-</table>
+<Box class={className}>
+	<table {...restProps}>
+		{#if headRow}
+			<thead>
+				<Row>
+					{@render headRow()}
+				</Row>
+			</thead>
+		{/if}
+		<tbody>
+			{#each data as item}
+				<Row>
+					{@render bodyRow(item)}
+				</Row>
+			{/each}
+		</tbody>
+	</table>
+</Box>
 
 <style lang="postcss">
 

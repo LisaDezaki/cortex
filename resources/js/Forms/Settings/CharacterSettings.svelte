@@ -45,7 +45,6 @@
 	/>
 
 	<Field name="subheading"
-		layout="block"
 		inputClass="w-full"
 		type="select"
 		label="Character subheading"

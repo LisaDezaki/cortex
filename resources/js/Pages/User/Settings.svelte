@@ -24,7 +24,6 @@
 
 	{#snippet header()}
 		<PageHeader
-			title="User Settings"
 			tabs={[
 				{ label: "Profile",		href: route('user.edit') },
 				{ label: "Settings",	active: true },

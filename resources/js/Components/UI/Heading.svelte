@@ -3,6 +3,7 @@
 	import { Flex, Inline, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
+	import Input  from '@/Components/UI/Input.svelte'
 
     let {
 		is = "h2",
@@ -19,6 +20,13 @@
 		class: className,
 		...restProps
     } = $props()
+
+	let editing = $state(false)
+
+	function toggleEditing() {
+		editing = !editing
+	}
+
 </script>
 
 <Inline as="header" align="center" class="heading {className}" {...restProps}>
@@ -33,7 +41,10 @@
 			</Flex>
 		{/if}
 
-		<svelte:element this={is} class="heading-head whitespace-pre-wrap font-style-{as} {headingClass}">{heading}{@render children?.()}</svelte:element>
+		<Inline>
+			<svelte:element this={is} class="heading-head whitespace-pre-wrap font-style-{as} {headingClass}">{heading}{@render children?.()}</svelte:element>
+		</Inline>
+
 
 		{#if subheadingLink && subheading}
 			<Link class="italic text-accent hover:underline {subheadingClass}" href={subheadingLink}>

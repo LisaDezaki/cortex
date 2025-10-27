@@ -10,6 +10,7 @@
 	import Flex   	  from '@/Components/Core/Flex.svelte'
 	import Container  from '@/Components/UI/Container.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
+	import Input      from '@/Components/UI/Input.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
@@ -17,6 +18,7 @@
 	
 	//	Page props
 
+	const customFields = $page.props.customFields?.data
 	const settings = $page.props.settings?.characters?.data
 
 </script>
@@ -31,7 +33,6 @@
 
 	{#snippet header()}
 		<PageHeader
-			title="Character Settings"
 			tabs={[
 				{ label: "List",			href: route('characters') },
 				{ label: "Collections", 	href: route('characters.collections') },
@@ -66,7 +67,16 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h4" as="h6">Custom Fields</Heading>
 					</Flex>
-					Custom Fields
+
+					{#each customFields as field}
+						<Input type={field.type}
+							name={field.name}
+							label={field.label}
+							options={field.options || null}
+							placeholder={field.placeholder}
+						/>
+					{/each}
+
 				</Section>
 
 			</Container>

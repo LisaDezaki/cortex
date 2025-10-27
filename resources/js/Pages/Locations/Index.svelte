@@ -9,20 +9,14 @@
 	import Box					from '@/Components/Core/Box.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
-	import Inline				from '@/Components/Core/Inline.svelte'
 	import Stack				from '@/Components/Core/Stack.svelte'
-	import Button     			from '@/Components/UI/Button.svelte'
-	import Collapsible			from '@/Components/UI/Collapsible.svelte'
 	import Empty   	  			from '@/Components/UI/Empty.svelte'
-	import Heading				from '@/Components/UI/Heading.svelte'
 	import PageHeader 			from '@/Components/UI/PageHeader.svelte'
 	import Section    			from '@/Components/UI/Section.svelte'
-	import Skeleton				from '@/Components/UI/Skeleton.svelte'
-	import Tag					from '@/Components/UI/Tag.svelte'
-	import Thumbnail			from '@/Components/UI/Thumbnail.svelte'
 	import LocationCard			from '@/Components/Features/Location/LocationCard.svelte'
 	import LocationControlBar 	from '@/Components/Features/Location/LocationControlBar.svelte'
 	import LocationGrid			from '@/Components/Features/Location/LocationGrid.svelte'
+	import LocationPanel		from '@/Components/Features/Location/LocationPanel.svelte'
 	import LocationTable		from '@/Components/Features/Location/LocationTable.svelte'
 	import LocationMap			from '@/Components/Features/Location/Map.svelte'
 	
@@ -73,13 +67,12 @@
 </svelte:head>
 
 <AuthenticatedLayout>
-
 	{#snippet article()}
-		<Section gap={6} class="px-20">
-			<Grid cols={4} gap={20} class="gap-20">
-				<Box class="col-span-3">
+		<Section gap={6} class="h-full overflow-hidden">
+			<Flex gap={0} class="h-full overflow-hidden">
+				<Stack gap={0} class="overflow-hidden">
 
-					<PageHeader class="sticky top-0"
+					<PageHeader class="px-12 py-3"
 						title="Location List"
 						tabs={[
 							{ label: "List",		active: true },
@@ -87,135 +80,106 @@
 							{ label: "Settings",	href: route('locations.settings') },
 						]}
 						actions={[
-							{ icon: "Plus", theme: "accent", onclick: () => locations.create(), },
+							{ icon: "Plus", label: "New", theme: "accent", onclick: () => locations.create(), },
 						]}
 					/>
 
-					<LocationControlBar
+
+					<LocationControlBar class="px-12 pb-1.5"
 						data={locations} project={activeProject}
 						bind:query bind:filter bind:sort
 						bind:results bind:size bind:layout
 					/>
 
-					{#if activeProject && locations.items?.length > 0}
-
-
-						<!-- Grid -->
-
-						{#if layout == 'grid'}
-							<LocationGrid
-								locations={results}
-								class="py-3"
-								cols={gridCols}
-							>
-								{#snippet gridItem(location)}
-									<LocationCard
-										active={selected?.id === location.id}
-										location={location}
-										subtitle={getSubtitle(location)}
-										onclick={() => selectLocation(location)}
-										iconOptions={[
-											{ icon: "Star", 	onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
-											{ icon: "Eye", 		href: location.routes.show },
-											{ icon: "Textbox", 	onclick: () => location.rename() },
-											{ icon: "UploadSimple", onclick: () => location.addBanner() },
-											{ icon: "Trash", 	onclick: () => location.delete(), theme: "danger" },
-										]}
-										options={[{
-											icon: 'FolderSimple', iconWeight: 'regular',
-											label: "Add to Collection",
-											create: () => collections.create('locations', [location]),
-											options: [ ...collections.items.map(collection => ({
-												label: collection.name,
-												onclick: 	collection.items.map(i => i.collectionable_id).includes(location.id) ? () => collection.removeItem(location) : () => collection.addItem(location),
-												disabled:   collection.items.map(i => i.collectionable_id).includes(location.id),
-												iconWeight: collection.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
-											}))]
-										},{
-											icon: 'TagSimple', iconWeight: 'regular',
-											label: "Add Tags",
-											onclick: () => location.applyTags()
-										},{
-											separator: true
-										},{
-											icon: 'Trash', iconWeight: 'regular',
-											label: "Delete Location",
-											onclick: () => location.delete(),
-											theme: "danger"
-										}]}
-									/>
-								{/snippet}
-							</LocationGrid>
-
-
-						<!-- Table -->
-						
-						{:else if layout == 'table'}
-							<LocationTable
-								locations={results}
-							/>
-
-						
-						<!-- Map -->
-
-						{:else if layout == 'map'}
-							<LocationMap
-								constrain={false}
-								class="bg-black/50 max-h-full rounded-lg"
-								location={worldTree}
-							/>
-
-
-						{/if}
-					{:else}
-
-						<Empty
-							icon="MapPin"
-							message="There are no locations for this project yet."
-							buttonLabel="Create one?"
-							buttonClick={() => location.create()}
-						/>
-					{/if}
-
-				</Box>
-				<Stack class="col-span-1">
-					<Stack class="sticky top-0 h-screen pt-16 pb-6">
-
-						{#if selected}
-							<Thumbnail aspect="aspect-video" src={selected.image?.url} class="mb-3 shadow-md" />
-
-							<Stack gap={0}>
-								<Flex align="start" justify="between">
-									<Heading is="h3" as="h5">{selected.name}</Heading>
-									<Button style="plain" theme="neutral" icon="DotsThreeOutlineVertical" iconSize="md" iconWeight="fill" class="rounded-full hover:bg-neutral-softest" />
-								</Flex>
-								<p class="-mt-1 mb-3 text-sm">{selected.type}</p>
-							</Stack>
-
-							<Collapsible class="font-style-small mb-6" collapsed={true}>
-								{selected.description}
-							</Collapsible>
-
-							{#if selected.getMap()}
-								<Thumbnail src={selected.getMap()?.url} class="mb-3" />
-								<Flex wrap gap={0.5} class="mb-3">
-									{#each selected.children as loc}
-										<Tag plain class="bg-neutral-softest font-style-tiny py-0.5">{loc.name}</Tag>
-									{/each}
-								</Flex>
+					<Flex align="start" class="px-12 pt-3 pb-6 overflow-y-auto">
+						{#if activeProject && locations.items?.length > 0}
+	
+	
+							<!-- Grid -->
+	
+							{#if layout == 'grid'}
+								<LocationGrid
+									cols={gridCols}
+									locations={results}
+								>
+									{#snippet gridItem(location)}
+										<LocationCard
+											active={selected?.id === location.id}
+											location={location}
+											subtitle={getSubtitle(location)}
+											onclick={() => selectLocation(location)}
+											iconOptions={[
+												{ icon: "Star", 	onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
+												{ icon: "Eye", 		href: location.routes.show },
+												{ icon: "Textbox", 	onclick: () => location.rename() },
+												{ icon: "UploadSimple", onclick: () => location.addBanner() },
+												{ icon: "Trash", 	onclick: () => location.delete(), theme: "danger" },
+											]}
+											options={[{
+												icon: 'FolderSimple', iconWeight: 'regular',
+												label: "Add to Collection",
+												create: () => collections.create('locations', [location]),
+												options: [ ...collections.items.map(collection => ({
+													label: collection.name,
+													onclick: 	collection.items.map(i => i.collectionable_id).includes(location.id) ? () => collection.removeItem(location) : () => collection.addItem(location),
+													disabled:   collection.items.map(i => i.collectionable_id).includes(location.id),
+													iconWeight: collection.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
+												}))]
+											},{
+												icon: 'TagSimple', iconWeight: 'regular',
+												label: "Add Tags",
+												onclick: () => location.applyTags()
+											},{
+												separator: true
+											},{
+												icon: 'Trash', iconWeight: 'regular',
+												label: "Delete Location",
+												onclick: () => location.delete(),
+												theme: "danger"
+											}]}
+										/>
+									{/snippet}
+								</LocationGrid>
+	
+	
+							<!-- Table -->
+							
+							{:else if layout == 'table'}
+								<LocationTable
+									locations={results}
+								/>
+	
+							
+							<!-- Map -->
+	
+							{:else if layout == 'map'}
+								<LocationMap
+									constrain={false}
+									class="bg-black/50 max-h-full rounded-lg"
+									location={worldTree}
+								/>
+	
+	
 							{/if}
-
-							<Button size="xl" style="hard" theme="accent" class="line-clamp-1 mt-auto"
-								icon="Eye" iconWeight="fill"
-								label="View {selected.name}"
-								href={selected.routes.show}
+						{:else}
+	
+							<Empty
+								icon="MapPin"
+								message="There are no locations for this project yet."
+								buttonLabel="Create one?"
+								buttonClick={() => location.create()}
 							/>
 						{/if}
 
-					</Stack>
+					</Flex>
 				</Stack>
-			</Grid>
+				
+				<LocationPanel class="max-w-96 min-w-96 shrink-0 w-96"
+					location={selected}
+				/>
+
+
+			</Flex>
 		</Section>
 	{/snippet}
-    
 </AuthenticatedLayout>

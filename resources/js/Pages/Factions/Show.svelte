@@ -45,6 +45,8 @@
     <title>{faction.name}</title>
 </svelte:head>
 
+
+
 <AuthenticatedLayout>
 
 	<!-- {#snippet header()}
@@ -53,14 +55,15 @@
 
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="py-12">
-			<PageMenu items={[
-				{ icon: "Info",      	label: "Details",    	href: "#details"	},
-				// { icon: "Textbox",      label: "Custom Fields", href: "#custom" 	},
-				// { icon: "MapPinArea", 	label: "Headquarters", 	href: "#hq"			},
-				{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
-				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
-				{ icon: "Trash", 		label: "Delete",		onclick: () => faction.delete(), theme: "danger" }
-			]} />
+			<PageMenu
+				backTo={route('characters')} backToLabel="Character List"
+				items={[
+					{ icon: "Info",      	label: "Details",    	href: "#details"	},
+					{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
+					{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
+					{ icon: "Trash", 		label: "Delete",		onclick: () => faction.delete(), theme: "danger" }
+				]}
+			/>
 			<Container size="4xl">
 
 				
@@ -70,7 +73,7 @@
 
 					<ArticleBanner>
 						<Media
-							class="absolute inset-0 aspect-[3/1] rounded-lg overflow-hidden shadow-md"
+							class="absolute inset-0 aspect-[3/1] rounded-lg overflow-hidden"
 							media={faction.getBanner()}
 							onclick={() => faction.addBanner()}
 						/>
@@ -234,7 +237,7 @@
 								/>
 								<Stack justify="center">
 									<div class="font-bold leading-[1.125rem] line-clamp-1">{member.name}</div>
-									<div class="text-sm leading-[1.125rem] line-clamp-1">{member.rank.name}</div>
+									<div class="text-sm leading-[1.125rem] line-clamp-1">{member.rank?.name}</div>
 								</Stack>
 							</Link>
 						{/each}

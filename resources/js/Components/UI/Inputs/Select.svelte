@@ -47,8 +47,8 @@
 	}
 
 	function updateSelection() {
-		console.log(selectedOption, onUpdate)
-		// onUpdate(selectedOption)
+		// console.log(selectedOption, onUpdate)
+		onUpdate(selectedOption)
 	// 	if (!multiple) {
 	// 		selection = val ? options.find(o => o.value === val || o.label === val) : null
 	// 	} else if (multiple) {
@@ -116,7 +116,7 @@
 				<!-- <span class="font-style-input line-clamp-1 text-left">{getLabel(value)}</span> -->
 				<InputItem item={selectedOption} class={inputClass} />
 			{:else}
-				<span class="font-style-placeholder line-clamp-1 text-left">{placeholder}</span>
+				<span class="font-style-placeholder line-clamp-1 px-1 text-left">{placeholder}</span>
 			{/if}
 			<Icon class="ml-auto" name="CaretUpDown" size="xs" />
 		</Select.Trigger>
@@ -152,8 +152,8 @@
 							<!-- <InputItem item={option} /> -->
 						{/if}
 					{:else}
-						<span class="block px-5 py-2 text-sm text-muted-foreground">
-							No results found, try again.
+						<span class="block px-3 py-1.5 text-sm text-muted-foreground">
+							No results found.
 						</span>
 					{/each}
 				</Stack>

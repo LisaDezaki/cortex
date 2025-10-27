@@ -53,10 +53,10 @@
 				processing.set(false)
 			},
 			onError: (errors) => {
-				console.log('Upload failed', errors)
+				// console.log('Upload failed', errors)
 			},
 			onProgress: (event) => {
-				console.log('Upload progress:', event)
+				// console.log('Upload progress:', event)
 			}
 		})
 		

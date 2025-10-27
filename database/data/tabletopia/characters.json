@@ -109,11 +109,11 @@
 
 	"drew": {
 		"name": "Drew",
-		"alias": "The Gym Rat",
+		"alias": "The Incel",
 		"species": "goblin",
 		"location": "gym",
-		"appearance": ["Oily", "Swole", "Veiny"],
-		"personality": ["Aggressive", "Belligerent", "Braggadocious", "Condescending", "Crass", "Insecure", "Misogynistic", "Narcissistic", "Obnoxious", "Patronizing", "Posturing", "Rude"],
+		"appearance": ["Short"],
+		"personality": ["Aggressive", "Belligerent", "Condescending", "Crass", "Insecure", "Misogynistic", "Narcissistic", "Obnoxious", "Patronizing", "Rude"],
 		"desc": "This guy HATES women. He constantly makes rude comments to female patrons and brags about his own strength and prowess. He is obsessed with being the biggest and strongest goblin in the gym, and will challenge anyone who he perceives as a threat to his ego.\n\nHe is extremely insecure about his short stature (even for a goblin)."
 	},
 
@@ -138,7 +138,7 @@
 	"fennick": {
 		"name": "Fennick",
 		"alias": "The Pup",
-		"species": null,
+		"species": "foxfolk",
 		"location": null,
 		"personality": ["Naive"],
 		"desc": ""
@@ -288,10 +288,11 @@
 
 	"makk": {
 		"name": "Makk",
-		"alias": "The Podcaster",
+		"alias": "The Gym Bro",
 		"species": "orc",
 		"location": null,
-		"personality": ["Arrogant", "Misogynistic", "Narcissistic"],
+		"appearance": ["Oily", "Swole", "Veiny"],
+		"personality": ["Aggressive", "Arrogant", "Misogynistic", "Narcissistic", "Posturing"],
 		"desc": "In a soundproofed studio that reeks of cheap energy drinks and entitlement, Makk holds court. An orc whose only discernible talents are a loud voice and a bottomless capacity for resentment, he is the host of \"The Makk Attakk\", a podcast that has inexplicably festered into a popular blight on New Miniport's airwaves.\n\nHis entire philosophy is a shallow, toxic brew of hyper-capitalism and virulent misogyny, where success is measured solely in coin and the perceived subjugation of others. Each episode is a monotonous rant, either glorifying the Dragon Council's cutthroat business tactics or spewing vile, reductive critiques of the women in town he feels are unjustly ignoring him.\n\nDespite—or perhaps because of—his repugnant views, he has cultivated a devoted following of disaffected young males who lap up his oversimplified, hateful explanations for their own frustrations. He offers them a convenient scapegoat for their failures and a hollow sense of superiority, all while lining his own pockets with merch sales and dubious sponsorships.\n\nTo most, he is a pathetic joke, but a dangerous one; his words are a poison that legitimizes bigotry and turns community members against each other, making him a different kind of villain for a modern New Miniport."
 	},
 
@@ -490,7 +491,7 @@
 	"viksen": {
 		"name": "Viksen",
 		"alias": "The Mother",
-		"species": null,
+		"species": "foxfolk",
 		"location": null,
 		"personality": ["Protective"],
 		"desc": ""

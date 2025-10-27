@@ -4,7 +4,10 @@
 		"type": "Alliance",
 		"hq": "lake",
 		"ranks": [ "Elder", "Guardian", "Hunter" ],
-		"members": {},
+		"members": {
+			"moss": "Guardian",
+			"nelbjorn": "Hunter"
+		},
 		"desc": "The Cursed Forest is not actually haunted, but it is guarded. The Blackthorn Pact is a secretive and ancient alliance of the forest's most primordial inhabitants, bound by a single sacred duty: to protect the wood's darkest secrets from the outside world—especially from the desecrating axes of DragonCorp and the ignorant curiosity of townsfolk.\n\nThey do not see themselves as owners of the forest, but as its stewards, their fates intrinsically woven into the gnarled roots and shadowed paths. They are the reason the forest's \"curse\" has teeth; every strange disappearance, every whispered warning, and every feeling of being watched is often a deliberate act of preservation by the Pact.\n\nThe alliance is a rare and fragile truce between species that would normally be at odds, united by a common threat. Its key members include:\n\nThe Myconid Sovereign: The ancient, psychic ruler of the Fungal Grotto. It does not speak, but communicates through a symphony of released spores that convey visions, emotions, and warnings to other Pact members. It views the forest as a single, interconnected living organism and the Pact as its immune system.\n\nCorvus: The grim and silent kenku leader of a murder of intelligent, blood-black crows that serve as the Pact's eyes and ears. They track intruders, steal shiny tools, and deliver cryptic omens to those who venture too deep.\n\nBriar: A vengeful dryad whose tree is anchored near the Black Lake. She is the Pact's most aggressive defender, capable of weaving thorns and roots into deadly traps and using her mesmerizing voice to lead interlopers to their doom in the lake or towards the Abandoned Cabin.\n\nThe Grove Warden: A massive, ancient treant of immense strength and patience, who slumbers near the forest's heart. It is the Pact's final, devastating weapon, a walking catastrophe that can be roused only in the face of existential threat, to crush entire work camps and swallow machinery into the earth.\n\nThe Pact's methods range from subtle misdirection to outright terror. They are not evil, but they are mercilessly pragmatic. They did not start this war, but they will ensure that anyone who seeks to strip the forest of its secrets pays a permanent price."
 	},
 	"cold-bloods": {
@@ -22,7 +25,7 @@
 		"name": "Children of the Game Master",
 		"type": "Cult",
 		"hq": "ruins",
-		"ranks": [ "Cult Leader", "Cultist", "Recruit" ],
+		"ranks": [ "Leader", "Cultist", "Recruit" ],
 		"members": {},
 		"desc": "A small group of radical conspiracy theorists who are obsessed with the idea that they have no free will or agency, and are all being secretly controlled by a being known as The Game Master."
 	},

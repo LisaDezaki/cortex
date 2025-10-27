@@ -7,6 +7,7 @@
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 	
 	let {
+		activeChild,
 		class: className,
 		constrain = false,
 		coordinates = $bindable([null,null]),
@@ -16,8 +17,10 @@
 		location = $bindable(null),
 		minZoom  = $bindable(0.5),
 		maxZoom  = $bindable(3),
+		pannable = true,
 		position = $bindable({ x:0, y:0 }),
 		setCoordinates,
+		zoomable = true,
 		zoom     = $bindable(1),
         ...restProps
     } = $props()
@@ -71,11 +74,12 @@
 {#snippet mapMarker(loc,i)}
 
 	<Flex
-		align="center"
-		class="bg-white cursor-pointer h-6 overflow-hidden p-1 rounded-full w-6 hover:w-auto transition-all"
+		align="center" gap={1}
+		class="backdrop-blur-sm cursor-pointer h-5 overflow-hidden p-1 rounded-full transition-all {activeChild?.slug === loc.slug ? "bg-white text-accent w-auto" : "bg-white/50 text-white w-5"}"
 		style="position: absolute; left: {loc.coordinates.x}%; top: {loc.coordinates.y}%; transform: translate(-0.75rem,-50%);"
+		onhover={() => activeChild = loc}
 	>
-		<Icon class="text-accent" name={loc.icon || "MapPin"} size="sm" weight="fill" />
+		<Icon name={loc.icon || "MapPinSimple"} size="xs" weight="fill" />
 		<Link
 			href={route('locations.show', { location: loc.slug} )}
 			class="font-style-tiny line-clamp-1 pr-1.5 text-accent truncate hover:underline"
@@ -107,8 +111,8 @@
 <Flex gap={0} class="bg-white overflow-hidden rounded w-full {className}">
 	
 	<PanZoom
-		bind:position
-		bind:zoom
+		bind:position {pannable}
+		bind:zoom {zoomable}
 		constrain={constrain}
 		class="bg-neutral-soft aspect-square cursor-crosshair flex-grow"
 		backgroundImage="/img/grid.png"
@@ -120,17 +124,19 @@
 		<!-- Controls -->
 	
 		{#snippet controls()}
-			<Flex class="absolute backdrop-blur-sm hover:backdrop-blur-md bg-white/10 border border-white/50 text-white top-1.5 left-1.5 rounded-md transition-all z-10">
+			<!-- <Flex class="absolute backdrop-blur-sm hover:backdrop-blur-md bg-white/10 border border-white/50 text-white top-1.5 left-1.5 rounded-md transition-all z-10">
 				{#each history as item}
 					<Button style="plain" theme="neutral" label={item.name} onclick={() => undo(item.id)} />
 					<Icon name="CaretRight" size="sm" />
 				{/each}
 				<Button style="plain" theme="neutral" size="xs" label={location?.name} class="p-1 rounded-sm" />
-			</Flex>
-			<Flex gap={0} class="absolute top-1.5 right-1.5 z-10">
-				<Button class="w-9 rounded-l-full" style="glass" icon="MagnifyingGlassMinus" iconSize="sm" onclick={() => {zoom /= 1.2}} disabled={zoom <= minZoom} />
-				<Button class="w-9 rounded-r-full" style="glass" icon="MagnifyingGlassPlus"  iconSize="sm" onclick={() => {zoom *= 1.2}} disabled={zoom >= maxZoom} />
-			</Flex>
+			</Flex> -->
+			{#if zoomable}
+				<Flex gap={0} class="absolute top-1.5 right-1.5 z-10">
+					<Button class="w-9 rounded-l-full" style="glass" icon="MagnifyingGlassMinus" iconSize="sm" onclick={() => {zoom /= 1.2}} disabled={zoom <= minZoom} />
+					<Button class="w-9 rounded-r-full" style="glass" icon="MagnifyingGlassPlus"  iconSize="sm" onclick={() => {zoom *= 1.2}} disabled={zoom >= maxZoom} />
+				</Flex>
+			{/if}
 		{/snippet}
 	
 	

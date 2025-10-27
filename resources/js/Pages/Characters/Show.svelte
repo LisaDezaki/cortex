@@ -47,17 +47,20 @@
 
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="py-12">
-			<PageMenu items={[
-				{ icon: "Info",         	label: "Details",       href: "#details"       },
-				{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        },
-				{ icon: "Handshake",        label: "Relationships", href: "#relationships" },
-				{ icon: "FlagBannerFold",   label: "Factions",      href: "#factions"      },
-				{ icon: "Backpack",         label: "Inventory",     href: "#items"         },
-				{ icon: "MapPinSimpleArea", label: "Location",      href: "#location"      },
-				{ icon: "ImagesSquare",     label: "Gallery",       href: "#gallery"       },
-				{ icon: "FolderSimple",     label: "Collections",  	href: "#collections"   },
-				{ icon: "Trash", 			label: "Delete", 		onclick: () => character.delete(), theme: "danger" }
-			]} />
+			<PageMenu
+				backTo={route('characters')} backToLabel="Character List"
+				items={[
+					{ icon: "Info",         	label: "Details",       href: "#details"       },
+					{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        },
+					{ icon: "Handshake",        label: "Relationships", href: "#relationships" },
+					{ icon: "FlagBannerFold",   label: "Factions",      href: "#factions"      },
+					{ icon: "Backpack",         label: "Inventory",     href: "#items"         },
+					{ icon: "MapPinSimpleArea", label: "Location",      href: "#location"      },
+					{ icon: "ImagesSquare",     label: "Gallery",       href: "#gallery"       },
+					{ icon: "FolderSimple",     label: "Collections",  	href: "#collections"   },
+					{ icon: "Trash", 			label: "Delete", 		onclick: () => character.openModal('delete'), theme: "danger" }
+				]}
+			/>
 			<Container size="4xl">
 
 
@@ -69,12 +72,12 @@
 						<Media
 							class="absolute inset-0 aspect-[3/1] bg-slate-200 border border-neutral-softest hover:border-accent rounded-lg overflow-hidden text-neutral-softest w-full"
 							media={character.getBanner()}
-							onclick={() => character.addBanner()}
+							onclick={() => character.openModal('setBanner')}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 hover:border-accent right-12 -bottom-16 rounded-lg overflow-hidden text-neutral-softest w-48"
 							media={character.getPortrait()}
-							onclick={() => character.addPortrait()}
+							onclick={() => character.openModal('setPortrait')}
 						/>
 						<Heading is="h1" as="h3"
 							class="max-w-3/4 mt-auto z-10 {character.getBanner() ? 'text-white' : ''}"
@@ -162,16 +165,12 @@
 							{/each}
 
 							<Flex class="p-1.5">
-								<Button size="xl" style="soft" theme="accent" icon="Plus" onclick={() => character.addRelationship()} class="h-12 rounded-full w-12" />
+								<Button size="xl" style="soft" theme="accent" icon="Plus" onclick={() => character.openModal('relationship')} class="h-12 rounded-full w-12" />
 							</Flex>
-
-							<!-- <Flex justify="center" class="mt-3 w-96">
-								<Button style="soft" theme="accent" onclick={() => addRelationship(character)}>Add another relationship?</Button>
-							</Flex> -->
 
 						{:else}
 							<p class="font-style-placeholder">{character.name} doesn't have any relationships yet.</p>
-							<p><button class="text-accent hover:underline" onclick={() => character.addRelationship()}>Create one?</button></p>
+							<p><button class="text-accent hover:underline" onclick={() => character.openModal('relationship')}>Create one?</button></p>
 						{/if}
 					</Grid>
 				</Section>
@@ -205,7 +204,7 @@
 						</Grid>
 					{:else}
 						<p class="font-style-placeholder">{character.name} isn't in any factions yet.</p>
-						<p><Link onclick={() => character.setFaction()}>Add one?</Link></p>
+						<p><Link onclick={() => character.addFaction()}>Add one?</Link></p>
 					{/if}
 				</Section>
 
@@ -247,7 +246,7 @@
 						/>
 					{:else}
 						<p class="font-style-placeholder">{character.name} hasn't been assigned a location yet.</p>
-						<p><Link onclick={() => character.setLocation()}>Assign one?</Link></p>
+						<p><Link onclick={() => character.openModal('location')}>Assign one?</Link></p>
 					{/if}
 				</Section>
 

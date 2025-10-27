@@ -87,6 +87,7 @@
 	import Moon from "phosphor-svelte/lib/Moon"
 	import Password from "phosphor-svelte/lib/Password"
 	import Pen from "phosphor-svelte/lib/Pen"
+	import PencilSimple from "phosphor-svelte/lib/PencilSimple"
 	import Pentagram from "phosphor-svelte/lib/Pentagram"
 	import PipeWrench from "phosphor-svelte/lib/PipeWrench"
 	import Plus from "phosphor-svelte/lib/Plus"
@@ -213,6 +214,7 @@
 		'Moon': Moon,
 		'Password': Password,
 		'Pen': Pen,
+		'PencilSimple': PencilSimple,
 		'Pentagram': Pentagram,
 		'PipeWrench': PipeWrench,
 		'Plus': Plus,

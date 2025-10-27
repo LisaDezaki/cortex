@@ -38,222 +38,247 @@
 
 
 
-<Stack cols={2} gap={3} class="sticky top-0 h-screen pt-12 pb-6 {className}">
-	{#if character}
-
-
-		<Media
-			class="bg-neutral-softest h-48 place-self-center rounded shrink-0 text-neutral-softest w-48"
-			icon="UserCircle" iconWeight="fill"
-			media={character.getPortrait()}
-			onclick={() => character.addPortrait()}
-		/>
-
-
-		<Stack align="center" justify="center" gap={0} class="my-3 -space-y-0.5">
-			<Heading is="h3" as="h4">{character.name}</Heading>
-			<p class="text-neutral-soft text-sm">{character.alias}</p>
-		</Stack>
-
-
-		<Collapsible class="font-style-small" collapsed={true}>
-			{character.description}
-		</Collapsible>
-
-
-		<Separator class="my-6" />
-
-		
-
-		<!-- Custom Fields -->
-
-		{#each customFields as field}
-		<Flex>
-			<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">{field?.label}:</Inline>
-			<Stack class="w-full">
-				{#if field?.options}
-					<Input type="select" class="w-full" contentClass="w-44"
-						placeholder="Unset"
-						value={character.customFieldValues?.find(f => f.name === field.name)?.value}
-						options={field.options?.map(o => ({
-							label: o.label,
-							value: o.value
-						}))}
-					/>
-				{/if}
-			</Stack>
-		</Flex>
-		{/each}
-
-
-
-		<!-- Factions -->
-
-		<Flex>
-			<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Factions:</Inline>
-			<Stack gap={1.5} class="w-full">
-				{#each character.factions?.items as fac,i}
+<Stack gap={3} class="bg-slate-50 sticky top-0 h-screen overflow-hidden {className}">
+	<Stack class="grow overflow-y-auto">
+		{#if character}
 	
+	
+			<Media
+				class="relative bg-neutral-softest h-48 place-self-center rounded shrink-0 text-neutral-softest w-48"
+				icon="UserCircle" iconWeight="fill"
+				media={character.getPortrait()}
+				onclick={() => character.openModal('setPortrait')}
+			/>
+	
+	
+			<Stack align="center" justify="center" gap={0} class="my-3 px-3">
+				<Inline align="center" gap={0}>
+					<Heading is="h3" as="h4" heading={character.name} />
+					<div class="relative place-self-start w-0">
+						<Button size="sm" theme="accent" icon="PencilSimple" iconSize="xs" class="absolute ml-1 rounded-full" onclick={() => character.openModal('rename')} />
+					</div>
+				</Inline>
+				<Inline align="center" gap={0}>
+					<p class="text-neutral-soft text-sm">{character.alias}</p>
+					<div class="relative w-0">
+						<Button size="sm" theme="accent" icon="PencilSimple" iconSize="xs" class="ml-1 rounded-full" onclick={() => character.setAlias()} />
+					</div>
+				</Inline>
+			</Stack>
+	
+			{#if character.description}
+				<Collapsible class="font-style-small" collapsed={true}>
+					{character.description}
+				</Collapsible>
+			{/if}
+	
+	
+			<!-- <Separator class="mb-6" /> -->
+			
+	
+	
+			<!-- Custom Fields -->
+	
+			{#each customFields as field}
+			<Flex>
+				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">{field?.label}:</Inline>
+				<Stack class="w-full">
+					{#if field?.options}
+						<Input type="select" class="w-full" contentClass="w-44"
+							placeholder="Unset"
+							value={character.customFieldValues?.find(f => f.name === field.name)?.value}
+							options={field.options?.map(o => ({
+								label: o.label,
+								value: o.value
+							}))}
+							onUpdate={(opt) => character.updateCustomField(field.id, opt.value)}
+						/>
+					{/if}
+				</Stack>
+			</Flex>
+			{/each}
+	
+	
+	
+			<!-- Factions -->
+	
+			<Flex>
+				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Factions:</Inline>
+				<Stack gap={1.5} class="w-full">
+					{#each character.factions?.items as fac,i}
+		
+						<Input type="select" class="w-full" contentClass="w-44"
+							placeholder="Unset"
+							value={fac.slug}
+							options={factions.items.map(f => ({
+								id:    f.id,
+								image: f.image?.url,
+								label: f.name,
+								value: f.slug
+							}))}
+							onUpdate={(opt) => character.syncFactions(opt,i)}
+						/>
+		
+					{/each}
 					<Input type="select" class="w-full" contentClass="w-44"
 						placeholder="Unset"
-						value={fac.slug}
+						value=""
 						options={factions.items.map(f => ({
+							id:    f.id,
 							image: f.image?.url,
 							label: f.name,
 							value: f.slug
 						}))}
-						onUpdate={(opt) => character.updateFaction(i,opt)}
+						onUpdate={(opt) => character.addFaction(opt)}
 					/>
+				</Stack>
+			</Flex>
 	
-				{/each}
-				<Input type="select" class="w-full" contentClass="w-44"
-					placeholder="Unset"
-					value=""
-					options={factions.items.map(f => ({
-						image: f.image?.url,
-						label: f.name,
-						value: f.slug
-					}))}
-				/>
-			</Stack>
-		</Flex>
-
-
-
-		<!-- Location -->
-
-		<Flex>
-			<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Location:</Inline>
-			<Stack gap={1.5} class="w-full">
-				<Input type="select" class="w-full" contentClass="w-44"
-					placeholder="Unset"
-					value={character.location?.slug}
-					options={locations.items.map(l => ({
-						image: l.image?.url,
-						label: l.name,
-						value: l.slug
-					}))}
-				/>
-			</Stack>
-		</Flex>
-
-
-		<!-- Relationships -->
-
-		<Flex>
-			<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Relationships:</Inline>
-			{#if character.relationships?.items.length > 0}
-				<Stack gap={1} class="w-full">
-					{#each character.relationships?.items as rel, i}
+	
+	
+			<!-- Location -->
+	
+			<Flex>
+				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Location:</Inline>
+				<Stack gap={1.5} class="w-full">
+					<Input type="select" class="w-full" contentClass="w-44"
+						placeholder="Unset"
+						value={character.location?.slug}
+						options={locations.items.map(l => ({
+							id:    l.id,
+							image: l.image?.url,
+							label: l.name,
+							value: l.slug
+						}))}
+						onUpdate={(opt) => character.setLocation(opt.id)}
+					/>
+				</Stack>
+			</Flex>
+	
+	
+	
+			<!-- Relationships -->
+	
+			<Flex>
+				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Relationships:</Inline>
+					<Stack gap={1} class="w-full">
+						{#each character.relationships?.items as rel, i}
+							<Input type="select" class="w-full" contentClass="w-44"
+								placeholder="Unset"
+								value={character.relationships?.items[i].slug}
+								options={characters.items?.map(c => ({
+									id:    c.id,
+									image: c.image?.url,
+									label: c.name,
+									value: c.slug
+								}))}
+							/>
+						{/each}
 						<Input type="select" class="w-full" contentClass="w-44"
 							placeholder="Unset"
-							value={character.relationships?.items[i].slug}
+							value=""
 							options={characters.items?.map(c => ({
+								id:    c.id,
 								image: c.image?.url,
 								label: c.name,
 								value: c.slug
 							}))}
+							onUpdate={(opt) => character.openModal('relationship', { related: characters.find(opt.id) })}
 						/>
-					{/each}
-				</Stack>
-			{:else if character.relationships?.items.length === 0}
-				<Input type="select" class="w-full" contentClass="w-44"
-					placeholder="Unset"
-					value=""
-					options={characters.items?.map(c => ({
-						image: c.image?.url,
-						label: c.name,
-						value: c.slug
-					}))}
-				/>
-			{/if}
-		</Flex>
-
-
-
-		<!-- Appearance -->
-
-		<Flex>
-			<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Appearance:</Inline>
-			<Flex wrap gap={0.5} class="py-1">
-				{#if character.appearance}
-					{#each character.appearance.split(',') as trait}
-						<Tag plain class="bg-neutral-softest font-style-small h-6 py-0.5">{trait}</Tag>
-					{/each}
-				{/if}
-				<Button style="plain" theme="accent" size="sm" class="bg-accent-softest h-6 w-6"
-					onclick={() => character.setAppearance()}
-					icon="Plus" iconSize="xs"
-				/>
+					</Stack>
 			</Flex>
-		</Flex>
-
-
-
-		<!-- Personality -->
-
-		<Flex>
-			<Inline class="font-medium min-w-24 mr-2 text-sm">Personality:</Inline>
-			<Flex wrap gap={0.5} class="py-1">
-				{#if character.personality}
-					{#each character.personality.split(',') as trait}
-						<Tag plain class="bg-neutral-softest font-style-small h-6 py-0.5">{trait}</Tag>
-					{/each}
-				{/if}
-				<Button style="plain" theme="accent" size="sm" class="bg-accent-softest h-6 w-6"
-					onclick={() => character.setAppearance()}
-					icon="Plus" iconSize="xs"
-				/>
+	
+	
+	
+			<!-- Appearance -->
+	
+			<Flex>
+				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Appearance:</Inline>
+				<Flex wrap gap={0.5} class="py-1">
+					{#if character.appearance}
+						{#each character.appearance.split(',') as trait}
+							<Tag plain class="bg-neutral-softest font-style-small h-6 py-0.5">{trait}</Tag>
+						{/each}
+					{/if}
+					<Button style="plain" theme="accent" size="sm" class="bg-accent-softest h-6 w-6"
+						onclick={() => character.updateAppearance()}
+						icon="Plus" iconSize="xs"
+					/>
+				</Flex>
 			</Flex>
-		</Flex>
-
-
-
-		<!-- Button -->
-
-		<Button size="xl" style="hard" theme="accent" class="line-clamp-1 mt-auto rounded-full"
+	
+	
+	
+			<!-- Personality -->
+	
+			<Flex>
+				<Inline class="font-medium min-w-24 mr-2 text-sm">Personality:</Inline>
+				<Flex wrap gap={0.5} class="py-1">
+					{#if character.personality}
+						{#each character.personality.split(',') as trait}
+							<Tag plain class="bg-neutral-softest font-style-small h-6 py-0.5">{trait}</Tag>
+						{/each}
+					{/if}
+					<Button style="plain" theme="accent" size="sm" class="bg-accent-softest h-6 w-6"
+						onclick={() => character.updatePersonality()}
+						icon="Plus" iconSize="xs"
+					/>
+				</Flex>
+			</Flex>
+	
+	
+	
+			<!-- Button -->
+	
+			
+	
+		{:else}
+			<Thumbnail class="h-48 place-self-center rounded shrink-0 w-48" />
+			<Stack gap={1.5} class="my-4 w-full" align="center">
+				<Skeleton class="h-6 w-1/2" />
+				<Skeleton class="h-3 w-1/3" />
+			</Stack>
+			<Stack gap={1.5} class="my-2">
+				<Skeleton class="h-3 mr-5" />
+				<Skeleton class="h-3 mr-1" />
+				<Skeleton class="h-3 mr-24" />
+				<Skeleton class="h-3 mt-4 w-16" color="bg-accent-softest" />
+			</Stack>
+			<Separator class="mt-6 mb-6" />
+			<Flex align="center" class="w-full">
+				<Skeleton class="h-3 w-16" />
+				<Skeleton class="h-7 ml-auto w-44" />
+			</Flex>
+			<Flex align="center" class="w-full">
+				<Skeleton class="h-3 w-16" />
+				<Skeleton class="h-7 ml-auto w-44" />
+			</Flex>
+			<Flex align="center" class="w-full">
+				<Skeleton class="h-3 w-16" />
+				<Skeleton class="h-7 ml-auto w-44" />
+			</Flex>
+			<Flex align="center" class="w-full">
+				<Skeleton class="h-3 w-24" />
+				<Skeleton class="h-7 ml-auto w-44" />
+			</Flex>
+			<Flex align="center" class="w-full">
+				<Skeleton class="h-3 w-20" />
+				<Skeleton class="h-7 ml-6 w-7" color="bg-accent-softest" />
+			</Flex>
+			<Flex align="center" class="w-full">
+				<Skeleton class="h-3 w-16" />
+				<Skeleton class="h-7 ml-10 w-7" color="bg-accent-softest" />
+			</Flex>
+			<Skeleton class="h-[50px] mt-auto" color="bg-accent-softest" border="rounded-full" />
+		{/if}
+	</Stack>
+	<Stack class="shrink-0 px-6 py-3">
+		<Button
+			size="xl" style="hard" theme="accent"
+			class="line-clamp-1 mt-auto rounded-full"
 			icon="Eye" iconWeight="fill"
-			label="View {character.name}"
-			href={character.routes.show}
+			label="View {character?.name}"
+			href={character?.routes.show}
 		/>
-
-	{:else}
-		<Thumbnail class="h-48 place-self-center rounded shrink-0 w-48" />
-		<Stack gap={1.5} class="my-4 w-full" align="center">
-			<Skeleton class="h-6 w-1/2" />
-			<Skeleton class="h-3 w-1/3" />
-		</Stack>
-		<Stack gap={1.5} class="my-2">
-			<Skeleton class="h-3 mr-5" />
-			<Skeleton class="h-3 mr-1" />
-			<Skeleton class="h-3 mr-24" />
-			<Skeleton class="h-3 mt-4 w-16" color="bg-accent-softest" />
-		</Stack>
-		<Separator class="mt-6 mb-6" />
-		<Flex align="center" class="w-full">
-			<Skeleton class="h-3 w-16" />
-			<Skeleton class="h-7 ml-auto w-44" />
-		</Flex>
-		<Flex align="center" class="w-full">
-			<Skeleton class="h-3 w-16" />
-			<Skeleton class="h-7 ml-auto w-44" />
-		</Flex>
-		<Flex align="center" class="w-full">
-			<Skeleton class="h-3 w-16" />
-			<Skeleton class="h-7 ml-auto w-44" />
-		</Flex>
-		<Flex align="center" class="w-full">
-			<Skeleton class="h-3 w-24" />
-			<Skeleton class="h-7 ml-auto w-44" />
-		</Flex>
-		<Flex align="center" class="w-full">
-			<Skeleton class="h-3 w-20" />
-			<Skeleton class="h-7 ml-6 w-7" color="bg-accent-softest" />
-		</Flex>
-		<Flex align="center" class="w-full">
-			<Skeleton class="h-3 w-16" />
-			<Skeleton class="h-7 ml-10 w-7" color="bg-accent-softest" />
-		</Flex>
-		<Skeleton class="h-[50px] mt-auto" color="bg-accent-softest" border="rounded-full" />
-	{/if}
+	</Stack>
 </Stack>

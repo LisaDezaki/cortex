@@ -29,6 +29,7 @@ export default class LocationObject {
 			media: this.getBanner(),
 			method: 'patch',
 			reloadPageProps: ['location.media', 'locations.media'],
+			title: 'Upload banner for ' + this.name,
 			type: 'banner',
 		})
 	}
