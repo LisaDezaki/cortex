@@ -4,7 +4,7 @@
 	let {
 		border = 'rounded',
 		class: className,
-		color = 'bg-neutral-softest',
+		color = 'bg-slate-100',
 		...restProps
 	} = $props()
 </script>

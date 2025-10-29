@@ -67,7 +67,7 @@
 				<Inline gap={3}>
 					{#each actions as action}
 						{#if !action.hasOwnProperty('if') || action.if === true}
-							<Button class="pr-3 rounded-full" size="md" type="button" style={action.style || "hard"} {...action} />
+							<Button class="pr-3 rounded-full" size="lg" type="button" style={action.style || "hard"} {...action} />
 						{/if}
 					{/each}
 				</Inline>

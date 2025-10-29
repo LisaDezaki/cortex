@@ -69,12 +69,12 @@
 						<Media
 							class="absolute inset-0 rounded-lg overflow-hidden"
 							media={location.getBanner()}
-							onclick={() => location.addBanner()}
+							onclick={() => location.openModal('setBanner')}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
 							media={location.getMap()}
-							onclick={() => location.addMap()}
+							onclick={() => location.openModal('setMap')}
 						/>
 						{#if location.parent}
 							<Inline class="relative">

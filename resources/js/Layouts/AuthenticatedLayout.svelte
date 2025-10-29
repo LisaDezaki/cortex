@@ -90,6 +90,7 @@
     let {
 		article,
 		header,
+		sidebar
 	} = $props()
 
 </script>
@@ -110,6 +111,7 @@
 					{/if}
 					{@render article?.()}
 				</Article>
+				{@render sidebar?.()}
 			</Main>
 		</Flex>
 	</Stack>

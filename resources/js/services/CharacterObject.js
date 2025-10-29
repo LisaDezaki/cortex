@@ -65,43 +65,6 @@ export default class CharacterObject {
 		}
 
 	}
-	
-
-	// delete() {
-	// 	modalActions.open('deleteCharacter', { character: this })
-	// }
-
-	// rename() {
-	// 	modalActions.open('renameCharacter', { character: this })
-	// }
-
-	// addBanner() {
-	// 	modalActions.open('uploadMedia', {
-	// 		aspect: 'aspect-[3/1]',
-	// 		endpoint: this.routes.update,
-	// 		media: this.getBanner(),
-	// 		method: 'patch',
-	// 		reloadPageProps: ['character.media', 'characters.media'],
-	// 		title: 'Upload banner for ' + this.name,
-	// 		type: 'banner',
-	// 	})
-	// }
-
-	// addGallery() {
-	// 	modalActions.open('uploadMedia', { type: 'gallery' })
-	// }
-
-	// addPortrait() {
-	// 	modalActions.open('uploadMedia', {
-	// 		aspect: 'aspect-square',
-	// 		endpoint: this.routes.update,
-	// 		media: this.getPortrait(),
-	// 		method: 'patch',
-	// 		reloadPageProps: ['character.media', 'characters.media'],
-	// 		title: 'Upload portrait for ' + this.name,
-	// 		type: 'portrait',
-	// 	})
-	// }
 
 
 

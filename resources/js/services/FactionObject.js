@@ -19,33 +19,51 @@ export default class FactionObject {
 	}
 
 
-	/**
-	 * Modal methods
-	 */
-	
-	addBanner() {
-		modalActions.open('uploadMedia', {
-			aspect: 'aspect-[3/1]',
-			endpoint: this.routes.update,
-			media: this.getBanner(),
-			method: 'patch',
-			reloadPageProps: ['faction.media', 'factions.media'],
-			title: "Add banner to " + this.name,
-			type: 'banner',
-		})
-	}
 
-	addEmblem() {
-		modalActions.open('uploadMedia', {
-			aspect: 'aspect-square',
-			endpoint: this.routes.update,
-			media: this.getEmblem(),
-			method: 'patch',
-			reloadPageProps: ['faction.media', 'factions.media'],
-			title: "Add emblem to " + this.name,
-			type: 'emblem',
-		})
+	/**
+	 * Modal Actions
+	 * The following methods will open a modal with the designated props.
+	 * Those modals will handle their own forms based on these props,
+	 * but the initial form data can be overwritten from here.
+	 */
+
+	openModal(modalName, props) {
+
+		switch(modalName) {
+			case 'delete':
+				modalActions.open('deleteFaction', { faction: this }); break;
+			case 'rename':
+				modalActions.open('renameFaction', { faction: this }); break;
+			case 'setHeadquarters':
+				modalActions.open('setHeadquarters', ...props); break;
+			case 'member':
+				modalActions.open('setFactionMember', { character: this, ...props }); break;
+			case 'setBanner':
+				modalActions.open('uploadMedia', {
+					aspect: 'aspect-[3/1]',
+					endpoint: this.routes.update,
+					media: this.getBanner(),
+					method: 'patch',
+					reloadPageProps: ['faction.media', 'factions.media'],
+					title: 'Upload banner for ' + this.name,
+					type: 'banner',
+				}); break;
+			case 'setEmblem':
+				modalActions.open('uploadMedia', {
+					aspect: 'aspect-square',
+					endpoint: this.routes.update,
+					media: this.getEmblem(),
+					method: 'patch',
+					reloadPageProps: ['faction.media', 'factions.media'],
+					title: 'Upload emblem for ' + this.name,
+					type: 'emblem',
+				}); break;
+			default:
+				console.log('FactionObject.openModal', modalName, props)
+		}
+
 	}
+	
 
 	addMember(opt) {
 		console.log('FactionObject.addMember()', opt)
@@ -68,13 +86,13 @@ export default class FactionObject {
 		modalActions.open('renameFaction', { faction: this })
 	}
 
-	setHeadquarters() {
-		modalActions.open('selectLocation', {
-			endpoint: route('factions.update', { faction: this.slug }),
-			method: 'patch',
-			title: `Set ${this.name} Headquarters`
-		})
-	}
+	// setHeadquarters() {
+	// 	modalActions.open('selectLocation', {
+	// 		endpoint: route('factions.update', { faction: this.slug }),
+	// 		method: 'patch',
+	// 		title: `Set ${this.name} Headquarters`
+	// 	})
+	// }
 
 
 

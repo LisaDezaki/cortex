@@ -18,48 +18,94 @@ export default class LocationObject {
 	}
 
 
+
+	/**
+	 * Modal Actions
+	 * The following methods will open a modal with the designated props.
+	 * Those modals will handle their own forms based on these props,
+	 * but the initial form data can be overwritten from here.
+	 */
+
+	openModal(modalName, props) {
+
+		switch(modalName) {
+			case 'delete':
+				modalActions.open('deleteLocation', { location: this }); break;
+			case 'rename':
+				modalActions.open('renameLocation', { location: this }); break;
+			// case 'location':
+			// 	modalActions.open('setLocation', ...props); break;
+			// case 'relationship':
+			// 	modalActions.open('setCharacterRelationship', { character: this, ...props }); break;
+			case 'setBanner':
+				modalActions.open('uploadMedia', {
+					aspect: 'aspect-[3/1]',
+					endpoint: this.routes.update,
+					media: this.getBanner(),
+					method: 'patch',
+					reloadPageProps: ['location.media', 'locations.media'],
+					title: 'Upload banner for ' + this.name,
+					type: 'banner',
+				}); break;
+			case 'setMap':
+				modalActions.open('uploadMedia', {
+					aspect: 'aspect-square',
+					endpoint: this.routes.update,
+					media: this.getMap(),
+					method: 'patch',
+					reloadPageProps: ['location.media', 'locations.media'],
+					title: 'Upload map for ' + this.name,
+					type: 'map',
+				}); break;
+			default:
+				console.log('LocationObject.openModal', modalName, props)
+		}
+
+	}
+
+
 	/**
 	 * Modal methods
 	 */
 
-	addBanner() {
-		modalActions.open('uploadMedia', {
-			aspect: 'aspect-[7/3]',
-			endpoint: this.routes.update,
-			media: this.getBanner(),
-			method: 'patch',
-			reloadPageProps: ['location.media', 'locations.media'],
-			title: 'Upload banner for ' + this.name,
-			type: 'banner',
-		})
-	}
+	// addBanner() {
+	// 	modalActions.open('uploadMedia', {
+	// 		aspect: 'aspect-[7/3]',
+	// 		endpoint: this.routes.update,
+	// 		media: this.getBanner(),
+	// 		method: 'patch',
+	// 		reloadPageProps: ['location.media', 'locations.media'],
+	// 		title: 'Upload banner for ' + this.name,
+	// 		type: 'banner',
+	// 	})
+	// }
 
-	addMap() {
-		modalActions.open('uploadMedia', {
-			aspect: 'aspect-square',
-			endpoint: this.routes.update,
-			media: this.getMap(),
-			method: 'patch',
-			reloadPageProps: ['location.media', 'locations.media'],
-			type: 'map',
-		})
-	}
+	// addMap() {
+	// 	modalActions.open('uploadMedia', {
+	// 		aspect: 'aspect-square',
+	// 		endpoint: this.routes.update,
+	// 		media: this.getMap(),
+	// 		method: 'patch',
+	// 		reloadPageProps: ['location.media', 'locations.media'],
+	// 		type: 'map',
+	// 	})
+	// }
 
-	addPointOfInterest(entity) {
-		console.log('LocationObject.addPointOfInterest()', entity)
-	}
+	// addPointOfInterest(entity) {
+	// 	console.log('LocationObject.addPointOfInterest()', entity)
+	// }
 
-	addTag(tag) {
-		console.log('LocationObject.addTag()', tag)
-	}
+	// addTag(tag) {
+	// 	console.log('LocationObject.addTag()', tag)
+	// }
 
-	delete() {
-		modalActions.open('deleteLocation', { location: this })
-	}
+	// delete() {
+	// 	modalActions.open('deleteLocation', { location: this })
+	// }
 
-	rename() {
-		modalActions.open('renameLocation', { location: this })
-	}
+	// rename() {
+	// 	modalActions.open('renameLocation', { location: this })
+	// }
 
 
 

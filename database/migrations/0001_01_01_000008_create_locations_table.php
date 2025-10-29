@@ -28,6 +28,15 @@ return new class extends Migration
 			$table->softDeletes();
 			$table->index('parent_location_id');
 		});
+
+		Schema::create('map_items', function (Blueprint $table) {
+			$table->uuid('id')->primary()->index();
+			$table->foreignUuid('location_id')->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
+			$table->uuidMorphs('mappable'); // Polymorphic relationship
+			$table->string('coordinates_x')->nullable();
+			$table->string('coordinates_y')->nullable();
+			$table->index('location_id');
+		});
     }
 
     /**
@@ -35,7 +44,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('locations');
+		Schema::dropIfExists('locations');
+        Schema::dropIfExists('map_items');
     }
 
 };

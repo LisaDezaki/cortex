@@ -7,6 +7,7 @@
 
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import Box					from '@/Components/Core/Box.svelte'
+	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
@@ -74,142 +75,139 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section gap={6}>
-			<Grid cols={4} gap={0}>
-				<Box class="col-span-3">
+		<Section gap={0} class="h-full overflow-hidden">
 
 
-					<PageHeader class="sticky top-0 mx-6 px-6"
-						title="Character List"
-						tabs={[
-							{ label: "List",		active: true },
-							{ label: "Collections",	href: route('characters.collections') },
-							{ label: "Settings",	href: route('characters.settings') },
-						]}
-						actions={[
-							{ icon: "Plus", label: "New", theme: "accent", onclick: () => characters.create() },
-						]}
-					/>
+			<PageHeader class="px-12 py-3"
+				title="Character List"
+				tabs={[
+					{ label: "List",		active: true },
+					{ label: "Collections",	href: route('characters.collections') },
+					{ label: "Settings",	href: route('characters.settings') },
+				]}
+				actions={[
+					{ icon: "Plus", label: "New", theme: "accent", onclick: () => characters.create() },
+				]}
+			/>
 
 
-					<CharacterControlBar class="mx-6 px-6"
-						data={characters} project={activeProject}
-						bind:query bind:filter bind:sort
-						bind:results bind:size bind:layout
-						min={4} max={8}
-					/>
+			<CharacterControlBar class="px-12 pb-1.5"
+				data={characters} project={activeProject}
+				bind:query bind:filter bind:sort
+				bind:results bind:size bind:layout
+				min={4} max={8}
+			/>
+			
 
-
-					{#if activeProject && results.length > 0}
-
-
-						<!-- Grid -->
-
-						{#if layout === 'grid'}
-							<CharacterGrid
-								characters={results}
-								class="-mx-1 px-20 py-3"
-								cols={gridCols}
-								gap={1.5}
-							>
-								{#snippet gridItem(character)}
-									<CharacterCard
-										active={selected?.id === character.id}
-										character={character}
-										subtitle={getSubtitle(character)}
-										onclick={() => selectCharacter(character)}
-										iconOptions={[
-											{ icon: "Star", 		onclick: () => character.star(), iconWeight: character.starred ? 'fill' : 'regular' },
-											{ icon: "Eye", 			href: character.routes?.show },
-											{ icon: "Textbox", 		onclick: () => character.openModal('rename') },
-											{ icon: "UploadSimple", onclick: () => character.openModal('setPortrait') },
-											{ icon: "Trash", 		onclick: () => character.openModal('delete'), theme: "danger" },
-										]}
-										options={[{
-											icon: 'FlagBannerFold', iconWeight: 'regular',
-											label: "Factions...",
-											create: () => factions.create(),
-											options: [ ...factions.items.map(f => ({
-												...f,
-												active: f.id === character.factions?.items?.[0]?.id,
-												label: f.name,
-												onclick: () => character.addFaction(f)
-											})) ]
-										},{
-											icon: 'MapPin', iconWeight: 'regular',
-											label: "Location...",
-											create: () => locations.create(),
-											options: [ ...locations.items.map(l => ({
-												...l,
-												active: l.id === character.location?.id,
-												label: l.name,
-												onclick: () => character.setLocation(l.id)
-											}))]
-										},{
-											separator: true
-										},{
-											icon: 'FolderSimple', iconWeight: 'regular',
-											label: "Add to Collection",
-											create: () => collections.create('characters', [character]),
-											options: [ ...collections.items.map(collection => ({
-												label: collection.name,
-												onclick: 	collection.items.map(i => i.collectionable_id).includes(character.id) ? () => collection.removeItem(character) : () => collection.addItem(character),
-												disabled:   collection.items.map(i => i.collectionable_id).includes(character.id),
-												iconWeight: collection.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light'
-											}))]
-										},{
-											icon: 'TagSimple', iconWeight: 'regular',
-											label: "Add Tags",
-											onclick: () => character.addTags()
-										},{
-											separator: true
-										},{
-											icon: 'Trash', iconWeight: 'regular',
-											label: "Delete Character",
-											onclick: () => character.openModal('delete'),
-											theme: "danger"
-										}]}
-									/>
-								{/snippet}
-							</CharacterGrid>
-						
+			<Flex align="start" class="px-12 pt-3 pb-6 overflow-y-auto">
+				{#if activeProject && results.length > 0}
+	
+	
+					<!-- Grid -->
+	
+					{#if layout === 'grid'}
+						<CharacterGrid
+							characters={results}
+							cols={gridCols}
+							gap={1.5}
+						>
+							{#snippet gridItem(character)}
+								<CharacterCard
+									active={selected?.id === character.id}
+									character={character}
+									subtitle={getSubtitle(character)}
+									onclick={() => selectCharacter(character)}
+									iconOptions={[
+										{ icon: "Star", 		onclick: () => character.star(), iconWeight: character.starred ? 'fill' : 'regular' },
+										{ icon: "Eye", 			href: character.routes?.show },
+										{ icon: "Textbox", 		onclick: () => character.openModal('rename') },
+										{ icon: "UploadSimple", onclick: () => character.openModal('setPortrait') },
+										{ icon: "Trash", 		onclick: () => character.openModal('delete'), theme: "danger" },
+									]}
+									options={[{
+										icon: 'FlagBannerFold', iconWeight: 'regular',
+										label: "Factions...",
+										create: () => factions.create(),
+										options: [ ...factions.items.map(f => ({
+											...f,
+											active: f.id === character.factions?.items?.[0]?.id,
+											label: f.name,
+											onclick: () => character.addFaction(f)
+										})) ]
+									},{
+										icon: 'MapPin', iconWeight: 'regular',
+										label: "Location...",
+										create: () => locations.create(),
+										options: [ ...locations.items.map(l => ({
+											...l,
+											active: l.id === character.location?.id,
+											label: l.name,
+											onclick: () => character.setLocation(l.id)
+										}))]
+									},{
+										separator: true
+									},{
+										icon: 'FolderSimple', iconWeight: 'regular',
+										label: "Add to Collection",
+										create: () => collections.create('characters', [character]),
+										options: [ ...collections.items.map(collection => ({
+											label: collection.name,
+											onclick: 	collection.items.map(i => i.collectionable_id).includes(character.id) ? () => collection.removeItem(character) : () => collection.addItem(character),
+											disabled:   collection.items.map(i => i.collectionable_id).includes(character.id),
+											iconWeight: collection.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light'
+										}))]
+									},{
+										icon: 'TagSimple', iconWeight: 'regular',
+										label: "Add Tags",
+										onclick: () => character.addTags()
+									},{
+										separator: true
+									},{
+										icon: 'Trash', iconWeight: 'regular',
+										label: "Delete Character",
+										onclick: () => character.openModal('delete'),
+										theme: "danger"
+									}]}
+								/>
+							{/snippet}
+						</CharacterGrid>
 					
-						<!-- Table -->
-		
-						{:else if layout === 'table'}
-							<CharacterTable class="px-20 py-6"
-								characters={results}
-							/>
-
-
-						<!-- Graph -->
-
-						{:else if layout === 'graph'}
-							<Empty
-								containerClass="px-20 py-6"
-								icon="Graph"
-								message="This layout type isn't working yet. Try again later."
-							/>
-
-
-						{/if}
-					{:else}
-		
-						<Empty
-							icon="User"
-							message="There are no characters for this project yet."
-							buttonLabel="Create one?"
-							buttonClick={() => characters.create()}
-						/>
-		
-					{/if}
-				</Box>
 				
-				<CharacterPanel class="col-span-1"
-					character={selected}
-				/>
-
-			</Grid>
+					<!-- Table -->
+	
+					{:else if layout === 'table'}
+						<CharacterTable
+							characters={results}
+						/>
+	
+	
+					<!-- Graph -->
+	
+					{:else if layout === 'graph'}
+						<Empty
+							containerClass="px-20 py-6"
+							icon="Graph"
+							message="This layout type isn't working yet. Try again later."
+						/>
+	
+	
+					{/if}
+				{:else}
+	
+					<Empty
+						icon="User"
+						message="There are no characters for this project yet."
+						buttonLabel="Create one?"
+						buttonClick={() => characters.create()}
+					/>
+	
+				{/if}
+			</Flex>
 		</Section>
+	{/snippet}
+	{#snippet sidebar()}
+		<CharacterPanel class="max-w-96 min-w-96 shrink-0 w-96"
+			character={selected}
+		/>
 	{/snippet}
 </AuthenticatedLayout>

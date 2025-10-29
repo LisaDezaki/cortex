@@ -69,6 +69,7 @@ class HandleInertiaRequests extends Middleware
 				'characters.inverseRelationships.image',
 				'characters.customFieldValues.customField',
 				'factions.image',
+				'factions.media',
 				'factions.headquarters.image',
 				'factions.ranks',
 				'factions.members.image',

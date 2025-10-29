@@ -51,9 +51,6 @@
 
 
 
-
-<!-- <pre>{JSON.stringify(restProps)}</pre> -->
-
 {#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(type)}
 	<Input id={name} bind:value={value}
 		class="input {hSizes[size]} {className}"

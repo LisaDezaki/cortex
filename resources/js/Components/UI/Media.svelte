@@ -6,7 +6,7 @@
 	let {
 		class: className,
 		imageClass,
-		icon = "Image",
+		icon,
 		iconSize = "xl",
 		iconWeight = "light",
 		media,
@@ -20,7 +20,7 @@
 <Flex align="center" justify="center" class="media overflow-hidden {className}">
 	{#if media}
 		<img class="min-h-full min-w-full object-cover {imageClass}" src={media.url} alt={media.name} />
-	{:else}
+	{:else if icon}
 		<Icon class="opacity-50 text-neutral-softest" name={icon} size={iconSize} weight={iconWeight} />
 	{/if}
 	{#if onclick}

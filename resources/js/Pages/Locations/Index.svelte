@@ -68,118 +68,113 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section gap={6} class="h-full overflow-hidden">
-			<Flex gap={0} class="h-full overflow-hidden">
-				<Stack gap={0} class="overflow-hidden">
+		<Section gap={0} class="h-full overflow-hidden">
 
-					<PageHeader class="px-12 py-3"
-						title="Location List"
-						tabs={[
-							{ label: "List",		active: true },
-							{ label: "Collections",	href: route('locations.collections') },
-							{ label: "Settings",	href: route('locations.settings') },
-						]}
-						actions={[
-							{ icon: "Plus", label: "New", theme: "accent", onclick: () => locations.create(), },
-						]}
-					/>
+			<PageHeader class="px-12 py-3"
+				title="Location List"
+				tabs={[
+					{ label: "List",		active: true },
+					{ label: "Collections",	href: route('locations.collections') },
+					{ label: "Settings",	href: route('locations.settings') },
+				]}
+				actions={[
+					{ icon: "Plus", label: "New", theme: "accent", onclick: () => locations.create(), },
+				]}
+			/>
 
 
-					<LocationControlBar class="px-12 pb-1.5"
-						data={locations} project={activeProject}
-						bind:query bind:filter bind:sort
-						bind:results bind:size bind:layout
-					/>
+			<LocationControlBar class="px-12 pb-1.5"
+				data={locations} project={activeProject}
+				bind:query bind:filter bind:sort
+				bind:results bind:size bind:layout
+			/>
 
-					<Flex align="start" class="px-12 pt-3 pb-6 overflow-y-auto">
-						{#if activeProject && locations.items?.length > 0}
-	
-	
-							<!-- Grid -->
-	
-							{#if layout == 'grid'}
-								<LocationGrid
-									cols={gridCols}
-									locations={results}
-								>
-									{#snippet gridItem(location)}
-										<LocationCard
-											active={selected?.id === location.id}
-											location={location}
-											subtitle={getSubtitle(location)}
-											onclick={() => selectLocation(location)}
-											iconOptions={[
-												{ icon: "Star", 	onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
-												{ icon: "Eye", 		href: location.routes.show },
-												{ icon: "Textbox", 	onclick: () => location.rename() },
-												{ icon: "UploadSimple", onclick: () => location.addBanner() },
-												{ icon: "Trash", 	onclick: () => location.delete(), theme: "danger" },
-											]}
-											options={[{
-												icon: 'FolderSimple', iconWeight: 'regular',
-												label: "Add to Collection",
-												create: () => collections.create('locations', [location]),
-												options: [ ...collections.items.map(collection => ({
-													label: collection.name,
-													onclick: 	collection.items.map(i => i.collectionable_id).includes(location.id) ? () => collection.removeItem(location) : () => collection.addItem(location),
-													disabled:   collection.items.map(i => i.collectionable_id).includes(location.id),
-													iconWeight: collection.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
-												}))]
-											},{
-												icon: 'TagSimple', iconWeight: 'regular',
-												label: "Add Tags",
-												onclick: () => location.applyTags()
-											},{
-												separator: true
-											},{
-												icon: 'Trash', iconWeight: 'regular',
-												label: "Delete Location",
-												onclick: () => location.delete(),
-												theme: "danger"
-											}]}
-										/>
-									{/snippet}
-								</LocationGrid>
-	
-	
-							<!-- Table -->
-							
-							{:else if layout == 'table'}
-								<LocationTable
-									locations={results}
+			<Flex align="start" class="px-12 pt-3 pb-6 overflow-y-auto">
+				{#if activeProject && locations.items?.length > 0}
+
+
+					<!-- Grid -->
+
+					{#if layout == 'grid'}
+						<LocationGrid
+							cols={gridCols}
+							locations={results}
+						>
+							{#snippet gridItem(location)}
+								<LocationCard
+									active={selected?.id === location.id}
+									location={location}
+									subtitle={getSubtitle(location)}
+									onclick={() => selectLocation(location)}
+									iconOptions={[
+										{ icon: "Star", 		onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
+										{ icon: "Eye", 			href: location.routes.show },
+										{ icon: "Textbox", 		onclick: () => location.openModal('rename') },
+										{ icon: "UploadSimple", onclick: () => location.openModal('setBanner') },
+										{ icon: "Trash", 		onclick: () => location.openModal('delete'), theme: "danger" },
+									]}
+									options={[{
+										icon: 'FolderSimple', iconWeight: 'regular',
+										label: "Add to Collection",
+										create: () => collections.create('locations', [location]),
+										options: [ ...collections.items.map(collection => ({
+											label: collection.name,
+											onclick: 	collection.items.map(i => i.collectionable_id).includes(location.id) ? () => collection.removeItem(location) : () => collection.addItem(location),
+											disabled:   collection.items.map(i => i.collectionable_id).includes(location.id),
+											iconWeight: collection.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
+										}))]
+									},{
+										icon: 'TagSimple', iconWeight: 'regular',
+										label: "Add Tags",
+										onclick: () => location.applyTags()
+									},{
+										separator: true
+									},{
+										icon: 'Trash', iconWeight: 'regular',
+										label: "Delete Location",
+										onclick: () => location.delete(),
+										theme: "danger"
+									}]}
 								/>
-	
-							
-							<!-- Map -->
-	
-							{:else if layout == 'map'}
-								<LocationMap
-									constrain={false}
-									class="bg-black/50 max-h-full rounded-lg"
-									location={worldTree}
-								/>
-	
-	
-							{/if}
-						{:else}
-	
-							<Empty
-								icon="MapPin"
-								message="There are no locations for this project yet."
-								buttonLabel="Create one?"
-								buttonClick={() => location.create()}
-							/>
-						{/if}
+							{/snippet}
+						</LocationGrid>
 
-					</Flex>
-				</Stack>
-				
-				<LocationPanel class="max-w-96 min-w-96 shrink-0 w-96"
-					location={selected}
-				/>
 
+					<!-- Table -->
+					
+					{:else if layout == 'table'}
+						<LocationTable
+							locations={results}
+						/>
+
+					
+					<!-- Map -->
+
+					{:else if layout == 'map'}
+						<LocationMap
+							constrain={false}
+							class="bg-black/50 max-h-full rounded-lg"
+							location={worldTree}
+						/>
+
+
+					{/if}
+				{:else}
+
+					<Empty
+						icon="MapPin"
+						message="There are no locations for this project yet."
+						buttonLabel="Create one?"
+						buttonClick={() => location.create()}
+					/>
+				{/if}
 
 			</Flex>
 		</Section>
+	{/snippet}
+	{#snippet sidebar()}
+		<LocationPanel class="max-w-96 min-w-96 shrink-0 w-96"
+			location={selected}
+		/>
 	{/snippet}
 </AuthenticatedLayout>

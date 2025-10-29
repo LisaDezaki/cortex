@@ -23,6 +23,7 @@
 		overrideLabel,
 		placeholder = "Select one...",
 		onUpdate = () => {},
+		rootClass,
 		value = $bindable(),
         ...restProps
     } = $props()
@@ -93,12 +94,12 @@
 	onValueChange={updateSelection}
 {...restProps}>
 
-	<Stack gap={0.5} class="w-full">
+	<Stack gap={0.5} class={rootClass}>
 
 		<!-- Label -->
 
 		{#if label}
-			<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft w-full">
+			<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft">
 				{#if labelIcon}
 					<Icon name={labelIcon} size="xs" />
 				{/if}

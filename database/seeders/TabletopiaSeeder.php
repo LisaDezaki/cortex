@@ -8,6 +8,7 @@ use App\Models\CustomFieldOption;
 use App\Models\CustomFieldValue;
 use App\Models\Faction;
 use App\Models\Location;
+use App\Models\MapItem;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -93,6 +94,13 @@ class TabletopiaSeeder extends Seeder
 				'coordinates_y' => $location['coordinates']['y'] ?? null,
 				'is_world_map'  => $location['is_world_map'] ?? false,
 			]);
+			if ($location['mapdata']) {
+				$mapdata[$locations[$slug]] = MapItem::create([
+					'location_id' => $location['mapdata']['location'] ?? null,
+					'x'			  => $location['mapdata']['x'] ?? null,
+					'y'			  => $location['mapdata']['y'] ?? null
+				]);
+			}
 		}
 
 		foreach ($json_locations as $slug => $location) {

@@ -25,7 +25,7 @@
 	{#if src}
 		<img {src} alt={restProps.alt || ''} class="thumbnail-image {imageClass}" />
 	{:else}
-		<div class="thumbnail-fallback">
+		<div class="thumbnail-fallback bg-slate-100">
 			{#if icon}
 				<Icon class="thumbnail-icon text-neutral-softest opacity-50" name={icon} size={iconSize} weight="fill" />
 			{/if}
@@ -51,7 +51,7 @@
 		@apply flex items-center justify-center w-full h-full;
 		@apply font-black text-5xl tracking-tighter;
 		@apply rounded-md;
-		background-color: var(--bg-neutral-softest);
+		/* background-color: var(--bg-neutral-softest); */
 		color: var(--text-neutral-softer);
 	}
 

@@ -1,4 +1,5 @@
 <script>
+	import Stack from '@/Components/Core/Stack.svelte'
 	import Button from '@/Components/UI/Button.svelte'
 
 	let {
@@ -12,18 +13,19 @@
 
 
 {#if children}
-	<div class={className}>
+	<Stack class={className}>
 		
 		<p class="whitespace-pre-wrap {collapsed ? collapsedClass : ''}">{@render children?.()}</p>
 		
-		<button class="self-center -mx-2 mt-2 px-2 py-1 text-accent text-sm hover:underline"
+		<Button size="xs" style="plain" theme="accent"
+			class="bg-accent-softest self-center mx-auto mt-2 px-2 py-1 rounded-full text-accent text-xs hover:underline"
 			onclick={() => collapsed = !collapsed}>
 			{#if collapsed}
 				Read more&hellip;
 			{:else}
 				Read less&hellip;
 			{/if}
-		</button>
+		</Button>
 
-	</div>
+	</Stack>
 {/if}
