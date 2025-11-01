@@ -38,20 +38,15 @@
 	//	Reactive State
 
 	let parameters = $state({
-		query: urlParams.get('q') || '',
-		filter: urlParams.get('filter') || '',
-		sort: urlParams.get('sort') || 'name',
-		direction: urlParams.get('dir') || 'desc',
-		size: urlParams.get('size') || 6,
-		layout: urlParams.get('layout') || 'grid'
+		query: 		urlParams.get('q') 		|| '',
+		filter: 	urlParams.get('filter') || '',
+		sort: 		urlParams.get('sort') 	|| 'name',
+		direction: 	urlParams.get('dir') 	|| 'desc',
+		size: 		urlParams.get('size') 	|| 3,
+		layout: 	urlParams.get('layout') || 'grid',
+		selected: 	urlParams.get('selected') || ''
 	})
 
-	// let query	 = $state('')
-	// let filter	 = $state('')
-	// let sort	 = $state('name')
-	// let size	 = $state(3)
-	// let layout   = $state('grid')
-	let selected = $state(null)
 	let gridCols = $derived(8-parameters.size)
 	let results  = $derived(locations.items)
 
@@ -63,12 +58,13 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			query: urlParams.get('q') || '',
-			filter: urlParams.get('filter') || '',
-			size: urlParams.get('size') || 6,
-			sort: urlParams.get('sort') || 'name',
-			direction: urlParams.get('dir') || 'desc',
-			layout: urlParams.get('layout') || 'grid'
+			query: 		urlParams.get('q') 		|| '',
+			filter: 	urlParams.get('filter') || '',
+			size: 		urlParams.get('size') 	|| 3,
+			sort: 		urlParams.get('sort') 	|| 'name',
+			direction: 	urlParams.get('dir') 	|| 'desc',
+			layout: 	urlParams.get('layout') || 'grid',
+			selected: 	urlParams.get('selected') || ''
 		};
 	});
 
@@ -87,6 +83,7 @@
 		url.searchParams.set('sort',		parameters.sort);
 		url.searchParams.set('direction',	parameters.direction);
 		url.searchParams.set('layout',		parameters.layout);
+		url.searchParams.set('selected',	parameters.selected);
 		window.history.replaceState({}, '', url);
 	});
 
@@ -113,7 +110,9 @@
 	 * @return {void}
 	 */
 	function selectLocation(location) {
-		selected = selected?.id === location?.id ? null : location
+		const url = new URL(window.location);
+		url.searchParams.set('selected', location?.slug)
+		parameters.selected = parameters.selected === location?.slug ? null : location.slug
 	}
 
 </script>
@@ -132,7 +131,7 @@
 				title="Location List"
 				tabs={[
 					{ label: "List",		active: true },
-					{ label: "Collections",	href: route('locations.collections') },
+					// { label: "Collections",	href: route('locations.collections') },
 					{ label: "Settings",	href: route('locations.settings') },
 				]}
 				actions={[
@@ -164,7 +163,7 @@
 						>
 							{#snippet gridItem(location)}
 								<LocationCard
-									active={selected?.id === location.id}
+									active={parameters.selected === location.slug}
 									location={location}
 									subtitle={getSubtitle(location)}
 									onclick={() => selectLocation(location)}
@@ -235,6 +234,6 @@
 		</Section>
 	{/snippet}
 	{#snippet sidebar()}
-		<LocationPanel location={selected} />
+		<LocationPanel location={locations.items.find(l => l.slug === parameters.selected)} />
 	{/snippet}
 </AuthenticatedLayout>

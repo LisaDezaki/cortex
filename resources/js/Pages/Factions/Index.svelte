@@ -36,15 +36,15 @@
 	//	Reactive State
 
 	let parameters = $state({
-		query: urlParams.get('q') || '',
-		filter: urlParams.get('filter') || '',
-		sort: urlParams.get('sort') || 'name',
-		direction: urlParams.get('dir') || 'desc',
-		size: urlParams.get('size') || 6,
-		layout: urlParams.get('layout') || 'grid'
+		query: 		urlParams.get('q')		|| '',
+		filter: 	urlParams.get('filter') || '',
+		sort: 		urlParams.get('sort')	|| 'name',
+		direction: 	urlParams.get('dir') 	|| 'desc',
+		size: 		urlParams.get('size') 	|| 6,
+		layout: 	urlParams.get('layout') || 'grid',
+		selected: 	urlParams.get('selected') || ''
 	})
 
-	let selected = $state(null)
 	let gridCols = $derived(12-parameters.size)
 	let results = $derived(factions.items)
 
@@ -56,12 +56,13 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			query: urlParams.get('q') || '',
-			filter: urlParams.get('filter') || '',
-			size: urlParams.get('size') || 6,
-			sort: urlParams.get('sort') || 'name',
-			direction: urlParams.get('dir') || 'desc',
-			layout: urlParams.get('layout') || 'grid'
+			query: 		urlParams.get('q') 		|| '',
+			filter: 	urlParams.get('filter') || '',
+			size: 		urlParams.get('size') 	|| 6,
+			sort: 		urlParams.get('sort') 	|| 'name',
+			direction: 	urlParams.get('dir') 	|| 'desc',
+			layout: 	urlParams.get('layout') || 'grid',
+			selected: 	urlParams.get('selected') || ''
 		};
 	});
 
@@ -80,6 +81,7 @@
 		url.searchParams.set('sort',		parameters.sort);
 		url.searchParams.set('direction',	parameters.direction);
 		url.searchParams.set('layout',		parameters.layout);
+		url.searchParams.set('selected',	parameters.selected);
 		window.history.replaceState({}, '', url);
 	});
 
@@ -109,7 +111,9 @@
 	 * @return {void}
 	 */
 	function selectFaction(faction) {
-		selected = selected === faction ? null : faction
+		const url = new URL(window.location);
+		url.searchParams.set('selected', faction?.slug)
+		parameters.selected = parameters.selected === faction.slug ? null : faction.slug
 	}
 	
 </script>
@@ -125,11 +129,11 @@
 		<Section gap={0} class="h-full overflow-hidden">
 
 
-			<PageHeader class="px-12 py-3"
+			<PageHeader class="px-16 py-3"
 				title="Faction List"
 				tabs={[
 					{ label: "List",		active: true },
-					{ label: "Collections",	href: route('factions.collections') },
+					// { label: "Collections",	href: route('factions.collections') },
 					{ label: "Settings",	href: route('factions.settings') },
 				]}
 				actions={[
@@ -138,7 +142,7 @@
 			/>
 
 
-			<FactionControlBar class="px-12 pb-1.5"
+			<FactionControlBar class="px-16 pb-1.5"
 				data={factions} project={activeProject}
 				bind:query={parameters.query}
 				bind:filter={parameters.filter}
@@ -150,7 +154,7 @@
 			/>
 
 
-			<Flex align="start" class="px-12 pt-3 pb-6 overflow-y-auto">
+			<Flex align="start" class="px-16 pt-3 pb-6 overflow-y-auto">
 				{#if activeProject && results.length > 0}
 
 
@@ -164,7 +168,7 @@
 						>
 							{#snippet gridItem(faction)}
 								<FactionCard
-									active={selected?.id === faction.id}
+									active={parameters.selected === faction.slug}
 									faction={faction}
 									subtitle={getSubtitle(faction)}
 									onclick={() => selectFaction(faction)}
@@ -250,6 +254,6 @@
 	{/snippet}
 
 	{#snippet sidebar()}
-		<FactionPanel faction={selected} />
+		<FactionPanel faction={factions.items.find(f => f.slug === parameters.selected)} />
 	{/snippet}
 </AuthenticatedLayout>

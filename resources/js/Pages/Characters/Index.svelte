@@ -36,15 +36,15 @@
 	//	Reactive State
 
 	let parameters = $state({
-		query: urlParams.get('q') || '',
-		filter: urlParams.get('filter') || '',
-		sort: urlParams.get('sort') || 'name',
-		direction: urlParams.get('dir') || 'desc',
-		size: urlParams.get('size') || 6,
-		layout: urlParams.get('layout') || 'grid'
+		query: 		urlParams.get('q')		|| '',
+		filter: 	urlParams.get('filter') || '',
+		sort: 		urlParams.get('sort')	|| 'name',
+		direction: 	urlParams.get('dir')	|| 'desc',
+		size: 		urlParams.get('size')	|| 6,
+		layout: 	urlParams.get('layout')	|| 'grid',
+		selected: 	urlParams.get('selected') || ''
 	})
 
-	let selected = $state(null)
 	let gridCols = $derived(12-parameters.size)
 	let results  = $derived(characters.items)
 
@@ -56,12 +56,13 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			query: urlParams.get('q') || '',
-			filter: urlParams.get('filter') || '',
-			size: urlParams.get('size') || 6,
-			sort: urlParams.get('sort') || 'name',
-			direction: urlParams.get('dir') || 'desc',
-			layout: urlParams.get('layout') || 'grid'
+			query: 		urlParams.get('q') 		|| '',
+			filter: 	urlParams.get('filter') || '',
+			sort: 		urlParams.get('sort') 	|| 'name',
+			direction: 	urlParams.get('dir') 	|| 'desc',
+			size: 		urlParams.get('size') 	|| 6,
+			layout: 	urlParams.get('layout') || 'grid',
+			selected: 	urlParams.get('selected') || ''
 		};
 	});
 
@@ -79,6 +80,7 @@
 		url.searchParams.set('sort',		parameters.sort);
 		url.searchParams.set('direction',	parameters.direction);
 		url.searchParams.set('layout',		parameters.layout);
+		url.searchParams.set('selected',	parameters.selected);
 		window.history.replaceState({}, '', url);
 	});
 
@@ -111,7 +113,9 @@
 	 * @return {void}
 	 */
 	function selectCharacter(character) {
-		selected = selected?.id === character?.id ? null : character
+		const url = new URL(window.location);
+		url.searchParams.set('selected', character?.slug)
+		parameters.selected = parameters.selected === character.slug ? null : character.slug
 	}
 
 </script>
@@ -131,7 +135,7 @@
 				title="Character List"
 				tabs={[
 					{ label: "List",		active: true },
-					{ label: "Collections",	href: route('characters.collections') },
+					// { label: "Collections",	href: route('characters.collections') },
 					{ label: "Settings",	href: route('characters.settings') },
 				]}
 				actions={[
@@ -169,7 +173,7 @@
 						>
 							{#snippet gridItem(character)}
 								<CharacterCard
-									active={selected?.id === character.id}
+									active={parameters.selected === character.slug}
 									character={character}
 									subtitle={getSubtitle(character)}
 									onclick={() => selectCharacter(character)}
@@ -262,6 +266,6 @@
 		</Section>
 	{/snippet}
 	{#snippet sidebar()}
-		<CharacterPanel character={selected} />
+		<CharacterPanel character={characters.items.find(c => c.slug === parameters.selected)} />
 	{/snippet}
 </AuthenticatedLayout>
