@@ -100,10 +100,12 @@ class Character extends Model
 		return $this->belongsToMany(Faction::class, 'faction_members')->withPivot('rank_id');
 	}
 
-	public function location()
+	public function mapData()
 	{
-		return $this->belongsTo(Location::class, 'location_id');
+		return $this->morphOne(MapItem::class, 'mappable');
 	}
+
+
 
 	/**
 	 * Media relationships.

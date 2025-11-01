@@ -7,13 +7,20 @@ import { modalActions } from '@/stores/modalStore';
 export default class LocationObject {
 	constructor(locationData) {
 		Object.assign(this, locationData, {
-			descendants: locationData.descendants ? new LocationList(locationData.descendants) : null,
-			routes: {
+			// descendants: locationData.descendants ? new LocationList(locationData.descendants) : null,
+
+			mapItems: locationData?.mapItems ? {
+				all:		locationData.mapItems,
+				characters: locationData.mapItems.filter(i => i.type === 'character'),
+				factions:   locationData.mapItems.filter(i => i.type === 'faction'),
+				locations:	locationData.mapItems.filter(i => i.type === 'location')
+			} : [],
+			routes: locationData ? {
 				show:    route('locations.show',    { location: locationData.slug }),
 				store:	 route('locations.store'),
 				update:  route('locations.update',  { location: locationData.slug }),
 				destroy: route('locations.destroy', { location: locationData.slug })
-			}
+			} : null
 		})
 	}
 

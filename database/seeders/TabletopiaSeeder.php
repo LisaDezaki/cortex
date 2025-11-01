@@ -29,8 +29,8 @@ class TabletopiaSeeder extends Seeder
 			'faction'	=> Faction::class,
 			'location'	=> Location::class
 		];
-
 		$fields = [];
+		$mapdata = [];
 		$json = File::get(database_path('data/tabletopia/custom_fields.json'));
 		$json_fields = json_decode($json, true);
 		foreach($json_fields as $slug => $field) {
@@ -84,39 +84,42 @@ class TabletopiaSeeder extends Seeder
 		foreach ($json_locations as $slug => $location) {
 			$locations[$slug] = Location::create([
 				'project_id'  => $projects['tabletopia']->id,
-				'parent_location_id' => null,
+				// 'parent_location_id' => null,
 				'name'        => $location['name'],
 				'type'        => $location['type'] ?? null,
 				'icon'		  => $location['icon'] ?? null,
 				'slug'        => $slug,
 				'description' => $location['desc'] ?? null,
-				'coordinates_x' => $location['coordinates']['x'] ?? null,
-				'coordinates_y' => $location['coordinates']['y'] ?? null,
+				// 'coordinates_x' => $location['coordinates']['x'] ?? null,
+				// 'coordinates_y' => $location['coordinates']['y'] ?? null,
 				'is_world_map'  => $location['is_world_map'] ?? false,
 			]);
-			if ($location['mapdata']) {
-				$mapdata[$locations[$slug]] = MapItem::create([
-					'location_id' => $location['mapdata']['location'] ?? null,
-					'x'			  => $location['mapdata']['x'] ?? null,
-					'y'			  => $location['mapdata']['y'] ?? null
-				]);
-			}
 		}
 
 		foreach ($json_locations as $slug => $location) {
 
-			if (isset($location['parent'])) {
-
-				$id = $locations[$slug]->id;
-				$parentSlug = $location['parent'];
-				$parentId = $locations[$parentSlug]->id;
-	
-				DB::table('locations')->where([
-					'id' => $id,
-				])->update([
-					'parent_location_id' => $parentId
+			if (isset($location['mapdata'])) {
+				$mapdata[$slug] = MapItem::create([
+					'location_id' => $locations[$location['mapdata']['location']]['id'] ?? null,
+					'mappable_type'	=> Location::class,
+					'mappable_id'	=> $locations[$slug]['id'],
+					'x'			  => $location['mapdata']['x'] ?? null,
+					'y'			  => $location['mapdata']['y'] ?? null
 				]);
 			}
+
+			// if (isset($location['parent'])) {
+
+			// 	$id = $locations[$slug]->id;
+			// 	$parentSlug = $location['parent'];
+			// 	$parentId = $locations[$parentSlug]->id;
+	
+			// 	DB::table('locations')->where([
+			// 		'id' => $id,
+			// 	])->update([
+			// 		'parent_location_id' => $parentId
+			// 	]);
+			// }
 		}
 
 
@@ -142,13 +145,22 @@ class TabletopiaSeeder extends Seeder
 				'description' => $character['desc'],
 				'appearance'  => isset($character['appearance'])	? join(",", $character['appearance'])		: null,
 				'personality' => isset($character['personality'])	? join(",", $character['personality'])		: null,
-				'location_id' => isset($character['location'])		? $locations[$character['location']]->id	: null,
+				// 'location_id' => isset($character['location'])		? $locations[$character['location']]->id	: null,
 			]);
 			if ($character['species']) {
 				CustomFieldValue::create([
 					'fieldable_id' => $characters[$slug]->id,
 					'custom_field_id' => $fields['species']->id,
 					'value'           => $character['species'],
+				]);
+			}
+			if (isset($character['mapdata'])) {
+				$mapdata[$slug] = MapItem::create([
+					'location_id'	=> $locations[$character['mapdata']['location']]['id'] ?? null,
+					'mappable_type'	=> Character::class,
+					'mappable_id'	=> $characters[$slug]['id'],
+					'x'				=> $character['mapdata']['x'] ?? null,
+					'y'				=> $character['mapdata']['y'] ?? null
 				]);
 			}
 		}

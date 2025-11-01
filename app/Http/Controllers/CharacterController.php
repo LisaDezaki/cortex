@@ -136,10 +136,11 @@ class CharacterController extends Controller
 
 	public function show(Character $character): Response
 	{
+
 		$character->load([
-			'location',
 			'image',
 			'media',
+			'mapData.location.media',
 			'factions.image',
 			'relationships.image',
 			'inverseRelationships.image',

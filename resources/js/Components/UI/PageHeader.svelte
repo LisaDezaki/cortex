@@ -27,7 +27,7 @@
 
 
 
-<Stack as="header" align="start" justify="center" gap={0} class="{color} h-16 shrink-0 {className}">
+<Stack as="header" align="start" justify="center" gap={0} class="{color} h-16 shrink-0 w-full z-10 {className}">
 
 	<Flex align="center" justify="center" class="w-full">
 

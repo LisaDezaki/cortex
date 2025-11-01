@@ -10,6 +10,7 @@
 	import CharacterIcon from '@/Components/Features/Character/CharacterIcon.svelte'
 
     let {
+		class: className,
 		factions,
 		selected = [],
 		selectionMode
@@ -58,13 +59,13 @@
 	<Table.Cell>
 		<Link href={route('factions.show', {faction: faction.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
-				class="h-9 w-9"
+				class="h-7 w-7"
 				src={faction.image?.url}
 				icon="FlagBannerFold"
 			/>
 			<div class="-space-y-0.5">
-				<div class="font-style-regular">{faction.name}</div>
-				<div class="font-style-tiny line-clamp-1 opacity-65">{faction.members.length} member{faction.members.length != 1 ? 's' : ''}</div>
+				<div class="font-style-small">{faction.name}</div>
+				<div class="font-style-tiny line-clamp-1 opacity-65">{faction.type}</div>
 			</div>
 		</Link>
 	</Table.Cell>
@@ -82,7 +83,7 @@
 		{:else}
 			<Button style="soft" theme="accent"
 				icon="Plus" iconSize={20} iconWeight="light"
-				class="h-9 w-9 rounded-full"
+				class="h-7 w-7 rounded-full"
 			/>
 		{/if}
 	</Table.Cell>
@@ -90,22 +91,26 @@
 		{#if faction.headquarters}
 			<Link href={route('locations.show', {location: faction.headquarters.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 				<Thumbnail
-					class="h-9 w-9"
+					class="h-7 w-7"
 					src={faction.headquarters.image?.url}
 					icon="MapPinArea"
 				/>
 				<div class="-space-y-0.5">
-					<div class="font-style-regular line-clamp-1">{faction.headquarters.name}</div>
+					<div class="font-style-small line-clamp-1">{faction.headquarters.name}</div>
 					<div class="font-style-tiny line-clamp-1 opacity-65">{faction?.headquarters?.region?.name}</div>
 				</div>
 			</Link>
 		{:else}
 			<Button style="soft" theme="accent"
 				icon="Plus" iconSize={20} iconWeight="light"
-				class="h-9 w-9"
+				class="h-7 w-7"
 			/>
 		{/if}
 	</Table.Cell>
 {/snippet}
 
-<Table data={factions} {headRow} {bodyRow} />
+<Table
+	class="w-full {className}"
+	data={factions}
+	{headRow} {bodyRow}
+/>

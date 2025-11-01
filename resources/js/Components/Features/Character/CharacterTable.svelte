@@ -5,6 +5,7 @@
 
 	import Flex          from '@/Components/Core/Flex.svelte'
 	import Form          from '@/Components/Core/Form.svelte'
+	import Inline        from '@/Components/Core/Inline.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
 	import Icon          from '@/Components/UI/Icon.svelte'
 	import Table         from '@/Components/UI/Table'
@@ -49,19 +50,19 @@
 	{#if selectionMode}
 		<Table.Head shrink><Form.Checkbox onclick={selectAll} /></Table.Head>
 	{/if}
-	<Table.Head sortable class="font-style-button">Name</Table.Head>
+	<Table.Head sortable class="font-light text-xs uppercase">Name</Table.Head>
 	{#if columns.includes('faction')}
-		<Table.Head sortable class="font-style-button">Faction</Table.Head>
+		<Table.Head sortable class="font-light text-xs uppercase">Faction</Table.Head>
 	{/if}
 	{#if columns.includes('relationships')}
-		<Table.Head sortable class="font-style-button">Relationships</Table.Head>
+		<Table.Head sortable class="font-light text-xs uppercase">Relationships</Table.Head>
 	{/if}
 	{#if columns.includes('location')}
-		<Table.Head sortable class="font-style-button">Location</Table.Head>
+		<Table.Head sortable class="font-light text-xs uppercase">Location</Table.Head>
 	{/if}
 	{#each customFields as field}
 		{#if columns.includes(field.name)}
-			<Table.Head sortable class="font-style-button">{field.label}</Table.Head>
+			<Table.Head sortable class="font-light text-xs uppercase">{field.label}</Table.Head>
 		{/if}
 	{/each}
 {/snippet}
@@ -80,28 +81,32 @@
 				icon="User"
 			/>
 			<div class="-space-y-0.5">
-				<div class="font-style-regular line-clamp-1">{character.name}</div>
+				<div class="font-style-small line-clamp-1">{character.name}</div>
 				<div class="font-style-tiny line-clamp-1 opacity-65">{character.subtitle}</div>
 			</div>
 		</Link>
 	</Table.Cell>
 	{#if columns.includes('faction')}
 		<Table.Cell>
-			{#if character?.factions.length > 0}
-				<Link href={route('factions.show', {faction: character?.factions[0]?.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
-					<Thumbnail
-						class="h-7 w-7"
-						src={character?.factions[0]?.image?.url}
-						icon="FlagBannerFold"
-					/>
-					<div class="-space-y-0.5">
-						<div class="font-style-regular line-clamp-1">{character?.factions[0]?.name}</div>
-						<div class="font-style-tiny line-clamp-1 opacity-65">{character?.factions[0]?.members?.length} member{character?.factions[0]?.members?.length !== 1 ? 's' : ''}</div>
-					</div>
-				</Link>
+			{#if character?.factions?.items.length > 0}
+				<Inline gap={1}>
+					{#each character?.factions?.items as faction}
+						<Link href={route('factions.show', {faction: faction.slug})} class="flex items-center gap-2 hover:text-emerald-500">
+							<Thumbnail
+								class="h-7 w-7"
+								src={faction.image?.url}
+								icon="FlagBannerFold"
+							/>
+							<!-- <div class="-space-y-0.5">
+								<div class="font-style-regular line-clamp-1">{faction.name}</div>
+								<div class="font-style-tiny line-clamp-1 opacity-65">{faction.members?.length} member{faction.members?.length !== 1 ? 's' : ''}</div>
+							</div> -->
+						</Link>
+					{/each}
+				</Inline>
 			{:else}
-				<Button style="soft" theme="accent"
-					icon="Plus" iconSize={20} iconWeight="light"
+				<Button size="sm" style="soft" theme="accent"
+					icon="Plus" iconSize="sm" iconWeight="light"
 					class="h-7 w-7 rounded-lg"
 					onclick={() => character.addFaction()}
 				/>
@@ -110,19 +115,21 @@
 	{/if}
 	{#if columns.includes('relationships')}
 		<Table.Cell>
-			{#if character?.relationships.length > 0}
-				<Flex class="w-full">
-					{#each character?.relationships as relationship, i}
-						<CharacterIcon
-							class="bg-white -mr-4"
-							href={route('characters.show', {character: relationship?.slug})}
-							src={relationship?.image?.url}
-						/>
+			{#if character?.relationships?.items.length > 0}
+				<Flex align="center" class="h-full w-full">
+					{#each character?.relationships?.items as relationship, i}
+						<Link href={route('characters.show', {character: relationship?.slug})} class="flex items-center">
+							<Thumbnail
+								class="bg-white h-7 rounded-full w-7"
+								icon="User" iconSize="sm" iconWeight="fill"
+								src={relationship?.image?.url}
+							/>
+						</Link>
 					{/each}
 				</Flex>
 			{:else}
-				<Button style="soft" theme="accent"
-					icon="Plus" iconSize={20} iconWeight="light"
+				<Button size="sm" style="soft" theme="accent"
+					icon="Plus" iconSize="sm" iconWeight="light"
 					class="h-7 w-7 rounded-full"
 					onclick={() => character.openModal('relationship')}
 				/>
@@ -139,13 +146,13 @@
 						icon="MapPinArea"
 					/>
 					<div class="-space-y-0.5">
-						<div class="font-style-regular line-clamp-1">{character?.location.name}</div>
+						<div class="font-style-small line-clamp-1">{character?.location.name}</div>
 						<div class="font-style-tiny line-clamp-1 opacity-65">{character?.location.region?.name}</div>
 					</div>
 				</Link>
 			{:else}
-				<Button style="soft" theme="accent"
-					icon="Plus" iconSize={20} iconWeight="light"
+				<Button size="sm" style="soft" theme="accent"
+					icon="Plus" iconSize="sm" iconWeight="light"
 					class="h-7 w-7 rounded-lg"
 					onclick={() => character.openModal('location')}
 				/>
@@ -162,4 +169,8 @@
 	{/each}
 {/snippet}
 
-<Table class={className} data={characters} {headRow} {bodyRow} />
+<Table
+	class="w-full {className}"
+	data={characters}
+	{headRow} {bodyRow}
+/>

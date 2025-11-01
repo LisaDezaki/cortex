@@ -70,7 +70,7 @@
 
 <Flex align="center" justify="center" gap={0} class="bg-background overflow-hidden rounded w-full {className}">
 
-	{#if location.getMap() === null}
+	{#if location.getMap?.() === null}
 		<Button style="soft" theme="accent" label="Upload map" onclick={() => location?.openModal('setMap')} />
 	{:else}
 	
@@ -78,7 +78,7 @@
 			bind:position {pannable}
 			bind:zoom {zoomable}
 			constrain={constrain}
-			class="bg-neutral-soft aspect-square cursor-crosshair flex-grow"
+			class="bg-neutral-soft aspect-square flex-grow"
 			backgroundImage="/img/grid.png"
 			{minZoom} {maxZoom}
 			{debug}
@@ -100,16 +100,16 @@
 			<!-- Map Image -->
 			
 			<Box class="absolute map" onclick={mapClick}>
-				<img class="h-full w-full" src={location.getMap()?.url} alt={location?.name} />
+				<img class="h-full w-full" src={location.getMap?.()?.url} alt={location?.name} />
 		
-				{#if location?.children}
-					{#each location?.children as location,i}
-						{@render mapMarker(location,i)}
+				{#if location?.mapItems?.all}
+					{#each location?.mapItems?.all as item,i}
+						{@render mapMarker(item,i)}
 					{/each}
-				{:else if location?.descendants?.items}
+				<!-- {:else if location?.descendants?.items}
 					{#each location?.descendants?.items as location,i}
 						{@render mapMarker(location,i)}
-					{/each}
+					{/each} -->
 				{/if}
 
 				{#if setCoordinates && coordinates[0] && coordinates[1]}
@@ -157,17 +157,17 @@
 </Flex>
 
 
-{#snippet mapMarker(loc,i)}
+{#snippet mapMarker(item,i)}
 	<Flex
 		align="center" gap={1}
-		class="backdrop-blur-sm cursor-pointer h-5 overflow-hidden p-1 rounded-full transition-all {activeChild?.slug === loc.slug ? "bg-white text-accent w-auto" : "bg-white/50 text-white w-5"}"
-		style="position: absolute; left: {loc.coordinates.x}%; top: {loc.coordinates.y}%; transform: translate(-0.75rem,-50%);"
-		onhover={() => activeChild = loc}
+		class="backdrop-blur-sm cursor-pointer h-5 overflow-hidden p-1 rounded-full transition-all {activeChild?.slug === item.mappable?.slug ? "bg-white text-accent w-auto" : "bg-white/50 text-white w-5"}"
+		style="position: absolute; left: {item.x}%; top: {item.y}%; transform: translate(-0.75rem,-50%);"
+		onhover={() => activeChild = item}
 	>
-		<Icon name={loc.icon || "MapPinSimple"} size="xs" weight="fill" />
+		<Icon name={item.mappable?.icon || "MapPinSimple"} size="xs" weight="fill" />
 		<Link
-			href={route('locations.show', { location: loc.slug} )}
+			href={route('locations.show', { location: item.mappable?.slug} )}
 			class="font-style-tiny line-clamp-1 pr-1.5 text-accent truncate hover:underline"
-		>{loc.name}</Link>
+		>{item.mappable?.name}</Link>
 	</Flex>
 {/snippet}

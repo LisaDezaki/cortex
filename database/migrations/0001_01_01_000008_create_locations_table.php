@@ -15,27 +15,28 @@ return new class extends Migration
 			$table->uuid('id')->primary()->index();
 			$table->foreignUuid('project_id')->constrained('projects')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->boolean('starred')->default(false);
-			$table->foreignUuid('parent_location_id')->nullable()->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
+			// $table->foreignUuid('parent_location_id')->nullable()->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('name');
 			$table->string('icon')->nullable();
 			$table->string('type')->nullable();
 			$table->string('slug')->nullable();
 			$table->boolean('is_world_map')->default(false);
 			$table->text('description')->nullable();
-			$table->string('coordinates_x')->nullable();
-			$table->string('coordinates_y')->nullable();
+			// $table->string('coordinates_x')->nullable();
+			// $table->string('coordinates_y')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
-			$table->index('parent_location_id');
+			// $table->index('parent_location_id');
 		});
 
 		Schema::create('map_items', function (Blueprint $table) {
 			$table->uuid('id')->primary()->index();
 			$table->foreignUuid('location_id')->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->uuidMorphs('mappable'); // Polymorphic relationship
-			$table->string('coordinates_x')->nullable();
-			$table->string('coordinates_y')->nullable();
-			$table->index('location_id');
+			$table->string('x')->nullable();
+			$table->string('y')->nullable();
+			$table->index(['location_id', 'mappable_id']);
+			$table->unique('mappable_id');
 		});
     }
 

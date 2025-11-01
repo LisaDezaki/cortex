@@ -54,7 +54,7 @@
 	{/snippet} -->
 
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="py-12">
+		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
 			<PageMenu
 				backTo={route('characters')} backToLabel="Character List"
 				items={[

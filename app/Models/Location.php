@@ -59,14 +59,14 @@ class Location extends Model
 		return $this->belongsTo(Project::class, 'project_id');
 	}
 
-	public function hasParent(): bool
-	{
-		return !is_null($this->parent_location_id);
-	}
-	public function parent(): BelongsTo
-    {
-        return $this->belongsTo(Location::class, 'parent_location_id');
-    }
+	// public function hasParent(): bool
+	// {
+	// 	return !is_null($this->parent_location_id);
+	// }
+	// public function parent(): BelongsTo
+    // {
+    //     return $this->belongsTo(Location::class, 'parent_location_id');
+    // }
 	public function ancestors()
 	{
 		return $this->parent()->with('ancestors');
@@ -76,10 +76,10 @@ class Location extends Model
 	{
 		return $this->children()->exists();
 	}
-	public function children(): HasMany
-    {
-        return $this->hasMany(Location::class, 'parent_location_id');
-    }
+	// public function children(): HasMany
+    // {
+    //     return $this->hasMany(Location::class, 'parent_location_id');
+    // }
 	public function descendants()
 	{
 		return $this->children()->with('descendants');
@@ -124,6 +124,14 @@ class Location extends Model
 	public function customFields(): MorphMany
 	{
 		return $this->morphMany(CustomField::class, 'fieldable');
+	}
+	public function mapData(): MorphOne
+	{
+		return $this->morphOne(MapItem::class, 'mappable');
+	}
+	public function mapItems()
+	{
+		return $this->hasMany(MapItem::class, 'location_id');
 	}
 
 

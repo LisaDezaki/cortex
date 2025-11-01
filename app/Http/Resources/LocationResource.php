@@ -25,21 +25,25 @@ class LocationResource extends JsonResource
 			'starred'	  => $this->starred,
 			'isWorldMap'  => $this->is_world_map,
 
+			'mapData'	  => new MapItemResource($this->whenLoaded('mapData')),
+			'mapItems'	  => MapItemResource::Collection($this->whenLoaded('mapItems')),
+
 			'image'		  => new MediaResource($this->whenLoaded('image')),
 			'media'		  => MediaResource::collection($this->whenLoaded('media')),
-			'banner'      => new MediaResource($this->whenLoaded('banner')),
-			'gallery'     => MediaResource::collection($this->whenLoaded('gallery')),
-			'map'         => new MediaResource($this->whenLoaded('map')),
-			
-			'parent'      => new LocationResource($this->whenLoaded('parent')),
-			'children'    => LocationResource::collection($this->whenLoaded('children')),
-			'ancestors' => LocationResource::collection($this->whenLoaded('ancestors')),
-			'descendants' => LocationResource::collection($this->whenLoaded('descendants')),
 
-			'coordinates' => [
-				'x' => $this->coordinates_x,
-				'y' => $this->coordinates_y
-			],
+			// 'banner'      => new MediaResource($this->whenLoaded('banner')),
+			// 'gallery'     => MediaResource::collection($this->whenLoaded('gallery')),
+			// 'map'         => new MediaResource($this->whenLoaded('map')),
+			
+			// 'parent'      => new LocationResource($this->whenLoaded('parent')),
+			// 'children'    => LocationResource::collection($this->whenLoaded('children')),
+			// 'ancestors' => LocationResource::collection($this->whenLoaded('ancestors')),
+			// 'descendants' => LocationResource::collection($this->whenLoaded('descendants')),
+
+			// 'coordinates' => [
+			// 	'x' => $this->coordinates_x,
+			// 	'y' => $this->coordinates_y
+			// ],
 
 			'characters'  => CharacterResource::collection($this->whenLoaded('characters')),
 

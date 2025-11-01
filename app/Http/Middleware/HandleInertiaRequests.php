@@ -59,8 +59,7 @@ class HandleInertiaRequests extends Middleware
 			? $user->projects()->with([
 				'image',
 				'media',
-				'characters.location.image',
-				'characters.location.parent',
+				'characters.mapData.location',
 				'characters.factions.image',
 				'characters.factions.members',
 				'characters.image',
@@ -75,9 +74,9 @@ class HandleInertiaRequests extends Middleware
 				'factions.members.image',
 				'locations.image',
 				'locations.media',
-				'locations.characters.image',
-				'locations.parent',
-				'locations.children',
+				'locations.mapData.location',
+				'locations.mapItems.mappable.media',
+				// 'locations.characters.image',
 				'customFields.options'
 			])->find($user->active_project)
 			: null;

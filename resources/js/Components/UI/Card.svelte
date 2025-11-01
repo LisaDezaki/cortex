@@ -40,7 +40,7 @@
 </script>
 
 <Stack gap={0.5}
-	class="card hover:text-accent {clickable ? "cursor-pointer" : null} {active ? 'active' : ''} {className}"
+	class="card {clickable ? "cursor-pointer" : null} {active ? 'active' : ''} {className}"
 	onclick={onclick}
 {...restProps}>
 
@@ -129,6 +129,9 @@
 			background-color: transparent;
 			border: 1px solid transparent;
 			color: var(--text-neutral);
+			&:hover {
+				background-color: var(--bg-neutral-softest);
+			}
 		}
 		&.active {
 			background-color: var(--bg-accent-softest);

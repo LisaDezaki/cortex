@@ -18,7 +18,7 @@
 {#if characters && characters.length > 0}
 
 	<Grid
-		class={className}
+		class="w-full {className}"
 		cols={cols}
 		gap={2}
 	{...restProps}>

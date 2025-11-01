@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
@@ -29,23 +30,66 @@
 	const factions    	  = $state(activeProject?.factions)
 	const locations    	  = $state(activeProject?.locations)
 
+	let urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
 
-	//	State & Derived values
 
-	let query	 = $state('')
-	let filter	 = $state('')
-	let sort	 = $state('name')
-	let size	 = $state(6)
-	let layout	 = $state('grid')
+	//	Reactive State
+
+	let parameters = $state({
+		query: urlParams.get('q') || '',
+		filter: urlParams.get('filter') || '',
+		sort: urlParams.get('sort') || 'name',
+		direction: urlParams.get('dir') || 'desc',
+		size: urlParams.get('size') || 6,
+		layout: urlParams.get('layout') || 'grid'
+	})
+
 	let selected = $state(null)
-	let gridCols = $derived(12-size)
+	let gridCols = $derived(12-parameters.size)
 	let results  = $derived(characters.items)
 
 
-	//	Page functions
+	/**
+	 * Sync with URL
+	 * Update filters from URL on Mount
+	 */
+	onMount(() => {
+		urlParams = new URLSearchParams(window.location.search);
+		parameters = {
+			query: urlParams.get('q') || '',
+			filter: urlParams.get('filter') || '',
+			size: urlParams.get('size') || 6,
+			sort: urlParams.get('sort') || 'name',
+			direction: urlParams.get('dir') || 'desc',
+			layout: urlParams.get('layout') || 'grid'
+		};
+	});
 
+	/**
+	 * Update URL
+	 * Update URL params (without page reload) when filters change
+	 */
+	$effect(() => {
+		const url = new URL(window.location);
+		if (parameters.query)	{ url.searchParams.set('q', parameters.query); }
+		else 					{ url.searchParams.delete('q'); }
+		if (parameters.filter)	{ url.searchParams.set('filter', parameters.filter); }
+		else					{ url.searchParams.delete('filter'); }
+		url.searchParams.set('size',		parameters.size);
+		url.searchParams.set('sort',		parameters.sort);
+		url.searchParams.set('direction',	parameters.direction);
+		url.searchParams.set('layout',		parameters.layout);
+		window.history.replaceState({}, '', url);
+	});
+
+
+	/**
+	 * Get Subtitle
+	 * @param character A CharacterObject class instance
+	 * @return {string} Subtitle to display on Character Cards
+	 */
 	function getSubtitle(character) {
-		switch (sort) {
+		switch (parameters.sort) {
 			case 'popularity':
 				return character.relationships?.items?.length + ' Relationships'
 			case 'location':
@@ -57,10 +101,15 @@
 			case 'updated_at':
 				return new Date(character.meta?.updatedAt).toLocaleString() || '--'
 			default:
-				return character.customFieldValues.find(v => v.name === sort)?.value || character.alias
+				return character.customFieldValues.find(v => v.name === parameters.sort)?.displayValue || character.alias
 		}
 	}
 
+	/**
+	 * Select Character
+	 * @param character A CharacterObject class instance
+	 * @return {void}
+	 */
 	function selectCharacter(character) {
 		selected = selected?.id === character?.id ? null : character
 	}
@@ -93,10 +142,17 @@
 
 			<CharacterControlBar class="px-12 pb-1.5"
 				data={characters} project={activeProject}
-				bind:query bind:filter bind:sort
-				bind:results bind:size bind:layout
+				bind:query={parameters.query}
+				bind:filter={parameters.filter}
+				bind:sort={parameters.sort}
+				bind:size={parameters.size}
+				bind:layout={parameters.layout}
+				bind:results={results}
 				min={4} max={8}
 			/>
+
+					
+			<!-- <pre>{JSON.stringify(parameters,null,3)}</pre> -->
 			
 
 			<Flex align="start" class="px-12 pt-3 pb-6 overflow-y-auto">
@@ -105,7 +161,7 @@
 	
 					<!-- Grid -->
 	
-					{#if layout === 'grid'}
+					{#if parameters.layout === 'grid'}
 						<CharacterGrid
 							characters={results}
 							cols={gridCols}
@@ -175,7 +231,7 @@
 				
 					<!-- Table -->
 	
-					{:else if layout === 'table'}
+					{:else if parameters.layout === 'table'}
 						<CharacterTable
 							characters={results}
 						/>
@@ -183,7 +239,7 @@
 	
 					<!-- Graph -->
 	
-					{:else if layout === 'graph'}
+					{:else if parameters.layout === 'graph'}
 						<Empty
 							containerClass="px-20 py-6"
 							icon="Graph"
@@ -206,8 +262,6 @@
 		</Section>
 	{/snippet}
 	{#snippet sidebar()}
-		<CharacterPanel class="max-w-96 min-w-96 shrink-0 w-96"
-			character={selected}
-		/>
+		<CharacterPanel character={selected} />
 	{/snippet}
 </AuthenticatedLayout>

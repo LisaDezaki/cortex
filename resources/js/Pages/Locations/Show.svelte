@@ -45,25 +45,24 @@
 
 <AuthenticatedLayout>
 
-	{#snippet header()}
-		<PageHeader title={location.name} />
-	{/snippet}
-
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="py-12">
-			<PageMenu items={[
-				{ icon: "Info",   		label: "Details",       href: "#details"	},
-				// { icon: "Textbox",      label: "Custom Fields", href: "#custom"		},
-				{ icon: "Compass",      label: "Map",           href: "#map"		},
-				{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery"	},
-				{ icon: "Trash", 		label: "Delete", 		onclick: () => location.delete(), theme: "danger" }
-			]} />
+		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
+			<PageMenu
+				backTo={route('locations')} backToLabel="Location List"
+				items={[
+					{ icon: "Info",   		label: "Details",       href: "#details"	},
+					{ icon: "Compass",      label: "Map",           href: "#map"		},
+					{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery"	},
+					{ icon: "Trash", 		label: "Delete", 		onclick: () => location.delete(), theme: "danger" }
+				]}
+			/>
 			<Container size="4xl">
 
 
 				<!-- Details -->
 
 				<Section id="details" class="pb-6">
+
 
 					<ArticleBanner>
 						<Media
@@ -119,13 +118,13 @@
 
 				<Section id="map" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Map</Heading>
-					{#if location.getMap() || location.children?.length > 0 || location.descendants?.length > 0}
+					{#if location.getMap() || location.mapItems?.length > 0}
 						<Map class="aspect-video rounded-lg shadow-lg"
 							location={location}
 							legend={[
 								// { icon: 'UsersThree', 	label: 'Characters', items: location.characters.map(c => ({ ...c, label: c.name })) },
 								// { icon: 'Backpack', 	label: 'Items', 	 items: location.characters.map(c => ({ ...c, label: c.name })) },
-								{ icon: 'MapPin', label: 'Locations', items: location.children.map(c => ({ ...c, label: c.name, icon: c.icon || 'MapPin' })) }
+								{ icon: 'MapPin', label: 'Locations', items: location.mapItems?.map(c => ({ ...c, label: c.name, icon: c.icon || 'MapPin' })) }
 							]}
 						/>
 					{:else}

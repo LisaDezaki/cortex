@@ -49,14 +49,15 @@
 
 
 
-<Grid cols={6} gap={3} class="bg-surface sticky top-16 pb-1.5 shrink-0 {className}">
+<Flex cols={6} gap={3} class="bg-surface sticky top-16 pb-1.5 shrink-0 {className}">
+	
 
 	<!-- Search -->
 
 	{#if searchable}
 		<Input bind:value={query}
 			type="search"
-			class="w-full" size="md"
+			class="w-40" size="md"
 			label="Search" labelIcon="MagnifyingGlass"
 			name="search"
 			placeholder="Search..."
@@ -72,9 +73,8 @@
 				even when clicking items in submenus. -->
 
 	{#if filterable}
-		<Dropdown bind:value={filter}
-			class="w-full" size="md"
-			contentClass="w-40"
+		<Dropdown size="md" bind:value={filter}
+			class="w-40" contentClass="w-40"
 			label="Filter" labelIcon="FunnelSimple"
 			options={filterOptions}
 			onUpdate={onFilter}
@@ -85,10 +85,8 @@
 	<!-- Sort -->
 
 	{#if sortable}
-		<Input bind:value={sort}
-			type="select"
-			class="w-full" size="md"
-			contentClass="w-40"
+		<Input type="select" size="md" bind:value={sort}
+			class="w-40" contentClass="w-40"
 			label="Sort" labelIcon="SortAscending"
 			placeholder="Sort by"
 			options={sortOptions}
@@ -100,7 +98,7 @@
 	<!-- Result Count -->
 
 	<Flex class="w-full">
-		<Inline class="bg-emerald-500/10 border-b border-accent-softest h-8 mt-auto p-md rounded text-accent text-sm whitespace-nowrap">
+		<Inline class="bg-emerald-500/10 border-b border-accent-softest h-8 mt-auto mr-auto p-md rounded text-accent text-sm whitespace-nowrap">
 			{results?.length} {results?.length !== 1 ? 'results' : 'result'}
 		</Inline>
 	</Flex>
@@ -110,7 +108,7 @@
 
 	<Input bind:value={size}
 		type="slider"
-		class="ml-auto w-full"
+		class="w-40"
 		label="Size" labelIcon="Resize"
 		style="none"
 		showTicks={true}
@@ -121,12 +119,10 @@
 
 	<!-- Layout -->
 
-	<Input bind:value={layout}
-		type="select"
-		class="w-full" size="md"
-		contentClass="w-40"
+	<Input type="select" size="md" bind:value={layout}
+		class="w-40" contentClass="w-40"
 		label="Layout" labelIcon="Layout"
 		options={layoutOptions}
 	/>
 
-</Grid>
+</Flex>

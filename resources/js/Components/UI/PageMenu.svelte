@@ -42,7 +42,7 @@
 	</Inline>
 {/snippet}
 
-<Box class="sticky top-12 place-self-start {className}">
+<Box class="sticky top-0 place-self-start {className}">
 	<Stack class="page-menu min-w-48 py-2 rounded-lg" {...restProps}>
 
 		{#if backTo}

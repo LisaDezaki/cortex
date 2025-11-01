@@ -15,6 +15,7 @@
 	import Input				from '@/Components/UI/Input.svelte'
 	import Media				from '@/Components/UI/Media.svelte'
 	import Separator			from '@/Components/UI/Separator.svelte'
+	import Sidebar				from '@/Components/UI/Sidebar.svelte'
 	import Skeleton				from '@/Components/UI/Skeleton.svelte'
 	import Tag					from '@/Components/UI/Tag.svelte'
 	import Thumbnail			from '@/Components/UI/Thumbnail.svelte'
@@ -38,19 +39,19 @@
 
 
 
-<Stack gap={0} class="bg-slate-50 sticky top-0 h-screen overflow-y-auto shadow-xl z-10 {className}">
+<Sidebar gap={0} class="bg-slate-50 sticky top-0 h-screen overflow-y-auto shadow-xl z-10 {className}">
 	{#if faction}
 
 
 		<!-- Head -->
 
 		<Media
-			class="relative bg-slate-200 h-48 place-self-center shrink-0 text-neutral-softest w-full"
+			class="relative bg-slate-200 hover:inner-shadow-lg h-48 place-self-center shrink-0 text-neutral-softest w-full transition-all"
 			media={faction.getBanner()}
 			onclick={() => faction.openModal('setBanner')}
 		/>
 		<Media
-			class="relative bg-slate-200 border border-slate-50 h-32 -mt-16 place-self-center rounded shrink-0 text-neutral-softest w-32"
+			class="relative bg-slate-200 hover:inner-shadow-lg border border-slate-50 h-32 -mt-16 place-self-center rounded shrink-0 text-neutral-softest w-32 transition-all"
 			icon="FlagBannerFold" iconWeight="fill"
 			media={faction.getEmblem()}
 			onclick={() => faction.openModal('setEmblem')}
@@ -64,7 +65,7 @@
 
 			<!-- Heading -->
 
-			<Stack align="center" justify="center" gap={0} class="my-3 px-6">
+			<Stack align="center" justify="center" gap={0} class="px-6">
 				<Heading is="h3" as="h4" class="text-center">{faction.name}</Heading>
 				<p class="text-neutral-soft text-sm">{faction.type}</p>
 			</Stack>
@@ -241,4 +242,4 @@
 		label="View {faction?.name}"
 		href={faction?.routes.show}
 	/>
-</Stack>
+</Sidebar>

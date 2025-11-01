@@ -70,7 +70,7 @@
 	{#snippet article()}
 		<Section gap={0} class="h-full overflow-hidden">
 
-			<PageHeader class="px-12 py-3"
+			<PageHeader class="px-16 py-3"
 				title="Location List"
 				tabs={[
 					{ label: "List",		active: true },
@@ -83,13 +83,13 @@
 			/>
 
 
-			<LocationControlBar class="px-12 pb-1.5"
+			<LocationControlBar class="px-16 pb-1.5"
 				data={locations} project={activeProject}
 				bind:query bind:filter bind:sort
 				bind:results bind:size bind:layout
 			/>
 
-			<Flex align="start" class="px-12 pt-3 pb-6 overflow-y-auto">
+			<Flex align="start" class="px-16 pt-3 pb-6 overflow-y-auto">
 				{#if activeProject && locations.items?.length > 0}
 
 
@@ -173,8 +173,6 @@
 		</Section>
 	{/snippet}
 	{#snippet sidebar()}
-		<LocationPanel class="max-w-96 min-w-96 shrink-0 w-96"
-			location={selected}
-		/>
+		<LocationPanel location={selected} />
 	{/snippet}
 </AuthenticatedLayout>

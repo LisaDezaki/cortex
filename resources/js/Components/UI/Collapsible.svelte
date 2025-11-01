@@ -14,10 +14,18 @@
 
 {#if children}
 	<Stack class={className}>
+		<p class="whitespace-pre-wrap {collapsed ? collapsedClass : ''}">
+			{@render children?.()}
+			<button class="inline text-accent" onclick={() => collapsed = !collapsed}>
+				{#if collapsed}
+					Read more&hellip;
+				{:else}
+					Read less&hellip;
+				{/if}
+			</button>
+		</p>
 		
-		<p class="whitespace-pre-wrap {collapsed ? collapsedClass : ''}">{@render children?.()}</p>
-		
-		<Button size="xs" style="plain" theme="accent"
+		<!-- <Button size="xs" style="plain" theme="accent"
 			class="bg-accent-softest self-center mx-auto mt-2 px-2 py-1 rounded-full text-accent text-xs hover:underline"
 			onclick={() => collapsed = !collapsed}>
 			{#if collapsed}
@@ -25,7 +33,7 @@
 			{:else}
 				Read less&hellip;
 			{/if}
-		</Button>
+		</Button> -->
 
 	</Stack>
 {/if}

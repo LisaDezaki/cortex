@@ -72,16 +72,16 @@ class LocationController extends Controller
 			'fieldable_type' => 'faction'
 		])->with('options')->get();
 
-		$worldTree = Location::where([
-			'project_id'   => Auth::user()->active_project,
-			'is_world_map' => true
-		])->with(['image', 'media', 'descendants.image', 'descendants.media', 'descendants.descendants.image', 'descendants.descendants.media'])->first();
+		// $worldTree = Location::where([
+		// 	'project_id'   => Auth::user()->active_project,
+		// 	'is_world_map' => true
+		// ])->with(['image', 'media'])->first();
 
         return Inertia::render('Locations/Index', [
 			'locationTypes' => $locationTypes,
 			'collections'	=> CollectionResource::collection($collections),
 			'customFields'	=> CustomFieldResource::collection($customFields),
-			'worldTree'		=> new LocationResource($worldTree)
+			// 'worldTree'		=> new LocationResource($worldTree)
 		]);
     }
 	public function collections()
@@ -128,8 +128,9 @@ class LocationController extends Controller
 		$location->load([
 			'image',
 			'media',
-			'parent',
-			'children.banner',
+			'mapData.location.media',
+			// 'parent',
+			// 'children.banner',
 			'characters.image',
 		]);
 

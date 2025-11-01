@@ -26,18 +26,28 @@ class CharacterResource extends JsonResource
 			'motivations' => $this->motivations,
 			'flaws'       => $this->flaws,
 
+			'mapData'	  => new MapItemResource($this->whenLoaded('mapData')),
+
 			'image'		  => new MediaResource($this->whenLoaded('image')),
 			'media'		  => MediaResource::collection($this->whenLoaded('media')),
 			'collections' => CollectionResource::collection($this->whenLoaded('collections')),
 
 			'banner'      => new MediaResource($this->whenLoaded('banner')),
 			'portrait'    => new MediaResource($this->whenLoaded('portrait')),
-			'location'    => new LocationResource($this->whenLoaded('location')),
+			// 'location'    => new LocationResource($this->whenLoaded('location')),
 			'factions'    => FactionResource::collection($this->whenLoaded('factions')),
 			'relationships' => CharacterRelationshipResource::collection($this->whenLoaded('relationships', function() {
 				return $this->relationships->merge($this->inverseRelationships)->sortBy('name');
 			})),
 			'customFieldValues' => CustomFieldValueResource::collection($this->whenLoaded('customFieldValues')),
+
+			// 'location' => new LocationResource($this->whenLoaded('mapData.location')),
+
+			// 'mapData' => $this->whenLoaded('mapData') ? [
+			// 	'x' => $this->whenLoaded('mapData.x'),
+			// 	'y' => $this->whenLoaded('mapData.y'),
+			// 	'location' => new LocationResource($this->whenLoaded('mapData.location'))
+			// ] : null,
 
 			'meta' => [
 				'projectId' => $this->project_id,

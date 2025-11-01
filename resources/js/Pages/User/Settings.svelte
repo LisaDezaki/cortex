@@ -42,7 +42,7 @@
 
 				<Section>
 					<Stack>
-						<Heading is="h1" as="h5">Heading</Heading>
+						<Heading is="h1" as="h5">Account Settings</Heading>
 						<p>Adjust your account settings to align with your preferences.</p>
 					</Stack>
 					<Form

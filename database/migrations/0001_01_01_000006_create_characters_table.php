@@ -22,7 +22,7 @@ return new class extends Migration
 			$table->text('motivations')->nullable();
 			$table->text('appearance')->nullable();
 			$table->text('personality')->nullable();
-			$table->foreignUuid('location_id')->nullable()->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
+			// $table->foreignUuid('location_id')->nullable()->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->timestamps();
 			$table->softDeletes();
 		});

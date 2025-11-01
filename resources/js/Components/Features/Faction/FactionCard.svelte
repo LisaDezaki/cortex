@@ -14,8 +14,8 @@
 <Card class={className}
 	aspect="square" thumbnailIcon="FlagBannerFold"
 	image={faction.image?.url}
-	title={faction.name}
-	subtitle="{faction.members?.items.length} member{faction.members?.items.length === 1 ? '' : 's'}"
+	title={title || faction.name}
+	subtitle={subtitle || faction.type}
 	options={options}
 	starred={faction.starred}
 	onStar={() => faction.star()}

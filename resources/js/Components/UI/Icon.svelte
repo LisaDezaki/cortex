@@ -56,6 +56,7 @@
 	import GlobeHemisphereEast from "phosphor-svelte/lib/GlobeHemisphereEast"
 	import GlobeHemisphereWest from "phosphor-svelte/lib/GlobeHemisphereWest"
 	import GlobeStand from "phosphor-svelte/lib/GlobeStand"
+	import Gps from "phosphor-svelte/lib/Gps"
 	import GpsFix from "phosphor-svelte/lib/GpsFix"
 	import Graph from "phosphor-svelte/lib/Graph"
 	import GridFour from "phosphor-svelte/lib/GridFour"
@@ -70,6 +71,7 @@
 	import Info from "phosphor-svelte/lib/Info"
 	import Key from "phosphor-svelte/lib/Key"
 	import Layout from "phosphor-svelte/lib/Layout"
+	import LetterCircleH from "phosphor-svelte/lib/LetterCircleH"
 	import Lighthouse from "phosphor-svelte/lib/Lighthouse"
 	import LineVertical from "phosphor-svelte/lib/LineVertical"
 	import Link from "phosphor-svelte/lib/Link"
@@ -183,6 +185,7 @@
 		'GlobeHemisphereEast': GlobeHemisphereEast,
 		'GlobeHemisphereWest': GlobeHemisphereWest,
 		'GlobeStand': GlobeStand,
+		'Gps': Gps,
 		'GpsFix': GpsFix,
 		'Graph': Graph,
 		'GridFour': GridFour,
@@ -197,6 +200,7 @@
 		'Info': Info,
 		'Key': Key,
 		'Layout': Layout,
+		'LetterCircleH': LetterCircleH,
 		'Lighthouse': Lighthouse,
 		'LineVertical': LineVertical,
 		'Link': Link,

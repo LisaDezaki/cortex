@@ -26,12 +26,12 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Define morph map for your entities
-		Relation::enforceMorphMap([
-			'user' => User::class,
-			'project' => Project::class,
-			'character' => Character::class,
-			'faction' => Faction::class,
-			'location' => Location::class,
-		]);
+		// Relation::enforceMorphMap([
+		// 	'user' => User::class,
+		// 	'project' => Project::class,
+		// 	'character' => Character::class,
+		// 	'faction' => Faction::class,
+		// 	'location' => Location::class,
+		// ]);
     }
 }

@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte'
 	import { page } from '@inertiajs/svelte'
 
 
@@ -12,13 +13,14 @@
 	const customFields = $page.props.customFields?.data
 
 	let {
+		class: className,
 		data, project,
-		results = $bindable([]),
 		query	= $bindable(''),
 		filter	= $bindable(''),
 		sort	= $bindable('name'),
 		size	= $bindable(8),
 		layout  = $bindable('grid'),
+		results = $bindable([]),
 		...restProps
 	} = $props()
 
@@ -28,13 +30,22 @@
 	const min	= $state(6)
 	const max	= $state(11)
 
-	let filterFunction	= $derived((ch)  => { return ch })
-	let sortFunction	= $derived((a,b) => { return a.name < b.name ? -1 : 1})
+	let filterOption    = $derived(filterOptions.find(opt => opt.value === filter) || '')
+	let sortOption		= $derived(  sortOptions.find(opt => opt.value === sort)   || '')
+
+	// let filterFunction	= $derived((ch)  => { return ch })
+	// let sortFunction	= $derived((a,b) => { return a.name < b.name ? -1 : 1})
+
+	onMount(() => {
+		filterOption    = filterOptions.find(opt => opt.value === filter) || ''
+		sortOption		= sortOptions.find(opt => opt.value === sort)   || ''
+		results = data.filter(query, filterOption.filterFunction, sortOption.sortFunction)
+	})
 
 	function onUpdate(type, option) {
-		if (type === 'filter') 	{ filterFunction = option.filterFunction }
-		if (type === 'sort') 	{ sortFunction 	 = option.sortFunction   }
-		results = data.filter(query, filterFunction, sortFunction)
+		if (type === 'filter') 	{ filterOption = option }
+		if (type === 'sort') 	{ sortOption   = option }
+		results = data.filter(query, filterOption.filterFunction, sortOption.sortFunction)
 	}
 
 
@@ -89,6 +100,7 @@
 
 
 <ControlBar
+	class={className}
 	data={data.items}
 	bind:query bind:filter bind:sort
 	bind:results bind:size bind:layout

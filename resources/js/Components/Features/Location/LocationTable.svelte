@@ -84,7 +84,7 @@
 {/snippet}
 
 <Table
-	class={className}
+	class="w-full {className}"
 	data={locations}
 	{headRow}
 	{bodyRow}

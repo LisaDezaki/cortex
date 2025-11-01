@@ -394,6 +394,12 @@
 		color: var(--text-neutral-softer);
 	}
 
+	.inner-shadow-xs		{ box-shadow: inset 0 0 0.25rem var(--bg-neutral-soft); }
+	.inner-shadow-sm		{ box-shadow: inset 0 0 0.5rem var(--bg-neutral-soft); }
+	.inner-shadow-md		{ box-shadow: inset 0 0 1rem var(--bg-neutral-soft); }
+	.inner-shadow-lg		{ box-shadow: inset 0 0 2rem var(--bg-neutral-soft); }
+	.inner-shadow-xl		{ box-shadow: inset 0 0 4rem var(--bg-neutral-soft); }
+
 
 
 

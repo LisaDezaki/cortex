@@ -4,17 +4,18 @@
 		"name": "Abigail",
 		"alias": "The Navigator",
 		"species": "satyr",
-		"location": "pirate-ship",
 		"appearance": ["Angular", "Austere", "Dashing", "Lean", "Polished", "Tanned"],
 		"personality": ["Intelligent", "Keen", "Perceptive", "Practical"],
-		"desc": "As the first mate and chief navigator of Captain Bugbeard's infamous vessel, The Crimson Tide, Abigail is the undisputed brains of the operation. While Bugbeard provides the booming voice and fearsome reputation, it is Abigail's sharp mind that charts their course through both treacherous waters and even more treacherous dungeon delves.\n\nA satyr whose keen eyes miss nothing, she reads star-charts, ocean currents, and the subtle tells of a duplicitous noble with equal skill. Her tools are not just a sextant and compass, but a well-maintained flintlock pistol for surprising obstacles and a wickedly sharp cutlass for the expected ones.\n\nHer loyalty to her crew is as solid as the ship's keel, forged not just in shared plunder but in the unbreakable bond of those who have stared into the leviathan's maw and lived to tell the tale.\n\nBeneath her pragmatic and calculating exterior lies a spirit that thrives on the freedom of the high seas and the thrill of the unknown. She joined Bugbeard's crew not out of desperation, but by choice, trading a predictable life on land for the endless horizon and the promise of forgotten treasures buried within the diorama's most remote dungeon islands.\n\nShe is fiercely protective of her found family, and while she might roll her eyes at the crew's more boisterous antics, any threat to them is met with cold, calculated precision. In the heat of a dungeon battle, her voice cuts through the chaos with clear, tactical commands, making her the steady rudder that guides the pirate crew through any storm, be it of water, magic, or steel."
+		"desc": "As the first mate and chief navigator of Captain Bugbeard's infamous vessel, The Crimson Tide, Abigail is the undisputed brains of the operation. While Bugbeard provides the booming voice and fearsome reputation, it is Abigail's sharp mind that charts their course through both treacherous waters and even more treacherous dungeon delves.\n\nA satyr whose keen eyes miss nothing, she reads star-charts, ocean currents, and the subtle tells of a duplicitous noble with equal skill. Her tools are not just a sextant and compass, but a well-maintained flintlock pistol for surprising obstacles and a wickedly sharp cutlass for the expected ones.\n\nHer loyalty to her crew is as solid as the ship's keel, forged not just in shared plunder but in the unbreakable bond of those who have stared into the leviathan's maw and lived to tell the tale.\n\nBeneath her pragmatic and calculating exterior lies a spirit that thrives on the freedom of the high seas and the thrill of the unknown. She joined Bugbeard's crew not out of desperation, but by choice, trading a predictable life on land for the endless horizon and the promise of forgotten treasures buried within the diorama's most remote dungeon islands.\n\nShe is fiercely protective of her found family, and while she might roll her eyes at the crew's more boisterous antics, any threat to them is met with cold, calculated precision. In the heat of a dungeon battle, her voice cuts through the chaos with clear, tactical commands, making her the steady rudder that guides the pirate crew through any storm, be it of water, magic, or steel.",
+		"mapdata": {
+			"location": "pirate-ship"
+		}
 	},
 
 	"atticus": {
 		"name": "Atticus",
 		"alias": "The Giant",
 		"species": "goliath",
-		"location": null,
 		"appearance": ["Brawny"],
 		"personality": ["Defender"],
 		"desc": "A huge goliath who is always pushed to fight but only wants to protect his friends."
@@ -24,167 +25,200 @@
 		"name": "Bak",
 		"alias": "The Historian",
 		"species": "goblin",
-		"location": "school",
 		"appearance": ["Dapper", "Dignified", "Short", "Older"],
 		"personality": ["Boring", "Monotonous", "Talkative"],
-		"desc": "In a dusty, dimly lit classroom that smells of old parchment and chalk dust, Professor Bak teaches the history of Diorama. A goblin with spectacles perpetually sliding down his nose and a tweed vest covered in ink stains, he is the Adventuring Academy's resident historian and lore-master. His knowledge of historical events, royal lineages, and epic battles is encyclopedic and utterly unimpeachable.\n\nHe is also, quite possibly, the most soul-crushingly boring orator in all of New Miniport. Professor Bak possesses the unique and tragic gift of transforming tales of legendary heroism, catastrophic dragon attacks, and world-shattering magical calamities into a monotonous recitation of dates, supply-line logistics, and agricultural impact reports.\n\nFor Professor Bak, the \"why\" of history is infinitely less interesting than the \"what,\" the \"when,\" and the \"how much it cost.\"\n\nHe will spend an entire hour detailing the tax reforms that preceded the Rise of the Serpent Kings, but only mention the ensuing century of tyrannical rule as a footnote on grain production.\n\nStudents quickly learn that his class is the ultimate test of endurance; a place where the most thrilling adventures go to die a slow, pedantic death. Yet, buried within his endless droning are gems of crucial information—the exact weakness of a long-dead lich, the secret entrance to a forgotten fortress, the true name of a demon lord—if anyone can manage to stay awake long enough to hear it. He is a living library, but one where the most exciting stories are locked in the driest, most verbose books on the shelf."
+		"desc": "In a dusty, dimly lit classroom that smells of old parchment and chalk dust, Professor Bak teaches the history of Diorama. A goblin with spectacles perpetually sliding down his nose and a tweed vest covered in ink stains, he is the Adventuring Academy's resident historian and lore-master. His knowledge of historical events, royal lineages, and epic battles is encyclopedic and utterly unimpeachable.\n\nHe is also, quite possibly, the most soul-crushingly boring orator in all of New Miniport. Professor Bak possesses the unique and tragic gift of transforming tales of legendary heroism, catastrophic dragon attacks, and world-shattering magical calamities into a monotonous recitation of dates, supply-line logistics, and agricultural impact reports.\n\nFor Professor Bak, the \"why\" of history is infinitely less interesting than the \"what,\" the \"when,\" and the \"how much it cost.\"\n\nHe will spend an entire hour detailing the tax reforms that preceded the Rise of the Serpent Kings, but only mention the ensuing century of tyrannical rule as a footnote on grain production.\n\nStudents quickly learn that his class is the ultimate test of endurance; a place where the most thrilling adventures go to die a slow, pedantic death. Yet, buried within his endless droning are gems of crucial information—the exact weakness of a long-dead lich, the secret entrance to a forgotten fortress, the true name of a demon lord—if anyone can manage to stay awake long enough to hear it. He is a living library, but one where the most exciting stories are locked in the driest, most verbose books on the shelf.",
+		"mapdata": {
+			"location": "school"
+		}
 	},
 
 	"barry": {
 		"name": "Barry",
 		"alias": "The Butcher",
 		"species": "bearfolk",
-		"location": "docks",
 		"appearance": ["Beaming", "Big", "Friendly", "Jovial", "Kindly", "Solid", "Sturdy"],
 		"personality": ["Approachable", "Avuncular", "Gentle", "Humble", "Patient", "Proud", "Simple", "Unhurried", "Welcoming"],
-		"desc": "In the salty, bustling air of the Downtown Docks, you'll find Billy, a bearfolk of immense stature and even bigger heart, presiding over his stall with quiet contentment. For generations, his family has provided the town with the finest cuts of meat and the freshest daily catch, and Billy carries on this tradition with immense pride. He knows every customer by name, remembers their preferred cuts, and always has a friendly word or a bit of local gossip to share over the counter. To Billy, his trade is about more than commerce; it's about community, about sustaining the life of the town he loves, one perfectly trimmed steak or fillet of sunscale trout at a time.\n\nHowever, a shadow looms over his small stall in the form of DragonCorp's sleek, automated delivery wyverns. Billy has watched, with a sad confusion, as longtime patrons have begun to opt for the corporation's cheaper, pre-packaged goods. He doesn't understand the appeal of a frost-touched box over a personally selected cut from a beast he knew by river and field.\n\nWhile not an ambitious bear, Billy's simple dream is under threat. His aspiration isn't for wealth, but to remain the town's butcher, a familiar, friendly face who ensures that a family's supper is not just nourishing, but a product of care and craft. He represents a fading way of life, a piece of New Miniport's homegrown soul struggling against the tide of impersonal convenience."
+		"desc": "In the salty, bustling air of the Downtown Docks, you'll find Billy, a bearfolk of immense stature and even bigger heart, presiding over his stall with quiet contentment. For generations, his family has provided the town with the finest cuts of meat and the freshest daily catch, and Billy carries on this tradition with immense pride. He knows every customer by name, remembers their preferred cuts, and always has a friendly word or a bit of local gossip to share over the counter. To Billy, his trade is about more than commerce; it's about community, about sustaining the life of the town he loves, one perfectly trimmed steak or fillet of sunscale trout at a time.\n\nHowever, a shadow looms over his small stall in the form of DragonCorp's sleek, automated delivery wyverns. Billy has watched, with a sad confusion, as longtime patrons have begun to opt for the corporation's cheaper, pre-packaged goods. He doesn't understand the appeal of a frost-touched box over a personally selected cut from a beast he knew by river and field.\n\nWhile not an ambitious bear, Billy's simple dream is under threat. His aspiration isn't for wealth, but to remain the town's butcher, a familiar, friendly face who ensures that a family's supper is not just nourishing, but a product of care and craft. He represents a fading way of life, a piece of New Miniport's homegrown soul struggling against the tide of impersonal convenience.",
+		"mapdata": {
+			"location": "fishery"
+		}
 	},
 
 	"bhezox": {
 		"name": "Bhezox",
 		"alias": "The Executive",
 		"species": "dragonborn",
-		"location": "council",
 		"appearance": ["Cold"],
 		"personality": ["Apathetic", "Calculating", "Cold", "Meticulous", "Shrewd"],
-		"desc": "With scales the color of tarnished copper and a silk tie of venomous green, Bhezox is the cold, calculating heart of the Council's economic engine. As a tech executive and investment titan, he views the entire economy of New Miniport as his personal spreadsheet. He manipulates markets, orchestrates hostile takeovers of smaller businesses, and creates investment funds that exclusively benefit Dragonborn interests, systematically funneling wealth and assets upward. He speaks in a low, precise hum of data points and profit margins, utterly devoid of empathy, seeing citizens not as people but as economic units to be optimized for maximum draconic yield."
+		"desc": "With scales the color of tarnished copper and a silk tie of venomous green, Bhezox is the cold, calculating heart of the Council's economic engine. As a tech executive and investment titan, he views the entire economy of New Miniport as his personal spreadsheet. He manipulates markets, orchestrates hostile takeovers of smaller businesses, and creates investment funds that exclusively benefit Dragonborn interests, systematically funneling wealth and assets upward. He speaks in a low, precise hum of data points and profit margins, utterly devoid of empathy, seeing citizens not as people but as economic units to be optimized for maximum draconic yield.",
+		"mapdata": {
+			"location": "council"
+		}
 	},
 	
 	"binksy": {
 		"name": "Binksy",
 		"alias": "The Artist",
 		"species": "gnome",
-		"location": "alley",
 		"appearance": ["Paint-splattered", "Slight", "Spiky", "Unkempt"],
 		"personality": ["Agile", "Anarchic", "Artistic", "Defiant", "Elusive", "Expressive", "Fidgety", "Fiery", "Incendiary", "Intense", "Keen", "Nimble", "Political", "Rebellious", "Restless", "Unpredictable", "Vibrant", "Wiry"],
-		"desc": "Lurking in the rain-slicked alleys of New Miniport, where the glow of the new DragonCorp neon signs doesn't quite reach, operates the city's most elusive and incendiary artist: a gnome known only as Binksy. More phantom than person, Binksy is a whirlwind of righteous anger and artistic genius, using the city's walls as their canvas for a relentless campaign against the Dragon Council's gentrification and DragonCorp's capitalist stranglehold.\n\nUsing custom-made magical spray paints, their graffiti can hypnotize passersby with swirling patterns, disorient guards with disconcerting illusions, or even leave temporary, immobilizing glyphs on the brickwork to trap their pursuers.\n\nDriven by a deep-seated hatred for the systemic oppression they see reshaping their home, Binksy is always trying to break the spell of complacency they believe has fallen over the citizens. They fight not for notoriety, but for the soul of New Miniport, defending the gritty, diverse, and chaotic character of the town against the sterile, draconic order being imposed from above. To the establishment, they're a dangerous nuisance. But to the discontented and the disillusioned living in the Council's shadow, Binksy is a folk hero, a voice of defiance painted in brilliant, magical color. Recruiting them means gaining a powerful and unpredictable ally, one who knows the city's underbelly and isn't afraid to paint a target on its back."
+		"desc": "Lurking in the rain-slicked alleys of New Miniport, where the glow of the new DragonCorp neon signs doesn't quite reach, operates the city's most elusive and incendiary artist: a gnome known only as Binksy. More phantom than person, Binksy is a whirlwind of righteous anger and artistic genius, using the city's walls as their canvas for a relentless campaign against the Dragon Council's gentrification and DragonCorp's capitalist stranglehold.\n\nUsing custom-made magical spray paints, their graffiti can hypnotize passersby with swirling patterns, disorient guards with disconcerting illusions, or even leave temporary, immobilizing glyphs on the brickwork to trap their pursuers.\n\nDriven by a deep-seated hatred for the systemic oppression they see reshaping their home, Binksy is always trying to break the spell of complacency they believe has fallen over the citizens. They fight not for notoriety, but for the soul of New Miniport, defending the gritty, diverse, and chaotic character of the town against the sterile, draconic order being imposed from above. To the establishment, they're a dangerous nuisance. But to the discontented and the disillusioned living in the Council's shadow, Binksy is a folk hero, a voice of defiance painted in brilliant, magical color. Recruiting them means gaining a powerful and unpredictable ally, one who knows the city's underbelly and isn't afraid to paint a target on its back.",
+		"mapdata": {
+			"location": "alley"
+		}
 	},
 
 	"bogdan": {
 		"name": "Bogdan",
 		"alias": "The Enforcer",
 		"species": "lizardfolk",
-		"location": "tavern",
 		"appearance": ["Brawny", "Hulking"],
 		"personality": ["Implacable", "Intimidating", "Menacing", "Quiet", "Stoic", "Unnerving"],
-		"desc": "Where Grenn is the calculating brain of the Cold-Bloods syndicate, Bogdan is its crushing tail. A mountain of muscle and scarred scales, this lizardfolk serves as the silent, imposing bouncer of \"The Lucky Die\" and Grenn's personal shadow.\n\nHe is less an employee and more a force of nature, a loyal instrument of violence whose presence alone is often enough to quell dissent. While patrons carouse inside the tavern, they are subconsciously comforted by the solid, unmoving wall of reptilian menace at the door, a walking advertisement for the consequences of causing trouble.\n\nBut his true work begins when the tavern closes. As Grenn's personal enforcer, Bogdan is the syndicate's blunt instrument. He is the one who \"collects\" on overdue debts, who \"convinces\" stubborn tenants to accept their eviction, and who ensures that anyone who crosses Grenn understands the physical cost of that mistake.\n\nHe rarely speaks, believing actions to be a far more universal language. His loyalty to Grenn is absolute and unthinking; he does not question the morality of an order, only the most efficient way to carry it out. To cross Grenn is to invite a visit from Bogdan, a visit that ends with broken bones and a very clear, very final message."
+		"desc": "Where Grenn is the calculating brain of the Cold-Bloods syndicate, Bogdan is its crushing tail. A mountain of muscle and scarred scales, this lizardfolk serves as the silent, imposing bouncer of \"The Lucky Die\" and Grenn's personal shadow.\n\nHe is less an employee and more a force of nature, a loyal instrument of violence whose presence alone is often enough to quell dissent. While patrons carouse inside the tavern, they are subconsciously comforted by the solid, unmoving wall of reptilian menace at the door, a walking advertisement for the consequences of causing trouble.\n\nBut his true work begins when the tavern closes. As Grenn's personal enforcer, Bogdan is the syndicate's blunt instrument. He is the one who \"collects\" on overdue debts, who \"convinces\" stubborn tenants to accept their eviction, and who ensures that anyone who crosses Grenn understands the physical cost of that mistake.\n\nHe rarely speaks, believing actions to be a far more universal language. His loyalty to Grenn is absolute and unthinking; he does not question the morality of an order, only the most efficient way to carry it out. To cross Grenn is to invite a visit from Bogdan, a visit that ends with broken bones and a very clear, very final message.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"brundle": {
 		"name": "Brundle",
 		"alias": "The Fly",
 		"species": "insectoid",
-		"location": "ruins",
-		"desc": "Brundle uses its compound eyes and many limbs to shoot in every direction simultaneously with ease. It is a master of reconnaissance and stealth, able to slip through cracks and crevices that would be impossible for larger adventurers. Its small size and agility make it an invaluable scout in the dangerous ruins surrounding New Miniport, where traps and ambushes lurk around every corner.\n\n"
+		"desc": "Brundle uses its compound eyes and many limbs to shoot in every direction simultaneously with ease. It is a master of reconnaissance and stealth, able to slip through cracks and crevices that would be impossible for larger adventurers. Its small size and agility make it an invaluable scout in the dangerous ruins surrounding New Miniport, where traps and ambushes lurk around every corner.\n\n",
+		"mapdata": {
+			"location": "ruins"
+		}
 	},
 
 	"bugbeard": {
 		"name": "Bugbeard",
 		"alias": "The Pirate Captain",
 		"species": "bugbear",
-		"location": "pirate-ship",
 		"appearance": ["Burly", "Grizzled", "Imposing", "Rugged", "Shaggy", "Weathered"],
 		"personality": ["Boisterous", "Charismatic", "Commanding", "Confident", "Imposing", "Loud", "Ornamented", "Principled", "Rebellious", "Unorthodox"],
-		"desc": "A hulking, charismatic bugbear with a beard famously woven with iridescent beetle shells and trinkets from a hundred plundered voyages, Captain Bugbeard cuts an imposing figure, even while laying low.\n\nAs the master of the pirate vessel The Crimson Tide, his reputation precedes him—though it is a matter of fierce debate as to what that reputation truly is. To the wealthy merchant lords and the Dragon Council that backs them, he is a notorious criminal, a scourge upon lawful trade with a bounty on his head large enough to buy a manor. But to the common folk and the oppressed, he is a folk hero of the high seas, a scoundrel with a code.\n\nHis philosophy is one of \"righteous plunder\", targeting only the fat merchant cogs and corporate vessels he knows are carrying wealth stolen from native populations or squeezed from the working class.\n\nThis very specific brand of Robin Hood piracy has made him powerful enemies and forced him to seek refuge in New Miniport, his ship disguised and tucked away in a secluded cove. He hopes the town's independent spirit will provide a safe harbor while the heat from his latest exploit dies down.\n\nHis presence is a polarizing force; some citizens see only a dangerous fugitive who will bring the Council's wrath down upon them all, while others cheer his defiance and see his wealth-redistribution as the only true justice in a system rigged against them. Despite his fearsome appearance, Bugbeard is a shrewd and competent leader, fiercely loyal to his crew and unshakable in his belief that sometimes, you have to break the law to do what's right."
+		"desc": "A hulking, charismatic bugbear with a beard famously woven with iridescent beetle shells and trinkets from a hundred plundered voyages, Captain Bugbeard cuts an imposing figure, even while laying low.\n\nAs the master of the pirate vessel The Crimson Tide, his reputation precedes him—though it is a matter of fierce debate as to what that reputation truly is. To the wealthy merchant lords and the Dragon Council that backs them, he is a notorious criminal, a scourge upon lawful trade with a bounty on his head large enough to buy a manor. But to the common folk and the oppressed, he is a folk hero of the high seas, a scoundrel with a code.\n\nHis philosophy is one of \"righteous plunder\", targeting only the fat merchant cogs and corporate vessels he knows are carrying wealth stolen from native populations or squeezed from the working class.\n\nThis very specific brand of Robin Hood piracy has made him powerful enemies and forced him to seek refuge in New Miniport, his ship disguised and tucked away in a secluded cove. He hopes the town's independent spirit will provide a safe harbor while the heat from his latest exploit dies down.\n\nHis presence is a polarizing force; some citizens see only a dangerous fugitive who will bring the Council's wrath down upon them all, while others cheer his defiance and see his wealth-redistribution as the only true justice in a system rigged against them. Despite his fearsome appearance, Bugbeard is a shrewd and competent leader, fiercely loyal to his crew and unshakable in his belief that sometimes, you have to break the law to do what's right.",
+		"mapdata": {
+			"location": "pirate-ship"
+		}
 	},
 
 	"cog": {
 		"name": "Cog",
 		"alias": "The Clockwork Assassin",
 		"species": "warforged",
-		"location": "tavern",
 		"personality": ["Perceptive"],
-		"desc": "Standing firm near the bar, quietly searching for potential clients."
+		"desc": "Standing firm near the bar, quietly searching for potential clients.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"dirk": {
 		"name": "Dirk",
 		"alias": "The Private Investigator",
 		"species": "orc",
-		"location": "mall",
 		"appearance": ["Grizzled", "Rugged", "Weathered"],
 		"personality": ["Analytical", "Chain-smoker", "Cynical", "Disillusioned", "Dogged", "Gruff", "Jaded", "Meticulous", "Observant", "Perceptive", "Tenacious", "World-weary"],
-		"desc": "In a dimly-lit office tucked between a defunct arcade and a candle shop in the New Miniport Galleria, you'll find Dirk. A hulking orc in a trench coat that's seen better days, he speaks in the gravelly, metaphor-laden drawl of a hardboiled noir detective, a style starkly at odds with his orcish accent. It's a dissonance that makes clients pause, but it never lasts long.\n\nBehind the world-weary act is the sharpest investigative mind in the region. Dirk can spot a misplaced fiber at a crime scene, read a micro-expression like a billboard, and piece together clues everyone else has trampled over. His methods are unorthodox, but his results are undeniable.\n\nHis greatest nemesis isn't a thug in a back alley, but the soul-crushing bureaucracy of the New Miniport PD. He's locked in a perpetual, grinding battle to access public records they are legally obligated to provide, a battle personified by Officer Laggard, a tortle cop whose deliberate pace makes molasses look speedy.\n\nWhile he handles the mundane cases that pay the rent (the Missing Hikers, the ever-present Graffitti, the infamous Stolen Bike), his real focus is his magnum opus: building an ironclad case against the Cold-Bloods syndicate. He's certain their operations are a front for something far darker, and he's determined to connect their crime boss, the seemingly respectable tavern owner Grenn, to the rot festering beneath New Miniport's streets. All he needs is one more break, and the patience to outlast Laggard's next delay tactic."
+		"desc": "In a dimly-lit office tucked between a defunct arcade and a candle shop in the New Miniport Galleria, you'll find Dirk. A hulking orc in a trench coat that's seen better days, he speaks in the gravelly, metaphor-laden drawl of a hardboiled noir detective, a style starkly at odds with his orcish accent. It's a dissonance that makes clients pause, but it never lasts long.\n\nBehind the world-weary act is the sharpest investigative mind in the region. Dirk can spot a misplaced fiber at a crime scene, read a micro-expression like a billboard, and piece together clues everyone else has trampled over. His methods are unorthodox, but his results are undeniable.\n\nHis greatest nemesis isn't a thug in a back alley, but the soul-crushing bureaucracy of the New Miniport PD. He's locked in a perpetual, grinding battle to access public records they are legally obligated to provide, a battle personified by Officer Laggard, a tortle cop whose deliberate pace makes molasses look speedy.\n\nWhile he handles the mundane cases that pay the rent (the Missing Hikers, the ever-present Graffitti, the infamous Stolen Bike), his real focus is his magnum opus: building an ironclad case against the Cold-Bloods syndicate. He's certain their operations are a front for something far darker, and he's determined to connect their crime boss, the seemingly respectable tavern owner Grenn, to the rot festering beneath New Miniport's streets. All he needs is one more break, and the patience to outlast Laggard's next delay tactic.",
+		"mapdata": {
+			"location": "mall"
+		}
 	},
 
 	"drew": {
 		"name": "Drew",
 		"alias": "The Incel",
 		"species": "goblin",
-		"location": "gym",
 		"appearance": ["Short"],
 		"personality": ["Aggressive", "Belligerent", "Condescending", "Crass", "Insecure", "Misogynistic", "Narcissistic", "Obnoxious", "Patronizing", "Rude"],
-		"desc": "This guy HATES women. He constantly makes rude comments to female patrons and brags about his own strength and prowess. He is obsessed with being the biggest and strongest goblin in the gym, and will challenge anyone who he perceives as a threat to his ego.\n\nHe is extremely insecure about his short stature (even for a goblin)."
+		"desc": "This guy HATES women. He constantly makes rude comments to female patrons and brags about his own strength and prowess. He is obsessed with being the biggest and strongest goblin in the gym, and will challenge anyone who he perceives as a threat to his ego.\n\nHe is extremely insecure about his short stature (even for a goblin).",
+		"mapdata": {
+			"location": "gym"
+		}
 	},
 
 	"duggan": {
 		"name": "Duggan",
 		"alias": "The Heavy",
 		"species": "troll",
-		"location": "pirate-ship",
 		"appearance": ["Grey-skinned", "Huge", "Imposing", "Scarred", "Thick-hided"],
 		"personality": ["Childlike", "Dumb", "Eager", "Explosive", "Loyal", "Powerful", "Protective", "Pyromaniac", "Simple-minded"],
-		"desc": "A mountain of mossy, grey-skinned muscle, the troll is the crew's undisputed heavy, a walking armory whose preferred solution to any problem, be it a locked door, an enemy ship, or a particularly stubborn crab, is overwhelming, percussive force.\n\nHis standard arsenal consists of a full-sized ship's cannon slung over his shoulder like a handbag and a pair of massive ship anchors he wields as dual axes, making him a one-troll boarding party and demolition crew all rolled into one.\n\nHe lives for the roar of the blast and the satisfying crunch of splintering timber, a simple soul with profoundly destructive tastes.\n\nHis loyalty to Captain Bugbeard is born of shared plunder and good fights, but his devotion to First Mate Abigail is absolute and unshakeable. She's the only one who can talk him down from a rampage or explain a complex plan in simple, action-oriented terms he understands (\"Duggan, see that wall? Make it not a wall.\"). Beyond the sea, he has a quieter connection to the land; his brother, Hugo, is a lumberjack, a profession Duggan vaguely respects for also involving hitting things with an axe, albeit in a much less exciting way. Their interactions are rare and awkward, two giants from the same clan who chose vastly different paths, one for the roar of the cannon and the other for the quiet fall of a tree."
+		"desc": "A mountain of mossy, grey-skinned muscle, the troll is the crew's undisputed heavy, a walking armory whose preferred solution to any problem, be it a locked door, an enemy ship, or a particularly stubborn crab, is overwhelming, percussive force.\n\nHis standard arsenal consists of a full-sized ship's cannon slung over his shoulder like a handbag and a pair of massive ship anchors he wields as dual axes, making him a one-troll boarding party and demolition crew all rolled into one.\n\nHe lives for the roar of the blast and the satisfying crunch of splintering timber, a simple soul with profoundly destructive tastes.\n\nHis loyalty to Captain Bugbeard is born of shared plunder and good fights, but his devotion to First Mate Abigail is absolute and unshakeable. She's the only one who can talk him down from a rampage or explain a complex plan in simple, action-oriented terms he understands (\"Duggan, see that wall? Make it not a wall.\"). Beyond the sea, he has a quieter connection to the land; his brother, Hugo, is a lumberjack, a profession Duggan vaguely respects for also involving hitting things with an axe, albeit in a much less exciting way. Their interactions are rare and awkward, two giants from the same clan who chose vastly different paths, one for the roar of the cannon and the other for the quiet fall of a tree.",
+		"mapdata": {
+			"location": "pirate-ship"
+		}
 	},
 
 	"eldingar": {
 		"name": "Eldingar",
 		"alias": "The Lightning Spirit",
 		"species": "genasi",
-		"location": "construction-site",
-		"desc": "Eldingar is a genasi."
+		"desc": "Eldingar is a genasi.",
+		"mapdata": {
+			"location": "construction-site"
+		}
 	},
 
 	"fennick": {
 		"name": "Fennick",
 		"alias": "The Pup",
 		"species": "foxfolk",
-		"location": null,
 		"personality": ["Naive"],
-		"desc": ""
+		"desc": "",
+		"mapdata": {
+			"location": "cabin"
+		}
 	},
 
 	"ferman": {
 		"name": "Ferman",
 		"alias": "The Construction Worker",
 		"species": "dwarf",
-		"location": "construction-site",
 		"personality": ["Cynical", "Disillusioned", "Hardworking", "Worried"],
-		"desc": "High above the streets of New Miniport, where the wind whips around the skeletal girders of a new DragonCorp tower, you'll find Ferman.\n\nA dwarf with the sturdy build of his trade and a permanent frown etched deep beneath his hard hat, he is a man caught between his proud heritage and a soul-crushing reality. His family once owned a respected construction company, known for craftsmanship and integrity, but it was slowly choked out by DragonCorp's monopolistic practices. Now, he punches a clock for one of their subsidiaries, forced to cut corners and ignore safety protocols by managers who've never held a hammer, all for a salary that barely covers his mortgage.\n\nHe vents his frustrations to his unpaid apprentice, Kass, a brilliant human artificer whose innovative ideas are routinely dismissed by the same corporate overseers. Ferman complains about the shoddy materials, the impossible deadlines, and the disrespect for the old ways—the proper ways—of building something to last. But his grumbling always ends in the same resigned sigh.\n\nFor all his bluster, Ferman is trapped. The specter of providing for his wife and kids keeps him harnessed to the beam, a cog in a machine building a skyline he despises, one unsafe practice at a time. He builds towers for a faceless corporation, dreaming of the day he might once again build a home with his own name on the deed."
+		"desc": "High above the streets of New Miniport, where the wind whips around the skeletal girders of a new DragonCorp tower, you'll find Ferman.\n\nA dwarf with the sturdy build of his trade and a permanent frown etched deep beneath his hard hat, he is a man caught between his proud heritage and a soul-crushing reality. His family once owned a respected construction company, known for craftsmanship and integrity, but it was slowly choked out by DragonCorp's monopolistic practices. Now, he punches a clock for one of their subsidiaries, forced to cut corners and ignore safety protocols by managers who've never held a hammer, all for a salary that barely covers his mortgage.\n\nHe vents his frustrations to his unpaid apprentice, Kass, a brilliant human artificer whose innovative ideas are routinely dismissed by the same corporate overseers. Ferman complains about the shoddy materials, the impossible deadlines, and the disrespect for the old ways—the proper ways—of building something to last. But his grumbling always ends in the same resigned sigh.\n\nFor all his bluster, Ferman is trapped. The specter of providing for his wife and kids keeps him harnessed to the beam, a cog in a machine building a skyline he despises, one unsafe practice at a time. He builds towers for a faceless corporation, dreaming of the day he might once again build a home with his own name on the deed.",
+		"mapdata": {
+			"location": "construction-site"
+		}
 	},
 
 	"gack": {
 		"name": "Gack",
 		"alias": "The Redneck",
 		"species": "kobold",
-		"location": "trailer-park",
 		"personality": ["Angry", "Arrogant", "Racist", "Terrified"],
-		"desc": "Tucked between overgrown weeds and a rusting chassis in the Dusty Springs Trailer Park, Gack's ramshackle home is his fortress, and he is its delusional, heavily-armed king.\n\nA kobold whose scales have lost their luster, he is a fervent believer in the myth of Draconic supremacy, clinging to the idea that his distant, diluted ancestry makes him inherently superior to the \"soft-skins\" and \"mammals\" of New Miniport. This ideology is his entire identity, a shield against a world that dismisses him. The cruel irony, lost entirely on Gack, is that the very Dragon Council he venerates sees him and his kind as pathetic vermin, genetic dead ends unfit to share their glorious name. He is, in fact, currently being evicted from his trailer by a writ bearing the Council's own seal.\n\nApproach his property at your peril. The creak of a floorboard or the shadow of a stranger will see him burst from his door, a battered shotgun held tight, screaming about his right to \"stand his ground.\"\n\nHis beady eyes are wide with a mix of terror and fanaticism. The only way to avoid immediate hostility is to appeal to his warped worldview; a Dragonborn or other scaled visage might grant a moment of audience before he inevitably says something profoundly ignorant or offensive. Gack is a pitiable figure, a victim of the very system he champions, too proud and too brainwashed to see the boot coming down to crush him."
+		"desc": "Tucked between overgrown weeds and a rusting chassis in the Dusty Springs Trailer Park, Gack's ramshackle home is his fortress, and he is its delusional, heavily-armed king.\n\nA kobold whose scales have lost their luster, he is a fervent believer in the myth of Draconic supremacy, clinging to the idea that his distant, diluted ancestry makes him inherently superior to the \"soft-skins\" and \"mammals\" of New Miniport. This ideology is his entire identity, a shield against a world that dismisses him. The cruel irony, lost entirely on Gack, is that the very Dragon Council he venerates sees him and his kind as pathetic vermin, genetic dead ends unfit to share their glorious name. He is, in fact, currently being evicted from his trailer by a writ bearing the Council's own seal.\n\nApproach his property at your peril. The creak of a floorboard or the shadow of a stranger will see him burst from his door, a battered shotgun held tight, screaming about his right to \"stand his ground.\"\n\nHis beady eyes are wide with a mix of terror and fanaticism. The only way to avoid immediate hostility is to appeal to his warped worldview; a Dragonborn or other scaled visage might grant a moment of audience before he inevitably says something profoundly ignorant or offensive. Gack is a pitiable figure, a victim of the very system he champions, too proud and too brainwashed to see the boot coming down to crush him.",
+		"mapdata": {
+			"location": "trailer-park"
+		}
 	},
 
 	"grenn": {
 		"name": "Grenn",
 		"alias": "The Slumlord",
 		"species": "lizardfolk",
-		"location": "tavern",
 		"personality": ["Backstabbing", "Conniving", "Deceitful", "Machiavellian"],
-		"desc": "In the shadowy underbelly of New Miniport, no one embodies the casual cruelty of greed quite like Grenn. A lizardfolk with calculating, cold eyes and a smile that never reaches them, he is the slithering heart of the Cold-Bloods syndicate.\n\nMore businessman than thug, his preferred weapons are not knives or spells, but predatory leases, crippling debt, and damning secrets. Thanks to a lucrative and deeply corrupt deal with the Dragon Council, he holds a near-monopoly on the city's low-cost housing, making him the de facto slum-lord of New Miniport. He is a master exploiter, a blackmailer, and a general slime-ball who views the entire town as a personal piggy bank to be cracked open.\n\nHis public face is the jovial proprietor of \"The Lucky Die,\" a raucous and popular tavern where citizens unwittingly line the pockets of their own oppressor with every pint of ale. But behind the bar, the real business is conducted: eviction notices signed for tenants who can't pay his suddenly spiking rents, and deals made to funnel ill-gotten gold back to his patrons on the Council.\n\nHe recently agreed to clear out a entire block of his own tenants—not because they were delinquent, but simply to improve the view for a new DragonCorp tower, an act of pure, profit-driven malice.\n\nProtected by his hulking bodyguard, Bogdan, Grenn operates with impunity, a perfectly tailored suit hiding the scales of a creature who would sell his own clan for a single, shiny coin."
+		"desc": "In the shadowy underbelly of New Miniport, no one embodies the casual cruelty of greed quite like Grenn. A lizardfolk with calculating, cold eyes and a smile that never reaches them, he is the slithering heart of the Cold-Bloods syndicate.\n\nMore businessman than thug, his preferred weapons are not knives or spells, but predatory leases, crippling debt, and damning secrets. Thanks to a lucrative and deeply corrupt deal with the Dragon Council, he holds a near-monopoly on the city's low-cost housing, making him the de facto slum-lord of New Miniport. He is a master exploiter, a blackmailer, and a general slime-ball who views the entire town as a personal piggy bank to be cracked open.\n\nHis public face is the jovial proprietor of \"The Lucky Die,\" a raucous and popular tavern where citizens unwittingly line the pockets of their own oppressor with every pint of ale. But behind the bar, the real business is conducted: eviction notices signed for tenants who can't pay his suddenly spiking rents, and deals made to funnel ill-gotten gold back to his patrons on the Council.\n\nHe recently agreed to clear out a entire block of his own tenants—not because they were delinquent, but simply to improve the view for a new DragonCorp tower, an act of pure, profit-driven malice.\n\nProtected by his hulking bodyguard, Bogdan, Grenn operates with impunity, a perfectly tailored suit hiding the scales of a creature who would sell his own clan for a single, shiny coin.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"grizz": {
 		"name": "Grizz",
 		"alias": "The Wrestler",
 		"species": "bearfolk",
-		"location": "school",
 		"personality": ["Naive", "Polite"],
-		"desc": "Barry's son Grizz is a wrestling star at school."
+		"desc": "Barry's son Grizz is a wrestling star at school.",
+		"mapdata": {
+			"location": "school"
+		}
 	},
 
 	"guilford": {
 		"name": "Guilford",
 		"alias": "The Mercenary",
 		"species": "elf",
-		"location": null,
 		"personality": ["Self-serving"],
 		"desc": "A straight-up mercenary."
 	},
@@ -193,78 +227,94 @@
 		"name": "Hamfast",
 		"alias": "The Cook",
 		"species": "halfling",
-		"location": "tavern",
 		"personality": ["Optimistic", "Warm"],
-		"desc": "Amid the clatter of tankards and the murmur of shady deals in Grenn's tavern, the true heart of \"The Lucky Die\" beats in its steaming, chaotic kitchen. Here, you'll find Hamfast, a flour-dusted halfling moving with a frantic, practiced energy as he single-handedly manages the entire kitchen. He is a craftsman of comfort food, a maestro of meat pies and stews, who believes that a full belly and a well-seasoned dish can solve most of the world's problems.\n\nHe insists on quality, which is why he still makes the daily trek down to the docks to get his supplies from Billy the Butcher, a stubborn tradition in the face of Grenn's preference for cheaper, DragonCorp-provisioned goods.\n\nHamfast is no fool. The whispered conversations that stop when he enters the room, the unsavory characters who meet with Grenn in the back booth, the general air of low-level menace—he knows his workplace is more than just a tavern. But he maintains a willful, professional ignorance, burying his concerns under a mountain of peeled potatoes and simmering gravy.\n\nHis world is defined by the four walls of his kitchen, the sizzle of his grill, and the simple, profound satisfaction of a patron enjoying his food. As long as Grenn lets him cook and doesn't involve him directly, Hamfast is content to keep his head down, his knives sharp, and focus on the one thing he can control: making the tastiest food in New Miniport."
+		"desc": "Amid the clatter of tankards and the murmur of shady deals in Grenn's tavern, the true heart of \"The Lucky Die\" beats in its steaming, chaotic kitchen. Here, you'll find Hamfast, a flour-dusted halfling moving with a frantic, practiced energy as he single-handedly manages the entire kitchen. He is a craftsman of comfort food, a maestro of meat pies and stews, who believes that a full belly and a well-seasoned dish can solve most of the world's problems.\n\nHe insists on quality, which is why he still makes the daily trek down to the docks to get his supplies from Billy the Butcher, a stubborn tradition in the face of Grenn's preference for cheaper, DragonCorp-provisioned goods.\n\nHamfast is no fool. The whispered conversations that stop when he enters the room, the unsavory characters who meet with Grenn in the back booth, the general air of low-level menace—he knows his workplace is more than just a tavern. But he maintains a willful, professional ignorance, burying his concerns under a mountain of peeled potatoes and simmering gravy.\n\nHis world is defined by the four walls of his kitchen, the sizzle of his grill, and the simple, profound satisfaction of a patron enjoying his food. As long as Grenn lets him cook and doesn't involve him directly, Hamfast is content to keep his head down, his knives sharp, and focus on the one thing he can control: making the tastiest food in New Miniport.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"hugo": {
 		"name": "Hugo",
 		"alias": "The Lumberjack",
 		"species": "troll",
-		"location": "protest-site",
 		"personality": ["Chain-smoker", "Irritable", "Quiet"],
-		"desc": "At the mist-shrouded edge of the Cursed Forest, a mountain of mossy, grey troll stands with immense frustration. This is Hugo, a lumberjack of few words and even less patience, who is just trying to do a simple job: clear-cut a swath of ancient timber on the direct orders of the Dragon Council.\n\nUnlike his brother Duggan, who found his calling in explosive piracy, Hugo sought a quieter life of straightforward labor—point at tree, turn on chainsaw, tree falls, get paid. It's an honest, uncomplicated cycle that has been violently disrupted by a band of idealistic student protesters and environmental activists who have chained themselves to his designated trees.\n\nNow, Hugo is stuck. He doesn't care about the Council's grand plans for expansion or the forest's supposed curses; he just wants his paycheck. The constant chanting, the signs, the sheer inconvenience of it all has worn his already thin patience to a frayed thread. His supply of cheap cigars, the only thing keeping his simmering rage in check, is nearly depleted. He's a hulking pressure cooker of resentment, and with the last wisp of smoke, he's this close to revving his industrial-grade chainsaw and letting the gods sort out the consequences. He didn't want a confrontation, but these kids are making it very, very difficult to just do his job."
+		"desc": "At the mist-shrouded edge of the Cursed Forest, a mountain of mossy, grey troll stands with immense frustration. This is Hugo, a lumberjack of few words and even less patience, who is just trying to do a simple job: clear-cut a swath of ancient timber on the direct orders of the Dragon Council.\n\nUnlike his brother Duggan, who found his calling in explosive piracy, Hugo sought a quieter life of straightforward labor—point at tree, turn on chainsaw, tree falls, get paid. It's an honest, uncomplicated cycle that has been violently disrupted by a band of idealistic student protesters and environmental activists who have chained themselves to his designated trees.\n\nNow, Hugo is stuck. He doesn't care about the Council's grand plans for expansion or the forest's supposed curses; he just wants his paycheck. The constant chanting, the signs, the sheer inconvenience of it all has worn his already thin patience to a frayed thread. His supply of cheap cigars, the only thing keeping his simmering rage in check, is nearly depleted. He's a hulking pressure cooker of resentment, and with the last wisp of smoke, he's this close to revving his industrial-grade chainsaw and letting the gods sort out the consequences. He didn't want a confrontation, but these kids are making it very, very difficult to just do his job.",
+		"mapdata": {
+			"location": "protest-site"
+		}
 	},
 
 	"kass": {
 		"name": "Kass",
 		"alias": "The Mechanic",
 		"species": "human",
-		"location": "construction-site",
 		"personality": ["Ambitious", "Analytical", "Idealistic"],
-		"desc": "Perched on a steel girder high above New Miniport, Kass is a splash of brilliant optimism against a grey sky of corporate cynicism. A human artificer with grease-smudged cheeks and a curious spark in her eyes, she serves as the unpaid apprentice to the dour dwarf construction foreman, Ferman.\n\nHer most striking feature is her own creation: a sleek, articulated robotic arm that she uses with breathtaking precision to handle tools, calibrate measurements, and sketch out innovative structural designs in a floating holographic display. Where Ferman sees back-breaking labor and cut corners, Kass sees fascinating engineering puzzles and the majestic beauty of a building rising from nothing.\n\nHer enthusiasm, however, is constantly doused by the cold water of Ferman's grim reality. She hangs on his every complaint about management and shoddy materials, not as a fellow griper, but as a student desperately trying to understand the vast gap between theoretical engineering and corrupt, real-world application.\n\nShe's caught in a difficult apprenticeship, learning invaluable practical skills from a master craftsman who is simultaneously trying to warn her away from the very industry she dreams of conquering. Kass represents the future—bright, innovative, and hopeful—banging its head against the rusty, immovable wall of the present, wondering if her genius will ever be allowed to build something truly great, or if it will only ever be used to patch the cracks in a failing system."
+		"desc": "Perched on a steel girder high above New Miniport, Kass is a splash of brilliant optimism against a grey sky of corporate cynicism. A human artificer with grease-smudged cheeks and a curious spark in her eyes, she serves as the unpaid apprentice to the dour dwarf construction foreman, Ferman.\n\nHer most striking feature is her own creation: a sleek, articulated robotic arm that she uses with breathtaking precision to handle tools, calibrate measurements, and sketch out innovative structural designs in a floating holographic display. Where Ferman sees back-breaking labor and cut corners, Kass sees fascinating engineering puzzles and the majestic beauty of a building rising from nothing.\n\nHer enthusiasm, however, is constantly doused by the cold water of Ferman's grim reality. She hangs on his every complaint about management and shoddy materials, not as a fellow griper, but as a student desperately trying to understand the vast gap between theoretical engineering and corrupt, real-world application.\n\nShe's caught in a difficult apprenticeship, learning invaluable practical skills from a master craftsman who is simultaneously trying to warn her away from the very industry she dreams of conquering. Kass represents the future—bright, innovative, and hopeful—banging its head against the rusty, immovable wall of the present, wondering if her genius will ever be allowed to build something truly great, or if it will only ever be used to patch the cracks in a failing system.",
+		"mapdata": {
+			"location": "construction-site"
+		}
 	},
 
 	"kem": {
 		"name": "Kem",
 		"alias": "The Alchemist",
 		"species": "kenku",
-		"location": "school",
 		"personality": ["Erratic", "Unpredictable"],
-		"desc": "In a classroom that hums with the energy of contained arcane reactions and smells faintly of ozone and sulfur, Professor Kem is a whirlwind of manic, brilliant energy. A goblin whose spectacles are perpetually askew and whose lab coat is stained with a fascinating history of metaphysical mishaps, he lives and breathes the intricate science of adventure. To him, a dungeon isn't just a place of monsters and treasure; it's a grand, unpredictable laboratory filled with unstable reagents, temporal anomalies, and substances that defy conventional physics.\n\nHe teaches his students to see the world not through a lens of mere combat, but through the rigorous principles of observation, hypothesis, and experimental verification.\n\nHis passion is utterly contagious. He doesn't just lecture; he performs, his voice rising to a fever pitch of excitement as he demonstrates the resonant frequency that shatters phantom crystal or the precise alchemical compound that neutralizes a slime's corrosive ooze. For every monstrous obstacle and environmental puzzle the dungeons throw at his students, Kem believes there is a logical, scientific solution waiting to be discovered.\n\nHe loves nothing more than the spark of understanding in a student's eye, the moment a chaotic magical effect is neatly explained by a elegant equation. In a world of brute force and simple spells, Professor Kem is a passionate advocate for the power of a keen mind and the scientific method, proving that the most powerful tool any adventurer can carry is their intellect."
+		"desc": "In a classroom that hums with the energy of contained arcane reactions and smells faintly of ozone and sulfur, Professor Kem is a whirlwind of manic, brilliant energy. A goblin whose spectacles are perpetually askew and whose lab coat is stained with a fascinating history of metaphysical mishaps, he lives and breathes the intricate science of adventure. To him, a dungeon isn't just a place of monsters and treasure; it's a grand, unpredictable laboratory filled with unstable reagents, temporal anomalies, and substances that defy conventional physics.\n\nHe teaches his students to see the world not through a lens of mere combat, but through the rigorous principles of observation, hypothesis, and experimental verification.\n\nHis passion is utterly contagious. He doesn't just lecture; he performs, his voice rising to a fever pitch of excitement as he demonstrates the resonant frequency that shatters phantom crystal or the precise alchemical compound that neutralizes a slime's corrosive ooze. For every monstrous obstacle and environmental puzzle the dungeons throw at his students, Kem believes there is a logical, scientific solution waiting to be discovered.\n\nHe loves nothing more than the spark of understanding in a student's eye, the moment a chaotic magical effect is neatly explained by a elegant equation. In a world of brute force and simple spells, Professor Kem is a passionate advocate for the power of a keen mind and the scientific method, proving that the most powerful tool any adventurer can carry is their intellect.",
+		"mapdata": {
+			"location": "school"
+		}
 	},
 
 	"kero": {
 		"name": "Kero",
 		"alias": "The Sensei",
 		"species": "frogfolk",
-		"location": "downtown",
-		"desc": "In a modest, slightly worn dojo tucked between a bakery and a tailor in the downtown district, the air is thick with the sound of focused exertion and the smell of polished wood and sweat. Here, Kero, a wiry and intensely perceptive frogfolk of few words, presides as sensei. His establishment, aptly named Saving Throw, is renowned not for teaching traditional martial arts, but for imparting a brutally practical philosophy of self-preservation.\n\nKero believes that a real fight isn't won with honor, but with survival. His curriculum is a unique blend of melee combat, environmental awareness, and cunning, designed to turn a student's panic into a tactical advantage.\n\nKero specializes in teaching adventuring students how to use anything at their disposal as a weapon—a chair leg, a hot pie from the bakery next door, a bag of flour to blind an opponent. He drills them in using an enemy's weight against them, how to turn a shove into a fall down a flight of stairs, and how to always, always, be aware of the nearest exit.\n\nHis lessons are less about kata and more about controlled chaos. While he maintains a stern, disciplined exterior, he possesses a deep, quiet care for his students, many of whom come from the poorer parts of town and cannot afford traditional weapon training.\n\nTo Kero, every student who learns to land safely from a push or disarm a bully with a belt is a life improved, a personal victory in a world that often feels stacked against the little guy. He is teaching them that the most important roll they'll ever make is the one to avoid getting hit."
+		"desc": "In a modest, slightly worn dojo tucked between a bakery and a tailor in the downtown district, the air is thick with the sound of focused exertion and the smell of polished wood and sweat. Here, Kero, a wiry and intensely perceptive frogfolk of few words, presides as sensei. His establishment, aptly named Saving Throw, is renowned not for teaching traditional martial arts, but for imparting a brutally practical philosophy of self-preservation.\n\nKero believes that a real fight isn't won with honor, but with survival. His curriculum is a unique blend of melee combat, environmental awareness, and cunning, designed to turn a student's panic into a tactical advantage.\n\nKero specializes in teaching adventuring students how to use anything at their disposal as a weapon—a chair leg, a hot pie from the bakery next door, a bag of flour to blind an opponent. He drills them in using an enemy's weight against them, how to turn a shove into a fall down a flight of stairs, and how to always, always, be aware of the nearest exit.\n\nHis lessons are less about kata and more about controlled chaos. While he maintains a stern, disciplined exterior, he possesses a deep, quiet care for his students, many of whom come from the poorer parts of town and cannot afford traditional weapon training.\n\nTo Kero, every student who learns to land safely from a push or disarm a bully with a belt is a life improved, a personal victory in a world that often feels stacked against the little guy. He is teaching them that the most important roll they'll ever make is the one to avoid getting hit.",
+		"mapdata": {
+			"location": "downtown",
+			"x": "78", "y": "12"
+		}
 	},
 
 	"lafferty": {
 		"name": "Lafferty",
 		"alias": "The Comedian",
 		"species": "gnoll",
-		"location": "tavern",
 		"personality": ["Confident", "Crass", "Funny", "Loud"],
-		"desc": "The raucous, laughter coming from \"The Lucky Die\" tavern on any Saturday night is credited entirely to Lafferty, a gnoll with a thick, rolling brogue and a grin full of sharp teeth.\n\nA master of timing and tone, he's a local treasure, able to spin the daily frustrations of life in New Miniport into side-splitting routines that have patrons howling with laughter into their ale. His comedy is a unifying force, a shared release for a town under increasing pressure. But recently, his sets have developed a sharper bite.\n\nWith a wag of his shaggy brow and a perfectly delivered punchline, he's begun to skewer the Dragon Council's absurd policies, the soul-crushing convenience of DragonCorp, and the gentrification pushing out the very people who make New Miniport unique.\n\nHe walks a razor's edge, keeping the jokes just light enough to maintain plausible deniability but pointed enough to get folks thinking long after the laughter dies down. This has, unsurprisingly, drawn the ire of his employer, the crime lord Grenn, who has pulled him aside to deliver a not-so-subtle \"suggestion\" to avoid certain topics.\n\nBut for a comedian, there is no greater challenge than a forbidden subject. To be told he can't joke about something is an invitation to craft his most brilliant, subversive material yet. For Lafferty, the stage is his battleground, and laughter is his weapon, and he's ready to die on the hill of a perfectly crafted punchline if it means speaking truth to power."
+		"desc": "The raucous, laughter coming from \"The Lucky Die\" tavern on any Saturday night is credited entirely to Lafferty, a gnoll with a thick, rolling brogue and a grin full of sharp teeth.\n\nA master of timing and tone, he's a local treasure, able to spin the daily frustrations of life in New Miniport into side-splitting routines that have patrons howling with laughter into their ale. His comedy is a unifying force, a shared release for a town under increasing pressure. But recently, his sets have developed a sharper bite.\n\nWith a wag of his shaggy brow and a perfectly delivered punchline, he's begun to skewer the Dragon Council's absurd policies, the soul-crushing convenience of DragonCorp, and the gentrification pushing out the very people who make New Miniport unique.\n\nHe walks a razor's edge, keeping the jokes just light enough to maintain plausible deniability but pointed enough to get folks thinking long after the laughter dies down. This has, unsurprisingly, drawn the ire of his employer, the crime lord Grenn, who has pulled him aside to deliver a not-so-subtle \"suggestion\" to avoid certain topics.\n\nBut for a comedian, there is no greater challenge than a forbidden subject. To be told he can't joke about something is an invitation to craft his most brilliant, subversive material yet. For Lafferty, the stage is his battleground, and laughter is his weapon, and he's ready to die on the hill of a perfectly crafted punchline if it means speaking truth to power.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"laggard": {
 		"name": "Laggard",
 		"alias": "The Police Officer",
 		"species": "tortle",
-		"location": "precinct",
 		"personality": ["Sluggish"],
-		"desc": "In the bustling New Miniport PD precinct, where urgency is the currency of the day, Officer Laggard moves at a different, more… geological pace. A tortle with a shell polished to a dull sheen and a face permanently fixed in an expression of placid incomprehension, he is the living embodiment of bureaucratic inertia.\n\nFor the average citizen reporting a crime, Laggard is a study in frustration. He arrives at crime scenes long after the culprits have fled, takes statements at a speed that suggests his quill is dipped in molasses, and files paperwork into a void from which it never returns. His standard response to any request, from a stolen locket to a bar brawl, is a slow, drawn-out \"I'll, uhhh... get around to that.\"\n\nThis maddening slowness, however, vanishes when the request comes from on high. A directive from the Dragon Council sees him spring into action with a speed that defies his biology, his shell suddenly no impediment to efficiently carrying out their every whim, be it serving an unjust eviction notice or shutting down a protest.\n\nThis stark contrast has led most citizens to a grim conclusion: Officer Laggard isn't incompetent; he is selectively, and strategically, slow. He is not a defender of justice, but a carefully placed obstruction, a living barrier ensuring that the wheels of law only turn for those with the power and influence to grease them."
+		"desc": "In the bustling New Miniport PD precinct, where urgency is the currency of the day, Officer Laggard moves at a different, more… geological pace. A tortle with a shell polished to a dull sheen and a face permanently fixed in an expression of placid incomprehension, he is the living embodiment of bureaucratic inertia.\n\nFor the average citizen reporting a crime, Laggard is a study in frustration. He arrives at crime scenes long after the culprits have fled, takes statements at a speed that suggests his quill is dipped in molasses, and files paperwork into a void from which it never returns. His standard response to any request, from a stolen locket to a bar brawl, is a slow, drawn-out \"I'll, uhhh... get around to that.\"\n\nThis maddening slowness, however, vanishes when the request comes from on high. A directive from the Dragon Council sees him spring into action with a speed that defies his biology, his shell suddenly no impediment to efficiently carrying out their every whim, be it serving an unjust eviction notice or shutting down a protest.\n\nThis stark contrast has led most citizens to a grim conclusion: Officer Laggard isn't incompetent; he is selectively, and strategically, slow. He is not a defender of justice, but a carefully placed obstruction, a living barrier ensuring that the wheels of law only turn for those with the power and influence to grease them.",
+		"mapdata": {
+			"location": "precinct"
+		}
 	},
 
 	"leon": {
 		"name": "Leon",
 		"alias": "The Subterranian",
 		"species": "tortle",
-		"location": null,
 		"personality": ["Lonely"],
-		"desc": "Leon is a tortle fighter."
+		"desc": "Leon is a tortle fighter.",
+		"mapdata": {
+			"location": "dojo"
+		}
 	},
 
 	"leona": {
 		"name": "Leona",
 		"alias": "The Scrapper",
 		"species": "leonin",
-		"location": null,
 		"personality": ["Unpredictable"],
 		"desc": "Leona is a drug-addicted arena fighter."
 	},
@@ -273,7 +323,6 @@
 		"name": "Lucas",
 		"alias": "The Pick-Up Artist",
 		"species": "tiefling",
-		"location": null,
 		"personality": ["Misogynistic"],
 		"desc": "Lucas is a pick-up artist who uses a combination of close-up magic and enchantment magic to seduce vulnerable young women."
 	},
@@ -283,17 +332,21 @@
 		"alias": "The Virtuosa",
 		"species": "harengon",
 		"desc": "Mae is a bard student at the school, and performs violin music in the tavern every Saturday night.",
-		"location": "school"
+		"mapdata": {
+			"location": "school"
+		}
 	},
 
 	"makk": {
 		"name": "Makk",
 		"alias": "The Gym Bro",
 		"species": "orc",
-		"location": null,
 		"appearance": ["Oily", "Swole", "Veiny"],
 		"personality": ["Aggressive", "Arrogant", "Misogynistic", "Narcissistic", "Posturing"],
-		"desc": "In a soundproofed studio that reeks of cheap energy drinks and entitlement, Makk holds court. An orc whose only discernible talents are a loud voice and a bottomless capacity for resentment, he is the host of \"The Makk Attakk\", a podcast that has inexplicably festered into a popular blight on New Miniport's airwaves.\n\nHis entire philosophy is a shallow, toxic brew of hyper-capitalism and virulent misogyny, where success is measured solely in coin and the perceived subjugation of others. Each episode is a monotonous rant, either glorifying the Dragon Council's cutthroat business tactics or spewing vile, reductive critiques of the women in town he feels are unjustly ignoring him.\n\nDespite—or perhaps because of—his repugnant views, he has cultivated a devoted following of disaffected young males who lap up his oversimplified, hateful explanations for their own frustrations. He offers them a convenient scapegoat for their failures and a hollow sense of superiority, all while lining his own pockets with merch sales and dubious sponsorships.\n\nTo most, he is a pathetic joke, but a dangerous one; his words are a poison that legitimizes bigotry and turns community members against each other, making him a different kind of villain for a modern New Miniport."
+		"desc": "In a soundproofed studio that reeks of cheap energy drinks and entitlement, Makk holds court. An orc whose only discernible talents are a loud voice and a bottomless capacity for resentment, he is the host of \"The Makk Attakk\", a podcast that has inexplicably festered into a popular blight on New Miniport's airwaves.\n\nHis entire philosophy is a shallow, toxic brew of hyper-capitalism and virulent misogyny, where success is measured solely in coin and the perceived subjugation of others. Each episode is a monotonous rant, either glorifying the Dragon Council's cutthroat business tactics or spewing vile, reductive critiques of the women in town he feels are unjustly ignoring him.\n\nDespite—or perhaps because of—his repugnant views, he has cultivated a devoted following of disaffected young males who lap up his oversimplified, hateful explanations for their own frustrations. He offers them a convenient scapegoat for their failures and a hollow sense of superiority, all while lining his own pockets with merch sales and dubious sponsorships.\n\nTo most, he is a pathetic joke, but a dangerous one; his words are a poison that legitimizes bigotry and turns community members against each other, making him a different kind of villain for a modern New Miniport.",
+		"mapdata": {
+			"location": "gym"
+		}
 	},
 
 	"manto": {
@@ -301,7 +354,9 @@
 		"alias": "The Mantis",
 		"species": "insectoid",
 		"desc": "Manto uses its two scythes to slice down anything in its path.",
-		"location": "ruins"
+		"mapdata": {
+			"location": "ruins"
+		}
 	},
 
 	"mawloq": {
@@ -309,14 +364,15 @@
 		"alias": "The Beast",
 		"species": "insectoid",
 		"desc": "Mawloq is the Queen of the insectoids.",
-		"location": "ruins"
+		"mapdata": {
+			"location": "ruins"
+		}
 	},
 
 	"montag": {
 		"name": "Montague",
 		"alias": "The Firefighter",
 		"species": "loxodon",
-		"location": null,
 		"desc": "In a town built largely of wood and packed with thatched roofs, magical mishaps, and the occasional alchemical explosion, the role of firefighter is an important duty. And there is no one in town more suited to this duty than Montague, a towering, immensely patient loxodon.\n\nAs the captain of the town's small but dedicated fire brigade, he is a calming, steadfast presence. His size and strength allow him to clear debris and support buckling structures, while his powerful trunk is a uniquely versatile tool, capable of delivering a precise deluge of water or carefully ventilating a roof to control a blaze. He is a pillar of the community, respected by all for his courage and his gentle, steady nature.\n\nMontague's role, however, has become increasingly complex and political. While he and his crew are officially funded by the town, they find themselves constantly at odds with the Dragon Council's new priorities. They are chronically underfunded, their equipment is aging, and their requests for better magical suppression gear are ignored—while just across the river, the DragonCorp tower construction site has its own state-of-the-art, privately funded fire-prevention system.\n\nMontague often has to make difficult choices about allocating his scarce resources, a quiet tension that pits his duty to the entire town against the Council's neglect of its older districts. He is a silent witness to the town's inequalities, and one of the few figures of authority who genuinely has everyone's best interests at heart."
 	},
 
@@ -324,119 +380,140 @@
 		"name": "Moss",
 		"alias": "The Forestguard",
 		"species": "firbolg",
-		"location": "forest",
-		"desc": "Moss is one of the forest's protectors."
+		"desc": "Moss is one of the forest's protectors.",
+		"mapdata": {
+			"location": "forest"
+		}
 	},
 
 	"murhdox": {
 		"name": "Murhdox",
 		"alias": "The Mogul",
 		"species": "dragonborn",
-		"location": "council",
-		"desc": "Where Bhezox controls the money, Muhrdox controls the minds. A media mogul with blazing crimson scales and a tie the color of fresh blood, his influence is a constant, insidious presence in every New Miniport home. He owns the news networks that spin pro-Council propaganda, the social media platforms that algorithmically silence dissent, and the radio stations that play jingles praising DragonCorp's \"innovation.\"\n\nHe crafts narratives, manufactures consent, and turns public opinion with the ease of changing a channel, ensuring the populace is too misinformed, distracted, or fearful to question the Council's authority. He is a master of perception, believing that whoever tells the story controls the world."
+		"desc": "Where Bhezox controls the money, Muhrdox controls the minds. A media mogul with blazing crimson scales and a tie the color of fresh blood, his influence is a constant, insidious presence in every New Miniport home. He owns the news networks that spin pro-Council propaganda, the social media platforms that algorithmically silence dissent, and the radio stations that play jingles praising DragonCorp's \"innovation.\"\n\nHe crafts narratives, manufactures consent, and turns public opinion with the ease of changing a channel, ensuring the populace is too misinformed, distracted, or fearful to question the Council's authority. He is a master of perception, believing that whoever tells the story controls the world.",
+		"mapdata": {
+			"location": "council"
+		}
 	},
 
 	"murv": {
 		"name": "Murv",
 		"alias": "The Boxer",
 		"species": "ratfolk",
-		"location": "tavern",
-		"desc": "Murv is an ex-boxer who retired after going blind during his big title fight years ago. He insists he's still got it, but most think he's all bluster."
+		"desc": "Murv is an ex-boxer who retired after going blind during his big title fight years ago. He insists he's still got it, but most think he's all bluster.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"naomi": {
 		"name": "Naomi",
 		"alias": "The Dancer",
 		"species": "human",
-		"desc": "Naomi dances in the tavern on friday nights.",
-		"location": null
+		"desc": "Naomi dances in the tavern on friday nights."
 	},
 
 	"nelbjorn": {
 		"name": "Nelbjorn",
 		"alias": "The Forestguard",
 		"species": "centaur",
-		"location": "forest",
-		"desc": "Nelbjorn is one of the forest's protectors."
+		"desc": "Nelbjorn is one of the forest's protectors.",
+		"mapdata": {
+			"location": "forest"
+		}
 	},
 
 	"newt": {
 		"name": "Newt",
 		"alias": "The Lake Spirit",
 		"species": "genasi",
-		"location": "forest",
-		"desc": "Newt is a genasi."
+		"desc": "Newt is a genasi.",
+		"mapdata": {
+			"location": "forest"
+		}
 	},
 
 	"nocturna": {
 		"name": "Nocturna",
 		"alias": "The Barista",
 		"species": "tiefling",
-		"location": "mall",
-		"desc": "When the sun sets on New Miniport and respectable citizens retreat to their homes, the night shift begins at the 'Rise & Grind' coffee house, presided over by its prickly, horned night-shift warden: Nocturna. A tiefling with a glare that could curdle milk and a wit sharp enough to etch glass, she serves caffeine and sarcasm in equally potent measures.\n\nShe is the guardian of the late-night study session, the savior of the overnight worker, and the terror of any customer who dares to be rude or condescending. She has no patience for fools and even less for the entitled, and she's been known to verbally eviscerate a DragonCorp executive over his pronunciation of \"macchiato.\"\n\nThis defiant attitude isn't confined to the counter. By day, she's a college student drowning in a seemingly inescapable tide of debt, watching her loan balance creep higher with every payment she makes. This systemic exploitation has forged her into a fervent anti-authoritarian. She is a fixture at every protest, march, and sit-in against the Dragon Council's policies, her unmistakable silhouette a familiar sight on the front lines.\n\nShe's currently spending her precious free time (and risking her job) standing with the protesters in the Cursed Forest, not just for the cause, but for the sheer principle of giving the powerful a headache. For Nocturna, every perfectly thrown insult and every protest sign is a small act of war against a system designed to grind her down."
+		"desc": "When the sun sets on New Miniport and respectable citizens retreat to their homes, the night shift begins at the 'Rise & Grind' coffee house, presided over by its prickly, horned night-shift warden: Nocturna. A tiefling with a glare that could curdle milk and a wit sharp enough to etch glass, she serves caffeine and sarcasm in equally potent measures.\n\nShe is the guardian of the late-night study session, the savior of the overnight worker, and the terror of any customer who dares to be rude or condescending. She has no patience for fools and even less for the entitled, and she's been known to verbally eviscerate a DragonCorp executive over his pronunciation of \"macchiato.\"\n\nThis defiant attitude isn't confined to the counter. By day, she's a college student drowning in a seemingly inescapable tide of debt, watching her loan balance creep higher with every payment she makes. This systemic exploitation has forged her into a fervent anti-authoritarian. She is a fixture at every protest, march, and sit-in against the Dragon Council's policies, her unmistakable silhouette a familiar sight on the front lines.\n\nShe's currently spending her precious free time (and risking her job) standing with the protesters in the Cursed Forest, not just for the cause, but for the sheer principle of giving the powerful a headache. For Nocturna, every perfectly thrown insult and every protest sign is a small act of war against a system designed to grind her down.",
+		"mapdata": {
+			"location": "mall"
+		}
 	},
 
 	"orlok": {
 		"name": "Orlok",
 		"alias": "The Showstopper",
 		"species": "batfolk",
-		"location": "school",
-		"desc": "Professor Orlok is the school's Music & Drama teacher. He is obsessed with all things related to stage and set production."
+		"desc": "Professor Orlok is the school's Music & Drama teacher. He is obsessed with all things related to stage and set production.",
+		"mapdata": {
+			"location": "school"
+		}
 	},
 
 	"ovina": {
 		"name": "Ovina",
 		"alias": "The Sherpa",
 		"species": "caoraa",
-		"location": "campsite",
-		"desc": "Among the towering, mist-shrouded peaks of the Red Mountains, the name Ovina was once synonymous with safety and expertise. A caora (sheepfolk) sherpa with a gentle, patient demeanor and a coat thick enough to ward off the highest winds, she was the most sought-after guide in New Miniport. She knew every treacherous pass, every sudden weather change, and every safe ledge as if they were old friends. Her clients, often nervous or inexperienced, were always put at ease by her steady presence and unwavering confidence. She was a dedicated professional who treated every tour group like her own flock, ensuring not a single soul was lost on her watch.\n\nWhich is why her current disappearance is so deeply alarming.\n\nOvina and her latest client, a tourist named Perd, along with several others in their party, vanished near the notoriously tricky area known as Hiker's Cramp.\n\nFor anyone else, it might be written off as a tragic accident in unforgiving terrain. But for those who knew her, for the town that relied on her, the truth is undeniable: Ovina would not have gotten lost. Her absence signals something far more sinister at work in the mountains—a hidden danger that even the most knowledgeable guide could not foresee or avoid. Her fate is now one of New Miniport's most worrying mysteries."
+		"desc": "Among the towering, mist-shrouded peaks of the Red Mountains, the name Ovina was once synonymous with safety and expertise. A caora (sheepfolk) sherpa with a gentle, patient demeanor and a coat thick enough to ward off the highest winds, she was the most sought-after guide in New Miniport. She knew every treacherous pass, every sudden weather change, and every safe ledge as if they were old friends. Her clients, often nervous or inexperienced, were always put at ease by her steady presence and unwavering confidence. She was a dedicated professional who treated every tour group like her own flock, ensuring not a single soul was lost on her watch.\n\nWhich is why her current disappearance is so deeply alarming.\n\nOvina and her latest client, a tourist named Perd, along with several others in their party, vanished near the notoriously tricky area known as Hiker's Cramp.\n\nFor anyone else, it might be written off as a tragic accident in unforgiving terrain. But for those who knew her, for the town that relied on her, the truth is undeniable: Ovina would not have gotten lost. Her absence signals something far more sinister at work in the mountains—a hidden danger that even the most knowledgeable guide could not foresee or avoid. Her fate is now one of New Miniport's most worrying mysteries.",
+		"mapdata": {
+			"location": "campsite"
+		}
 	},
 
 	"perd": {
 		"name": "Perd",
 		"alias": "The Tourist",
 		"species": "verdan",
-		"location": "campsite",
-		"desc": "Perd is a verdan tourist, a long way from home and buzzing with the exhilarating terror of her first true independence. With wide, curious eyes that miss nothing and a demeanor that shifts between bold curiosity and sudden, endearing shyness, she represents a soul utterly unjaded by the world.\n\nShe came to New Miniport with a single goal: to see the legendary Red Mountains and to meet the kinds of people she'd only ever read about in books.\n\nHer choice of Ovina as a guide was a deliberate one, seeking not just safety but a connection to a local who truly knew the land's stories. For Perd, this trip was meant to be the first chapter of her own grand adventure, a tale she would one day tell her family about the strange and wonderful folk she met beyond her quiet village. Instead, that story has taken a dark and unexpected turn."
+		"desc": "Perd is a verdan tourist, a long way from home and buzzing with the exhilarating terror of her first true independence. With wide, curious eyes that miss nothing and a demeanor that shifts between bold curiosity and sudden, endearing shyness, she represents a soul utterly unjaded by the world.\n\nShe came to New Miniport with a single goal: to see the legendary Red Mountains and to meet the kinds of people she'd only ever read about in books.\n\nHer choice of Ovina as a guide was a deliberate one, seeking not just safety but a connection to a local who truly knew the land's stories. For Perd, this trip was meant to be the first chapter of her own grand adventure, a tale she would one day tell her family about the strange and wonderful folk she met beyond her quiet village. Instead, that story has taken a dark and unexpected turn.",
+		"mapdata": {
+			"location": "campsite"
+		}
 	},
 
 	"pockets": {
 		"name": "Pockets",
 		"alias": "The Hoarder",
 		"species": "gnome",
-		"desc": "Pockets always wears clothing with dozens of pockets.",
-		"location": null
+		"desc": "Pockets always wears clothing with dozens of pockets."
 	},
 
 	"rhaegan": {
 		"name": "Rhaegan",
 		"alias": "The Senator",
 		"species": "dragonborn",
-		"location": "council",
-		"desc": "Completing the trifecta is Rhaegon, a politician whose light brown scales and gilded yellow tie project an air of warm, trustworthy authority that is entirely false. He is the architect of the Council's legal dominance, a vicious strategist who drafts legislation with seemingly benign language that contains loopholes and clauses exclusively beneficial to Dragonborn.\n\nHe creates tax breaks for scaled citizens, zoning laws that push other races out of lucrative districts, and \"public safety\" ordinances that criminalize protest. While Bhezox steals their money and Muhrdox clouds their thoughts, Rhaegon builds the legal cage around them, smiling all the while and calling it progress for all. Together, they are a perfect, tyrannical symbiosis: wealth, information, and law."
+		"desc": "Completing the trifecta is Rhaegon, a politician whose light brown scales and gilded yellow tie project an air of warm, trustworthy authority that is entirely false. He is the architect of the Council's legal dominance, a vicious strategist who drafts legislation with seemingly benign language that contains loopholes and clauses exclusively beneficial to Dragonborn.\n\nHe creates tax breaks for scaled citizens, zoning laws that push other races out of lucrative districts, and \"public safety\" ordinances that criminalize protest. While Bhezox steals their money and Muhrdox clouds their thoughts, Rhaegon builds the legal cage around them, smiling all the while and calling it progress for all. Together, they are a perfect, tyrannical symbiosis: wealth, information, and law.",
+		"mapdata": {
+			"location": "council"
+		}
 	},
 
 	"rodrik": {
 		"name": "Rodrik",
 		"alias": "The Bartender",
 		"species": "orc",
-		"location": "tavern",
-		"desc": "Behind the worn oak bar of The Lucky Die, Rodrik presides over not just the ale taps, but the flow of information. A hobgoblin with a neatly waxed mustache and eyes that miss nothing, he is the silent, steady constant in the tavern's chaotic ecosystem.\n\nHe knows every regular by name, their usual drink, and more importantly, the weight of the secrets they carry. His method of intelligence gathering is deceptively simple: to loosen a tongue, he simply stops watering down that patron's drinks. A few cups of full-strength dwarven stout, and the most tightly held confessions and grievances begin to spill out across the sticky countertop.\n\nHe is acutely aware that his employer, Grenn, is a criminal kingpin, but Rodrik operates on a simple, survivalist code: the tavern is neutral ground, and he is its warden. He is not a snitch; he trades in secrets, not loyalty. He provides Grenn with just enough useful information to remain valuable and above suspicion, but he holds back far more than he gives. If a piece of gossip could put a decent regular in danger or disrupt the delicate balance of his domain, he might just \"forget\" he heard it, or even offer a carefully crafted piece of misinformation.\n\nIn the shifting allegiances of New Miniport, Rodrik's true allegiance is to himself and the sanctity of his bar, making him one of the most quietly powerful and unpredictable figures in town."
+		"desc": "Behind the worn oak bar of The Lucky Die, Rodrik presides over not just the ale taps, but the flow of information. A hobgoblin with a neatly waxed mustache and eyes that miss nothing, he is the silent, steady constant in the tavern's chaotic ecosystem.\n\nHe knows every regular by name, their usual drink, and more importantly, the weight of the secrets they carry. His method of intelligence gathering is deceptively simple: to loosen a tongue, he simply stops watering down that patron's drinks. A few cups of full-strength dwarven stout, and the most tightly held confessions and grievances begin to spill out across the sticky countertop.\n\nHe is acutely aware that his employer, Grenn, is a criminal kingpin, but Rodrik operates on a simple, survivalist code: the tavern is neutral ground, and he is its warden. He is not a snitch; he trades in secrets, not loyalty. He provides Grenn with just enough useful information to remain valuable and above suspicion, but he holds back far more than he gives. If a piece of gossip could put a decent regular in danger or disrupt the delicate balance of his domain, he might just \"forget\" he heard it, or even offer a carefully crafted piece of misinformation.\n\nIn the shifting allegiances of New Miniport, Rodrik's true allegiance is to himself and the sanctity of his bar, making him one of the most quietly powerful and unpredictable figures in town.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"scratch": {
 		"name": "Scratch",
 		"alias": "The DJ",
 		"species": "satyr",
-		"location": "tavern",
-		"desc": ""
+		"desc": "",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"selina": {
 		"name": "Selina",
 		"alias": "The Burglar",
 		"species": "tabaxi",
-		"location": null,
 		"desc": "Selina is a burglar."
 	},
 
@@ -444,7 +521,6 @@
 		"name": "Shimmer",
 		"alias": "The Crystal Spirit",
 		"species": "genasi",
-		"location": null,
 		"desc": "Shimmer is a genasi."
 	},
 
@@ -452,7 +528,6 @@
 		"name": "Skorch",
 		"alias": "The Volano Spirit",
 		"species": "genasi",
-		"location": null,
 		"desc": "Skorch is a genasi."
 	},
 
@@ -460,8 +535,10 @@
 		"name": "Stark",
 		"alias": "The Quarterback",
 		"species": "wolfkind",
-		"location": "school",
-		"desc": "Stark is a werewolf athlete at the academy."
+		"desc": "Stark is a werewolf athlete at the academy.",
+		"mapdata": {
+			"location": "school"
+		}
 	},
 
 	"taurus": {
@@ -469,30 +546,35 @@
 		"alias": "The Surgeon",
 		"species": "minotaur",
 		"desc": "Doc Taurus is a minotaur doctor.",
-		"location": null
+		"mapdata": {
+			"location": "clinic"
+		}
 	},
 
 	"thalassa": {
 		"name": "Thalassa",
 		"alias": "The Valedictorian",
 		"species": "triton",
-		"location": "school",
-		"desc": "In the halls of New Miniport's academy, Thalassa cuts a formidable figure. A triton valedictorian and student president with an unwavering moral compass, she navigates the land-bound world from her wheelchair device she views, not as a limitation, but as a stark indictment of the town's poor design.\n\nWith the keen intellect of a scholar and the unshakable confidence of someone who knows her true power, she often points out that in her underwater home, it is the air-breathing mammals who would be considered \"disabled\", utterly helpless beneath the waves. This perspective fuels her fierce advocacy for justice and accessibility.\n\nThalassa is a force of nature in student government, a brilliant orator and organizer who fights tirelessly for the rights of the marginalized. She sees the systemic injustices in New Miniport—the favoritism of the Dragon Council, the exploitation by figures like Grenn, the struggles of people like Ferman and Nocturna—not as isolated problems, but as failures of a system that refuses to accommodate anyone outside the norm.\n\nShe will always, without fail, defend the underdog, using her sharp wit and top-tier grades as weapons to dismantle arguments and shame bullies. For Thalassa, her wheelchair is a constant reminder that the world needs to change, not her, and she is the unstoppable tide that will see it happen."
+		"desc": "In the halls of New Miniport's academy, Thalassa cuts a formidable figure. A triton valedictorian and student president with an unwavering moral compass, she navigates the land-bound world from her wheelchair device she views, not as a limitation, but as a stark indictment of the town's poor design.\n\nWith the keen intellect of a scholar and the unshakable confidence of someone who knows her true power, she often points out that in her underwater home, it is the air-breathing mammals who would be considered \"disabled\", utterly helpless beneath the waves. This perspective fuels her fierce advocacy for justice and accessibility.\n\nThalassa is a force of nature in student government, a brilliant orator and organizer who fights tirelessly for the rights of the marginalized. She sees the systemic injustices in New Miniport—the favoritism of the Dragon Council, the exploitation by figures like Grenn, the struggles of people like Ferman and Nocturna—not as isolated problems, but as failures of a system that refuses to accommodate anyone outside the norm.\n\nShe will always, without fail, defend the underdog, using her sharp wit and top-tier grades as weapons to dismantle arguments and shame bullies. For Thalassa, her wheelchair is a constant reminder that the world needs to change, not her, and she is the unstoppable tide that will see it happen.",
+		"mapdata": {
+			"location": "school"
+		}
 	},
 
 	"uma": {
 		"name": "Uma",
 		"alias": "The Headmistress",
 		"species": "owlin",
-		"location": "school",
-		"desc": "Perched atop a precarious mountain of paperwork in her academy office, Headmistress Uma is a portrait of exhausted dedication. An owlin whose feathers are slightly ruffled from long hours and constant stress, her enormous, keen eyes are perpetually ringed with the shadows of sleep deprivation.\n\nShe is never without a massive, steaming mug of coffee, a lifeline that fuels her through budget meetings with the Dragon Council, drafting lesson plans on dungeon etiquette, and writing endless letters of recommendation. The weight of shaping the next generation of New Miniport's adventurers is a heavy one, and it rests squarely on her tired shoulders.\n\nYet, for all her weariness, her care for her students is boundless. She knows each of them by name, their strengths, their fears, and their potential. She frets over them like a mother hen, her heart aching when they stumble and swelling with pride when they succeed. She pushes them not just to be skilled with a sword or a spell, but to be critical thinkers and ethical problem-solvers in a world that often rewards the opposite.\n\nThe academy is her nest, and she will fiercely protect the fledglings within it, even if it means going beak-to-beak with the Council itself. She is desperately tired, but she will not rest until every last one of her students is prepared for the real world—a world she knows is far more dangerous than any diorama dungeon."
+		"desc": "Perched atop a precarious mountain of paperwork in her academy office, Headmistress Uma is a portrait of exhausted dedication. An owlin whose feathers are slightly ruffled from long hours and constant stress, her enormous, keen eyes are perpetually ringed with the shadows of sleep deprivation.\n\nShe is never without a massive, steaming mug of coffee, a lifeline that fuels her through budget meetings with the Dragon Council, drafting lesson plans on dungeon etiquette, and writing endless letters of recommendation. The weight of shaping the next generation of New Miniport's adventurers is a heavy one, and it rests squarely on her tired shoulders.\n\nYet, for all her weariness, her care for her students is boundless. She knows each of them by name, their strengths, their fears, and their potential. She frets over them like a mother hen, her heart aching when they stumble and swelling with pride when they succeed. She pushes them not just to be skilled with a sword or a spell, but to be critical thinkers and ethical problem-solvers in a world that often rewards the opposite.\n\nThe academy is her nest, and she will fiercely protect the fledglings within it, even if it means going beak-to-beak with the Council itself. She is desperately tired, but she will not rest until every last one of her students is prepared for the real world—a world she knows is far more dangerous than any diorama dungeon.",
+		"mapdata": {
+			"location": "school"
+		}
 	},
 
 	"viksen": {
 		"name": "Viksen",
 		"alias": "The Mother",
 		"species": "foxfolk",
-		"location": null,
 		"personality": ["Protective"],
 		"desc": ""
 	},
@@ -501,24 +583,30 @@
 		"name": "Wikus",
 		"alias": "The Prawn",
 		"species": "insectoid",
-		"location": "ruins",
-		"desc": "Wikus is a relentless stabbing machine."
+		"desc": "Wikus is a relentless stabbing machine.",
+		"mapdata": {
+			"location": "ruins"
+		}
 	},
 
 	"wyatt": {
 		"name": "Wyatt",
 		"alias": "The Gunslinger",
 		"species": "human",
-		"location": "tavern",
-		"desc": "Wyatt is an old west gunslinger."
+		"desc": "Wyatt is an old west gunslinger.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	},
 
 	"willow": {
 		"name": "Willow",
 		"alias": "The Barmaid",
 		"species": "human",
-		"location": "tavern",
-		"desc": "Willow is a half-elf working in the tavern."
+		"desc": "Willow is a half-elf working in the tavern.",
+		"mapdata": {
+			"location": "tavern"
+		}
 	}
 
 }

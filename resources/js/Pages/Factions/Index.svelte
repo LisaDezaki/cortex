@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
@@ -28,21 +29,68 @@
 	const characters      = $state(activeProject?.characters)
 	const factions    	  = $state(activeProject?.factions)
 	const locations    	  = $state(activeProject?.locations)
+
+	let urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
 	
 
-	//	State & Derived values
+	//	Reactive State
 
-	let query	 = $state('')
-	let filter	 = $state('')
-	let sort	 = $state('name')
-	let size	 = $state(6)
-	let layout   = $state('grid')
+	let parameters = $state({
+		query: urlParams.get('q') || '',
+		filter: urlParams.get('filter') || '',
+		sort: urlParams.get('sort') || 'name',
+		direction: urlParams.get('dir') || 'desc',
+		size: urlParams.get('size') || 6,
+		layout: urlParams.get('layout') || 'grid'
+	})
+
 	let selected = $state(null)
-	let gridCols = $derived(12-size)
+	let gridCols = $derived(12-parameters.size)
 	let results = $derived(factions.items)
 
+
+	/**
+	 * Sync with URL
+	 * Update filters from URL on Mount
+	 */
+	onMount(() => {
+		urlParams = new URLSearchParams(window.location.search);
+		parameters = {
+			query: urlParams.get('q') || '',
+			filter: urlParams.get('filter') || '',
+			size: urlParams.get('size') || 6,
+			sort: urlParams.get('sort') || 'name',
+			direction: urlParams.get('dir') || 'desc',
+			layout: urlParams.get('layout') || 'grid'
+		};
+	});
+
+
+	/**
+	 * Update URL
+	 * Update URL params (without page reload) when filters change
+	 */
+	$effect(() => {
+		const url = new URL(window.location);
+		if (parameters.query)	{ url.searchParams.set('q', parameters.query); }
+		else 					{ url.searchParams.delete('q'); }
+		if (parameters.filter)	{ url.searchParams.set('filter', parameters.filter); }
+		else					{ url.searchParams.delete('filter'); }
+		url.searchParams.set('size',		parameters.size);
+		url.searchParams.set('sort',		parameters.sort);
+		url.searchParams.set('direction',	parameters.direction);
+		url.searchParams.set('layout',		parameters.layout);
+		window.history.replaceState({}, '', url);
+	});
+
+
+	/**
+	 * Get Subtitle
+	 * @param character A CharacterObject class instance
+	 * @return {string} Subtitle to display on Character Cards
+	 */
 	function getSubtitle(faction) {
-		switch (sort) {
+		switch (parameters.sort) {
 			case 'members':
 				return faction.members?.items.length + ' Members'
 			case 'created_at':
@@ -50,10 +98,16 @@
 			case 'updated_at':
 				return new Date(faction.meta?.updatedAt).toLocaleString() || '--'
 			default:
-				return faction.type
+				return faction.type || '--'
 		}
 	}
 
+
+	/**
+	 * Select Faction
+	 * @param faction A FactionObject class instance
+	 * @return {void}
+	 */
 	function selectFaction(faction) {
 		selected = selected === faction ? null : faction
 	}
@@ -86,8 +140,12 @@
 
 			<FactionControlBar class="px-12 pb-1.5"
 				data={factions} project={activeProject}
-				bind:query bind:filter bind:sort
-				bind:results bind:size bind:layout
+				bind:query={parameters.query}
+				bind:filter={parameters.filter}
+				bind:sort={parameters.sort}
+				bind:size={parameters.size}
+				bind:layout={parameters.layout}
+				bind:results={results}
 				min={4} max={8}
 			/>
 
@@ -98,7 +156,7 @@
 
 					<!-- Grid -->
 
-					{#if layout == 'grid'}
+					{#if parameters.layout == 'grid'}
 						<FactionGrid
 							factions={results}
 							cols={gridCols}
@@ -168,7 +226,7 @@
 
 					<!-- Table -->
 
-					{:else if layout == 'table'}
+					{:else if parameters.layout == 'table'}
 						<FactionTable
 							factions={results}
 						/>
@@ -192,8 +250,6 @@
 	{/snippet}
 
 	{#snippet sidebar()}
-		<FactionPanel class="max-w-96 min-w-96 shrink-0 w-96"
-			faction={selected}
-		/>
+		<FactionPanel faction={selected} />
 	{/snippet}
 </AuthenticatedLayout>

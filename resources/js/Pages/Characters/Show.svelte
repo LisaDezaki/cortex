@@ -46,7 +46,7 @@
 <AuthenticatedLayout>
 
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="py-12">
+		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
 			<PageMenu
 				backTo={route('characters')} backToLabel="Character List"
 				items={[
@@ -240,9 +240,10 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h6">Location</Heading>
 					</Flex>
-					{#if character.location}
+					{#if character.mapData?.location}
+						{character.mapData.location.name}
 						<Map class="aspect-video rounded-lg shadow w-[64ch]"
-							location={character.location}
+							location={character.mapData?.location}
 						/>
 					{:else}
 						<p class="font-style-placeholder">{character.name} hasn't been assigned a location yet.</p>
