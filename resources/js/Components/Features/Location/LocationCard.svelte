@@ -5,6 +5,8 @@
 		class: className,
 		location,
 		options,
+		title,
+		subtitle,
         ...restProps
     } = $props()
 </script>
@@ -14,8 +16,8 @@
 	aspect="video" thumbnailIcon="MapPinArea"
 	image={location.image?.url}
 	icon={location.icon || "MapPin"}
-	title={location.name}
-	subtitle={location.type}
+	title={title || location.name}
+	subtitle={subtitle || location.type}
 	options={options}
 	starred={location.starred}
 	onStar={() => location.star()}

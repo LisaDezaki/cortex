@@ -127,7 +127,7 @@
 		<Section gap={0} class="h-full overflow-hidden">
 
 
-			<PageHeader class="px-12 py-3"
+			<PageHeader class="px-16 py-3"
 				title="Character List"
 				tabs={[
 					{ label: "List",		active: true },
@@ -140,14 +140,14 @@
 			/>
 
 
-			<CharacterControlBar class="px-12 pb-1.5"
+			<CharacterControlBar class="px-16 pb-1.5"
 				data={characters} project={activeProject}
 				bind:query={parameters.query}
 				bind:filter={parameters.filter}
 				bind:sort={parameters.sort}
 				bind:size={parameters.size}
 				bind:layout={parameters.layout}
-				bind:results={results}
+				bind:results
 				min={4} max={8}
 			/>
 
@@ -155,7 +155,7 @@
 			<!-- <pre>{JSON.stringify(parameters,null,3)}</pre> -->
 			
 
-			<Flex align="start" class="px-12 pt-3 pb-6 overflow-y-auto">
+			<Flex align="start" class="px-16 pt-3 pb-6 overflow-y-auto">
 				{#if activeProject && results.length > 0}
 	
 	

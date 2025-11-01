@@ -131,7 +131,7 @@ class LocationController extends Controller
 			'mapData.location.media',
 			// 'parent',
 			// 'children.banner',
-			'characters.image',
+			// 'characters.image',
 		]);
 
 		return Inertia::render('Locations/Show', [

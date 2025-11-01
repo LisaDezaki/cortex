@@ -1,4 +1,5 @@
 <script>
+	import { onMount } from 'svelte';
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
@@ -31,29 +32,86 @@
 	const locations       = $state(activeProject?.locations)
 	const worldTree		  = $state(new LocationObject($page.props.worldTree?.data))
 
+	let urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
 
-	//	State & Derived values
 
-	let query	 = $state('')
-	let filter	 = $state('')
-	let sort	 = $state('name')
-	let size	 = $state(3)
-	let layout   = $state('grid')
+	//	Reactive State
+
+	let parameters = $state({
+		query: urlParams.get('q') || '',
+		filter: urlParams.get('filter') || '',
+		sort: urlParams.get('sort') || 'name',
+		direction: urlParams.get('dir') || 'desc',
+		size: urlParams.get('size') || 6,
+		layout: urlParams.get('layout') || 'grid'
+	})
+
+	// let query	 = $state('')
+	// let filter	 = $state('')
+	// let sort	 = $state('name')
+	// let size	 = $state(3)
+	// let layout   = $state('grid')
 	let selected = $state(null)
-	let gridCols = $derived(8-size)
+	let gridCols = $derived(8-parameters.size)
 	let results  = $derived(locations.items)
 
+
+	/**
+	 * Sync with URL
+	 * Update filters from URL on Mount
+	 */
+	onMount(() => {
+		urlParams = new URLSearchParams(window.location.search);
+		parameters = {
+			query: urlParams.get('q') || '',
+			filter: urlParams.get('filter') || '',
+			size: urlParams.get('size') || 6,
+			sort: urlParams.get('sort') || 'name',
+			direction: urlParams.get('dir') || 'desc',
+			layout: urlParams.get('layout') || 'grid'
+		};
+	});
+
+
+	/**
+	 * Update URL
+	 * Update URL params (without page reload) when filters change
+	 */
+	$effect(() => {
+		const url = new URL(window.location);
+		if (parameters.query)	{ url.searchParams.set('q', parameters.query); }
+		else 					{ url.searchParams.delete('q'); }
+		if (parameters.filter)	{ url.searchParams.set('filter', parameters.filter); }
+		else					{ url.searchParams.delete('filter'); }
+		url.searchParams.set('size',		parameters.size);
+		url.searchParams.set('sort',		parameters.sort);
+		url.searchParams.set('direction',	parameters.direction);
+		url.searchParams.set('layout',		parameters.layout);
+		window.history.replaceState({}, '', url);
+	});
+
+
+	/**
+	 * Get Subtitle
+	 * @param location A LocationObject class instance
+	 * @return {string} Subtitle to display on Location Cards
+	 */
 	function getSubtitle(location) {
-		switch (sort) {
+		switch (parameters.sort) {
 			case 'created_at':
 				return new Date(location.meta?.createdAt).toLocaleString() || '--'
 			case 'updated_at':
 				return new Date(location.meta?.updatedAt).toLocaleString() || '--'
 			default:
-				return location.type
+				return location.type || '--'
 		}
 	}
 
+	/**
+	 * Select Location
+	 * @param location A LocationObject class instance
+	 * @return {void}
+	 */
 	function selectLocation(location) {
 		selected = selected?.id === location?.id ? null : location
 	}
@@ -85,8 +143,12 @@
 
 			<LocationControlBar class="px-16 pb-1.5"
 				data={locations} project={activeProject}
-				bind:query bind:filter bind:sort
-				bind:results bind:size bind:layout
+				bind:query={parameters.query}
+				bind:filter={parameters.filter}
+				bind:sort={parameters.sort}
+				bind:size={parameters.size}
+				bind:layout={parameters.layout}
+				bind:results
 			/>
 
 			<Flex align="start" class="px-16 pt-3 pb-6 overflow-y-auto">
@@ -95,7 +157,7 @@
 
 					<!-- Grid -->
 
-					{#if layout == 'grid'}
+					{#if parameters.layout == 'grid'}
 						<LocationGrid
 							cols={gridCols}
 							locations={results}
@@ -142,7 +204,7 @@
 
 					<!-- Table -->
 					
-					{:else if layout == 'table'}
+					{:else if parameters.layout == 'table'}
 						<LocationTable
 							locations={results}
 						/>
@@ -150,7 +212,7 @@
 					
 					<!-- Map -->
 
-					{:else if layout == 'map'}
+					{:else if parameters.layout == 'map'}
 						<LocationMap
 							constrain={false}
 							class="bg-black/50 max-h-full rounded-lg"

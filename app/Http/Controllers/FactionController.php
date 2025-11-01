@@ -146,14 +146,14 @@ class FactionController extends Controller
     public function show(Faction $faction)
     {
 		$faction->load([
-			'banner',
-			'emblem',
+			// 'banner',
+			// 'emblem',
 			'image',
 			'media',
 			'members.image',
 			'ranks',
-			'headquarters.image',
-			'headquarters.parent.map'
+			'headquarters',
+			// 'headquarters.parent.map'
 		]);
         return Inertia::render('Factions/Show', [
 			'faction' => new FactionResource($faction),

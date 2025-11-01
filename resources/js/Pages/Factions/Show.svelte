@@ -56,7 +56,7 @@
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
 			<PageMenu
-				backTo={route('characters')} backToLabel="Character List"
+				backTo={route('factions')} backToLabel="Faction List"
 				items={[
 					{ icon: "Info",      	label: "Details",    	href: "#details"	},
 					{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},

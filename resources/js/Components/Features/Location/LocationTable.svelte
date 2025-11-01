@@ -4,6 +4,7 @@
 	import { route } from 'momentum-trail'
 
 	import Form      from '@/Components/Core/Form.svelte'
+	import Inline    from '@/Components/Core/Inline.svelte'
 	import Button    from '@/Components/UI/Button.svelte'
 	import Table     from '@/Components/UI/Table'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
@@ -56,32 +57,36 @@
 	<Table.Cell>
 		<Link href={route('locations.show', {location: location.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
-				class="h-8 w-12 rounded"
+				class="h-6 w-9 rounded"
 				icon="MapPinArea"
 				src={location.image?.url}
 			/>
 			<div class="-space-y-0.5">
-				<div class="font-style-regular line-clamp-1">{location.name}</div>
+				<div class="font-style-small line-clamp-1">{location.name}</div>
 				<div class="font-style-tiny line-clamp-1 opacity-65">{location.region?.name}</div>
 			</div>
 		</Link>
 	</Table.Cell>
 	<Table.Cell>
-		<div class="font-style-regular line-clamp-1">{location.type}</div>
+		<div class="font-style-small line-clamp-1">{location.type}</div>
 	</Table.Cell>
 	<Table.Cell>
-		{#if location.characters.length > 0}
-			<div class="w-full -space-x-3">
-				{#each location.characters as character, i}
-					<CharacterIcon
-						href={route('characters.show', {character: character.slug})}
-						src={character.image?.url}
+		{#if location.mapItems.characters?.length > 0}
+			<Inline gap={0.5} class="w-full">
+				{#each location.mapItems.characters as mapItem, i}
+					<Thumbnail
+						class="h-7 w-7 rounded-full"
+						href={route('characters.show', {character: mapItem.mappable?.slug})}
+						icon="User" iconSize="sm"
+						src={mapItem.mappable?.image?.url}
 					/>
 				{/each}
-			</div>
+			</Inline>
 		{/if}
 	</Table.Cell>
 {/snippet}
+
+
 
 <Table
 	class="w-full {className}"
