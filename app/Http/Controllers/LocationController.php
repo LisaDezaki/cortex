@@ -129,6 +129,7 @@ class LocationController extends Controller
 			'image',
 			'media',
 			'mapData.location.media',
+			'mapItems.mappable'
 			// 'parent',
 			// 'children.banner',
 			// 'characters.image',

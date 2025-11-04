@@ -7,7 +7,7 @@
 	import ModalForm	from '@/Components/UI/ModalForm.svelte'
 	import Thumbnail	from '@/Components/UI/Thumbnail.svelte'
 	import LocationCard  from '@/Components/Features/Location/LocationCard.svelte'
-	import Map  		 from '@/Components/Features/Location/Map.svelte'
+	// import Map  		 from '@/Components/Features/Location/Map.svelte'
 
 	import LocationList from '@/services/LocationList'
 	let locations = new LocationList($page.props.activeProject?.data.locations)

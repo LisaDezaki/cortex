@@ -8,6 +8,7 @@
 	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
 	import Inline				from '@/Components/Core/Inline.svelte'
+	import Map					from '@/Components/Core/Map'
 	import Stack				from '@/Components/Core/Stack.svelte'
 	import Button				from '@/Components/UI/Button.svelte'
 	import Collapsible			from '@/Components/UI/Collapsible.svelte'
@@ -21,7 +22,7 @@
 	import Tag					from '@/Components/UI/Tag.svelte'
 	import Thumbnail			from '@/Components/UI/Thumbnail.svelte'
 
-	import Map					from '@/Components/Features/Location/Map.svelte'
+	// import Map					from '@/Components/Features/Location/Map.svelte'
 
 
 	//	Page & Component props
@@ -38,16 +39,15 @@
 		class: className
 	} = $props()
 
-	let hoveredLocation = $state()
+	// let hoveredLocation = $state()
 
-	function hoverLocation(loc) {
-		hoveredLocation = loc
-		// console.log(hoveredLocation)
-	}
+	// function hoverLocation(loc) {
+	// 	hoveredLocation = loc
+	// }
 
-	function setCoordinates(item) {
-		console.log('set coordinates', item)
-	}
+	// function setCoordinates(item) {
+	// 	console.log('set coordinates', item)
+	// }
 
 </script>
 
@@ -59,82 +59,87 @@
 
 		<!-- Head -->
 
-		<Map
-			pannable={false} zoomable={false}
-			class="aspect-square rounded-none shrink-0"
+		<Map.Context
+			class="flex-col w-full"
 			location={location}
-			bind:activeChild={hoveredLocation}
-		/>
+			map={location.getMap()}
+			mapItems={location.mapItems.all}
+		>
+
+			<!-- Head -->
+
+			<Map.Preview
+				class="aspect-square w-full"
+			/>
 
 
-		<!-- Body -->
-
-		<Stack gap={3} class="px-6 pt-5 pb-6">
-
-
-			<!-- Heading -->
-
-			<Stack align="center" justify="center" gap={0} class="mb-1.5 px-6">
-				<Heading is="h3" as="h4" class="text-center">{location.name}</Heading>
-				<p class="text-neutral-soft text-sm">{location.type}
-					{#if location.mapData?.location}
-						in <Link href={route('locations.show', { location: location.mapData.location.slug})}>{location.mapData.location.name}</Link>
-					{/if}
-				</p>
-			</Stack>
-
-
-			<!-- Description -->
-
-			{#if location.description}
-				<Collapsible class="font-style-small mb-6 min-h-16" collapsed={true}>
-					{location.description}
-				</Collapsible>
-			{/if}
-			<Separator />
-
-
-			<!-- MapItems -->
-
-			{#each [
-				{ type: 'character', title: 'Characters', icon: 'User', buttonLabel: 'Add character' },
-				{ type: 'faction',   title: 'Factions',   icon: 'FlagBannerFold', buttonLabel: 'Add headquarters' },
-				{ type: 'location',  title: 'Locations',  icon: 'MapPinSimple', buttonLabel: 'Add point of interest' }
-			] as group}
-				{#if location.mapItems?.[group.type+'s']?.length > 0}
-					<Stack align="start" gap={3} class="py-3">
-						<Inline class="font-style-button text-neutral-softest text-sm">{group.title}</Inline>
-						<Grid cols={2} gap={0} class="w-full">
-							{#each location.mapItems[group.type+'s'] as item,i}
-								<Inline
-									gap={0}
-									class="border cursor-pointer {hoveredLocation?.slug === item.mappable?.slug ? "border-accent" : "border-transparent"}"
-									onmouseover={() => hoverLocation(item.mappable)}
-									onmouseout={() => hoverLocation()}
-								>
-									<Flex align="center" justify="center" class="p-1 {hoveredLocation?.slug === item.mappable?.slug ? "bg-accent text-white" : "bg-neutral-softest text-neutral"}">
-										<Icon name={item.mappable?.icon || group.icon} size="sm" weight={hoveredLocation?.slug === item.mappable?.slug ? 'fill' : 'light'} />
-									</Flex>
-									<span class="font-light line-clamp-1 ml-1.5 text-sm truncate">{item.mappable?.name}</span>
-									{#if hoveredLocation?.slug === item.mappable?.slug}
-										<Button size="sm"
-											class="h-full ml-auto rounded-none {item.x && item.y ? 'bg-accent-softest text-accent' : 'bg-neutral-softest text-neutral-softer'}"
-											icon={item.x && item.y ? "GpsFix" : "Gps"} iconSize={14}
-											onclick={() => setCoordinates(item.mappable)}
-										/>
-										<!-- <Icon
-											class="ml-auto mr-1 {item.x && item.y ? 'text-accent' : 'text-neutral-softer'}"
-											name={item.x && item.y ? "GpsFix" : "Gps"}
-											size={14}
-										/> -->
-									{/if}
-								</Inline>
-							{/each}
-						</Grid>
-					</Stack>
+			<!-- Body -->
+	
+			<Stack gap={3} class="px-6 pt-5 pb-6">
+	
+	
+				<!-- Heading -->
+	
+				<Stack align="center" justify="center" gap={0} class="mb-1.5 px-6">
+					<Heading is="h3" as="h4" class="text-center">{location.name}</Heading>
+					<p class="text-neutral-soft text-sm">{location.type}
+						{#if location.mapData?.location}
+							in <Link href={route('locations.show', { location: location.mapData.location.slug})}>{location.mapData.location.name}</Link>
+						{/if}
+					</p>
+				</Stack>
+	
+	
+				<!-- Description -->
+	
+				{#if location.description}
+					<Collapsible class="font-style-small mb-6 min-h-16" collapsed={true}>
+						{location.description}
+					</Collapsible>
 				{/if}
-			{/each}
-		</Stack>	
+				<Separator />
+	
+	
+				<!-- MapItems -->
+
+				<Map.Legend class="grid grid-cols-2" />
+	
+				<!-- {#each [
+					{ type: 'character', title: 'Characters', icon: 'User', buttonLabel: 'Add character' },
+					{ type: 'faction',   title: 'Factions',   icon: 'FlagBannerFold', buttonLabel: 'Add headquarters' },
+					{ type: 'location',  title: 'Locations',  icon: 'MapPinSimple', buttonLabel: 'Add point of interest' }
+				] as group}
+					{#if location.mapItems?.[group.type+'s']?.length > 0}
+						<Stack align="start" gap={3} class="py-3">
+							<Inline class="font-style-button text-neutral-softest text-sm">{group.title}</Inline>
+							<Grid cols={2} gap={0} class="w-full">
+								{#each location.mapItems[group.type+'s'] as item,i}
+									<Inline
+										gap={0}
+										class="border cursor-pointer {hoveredLocation?.slug === item.mappable?.slug ? "border-accent" : "border-transparent"}"
+										onmouseover={() => hoverLocation(item.mappable)}
+										onmouseout={() => hoverLocation()}
+									>
+										<Flex align="center" justify="center" class="p-1 {hoveredLocation?.slug === item.mappable?.slug ? "bg-accent text-white" : "bg-neutral-softest text-neutral"}">
+											<Icon name={item.mappable?.icon || group.icon} size="sm" weight={hoveredLocation?.slug === item.mappable?.slug ? 'fill' : 'light'} />
+										</Flex>
+										<span class="font-light line-clamp-1 ml-1.5 text-sm truncate">{item.mappable?.name}</span>
+										{#if hoveredLocation?.slug === item.mappable?.slug}
+											<Button size="sm"
+												class="h-full ml-auto rounded-none {item.x && item.y ? 'bg-accent-softest text-accent' : 'bg-neutral-softest text-neutral-softer'}"
+												icon={item.x && item.y ? "GpsFix" : "Gps"} iconSize={14}
+												onclick={() => setCoordinates(item.mappable)}
+											/>
+										{/if}
+									</Inline>
+								{/each}
+							</Grid>
+						</Stack>
+					{/if}
+				{/each} -->
+			</Stack>	
+		</Map.Context>
+
 	{:else}
 
 

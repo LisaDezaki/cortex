@@ -5,6 +5,8 @@
 
 	//	Layout & Components
 
+	import Map from '@/Components/Core/Map'
+
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
 	import Grid 		 from '@/Components/Core/Grid.svelte'
@@ -28,7 +30,7 @@
 	import Section  	 from '@/Components/UI/Section.svelte'
 	import Separator  	 from '@/Components/UI/Separator.svelte'
 	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
-	import Map			 from '@/Components/Features/Location/Map.svelte'
+	// import Map			 from '@/Components/Features/Location/Map.svelte'
 
 
 	//	Page props
@@ -46,7 +48,7 @@
 <AuthenticatedLayout>
 
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
+		<Flex justify="center" gap={6} class="h-full overflow-y-auto py-12">
 			<PageMenu
 				backTo={route('locations')} backToLabel="Location List"
 				items={[
@@ -114,22 +116,13 @@
 
 				<!-- Map -->
 
-				<!-- <pre>{JSON.stringify(location.getMap(),null,3)}</pre> -->
-
 				<Section id="map" class="px-6 py-12">
 					<Heading is="h3" as="h6" class="mb-6">Map</Heading>
-					{#if location.getMap() || location.mapItems?.length > 0}
-						<Map class="aspect-video rounded-lg shadow-lg"
-							location={location}
-							legend={[
-								// { icon: 'UsersThree', 	label: 'Characters', items: location.characters.map(c => ({ ...c, label: c.name })) },
-								// { icon: 'Backpack', 	label: 'Items', 	 items: location.characters.map(c => ({ ...c, label: c.name })) },
-								{ icon: 'MapPin', label: 'Locations', items: location.mapItems?.map(c => ({ ...c, label: c.name, icon: c.icon || 'MapPin' })) }
-							]}
-						/>
-					{:else}
-						<p class="font-style-placeholder">{location.name} doesn't have a map or any child locations yet.</p>
-					{/if}
+					<Map.Context
+						location={location}
+						mapItems={location.mapItems.all}
+						previewClass="aspect-[3/2] w-full"
+					/>
 				</Section>
 
 				<Separator class="mx-6 my-6 w-[64ch]" />
@@ -198,6 +191,10 @@
 
 			</Container>
 		</Flex>
+	{/snippet}
+
+	{#snippet sidebar()}
+		<div class="min-w-96"></div>
 	{/snippet}
 
 </AuthenticatedLayout>

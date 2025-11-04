@@ -8,6 +8,7 @@
 	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
 	import Grid 		 from '@/Components/Core/Grid.svelte'
+	import Map			 from '@/Components/Core/Map'
 	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
@@ -22,7 +23,7 @@
 	import Separator     from '@/Components/UI/Separator.svelte'
 	import Tag     		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
-	import Map      	 from '@/Components/Features/Location/Map.svelte'
+	// import Map      	 from '@/Components/Features/Location/Map.svelte'
 
 
 	//	Page props
@@ -242,7 +243,7 @@
 					</Flex>
 					{#if character.mapData?.location}
 						{character.mapData.location.name}
-						<Map class="aspect-video rounded-lg shadow w-[64ch]"
+						<Map.Context class="aspect-video rounded-lg shadow w-[64ch]"
 							location={character.mapData?.location}
 						/>
 					{:else}

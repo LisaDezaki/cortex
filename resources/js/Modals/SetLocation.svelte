@@ -4,7 +4,7 @@
 
 	import { Flex, Stack, UploadContext } from '@/Components/Core'
 	import Field  from '@/Components/UI/Field.svelte'
-	import Map  from '@/Components/Features/Location/Map.svelte'
+	// import Map  from '@/Components/Features/Location/Map.svelte'
 	import ModalForm  from '@/Components/UI/ModalForm.svelte'
 
     let {
@@ -30,9 +30,9 @@
 		label: 'Save'
 	}}
 >
-	<Map class="aspect-video rounded-none w-full"
+	<!-- <Map class="aspect-video rounded-none w-full"
 		location={location}
 		setCoordinates
 		bind:coordinates={$form.coordinates}
-	/>
+	/> -->
 </ModalForm>
