@@ -224,6 +224,7 @@
 
 					<Empty
 						icon="MapPin"
+						containerClass="w-full"
 						message="There are no locations for this project yet."
 						buttonLabel="Create one?"
 						buttonClick={() => location.create()}

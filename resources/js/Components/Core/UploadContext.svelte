@@ -12,11 +12,13 @@
 	const { form } = getContext("form");
 
 	let {
+		aspect,
 		children,
 		class: className,
 		multiple = false,
 		name,
 		type = 'upload',
+		onTempUpload = () => {}
 		// value = $bindable()
 	} = $props();
 
@@ -51,6 +53,7 @@
 					$form[name] = { ...res.props.flash.success.map(f => ({ ...f, type })) }
 				}
 				processing.set(false)
+				onTempUpload?.(res)
 			},
 			onError: (errors) => {
 				// console.log('Upload failed', errors)
@@ -105,7 +108,7 @@
 
 </script>
 
-<div class="upload-context overflow-hidden {className}">
+<div class="upload-context overflow-hidden {className} {aspect}">
 	{#if children}
 		{@render children(files, clearFiles)}
 	{:else}

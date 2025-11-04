@@ -1,5 +1,6 @@
 <script>
-	import { page } from '@inertiajs/svelte'
+	import { Link, page, router } from '@inertiajs/svelte'
+	import { route } from 'momentum-trail'
 
 
 	//	Layout & Components
@@ -60,12 +61,12 @@
 		
 		<!-- Body -->
 		
-		<Stack gap={3} class="px-6 pt-3 pb-6">
+		<Stack gap={0} class="px-6 pt-3 pb-6">
 
 
 			<!-- Heading -->
 
-			<Stack gap={0} class="-space-y-1 px-6">
+			<Stack gap={0.5} class="mb-3 px-6 -space-y-1">
 				<Inline align="center" gap={0} class="place-self-center">
 					<Heading is="h3" as="h4" heading={character.name} />
 					<div class="relative place-self-start w-0">
@@ -81,164 +82,141 @@
 			</Stack>
 
 
+
 			<!-- Description -->
 			
 			{#if character.description}
-				<Collapsible class="font-style-small" collapsed={true}>
+				<Collapsible class="font-style-small mb-6 min-h-16" collapsed={true}>
 					{character.description}
 				</Collapsible>
 			{/if}
-	
-			<Separator class="my-3" />
+			<Separator />
+
 
 
 			<!-- Custom Fields -->
 	
 			{#each customFields as field}
-				<Flex>
-					<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">{field?.label}:</Inline>
-					<Stack class="w-full">
-						{#if field?.options}
-							<Input type="select" class="w-full" contentClass="w-44"
-								placeholder="Unset"
-								value={character.customFieldValues?.find(f => f.name === field.name)?.value}
-								options={field.options?.map(o => ({
-									label: o.label,
-									value: o.value
-								}))}
-								onUpdate={(opt) => character.updateCustomField(field.id, opt.value)}
-							/>
-						{/if}
-					</Stack>
+				<Flex align="start" class="font-light py-1.5">
+					<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">{field?.label}</p>
+					<p class="min-h-5 text-sm text-neutral">{character.customFieldValues?.find(f => f.name === field.name)?.displayValue}</p>
+					<Button style="plain" theme="accent" size="sm" class="h-5 w-5 ml-auto rounded-full"
+						onclick={() => character.setCustomField()}
+						icon="PencilSimple" iconSize="xs"
+					/>
 				</Flex>
+				<Separator />
 			{/each}
 
 
 
 			<!-- Factions -->
 	
-			<Flex>
-				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Factions:</Inline>
-				<Stack gap={1.5} class="w-full">
-					{#each character.factions?.items as fac,i}
-		
-						<Input type="select" class="w-full" contentClass="w-44"
-							placeholder="Unset"
-							value={fac.slug}
-							options={factions.items.map(f => ({
-								id:    f.id,
-								image: f.image?.url,
-								label: f.name,
-								value: f.slug
-							}))}
-							onUpdate={(opt) => character.syncFactions(opt,i)}
-						/>
-		
-					{/each}
-					<Input type="select" class="w-full" contentClass="w-44"
-						placeholder="Unset"
-						value=""
-						options={factions.items.map(f => ({
-							id:    f.id,
-							image: f.image?.url,
-							label: f.name,
-							value: f.slug
-						}))}
-						onUpdate={(opt) => character.addFaction(opt)}
-					/>
-				</Stack>
+			<Flex align="start" class="font-light py-1.5">
+				<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">Factions</p>
+				<p class="min-h-5 text-sm text-neutral">
+					{#if character.factions?.items.length > 0}
+						{#each character.factions?.items as fac,i}
+							<Link href={route('factions.show', { faction: fac.slug })}>
+								{fac.name}
+							</Link>{character.factions?.items.length-1 !== i ? ', ' : ''}
+						{/each}
+					{:else}
+						<span class="font-style-placeholder text-sm text-neutral-softest">None</span>
+					{/if}
+				</p>
+				<Button style="plain" theme="accent" size="md" class="h-5 w-5 ml-auto rounded-full"
+					onclick={() => character.setFactions()}
+					icon="PencilSimple" iconSize="xs"
+				/>
 			</Flex>
+			<Separator />
 
 
 
 			<!-- Location -->
 	
-			<Flex>
-				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Location:</Inline>
-				<Stack gap={1.5} class="w-full">
-					<Input type="select" class="w-full" contentClass="w-44"
-						placeholder="Unset"
-						value={character.location?.slug}
-						options={locations.items.map(l => ({
-							id:    l.id,
-							image: l.image?.url,
-							label: l.name,
-							value: l.slug
-						}))}
-						onUpdate={(opt) => character.setLocation(opt.id)}
-					/>
-				</Stack>
+			<Flex align="start" class="font-light py-1.5">
+				<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">Location</p>
+				<p class="min-h-5 text-sm text-neutral">
+					{#if character.location}
+						<Link href={route('locations.show', { location: character.location?.slug })}>{character.location?.name}</Link>
+					{:else}
+						<span class="font-style-placeholder text-sm text-neutral-softest">None</span>
+					{/if}
+				</p>
+				<Button style="plain" theme="accent" size="sm" class="h-5 w-5 ml-auto rounded-full"
+					onclick={() => character.setLocation()}
+					icon="PencilSimple" iconSize="xs"
+				/>
 			</Flex>
+			<Separator />
 
 
 
 			<!-- Relationships -->
 	
-			<Flex>
-				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Relationships:</Inline>
-				<Stack gap={1} class="w-full">
-					{#each character.relationships?.items as rel, i}
-						<Input type="select" class="w-full" contentClass="w-44"
-							placeholder="Unset"
-							value={character.relationships?.items[i].slug}
-							options={characters.items?.map(c => ({
-								id:    c.id,
-								image: c.image?.url,
-								label: c.name,
-								value: c.slug
-							}))}
-						/>
-					{/each}
-					<Input type="select" class="w-full" contentClass="w-44"
-						placeholder="Unset"
-						value=""
-						options={characters.items?.map(c => ({
-							id:    c.id,
-							image: c.image?.url,
-							label: c.name,
-							value: c.slug
-						}))}
-						onUpdate={(opt) => character.openModal('relationship', { related: characters.find(opt.id) })}
-					/>
-				</Stack>
+			<Flex align="start" class="font-light py-1.5">
+				<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">Relationships</p>
+				<p class="min-h-5 text-sm text-neutral">
+					{#if character.relationships?.items.length > 0}
+						{#each character.relationships?.items as rel,i}
+							<Link href={route('characters.show', { character: rel.slug })}>
+								{rel.name}
+							</Link>{character.relationships?.items.length-1 !== i ? ', ' : ''}
+						{/each}
+					{:else}
+						<span class="font-style-placeholder text-sm text-neutral-softest">None</span>
+					{/if}
+				</p>
+				<Button style="plain" theme="accent" size="sm" class="h-5 w-5 ml-auto rounded-full"
+					onclick={() => character.setRelationships()}
+					icon="PencilSimple" iconSize="xs"
+				/>
 			</Flex>
+			<Separator />
 
 
 
 			<!-- Appearance -->
 	
-			<Flex>
-				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Appearance:</Inline>
-				<Flex wrap gap={0.5} class="py-1">
+			<Flex align="start" class="font-light py-1.5">
+				<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">Appearance</p>
+				<p class="min-h-5 text-sm text-neutral line-clamp-2">
 					{#if character.appearance}
-						{#each character.appearance.split(',') as trait}
-							<Tag plain class="bg-neutral-softest font-style-small h-6 py-0.5">{trait}</Tag>
+						{#each character.appearance.split(',') as trait,i}
+							{trait}{character.appearance.split(',').length-1 !== i ? ', ' : ''}
 						{/each}
+					{:else}
+						<span class="font-style-placeholder text-sm text-neutral-softest">None</span>
 					{/if}
-					<Button style="plain" theme="accent" size="sm" class="bg-accent-softest h-6 w-6"
-						onclick={() => character.updateAppearance()}
-						icon="Plus" iconSize="xs"
-					/>
-				</Flex>
+				</p>
+				<Button style="plain" theme="accent" size="sm" class="h-5 w-5 ml-auto rounded-full"
+					onclick={() => character.updateAppearance()}
+					icon="PencilSimple" iconSize="xs"
+				/>
 			</Flex>
+			<Separator />
 
 
-			
+
 			<!-- Personality -->
 	
-			<Flex>
-				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Personality:</Inline>
-				<Flex wrap gap={0.5} class="py-1">
+			<Flex align="start" class="font-light py-1.5">
+				<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">Personality</p>
+				<p class="min-h-5 text-sm text-neutral line-clamp-2">
 					{#if character.personality}
-						{#each character.personality.split(',') as trait}
-							<Tag plain class="bg-neutral-softest font-style-small h-6 py-0.5">{trait}</Tag>
+						{#each character.personality.split(',') as trait,i}
+							{trait}{character.personality.split(',').length-1 !== i ? ', ' : ''}
 						{/each}
+					{:else}
+						<span class="font-style-placeholder text-sm text-neutral-softest">None</span>
 					{/if}
-					<Button style="plain" theme="accent" size="sm" class="bg-accent-softest h-6 w-6"
-						onclick={() => character.updatePersonality()}
-						icon="Plus" iconSize="xs"
-					/>
-				</Flex>
+				</p>
+				<Button style="plain" theme="accent" size="sm" class="h-5 w-5 ml-auto rounded-full"
+					onclick={() => character.updatePersonality()}
+					icon="PencilSimple" iconSize="xs"
+				/>
 			</Flex>
 		</Stack>
 

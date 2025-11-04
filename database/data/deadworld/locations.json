@@ -1,0 +1,73 @@
+{
+	"deadworld": {
+		"is_world_map": true,
+		"name": "Deadworld",
+		"type": "Overworld",
+		"icon": "GlobeStand",
+		"desc": "Global hypercapitalism has completed its transformation into technofeudalism."
+	},
+
+	"arcadia": {
+		"name": "Arcadia",
+		"type": "City",
+		"icon": "Rocket",
+		"desc": "Reaching entirely new heights of luxury, the Arcadia Resolution Center is a totally self-sufficient space station, relying on thousands of robotic staff and assistants to keep it operational."
+	},
+
+	"camp": {
+		"name": "Nomad Camp",
+		"type": "City",
+		"icon": "Campsite",
+		"desc": "A camp of inflatable tents occupied by a scavenger clan."
+	},
+
+	"cliffside": {
+		"name": "Cliffside",
+		"type": "City",
+		"icon": "Lighthouse",
+		"desc": "A city built into the side of a cliff."
+	},
+
+	"eden-forest": {
+		"name": "Eden Forest",
+		"type": "City",
+		"icon": "Tree",
+		"desc": "A huge community of exiled androids occupy this huge artificial forest, which has been genetically engineered to support a huge number of residential and communal buildings in the canopy, providing comfort and safety without sacrificing a connection to nature."
+	},
+
+	"holo-city": {
+		"name": "Holo City",
+		"type": "City",
+		"icon": "City",
+		"desc": "The overcrowded streets of this glowing metropolis are overwhelmed with crime and filth. Thousands of neon signs burn through the permanent fog of pollution in the air. Sinister megacorporations tower over the city with their seemingly infinite skyscrapers."
+	},
+
+	"megacity": {
+		"name": "Abandoned Megacity",
+		"type": "City",
+		"icon": "City",
+		"desc": "An enormous megacity that was abandoned after the nanobomb pandemic made the area unlivable. Now it remains almost entirely populated by androids and robots, and extremely brave scavengers in hazmat suits."
+	},
+
+	"orbital": {
+		"name": "Crashed Orbital",
+		"type": "Point of interest",
+		"icon": "Rocket",
+		"desc": "A chunk of space station that landed in a swampy marshland."
+	},
+
+	"puerta-verde": {
+		"name": "Puerta Verde",
+		"type": "City",
+		"icon": "Lighthouse",
+		"desc": "The citizens of this coastal eco-utopia live in perfect harmony with nature. Their buildings are carved into cliffs and gardening drones maintain the plants to keep them from overwhelming the buildings. They have abundant renewable energy from ocean waves and tidal forces, as well as the cliffside winds and intense solar energy."
+	},
+
+	"scavlands": {
+		"name": "The Scavlands",
+		"type": "Region",
+		"icon": "Skull",
+		"desc": "Most land between patches of civilization are occupied only by nomads, scavengers, outcasts, and exiles. Survival is a challenge every day, and large mutated predators roam the abandoned megacities where millions once lived."
+	}
+
+}

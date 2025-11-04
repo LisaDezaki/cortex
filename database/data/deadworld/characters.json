@@ -1,0 +1,21 @@
+{
+	"blue": {
+		"name": "Blue",
+		"description": "Blue is a cynical and sarcastic criminal who spends most of her time in the Sync Hole, one of the seediest bars in the city."
+	},
+
+	"kira": {
+		"name": "Kira",
+		"description": "Kira is a scavenger girl with short messy blonde hair. She lives with her nomadic community in a small village of inflatable tents. They survive by scavenging from the abandoned megacity."
+	},
+
+	"nia": {
+		"name": "Nia",
+		"description": "Nia is a cheerful and optimistic woman with a strong sense of humor. She has dark skin and many golden tattoos all over her body. Her intricately arranged dreadlocks are also heavily decorated with gold adornments."
+	},
+
+	"song": {
+		"name": "Song",
+		"description": "Song is the wealthy daughter of a Korean trillionaire CEO who begins to question the world as she’s been taught. She reads about the forests and oceans down on Earth, and can’t understand why humans would destroy and abandon such abundant beauty. One day, her service android begins to experience minor glitches, and tells her that he is afraid of being sent to Maintenance."
+	}
+}

@@ -20,6 +20,13 @@
 		"language": "Telugu",
 		"description": ""
 	},
+	"chandra": {
+		"name": "Chandra",
+		"from": "Lokah Chapter 1: Chandra (2025)",
+		"actor": "Kalyani Priyadarshan",
+		"language": "Malayalam",
+		"description": ""
+	},
 	"chitti": {
 		"name": "Chitti",
 		"from": "Enthiran (2010)",
@@ -39,13 +46,6 @@
 		"from": "Dhoom (2004)",
 		"actor": "Abhishek Bachchan",
 		"language": "Hindi",
-		"description": ""
-	},
-	"fly": {
-		"name": "The Fly",
-		"from": "Eega (2012)",
-		"actor": "Nani",
-		"language": "Telugu",
 		"description": ""
 	},
 	"g.one": {
@@ -75,6 +75,13 @@
 		"actor": "Hrithik Roshan",
 		"language": "Hindi",
 		"description": "In Singapore, Krishna is forced by circumstances to use his superpowers and become a masked superhero named Krrish, before getting drawn towards his lost legacy."
+	},
+	"nani": {
+		"name": "Nani The Fly",
+		"from": "Eega (2012)",
+		"actor": "Sudeep",
+		"language": "Telugu",
+		"description": ""
 	},
 	"pushpa": {
 		"name": "Pushpa",

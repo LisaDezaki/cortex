@@ -241,6 +241,7 @@
 
 					<Empty
 						icon="FlagBannerFold"
+						containerClass="w-full"
 						message="There are no factions for this project yet."
 						buttonLabel="Create one?"
 						buttonClick={() => factions.create()}

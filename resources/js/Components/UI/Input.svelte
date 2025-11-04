@@ -202,8 +202,6 @@
 		:global(.input-icon) {
 			@apply inline-flex items-center justify-center h-7 w-7 -mr-1 aspect-square rounded;
 			@apply absolute left-1;
-			/* outline: 1px solid red;
-			outline-offset: -1px; */
 		}
 
 		:global(.input-value) {

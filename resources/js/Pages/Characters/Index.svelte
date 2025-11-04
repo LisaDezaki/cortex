@@ -155,9 +155,6 @@
 				min={4} max={8}
 			/>
 
-					
-			<!-- <pre>{JSON.stringify(parameters,null,3)}</pre> -->
-			
 
 			<Flex align="start" class="px-16 pt-3 pb-6 overflow-y-auto">
 				{#if activeProject && results.length > 0}
@@ -249,18 +246,19 @@
 							icon="Graph"
 							message="This layout type isn't working yet. Try again later."
 						/>
-	
-	
+
+
 					{/if}
 				{:else}
-	
+
 					<Empty
 						icon="User"
+						containerClass="w-full"
 						message="There are no characters for this project yet."
 						buttonLabel="Create one?"
 						buttonClick={() => characters.create()}
 					/>
-	
+
 				{/if}
 			</Flex>
 		</Section>

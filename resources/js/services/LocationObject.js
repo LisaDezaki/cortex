@@ -46,7 +46,7 @@ export default class LocationObject {
 			// 	modalActions.open('setCharacterRelationship', { character: this, ...props }); break;
 			case 'setBanner':
 				modalActions.open('uploadMedia', {
-					aspect: 'aspect-[3/1]',
+					aspect: 'aspect-[7/3]',
 					endpoint: this.routes.update,
 					media: this.getBanner(),
 					method: 'patch',

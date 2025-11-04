@@ -30,6 +30,7 @@
 		label: 'Upload'
 	}}
 {...restProps}>
+
 	<UploadContext name="media" {type} {multiple} {aspect}>
 
 		{#if !multiple}

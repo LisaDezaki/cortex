@@ -53,7 +53,7 @@
 
 
 
-<Sidebar class={className}>
+<Sidebar gap={0} class="bg-slate-50 sticky top-0 h-screen overflow-y-auto shadow-xl z-10 {className}">
 	{#if location}
 
 
@@ -69,7 +69,7 @@
 
 		<!-- Body -->
 
-		<Stack gap={3} class="px-6 pt-5 pb-6 w-full">
+		<Stack gap={3} class="px-6 pt-5 pb-6">
 
 
 			<!-- Heading -->
@@ -87,12 +87,11 @@
 			<!-- Description -->
 
 			{#if location.description}
-				<Collapsible class="font-style-small" collapsed={true} collapsedClass = "line-clamp-2 overflow-hidden">
+				<Collapsible class="font-style-small mb-6 min-h-16" collapsed={true}>
 					{location.description}
 				</Collapsible>
 			{/if}
-
-			<Separator class="w-full" />
+			<Separator />
 
 
 			<!-- MapItems -->
@@ -135,11 +134,6 @@
 					</Stack>
 				{/if}
 			{/each}
-
-			<!-- <Button theme="accent" class="place-self-center rounded-full"
-				label="New point of interest"
-			/> -->
-
 		</Stack>	
 	{:else}
 

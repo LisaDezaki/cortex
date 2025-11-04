@@ -9,6 +9,7 @@
 		form,
 		method = 'post',
 		reloadPageProps,
+		reloadPageUrl = $page.url,
 		onsubmit,
 		onSuccess,
 		onFinish,
@@ -28,7 +29,7 @@
 					onSuccess: (res) => {
 						onSuccess?.(res)
 						if (reloadPageProps) {
-							router.visit( $page.url, {
+							router.visit( reloadPageUrl, {
 								only: reloadPageProps,
 							})
 						}

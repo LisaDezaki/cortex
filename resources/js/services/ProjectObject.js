@@ -29,11 +29,12 @@ export default class ProjectObject {
 
 	addBanner() {
 		modalActions.open('uploadMedia', {
-			aspect: 'aspect-[3/1]',
+			aspect: 'aspect-[7/3]',
 			endpoint: this.routes.update,
 			media: this.getBanner(),
 			method: 'patch',
 			reloadPageProps: ['activeProject.media', 'projects.media'],
+			title: "Upload Project banner",
 			type: 'banner',
 		})
 	}

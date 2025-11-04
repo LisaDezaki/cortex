@@ -1,5 +1,6 @@
 <script>
 	import { Link, page } from '@inertiajs/svelte'
+	import { route } from 'momentum-trail'
 
 
 	//	Layout & Components
@@ -60,88 +61,92 @@
 
 		<!-- Body -->
 
-		<Stack gap={3} class="px-6 pt-3 pb-6">
+		<Stack gap={0} class="px-6 pt-3 pb-6">
 
 
 			<!-- Heading -->
 
-			<Stack align="center" justify="center" gap={0} class="px-6">
-				<Heading is="h3" as="h4" class="text-center">{faction.name}</Heading>
-				<p class="text-neutral-soft text-sm">{faction.type}</p>
+			<Stack gap={0.5} class="mb-3 px-6 -space-y-1">
+				<Heading is="h3" as="h4" class="place-self-center text-center">{faction.name}</Heading>
+				<p class="place-self-center text-neutral-soft text-sm">{faction.type}</p>
 			</Stack>
 
 
 			<!-- Description -->
 
 			{#if faction.description}
-				<Collapsible class="font-style-small" collapsed={true}>
+				<Collapsible class="font-style-small mb-6 min-h-16" collapsed={true}>
 					{faction.description}
 				</Collapsible>
 			{/if}
+			<Separator />
+
+
+
+			<!-- Custom Fields -->
 	
-			<Separator class="my-3" />
-	
-	
+			<!-- {#each customFields as field}
+				<Flex align="start" class="font-light py-1.5">
+					<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">{field?.label}</p>
+					<p class="min-h-5 text-sm text-neutral">{faction.customFieldValues?.find(f => f.name === field.name)?.displayValue}</p>
+					<Button style="plain" theme="accent" size="sm" class="h-5 w-5 ml-auto rounded-full"
+						onclick={() => faction.setCustomField()}
+						icon="PencilSimple" iconSize="xs"
+					/>
+				</Flex>
+			{/each}
+			<Separator /> -->
+
+
+
+
 			<!-- Headquarters -->
 	
-			<Flex>
-				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Headquarters:</Inline>
-				<Stack gap={1.5} class="w-full">
-					<Input type="select" class="w-full" contentClass="w-44"
-						placeholder="Unset"
-						value={faction.headquarters?.slug}
-						options={locations.items.map(l => ({
-							id:    l.id,
-							image: l.image?.url,
-							label: l.name,
-							value: l.slug
-						}))}
-					/>
-				</Stack>
+			<Flex align="start" class="font-light py-1.5">
+				<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">Headquarters</p>
+				<p class="min-h-5 text-sm text-neutral">
+					{#if faction.headquarters}
+						<Link href={route('locations.show', { location: faction.headquarters?.slug })}>{faction.headquarters?.name}</Link>
+					{:else}
+						<span class="font-style-placeholder text-sm text-neutral-softest">None</span>
+					{/if}
+				</p>
+				<Button style="plain" theme="accent" size="sm" class="h-5 w-5 ml-auto rounded-full"
+					onclick={() => faction.setHeadquarters()}
+					icon="PencilSimple" iconSize="xs"
+				/>
 			</Flex>
+			<Separator />
 
 
-			<!-- Ranks -->
-
-			<!-- <Flex>
-				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Ranks:</Inline>
-				<Stack gap={1} class="w-full">
-					{#each faction.ranks as rank}
-						<Input type="select" class="w-full" contentClass="w-44"
-							placeholder="Unset"
-							value={rank.name.toLowerCase()}
-							options={faction.ranks?.map(r => ({
-								id:    r.id,
-								label: r.name,
-								value: r.name.toLowerCase()
-							}))}
-						/>
-					{/each}
-				</Stack>
-			</Flex> -->
-
-
-			<!-- Leader -->
-	
-			<!-- <Flex>
-				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Leader:</Inline>
-				<Stack gap={1.5} class="w-full">
-					<Input type="select" class="w-full" contentClass="w-44"
-						placeholder="Unset"
-						options={faction.members?.items?.map(c => ({
-							id:    c.id,
-							image: c.image?.url,
-							label: c.name,
-							value: c.slug
-						}))}
-					/>
-				</Stack>
-			</Flex> -->
-	
 	
 			<!-- Members -->
 	
-			<Stack gap={1} class="w-full">
+			<Flex align="start" class="font-light py-1.5">
+				<p class="min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5">Members</p>
+				<p class="min-h-5 text-sm text-neutral">
+					{#if faction.members?.items.length > 0}
+						{#each faction.members?.items as fac,i}
+							<Link href={route('factions.show', { faction: fac.slug })}>
+								{fac.name}
+							</Link>{faction.members?.items.length-1 !== i ? ', ' : ''}
+						{/each}
+					{:else}
+						<span class="font-style-placeholder text-sm text-neutral-softest">None</span>
+					{/if}
+				</p>
+				<Button style="plain" theme="accent" size="sm" class="h-5 w-5 ml-auto rounded-full"
+					onclick={() => character.setRelationships()}
+					icon="PencilSimple" iconSize="xs"
+				/>
+			</Flex>
+			<Separator />
+
+
+	
+			<!-- Members -->
+	
+			<!-- <Stack gap={1} class="w-full">
 				<Inline class="font-medium h-7 min-w-24 mr-2 text-sm">Members:</Inline>
 				{#each faction.members?.items as member, i}
 					<Flex>
@@ -193,7 +198,7 @@
 						/>
 					{/if}
 				</Flex>
-			</Stack>
+			</Stack> -->
 		</Stack>
 
 
