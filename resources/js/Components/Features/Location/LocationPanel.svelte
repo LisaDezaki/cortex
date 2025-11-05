@@ -1,5 +1,5 @@
 <script>
-	import { Link, page, router } from '@inertiajs/svelte'
+	import { Link } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
 
@@ -13,42 +13,18 @@
 	import Button				from '@/Components/UI/Button.svelte'
 	import Collapsible			from '@/Components/UI/Collapsible.svelte'
 	import Heading				from '@/Components/UI/Heading.svelte'
-	import Icon					from '@/Components/UI/Icon.svelte'
-	import Input				from '@/Components/UI/Input.svelte'
-	import Media				from '@/Components/UI/Media.svelte'
 	import Separator			from '@/Components/UI/Separator.svelte'
 	import Sidebar				from '@/Components/UI/Sidebar.svelte'
 	import Skeleton				from '@/Components/UI/Skeleton.svelte'
-	import Tag					from '@/Components/UI/Tag.svelte'
 	import Thumbnail			from '@/Components/UI/Thumbnail.svelte'
-
-	// import Map					from '@/Components/Features/Location/Map.svelte'
 
 
 	//	Page & Component props
-
-	import ProjectObject 	from '@/services/ProjectObject'
-	const activeProject	  = $state(new ProjectObject($page.props.activeProject.data))
-	const customFields	  = $state($page.props.customFields?.data)
-	const characters      = $state(activeProject?.characters)
-	const factions    	  = $state(activeProject?.factions)
-	const locations    	  = $state(activeProject?.locations)
 
 	let {
 		location,
 		class: className
 	} = $props()
-
-	// let hoveredLocation = $state()
-
-	// function hoverLocation(loc) {
-	// 	hoveredLocation = loc
-	// }
-
-	// function setCoordinates(item) {
-	// 	console.log('set coordinates', item)
-	// }
-
 </script>
 
 
@@ -64,6 +40,7 @@
 			location={location}
 			map={location.getMap()}
 			mapItems={location.mapItems.all}
+			onUpload={() => location.openModal('setMap')}
 		>
 
 			<!-- Head -->
@@ -74,13 +51,13 @@
 
 
 			<!-- Body -->
-	
-			<Stack gap={3} class="px-6 pt-5 pb-6">
+
+			<Stack gap={0} class="px-6 pt-3 pb-6">
 	
 	
 				<!-- Heading -->
 	
-				<Stack align="center" justify="center" gap={0} class="mb-1.5 px-6">
+				<Stack align="center" justify="center" gap={0.5} class="mb-3 px-6">
 					<Heading is="h3" as="h4" class="text-center">{location.name}</Heading>
 					<p class="text-neutral-soft text-sm">{location.type}
 						{#if location.mapData?.location}
@@ -93,7 +70,7 @@
 				<!-- Description -->
 	
 				{#if location.description}
-					<Collapsible class="font-style-small mb-6 min-h-16" collapsed={true}>
+					<Collapsible class="font-style-small mb-3 min-h-16" collapsed={true}>
 						{location.description}
 					</Collapsible>
 				{/if}

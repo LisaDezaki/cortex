@@ -129,7 +129,7 @@ class Location extends Model
 	{
 		return $this->morphOne(MapItem::class, 'mappable');
 	}
-	public function mapItems()
+	public function mapItems(): HasMany
 	{
 		return $this->hasMany(MapItem::class, 'location_id');
 	}

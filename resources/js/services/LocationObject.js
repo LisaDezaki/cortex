@@ -1,6 +1,8 @@
 import { router } from '@inertiajs/svelte'
 import { route } from 'momentum-trail'
 
+import CharacterObject from '@/services/CharacterObject'
+import FactionObject from '@/services/FactionObject'
 import LocationList from '@/services/LocationList'
 import { modalActions } from '@/stores/modalStore';
 
@@ -12,8 +14,8 @@ export default class LocationObject {
 			mapItems: locationData?.mapItems ? {
 				all:		locationData.mapItems,
 				characters: locationData.mapItems.filter(i => i.type === 'character'),
-				factions:   locationData.mapItems.filter(i => i.type === 'faction'),
-				locations:	locationData.mapItems.filter(i => i.type === 'location')
+				factions:   locationData.mapItems.filter(i => i.type === 'faction'  ),
+				locations:	locationData.mapItems.filter(i => i.type === 'location' )
 			} : [],
 			routes: locationData ? {
 				show:    route('locations.show',    { location: locationData.slug }),
@@ -136,6 +138,17 @@ export default class LocationObject {
 	/**
 	 * 	Update methods
 	 */
+
+	addMapMarker(items) {
+		console.log('LocationObject.addMapMarker()', items.map(i => ({
+			location_id: this.id,
+			...i
+		})))
+		this._update({ mapItems: items.map(i => ({
+			location_id: this.id,
+			...i
+		}))})
+	}
 
 	removePointOfInterest(entity) {
 		console.log('LocationObject.removePointOfInterest()', entity)

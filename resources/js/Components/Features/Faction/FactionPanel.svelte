@@ -75,7 +75,7 @@
 			<!-- Description -->
 
 			{#if faction.description}
-				<Collapsible class="font-style-small mb-6 min-h-16" collapsed={true}>
+				<Collapsible class="font-style-small mb-3 min-h-16" collapsed={true}>
 					{faction.description}
 				</Collapsible>
 			{/if}

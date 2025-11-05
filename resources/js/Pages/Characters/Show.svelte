@@ -23,7 +23,6 @@
 	import Separator     from '@/Components/UI/Separator.svelte'
 	import Tag     		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
-	// import Map      	 from '@/Components/Features/Location/Map.svelte'
 
 
 	//	Page props

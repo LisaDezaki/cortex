@@ -30,7 +30,6 @@
 	import Section  	 from '@/Components/UI/Section.svelte'
 	import Separator  	 from '@/Components/UI/Separator.svelte'
 	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
-	// import Map			 from '@/Components/Features/Location/Map.svelte'
 
 
 	//	Page props

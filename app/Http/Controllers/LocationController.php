@@ -9,6 +9,7 @@ use App\Http\Requests\StoreLocationRequest;
 use App\Models\Collection;
 use App\Models\CustomField;
 use App\Models\Location;
+use App\Models\MapItem;
 use App\Services\MediaService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,6 +39,12 @@ class LocationController extends Controller
 		'name'					=> ['sometimes', 'string'],
 		'description'			=> ['nullable',  'string'],
 		'starred'				=> ['sometimes', 'boolean'],
+
+		'mapItems'					=> ['sometimes', 'array'],
+		'mapItems.*.mappable_id'	=> ['required', 'string'],
+		'mapItems.*.mappable_type'	=> ['required', 'string'],
+		'mapItems.*.x'				=> ['nullable', 'numeric'],
+		'mapItems.*.y'				=> ['nullable', 'numeric'],
 
 		'media'  				=> ['sometimes', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],
@@ -152,8 +159,9 @@ class LocationController extends Controller
     public function edit(Location $location) {}
     public function update(Request $request, Location $location)
     {
-		
+		// dd($request->all());
 		$validatedData = $request->validate($this->validationRules);
+		// dd($validatedData);
 
 		//	Handle media
 		if ($request->has('media')) {
@@ -163,6 +171,30 @@ class LocationController extends Controller
 				foreach ($request['media'] as $media) {
 					$this->mediaService->attachMedia($location, $media['type'], $media);
 				}
+			}
+		}
+
+
+		//	Handle map items
+		if ($request->has('mapItems')) {
+			foreach ($validatedData['mapItems'] as $item) {
+
+				if ($location->mapItems()->where('mappable_id', $item['mappable_id'])) {
+					$location->mapItems()->where('mappable_id', $item['mappable_id'])->update([
+						'x' => $item['x'],
+						'y' => $item['y']
+					]);
+				} else {
+					$mapItem = new MapItem([
+						'location_id'   => $location->id,
+						'mappable_id'   => $item['mappable_id'],
+						'mappable_type' => $item['mappable_type'],
+						'x'				=> $item['x'],
+						'y'				=> $item['y']
+					]);
+					$location->mapItems()->save($mapItem);
+				}
+
 			}
 		}
 

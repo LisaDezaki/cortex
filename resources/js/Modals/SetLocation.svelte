@@ -4,7 +4,6 @@
 
 	import { Flex, Stack, UploadContext } from '@/Components/Core'
 	import Field  from '@/Components/UI/Field.svelte'
-	// import Map  from '@/Components/Features/Location/Map.svelte'
 	import ModalForm  from '@/Components/UI/ModalForm.svelte'
 
     let {

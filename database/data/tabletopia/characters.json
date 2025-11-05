@@ -273,7 +273,7 @@
 		"species": "frogfolk",
 		"desc": "In a modest, slightly worn dojo tucked between a bakery and a tailor in the downtown district, the air is thick with the sound of focused exertion and the smell of polished wood and sweat. Here, Kero, a wiry and intensely perceptive frogfolk of few words, presides as sensei. His establishment, aptly named Saving Throw, is renowned not for teaching traditional martial arts, but for imparting a brutally practical philosophy of self-preservation.\n\nKero believes that a real fight isn't won with honor, but with survival. His curriculum is a unique blend of melee combat, environmental awareness, and cunning, designed to turn a student's panic into a tactical advantage.\n\nKero specializes in teaching adventuring students how to use anything at their disposal as a weapon—a chair leg, a hot pie from the bakery next door, a bag of flour to blind an opponent. He drills them in using an enemy's weight against them, how to turn a shove into a fall down a flight of stairs, and how to always, always, be aware of the nearest exit.\n\nHis lessons are less about kata and more about controlled chaos. While he maintains a stern, disciplined exterior, he possesses a deep, quiet care for his students, many of whom come from the poorer parts of town and cannot afford traditional weapon training.\n\nTo Kero, every student who learns to land safely from a push or disarm a bully with a belt is a life improved, a personal victory in a world that often feels stacked against the little guy. He is teaching them that the most important roll they'll ever make is the one to avoid getting hit.",
 		"mapdata": {
-			"location": "downtown",
+			"location": "dojo",
 			"x": "78", "y": "12"
 		}
 	},

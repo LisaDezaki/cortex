@@ -19,7 +19,6 @@
 	import LocationGrid			from '@/Components/Features/Location/LocationGrid.svelte'
 	import LocationPanel		from '@/Components/Features/Location/LocationPanel.svelte'
 	import LocationTable		from '@/Components/Features/Location/LocationTable.svelte'
-	import LocationMap			from '@/Components/Features/Location/Map.svelte'
 	
 
 	//	Page props

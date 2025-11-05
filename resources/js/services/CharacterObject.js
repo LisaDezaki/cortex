@@ -9,6 +9,7 @@ import { modalActions } from '@/stores/modalStore'
 export default class CharacterObject {
     constructor(characterData) {
         Object.assign(this, characterData, {
+			laravelClass:	"App\Models\Character",
 			factions:		characterData.factions		? new FactionList(characterData.factions)		 		: null,
 			location: 		characterData.mapData?.location ? new LocationObject(characterData.mapData.location) 	: null,
 			relationships: 	characterData.relationships ? new CharacterList(characterData.relationships) 		: null,
@@ -108,13 +109,28 @@ export default class CharacterObject {
 
 	//	One-to-one relationships
 
-	setLocation(location_id) {
-		this._update({ location_id })
+	updateCoordinates(location, xy) {
+		// console.log('CharacterObject.updateCoordinates', location, xy)
+		this._update({ mapItems: [{
+			location_id: location.id,
+			mappable_id: this.id,
+			mappable_type: this.laravelClass,
+			x: xy.x,
+			y: xy.y
+		}] })
 	}
 
-	unsetLocation() {
-		this._update({ location_id: null })
+	removeCoordinates() {
+		console.log('CharacterObject.removeCoordinates')
 	}
+
+	// setLocation(location_id) {
+	// 	this._update({ location_id })
+	// }
+
+	// unsetLocation() {
+	// 	this._update({ location_id: null })
+	// }
 
 	//	One-to-many relationships
 

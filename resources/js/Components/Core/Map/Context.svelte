@@ -1,6 +1,5 @@
 <script>
 	import { setContext } from "svelte";
-	import { writable } from "svelte/store";
 
 	import Flex from '@/Components/Core/Flex.svelte'
 	import MapLegend  from './Legend.svelte';
@@ -10,37 +9,76 @@
 		children,
 		class: className = "flex",
 		location,
-		previewClass = "min-h-32 w-full"
+		legendClass = "",
+		previewClass = "min-h-32 w-full",
+		onUpload
 	} = $props()
 
-	let hoveredItem   = writable(null)
-	let locationStore = writable(location)
+	let activeItem	= $state(null)
+	let hoveredItem	= $state(null)
+	let lastClick	= $state({x:null,y:null})
 
-	function hoverMapMarker(item) {
-		hoveredItem.set(item)
+	function handleFileUpload(e) {
+		onUpload()
+	}
+
+	function handleItemHover(item) {
+		hoveredItem = item
+	}
+
+	function handleConfirmCoordinates() {
+		location.addMapMarker([{
+			mappable_id:   activeItem.mappable.id,
+			mappable_type: activeItem.type,
+			x: lastClick.x,
+			y: lastClick.y
+		}])
+	}
+
+	function handlePreviewClick(e) {
+		lastClick = {
+			x: 100 / e.target.width  * e.layerX,
+			y: 100 / e.target.height * e.layerY
+		}
+	}
+
+	function setActiveItem(item) {
+		// console.log('MapContext.setActiveItem()', item)
+		activeItem = item
 	}
 
 	// Expose state and methods via context
 	setContext("map-context", {
-		hoveredItem,
-		hoverMapMarker,
-		location: locationStore,
-		previewClass
+		getActive:	 () => activeItem,
+		getHovered:  () => hoveredItem,
+		getItems:    () => location.mapItems,
+		getLastClick:() => lastClick,
+		getLocation: () => location,
+		getMap:		 () => location.getMap(),
+		handleConfirmCoordinates,
+		handleFileUpload,
+		handleItemHover,
+		handlePreviewClick,
+		setActiveItem,
+		legendClass,
+		previewClass,
 	});
-
-	$effect(() => {
-		locationStore.set(location)
-	})
 
 </script>
 
 
 
+<!-- <pre>{JSON.stringify({
+	lastClick,
+	activeItem:  activeItem?.mappable?.id  || 'null',
+	hoveredItem: hoveredItem?.mappable?.id || 'null'
+}, null, 3)}</pre> -->
+
 <Flex class= {className}>
 	{#if children}
 		{@render children()}
 	{:else}
-		<MapPreview />
-		<MapLegend />
+		<MapPreview class={previewClass} />
+		<MapLegend  class={legendClass}  />
 	{/if}
 </Flex>
