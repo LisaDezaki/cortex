@@ -126,7 +126,7 @@
 	{#snippet article()}
 		<Section gap={0} class="h-full overflow-hidden">
 
-			<PageHeader class="px-16 py-3"
+			<PageHeader class="px-20 py-3"
 				title="Location List"
 				tabs={[
 					{ label: "List",		active: true },
@@ -136,20 +136,20 @@
 				actions={[
 					{ icon: "Plus", label: "New", theme: "accent", onclick: () => locations.create(), },
 				]}
-			/>
+			>
+				<LocationControlBar class="px-20 pb-1.5"
+					data={locations} project={activeProject}
+					bind:query={parameters.query}
+					bind:filter={parameters.filter}
+					bind:sort={parameters.sort}
+					bind:size={parameters.size}
+					bind:layout={parameters.layout}
+					bind:results
+				/>
+			</PageHeader>
 
 
-			<LocationControlBar class="px-16 pb-1.5"
-				data={locations} project={activeProject}
-				bind:query={parameters.query}
-				bind:filter={parameters.filter}
-				bind:sort={parameters.sort}
-				bind:size={parameters.size}
-				bind:layout={parameters.layout}
-				bind:results
-			/>
-
-			<Flex align="start" class="px-16 pt-3 pb-6 overflow-y-auto">
+			<Flex align="start" class="px-20 pt-3 pb-6 overflow-y-auto">
 				{#if activeProject && locations.items?.length > 0}
 
 

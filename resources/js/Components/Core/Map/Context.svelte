@@ -11,7 +11,9 @@
 		location,
 		legendClass = "",
 		previewClass = "min-h-32 w-full",
-		onUpload
+		onUpload,
+		pannable = false,
+		zoomable = false
 	} = $props()
 
 	let activeItem	= $state(null)
@@ -62,6 +64,8 @@
 		setActiveItem,
 		legendClass,
 		previewClass,
+		pannable,
+		zoomable
 	});
 
 </script>

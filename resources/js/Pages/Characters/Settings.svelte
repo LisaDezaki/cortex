@@ -8,6 +8,7 @@
     import AuthenticatedLayout	 from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharacterSettingsForm from '@/Forms/Settings/CharacterSettings.svelte'
 	import Flex   	  from '@/Components/Core/Flex.svelte'
+	import Stack   	  from '@/Components/Core/Stack.svelte'
 	import Container  from '@/Components/UI/Container.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
 	import Input      from '@/Components/UI/Input.svelte'
@@ -19,7 +20,7 @@
 	//	Page props
 
 	const customFields = $page.props.customFields?.data
-	const settings = $page.props.settings?.characters?.data
+	const settings     = $page.props.settings?.characters?.data
 
 </script>
 
@@ -30,56 +31,61 @@
 </svelte:head>
 
 <AuthenticatedLayout>
-
-	{#snippet header()}
-		<PageHeader
-			tabs={[
-				{ label: "List",			href: route('characters') },
-				{ label: "Collections", 	href: route('characters.collections') },
-				{ label: "Settings", 		active: true },
-			]}
-		/>
-	{/snippet}
-
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="py-12">
-			<PageMenu
-				items={[
-					{ icon: "UserList",       label: "Overview",      href: "#overview" },
-					{ icon: "ImagesSquare",   label: "Media",         href: "#media"    },
-					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   }
+		<Section gap={0} class="h-full overflow-hidden">
+
+			<PageHeader class="px-20 py-3"
+				title="Character Settings"
+				tabs={[
+					{ label: "List",			href: route('characters') },
+					// { label: "Collections", 	href: route('characters.collections') },
+					{ label: "Settings", 		active: true },
 				]}
 			/>
-			<Container size="4xl">
 
-				<Section id="overview" class="pb-12">
-					<CharacterSettingsForm />
-				</Section>
+			<Flex gap={12} class="px-20 py-6 w-full">
+				<PageMenu
+					items={[
+						{ icon: "UserList",       label: "Overview",      href: "#overview" },
+						{ icon: "ImagesSquare",   label: "Media",         href: "#media"    },
+						{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   }
+					]}
+				/>
+				<Stack>
 
-				<Section id="media" class="pb-12">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h4" as="h6">Media</Heading>
-					</Flex>
-					Media
-				</Section>
+					<Section id="overview" class="pb-12">
+						<CharacterSettingsForm />
+					</Section>
 
-				<Section id="custom" class="pb-12">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h4" as="h6">Custom Fields</Heading>
-					</Flex>
+					<Section id="media" class="pb-12">
+						<Flex align="center" class="mb-6 max-w-[32ch]">
+							<Heading is="h4" as="h6">Media</Heading>
+						</Flex>
+						Media
+					</Section>
 
-					{#each customFields as field}
-						<Input type={field.type}
-							name={field.name}
-							label={field.label}
-							options={field.options || null}
-							placeholder={field.placeholder}
-						/>
-					{/each}
+					<Section id="custom" class="pb-12">
+						<Flex align="center" class="mb-6 max-w-[32ch]">
+							<Heading is="h4" as="h6">Custom Fields</Heading>
+						</Flex>
 
-				</Section>
+						{#each customFields as field}
+							<Input type={field.type}
+								name={field.name}
+								label={field.label}
+								options={field.options || null}
+								placeholder={field.placeholder}
+							/>
+						{/each}
 
-			</Container>
-		</Flex>
+					</Section>
+
+				</Stack>
+			</Flex>
+		</Section>
+	{/snippet}
+
+	{#snippet sidebar()}
+		<div class="bg-slate-50 min-w-80 shadow-lg"></div>
 	{/snippet}
 </AuthenticatedLayout>

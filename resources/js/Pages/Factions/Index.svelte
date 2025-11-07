@@ -129,7 +129,7 @@
 		<Section gap={0} class="h-full overflow-hidden">
 
 
-			<PageHeader class="px-16 py-3"
+			<PageHeader class="px-20 py-3"
 				title="Faction List"
 				tabs={[
 					{ label: "List",		active: true },
@@ -139,22 +139,23 @@
 				actions={[
 					{ icon: "Plus", label: "New", theme: "accent", onclick: () => factions.create() },
 				]}
-			/>
+			>
+				<FactionControlBar
+					data={factions} project={activeProject}
+					bind:query={parameters.query}
+					bind:filter={parameters.filter}
+					bind:sort={parameters.sort}
+					bind:size={parameters.size}
+					bind:layout={parameters.layout}
+					bind:results={results}
+					min={4} max={8}
+				/>
+			</PageHeader>
 
 
-			<FactionControlBar class="px-16 pb-1.5"
-				data={factions} project={activeProject}
-				bind:query={parameters.query}
-				bind:filter={parameters.filter}
-				bind:sort={parameters.sort}
-				bind:size={parameters.size}
-				bind:layout={parameters.layout}
-				bind:results={results}
-				min={4} max={8}
-			/>
 
 
-			<Flex align="start" class="px-16 pt-3 pb-6 overflow-y-auto">
+			<Flex align="start" class="px-20 pt-3 pb-6 overflow-y-auto">
 				{#if activeProject && results.length > 0}
 
 

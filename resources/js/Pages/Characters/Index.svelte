@@ -128,10 +128,9 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section gap={0} class="h-full overflow-hidden">
+		<Section gap={0} class="h-full overflow-y-auto">
 
-
-			<PageHeader class="px-16 py-3"
+			<PageHeader class="px-20 py-3"
 				title="Character List"
 				tabs={[
 					{ label: "List",		active: true },
@@ -141,22 +140,20 @@
 				actions={[
 					{ icon: "Plus", label: "New", theme: "accent", onclick: () => characters.create() },
 				]}
-			/>
+			>
+				<CharacterControlBar
+					data={characters} project={activeProject}
+					bind:query={parameters.query}
+					bind:filter={parameters.filter}
+					bind:sort={parameters.sort}
+					bind:size={parameters.size}
+					bind:layout={parameters.layout}
+					bind:results
+					min={4} max={8}
+				/>
+			</PageHeader>
 
-
-			<CharacterControlBar class="px-16 pb-1.5"
-				data={characters} project={activeProject}
-				bind:query={parameters.query}
-				bind:filter={parameters.filter}
-				bind:sort={parameters.sort}
-				bind:size={parameters.size}
-				bind:layout={parameters.layout}
-				bind:results
-				min={4} max={8}
-			/>
-
-
-			<Flex align="start" class="px-16 pt-3 pb-6 overflow-y-auto">
+			<Flex align="start" class="px-20 pt-3 pb-6">
 				{#if activeProject && results.length > 0}
 	
 	

@@ -123,7 +123,7 @@ abstract class Controller
 	 * 		'digits:n'		=> Must be numeric and have exactly n digits
 	 * 							e.g, 'zip_code' => ['sometimes', 'digits:5']
 	 * 
-	 * 		'digits_between:min,man' => Must be numeric and have digits between min and max
+	 * 		'digits_between:min,max' => Must be numeric and have digits between min and max
 	 * 							e.g, 'phone' => ['sometimes', 'digits_between:10,15']
 	 * 
 	 * 		'min:value'		=> Minimum value/length

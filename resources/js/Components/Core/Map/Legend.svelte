@@ -10,6 +10,7 @@
 		getActive,
 		getHovered,
 		getItems,
+		getMap,
 		handleConfirmCoordinates,
 		handleItemHover,
 		setActiveItem,
@@ -63,14 +64,14 @@
 								class="p-1 {isHovered(item) ? cx.iconHover : cx.icon}"
 							/>
 							<span class="line-clamp-1">{item.mappable.name}</span>
-							{#if getActive()?.mappable.id === item.mappable?.id}
+							{#if getMap() && getActive()?.mappable.id === item.mappable?.id}
 								<Button class="bg-accent ml-auto rounded-none text-white"
 									icon={item.x && item.y ? "Check" : "Check"} iconWeight="bold"
 									iconSize="xs"
 									onclick={handleConfirmCoordinates}
 								/>
-							{:else if !getActive()}
-								<Button class="ml-auto rounded-none text-neutral-softer"
+							{:else if getMap() && !getActive()}
+								<Button class="ml-auto rounded-none text-neutral-softer hover:bg-accent-softest hover:text-accent"
 									theme={item.x && item.y ? "accent" : ""}
 									icon={item.x && item.y ? "GpsFix" : "Gps"}
 									iconSize="xs"

@@ -49,7 +49,7 @@
 
 
 
-<Flex cols={6} gap={3} class="bg-surface sticky top-16 pb-1.5 shrink-0 {className}">
+<Flex cols={6} gap={3} class="shrink-0 w-full z-10 {className}">
 	
 
 	<!-- Search -->
@@ -57,7 +57,7 @@
 	{#if searchable}
 		<Input bind:value={query}
 			type="search"
-			class="w-40" size="md"
+			class="w-32" size="md"
 			label="Search" labelIcon="MagnifyingGlass"
 			name="search"
 			placeholder="Search..."
@@ -74,7 +74,7 @@
 
 	{#if filterable}
 		<Dropdown size="md" bind:value={filter}
-			class="w-40" contentClass="w-40"
+			class="w-32" contentClass="w-32"
 			label="Filter" labelIcon="FunnelSimple"
 			options={filterOptions}
 			onUpdate={onFilter}
@@ -86,7 +86,7 @@
 
 	{#if sortable}
 		<Input type="select" size="md" bind:value={sort}
-			class="w-40" contentClass="w-40"
+			class="w-32" contentClass="w-32"
 			label="Sort" labelIcon="SortAscending"
 			placeholder="Sort by"
 			options={sortOptions}
@@ -108,7 +108,7 @@
 
 	<Input bind:value={size}
 		type="slider"
-		class="w-40"
+		class="w-32"
 		label="Size" labelIcon="Resize"
 		style="none"
 		showTicks={true}
@@ -120,7 +120,7 @@
 	<!-- Layout -->
 
 	<Input type="select" size="md" bind:value={layout}
-		class="w-40" contentClass="w-40"
+		class="w-32" contentClass="w-32"
 		label="Layout" labelIcon="Layout"
 		options={layoutOptions}
 	/>

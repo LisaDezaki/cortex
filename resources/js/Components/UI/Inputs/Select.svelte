@@ -128,7 +128,7 @@
 	 
 	<Select.Portal class="z-50 {contentClass}">
 		<Select.Content
-			class="input-content {contentClass} min-w-[var(--bits-select-anchor-width)] px-0.5 py-1.5 z-50"
+			class="input-content {contentClass} min-w-[var(--bits-select-anchor-width)] px-0.5 py-0.5 z-50"
 			align="start" sideOffset={-1}
 		>
 			<Select.ScrollUpButton class="flex w-full items-center justify-center opacity-50">

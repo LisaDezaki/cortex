@@ -20,6 +20,8 @@
 		handlePreviewClick,
 		location,
 		previewClass,
+		pannable,
+		zoomable
 	} = getContext("map-context");
 
 	let {
@@ -28,14 +30,14 @@
 
 	let cx = $derived({
 		active:  'bg-white text-neutral',
-		cursor:  getActive() ? 'cursor-crosshair' : 'cursor-grab',
+		cursor:  getActive() ? 'cursor-crosshair' : (pannable ? 'cursor-grab' : 'cursor-default'),
 		preview: className || previewClass
 	})
 </script>
 
 
 
-<PanZoom pannable={false} zoomable={false}
+<PanZoom pannable={pannable} zoomable={zoomable}
 	class="bg-background {cx.cursor} {cx.preview}"
 	contentClass="flex items-center justify-center"
 	backgroundImage="/img/grid.png"

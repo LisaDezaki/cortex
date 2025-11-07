@@ -1,33 +1,22 @@
 <script>
-
 	import { Flex, Inline, Stack } from '@/Components/Core'
-
-	import Back        from '@/Components/UI/Back.svelte'
-	import Breadcrumbs from '@/Components/UI/Breadcrumbs.svelte'
 	import Button      from '@/Components/UI/Button.svelte'
-	import Container   from '@/Components/UI/Container.svelte'
 	import Heading     from '@/Components/UI/Heading.svelte'
 
 	let {
 		actions,
-		back,
-		breadcrumbs,
 		children,
 		class: className,
 		color = 'bg-surface',
-		eyebrow,
-		eyebrowIcon,
-		subtitle,
 		tabs,
-		title,
-		...restProps
+		title
 	} = $props()
 
 </script>
 
 
 
-<Stack as="header" align="start" justify="center" gap={0} class="{color} h-16 shrink-0 w-full z-10 {className}">
+<Stack as="header" align="start" justify="center" gap={1.5} class="sticky top-0 min-h-16 shrink-0 w-full z-10 {className} {color}">
 
 	<Flex align="center" justify="center" class="w-full">
 
@@ -76,10 +65,6 @@
 
 	</Flex>
 
-	<Flex align="center" justify="center" class="w-full">
-		<Container size="7xl">
-			{@render children?.()}
-		</Container>
-	</Flex>
+	{@render children?.()}
 
 </Stack>

@@ -10,7 +10,7 @@
 
 <style lang="postcss">
 	.sidebar {
-		@apply bg-slate-50 flex flex-col h-full max-w-96 overflow-y-auto shadow-xl shrink-0 w-96 z-10;
+		@apply bg-slate-50 flex flex-col h-full max-w-80 overflow-y-auto shadow-xl shrink-0 w-80 z-10;
 	}
 </style>
 

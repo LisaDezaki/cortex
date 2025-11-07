@@ -43,7 +43,7 @@
 {/snippet}
 
 <Box class="sticky top-0 place-self-start {className}">
-	<Stack class="page-menu min-w-48 py-2 rounded-lg" {...restProps}>
+	<Stack class="page-menu min-w-48 rounded-lg" {...restProps}>
 
 		{#if backTo}
 			<Link href={backTo} class="place-self-start border border-neutral-softest flex items-center gap-3 mb-3 pl-3 pr-5 py-1.5 rounded-full hover:border-accent hover:text-accent">

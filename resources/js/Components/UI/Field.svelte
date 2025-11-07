@@ -87,7 +87,7 @@
 	}
 
 	.form-field.block {
-		@apply grid grid-cols-2 gap-6 w-full;
+		@apply relative grid grid-cols-2 gap-6 w-full;
 	}
 
 	.form-field:not(.block) {

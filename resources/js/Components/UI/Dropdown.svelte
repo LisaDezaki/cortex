@@ -123,7 +123,7 @@
 					<Flex align="center" gap={0} class="bg-white p-0.5 w-full">
 						<Button style="plain" theme="neutral" size="md" icon="CaretLeft" iconSize="sm" class="hover:bg-neutral-softest text-neutral-softest focus:outline-none border-none" onclick={back} />
 						<input bind:value={suboptionQuery} class="border-none p-1 rounded text-neutral font-style-input w-28" placeholder="Search" />
-						<Button size="md" icon="Plus" iconSize="sm" theme="accent" class="ml-auto" />
+						<!-- <Button size="md" icon="Plus" iconSize="sm" theme="accent" class="ml-auto" /> -->
 					</Flex>
 					<Separator class="mx-2 w-auto" />
 					<div class="overflow-y-auto p-0.5 max-h-80">
