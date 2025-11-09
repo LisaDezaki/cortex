@@ -7,9 +7,7 @@
 	//	Layout & Components
 
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
-	import Box					from '@/Components/Core/Box.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
-	import Grid					from '@/Components/Core/Grid.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
 	import Section				from '@/Components/UI/Section.svelte'
@@ -130,11 +128,12 @@
 	{#snippet article()}
 		<Section gap={0} class="h-full overflow-y-auto">
 
+			<!-- Fixed/Sticky Header -->
+
 			<PageHeader class="px-20 py-3"
 				title="Character List"
 				tabs={[
 					{ label: "List",		active: true },
-					// { label: "Collections",	href: route('characters.collections') },
 					{ label: "Settings",	href: route('characters.settings') },
 				]}
 				actions={[
@@ -153,9 +152,10 @@
 				/>
 			</PageHeader>
 
+			<!-- Main Body -->
+
 			<Flex align="start" class="px-20 pt-3 pb-6">
 				{#if activeProject && results.length > 0}
-	
 	
 					<!-- Grid -->
 	

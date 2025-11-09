@@ -73,16 +73,16 @@
 					<ArticleBanner>
 						<Media
 							class="absolute inset-0 aspect-[3/1] rounded-lg overflow-hidden"
-							media={faction.getBanner()}
+							media={faction.getMedia('banner')}
 							onclick={() => faction.openModal('setBanner')}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
-							media={faction.getEmblem()}
+							media={faction.getMedia('emblem')}
 							onclick={() => faction.openModal('setEmblem')}
 						/>
 						<Heading is="h1" as="h3"
-							class="mt-auto w-3/4 z-10 {faction.getBanner() ? 'text-white' : ''}"
+							class="mt-auto w-3/4 z-10 {faction.getMedia('banner') ? 'text-white' : ''}"
 							heading={faction.name}
 							headingClass="whitespace-pre-wrap"
 							subheading={faction.type}

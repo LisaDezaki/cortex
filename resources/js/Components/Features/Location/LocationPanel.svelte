@@ -57,7 +57,7 @@
 		<Map.Context
 			class="flex-col w-full"
 			location={location}
-			map={location.getMap()}
+			map={location.getMedia('map')}
 			mapItems={location.mapItems.all}
 			onUpload={() => location.openModal('setMap')}
 		>

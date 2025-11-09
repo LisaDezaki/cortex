@@ -56,12 +56,12 @@
 
 		<Media
 			class={cx.banner}
-			media={faction.getBanner()}
+			media={faction.getMedia('banner')}
 			onclick={() => faction.openModal('setBanner')}
 		/>
 		<Media
 			class={cx.emblem}
-			media={faction.getEmblem()}
+			media={faction.getMedia('emblem')}
 			onclick={() => faction.openModal('setEmblem')}
 			icon="FlagBannerFold" iconWeight="fill"
 		/>

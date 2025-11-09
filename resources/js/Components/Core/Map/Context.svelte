@@ -56,7 +56,7 @@
 		getItems:    () => location.mapItems,
 		getLastClick:() => lastClick,
 		getLocation: () => location,
-		getMap:		 () => location.getMap(),
+		getMap:		 () => location.getMedia('map'),
 		handleConfirmCoordinates,
 		handleFileUpload,
 		handleItemHover,

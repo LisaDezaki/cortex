@@ -61,8 +61,8 @@
 				<Section>
 					<Media
 						class="relative aspect-[7/3] bg-neutral-softest overflow-hidden text-neutral-softest w-full"
-						media={active.getBanner()}
-						onclick={() => active.addBanner()}
+						media={active.getMedia('banner')}
+						onclick={() => active.openModal('setBanner')}
 					/>
 				</Section>
 	
@@ -75,8 +75,8 @@
 						<Stack gap={0}>
 							<Flex align="center">
 								<Heading is="h1" as="h2" heading={active.name} />
-								<Button size="lg" style="soft" theme="accent" icon="Pen"   iconSize="lg" onclick={() => active.rename()} class="ml-auto" />
-								<Button size="lg" style="soft" theme="danger" icon="Trash" iconSize="lg" onclick={() => active.destroy()} />
+								<Button size="lg" style="soft" theme="accent" icon="Pen"   iconSize="lg" onclick={() => active.openModal('rename')} class="ml-auto" />
+								<Button size="lg" style="soft" theme="danger" icon="Trash" iconSize="lg" onclick={() => active.openModal('delete')} />
 							</Flex>
 							<p class="font-style-large italic max-w-[65ch] text-neutral-soft">{active.type}</p>
 							<Collapsible collapsed={true}

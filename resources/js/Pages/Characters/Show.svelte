@@ -71,16 +71,16 @@
 					<ArticleBanner>
 						<Media
 							class="absolute inset-0 aspect-[3/1] bg-slate-200 border border-neutral-softest hover:border-accent rounded-lg overflow-hidden text-neutral-softest w-full"
-							media={character.getBanner()}
+							media={character.getMedia('banner')}
 							onclick={() => character.openModal('setBanner')}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 hover:border-accent right-12 -bottom-16 rounded-lg overflow-hidden text-neutral-softest w-48"
-							media={character.getPortrait()}
+							media={character.getMedia('portrait')}
 							onclick={() => character.openModal('setPortrait')}
 						/>
 						<Heading is="h1" as="h3"
-							class="max-w-3/4 mt-auto z-10 {character.getBanner() ? 'text-white' : ''}"
+							class="max-w-3/4 mt-auto z-10 {character.getMedia('banner') ? 'text-white' : ''}"
 							heading={character.name}
 							subheading={character.alias}
 						/>

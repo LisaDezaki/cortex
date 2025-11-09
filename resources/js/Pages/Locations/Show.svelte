@@ -68,12 +68,12 @@
 					<ArticleBanner>
 						<Media
 							class="absolute inset-0 rounded-lg overflow-hidden"
-							media={location.getBanner()}
+							media={location.getMedia('banner')}
 							onclick={() => location.openModal('setBanner')}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
-							media={location.getMap()}
+							media={location.getMedia('map')}
 							onclick={() => location.openModal('setMap')}
 						/>
 						{#if location.parent}
@@ -85,7 +85,7 @@
 							</Inline>
 						{/if}
 						<Heading is="h1" as="h3"
-							class="mt-auto w-3/4 z-10 {location.getBanner() ? 'text-white' : ''}"
+							class="mt-auto w-3/4 z-10 {location.getMedia('banner') ? 'text-white' : ''}"
 							heading={location.name}
 							subheading={location.type}
 						/>

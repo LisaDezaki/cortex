@@ -7,10 +7,7 @@
 	//	Layout & Components
 
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import Box					from '@/Components/Core/Box.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
-	import Grid					from '@/Components/Core/Grid.svelte'
-	import Stack				from '@/Components/Core/Stack.svelte'
 	import Empty   	  			from '@/Components/UI/Empty.svelte'
 	import PageHeader 			from '@/Components/UI/PageHeader.svelte'
 	import Section    			from '@/Components/UI/Section.svelte'
@@ -25,11 +22,12 @@
 
 	import ProjectObject 	from '@/services/ProjectObject'
 	import CollectionList 	from '@/services/CollectionList'
+	import LocationList 	from '@/services/LocationList'
 	import LocationObject 	from '@/services/LocationObject'
 	const activeProject   = $state(new ProjectObject($page.props.activeProject.data))
 	const collections	  = $state(new CollectionList($page.props.collections?.data))
 	const locations       = $state(activeProject?.locations)
-	const worldTree		  = $state(new LocationObject($page.props.worldTree?.data))
+	// const worldTree		  = $state(new LocationObject($page.props.worldTree?.data))
 
 	let urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
 
@@ -126,18 +124,19 @@
 	{#snippet article()}
 		<Section gap={0} class="h-full overflow-hidden">
 
+			<!-- Fixed/Sticky Header -->
+
 			<PageHeader class="px-20 py-3"
 				title="Location List"
 				tabs={[
 					{ label: "List",		active: true },
-					// { label: "Collections",	href: route('locations.collections') },
 					{ label: "Settings",	href: route('locations.settings') },
 				]}
 				actions={[
 					{ icon: "Plus", label: "New", theme: "accent", onclick: () => locations.create(), },
 				]}
 			>
-				<LocationControlBar class="px-20 pb-1.5"
+				<LocationControlBar
 					data={locations} project={activeProject}
 					bind:query={parameters.query}
 					bind:filter={parameters.filter}
@@ -148,10 +147,10 @@
 				/>
 			</PageHeader>
 
+			<!-- Main Body -->
 
 			<Flex align="start" class="px-20 pt-3 pb-6 overflow-y-auto">
-				{#if activeProject && locations.items?.length > 0}
-
+				{#if activeProject && results.length > 0}
 
 					<!-- Grid -->
 
@@ -159,6 +158,7 @@
 						<LocationGrid
 							cols={gridCols}
 							locations={results}
+							gap={1.5}
 						>
 							{#snippet gridItem(location)}
 								<LocationCard
@@ -211,11 +211,11 @@
 					<!-- Map -->
 
 					{:else if parameters.layout == 'map'}
-						<LocationMap
+						<!-- <LocationMap
 							constrain={false}
 							class="bg-black/50 max-h-full rounded-lg"
 							location={worldTree}
-						/>
+						/> -->
 
 
 					{/if}
