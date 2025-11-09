@@ -1,11 +1,8 @@
 <script>
+
 	import { onMount } from 'svelte';
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-
-
-	//	Layout & Components
-
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
@@ -16,23 +13,40 @@
 	import CharacterGrid 		from '@/Components/Features/Character/CharacterGrid.svelte'
 	import CharacterPanel 		from '@/Components/Features/Character/CharacterPanel.svelte'
 	import CharacterTable		from '@/Components/Features/Character/CharacterTable.svelte'
+	import ProjectObject 		from '@/services/ProjectObject'
 
 
-	//	Page props
+	/**
+	 * Active project instance
+	 * @type {ProjectObject}
+	 */
+	const activeProject	  = new ProjectObject($page.props.activeProject.data)
+	const characters      = activeProject?.characters
 
-	import ProjectObject 	from '@/services/ProjectObject'
-	import CollectionList 	from '@/services/CollectionList'
-	const activeProject	  = $state(new ProjectObject($page.props.activeProject.data))
-	const collections	  = $state(new CollectionList($page.props.collections?.data))
-	const characters      = $state(activeProject?.characters)
-	const factions    	  = $state(activeProject?.factions)
-	const locations    	  = $state(activeProject?.locations)
 
+	/**
+	 * URL search parameters for state persistence
+	 * @type {URLSearchParams}
+	 */
 	let urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
 
 
-	//	Reactive State
+	/**
+	 * Reactive application state parameters
+	 * @typedef {Object} AppParameters
+	 * @property {string} query - Search query string
+	 * @property {string} filter - Current filter type
+	 * @property {string} sort - Sort field name
+	 * @property {string} direction - Sort direction ('asc' or 'desc')
+	 * @property {number} size - Grid size/layout parameter
+	 * @property {string} layout - Display layout ('grid' or 'table')
+	 * @property {string} selected - Slug of currently selected faction
+	 */
 
+	/**
+	 * Reactive state parameters for filtering, sorting, and layout
+	 * @type {AppParameters}
+	 */
 	let parameters = $state({
 		query: 		urlParams.get('q')		|| '',
 		filter: 	urlParams.get('filter') || '',
@@ -43,13 +57,22 @@
 		selected: 	urlParams.get('selected') || ''
 	})
 
+	/**
+	 * Derived grid columns calculation based on size parameter
+	 * @type {number}
+	 */
 	let gridCols = $derived(12-parameters.size)
+
+	/**
+	 * Derived filtered/sorted results
+	 * @type {Array<CharacterObject>}
+	 */
 	let results  = $derived(characters.items)
 
 
 	/**
-	 * Sync with URL
-	 * Update filters from URL on Mount
+	 * Sync with URL - Update filters from URL on component mount
+	 * @returns {void}
 	 */
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
@@ -65,8 +88,8 @@
 	});
 
 	/**
-	 * Update URL
-	 * Update URL params (without page reload) when filters change
+	 * Update URL - Sync URL params with state changes (without page reload)
+	 * @returns {void}
 	 */
 	$effect(() => {
 		const url = new URL(window.location);
@@ -84,9 +107,9 @@
 
 
 	/**
-	 * Get Subtitle
-	 * @param character A CharacterObject class instance
-	 * @return {string} Subtitle to display on Character Cards
+	 * Generate subtitle text for character cards based on current sort criteria
+	 * @param {CharacterObject} character | A CharacterObject class instance
+	 * @returns {string} subtitle to display on Character Cards
 	 */
 	function getSubtitle(character) {
 		switch (parameters.sort) {
@@ -106,8 +129,8 @@
 	}
 
 	/**
-	 * Select Character
-	 * @param character A CharacterObject class instance
+	 * Select or deselect a character in the UI
+	 * @param {CharacterObject} character | A CharacterObject class instance
 	 * @return {void}
 	 */
 	function selectCharacter(character) {
@@ -171,57 +194,6 @@
 									character={character}
 									subtitle={getSubtitle(character)}
 									onclick={() => selectCharacter(character)}
-									iconOptions={[
-										{ icon: "Star", 		onclick: () => character.star(), iconWeight: character.starred ? 'fill' : 'regular' },
-										{ icon: "Eye", 			href: character.routes?.show },
-										{ icon: "Textbox", 		onclick: () => character.openModal('rename') },
-										{ icon: "UploadSimple", onclick: () => character.openModal('setPortrait') },
-										{ icon: "Trash", 		onclick: () => character.openModal('delete'), theme: "danger" },
-									]}
-									options={[{
-										icon: 'FlagBannerFold', iconWeight: 'regular',
-										label: "Factions...",
-										create: () => factions.create(),
-										options: [ ...factions.items.map(f => ({
-											...f,
-											active: f.id === character.factions?.items?.[0]?.id,
-											label: f.name,
-											onclick: () => character.addFaction(f)
-										})) ]
-									},{
-										icon: 'MapPin', iconWeight: 'regular',
-										label: "Location...",
-										create: () => locations.create(),
-										options: [ ...locations.items.map(l => ({
-											...l,
-											active: l.id === character.location?.id,
-											label: l.name,
-											onclick: () => character.setLocation(l.id)
-										}))]
-									},{
-										separator: true
-									},{
-										icon: 'FolderSimple', iconWeight: 'regular',
-										label: "Add to Collection",
-										create: () => collections.create('characters', [character]),
-										options: [ ...collections.items.map(collection => ({
-											label: collection.name,
-											onclick: 	collection.items.map(i => i.collectionable_id).includes(character.id) ? () => collection.removeItem(character) : () => collection.addItem(character),
-											disabled:   collection.items.map(i => i.collectionable_id).includes(character.id),
-											iconWeight: collection.items.map(i => i.collectionable_id).includes(character.id) ? 'fill' : 'light'
-										}))]
-									},{
-										icon: 'TagSimple', iconWeight: 'regular',
-										label: "Add Tags",
-										onclick: () => character.addTags()
-									},{
-										separator: true
-									},{
-										icon: 'Trash', iconWeight: 'regular',
-										label: "Delete Character",
-										onclick: () => character.openModal('delete'),
-										theme: "danger"
-									}]}
 								/>
 							{/snippet}
 						</CharacterGrid>

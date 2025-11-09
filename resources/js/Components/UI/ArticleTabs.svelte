@@ -1,7 +1,6 @@
 <script>
 
 	import { Tabs } from '@/Components/Core'
-	import Container from '@/Components/UI/Container.svelte'
 	import Icon from '@/Components/UI/Icon.svelte'
 
 	let {
@@ -11,17 +10,26 @@
 		...restProps
 	} = $props()
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = {
+		tabs: 	 "flex items-start justify-center gap-12 w-full " + className,
+		list:	 "pt-12 w-56",
+		trigger: "flex items-center justify-start gap-2 px-3 py-1.5 rounded w-full hover:bg-neutral-softest",
+		active:	 "text-accent"
+	}
+
 </script>
 
 
 
+<Tabs class={cx.tabs} orientation="vertical" {...restProps}>
 
-
-<Tabs class="article-tabs {className}" orientation="vertical" {...restProps}>
-
-	<Tabs.List class="pt-12 w-56">
+	<Tabs.List class={cx.list}>
 		{#each tabs as tab}
-			<Tabs.Trigger value={tab.value}>
+			<Tabs.Trigger class={cx.trigger} value={tab.value}>
 				{#if tab.icon}
 					<Icon name={tab.icon} size="md" />
 				{/if}
@@ -35,22 +43,3 @@
 	</div>
 
 </Tabs>
-
-
-<style lang="postcss">
-
-	:global(.article-tabs) {
-		@apply flex items-start justify-center gap-12 w-full;
-
-		:global(.tab-trigger) {
-			@apply flex items-center justify-start gap-2 px-3 py-1.5 rounded w-full;
-			&[aria-selected="true"] {
-				color: var(--text-accent);
-			}
-			&:hover {
-				background-color: var(--bg-neutral-softest);
-			}
-		}
-	}
-
-</style>

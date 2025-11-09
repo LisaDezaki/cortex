@@ -1,11 +1,8 @@
 <script>
+
 	import { onMount } from 'svelte';
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-
-
-	//	Layout & Components
-
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
 	import Empty   	  			from '@/Components/UI/Empty.svelte'
@@ -16,24 +13,42 @@
 	import LocationGrid			from '@/Components/Features/Location/LocationGrid.svelte'
 	import LocationPanel		from '@/Components/Features/Location/LocationPanel.svelte'
 	import LocationTable		from '@/Components/Features/Location/LocationTable.svelte'
-	
-
-	//	Page props
-
 	import ProjectObject 	from '@/services/ProjectObject'
-	import CollectionList 	from '@/services/CollectionList'
 	import LocationList 	from '@/services/LocationList'
 	import LocationObject 	from '@/services/LocationObject'
-	const activeProject   = $state(new ProjectObject($page.props.activeProject.data))
-	const collections	  = $state(new CollectionList($page.props.collections?.data))
-	const locations       = $state(activeProject?.locations)
-	// const worldTree		  = $state(new LocationObject($page.props.worldTree?.data))
 
+
+	/**
+	 * Active project instance
+	 * @type {ProjectObject}
+	 */
+	const activeProject   = $state(new ProjectObject($page.props.activeProject.data))
+	const locations       = $state(activeProject?.locations)
+
+
+	/**
+	 * URL search parameters for state persistence
+	 * @type {URLSearchParams}
+	 */
 	let urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
 
 
-	//	Reactive State
+	/**
+	 * Reactive application state parameters
+	 * @typedef {Object} AppParameters
+	 * @property {string} query - Search query string
+	 * @property {string} filter - Current filter type
+	 * @property {string} sort - Sort field name
+	 * @property {string} direction - Sort direction ('asc' or 'desc')
+	 * @property {number} size - Grid size/layout parameter
+	 * @property {string} layout - Display layout ('grid' or 'table')
+	 * @property {string} selected - Slug of currently selected faction
+	 */
 
+	 /**
+	 * Reactive state parameters for filtering, sorting, and layout
+	 * @type {AppParameters}
+	 */
 	let parameters = $state({
 		query: 		urlParams.get('q') 		|| '',
 		filter: 	urlParams.get('filter') || '',
@@ -44,13 +59,22 @@
 		selected: 	urlParams.get('selected') || ''
 	})
 
+	/**
+	 * Derived grid columns calculation based on size parameter
+	 * @type {number}
+	 */
 	let gridCols = $derived(8-parameters.size)
+
+	/**
+	 * Derived filtered/sorted results
+	 * @type {Array<CharacterObject>}
+	 */
 	let results  = $derived(locations.items)
 
 
 	/**
-	 * Sync with URL
-	 * Update filters from URL on Mount
+	 * Sync with URL - Update filters from URL on component mount
+	 * @returns {void}
 	 */
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
@@ -67,8 +91,8 @@
 
 
 	/**
-	 * Update URL
-	 * Update URL params (without page reload) when filters change
+	 * Update URL - Sync URL params with state changes (without page reload)
+	 * @returns {void}
 	 */
 	$effect(() => {
 		const url = new URL(window.location);
@@ -87,7 +111,7 @@
 
 	/**
 	 * Get Subtitle
-	 * @param location A LocationObject class instance
+	 * @param {LocationObject} location | A LocationObject class instance
 	 * @return {string} Subtitle to display on Location Cards
 	 */
 	function getSubtitle(location) {
@@ -103,7 +127,7 @@
 
 	/**
 	 * Select Location
-	 * @param location A LocationObject class instance
+	 * @param {LocationObject} location | A LocationObject class instance
 	 * @return {void}
 	 */
 	function selectLocation(location) {

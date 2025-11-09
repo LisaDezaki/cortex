@@ -1,10 +1,6 @@
 <script>
 	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-
-
-	//	Layout & Components
-
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
 	import Grid 		 from '@/Components/Core/Grid.svelte'
@@ -24,17 +20,14 @@
 	import Separator	 from '@/Components/UI/Separator.svelte'
 	import Tag	 		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
-
-
-	//	Page props
-
 	import FactionObject from '@/services/FactionObject';
+
+	/**
+	 * Active faction instance
+	 * @type {FactionObject}
+	 */
 	const faction 	   = new FactionObject($page.props.faction?.data)
 	const customFields = $page.props.customFields?.data
-
-	function findDisplayValue(fieldId) {
-		return character.customFieldValues?.find(v => v.customFieldId == fieldId)?.displayValue || null
-	}
 
 </script>
 
@@ -44,14 +37,7 @@
     <title>{faction.name}</title>
 </svelte:head>
 
-
-
 <AuthenticatedLayout>
-
-	<!-- {#snippet header()}
-		<PageHeader title={faction.name} />
-	{/snippet} -->
-
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
 			<PageMenu
@@ -95,7 +81,7 @@
 							<Stack gap={1.5}>
 								<Inline class="font-light px-1.5 text-neutral-soft text-sm" gap={1.5}>
 									<Icon name="MapPin" size="sm" />
-									<span>Headquarters
+									<span>Headquarters</span>
 								</Inline>
 
 								{#if faction.headquarters}
@@ -121,7 +107,7 @@
 							<Stack gap={1.5}>
 								<Inline class="font-light text-neutral-soft text-sm" gap={1.5}>
 									<Icon name="UsersFour" size="sm" />
-									<span>Membership
+									<span>Membership</span>
 								</Inline>
 
 								<!-- {#if faction.headquarters}
@@ -177,7 +163,7 @@
 							{#each customFields as field, i}
 								<Flex gap={3}>
 									<span class="font-bold w-20">{field.label}:</span>
-									<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
+									<span class="line-clamp-1 {field.displayValue ? '' : 'font-style-placeholder'}">{field.displayValue || "undefined"}</span>
 								</Flex>
 							{/each}
 						{:else}

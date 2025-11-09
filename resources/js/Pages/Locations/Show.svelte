@@ -1,51 +1,38 @@
 <script>
 	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-
-
-	//	Layout & Components
-
-	import Map from '@/Components/Core/Map'
-
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
-	import Grid 		 from '@/Components/Core/Grid.svelte'
 	import Inline 		 from '@/Components/Core/Grid.svelte'
+	import Map 			 from '@/Components/Core/Map'
 	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button     	 from '@/Components/UI/Button.svelte'
-	import Card     	 from '@/Components/UI/Card.svelte'
-	import CardNew       from '@/Components/UI/CardNew.svelte'
-	import Chip			 from '@/Components/UI/Chip.svelte'
 	import Collapsible	 from '@/Components/UI/Collapsible.svelte'
 	import Container	 from '@/Components/UI/Container.svelte'
-	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading  	 from '@/Components/UI/Heading.svelte'
-	import Icon  		 from '@/Components/UI/Icon.svelte'
 	import Media     	 from '@/Components/UI/Media.svelte'
-	import MediaGrid     from '@/Components/UI/MediaGrid.svelte'
-	import Modal    	 from '@/Components/UI/Modal.svelte'
-	import PageHeader 	 from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section  	 from '@/Components/UI/Section.svelte'
 	import Separator  	 from '@/Components/UI/Separator.svelte'
-	import Thumbnail	 from '@/Components/UI/Thumbnail.svelte'
-
-
-	//	Page props
-
 	import LocationObject from '@/services/LocationObject';
+
+	/**
+	 * Active location instance
+	 * @type {LocationObject}
+	 */
 	const location 	   = new LocationObject($page.props.location?.data)
 	const customFields = $page.props.customFields?.data
 
 </script>
+
+
 
 <svelte:head>
     <title>{location.name}</title>
 </svelte:head>
 
 <AuthenticatedLayout>
-
 	{#snippet article()}
 		<Flex justify="center" gap={6} class="h-full overflow-y-auto py-12">
 			<PageMenu

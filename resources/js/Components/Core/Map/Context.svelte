@@ -49,6 +49,8 @@
 		activeItem = item
 	}
 
+	console.log(location)
+
 	// Expose state and methods via context
 	setContext("map-context", {
 		getActive:	 () => activeItem,
@@ -56,7 +58,7 @@
 		getItems:    () => location.mapItems,
 		getLastClick:() => lastClick,
 		getLocation: () => location,
-		getMap:		 () => location.getMedia('map'),
+		getMap:		 () => location.getMedia?.('map'),
 		handleConfirmCoordinates,
 		handleFileUpload,
 		handleItemHover,

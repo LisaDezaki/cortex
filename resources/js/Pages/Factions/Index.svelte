@@ -1,11 +1,8 @@
 <script>
+
 	import { onMount } from 'svelte';
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-
-
-	//	Layout & Components
-
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
 	import Empty     		 	from '@/Components/UI/Empty.svelte'
@@ -16,23 +13,42 @@
 	import FactionGrid 		 	from '@/Components/Features/Faction/FactionGrid.svelte'
 	import FactionPanel 	 	from '@/Components/Features/Faction/FactionPanel.svelte'
 	import FactionTable 	 	from '@/Components/Features/Faction/FactionTable.svelte'
-
-
-	//	Page props
-
 	import ProjectObject 	from '@/services/ProjectObject'
-	import CollectionList 	from '@/services/CollectionList'
-	const activeProject   = new ProjectObject($page.props.activeProject.data)
-	const collections	  = new CollectionList($page.props.collections?.data)
+
+
+	/**
+	 * Active project instance
+	 * @type {ProjectObject}
+	 */
+	const activeProject   = $state(new ProjectObject($page.props.activeProject.data))
 	const characters      = $state(activeProject?.characters)
 	const factions    	  = $state(activeProject?.factions)
 	const locations    	  = $state(activeProject?.locations)
 
+
+	/**
+	 * URL search parameters for state persistence
+	 * @type {URLSearchParams}
+	 */
 	let urlParams = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
 	
 
-	//	Reactive State
+	/**
+	 * Reactive application state parameters
+	 * @typedef {Object} AppParameters
+	 * @property {string} query - Search query string
+	 * @property {string} filter - Current filter type
+	 * @property {string} sort - Sort field name
+	 * @property {string} direction - Sort direction ('asc' or 'desc')
+	 * @property {number} size - Grid size/layout parameter
+	 * @property {string} layout - Display layout ('grid' or 'table')
+	 * @property {string} selected - Slug of currently selected faction
+	 */
 
+	 /**
+	 * Reactive state parameters for filtering, sorting, and layout
+	 * @type {AppParameters}
+	 */
 	let parameters = $state({
 		query: 		urlParams.get('q')		|| '',
 		filter: 	urlParams.get('filter') || '',
@@ -43,13 +59,22 @@
 		selected: 	urlParams.get('selected') || ''
 	})
 
+	/**
+	 * Derived grid columns calculation based on size parameter
+	 * @type {number}
+	 */
 	let gridCols = $derived(12-parameters.size)
+
+	/**
+	 * Derived filtered/sorted results
+	 * @type {Array<CharacterObject>}
+	 */
 	let results = $derived(factions.items)
 
 
 	/**
-	 * Sync with URL
-	 * Update filters from URL on Mount
+	 * Sync with URL - Update filters from URL on component mount
+	 * @returns {void}
 	 */
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
@@ -66,8 +91,8 @@
 
 
 	/**
-	 * Update URL
-	 * Update URL params (without page reload) when filters change
+	 * Update URL - Sync URL params with state changes (without page reload)
+	 * @returns {void}
 	 */
 	$effect(() => {
 		const url = new URL(window.location);
@@ -85,9 +110,9 @@
 
 
 	/**
-	 * Get Subtitle
-	 * @param character A CharacterObject class instance
-	 * @return {string} Subtitle to display on Character Cards
+	 * Generate subtitle text for faction cards based on current sort criteria
+	 * @param {FactionObject} faction | A FactionObject class instance
+	 * @returns {string} subtitle to display on Faction Cards
 	 */
 	function getSubtitle(faction) {
 		switch (parameters.sort) {
@@ -105,7 +130,7 @@
 
 	/**
 	 * Select Faction
-	 * @param faction A FactionObject class instance
+	 * @param {FactionObject} faction | A FactionObject class instance
 	 * @return {void}
 	 */
 	function selectFaction(faction) {

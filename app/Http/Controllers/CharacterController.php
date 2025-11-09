@@ -3,10 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\CharacterResource;
-use App\Http\Resources\CollectionResource;
 use App\Http\Resources\CustomFieldResource;
 use App\Models\Character;
-use App\Models\Collection;
 use App\Models\CustomField;
 use App\Models\CustomFieldValue;
 use App\Models\Faction;
@@ -73,32 +71,20 @@ class CharacterController extends Controller
 
 	public function index()
 	{
-		$collections = Collection::where([
-			'project_id' => Auth::user()->active_project,
-			'collection_type' => Character::class
-		])->with(['items'])->get();
-
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Character::class
 		])->with('options')->get();
 
 		return Inertia::render('Characters/Index', [
-			'collections'	=> CollectionResource::collection($collections),
 			'customFields'	=> CustomFieldResource::collection($customFields)
 		]);
 	}
-	public function collections()
-	{
-		$collections = Collection::where([
-			'project_id' => Auth::user()->active_project,
-			'collection_type' => Character::class
-		])->with(['items'])->get();
-
-		return Inertia::render('Characters/Collections', [
-			'collections'	=> CollectionResource::collection($collections),
-		]);
-	}
+	// public function collections()
+	// {
+	// 	return Inertia::render('Characters/Collections', [
+	// 	]);
+	// }
 
 	/**
 	 * CREATE / STORE
@@ -145,7 +131,6 @@ class CharacterController extends Controller
 			'relationships.image',
 			'inverseRelationships.image',
 			'customFieldValues.customField',
-			'collections.items',
 		]);
 
 		$customFields = CustomField::where([

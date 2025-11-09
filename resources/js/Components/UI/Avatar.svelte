@@ -1,5 +1,7 @@
 <script>
+
 	import { Avatar } from "bits-ui"
+
 	let {
 		alt,
 		children,
@@ -9,35 +11,24 @@
 		src,
 		...restProps
 	} = $props()
+
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = {
+		avatar: "aspect-square border border-neutral-softest inline-flex items-center justify-center overflow-hidden p-0.5 rounded-full shrink-0" + className,
+		image:	"h-full object-cover  rounded-full w-full",
+		fallback: "bg-neutral-softer flex items-center justify-center h-full rounded-full text-neutral-soft w-full"
+	}
+
 </script>
 
+
+
 {#if showIf}
-	<Avatar.Root class="avatar aspect-square {className} {restProps.square ? 'square' : ''}" {...restProps}>
-		<Avatar.Image class="avatar-image" src={src} alt={alt}></Avatar.Image>
-		<Avatar.Fallback class="avatar-fallback">{fallback}</Avatar.Fallback>
+	<Avatar.Root class="{cx.avatar} {restProps.square ? 'square' : ''}" {...restProps}>
+		<Avatar.Image class={cx.image} src={src} alt={alt}></Avatar.Image>
+		<Avatar.Fallback class={cx.fallback}>{fallback}</Avatar.Fallback>
 	</Avatar.Root>
 {/if}
-
-<style lang="postcss">
-
-	:global(.avatar) {
-		@apply inline-flex items-center justify-center aspect-square overflow-hidden p-0.5 flex-shrink-0;
-		@apply border rounded-full;
-		@apply font-black text-lg tracking-tighter;
-	}
-	:global(.avatar:not([class*="border-"])) {
-		border-color: var(--border-neutral-softest);
-	}
-
-	:global(.avatar-image) {
-		@apply object-cover h-full w-full rounded-full;
-	}
-
-	:global(.avatar-fallback) {
-		@apply flex items-center justify-center w-full h-full;
-		@apply rounded-full;
-		background-color: var(--bg-neutral-softer);
-		color: var(--text-neutral-soft);
-	}
-
-</style>

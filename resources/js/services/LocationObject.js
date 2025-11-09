@@ -42,7 +42,7 @@ export default class LocationObject {
 
 			/**
 			 * A collection of entities as MapItems
-			 * @type {LocationObject}
+			 * @type {Array}
 			 * @readonly
 			 */
 			mapItems: locationData?.mapItems ? {

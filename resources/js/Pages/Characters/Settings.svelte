@@ -1,10 +1,6 @@
 <script>
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-
-
-	//	Layout & Components
-
     import AuthenticatedLayout	 from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharacterSettingsForm from '@/Forms/Settings/CharacterSettings.svelte'
 	import Flex   	  from '@/Components/Core/Flex.svelte'
@@ -15,10 +11,11 @@
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
-
 	
-	//	Page props
-
+	/**
+	 * Active character instance
+	 * @type {CharacterObject}
+	 */
 	const customFields = $page.props.customFields?.data
 	const settings     = $page.props.settings?.characters?.data
 
@@ -38,7 +35,6 @@
 				title="Character Settings"
 				tabs={[
 					{ label: "List",			href: route('characters') },
-					// { label: "Collections", 	href: route('characters.collections') },
 					{ label: "Settings", 		active: true },
 				]}
 			/>

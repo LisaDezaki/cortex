@@ -46,21 +46,21 @@ export default class CharacterObject {
 			 * @type {FactionList}
 			 * @readonly
 			 */
-			factions:		characterData.factions ? new FactionList(characterData.factions)		 		: null,
+			factions: characterData.factions ? new FactionList(characterData.factions) : null,
 			
 			/**
 			 * A LocationObject instance
 			 * @type {LocationObject}
 			 * @readonly
 			 */
-			location: 		characterData.mapData?.location ? new LocationObject(characterData.mapData.location) 	: null,
+			location: characterData.mapData?.location ? new LocationObject(characterData.mapData.location) : null,
 
 			/**
 			 * A CharacterList instance
 			 * @type {CharacterList}
 			 * @readonly
 			 */
-			relationships: 	characterData.relationships ? new CharacterList(characterData.relationships) 		: null,
+			relationships: characterData.relationships ? new CharacterList(characterData.relationships) : null,
 			
 			/**
 			 * API routes for character operations
