@@ -1,10 +1,6 @@
 <script>
 	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-
-
-	//	Layout & Components
-
 	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
 	import Grid 		 from '@/Components/Core/Grid.svelte'
@@ -23,17 +19,14 @@
 	import Separator     from '@/Components/UI/Separator.svelte'
 	import Tag     		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
-
-
-	//	Page props
-
 	import CharacterObject from '@/services/CharacterObject';
+
+	/**
+	 * Active character instance
+	 * @type {CharacterObject}
+	 */
 	const character    = new CharacterObject($page.props.character?.data)
 	const customFields = $page.props.customFields?.data
-
-	function findDisplayValue(fieldId) {
-		return character.customFieldValues?.find(v => v.customFieldId == fieldId)?.displayValue || null
-	}
 
 </script>
 
@@ -44,7 +37,6 @@
 </svelte:head>
 
 <AuthenticatedLayout>
-
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
 			<PageMenu
@@ -71,16 +63,16 @@
 					<ArticleBanner>
 						<Media
 							class="absolute inset-0 aspect-[3/1] bg-slate-200 border border-neutral-softest hover:border-accent rounded-lg overflow-hidden text-neutral-softest w-full"
-							media={character.getBanner()}
+							media={character.getMedia('banner')}
 							onclick={() => character.openModal('setBanner')}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 hover:border-accent right-12 -bottom-16 rounded-lg overflow-hidden text-neutral-softest w-48"
-							media={character.getPortrait()}
+							media={character.getMedia('portrait')}
 							onclick={() => character.openModal('setPortrait')}
 						/>
 						<Heading is="h1" as="h3"
-							class="max-w-3/4 mt-auto z-10 {character.getBanner() ? 'text-white' : ''}"
+							class="max-w-3/4 mt-auto z-10 {character.getMedia('banner') ? 'text-white' : ''}"
 							heading={character.name}
 							subheading={character.alias}
 						/>
@@ -128,7 +120,7 @@
 						{#each customFields as field, i}
 							<Flex gap={3}>
 								<span class="font-bold w-20">{field.label}:</span>
-								<span class="line-clamp-1 {findDisplayValue(field.id) ? '' : 'font-style-placeholder'}">{findDisplayValue(field.id) || "undefined"}</span>
+								<span class="line-clamp-1 {field.displayValue ? '' : 'font-style-placeholder'}">{field.displayValue || "undefined"}</span>
 							</Flex>
 						{/each}
 						<Flex class="pt-3">
@@ -241,9 +233,9 @@
 						<Heading is="h3" as="h6">Location</Heading>
 					</Flex>
 					{#if character.mapData?.location}
-						{character.mapData.location.name}
+						<!-- <pre>{JSON.stringify(character.location,null,3)}</pre> -->
 						<Map.Context class="aspect-video rounded-lg shadow w-[64ch]"
-							location={character.mapData?.location}
+							location={character?.location}
 						/>
 					{:else}
 						<p class="font-style-placeholder">{character.name} hasn't been assigned a location yet.</p>

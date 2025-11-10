@@ -1,15 +1,65 @@
+/**
+ * @typedef {import('@inertiajs/svelte')} router
+ * @typedef {import('momentum-trail')} route
+ * @typedef {import('@/stores/modalStore')} modalActions
+ * @typedef {import('@/services/CharacterList')} CharacterList
+ * @typedef {import('@/services/LocationObject')} LocationObject
+ */
+
 import { router } from '@inertiajs/svelte'
 import { route } from 'momentum-trail'
-
+import { modalActions } from '@/stores/modalStore';
 import CharacterList from '@/services/CharacterList'
 import LocationObject from '@/services/LocationObject'
-import { modalActions } from '@/stores/modalStore';
+
+/**
+ * Class: Faction Object
+ * Represents a single Faction record
+ * @class
+ * @classdesc A Faction entity as fetched from the database
+ * with other functionality to make data handling easier
+ */
 
 export default class FactionObject {
+
+	/**
+	 * Creates a new FactionObject instance
+	 * @param {Object} factionData
+	 * @throws {TypeError} if factionData is not provided
+	 */
 	constructor(factionData) {
+		if (!factionData || (typeof factionData !== 'object')) {
+			throw new TypeError('FactionObject constructor requires a valid faction object');
+		}
 		Object.assign(this, factionData, {
+
+			/**
+			 * Laravel's Model location as printed by Faction::class
+			 * @type {string}
+			 */
+			laravelClass:	"App\Models\Faction",
+
+			/**
+			 * A LocationObject instance
+			 * @type {LocationObject}
+			 * @readonly
+			 */
 			headquarters: factionData.headquarters ? new LocationObject(factionData.headquarters) : null,
+
+			/**
+			 * A CharacterList instance
+			 * @type {CharacterList}
+			 * @readonly
+			 */
 			members: factionData.members ? new CharacterList(factionData.members) : null,
+
+			/**
+			 * API routes for faction operations
+			 * @type {Object}
+			 * @property {string} show    | Route for showing this faction
+			 * @property {string} update  | Route for updating this faction
+			 * @property {string} destroy | Route for destroying this faction
+			 */
 			routes: {
 				show:    route('factions.show',    { faction: factionData.slug }),
 				update:  route('factions.update',  { faction: factionData.slug }),
@@ -18,15 +68,12 @@ export default class FactionObject {
 		})
 	}
 
-
-
 	/**
-	 * Modal Actions
-	 * The following methods will open a modal with the designated props.
-	 * Those modals will handle their own forms based on these props,
-	 * but the initial form data can be overwritten from here.
+	 * Open Modal
+	 * Open any of the available modals with associated props
+	 * @param {string} modalName | the name of the modal to open
+	 * @param {Array}  props     | any additional props to be added
 	 */
-
 	openModal(modalName, props) {
 
 		switch(modalName) {
@@ -42,7 +89,7 @@ export default class FactionObject {
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-[3/1]',
 					endpoint: this.routes.update,
-					media: this.getBanner(),
+					media: this.getMedia('banner'),
 					method: 'patch',
 					reloadPageProps: ['faction.media', 'factions.media'],
 					title: 'Upload banner for ' + this.name,
@@ -52,7 +99,7 @@ export default class FactionObject {
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-square',
 					endpoint: this.routes.update,
-					media: this.getEmblem(),
+					media: this.getMedia('emblem'),
 					method: 'patch',
 					reloadPageProps: ['faction.media', 'factions.media'],
 					title: 'Upload emblem for ' + this.name,
@@ -63,85 +110,95 @@ export default class FactionObject {
 		}
 
 	}
-	
 
+	/**
+	 * Get Media
+	 * @param {string} type | The "type" of media to filter
+	 * @returns {Object} first media instance with specified type
+	 */
+	getMedia(type) {
+		return type ? this.media?.filter(m => m.type === type)?.[0] : null
+	}
+
+	/**
+	 * Get All Media
+	 * @param {string} type | The "type" of media to filter
+	 * @returns {Array} all media instances with specified type
+	 */
+	getAllMedia(type) {
+		return type ? this.media?.filter(m => m.type === type) : null
+	}
+
+	/**
+	 * Star
+	 * Toggle this Character's "starred" field in the database
+	 * @returns {void}
+	 */
+	star() {
+		this._update({ starred: !Boolean(this.starred) })
+	}
+
+	/**
+	 * Set Custom Field
+	 * Sets a specific custom field to a specific available value
+	 * for this Character in the database
+	 * @param {string} id - the UUID of the CustomField to update
+	 * @param {string} value - the new value to set for this field
+	 */
+	setCustomField(id, value) {
+		this._update({ custom_fields: [{ id, value }] })
+	}
+
+	/**
+	 * Add Member
+	 * Adds a new Character to this Faction's list of members
+	 * @param   {Object} opt - the option
+	 * @returns {void}
+	 */
 	addMember(opt) {
-		console.log('FactionObject.addMember()', opt)
-		this._update({
-			members: [
-				{ id: opt.id }
-			]
-		})
-	}
-
-	addTag(tag) {
-		console.log('addTag()', tag)
-	}
-
-	delete() {
-		modalActions.open('deleteFaction', { faction: this })
-	}
-
-	rename() {
-		modalActions.open('renameFaction', { faction: this })
-	}
-
-	// setHeadquarters() {
-	// 	modalActions.open('selectLocation', {
-	// 		endpoint: route('factions.update', { faction: this.slug }),
-	// 		method: 'patch',
-	// 		title: `Set ${this.name} Headquarters`
-	// 	})
-	// }
-
-
-
-	/**
-	 * 	Media methods
-	 */
-
-	getBanner() {
-		return this.media?.filter(m => m.type === 'banner')?.[0] || null
-	}
-
-	getEmblem() {
-		return this.media?.filter(m => m.type === 'emblem')?.[0] || null
+		this._update({ members: [{ id: opt.id }] })
 	}
 
 	/**
-	 * 	Update methods
+	 * Star
+	 * Toggle this Character's "starred" field in the database
+	 * @returns {void}
 	 */
-
-	updateMember(opt) {
-		console.log('FactionObject.updateMember()', opt)
-	}
-
-	removeHeadquarters() {
-		console.log('removeHeadquarters()')
-	}
-
-	removeMember(char) {
-		console.log('removeMember()', char?.name)
-	}
-
 	star() {
 		this._update({ starred: !Boolean(this.starred) })
 	}
 
 
-	/**
-	 * 	HTTP methods
-	 */
 
+
+
+	/**
+	 * Controller - Store
+	 * @param {Object} data | The data to STORE on the database
+	 */
+	_store(data) {
+		router.post( this.routes.store, data, {
+			onFinish: () => router.visit( router.page.url, { only: ['factions', 'faction'] })
+		})
+	}
+
+	/**
+	 * Controller - Update
+	 * @param {Object} data | The data to UPDATE on the database
+	 */
 	_update(data) {
-		router.patch(
-			this.routes.update,
-			data,
-			{
-				onFinish: (response) => {
-					router.visit( router.page.url, { only: ['factions'] })
-				}
-			}
-		)
+		router.patch( this.routes.update, data, {
+			onFinish: () => router.visit( router.page.url, { only: ['factions', 'faction'] })
+		})
+	}
+
+	/**
+	 * Controller - Destroy
+	 * @param {Object} data | The data to DESTROY on the database
+	 */
+	_destroy(data) {
+		router.destroy( this.routes.destroy, data, {
+			onFinish: () => router.visit( router.page.url, { only: ['factions', 'faction'] })
+		})
 	}
 }

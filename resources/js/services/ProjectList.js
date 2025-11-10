@@ -1,35 +1,103 @@
-import { router } from '@inertiajs/svelte'
-import { route } from 'momentum-trail'
+/**
+ * @typedef {import('momentum-trail')} route
+ * @typedef {import('@/stores/modalStore')} modalActions
+ * @typedef {import('@/services/ProjectObject')} ProjectObject
+ */
 
+import { route } from 'momentum-trail'
 import { modalActions } from '@/stores/modalStore';
 import ProjectObject from '@/services/ProjectObject'
 
+/**
+ * Class: Project List
+ * Represents a collection of Project records
+ * @class
+ * @classdesc A list of ProjectObjects (this.items) with a collection
+ * of other functionality to make data handling easier
+ */
+
 export default class ProjectList {
+
+	/**
+	 * Creates a new ProjectList instance
+	 * @param {Array} list
+	 * @throws {TypeError} if list is not an array or object
+	 */
 	constructor(list) {
+		if (!list || (typeof list !== 'object')) {
+			throw new TypeError('ProjectList constructor requires an array or object');
+		}
 		Object.assign(this, {
-			items: Array.isArray(list) ? list.map(i => new ProjectObject(i)) : [list],
-			history: [], // Track changes for undo/redo
-			filters: {}, // Store active filters
-			sortOrder: null, // Current sort order
+
+			/**
+			 * Array of ProjectObject instances
+			 * @type {Array<ProjectObject>}
+			 * @readonly
+			 */
+			items: list.map(i => new ProjectObject(i)),
+
+			/**
+			 * History stack for undo/redo functionality
+			 * @type {Array<Object>}
+			 * @private
+			 */
+			history: [],
+
+			/**
+			 * API routes for project operations
+			 * @type {Object}
+			 * @property {string} store | Route for storing new projects
+			 */
 			routes: {
-				create:	route('projects.create')
+				create:	route('projects.create'),
+				deactivate: route('projects.deactivate'),
 			}
 		})
+
+		/** @private */
 		this._saveToHistory(); // Save initial state to history
 	}
 
+	/**
+	 * Create
+	 * Open the modal for creating a new project entity
+	 * @returns {void}
+	 */
 	create() {
 		modalActions.open('createProject')
 	}
 
-	filter(query, filter) {
-		console.log('ProjectList.filter()', query, filter)
+	/**
+	 * Filter
+	 * Returns a filtered list of items based on the strings provided
+	 * @param {string} query
+	 * @param {string} filter
+	 * @param {string} sort
+	 * @returns {Array}
+	 */
+	filter(query, filter, sort) {
+		return this.items
+			.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
+			.filter(filter).sort(sort)
 	}
 
-	// History/Undo
+	/**
+	 * Find
+	 * Returns the item with the provided id, if it exists
+	 * @param {string} id
+	 * @returns {Object}
+	 */
+	find(id) {
+		return this.items.find(item => item.id === id)
+	}
+
+	/**
+	 * History / Undo
+	 * Keep only the last 50 states to prevent memory issues
+	 * @returns {void}
+	 */
     _saveToHistory() {
         this.history.push([...this.items]);
-        // Keep only last 50 states to prevent memory issues
         if (this.history.length > 50) {
             this.history.shift();
         }

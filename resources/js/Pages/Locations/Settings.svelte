@@ -1,10 +1,6 @@
 <script>
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-
-
-	//	Layout & Components
-
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import LocationSettingsForm from '@/Forms/Settings/LocationSettings.svelte'
 	import Flex			from '@/Components/Core/Flex.svelte'
@@ -15,9 +11,10 @@
 	import PageMenu		from '@/Components/UI/PageMenu.svelte'
 	import Section		from '@/Components/UI/Section.svelte'
 
-	
-	//	Page props
-
+	/**
+	 * Active character instance
+	 * @type {CharacterObject}
+	 */
 	const customFields = $page.props.customFields?.data
 	const settings     = $page.props.settings?.locations?.data
 
@@ -41,6 +38,7 @@
 					{ label: "Settings", 		active: true },
 				]}
 			/>
+			
 			<Flex gap={12} class="px-20 py-6 w-full">
 				<PageMenu
 					items={[

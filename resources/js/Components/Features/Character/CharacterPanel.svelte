@@ -59,12 +59,12 @@
 
 		<Media
 			class={cx.banner}
-			media={character.getBanner()}
+			media={character.getMedia('banner')}
 			onclick={() => character.openModal('setBanner')}
 		/>
 		<Media
 			class={cx.portrait}
-			media={character.getPortrait()}
+			media={character.getMedia('portrait')}
 			onclick={() => character.openModal('setPortrait')}
 			icon="UserCircle" iconWeight="fill"
 		/>

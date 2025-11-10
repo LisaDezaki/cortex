@@ -50,15 +50,15 @@
 			<PageMenu items={[
 				{ icon: "UserList", label: "Profile Info",    href: "#profile",  active: $page.url.endsWith('#profile') },
 				{ icon: "Password", label: "Update Password", href: "#password", active: $page.url.endsWith('#password') },
-				{ icon: "Trash",    label: "Delete Account",  onclick: () => user.delete(), theme: "danger" }
+				{ icon: "Trash",    label: "Delete Account",  onclick: () => user.openModal('delete'), theme: "danger" }
 			]} />
 
 			<Container gap={12} size="2xl">
 
 				<Media
 					class="relative aspect-square bg-neutral-softest rounded-full w-48"
-					media={user.getAvatar()}
-					onclick={() => user.addAvatar()}
+					media={user.getMedia('avatar')}
+					onclick={() => user.openModal('setAvatar')}
 				/>
 
 				<Section id="profile" class="max-w-[64ch]">

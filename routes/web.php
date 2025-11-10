@@ -41,6 +41,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 	Route::get('/',    			     				[ProjectController::class, 'dashboard' 		])->name('dashboard');
 	Route::get('/tests',             				fn () => Inertia::render('Tests')  			 )->name('tests');
+	Route::get('/todo',             				fn () => Inertia::render('Todo')  			 )->name('todo');
 
 
 	/*  File uploads  */

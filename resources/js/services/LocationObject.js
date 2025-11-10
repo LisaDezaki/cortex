@@ -1,40 +1,78 @@
+/**
+ * @typedef {import('@inertiajs/svelte')} router
+ * @typedef {import('momentum-trail')} route
+ * @typedef {import('@/stores/modalStore')} modalActions
+ * @typedef {import('@/services/CharacterList')} CharacterList
+ * @typedef {import('@/services/LocationObject')} LocationObject
+ */
+
 import { router } from '@inertiajs/svelte'
 import { route } from 'momentum-trail'
-
+import { modalActions } from '@/stores/modalStore';
 import CharacterObject from '@/services/CharacterObject'
 import FactionObject from '@/services/FactionObject'
 import LocationList from '@/services/LocationList'
-import { modalActions } from '@/stores/modalStore';
+
+/**
+ * Class: Location Object
+ * Represents a single Location record
+ * @class
+ * @classdesc A Location entity as fetched from the database
+ * with other functionality to make data handling easier
+ */
 
 export default class LocationObject {
-	constructor(locationData) {
-		Object.assign(this, locationData, {
-			// descendants: locationData.descendants ? new LocationList(locationData.descendants) : null,
 
+	/**
+	 * Creates a new LocationObject instance
+	 * @param {Object} locationData
+	 * @throws {TypeError} if locationData is not provided
+	 */
+	constructor(locationData) {
+		if (!locationData || (typeof locationData !== 'object')) {
+			throw new TypeError('LocationObject constructor requires a valid location object');
+		}
+		Object.assign(this, locationData, {
+
+			/**
+			 * Laravel's Model location as printed by Location::class
+			 * @type {string}
+			 */
+			laravelClass:	"App\Models\Location",
+
+			/**
+			 * A collection of entities as MapItems
+			 * @type {Array}
+			 * @readonly
+			 */
 			mapItems: locationData?.mapItems ? {
 				all:		locationData.mapItems,
 				characters: locationData.mapItems.filter(i => i.type === 'character'),
 				factions:   locationData.mapItems.filter(i => i.type === 'faction'  ),
 				locations:	locationData.mapItems.filter(i => i.type === 'location' )
 			} : [],
-			routes: locationData ? {
+
+			/**
+			 * API routes for location operations
+			 * @type {Object}
+			 * @property {string} show    | Route for showing this location
+			 * @property {string} update  | Route for updating this location
+			 * @property {string} destroy | Route for destroying this location
+			 */
+			routes: {
 				show:    route('locations.show',    { location: locationData.slug }),
-				store:	 route('locations.store'),
 				update:  route('locations.update',  { location: locationData.slug }),
 				destroy: route('locations.destroy', { location: locationData.slug })
-			} : null
+			}
 		})
 	}
 
-
-
 	/**
-	 * Modal Actions
-	 * The following methods will open a modal with the designated props.
-	 * Those modals will handle their own forms based on these props,
-	 * but the initial form data can be overwritten from here.
+	 * Open Modal
+	 * Open any of the available modals with associated props
+	 * @param {string} modalName | the name of the modal to open
+	 * @param {Array}  props     | any additional props to be added
 	 */
-
 	openModal(modalName, props) {
 
 		switch(modalName) {
@@ -42,15 +80,11 @@ export default class LocationObject {
 				modalActions.open('deleteLocation', { location: this }); break;
 			case 'rename':
 				modalActions.open('renameLocation', { location: this }); break;
-			// case 'location':
-			// 	modalActions.open('setLocation', ...props); break;
-			// case 'relationship':
-			// 	modalActions.open('setCharacterRelationship', { character: this, ...props }); break;
 			case 'setBanner':
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-[7/3]',
 					endpoint: this.routes.update,
-					media: this.getBanner(),
+					media: this.getMedia('banner'),
 					method: 'patch',
 					reloadPageProps: ['location.media', 'locations.media'],
 					title: 'Upload banner for ' + this.name,
@@ -60,7 +94,7 @@ export default class LocationObject {
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-square',
 					endpoint: this.routes.update,
-					media: this.getMap(),
+					media: this.getMedia('map'),
 					method: 'patch',
 					reloadPageProps: ['location.media', 'locations.media'],
 					title: 'Upload map for ' + this.name,
@@ -72,73 +106,28 @@ export default class LocationObject {
 
 	}
 
-
 	/**
-	 * Modal methods
+	 * Get Media
+	 * @param {string} type | The "type" of media to filter
+	 * @returns {Object} first media instance with specified type
 	 */
-
-	// addBanner() {
-	// 	modalActions.open('uploadMedia', {
-	// 		aspect: 'aspect-[7/3]',
-	// 		endpoint: this.routes.update,
-	// 		media: this.getBanner(),
-	// 		method: 'patch',
-	// 		reloadPageProps: ['location.media', 'locations.media'],
-	// 		title: 'Upload banner for ' + this.name,
-	// 		type: 'banner',
-	// 	})
-	// }
-
-	// addMap() {
-	// 	modalActions.open('uploadMedia', {
-	// 		aspect: 'aspect-square',
-	// 		endpoint: this.routes.update,
-	// 		media: this.getMap(),
-	// 		method: 'patch',
-	// 		reloadPageProps: ['location.media', 'locations.media'],
-	// 		type: 'map',
-	// 	})
-	// }
-
-	// addPointOfInterest(entity) {
-	// 	console.log('LocationObject.addPointOfInterest()', entity)
-	// }
-
-	// addTag(tag) {
-	// 	console.log('LocationObject.addTag()', tag)
-	// }
-
-	// delete() {
-	// 	modalActions.open('deleteLocation', { location: this })
-	// }
-
-	// rename() {
-	// 	modalActions.open('renameLocation', { location: this })
-	// }
-
-
-
-	/**
-	 * 	Media methods
-	 */
-
-	getBanner() {
-		return this.media?.filter(m => m.type === 'banner')?.[0] || null
+	getMedia(type) {
+		return type ? this.media?.filter(m => m.type === type)?.[0] : null
 	}
 
-	getMap() {
-		return this.media?.filter(m => m.type === 'map')?.[0] || null
+	/**
+	 * Get All Media
+	 * @param {string} type | The "type" of media to filter
+	 * @returns {Array} all media instances with specified type
+	 */
+	getAllMedia(type) {
+		return type ? this.media?.filter(m => m.type === type) : null
 	}
 
-
-
-
-
-
 	/**
-	 * 	Update methods
+	 * Add Map Marker
+	 * @param {Array} items | The items to add
 	 */
-
 	addMapMarker(items) {
 		console.log('LocationObject.addMapMarker()', items.map(i => ({
 			location_id: this.id,
@@ -150,25 +139,36 @@ export default class LocationObject {
 		}))})
 	}
 
-	removePointOfInterest(entity) {
-		console.log('LocationObject.removePointOfInterest()', entity)
-	}
-
-	star() {
-		this._update({ starred: !Boolean(this.starred) })
-	}
 
 
 
 	/**
-	 * 	HTTP methods
+	 * Controller - Store
+	 * @param {Object} data | The data to STORE on the database
 	 */
+	_store(data) {
+		router.post( this.routes.store, data, {
+			onFinish: () => router.visit( router.page.url, { only: ['locations', 'location'] })
+		})
+	}
 
+	/**
+	 * Controller - Update
+	 * @param {Object} data | The data to UPDATE on the database
+	 */
 	_update(data) {
-		router.patch(
-			this.routes.update, data, {
-				onFinish: () => router.visit( router.page.url, { only: ['locations'] })
-			}
-		)
+		router.patch( this.routes.update, data, {
+			onFinish: () => router.visit( router.page.url, { only: ['locations', 'location'] })
+		})
+	}
+
+	/**
+	 * Controller - Destroy
+	 * @param {Object} data | The data to DESTROY on the database
+	 */
+	_destroy(data) {
+		router.destroy( this.routes.destroy, data, {
+			onFinish: () => router.visit( router.page.url, { only: ['locations', 'location'] })
+		})
 	}
 }

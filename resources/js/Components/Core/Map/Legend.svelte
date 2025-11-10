@@ -46,7 +46,7 @@
 	{ title: 'Locations',  defaultIcon: 'MapPinSimple', list: getItems().locations },
 	{ title: 'Characters', defaultIcon: 'User',			list: getItems().characters }
 ] as mapItems}
-	{#if mapItems.list.length > 0}
+	{#if mapItems.list?.length > 0}
 		<Stack class="pt-3 {legendClass}">
 			<p class={cx.title}>{mapItems.title}</p>
 			<ul class={cx.list}>
