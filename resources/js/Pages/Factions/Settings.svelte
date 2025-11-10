@@ -38,7 +38,6 @@
 				title="Faction Settings"
 				tabs={[
 					{ label: "List",			href: route('factions') },
-					// { label: "Collections", 	href: route('factions.collections') },
 					{ label: "Settings", 		active: true },
 				]}
 			/>

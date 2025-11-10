@@ -130,7 +130,6 @@
 				title="Location List"
 				tabs={[
 					{ label: "List",		active: true },
-					// { label: "Collections",	href: route('locations.collections') },
 					{ label: "Settings",	href: route('locations.settings') },
 				]}
 				actions={[
