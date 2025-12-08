@@ -1,5 +1,6 @@
 <script>
-	import { Flex } from '@/Components/Core'
+	import clsx 	from 'clsx'
+	import Flex 	from '@/Components/Core/Flex.svelte'
 	import Button 	from '@/Components/UI/Button.svelte'
 	import Icon 	from '@/Components/UI/Icon.svelte'
 
@@ -13,20 +14,28 @@
 		onclick,
 	} = $props()
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		media:  clsx('media overflow-hidden', className),
+		img:    clsx('min-h-full min-w-full object-cover', imageClass),
+		icon:   clsx('opacity-50 text-neutral-softest'),
+		button: clsx('absolute inset-0')
+	})
+
 </script>
 
 
 
-<Flex align="center" justify="center" class="media overflow-hidden {className}">
+<Flex align="center" justify="center" class={cx.media}>
 	{#if media}
-		<img class="min-h-full min-w-full object-cover {imageClass}" src={media.url} alt={media.name} />
+		<img class={cx.img} src={media.url} alt={media.name} />
 	{:else if icon}
-		<Icon class="opacity-50 text-neutral-softest" name={icon} size={iconSize} weight={iconWeight} />
+		<Icon class={cx.icon} name={icon} size={iconSize} weight={iconWeight} />
 	{/if}
 	{#if onclick}
-		<Button
-			class="absolute inset-0"
-			onclick={onclick}
-		/>
+		<Button class={cx.button} onclick={onclick} />
 	{/if}
 </Flex>

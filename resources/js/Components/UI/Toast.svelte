@@ -4,8 +4,10 @@
 	import { Inline } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon from '@/Components/UI/Icon.svelte'
+    import clsx from 'clsx'
 	
 	let {
+		class: className,
 		error,
 		errors,
 		icon,
@@ -13,6 +15,23 @@
 		success,
 		onDismiss
 	} = $props()
+
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		toast: clsx({
+			'toast fixed bottom-8 left-1/2 font-medium p-1.5 pl-3 rounded-full shadow-xl text-white translate-x-[-50%] z-50': true,
+			'backdrop-blur bg-accent-gradient border border-accent-strong text-white': success,
+			'bg-neutral-softer backdrop-blur-sm border border-neutral-soft text-neutral': message,
+			'bg-danger-gradient border border-danger-strong text-white': error || errors,
+		}, className),
+		button: clsx({
+			'ml-3 rounded-full': true,
+			'bg-accent-gradient-flip': success
+		})
+	})
 
 	let visible = $state(false)
 	let timeoutId
@@ -37,35 +56,35 @@
 
 
 {#if visible && success}
-	<Inline class="toast backdrop-blur bg-accent-gradient border border-accent-strong fixed bottom-8 left-1/2 p-1.5 pl-3 rounded-full shadow-xl text-white translate-x-[-50%] z-50">
+	<Inline class={cx.toast}>
 		<Icon name={icon || 'Check'} size="md" weight="bold" />
-		<span class="font-medium">{success}</span>
-		<Button onclick={dismiss} icon="X" iconSize="sm" iconWeight="bold" style="plain" theme="danger" class="bg-accent-gradient-flip ml-3 rounded-full" />
+		<span>{success}</span>
+		<Button style="plain" theme="danger" icon="X" iconSize="sm" iconWeight="bold" onclick={dismiss} />
 	</Inline>
 {/if}
 
 {#if visible && message}
-	<Inline class="toast bg-neutral-softer backdrop-blur-sm border border-neutral-soft fixed bottom-8 left-1/2 p-1.5 pl-3 rounded-full shadow-xl text-neutral translate-x-[-50%] z-50">
+	<Inline class={cx.toast}>
 		<Icon name={icon || 'Info'} size="md" weight="fill" />
-		<span class="font-medium">{message}</span>
-		<Button onclick={dismiss} icon="X" iconSize="sm" iconWeight="light" style="plain" theme="danger" class="ml-3 rounded-full" />
+		<span>{message}</span>
+		<Button style="plain" theme="danger" icon="X" iconSize="sm" iconWeight="light" onclick={dismiss} />
 	</Inline>
 {/if}
 
 {#if visible && error}
-	<Inline class="toast bg-danger-gradient border border-danger-strong fixed bottom-8 left-1/2 p-1.5 pl-3 rounded-full shadow-xl text-white translate-x-[-50%] z-50">
+	<Inline class={cx.toast}>
 		<Icon name={icon || 'SmileySad'} size="md" weight="fill" />
-		<span class="font-medium">{error}</span>
-		<Button onclick={dismiss} icon="X" iconSize="sm" iconWeight="light" style="plain" theme="danger" class="ml-3 rounded-full" />
+		<span>{error}</span>
+		<Button style="plain" theme="danger" icon="X" iconSize="sm" iconWeight="light" onclick={dismiss} />
 	</Inline>
 {/if}
 
 {#if visible && errors}
 	{#each errors as error}
-		<Inline class="toast bg-danger-gradient border border-danger-strong fixed bottom-8 left-1/2 p-1.5 pl-3 rounded-full shadow-xl text-white translate-x-[-50%] z-50">
+		<Inline class={cx.toast}>
 			<Icon name={icon || 'SmileySad'} size="md" weight="fill" />
-			<span class="font-medium">{error}</span>
-			<Button onclick={dismiss} icon="X" iconSize="sm" iconWeight="light" style="plain" theme="danger" class="ml-3 rounded-full" />
+			<span>{error}</span>
+			<Button style="plain" theme="danger" icon="X" iconSize="sm" iconWeight="light" onclick={dismiss} />
 		</Inline>
 	{/each}
 {/if}

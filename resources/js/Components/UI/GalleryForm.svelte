@@ -12,7 +12,7 @@
 	import Button  from '@/Components/UI/Button.svelte'
 	import Heading from '@/Components/UI/Heading.svelte'
 	import Icon    from '@/Components/UI/Icon.svelte'
-	import MediaGrid from '@/Components/UI/MediaGrid.svelte'
+	// import MediaGrid from '@/Components/UI/MediaGrid.svelte'
 	import Modal   from '@/Components/UI/Modal.svelte'
     import Upload from '../../Forms/Media/Upload.svelte'
 
@@ -66,7 +66,7 @@
 
 	<UploadContext bind:value={$form[requestKey]} preview={media?.url} multiple>
 
-		<MediaGrid addable cols={cols} media={media} onAdd={uploadImage} />
+		<!-- <MediaGrid addable cols={cols} media={media} onAdd={uploadImage} /> -->
 
 		<Modal show={uploadingImage} maxWidth="2xl" onclose={closeModal} class="flex items-start">
 

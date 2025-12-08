@@ -59,7 +59,7 @@
 			location={location}
 			map={location.getMedia('map')}
 			mapItems={location.mapItems.all}
-			onUpload={() => location.openModal('setMap')}
+			onUpload={() => location.openModal('setMedia', {type:'map'})}
 		>
 
 			<!-- Head -->
@@ -71,12 +71,12 @@
 
 			<!-- Body -->
 
-			<Stack gap={0} class="px-4 pt-3 pb-6">
+			<Stack gap={3} class="relative px-4 py-3">
 	
 	
 				<!-- Heading -->
 	
-				<Stack align="center" justify="center" gap={0.5} class="mb-3 px-6">
+				<Stack align="center" justify="center" gap={0.5} class="px-6">
 					<Heading is="h3" as="h4" class="text-center">{location.name}</Heading>
 					<p class="text-neutral-soft text-sm">{location.type}
 						{#if location.mapData?.location}
@@ -84,17 +84,40 @@
 						{/if}
 					</p>
 				</Stack>
-	
+
+
+				<!-- Panel Actions -->
+
+				<Inline align="center" gap={0} class="border border-neutral-softest place-self-center p-0.5 rounded-full">
+					<Button
+						icon="Star" iconSize="sm" iconWeight={location.starred ? 'fill' : 'regular'}
+						class="cursor-pointer p-0.5 rounded-full text-amber-400 hover:bg-amber-50"
+						onclick={() => location.star()}
+					/>
+					<Button
+						icon="PencilSimple" iconSize="sm" iconWeight="regular"
+						class="cursor-pointer p-0.5 rounded-full text-accent hover:bg-accent-softest"
+						onclick={() => location.star()}
+					/>
+					<Button
+						icon="Trash" iconSize="sm" iconWeight="regular"
+						class="cursor-pointer p-0.5 rounded-full text-danger hover:bg-danger-softest"
+						onclick={() => location.openModal('delete')}
+					/>
+				</Inline>
 
 
 				<!-- Description -->
 	
 				{#if location.description}
-					<Collapsible class="font-style-small mb-3 min-h-16 px-3" collapsed={true}>
+					<Collapsible class="font-style-small min-h-16 px-1.5" collapsed={true}>
 						{location.description}
 					</Collapsible>
 				{/if}
 				<Separator />
+
+		</Stack>
+		<Stack gap={0} class="relative px-4 py-3">
 
 
 

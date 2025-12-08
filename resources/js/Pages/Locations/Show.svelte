@@ -41,7 +41,7 @@
 					{ icon: "Info",   		label: "Details",       href: "#details"	},
 					{ icon: "Compass",      label: "Map",           href: "#map"		},
 					{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery"	},
-					{ icon: "Trash", 		label: "Delete", 		onclick: () => location.delete(), theme: "danger" }
+					{ icon: "Trash", 		label: "Delete", 		onclick: () => location.openModal('delete'), theme: "danger" }
 				]}
 			/>
 			<Container size="4xl">
@@ -56,12 +56,12 @@
 						<Media
 							class="absolute inset-0 rounded-lg overflow-hidden"
 							media={location.getMedia('banner')}
-							onclick={() => location.openModal('setBanner')}
+							onclick={() => location.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]'})}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
 							media={location.getMedia('map')}
-							onclick={() => location.openModal('setMap')}
+							onclick={() => location.openModal('setMedia', { type: 'map', aspect: 'aspect-[1/1]'})}
 						/>
 						{#if location.parent}
 							<Inline class="relative">

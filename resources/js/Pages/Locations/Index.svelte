@@ -146,11 +146,11 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section gap={0} class="h-full overflow-hidden">
+		<Section gap={0} class="h-full overflow-y-auto">
 
 			<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-20 py-3"
+			<PageHeader class="px-20 py-2"
 				title="Location List"
 				tabs={[
 					{ label: "List",		active: true },
@@ -173,7 +173,7 @@
 
 			<!-- Main Body -->
 
-			<Flex align="start" class="px-20 pt-3 pb-6 overflow-y-auto">
+			<Flex align="start" class="px-20 pt-3 pb-6">
 				{#if activeProject && results.length > 0}
 
 					<!-- Grid -->
@@ -194,7 +194,7 @@
 										{ icon: "Star", 		onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
 										{ icon: "Eye", 			href: location.routes.show },
 										{ icon: "Textbox", 		onclick: () => location.openModal('rename') },
-										{ icon: "UploadSimple", onclick: () => location.openModal('setBanner') },
+										{ icon: "UploadSimple", onclick: () => location.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3'}) },
 										{ icon: "Trash", 		onclick: () => location.openModal('delete'), theme: "danger" },
 									]}
 									options={[{

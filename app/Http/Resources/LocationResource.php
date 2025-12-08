@@ -49,8 +49,14 @@ class LocationResource extends JsonResource
 
 			'meta' => [
 				'projectId' => $this->project_id,
-				'createdAt' => $this->created_at,
-				'updatedAt' => $this->updated_at
+				'createdAt' => $this->created_at->diffForHumans(),
+				'updatedAt' => $this->updated_at->diffForHumans()
+			],
+
+			'routes' => [
+				'show'    => route('locations.show',    ['location' => $this->slug]),
+				'update'  => route('locations.update',  ['location' => $this->slug]),
+				'destroy' => route('locations.destroy', ['location' => $this->slug])
 			]
 		];
     }

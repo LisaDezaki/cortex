@@ -39,17 +39,20 @@
 
 <AuthenticatedLayout>
 
-	{#snippet header()}
-		<PageHeader
-			tabs={ active ? [
-				{ label: 'Dashboard', href: route('dashboard') },
-				{ label: 'Settings', 	active: true }
-			] : undefined }
-			
-		/>
-	{/snippet}
-
 	{#snippet article()}
+
+		<PageHeader class="px-20 py-2"
+			title={ activeProject ? null : "Projects" }
+			tabs={ activeProject ? [
+				{ label: 'Dashboard', href: route('dashboard') },
+				{ label: 'Settings',  active: true }
+			] : undefined }
+			actions={[
+				{ icon: "X", 	label: "Deactivate",	 theme: "danger", onclick: () => active.deactivate(), 	if: !!activeProject },
+				{ icon: "Plus", label: "Create Project", theme: "accent", onclick: () => projectList.create(),	if: !activeProject }
+			]}
+		/>
+
 		<Flex justify="center" gap={12} class="py-12">
 
 			<PageMenu
@@ -57,7 +60,8 @@
 					{ icon: "UserList",       label: "Overview",      href: "#overview" },
 					{ icon: "GearFine",       label: "Settings",      href: "#settings" },
 					{ icon: "ImagesSquare",   label: "Media",         href: "#media"    },
-					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   }
+					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   },
+					{ icon: "Trash",	 	  label: "Delete",		  onclick: () => active.openModal('delete'), theme: "danger" }
 				]}
 			/>
 

@@ -90,9 +90,14 @@ export default class LocationList {
 		return this.items.find(item => item.id === id)
 	}
 
-	// getWorldMap() {
-	// 	return this.items.find(item => item.isWorldMap)
-	// }
+	/**
+	 * Get world map
+	 * Returns the location that's tagged with is_world_map on the database
+	 * @returns {Object}
+	 */
+	getWorldMap() {
+		return this.items.find(item => item.isWorldMap)
+	}
 
 	/**
 	 * History / Undo

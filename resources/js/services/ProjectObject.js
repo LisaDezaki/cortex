@@ -30,6 +30,9 @@ export default class ProjectObject {
 	 * @throws {TypeError} if projectData is not provided
 	 */
 	constructor(projectData) {
+		if (!projectData || (typeof projectData !== 'object')) {
+			throw new TypeError('ProjectObject constructor requires a valid project object');
+		}
 		Object.assign(this, projectData, {
 
 			/**
@@ -92,29 +95,21 @@ export default class ProjectObject {
 				modalActions.open('deleteProject', { project: this }); break;
 			case 'rename':
 				modalActions.open('renameProject', { project: this }); break;
-			case 'setBanner':
+			case 'setMedia':
 				modalActions.open('uploadMedia', {
-					aspect: 'aspect-[7/3]',
+					aspect: 'aspect-square',
 					endpoint: this.routes.update,
-					media: this.getMedia('banner'),
+					media: this.getMedia(props.type),
 					method: 'patch',
 					reloadPageProps: ['activeProject.media', 'projects.media'],
-					title: "Upload Project banner",
-					type: 'banner',
+					title: 'Upload ' + props.type + ' for ' + this.name,
+					type: props.type,
+					...props
 				}); break;
 			default:
 				console.log('ProjectObject.openModal', modalName, props)
 		}
 	}
-
-	// destroy() {
-	// 	modalActions.open('deleteProject', 	{ project: this })
-	// }
-
-	// rename() {
-	// 	modalActions.open('renameProject', 	{ project: this })
-	// }
-
 
 
 	/**
@@ -126,6 +121,7 @@ export default class ProjectObject {
 		return type ? this.media?.filter(m => m.type === type)?.[0] : null
 	}
 
+
 	/**
 	 * Get All Media
 	 * @param {string} type | The "type" of media to filter
@@ -136,7 +132,6 @@ export default class ProjectObject {
 	}
 
 
-	
 	/**
 	 * Controller - Activate
 	 * @param {Object} data | The data to ACTIVATE on the database
@@ -147,6 +142,7 @@ export default class ProjectObject {
 		})
 	}
 
+
 	/**
 	 * Controller - Deactivate
 	 * @param {Object} data | The data to DEACTIVATE on the database
@@ -156,6 +152,7 @@ export default class ProjectObject {
 			onFinish: () => router.visit( router.page.url, { only: ['activeProject'] })
 		})
 	}
+
 
 	/**
 	 * Controller - Store

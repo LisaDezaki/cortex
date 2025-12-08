@@ -1,10 +1,18 @@
 <script>
 
+	import clsx from 'clsx'
+	import { onMount } from 'svelte'
 	import Icon from '@/Components/UI/Icon.svelte'
 
-	let darkMode = localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		switch: clsx('theme-switcher flex items-center gap-3 p-2 rounded text-sm text-left truncate hover:text-white',)
+	})
 
-	setDarkMode(darkMode);
+	let darkMode = $state(localStorage.theme === "dark" || (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches));
 
 	function setDarkMode() {
 		if (darkMode) {
@@ -19,25 +27,18 @@
 		setDarkMode();
 	}
 
+	onMount(() => {
+		setDarkMode(darkMode)
+	})
+
 </script>
 
-<button onclick={toggleDarkMode} class="theme-switcher">
+
+
+<button onclick={toggleDarkMode} class={cx.switch}>
 	{#if darkMode}
 		<Icon name="Sun" size={20} />Light Mode
 	{:else}
 		<Icon name="Moon" size={20} />Dark Mode
 	{/if}
 </button>
-
-<style lang="postcss">
-
-	.theme-switcher {
-		@apply flex items-center gap-3 p-2;
-		@apply rounded text-sm text-left truncate;
-	}
-
-	.theme-switcher:hover {
-		color: var(--text-white);
-	}
-
-</style>

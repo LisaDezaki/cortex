@@ -299,6 +299,7 @@
 
 	.bg-surface 			{ background-color: var(--surface); }
 	.bg-background 			{ background-color: var(--background); }
+	.bg-nav 				{ background-color: var(--bg-accent-strong); }
 	
 	.bg-accent 				{ background-color: var(--bg-accent); }
 	.bg-accent-strong 		{ background-color: var(--bg-accent-strong); }
@@ -371,6 +372,9 @@
 	.text-danger-soft 		{ color: var(--text-danger-soft); }
 	.text-danger-softer 	{ color: var(--text-danger-softer); }
 	.text-danger-softest 	{ color: var(--text-danger-softest); }
+
+	.text-nav-link			{ color: var(--text-nav-link); }
+	.text-nav-link-hover	{ color: var(--text-nav-link-hover); }
 
 	.font-style-h1 			{ @apply font-semibold text-8xl tracking-tighter; }
 	.font-style-h2 			{ @apply font-semibold text-7xl tracking-tighter; }

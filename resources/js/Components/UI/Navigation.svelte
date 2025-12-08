@@ -15,6 +15,10 @@
 	const projects = $page.props.projects.data;
 	const activeProject = $page.props.activeProject.data;
 
+	let {
+		active
+	} = $props()
+
 </script>
 
 <Nav>
@@ -25,7 +29,7 @@
 				<Nav.Logo />
 				<Navatar src={user.image?.url} fallback={user.name?.toUpperCase().substr(0,2)} href={route('user.edit')} />
 			</Flex>
-			<ProjectSelect projects={projects} active={activeProject?.id} />
+			<ProjectSelect projects={projects} active={active} />
 		</Stack>
 	{/snippet}
 
@@ -47,8 +51,8 @@
 	{#snippet footer()}
 		<Stack class="px-2">
 			<ThemeSwitch />
-			<Nav.Item icon="GearFine"   	 label="Settings"         href={route('user.settings')} 			active={$page.url.startsWith('user/settings')} />
-			<Nav.Item icon="SignOut"    	 label="Log Out"          href={route('logout')} as="button" method="post" class="text-rose-400" />
+			<Nav.Item icon="GearFine"	label="Settings"	href={route('user.settings')} active={$page.url.startsWith('user/settings')} />
+			<Nav.Item icon="SignOut" 	label="Log Out" 	href={route('logout')} as="button" method="post" class="text-rose-400" />
 		</Stack>
 	{/snippet}
 </Nav>

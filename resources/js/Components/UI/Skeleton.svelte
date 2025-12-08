@@ -1,4 +1,6 @@
 <script>
+
+	import clsx from 'clsx'
 	import Box from '@/Components/Core/Box.svelte'
 
 	let {
@@ -7,6 +9,15 @@
 		color = 'bg-slate-100',
 		...restProps
 	} = $props()
+
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		skeleton: clsx(border, color, className)
+	})
+
 </script>
 
-<Box class="{border} {color} {className}" {...restProps} />
+<Box class={cx.skeleton} {...restProps} />

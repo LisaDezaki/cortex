@@ -1,5 +1,6 @@
 <script>
 
+	import clsx from 'clsx'
 	import { Tabs } from '@/Components/Core'
 	import Icon from '@/Components/UI/Icon.svelte'
 
@@ -14,12 +15,12 @@
 	 * Classnames
 	 * @type {Object}
 	 */
-	let cx = {
-		tabs: 	 "flex items-start justify-center gap-12 w-full " + className,
-		list:	 "pt-12 w-56",
-		trigger: "flex items-center justify-start gap-2 px-3 py-1.5 rounded w-full hover:bg-neutral-softest",
-		active:	 "text-accent"
-	}
+	let cx = $derived({
+		tabs: 	 clsx('flex items-start justify-center gap-12 w-full', className),
+		list:	 clsx('pt-12 w-56'),
+		trigger: clsx('flex items-center justify-start gap-2 px-3 py-1.5 rounded w-full hover:bg-neutral-softest'),
+		active:	 clsx('text-accent')
+	})
 
 </script>
 

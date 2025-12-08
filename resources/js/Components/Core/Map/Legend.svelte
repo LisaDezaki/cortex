@@ -1,6 +1,6 @@
 <script>
-	import { getContext } from "svelte";
-
+	import clsx from 'clsx'
+	import { getContext } from "svelte"
 	import Inline from '@/Components/Core/Inline.svelte'
 	import Stack  from '@/Components/Core/Stack.svelte'
 	import Button from '@/Components/UI/Button.svelte'
@@ -23,15 +23,22 @@
 		zoomable
 	} = $props()
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
 	let cx = $derived({
-		active: 	"",
+		legend:     clsx('pt-3', legendClass),
+		title: 		clsx('min-h-6 min-w-20 pt-0.5 text-xs text-neutral-soft'),
+		list: 		clsx('grid grid-cols-2 gap-[1px] min-w-48 shrink-0 w-full'),
+		item: 		clsx('cursor-pointer text-sm text-neutral'),
+		itemHover: 	clsx('bg-accent-softest text-accent'),
+		icon: 		clsx('bg-neutral-softest p-1 text-neutral'),
+		iconHover: 	clsx('bg-accent p-1 text-white'),
 		cursor: 	getActive() ? "cursor-crosshair" : (pannable ? "cursor-grab" : "cursor-pointer"),
-		icon: 		"bg-neutral-softest text-neutral",
-		iconHover: 	"bg-accent text-white",
-		item: 		"cursor-pointer text-sm text-neutral",
-		itemHover: 	"text-accent bg-accent-softest",
-		list: 		"grid grid-cols-2 gap-[1px] min-w-48 shrink-0 w-full",
-		title: 		"min-h-6 text-xs text-neutral-soft min-w-20 pt-0.5"
+		action:     clsx('ml-auto rounded-none'),
+		check:      clsx('bg-accent text-white'),
+		gps:	    clsx('text-neutral-softer hover:bg-accent-softest hover:text-accent')
 	})
 
 	function isHovered(item) {
@@ -47,7 +54,7 @@
 	{ title: 'Characters', defaultIcon: 'User',			list: getItems().characters }
 ] as mapItems}
 	{#if mapItems.list?.length > 0}
-		<Stack class="pt-3 {legendClass}">
+		<Stack class={cx.legend} gap={1}>
 			<p class={cx.title}>{mapItems.title}</p>
 			<ul class={cx.list}>
 				{#each mapItems.list as item}
@@ -61,17 +68,20 @@
 								name={item.mappable.icon || mapItems.defaultIcon}
 								size="sm"
 								weight={isHovered(item) ? 'fill' : 'regular'}
-								class="p-1 {isHovered(item) ? cx.iconHover : cx.icon}"
+								class={isHovered(item) ? cx.iconHover : cx.icon}
 							/>
 							<span class="line-clamp-1">{item.mappable.name}</span>
 							{#if getMap() && getActive()?.mappable.id === item.mappable?.id}
-								<Button class="bg-accent ml-auto rounded-none text-white"
-									icon={item.x && item.y ? "Check" : "Check"} iconWeight="bold"
+								<Button
+									class="{cx.action} {cx.check}"
+									icon={item.x && item.y ? "Check" : "Check"}
 									iconSize="xs"
+									iconWeight="bold"
 									onclick={handleConfirmCoordinates}
 								/>
 							{:else if getMap() && !getActive()}
-								<Button class="ml-auto rounded-none text-neutral-softer hover:bg-accent-softest hover:text-accent"
+								<Button
+									class="{cx.action} {cx.gps}"
 									theme={item.x && item.y ? "accent" : ""}
 									icon={item.x && item.y ? "GpsFix" : "Gps"}
 									iconSize="xs"

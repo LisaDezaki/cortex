@@ -1,54 +1,38 @@
 <script>
+
+	import clsx from 'clsx'
+
     let {
 		children,
         class: className,
 		label,
         ...restProps
     } = $props()
+
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		tag: clsx('tag inline-flex items-center justify-center min-h-2 min-w-6 px-1 rounded text-center', {
+			'bg-accent': !restProps.plain,
+			'bg-gradient-primary text-white': restProps.primary,
+			'bg-emerald-500/10 text-accent': restProps.secondary,
+			'bg-disabled text-disabled': restProps.disabled
+		}, className),
+		
+	})
+
 </script>
 
-<span {...restProps}
-	class="tag {className}"
-	class:plain={restProps.plain}
-	class:primary={restProps.primary}
-	class:secondary={restProps.secondary}
-	class:disabled={restProps.disabled}
->
+
+
+<span class={cx.tag} {...restProps}>
     {#if label}
-		<span class="label">{label}</span>
+		<span>{label}</span>
 	{/if}
 
 	{#if children}
 		{@render children()}
 	{/if}
 </span>
-
-
-
-<style lang="postcss">
-
-	.tag {
-		@apply inline-flex items-center justify-center min-h-2 min-w-2 px-1;
-		@apply rounded;
-		&:not(.plain) {
-			background: var(--bg-accent);
-		}
-		&.primary {
-			background: var(--gradient-primary);
-			color: var(--text-white);
-		}
-		&.secondary {
-			@apply bg-emerald-500/10;
-			color: var(--text-accent);
-		}
-		&.disabled {
-			background: var(--bg-disabled);
-			color: var(--text-disabled);
-		}
-	}
-
-	.tag .label {
-		@apply text-center min-w-6;
-	}
-
-</style>

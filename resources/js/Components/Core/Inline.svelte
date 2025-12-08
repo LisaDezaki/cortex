@@ -5,7 +5,7 @@
 		align = 'center',
 		children,
 		class: className,
-		gap = 2,
+		gap = 0,
 		...restProps
 	} = $props()
 </script>

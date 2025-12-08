@@ -1,31 +1,33 @@
 <script>
-	import { Tooltip } from "bits-ui";
+
+    import clsx from "clsx"
+	import { Tooltip } from "bits-ui"
+	import Flex from "@/Components/Core/Flex.svelte"
+
     let {
 		children,
 		class: className,
 		...restProps
     } = $props()
+
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		page: clsx({
+			'page font-body h-screen overflow-hidden selection:bg-emerald-500 selection:text-white': true,
+			'bg-background': !className?.includes('bg-'),
+			'text-neutral': !className?.includes('text-')
+		}, className)
+	})
+
 </script>
 
-<div class="page {className}" {...restProps}>
+<Flex class={cx.page} {...restProps}>
 	<Tooltip.Provider>
 		{#if children}
 			{@render children()}
 		{/if}
 	</Tooltip.Provider>
-</div>
-
-<style lang="postcss">
-	
-	.page {
-		font-family: 'Archivo', 'Figtree';
-		@apply h-screen flex items-stretch overflow-hidden selection:bg-emerald-500;
-	}
-	.page:not([class*="bg-"]) {
-		background-color: var(--background);
-	}
-	.page:not([class*="text-"]) {
-		color: var(--text-neutral);
-	}
-
-</style>
+</Flex>

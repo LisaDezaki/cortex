@@ -7,7 +7,7 @@
 		children,
 		class: className,
 		direction = 'row',
-		gap = 1.5,
+		gap = 0,
 		justify = 'start',
 		wrap = false,
 		...restProps

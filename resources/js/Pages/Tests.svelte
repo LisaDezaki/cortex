@@ -87,8 +87,8 @@
 </svelte:head>
 
 <AuthenticatedLayout>
-
-	{#snippet header()}
+	
+	{#snippet article()}
 		<PageHeader
 			tabs={[
 				{ icon: 'DiamondsFour',	label: 'General',	active: activeTab === 'general',	onclick: () => activeTab = 'general'	},
@@ -97,9 +97,6 @@
 				{ icon: 'TextAa',		label: 'Type',		active: activeTab === 'typography',	onclick: () => activeTab = 'typography'	}
 			]}
 		/>
-	{/snippet}
-
-	{#snippet article()}
 		<Section size="5xl" class="overflow-y-auto">
 
 				{#if activeTab === 'general'}

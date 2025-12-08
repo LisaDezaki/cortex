@@ -1,5 +1,8 @@
 <script>
+
+	import clsx from 'clsx'
     import { Link } from '@inertiajs/svelte'
+	import Flex from '@/Components/Core/Flex.svelte'
 	import Badge from '@/Components/UI/Badge.svelte'
 	import Icon  from '@/Components/UI/Icon.svelte'
 
@@ -12,20 +15,31 @@
 		label,
         ...restProps
     } = $props()
+
+	const cx = {
+		item: clsx('nav-item block leading-5 rounded text-sm hover:text-white',
+					'transition duration-150 ease-in-out',
+					{'active bg-accent-softest text-white':active}),
+		link: clsx('nav-link flex items-center gap-3 p-2 w-full', {active}, className),
+		badge: clsx('ml-auto bg-white/10 text-white rounded')
+	}
+
 </script>
 
-<li class="nav-item {active ? 'active' : ''}">
+
+
+<Flex as="li" class={cx.item}>
 
 	<Link
 		{...restProps}
-		class="nav-link {className} {active ? 'active' : ''}"
+		class={cx.link}
 	>
 		{#if icon}
 			<Icon name={icon} size={20} />
 		{/if}
 
 		{#if label}
-			{label}
+			<span>{label}</span>
 		{/if}
 
 		{#if children}
@@ -33,32 +47,8 @@
 		{/if}
 
 		{#if badge}
-			<Badge plain label={badge} class="ml-auto bg-white/10 text-white rounded" />
+			<Badge plain label={badge} class={cx.badge} />
 		{/if}
 		
 	</Link>
-</li>
-
-<style lang="postcss">
-
-	:global(.nav-link) {
-		@apply flex items-center gap-3 p-2;
-	}
-
-	.nav-item {
-		@apply block rounded list-none;
-		@apply font-medium text-sm leading-5;
-		@apply transition duration-150 ease-in-out;
-		&:hover {
-			color: var(--text-white);
-		}
-	}
-
-	.nav-item.active {
-		@apply bg-emerald-600;
-		@apply text-white;
-		background-color: var(--bg-nav-active);
-		color: var(--text-white);
-	}
-
-</style>
+</Flex>

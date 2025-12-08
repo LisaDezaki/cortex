@@ -1,6 +1,7 @@
 <script>
 
-	import { Avatar } from "bits-ui"
+	import clsx from 'clsx'
+	import Inline from '@/Components/Core/Inline.svelte'
 	import Icon from '@/Components/UI/Icon.svelte'
 
 	let {
@@ -15,64 +16,29 @@
 		...restProps
 	} = $props()
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		thumbnail: clsx('thumbnail overflow-hidden shrink-0', {'rounded-lg': !className.includes('rounded-')}, aspect, className),
+		image:     clsx('thumbnail-image min-h-full min-w-full object-cover', imageClass),
+		fallback:  clsx('thumbnail-fallback bg-slate-100 font-black h-full rounded-md text-neutral-softer text-5xl tracking-tighter w-full'),
+		icon:      clsx('thumbnail-icon text-neutral-softest opacity-50')
+	})
+
 </script>
 
 
 
-
-
-<div class="thumbnail {aspect} {className}" {...restProps}>
+<Inline class={cx.thumbnail} {...restProps}>
 	{#if src}
-		<img {src} alt={restProps.alt || ''} class="thumbnail-image {imageClass}" />
+		<img class={cx.image} {src} {alt} />
 	{:else}
-		<div class="thumbnail-fallback bg-slate-100">
+		<Inline class={cx.fallback}>
 			{#if icon}
-				<Icon class="thumbnail-icon text-neutral-softest opacity-50" name={icon} size={iconSize} weight="fill" />
+				<Icon class={cx.icon} name={icon} size={iconSize} weight="fill" />
 			{/if}
-		</div>
+		</Inline>
 	{/if}
-</div>
-
-<style lang="postcss">
-
-	:global(.thumbnail) {
-		@apply inline-flex items-center justify-center overflow-hidden flex-shrink-0;
-	}
-
-	:global(.thumbnail:not([class*="rounded"])) {
-		@apply rounded-lg;
-	}
-
-	:global(.thumbnail-image) {
-		@apply object-cover min-h-full min-w-full;
-	}
-
-	:global(.thumbnail-fallback) {
-		@apply flex items-center justify-center w-full h-full;
-		@apply font-black text-5xl tracking-tighter;
-		@apply rounded-md;
-		/* background-color: var(--bg-neutral-softest); */
-		color: var(--text-neutral-softer);
-	}
-
-	/* :global([data-theme="light"] .thumbnail:not([class*="border-"])) {
-		@apply border-slate-300;
-	}
-	:global([data-theme="light"] .thumbnail-fallback) {
-		@apply bg-slate-200 text-slate-100;
-	}
-	:global([data-theme="light"] .thumbnail-icon) {
-		@apply text-slate-400;
-	}
-
-	:global([data-theme="dark"] .thumbnail:not([class*="border-"])) {
-		@apply border-slate-600;
-	}
-	:global([data-theme="dark"] .thumbnail-fallback) {
-		@apply bg-slate-800 text-slate-900;
-	}
-	:global([data-theme="dark"] .thumbnail-icon) {
-		@apply text-slate-600;
-	} */
-	
-</style>
+</Inline>

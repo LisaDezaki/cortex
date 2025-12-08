@@ -153,7 +153,7 @@
 
 			<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-20 py-3"
+			<PageHeader class="px-20 py-2"
 				title="Character List"
 				tabs={[
 					{ label: "List",		active: true },

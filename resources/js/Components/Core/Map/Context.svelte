@@ -45,11 +45,8 @@
 	}
 
 	function setActiveItem(item) {
-		// console.log('MapContext.setActiveItem()', item)
 		activeItem = item
 	}
-
-	console.log(location)
 
 	// Expose state and methods via context
 	setContext("map-context", {
@@ -74,13 +71,7 @@
 
 
 
-<!-- <pre>{JSON.stringify({
-	lastClick,
-	activeItem:  activeItem?.mappable?.id  || 'null',
-	hoveredItem: hoveredItem?.mappable?.id || 'null'
-}, null, 3)}</pre> -->
-
-<Flex class= {className}>
+<Flex class={className}>
 	{#if children}
 		{@render children()}
 	{:else}

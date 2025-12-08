@@ -52,21 +52,9 @@ export default class FactionObject {
 			 * @readonly
 			 */
 			members: factionData.members ? new CharacterList(factionData.members) : null,
-
-			/**
-			 * API routes for faction operations
-			 * @type {Object}
-			 * @property {string} show    | Route for showing this faction
-			 * @property {string} update  | Route for updating this faction
-			 * @property {string} destroy | Route for destroying this faction
-			 */
-			routes: {
-				show:    route('factions.show',    { faction: factionData.slug }),
-				update:  route('factions.update',  { faction: factionData.slug }),
-				destroy: route('factions.destroy', { faction: factionData.slug })
-			}
 		})
 	}
+
 
 	/**
 	 * Open Modal
@@ -85,25 +73,16 @@ export default class FactionObject {
 				modalActions.open('setHeadquarters', ...props); break;
 			case 'member':
 				modalActions.open('setFactionMember', { character: this, ...props }); break;
-			case 'setBanner':
-				modalActions.open('uploadMedia', {
-					aspect: 'aspect-[3/1]',
-					endpoint: this.routes.update,
-					media: this.getMedia('banner'),
-					method: 'patch',
-					reloadPageProps: ['faction.media', 'factions.media'],
-					title: 'Upload banner for ' + this.name,
-					type: 'banner',
-				}); break;
-			case 'setEmblem':
+			case 'setMedia':
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-square',
 					endpoint: this.routes.update,
-					media: this.getMedia('emblem'),
+					media: this.getMedia(props.type),
 					method: 'patch',
-					reloadPageProps: ['faction.media', 'factions.media'],
-					title: 'Upload emblem for ' + this.name,
-					type: 'emblem',
+					reloadPageProps: ['character.media', 'characters.media'],
+					title: 'Upload ' + props.type + ' for ' + this.name,
+					type: props.type,
+					...props
 				}); break;
 			default:
 				console.log('FactionObject.openModal', modalName, props)
@@ -131,7 +110,7 @@ export default class FactionObject {
 
 	/**
 	 * Star
-	 * Toggle this Character's "starred" field in the database
+	 * Toggle this Faction's "starred" field in the database
 	 * @returns {void}
 	 */
 	star() {
@@ -141,7 +120,7 @@ export default class FactionObject {
 	/**
 	 * Set Custom Field
 	 * Sets a specific custom field to a specific available value
-	 * for this Character in the database
+	 * for this Faction in the database
 	 * @param {string} id - the UUID of the CustomField to update
 	 * @param {string} value - the new value to set for this field
 	 */
@@ -161,7 +140,7 @@ export default class FactionObject {
 
 	/**
 	 * Star
-	 * Toggle this Character's "starred" field in the database
+	 * Toggle this Faction's "starred" field in the database
 	 * @returns {void}
 	 */
 	star() {

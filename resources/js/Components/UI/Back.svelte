@@ -1,5 +1,6 @@
 <script>
 
+	import clsx from 'clsx'
 	import Button from '@/Components/UI/Button.svelte'
 
 	let {
@@ -14,9 +15,9 @@
 	 * Classnames
 	 * @type {Object}
 	 */
-	let cx = {
-		back: "rounded-full h-10 w-10 border border-neutral-softest hover:text-emerald-500" + className,
-	}
+	let cx = $derived({
+		back: clsx('rounded-full h-10 w-10 border border-neutral-softest hover:text-emerald-500', className),
+	})
 
 </script>
 

@@ -1,17 +1,11 @@
 <script>
 	import { Link } from '@inertiajs/svelte'
-
-
-	//	Components
-
 	import Flex			from '@/Components/Core/Flex.svelte';
 	import Stack		from '@/Components/Core/Stack.svelte';
 	import Button		from '@/Components/UI/Button.svelte'
 	import ContextMenu	from '@/Components/UI/ContextMenu.svelte'
 	import Icon			from '@/Components/UI/Icon.svelte';
-
-
-	//	Component props
+    import clsx from 'clsx'
 
     let {
 		active,
@@ -35,41 +29,70 @@
         ...restProps
     } = $props()
 
-	const clickable = $derived(restProps.disabled ? false : (href || onclick))
+	// const clickable = $derived(restProps.disabled ? false : (href || onclick))
+
+	let cx = $derived({
+		card: clsx({
+			'card group border border-transparent relative shrink-0 min-w-24 mb-1 p-1 rounded-md overflow-hidden': true,
+			'bg-transparent text-neutral': !active,
+			'bg-accent-softest border text-accent': active,
+			'cursor-pointer': restProps.disabled ? false : (href || onclick),
+			'text-accent': active,
+			'cursor-not-allowed': restProps.disabled
+		}, className),
+		top: clsx({
+			'card-visual overflow-hidden rounded shrink-0 w-full': true,
+			'bg-accent-softer': active,
+			'bg-neutral-softest group-hover:bg-neutral-softer': !active,
+			'hover:bg-neutral-gradient-alt hover:border-accent': image,
+			'opacity-35 pointer-events-none': restProps.disabled
+		}, `aspect-${aspect}`, imageClass),
+		img:  clsx('card-image min-h-full object-cover', {
+			'group-hover:mix-blend-multiply': image,
+		}),
+		icon: clsx('card-icon aspect-square h-full max-h-[60%] max-w-[60%] opacity-35 p-6 rounded-full text-neutral-softest w-full'),
+		main: clsx('px-1 w-full'),
+		details: clsx({
+			'card-details pb-0.5 -space-y-0.5 w-full': true,
+			'opacity-35 pointer-events-none': restProps.disabled
+		}),
+		title:   clsx('font-style-small font-semibold line-clamp-1 w-full'),
+		subtitle: clsx('font-style-tiny line-clamp-1 w-full', subtitleClass),
+		link: clsx('card-link absolute inset-0 text-transparent z-10'),
+	})
 
 </script>
 
+
+
 <Stack gap={0.5}
-	class="card {clickable ? "cursor-pointer" : null} {active ? 'active' : ''} {className}"
+	class={cx.card}
 	onclick={onclick}
 {...restProps}>
 
-	<Flex class="card-visual aspect-{aspect} {imageClass}">
+	<Flex align="center" justify="center" class={cx.top}>
 		{#if image}
-			<img class="card-image" src={image} alt={title} />
+			<img class={cx.img} src={image} alt={title} />
 		{:else if thumbnailIcon}
-			<Icon class="card-icon opacity-35" name={thumbnailIcon} size={32} weight="fill" />
+			<Icon class={cx.icon} name={thumbnailIcon} size={32} weight="fill" />
 		{/if}
 		{@render children?.()}
 	</Flex>
 
-	<Flex align="center" justify="start" gap={2} class="px-1 w-full">
-		<!-- {#if icon}
-			<Icon name={icon} size="sm" class="border border-neutral-softest rounded-full h-8 w-8" />
-		{/if} -->
-		<Stack class="card-details -space-y-0.5 pb-0.5" gap={0}>
-			<span class="font-style-small font-semibold line-clamp-1 w-full">{title}</span>
+	<Flex align="center" justify="start" gap={2} class={cx.main}>
+		<Stack class={cx.details} gap={0}>
+			<span class={cx.title}>{title}</span>
 			{#if subtitle}
-				<span class="font-style-tiny line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
+				<span class={cx.subtitle}>{subtitle}</span>
 			{/if}
 		</Stack>
+		{#if active}
+			<Icon name="CheckCircle" size="md" />
+		{/if}
 	</Flex>
 
 	{#if href}
-		<Link
-			class="card-link absolute inset-0 text-transparent z-10"
-			href={href}
-		/>
+		<Link class={cx.link} href={href} />
 	{/if}
 
 	<!-- {#if options}
@@ -90,86 +113,3 @@
 	{/if}
 
 </Stack>
-
-<style lang="postcss">
-
-	:global(.card .show-on-hover) {
-		@apply opacity-0 pointer-events-none;
-	}
-	:global(.card:hover .show-on-hover) {
-		@apply opacity-100 pointer-events-auto;
-	}
-
-	:global(.card) {
-		@apply relative flex flex-col flex-shrink-0 min-w-24 mb-1 p-1 rounded-md overflow-hidden;
-		&:not([disabled="true"]):hover {
-			.card-visual {
-				background: var(--bg-neutral-gradient-alt)!important;
-				border-color: var(--border-accent)!important;
-			}
-			.card-image {
-				mix-blend-mode: multiply;
-			}
-			.card-details {
-				color: var(--text-accent);
-			}
-			:global(.card-item-options-button) {
-				opacity: 1;
-			}
-		}
-		&[disabled="true"] { cursor: not-allowed; }
-		&[disabled="true"] .card-image,
-		&[disabled="true"] .card-icon,
-		&[disabled="true"] .card-details {
-			opacity: 0.35;
-			pointer-events: none;
-		}
-
-		&:not(.active) {
-			background-color: transparent;
-			border: 1px solid transparent;
-			color: var(--text-neutral);
-			&:hover {
-				background-color: var(--bg-neutral-softest);
-			}
-		}
-		&.active {
-			background-color: var(--bg-accent-softest);
-			border: 1px solid var(--border-accent-softest);
-			color: var(--text-accent);
-		}
-
-		:global(.card-visual) {
-			@apply flex-shrink-0 rounded overflow-hidden w-full;
-			/* background: var(--bg-neutral-gradient); */
-			background-color: var(--bg-neutral-softest);
-			/* border-color: var(--border-neutral-softest); */
-			&:not(.grid) {
-				@apply flex items-center justify-center;
-			}
-
-			.card-image {
-				@apply min-h-full min-w-full object-cover;
-			}
-
-			:global(.card-icon) {
-				@apply aspect-square h-full max-h-[60%] max-w-[60%] p-6 rounded-full w-full;
-				color: var(--text-neutral-softest);
-			}
-		}
-
-		.card-details {
-			@apply px-1 w-full;
-		}
-
-		:global(.card-dropdown) {
-			@apply absolute;
-			z-index: 5;
-		}
-
-		:global(.card-item-options-button) {
-			opacity: 0;
-		}
-	}
-
-</style>

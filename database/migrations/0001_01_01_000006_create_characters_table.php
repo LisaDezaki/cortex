@@ -14,10 +14,10 @@ return new class extends Migration
 		Schema::create('characters', function (Blueprint $table) {
 			$table->uuid('id')->primary()->index();
 			$table->foreignUuid('project_id')->constrained('projects')->cascadeOnUpdate()->cascadeOnDelete();
-			$table->boolean('starred')->default(false);
 			$table->string('slug')->nullable();
 			$table->string('name');
 			$table->string('alias')->nullable();
+			$table->boolean('starred')->default(false);
 			$table->text('description')->nullable();
 			$table->text('motivations')->nullable();
 			$table->text('appearance')->nullable();

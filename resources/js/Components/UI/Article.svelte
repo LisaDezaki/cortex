@@ -1,5 +1,14 @@
 <script>
+	
+    import clsx from "clsx"
 
+	/**
+	 * Component Props
+	 * @type {Object}
+	 * @property {Object} children  | Slot content
+	 * @property {string} className | Additional class names
+	 * @property {boolean} noscroll | Disable vertical scrolling
+	 */
     let {
         children,
 		class: className,
@@ -11,16 +20,20 @@
 	 * Classnames
 	 * @type {Object}
 	 */
-	let cx = {
-		article: "h-full relative w-full " + className,
-		empty:	 "font-style-placeholder text-center opacity-50"
-	}
+	let cx = $derived({
+		article: clsx({
+			'article h-full relative w-full': true,
+			'overflow-hidden': noscroll,
+			'overflow-y-auto': !noscroll
+		}, className),
+		empty: clsx('font-style-placeholder text-center opacity-50')
+	})
 
 </script>
 
 
 
-<article class="{cx.article} {noscroll ? 'overflow-hidden' : 'overflow-y-auto'}" {...restProps}>
+<article class={cx.article} {...restProps}>
 	{#if children}
 		{@render children()}
 	{:else}

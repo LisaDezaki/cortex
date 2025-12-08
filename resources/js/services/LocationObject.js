@@ -51,21 +51,9 @@ export default class LocationObject {
 				factions:   locationData.mapItems.filter(i => i.type === 'faction'  ),
 				locations:	locationData.mapItems.filter(i => i.type === 'location' )
 			} : [],
-
-			/**
-			 * API routes for location operations
-			 * @type {Object}
-			 * @property {string} show    | Route for showing this location
-			 * @property {string} update  | Route for updating this location
-			 * @property {string} destroy | Route for destroying this location
-			 */
-			routes: {
-				show:    route('locations.show',    { location: locationData.slug }),
-				update:  route('locations.update',  { location: locationData.slug }),
-				destroy: route('locations.destroy', { location: locationData.slug })
-			}
 		})
 	}
+
 
 	/**
 	 * Open Modal
@@ -80,25 +68,16 @@ export default class LocationObject {
 				modalActions.open('deleteLocation', { location: this }); break;
 			case 'rename':
 				modalActions.open('renameLocation', { location: this }); break;
-			case 'setBanner':
-				modalActions.open('uploadMedia', {
-					aspect: 'aspect-[7/3]',
-					endpoint: this.routes.update,
-					media: this.getMedia('banner'),
-					method: 'patch',
-					reloadPageProps: ['location.media', 'locations.media'],
-					title: 'Upload banner for ' + this.name,
-					type: 'banner',
-				}); break;
-			case 'setMap':
+			case 'setMedia':
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-square',
 					endpoint: this.routes.update,
-					media: this.getMedia('map'),
+					media: this.getMedia(props.type),
 					method: 'patch',
-					reloadPageProps: ['location.media', 'locations.media'],
-					title: 'Upload map for ' + this.name,
-					type: 'map',
+					reloadPageProps: ['character.media', 'characters.media'],
+					title: 'Upload ' + props.type + ' for ' + this.name,
+					type: props.type,
+					...props
 				}); break;
 			default:
 				console.log('LocationObject.openModal', modalName, props)
@@ -137,6 +116,15 @@ export default class LocationObject {
 			location_id: this.id,
 			...i
 		}))})
+	}
+
+	/**
+	 * Star
+	 * Toggle this Location's "starred" field in the database
+	 * @returns {void}
+	 */
+	star() {
+		this._update({ starred: !Boolean(this.starred) })
 	}
 
 

@@ -64,12 +64,12 @@
 						<Media
 							class="absolute inset-0 aspect-[3/1] bg-slate-200 border border-neutral-softest hover:border-accent rounded-lg overflow-hidden text-neutral-softest w-full"
 							media={character.getMedia('banner')}
-							onclick={() => character.openModal('setBanner')}
+							onclick={() => character.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]' })}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 hover:border-accent right-12 -bottom-16 rounded-lg overflow-hidden text-neutral-softest w-48"
 							media={character.getMedia('portrait')}
-							onclick={() => character.openModal('setPortrait')}
+							onclick={() => character.openModal('setMedia', { type: 'portrait', aspect: 'aspect-[1/1]' })}
 						/>
 						<Heading is="h1" as="h3"
 							class="max-w-3/4 mt-auto z-10 {character.getMedia('banner') ? 'text-white' : ''}"

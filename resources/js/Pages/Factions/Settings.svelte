@@ -31,7 +31,7 @@
 		<Section gap={0} class="h-full overflow-hidden">
 
 
-			<PageHeader class="px-20 py-3"
+			<PageHeader class="px-20 py-2"
 				title="Faction Settings"
 				tabs={[
 					{ label: "List",			href: route('factions') },

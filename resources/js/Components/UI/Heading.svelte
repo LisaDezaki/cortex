@@ -1,9 +1,11 @@
 <script>
+	
 	import { Link } from '@inertiajs/svelte'
 	import { Flex, Inline, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
 	import Input  from '@/Components/UI/Input.svelte'
+    import clsx from 'clsx'
 
     let {
 		is = "h2",
@@ -21,37 +23,45 @@
 		...restProps
     } = $props()
 
-	let editing = $state(false)
-
-	function toggleEditing() {
-		editing = !editing
-	}
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		heading: clsx('heading', className),
+		eyebrow: clsx('eyebrow text-neutral-soft text-medium'),
+		title:   clsx('heading-title whitespace-pre-wrap', `font-style-${as}`, headingClass),
+		subtitle: clsx('heading-subtitle italic', {'text-accent': subheadingLink}, subheadingClass)
+	})
 
 </script>
 
-<Inline as="header" align="center" class="heading {className}" {...restProps}>
+
+
+<Inline as="header" align="center" class={cx.heading} {...restProps}>
 
 	<Flex direction="col" align="start" justify="start" gap={0}>
+
 		{#if eyebrow}
-			<Flex align="center" gap={2} class="text-neutral-soft">
+			<Flex align="center" gap={2} class={cx.eyebrow}>
 				{#if eyebrowIcon}
 					<Icon name={eyebrowIcon} size="sm" weight="bold" />
 				{/if}
-				<span class="text-medium">{eyebrow}</span>
+				<span>{eyebrow}</span>
 			</Flex>
 		{/if}
 
 		<Inline>
-			<svelte:element this={is} class="heading-head whitespace-pre-wrap font-style-{as} {headingClass}">{heading}{@render children?.()}</svelte:element>
+			<svelte:element this={is} class={cx.title}>{heading}{@render children?.()}</svelte:element>
 		</Inline>
 
 
 		{#if subheadingLink && subheading}
-			<Link class="italic text-accent hover:underline {subheadingClass}" href={subheadingLink}>
+			<Link class={cx.subtitle} href={subheadingLink}>
 				{subheading}
 			</Link>
 		{:else if subheading}
-			<div class="heading-subhead italic {subheadingClass}">
+			<div class={cx.subtitle}>
 				{subheading}
 			</div>
 		{/if}

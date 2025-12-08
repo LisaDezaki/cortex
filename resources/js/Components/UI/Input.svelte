@@ -10,6 +10,7 @@
 	import Switch     from '@/Components/UI/Inputs/Switch.svelte'
 	import Textarea   from '@/Components/UI/Inputs/Textarea.svelte'
 	import Upload     from '@/Components/UI/Inputs/Upload.svelte'
+    import clsx from 'clsx'
 
 	let {
 		checked = $bindable(false),
@@ -47,13 +48,28 @@
 		xl: "py-1.5"
 	}
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		input: clsx('input relative inline-flex items-center min-w-32 rounded', hSizes[size], className),
+		placeholder: clsx('input-placeholder italic opacity-75 text-neutral-softer'),
+		icon: clsx('input-icon absolute left-1 inline-flex items-center justify-center aspect-square h-7 -mr-1 rounded w-7'),
+		value: clsx('input-value bg-transparent border-none inline-flex items-center gap-2 line-clamp-1 rounded text-left text-sm w-full'),
+		element: clsx('input-element bg-transparent border-none h-full px-1 rounded-sm text-sm w-full focus:appearance-none'),
+		action: clsx('input-action aspect-square hover:bg-neutral-softest inline-flex items-center justify-center h-7 rounded shrink-0 w-7'),
+		content: clsx('input-content block border border-accent font-body max-h-96 min-w-32 overflow-y-auto rounded shadow-lg text-neutral z-10', contentClass),
+		option: clsx('input-option flex items-center cursor-pointer h-7 pl-1.5 pr-0.5 rounded-sm text-sm hover:bg-neutral-softest')
+	})
+
 </script>
 
 
 
 {#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(type)}
 	<Input id={name} bind:value={value}
-		class="input {hSizes[size]} {className}"
+		class={cx.input}
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 		type={type}
@@ -63,7 +79,7 @@
 
 {#if type == 'textarea'}
 	<Textarea id={name} bind:value={value}
-		class="input {hSizes[size]} {className}"
+		class={cx.input}
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 	{...restProps} />
@@ -72,7 +88,7 @@
 
 {#if type == 'number'}
 	<Number id={name} bind:value={value}
-		class="input {hSizes[size]} {className}"
+		class={cx.input}
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 	{...restProps} />
@@ -81,7 +97,7 @@
 
 {#if type == 'select'}
 	<Select id={name} bind:value={value}
-		class="input {hSizes[size]} {className}"
+		class={cx.input}
 		iconSize={iconSizes[size]}
 		inputClass={padSizes[size]}
 		options={options} contentClass="input-content {contentClass}"

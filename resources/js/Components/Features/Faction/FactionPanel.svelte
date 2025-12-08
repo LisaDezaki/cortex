@@ -57,39 +57,60 @@
 		<Media
 			class={cx.banner}
 			media={faction.getMedia('banner')}
-			onclick={() => faction.openModal('setBanner')}
+			onclick={() => faction.openModal('setMedia', {type: 'banner', aspect: 'aspect-[7/3]'})}
 		/>
 		<Media
 			class={cx.emblem}
 			media={faction.getMedia('emblem')}
-			onclick={() => faction.openModal('setEmblem')}
+			onclick={() => faction.openModal('setMedia', {type: 'emblem', aspect: 'aspect-[1/1]'})}
 			icon="FlagBannerFold" iconWeight="fill"
 		/>
 
 
 		<!-- Body -->
 
-		<Stack gap={0} class="px-4 pt-3 pb-6">
+		<Stack gap={3} class="relative px-4 py-3">
 
 
 			<!-- Heading -->
 
-			<Stack gap={0.5} class="mb-3 px-6 -space-y-1">
+			<Stack gap={0.5} class="px-6 -space-y-1">
 				<Heading is="h3" as="h4" class="place-self-center text-center">{faction.name}</Heading>
 				<p class="place-self-center text-neutral-soft text-sm">{faction.type}</p>
 			</Stack>
 
 
+			<!-- Panel Actions -->
+
+			<Inline align="center" gap={0} class="border border-neutral-softest place-self-center p-0.5 rounded-full">
+				<Button size="sm"
+					icon="Star" iconSize="sm" iconWeight={faction.starred ? 'fill' : 'regular'}
+					class="cursor-pointer p-0.5 rounded-full text-amber-400 hover:bg-amber-50"
+					onclick={() => faction.star()}
+				/>
+				<Button size="sm"
+					icon="PencilSimple" iconSize="sm" iconWeight="regular"
+					class="cursor-pointer p-0.5 rounded-full text-accent hover:bg-accent-softest"
+					onclick={() => faction.star()}
+				/>
+				<Button size="sm"
+					icon="Trash" iconSize="sm" iconWeight="regular"
+					class="cursor-pointer p-0.5 rounded-full text-danger hover:bg-danger-softest"
+					onclick={() => faction.openModal('delete')}
+				/>
+			</Inline>
+
+
 			<!-- Description -->
 
 			{#if faction.description}
-				<Collapsible class="font-style-small mb-3 min-h-16 px-3" collapsed={true}>
+				<Collapsible class="font-style-small min-h-16 px-1.5" collapsed={true}>
 					{faction.description}
 				</Collapsible>
 			{/if}
+		</Stack>
+		<Stack gap={0} class="relative px-4 py-3">
 			<Separator />
-
-
 
 			<!-- Custom Fields -->
 	
@@ -114,7 +135,7 @@
 				<p class={cx.label}>Headquarters</p>
 				<p class={cx.value}>
 					{#if faction.headquarters}
-						<Link href={faction.headquarters.routes.show}>
+						<Link href={faction.headquarters.routes?.show}>
 							{faction.headquarters?.name}
 						</Link>
 					{:else}
@@ -138,7 +159,7 @@
 				<p class={cx.value}>
 					{#if faction.members?.items.length > 0}
 						{#each faction.members?.items as member,i}
-							<Link href={member.routes.show}>
+							<Link href={member.routes?.show}>
 								{member.name}
 							</Link>{faction.members?.items.length-1 !== i ? ', ' : ''}
 						{/each}
@@ -157,18 +178,23 @@
 
 
 	{:else}
-		<Thumbnail class="aspect-[7/3] max-h-48 rounded-none w-full" />
+		<Thumbnail class="max-h-40 rounded-none w-full" />
 		<Thumbnail class="border border-slate-50 h-32 -mt-16 place-self-center rounded shrink-0 w-32" />
 		<Stack gap={1.5} class="my-4 w-full" align="center">
-			<Skeleton class="h-6 w-1/4" />
-			<Skeleton class="h-3 w-1/3" />
+			<Skeleton class="h-6 w-3/4" />
+			<Skeleton class="h-3 w-1/4" />
+			<Inline class="bg-transparent border border-neutral-softest mt-4 p-0.5 rounded-full translate-y-[-2px]">
+				<Skeleton class="bg-transparent h-6 rounded-full w-6" />
+				<Skeleton class="bg-transparent h-6 rounded-full w-6" />
+				<Skeleton class="bg-transparent h-6 rounded-full w-6" />
+			</Inline>
 		</Stack>
-		<Stack gap={2} class="my-2 px-6">
+		<Stack gap={2} class="mb-2 px-6">
 			<Skeleton class="h-3 mr-5" />
 			<Skeleton class="h-3 mr-1" />
 			<Skeleton class="h-3 mr-24" />
-			<Skeleton class="h-5 mx-auto my-1 rounded-full w-20" color="bg-accent-softest" />
-			<Separator class="my-3" />
+			<!-- <Skeleton class="h-5 mx-auto my-1 rounded-full w-20" color="bg-accent-softest" /> -->
+			<Separator class="mt-6 mb-3" />
 			<Flex align="center" class="w-full">
 				<Skeleton class="h-3 w-16" />
 				<Skeleton class="h-7 ml-auto w-44" />

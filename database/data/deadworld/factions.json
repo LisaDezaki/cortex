@@ -1,0 +1,34 @@
+{
+	"arcadians": {
+		"name": "Arcadians",
+		"type": "",
+		"hq": "",
+		"ranks": [ "Passenger" ],
+		"members": {},
+		"desc": "Arcadians are the group of people born and raised in Arcadia, the space station orbiting earth."
+	},
+	"citizens": {
+		"name": "Holo Citizens",
+		"type": "",
+		"hq": "holo-city",
+		"ranks": [ "Punk" ],
+		"members": {},
+		"desc": "Everyone born in Holo City is tracked with a chip implanted at birth, forever indebting them to various corporations for their whole lives."
+	},
+	"edenites": {
+		"name": "Edenites",
+		"type": "",
+		"hq": "",
+		"ranks": [ "Elder" ],
+		"members": {},
+		"desc": "Forest-dwelling nature-lovers. Somewhat zealous but good-hearted."
+	},
+	"scavs": {
+		"name": "Scavs",
+		"type": "",
+		"hq": "",
+		"ranks": [ "Junkmaster" ],
+		"members": {},
+		"desc": "Nomadic scavengers."
+	}
+}

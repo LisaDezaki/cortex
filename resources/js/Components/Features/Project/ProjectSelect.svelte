@@ -2,45 +2,62 @@
 	import { Link, page, useForm } from '@inertiajs/svelte'
     import { route } from "momentum-trail"
 
-	// import Dropdown from '@/Components/Dropdown'
-	// import Icon from '@/Components/Icon.svelte'
-	// import Thumbnail from '@/Components/Thumbnail.svelte'
-
-	
+	import Box from '@/Components/Core/Box.svelte'
+	import Button from '@/Components/UI/Button.svelte'
 
 	const projects = $page.props.projects.data
-	const activeProject = $page.props.activeProject?.data
 	const form = useForm({
         project: null,
     })
-	let media_banner = $derived(activeProject.media?.filter(m => m.type === 'banner')?.[0])
+
+	let {
+		active
+	} = $props()
 
 </script>
 
-
-{#if activeProject}
-	<Link class="project-select" href="/">
-		{#if media_banner}
-			<img class="project-image min-h-full min-w-full object-cover" src={media_banner.url} alt={activeProject.name} />
-		{/if}
-		<div class="project-details">
-			<div class="project-details-text text-left -space-y-1">
-				<div class="font-style-h6">{activeProject.name}</div>
-				<div class="font-style-tiny">{activeProject.type || 'Project'}</div>
+<Box class="project-select">
+	{#if active}
+		<Link class="absolute inset-0 flex items-end justify-start" href="/">
+			{#if active.getMedia('banner')}
+				<img class="project-image min-h-full min-w-full object-cover" src={active.getMedia('banner')?.url} alt={active.name} />
+			{/if}
+			<div class="project-details">
+				<div class="project-details-text text-left -space-y-1">
+					<div class="font-style-h6">{active.name}</div>
+					<div class="font-style-tiny">{active.type || 'Project'}</div>
+				</div>
 			</div>
-		</div>
-	</Link>
-{:else if projects.length >= 1}
-	<Link class="project-select text-sm" href={route('dashboard')}>
-		No project selected.<br/>
-		Activate one?
-	</Link>
-{:else if projects.length == 0}
-	<Link class="project-select text-sm" href={route('projects.create')}>
-		No projects.<br/>
-		Create one?
-	</Link>
-{/if}
+		</Link>
+	{:else if projects.length >= 1}
+		<Link class="absolute inset-0 flex items-center justify-center text-sm" href={route('dashboard')}>
+			No project selected.<br/>
+			Activate one?
+		</Link>
+	{:else if projects.length == 0}
+		<Link class="absolute inset-0 flex items-center justify-center text-sm" href={route('projects.create')}>
+			No projects.<br/>
+			Create one?
+		</Link>
+	{/if}
+	{#if active}
+		<Button
+			class="absolute top-1 right-1 backdrop-blur-sm bg-danger-softest rounded-full text-danger z-10"
+			icon="X" iconSize="sm"
+			onclick={() => active.deactivate()}
+		/>
+	{/if}
+</Box>
+
+
+<!-- <Button size="xs"
+	icon="GlobeStand" iconSize="xs" iconWeight="bold"
+	label="View all projects"
+	class="text-xs"
+	onclick={() => active.deactivate()}
+/> -->
+
+
 
 <style lang="postcss">
 

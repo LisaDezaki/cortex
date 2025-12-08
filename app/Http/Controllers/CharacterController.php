@@ -39,8 +39,8 @@ class CharacterController extends Controller
 		'alias'                 => ['sometimes', 'nullable', 'string', 'max:255'],
 		'description'           => ['sometimes', 'nullable', 'string'],
 		'starred'				=> ['sometimes', 'boolean'],
-		'faction_id'            => ['sometimes', 'nullable', 'string', 'uuid', 'exists:factions,id'],
-		'location_id'           => ['sometimes', 'nullable', 'string', 'uuid', 'exists:locations,id'],
+		// 'faction_id'            => ['sometimes', 'nullable', 'string', 'uuid', 'exists:factions,id'],
+		// 'location_id'           => ['sometimes', 'nullable', 'string', 'uuid', 'exists:locations,id'],
 
 		'media'					=> ['sometimes', 'nullable', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],
@@ -49,9 +49,9 @@ class CharacterController extends Controller
 		'media.*.url'			=> ['nullable',  'string'],
 
 		'factions'         		=> ['sometimes', 'nullable', 'array'],
-		'factions.*.id'  		=> ['required',  'string', 'uuid', 'distinct', 'exists:factions,id'],
-		'factions.*.slug'		=> ['nullable',  'string'],
-		'factions.*.name' 		=> ['nullable',  'string'],
+		'factions.*'  			=> ['required',  'string', 'uuid', 'distinct', 'exists:factions,id'],
+
+		'location'				=> ['sometimes', 'nullable', 'string', 'uuid', 'exists:locations,id'],
 
 		'relationships'         				 => ['sometimes', 'nullable', 'array'],
 		'relationships.*.character_role'  		 => ['required',  'string'],
@@ -156,9 +156,10 @@ class CharacterController extends Controller
 	public function edit(Character $character) {}
 	public function update(Request $request, Character $character): RedirectResponse
 	{
+
 		//	Validate
 		$validatedData = $request->validate($this->validationRules);
-
+		
 		//	Media
 		if ($request->has('media') && $request['media'] !== null) {
 			foreach ($request['media'] as $media) {
@@ -166,15 +167,10 @@ class CharacterController extends Controller
 			}
 			unset($validatedData['media']);
 		}
-
+		
 		//	Factions
 		if ($request->has('factions')) {
-			foreach ($validatedData['factions'] as $fac) {
-				// $character->factions()->save($faction);
-
-				$faction = Faction::find($fac['id']);
-				$faction->members()->attach($character);
-			}
+			$character->factions()->sync($request['factions']);
 			unset($validatedData['factions']);
 		}
 
@@ -188,12 +184,12 @@ class CharacterController extends Controller
 		}
 
 		//	Location
-		if ($request->has('location_id')) {
-			if ($validatedData['location_id'] === null) {
-				$character->location()->dissociate();
-			} else {
-				$character->location()->associate($validatedData['location_id']);
-			}
+		if ($request->has('location')) {
+			$character->mapData()->updateOrCreate([], [
+				'location_id' => $validatedData['location']
+				//	other pivot data
+			]);
+			unset($validatedData['location']);
 		}
 
 		//	Custom Fields
@@ -202,8 +198,8 @@ class CharacterController extends Controller
 		}
 
 		//	Update
-		$character->fill($validatedData);
-		$character->update();
+		// $character->fill($validatedData);
+		$character->update($validatedData);
 		Session::flash('success', "$character->name updated successfully.");
         return Redirect::back();
 	}

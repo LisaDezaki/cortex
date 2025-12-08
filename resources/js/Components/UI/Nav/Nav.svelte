@@ -1,5 +1,8 @@
 <script>
 
+	import clsx from 'clsx'
+	import Stack from '@/Components/Core/Stack.svelte'
+
     let {
 		children,
         class: className,
@@ -8,54 +11,33 @@
         ...restProps
     } = $props()
 
+	const cx = {
+		nav:  clsx('nav border-r h-full min-w-12 w-56 max-w-72 shrink-0',
+					'bg-accent-strong border-neutral-softest text-nav-link',
+					className),
+		list: clsx('nav-list py-2')
+	}
+
 </script>
 
-<nav class="nav {className}" {...restProps}>
+
+
+<Stack as="nav" class={cx.nav} {...restProps}>
 
 	{#if header}
 		{@render header()}
 	{/if}
 
 	{#if children}
-		<ul class="nav-list flex-grow py-2 scrollable mb-auto">
+		<Stack as="ul" class="{cx.list} scrollable mb-auto">
 			{@render children()}
-		</ul>
+		</Stack>
 	{/if}
 
 	{#if footer}
-		<ul class="nav-list py-2">
+		<Stack as="ul" class={cx.list}>
 			{@render footer()}
-		</ul>
+		</Stack>
 	{/if}
 
-</nav>
-
-<style lang="postcss">
-
-	.nav {
-		@apply flex flex-col items-center h-full min-w-12 w-56 max-w-72 border-r flex-shrink-0;
-		background-color: var(--bg-nav);
-		border-color: var(--border-nav);
-		color: var(--text-nav-link);
-	}
-
-	nav ul.nav-list {
-		@apply flex flex-col gap-1 w-full;
-
-		&:not(:first-of-type) {
-			@apply border-t;
-			border-color: var(--border-neutral-softest);
-		}
-		&.scrollable {
-			@apply overflow-y-auto;
-			&::-webkit-scrollbar {
-				background: transparent;
-				width: 4px;
-			}
-			&::-webkit-scrollbar-thumb {
-				background: var(--border-accent);
-			}
-		}
-	}
-
-</style>
+</Stack>

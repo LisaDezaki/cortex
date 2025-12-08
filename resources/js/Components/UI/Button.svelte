@@ -1,9 +1,13 @@
 <script>
+	
+	import clsx from 'clsx'
 	import { Link } from '@inertiajs/svelte'
 	import Icon from '@/Components/UI/Icon.svelte'
+
     let {
         children,
         class: className,
+		disabled,
 		icon = null,
 		iconSize = 20,
 		iconWeight = 'regular',
@@ -15,6 +19,7 @@
 		size  = "md",
 		style = 'plain',
 		theme = 'neutral',
+		type,
         ...restProps
     } = $props()
 
@@ -36,22 +41,51 @@
 		xl: "p-3"
 	}
 
-	let styles = {
-		button: "button",
-		label:  'button-label font-style-button',
-		hard:   'button-hard border',
-		soft:   'button-soft border',
-		glass:  'button-glass border',
-		plain:  'button-plain',
-	}
+	const cx = $derived({
+		button: clsx({
+			'button inline-flex items-center justify-center gap-1 shrink-0 transition duration-300 ease-in-out': true,
+			'border': style !== 'plain',
+			'cursor-not-allowed opacity-50': disabled,
+			
+			'bg-accent-gradient border-accent-strong text-white hover:bg-accent-gradient-alt':  style === 'hard' && theme === 'accent',
+			'bg-accent-softest border-accent-softest text-accent hover:bg-accent-softer': 		style === 'soft' && theme === 'accent',
+			'text-accent hover:bg-accent-softest': style === 'plain' && theme === 'accent',
+
+			'bg-neutral-gradient border-neutral-softest text-neutral hover:bg-neutral-gradient-alt': style === 'hard' && theme === 'neutral',
+			'bg-neutral-softest border-neutral-softest text-neutral hover:bg-neutral-softer': 		 style === 'soft' && theme === 'neutral',
+
+			'bg-danger-gradient border-danger-strong text-white hover:bg-danger-gradient-alt':  style === 'hard' && theme === 'danger',
+			'bg-danger-softest border-danger-softest text-danger hover:bg-danger-softer': 		style === 'soft' && theme === 'danger',
+			'text-danger hover:bg-danger-softest': style === 'plain' && theme === 'danger',
+		}, className),
+		label: clsx('button-label line-clamp-1 px-1 whitespace-pre')
+	})
+
 </script>
 
 
 
+{#if restProps.href}
+	<Link as={!restProps.href ? 'button' : 'a'} aria-disabled={restProps.disabled ? 'true' : undefined}
+		class="{cx.button} {sizes[size]} {className}"
+	{...restProps}>
+
+		{@render contents()}
+
+	</Link>
+{:else}
+	<button aria-disabled={restProps.disabled ? 'true' : undefined}
+		type={restProps.type || 'button'}
+		class="{cx.button} {sizes[size]} {className}"
+	{...restProps}>
+
+		{@render contents()}
+
+	</button>
+{/if}
 
 {#snippet contents()}
 	{#if loading}
-		
 		<Icon name="CircleNotch" animation="animate-[spin_0.5s_linear_infinite]" />
 
 	{:else}
@@ -61,7 +95,7 @@
 		{/if}
 
 		{#if label}
-			<span class={styles.label}>{label}</span>
+			<span class={cx.label}>{label}</span>
 		{/if}
 
 		{@render children?.()}
@@ -72,156 +106,3 @@
 
 	{/if}
 {/snippet}
-
-
-
-{#if restProps.href}
-	<Link as={!restProps.href ? 'button' : 'a'} aria-disabled={restProps.disabled ? 'true' : undefined}
-		class="{styles.button} button-{theme} {sizes[size]} {styles[style]} {className}"
-	{...restProps}>
-
-		{@render contents()}
-
-	</Link>
-{:else}
-	<button aria-disabled={restProps.disabled ? 'true' : undefined}
-		type={restProps.type || 'button'}
-		class="{styles.button} button-{theme} {sizes[size]} {styles[style]} {className}"
-	{...restProps}>
-
-		{@render contents()}
-
-	</button>
-{/if}
-
-<style lang="postcss">
-
-	:global(.button) {
-		@apply inline-flex items-center justify-center gap-1 flex-shrink-0;
-		@apply transition duration-300 ease-in-out flex-shrink-0;
-		/* &:focus {
-			outline: 1px solid var(--border-accent);
-			outline-offset: 1px;
-		} */
-		/* @apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2; */
-
-		&:not([class*="rounded-"]) {
-			@apply rounded;
-		}
-		/* &:not([class*="max-w-"]) {
-			@apply max-w-64;
-		} */
-
-		&.button-hard.button-accent {
-			background: var(--bg-accent-gradient);
-			border-color: var(--border-accent-strong);
-			color: var(--text-white);
-			&:hover {
-				background: var(--bg-accent-gradient-alt);
-			}
-		}
-		&.button-hard.button-neutral {
-			background: var(--bg-neutral-gradient);
-			border-color: var(--border-neutral-softest);
-			color: var(--text-neutral);
-			&:hover {
-				background: var(--bg-neutral-gradient-alt);
-			}
-		}
-		&.button-hard.button-danger {
-			background: var(--bg-danger-gradient);
-			border-color: var(--border-danger-strong);
-			color: var(--text-white);
-			&:hover {
-				background: var(--bg-danger-gradient-alt);
-			}
-		}
-
-		&.button-soft.button-accent {
-			background-color: var(--bg-accent-softest);
-			border-color: var(--border-accent-softest);
-			color: var(--text-accent);
-			&:hover {
-				background-color: var(--bg-accent-softer);
-			}
-		}
-		&.button-soft.button-neutral {
-			background-color: var(--bg-neutral-softest);
-			border-color: var(--border-neutral-softest);
-			&:hover {
-				background-color: var(--bg-neutral-softer);
-			}
-		}
-		&.button-soft.button-white {
-			background-color: rgba(255,255,255,0.1);
-			border-color: rgba(255,255,255,0.35);
-			color: var(--text-white);
-			&:hover {
-				background-color: rgba(255,255,255,0.2);
-			}
-		}
-		&.button-soft.button-danger {
-			background-color: var(--bg-danger-softest);
-			border-color: var(--border-danger-softest);
-			color: var(--text-danger);
-			&:hover {
-				background-color: var(--bg-danger-softer);
-			}
-		}
-
-		/* &.button-glass.button-accent {
-			background: var(--bg-accent-gradient);
-			border-color: var(--border-accent-strong);
-			color: var(--text-white);
-			&:hover {
-				background: var(--bg-accent-gradient-alt);
-			}
-		} */
-		&.button-glass.button-neutral {
-			backdrop-filter: blur(4px);
-			background: rgba(255,255,255,0.1);
-			border-color: rgba(255,255,255,0.5);
-			color: var(--text-white);
-			&:hover {
-				backdrop-filter: blur(8px);
-				background: rgba(255,255,255,0.2);
-			}
-		}
-		/* &.button-glass.button-danger {
-			background: var(--bg-danger-gradient);
-			border-color: var(--border-danger-strong);
-			color: var(--text-white);
-			&:hover {
-				background: var(--bg-danger-gradient-alt);
-			}
-		} */
-
-		&.button-plain.button-accent {
-			color: var(--text-accent);
-			&:hover {
-				background-color: var(--bg-accent-softest);
-			}
-		}
-		&.button-plain.button-neutral {
-			/* &:hover {
-				background-color: var(--bg-neutral-softest);
-			} */
-		}
-		&.button-plain.button-danger {
-			color: var(--text-danger);
-			&:hover {
-				background-color: var(--bg-danger-softest);
-			}
-		}
-		
-		&[aria-disabled] {
-			cursor: not-allowed;
-			opacity: 50%;
-		}
-
-		.button-label {
-			@apply line-clamp-1 px-1 whitespace-pre;
-		}
-	}
-	
-</style>

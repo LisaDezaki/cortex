@@ -51,23 +51,15 @@ class CharacterResource extends JsonResource
 
 			'meta' => [
 				'projectId' => $this->project_id,
-				'createdAt' => $this->created_at,
-				'updatedAt' => $this->updated_at
+				'createdAt' => $this->created_at->diffForHumans(),
+				'updatedAt' => $this->updated_at->diffForHumans(),
+			],
+
+			'routes' => [
+				'show'    => route('characters.show',    ['character' => $this->slug]),
+				'update'  => route('characters.update',  ['character' => $this->slug]),
+				'destroy' => route('characters.destroy', ['character' => $this->slug])
 			]
 		];
     }
-
-	/**
-	 * Get the resource's additional data.
-	 *
-	 * @return array<string, mixed>
-	 */
-	// public function with(Request $request): array
-	// {
-	// 	return [
-	// 		'links' => [
-	// 			'self' => route('characters.show', ['character' => $this->id]),
-	// 		],
-	// 	];
-	// }
 }

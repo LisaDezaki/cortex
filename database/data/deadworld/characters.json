@@ -1,7 +1,20 @@
 {
-	"blue": {
-		"name": "Blue",
-		"description": "Blue is a cynical and sarcastic criminal who spends most of her time in the Sync Hole, one of the seediest bars in the city."
+	"aida": {
+		"name": "AIDA",
+		"alias": "Virtual Assistant",
+		"description": "AIDA is a virtual assistant AI developed by Synapse Corporation. She is designed to help users manage their schedules, control smart home devices, and provide information on a wide range of topics."
+	},
+
+	"alyx": {
+		"name": "Alyx",
+		"alias": "Wasteland Junkrat",
+		"description": "Alyx is a scrappy scavenger who roams the wastelands in search of valuable tech and resources. She is known for her quick wit and resourcefulness, often using her ingenuity to get out of tight situations."
+	},
+
+	"deadeye": {
+		"name": "Deadeye",
+		"alias": "Fixer",
+		"description": "Deadeye is a notorious fixer and information broker operating in the underbelly of Holo City. With a reputation for being able to get anything for the right price, Deadeye is a key player in the city's criminal underworld."
 	},
 
 	"kira": {
@@ -11,11 +24,25 @@
 
 	"nia": {
 		"name": "Nia",
+		"alias": "Solar Citizen",
 		"description": "Nia is a cheerful and optimistic woman with a strong sense of humor. She has dark skin and many golden tattoos all over her body. Her intricately arranged dreadlocks are also heavily decorated with gold adornments."
+	},
+
+	"saph": {
+		"name": "Saph",
+		"alias": "Cyberpunk Streetkid",
+		"description": "Saph is a cynical and sarcastic criminal who spends most of her time in the Sync Hole, one of the seediest bars in the city."
+	},
+
+	"skar": {
+		"name": "Skar",
+		"alias": "Forest Treefolk",
+		"description": "Skar lives in a huge treehouse built around an enormous genetically engineered tree in Eden Forest. As a member of the Treefolk, Skar and his community have a deep connection to nature and work to maintain the balance between technology and the environment."
 	},
 
 	"song": {
 		"name": "Song",
-		"description": "Song is the wealthy daughter of a Korean trillionaire CEO who begins to question the world as she’s been taught. She reads about the forests and oceans down on Earth, and can’t understand why humans would destroy and abandon such abundant beauty. One day, her service android begins to experience minor glitches, and tells her that he is afraid of being sent to Maintenance."
+		"alias": "Orbital Heiress",
+		"description": "Song is the daughter of a Korean trillionaire CEO who begins to question the world as she’s been taught. She reads about the forests and oceans down on Earth, and can’t understand why humans would destroy and abandon such abundant beauty. One day, her service android begins to experience minor glitches, and tells her that he is afraid of being sent to Maintenance."
 	}
 }

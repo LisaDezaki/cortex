@@ -7,6 +7,7 @@
     import Main       	from '@/Components/UI/Main.svelte'
     import Page       	from '@/Components/UI/Page.svelte'
 	import Toast		from '@/Components/UI/Toast.svelte'
+	import ProjectObject from '@/services/ProjectObject'
 
 
 	/**
@@ -22,6 +23,9 @@
 	//	1. Import all modal components
 
 	import { modalStore } from '@/stores/modalStore';
+
+	import CharacterFactionsModal		from '@/Modals/CharacterFactions.svelte'
+	import CharacterRelationshipsModal	from '@/Modals/CharacterRelationships.svelte'
 
     import CreateCharacterModal  from '@/Modals/CreateCharacter.svelte';
     import CreateCollectionModal from '@/Modals/CreateCollection.svelte';
@@ -41,6 +45,8 @@
     import RenameFactionModal 	 from '@/Modals/RenameFaction.svelte';
     import RenameLocationModal 	 from '@/Modals/RenameLocation.svelte';
     import RenameProjectModal 	 from '@/Modals/RenameProject.svelte';
+
+	import CustomFieldModal      from '@/Modals/CustomField.svelte';
 	
     import SelectLocationModal 			 from '@/Modals/SelectLocation.svelte';
     import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte';
@@ -51,6 +57,10 @@
 	//	2. Create a modal registry map
 
     const modals = {
+
+		characterFactions:	CharacterFactionsModal,
+		characterRelationships: CharacterRelationshipsModal,
+
         createCharacter: 	CreateCharacterModal,
         createCollection: 	CreateCollectionModal,
         createFaction: 		CreateFactionModal,
@@ -70,6 +80,8 @@
 		renameLocation:		RenameLocationModal,
 		renameProject:		RenameProjectModal,
 
+		customField:				CustomFieldModal,
+
 		selectLocation:				SelectLocationModal,
 		setCharacterRelationship:	SetCharacterRelationshipModal,
 		setLocation:				SetLocationModal,
@@ -85,11 +97,12 @@
 	 * 
 	 */
 
-	const activeProject = $page.props.activeProject.data;
+	const activeProject = $page.props.activeProject?.data
+	const active = $derived(activeProject ? new ProjectObject(activeProject) : null);
 
     let {
 		article,
-		header,
+		noscroll,
 		sidebar
 	} = $props()
 
@@ -98,24 +111,16 @@
 
 
 <Page>
-
-	<Navigation project={activeProject} />
-
-	<Stack class="relative w-full">
-		{@render header?.()}
-		<Flex class="relative flex-grow-0 h-screen overflow-hidden w-full">
-			<Main>
-				<Article noscroll>
-					{#if $page.props.flash}
-						<Toast {...$page.props.flash} />
-					{/if}
-					{@render article?.()}
-				</Article>
-				{@render sidebar?.()}
-			</Main>
-		</Flex>
-	</Stack>
-
+	<Navigation {active} />
+	<Main>
+		<Article {noscroll}>
+			{#if $page.props.flash}
+				<Toast {...$page.props.flash} />
+			{/if}
+			{@render article?.()}
+		</Article>
+		{@render sidebar?.()}
+	</Main>
 </Page>
 
 {#if CurrentModal}

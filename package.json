@@ -41,6 +41,7 @@
         "vitest": "^1.2.1"
     },
     "dependencies": {
+        "clsx": "^2.1.1",
         "svelte-splitpanes": "^8.0.9"
     }
 }

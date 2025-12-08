@@ -1,11 +1,10 @@
 <script>
+	import clsx from 'clsx'
 	import { Link } from '@inertiajs/svelte'
-
-	import { Flex, Popover, Stack }  from '@/Components/Core';
-	
-	import Button   from '@/Components/UI/Button.svelte';
-	import Dropdown from '@/Components/UI/Dropdown.svelte';
-	import Icon     from '@/Components/UI/Icon.svelte';
+	import { Flex, Popover, Stack }  from '@/Components/Core'
+	import Button   from '@/Components/UI/Button.svelte'
+	import Dropdown from '@/Components/UI/Dropdown.svelte'
+	import Icon     from '@/Components/UI/Icon.svelte'
 
     let {
 		aspect,
@@ -22,15 +21,31 @@
         ...restProps
     } = $props()
 
-	const clickable = $derived(href || onclick) 
+	const clickable = $derived(href || onclick)
+
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		chip: clsx({
+			'chip': true,
+			'cursor-pointer': href || onclick
+		}, className),
+		visual: clsx({
+			'chip-visual aspect-square rounded-full overflow-hidden w-12': true,
+		})
+	})
 
 </script>
+
+
 
 <Flex class="chip {clickable ? "cursor-pointer" : null} {className}"
 	align="center" gap={3} onclick={onclick}
 {...restProps}>
 
-	<div class="chip-visual aspect-square rounded-full overflow-hidden w-12">
+	<div class={cx.visual}>
 		{#if image}
 			<img class="chip-image" src={image} alt={title} />
 		{:else if icon}
@@ -77,11 +92,3 @@
 	{/if}
 
 </Flex>
-
-<style lang="postcss">
-
-	:global(.chip) {
-		
-	}
-
-</style>

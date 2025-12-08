@@ -38,8 +38,9 @@ export default class CharacterObject {
 			/**
 			 * Laravel's Model location as printed by Character::class
 			 * @type {string}
+			 * @readonly
 			 */
-			laravelClass:	"App\Models\Character",
+			laravelClass: "App\Models\Character",
 
 			/**
 			 * A FactionList instance
@@ -61,21 +62,10 @@ export default class CharacterObject {
 			 * @readonly
 			 */
 			relationships: characterData.relationships ? new CharacterList(characterData.relationships) : null,
-			
-			/**
-			 * API routes for character operations
-			 * @type {Object}
-			 * @property {string} show    | Route for showing this character
-			 * @property {string} update  | Route for updating this character
-			 * @property {string} destroy | Route for destroying this character
-			 */
-			routes: {
-				show:    route('characters.show',    { character: characterData.slug }),
-				update:  route('characters.update',  { character: characterData.slug }),
-				destroy: route('characters.destroy', { character: characterData.slug })
-			}
+
 		})
     }
+
 
 	/**
 	 * Open Modal
@@ -90,34 +80,54 @@ export default class CharacterObject {
 				modalActions.open('deleteCharacter', { character: this }); break;
 			case 'rename':
 				modalActions.open('renameCharacter', { character: this }); break;
+			case 'factions':
+				modalActions.open('characterFactions', { character: this }); break;
 			case 'location':
-				modalActions.open('setLocation', ...props); break;
+				modalActions.open('setLocation', {
+					entity: this,
+					endpoint: this.routes.update,
+					...props
+				}); break;
 			case 'relationship':
 				modalActions.open('setCharacterRelationship', { character: this, ...props }); break;
-			case 'setBanner':
-				modalActions.open('uploadMedia', {
-					aspect: 'aspect-[3/1]',
-					endpoint: this.routes.update,
-					media: this.getMedia('banner'),
-					method: 'patch',
-					reloadPageProps: ['character.media', 'characters.media'],
-					title: 'Upload banner for ' + this.name,
-					type: 'banner',
-				}); break;
-			case 'setPortrait':
+			case 'relationships':
+				modalActions.open('characterRelationships', { character: this }); break;
+			case 'setMedia':
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-square',
 					endpoint: this.routes.update,
-					media: this.getMedia('portrait'),
+					media: this.getMedia(props.type),
 					method: 'patch',
 					reloadPageProps: ['character.media', 'characters.media'],
-					title: 'Upload portrait for ' + this.name,
-					type: 'portrait',
+					title: 'Upload ' + props.type + ' for ' + this.name,
+					type: props.type,
+					...props
+				}); break;
+			case 'appearance':
+				modalActions.open('setTags', {
+					entity: this,
+					endpoint: this.routes.update,
+					title: 'Set ' + this.name + '\'s appearance',
+					tags: this.appearance.split(','),
+					...props
+				}); break;
+			case 'personality':
+				modalActions.open('setTags', {
+					entity: this,
+					endpoint: this.routes.update,
+					title: 'Set ' + this.name + '\'s personality',
+					tags: this.personality.split(','),
+					...props
+				}); break;
+			case 'customField':
+				modalActions.open('customField', {
+					
 				}); break;
 			default:
 				console.log('CharacterObject.openModal', modalName, props)
 		}
 	}
+
 
 	/**
 	 * Find Faction
@@ -130,6 +140,7 @@ export default class CharacterObject {
 		return this.factions.items?.find(f => f.id === id) || null
 	}
 
+
 	/**
 	 * Find Relationship
 	 * Returns the CharacterObject with the provided id,
@@ -141,6 +152,7 @@ export default class CharacterObject {
 		return this.relationships.items?.find(r => r.id === id) || null
 	}
 
+
 	/**
 	 * Get Media
 	 * @param {string} type | The "type" of media to filter
@@ -149,6 +161,7 @@ export default class CharacterObject {
 	getMedia(type) {
 		return type ? this.media?.filter(m => m.type === type)?.[0] : null
 	}
+
 
 	/**
 	 * Get All Media
@@ -159,6 +172,7 @@ export default class CharacterObject {
 		return type ? this.media?.filter(m => m.type === type) : null
 	}
 
+
 	/**
 	 * Star
 	 * Toggle this Character's "starred" field in the database
@@ -167,6 +181,7 @@ export default class CharacterObject {
 	star() {
 		this._update({ starred: !Boolean(this.starred) })
 	}
+
 
 	/**
 	 * Set Custom Field
@@ -178,6 +193,7 @@ export default class CharacterObject {
 	setCustomField(id, value) {
 		this._update({ custom_fields: [{ id, value }] })
 	}
+
 
 	/**
 	 * Update Coordinates
@@ -195,6 +211,7 @@ export default class CharacterObject {
 		}] })
 	}
 
+
 	/**
 	 * Remove Coordinates
 	 * Remove the location and coordinates for this Character
@@ -203,6 +220,12 @@ export default class CharacterObject {
 	removeCoordinates() {
 		console.log('CharacterObject.removeCoordinates')
 	}
+
+
+
+
+
+
 
 	/**
 	 * Add Relationship

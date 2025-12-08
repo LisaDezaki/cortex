@@ -33,8 +33,14 @@ class FactionResource extends JsonResource
 
 			'meta' => [
 				'projectId' => $this->project_id,
-				'createdAt' => $this->created_at,
-				'updatedAt' => $this->updated_at
+				'createdAt' => $this->created_at->diffForHumans(),
+				'updatedAt' => $this->updated_at->diffForHumans()
+			],
+
+			'routes' => [
+				'show'    => route('factions.show',    ['faction' => $this->slug]),
+				'update'  => route('factions.update',  ['faction' => $this->slug]),
+				'destroy' => route('factions.destroy', ['faction' => $this->slug])
 			]
 		];
     }

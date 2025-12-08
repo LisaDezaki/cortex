@@ -17,6 +17,7 @@ return new class extends Migration
 			$table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('name')->nullable();
 			$table->string('type')->nullable();
+			$table->boolean('starred')->default(false);
 			$table->text('description')->nullable();
             $table->timestamps();
 			$table->softDeletes();

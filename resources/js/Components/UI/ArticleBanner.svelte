@@ -1,5 +1,6 @@
 <script>
 
+    import clsx from 'clsx'
 	import { Flex } from '@/Components/Core'
 
 	let {
@@ -12,9 +13,9 @@
 	 * Classnames
 	 * @type {Object}
 	 */
-	let cx = {
-		banner: "relative aspect-[3/1] bg-neutral-softer px-6 py-6 rounded-lg w-full " + className
-	}
+	let cx = $derived({
+		banner: clsx('relative aspect-[3/1] bg-neutral-softer px-6 py-6 rounded-lg w-full', className)
+	})
 
 </script>
 

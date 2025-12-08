@@ -1,5 +1,6 @@
 <script>
 
+	import clsx from 'clsx'
 	import { Avatar } from "bits-ui"
 
 	let {
@@ -16,11 +17,11 @@
 	 * Classnames
 	 * @type {Object}
 	 */
-	let cx = {
-		avatar: "aspect-square border border-neutral-softest inline-flex items-center justify-center overflow-hidden p-0.5 rounded-full shrink-0" + className,
-		image:	"h-full object-cover  rounded-full w-full",
-		fallback: "bg-neutral-softer flex items-center justify-center h-full rounded-full text-neutral-soft w-full"
-	}
+	let cx = $derived({
+		avatar:   clsx('aspect-square border border-neutral-softest inline-flex items-center justify-center overflow-hidden p-0.5 rounded-full shrink-0', className),
+		image:	  clsx('h-full object-cover rounded-full w-full'),
+		fallback: clsx('bg-neutral-softer flex items-center justify-center h-full rounded-full text-neutral-soft w-full')
+	})
 
 </script>
 

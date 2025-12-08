@@ -100,9 +100,23 @@ class Character extends Model
 		return $this->belongsToMany(Faction::class, 'faction_members')->withPivot('rank_id');
 	}
 
+	// public function location()
+	// {
+	// 	return $this->hasOne(Location::class)
+	// }
+
 	public function mapData()
 	{
 		return $this->morphOne(MapItem::class, 'mappable');
+	}
+	
+	public function location()
+	{
+		return $this->hasOneThrough(
+			Location::class,
+			MapItem::class,
+			'mappable_id', 'id', 'id', 'location_id'
+		)->where('mappable_type', static::class);
 	}
 
 

@@ -46,7 +46,7 @@
 					{ icon: "Info",      	label: "Details",    	href: "#details"	},
 					{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
 					{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
-					{ icon: "Trash", 		label: "Delete",		onclick: () => faction.delete(), theme: "danger" }
+					{ icon: "Trash", 		label: "Delete",		onclick: () => faction.openModal('delete'), theme: "danger" }
 				]}
 			/>
 			<Container size="4xl">
@@ -60,12 +60,12 @@
 						<Media
 							class="absolute inset-0 aspect-[3/1] rounded-lg overflow-hidden"
 							media={faction.getMedia('banner')}
-							onclick={() => faction.openModal('setBanner')}
+							onclick={() => faction.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]'})}
 						/>
 						<Media
 							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
 							media={faction.getMedia('emblem')}
-							onclick={() => faction.openModal('setEmblem')}
+							onclick={() => faction.openModal('setMedia', { type: 'emblem', aspect: 'aspect-[1/1]'})}
 						/>
 						<Heading is="h1" as="h3"
 							class="mt-auto w-3/4 z-10 {faction.getMedia('banner') ? 'text-white' : ''}"

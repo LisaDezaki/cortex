@@ -7,6 +7,7 @@
 	import Icon 	 from '@/Components/UI/Icon.svelte';
 	import Separator from '@/Components/UI/Separator.svelte';
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
+    import clsx from 'clsx'
 
 	let {
 		children,
@@ -20,42 +21,44 @@
 		...restProps
 	} = $props()
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		item: clsx({
+			'context-menu relative cursor-pointer h-8 px-1.5 py-1 rounded w-full': true,
+			'bg-accent-softest': item.active,
+			'text-neutral-softest': item.disabled,
+			'text-accent': item.theme === 'accent',
+			'text-danger': item.theme === 'danger',
+			'text-neutral-strong active:text-accent': item.theme === undefined
+		}),
+		img: clsx({
+			'border p-[1px] rounded-full w-6' : true,
+			'border-accent': item.active,
+			'border-neutral-softest': !item.active,
+		})
+		
+	})
+
 	let contextSearch   = $state('')
-	let lowerCaseSearch = $derived(contextSearch.toLowerCase())
 
 	function queried(opts) {
 		return opts.filter(o => {
 			return contextSearch === '' ? true : o.label?.toLowerCase().includes(contextSearch?.toLowerCase())
 		})
 	}
-
-	// {#each option.options.filter(o => {
-	// 	return contextSearch === '' ? true : o.label?.toLowerCase().includes(contextSearch?.toLowerCase())
-	// }) as opt}
   
 </script>
 
 
 
-
-
-
-
-
-
 {#snippet item(item)}
-	<Flex
-		align="center" justify="center" gap={2}
-		class="relative cursor-pointer h-8 px-1.5 py-1 rounded w-full
-			{item.active			 ? 'bg-accent-softest'		:	'' }
-			{item.disabled			 ? 'text-neutral-softest'	:	'' }
-			{item.theme === 'accent' ? 'text-accent' : '' }
-			{item.theme === 'danger' ? 'text-danger' : '' }
-			{item.theme === undefined ? 'text-neutral-strong active:text-accent' : '' }
-		">
+	<Flex class={cx.item} align="center" justify="center" gap={2}>
 
 		{#if item.image !== undefined}
-			<Thumbnail class="border p-[1px] rounded-full w-6 {item.active ? 'border-accent' : 'border-neutral-softest'}"
+			<Thumbnail class={cx.img}
 				iconSize={16} src={item.image?.url}
 				imageClass="rounded-full"
 			/>

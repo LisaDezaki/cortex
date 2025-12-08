@@ -3,6 +3,7 @@
 	import { Flex, Grid, Inline } from '@/Components/Core'
 	import Dropdown	from '@/Components/UI/Dropdown.svelte'
 	import Input	from '@/Components/UI/Input.svelte'
+    import clsx from 'clsx'
 
 	let {
 		class: className,
@@ -32,6 +33,15 @@
 		...restProps
 	} = $props()
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		bar: clsx('control-bar shrink-0 w-full z-10', className),
+		input: clsx('w-32'),
+		result: clsx('bg-emerald-500/10 border-b border-accent-softest h-8 mt-auto mr-auto p-md rounded text-accent text-sm whitespace-nowrap')
+	})
 
 	function onQuery() {
 		onUpdate('query', query)
@@ -49,7 +59,7 @@
 
 
 
-<Flex cols={6} gap={3} class="shrink-0 w-full z-10 {className}">
+<Flex cols={6} gap={3} class={cx.bar} {...restProps}>
 	
 
 	<!-- Search -->
@@ -57,7 +67,7 @@
 	{#if searchable}
 		<Input bind:value={query}
 			type="search"
-			class="w-32" size="md"
+			class={cx.input} size="md"
 			label="Search" labelIcon="MagnifyingGlass"
 			name="search"
 			placeholder="Search..."
@@ -74,7 +84,7 @@
 
 	{#if filterable}
 		<Dropdown size="md" bind:value={filter}
-			class="w-32" contentClass="w-32"
+			class={cx.input} contentClass={cx.input}
 			label="Filter" labelIcon="FunnelSimple"
 			options={filterOptions}
 			onUpdate={onFilter}
@@ -86,7 +96,7 @@
 
 	{#if sortable}
 		<Input type="select" size="md" bind:value={sort}
-			class="w-32" contentClass="w-32"
+			class={cx.input} contentClass={cx.input}
 			label="Sort" labelIcon="SortAscending"
 			placeholder="Sort by"
 			options={sortOptions}
@@ -98,7 +108,7 @@
 	<!-- Result Count -->
 
 	<Flex class="w-full">
-		<Inline class="bg-emerald-500/10 border-b border-accent-softest h-8 mt-auto mr-auto p-md rounded text-accent text-sm whitespace-nowrap">
+		<Inline class={cx.result}>
 			{results?.length} {results?.length !== 1 ? 'results' : 'result'}
 		</Inline>
 	</Flex>
@@ -108,7 +118,7 @@
 
 	<Input bind:value={size}
 		type="slider"
-		class="w-32"
+		class={cx.input}
 		label="Size" labelIcon="Resize"
 		style="none"
 		showTicks={true}
@@ -120,7 +130,7 @@
 	<!-- Layout -->
 
 	<Input type="select" size="md" bind:value={layout}
-		class="w-32" contentClass="w-32"
+		class={cx.input} contentClass={cx.input}
 		label="Layout" labelIcon="Layout"
 		options={layoutOptions}
 	/>

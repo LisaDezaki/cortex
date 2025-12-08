@@ -26,6 +26,7 @@
 	import CaretUpDown from "phosphor-svelte/lib/CaretUpDown"
 	import Chats from "phosphor-svelte/lib/Chats"
 	import Check from "phosphor-svelte/lib/Check"
+	import CheckCircle from "phosphor-svelte/lib/CheckCircle"
 	import CheckFat from "phosphor-svelte/lib/CheckFat"
 	import CircleNotch from "phosphor-svelte/lib/CircleNotch"
 	import Compass from "phosphor-svelte/lib/Compass"
@@ -126,6 +127,8 @@
 	import UsersThree from "phosphor-svelte/lib/UsersThree"
 	import Wrench from "phosphor-svelte/lib/Wrench"
 	import X from "phosphor-svelte/lib/X"
+    import Inline from "@/Components/Core/Inline.svelte"
+    import clsx from "clsx"
 
 	const icons = {
 		'ArrowElbowUpLeft': ArrowElbowUpLeft,
@@ -155,6 +158,7 @@
 		'CaretUpDown': CaretUpDown,
 		'Chats': Chats,
 		'Check': Check,
+		'CheckCircle': CheckCircle,
 		'CheckFat': CheckFat,
 		'CircleNotch': CircleNotch,
 		'Crane': Crane,
@@ -196,8 +200,8 @@
 		'Image': Image,
 		'ImageSquare': ImageSquare,
 		'ImagesSquare': ImagesSquare,
-		'Island': Island,
 		'Info': Info,
+		'Island': Island,
 		'Key': Key,
 		'Layout': Layout,
 		'LetterCircleH': LetterCircleH,
@@ -274,13 +278,23 @@
 		size = "lg",
 		...restProps
     } = $props()
+
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		icon: clsx('icon aspect-square pointer-events-none shrink-0', className)
+	})
 	
 	if (!name) {
-		console.log(name+' is not a valid icon name.')
+		// console.log(name+' is not a valid icon name.')
+		throw new Error(name + ' is not a valid icon name.')
 	}
-
+	
 	if (!icons[name]) {
-		console.log('Failed to import icon '+name+'. It may not be a valid icon name.')
+		// console.log('Failed to import icon '+name+'. It may not be a valid icon name.')
+		throw new Error('Failed to import icon '+name+'. It may not be a valid icon name.')
 	}
 
 	const Component = $derived(icons[name])
@@ -289,13 +303,7 @@
 </script>
 
 {#if showIf && Component}
-	<div class="icon {className}" style={restProps.style || null}>
+	<Inline class={cx.icon} align="center" justify="center" style={restProps.style || null}>
 		<Component class={animation} size={iconSize} {...restProps} />
-	</div>
+	</Inline>
 {/if}
-
-<style lang="postcss">
-	:global(.icon) {
-		@apply aspect-square inline-flex items-center justify-center pointer-events-none flex-shrink-0;
-	}
-</style>

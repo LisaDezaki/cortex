@@ -1,5 +1,7 @@
 <script>
 
+	import clsx from 'clsx'
+
 	let {
 		children,
 		class: className,
@@ -7,8 +9,14 @@
 		...restProps
 	} = $props()
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		banner:  clsx('separator border-b border-neutral-softest h-0', className)
+	})
+
 </script>
 
-<div class="separator border-b border-neutral-softest h-0 {className}" {...restProps}>
-	
-</div>
+<div class={cx.banner} {...restProps}></div>

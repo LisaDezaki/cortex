@@ -1,4 +1,5 @@
 <script>
+	import clsx from 'clsx'
 	import { Flex, Grid, Stack, Tabs } from '@/Components/Core'
     import Container from '@/Components/UI/Container.svelte'
 
@@ -10,13 +11,19 @@
 		...restProps
     } = $props()
 
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		section: clsx('section w-full', className),
+	})
+
 </script>
 
 
 
-
-
-<Flex as="section" {direction} class="section w-full {className}" {...restProps}>
+<Flex as="section" {direction} class={cx.section} {...restProps}>
 	{#if size}
 		<Container {size} {direction} class="mx-auto">
 			{@render children?.()}

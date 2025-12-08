@@ -1,5 +1,18 @@
 @theme {
 
+	--animate-blur-in: blur-in 500ms forwards;
+
+	@keyframes blur-in {
+		from {
+			backdrop-filter: blur(0px);
+			background-color: rgba(0,0,0,0.0);
+		}
+		to {
+			backdrop-filter: blur(8px);
+			background-color: rgba(0,0,0,0.4);
+		}
+	}
+
 	--animate-ping2: ping2 1s linear infinite;
 	
 	@keyframes ping2 {

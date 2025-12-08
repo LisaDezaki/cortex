@@ -1,5 +1,8 @@
 <script>
 
+	import clsx from 'clsx'
+	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
+
 	let {
 		children,
 		class: className,
@@ -8,14 +11,22 @@
 		...restProps
 	} = $props()
 
-	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		banner:  clsx('section-banner relative bg-neutral-softer h-24 -mx-6 px-6 py-6 rounded-lg w-full', className),
+		wrapper: clsx('absolute inset-0 overflow-hidden rounded-lg'),
+		image:   clsx('min-h-full min-w-full object-cover')
+	})
 
 </script>
 
-<Stack items="start" justify="end" class="section-banner relative bg-neutral-softer h-24 -mx-6 px-6 py-6 rounded-lg w-full {className}" {...restProps}>
+<Stack class={cx.banner} items="start" justify="end" {...restProps}>
 	{#if image}
-		<Flex items="center" justify="center" class="absolute inset-0 overflow-hidden rounded-lg">
-			<img src={image} alt={imageAlt} class="min-h-full min-w-full object-cover" />
+		<Flex class={cx.wrapper} items="center" justify="center">
+			<img class={cx.image}  src={image} alt={imageAlt} />
 		</Flex>
 	{/if}
 	{@render children?.()}
