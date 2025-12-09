@@ -33,9 +33,9 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section gap={0} class="h-full overflow-hidden">
+		<Section size="7xl" gap={0} class="h-full overflow-hidden">
 
-			<PageHeader class="px-20 py-2"
+			<PageHeader class="px-6 py-2"
 				title="Character Settings"
 				tabs={[
 					{ label: "List",			href: route('characters') },
@@ -43,7 +43,7 @@
 				]}
 			/>
 
-			<Flex gap={12} class="px-20 py-6 w-full">
+			<Flex gap={12} class="px-6 py-6 w-full">
 				<PageMenu
 					items={[
 						{ icon: "UserList",       label: "Overview",      href: "#overview" },

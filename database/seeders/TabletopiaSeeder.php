@@ -46,16 +46,6 @@ class TabletopiaSeeder extends Seeder
 			]);
 		}
 
-		// $species_field = CustomField::create([
-		// 	'project_id' => $projects['tabletopia']->id,
-		// 	'fieldable_type' => 'character',
-		// 	'type' => 'select',
-		// 	'name' => 'species',
-		// 	'label' => 'Species',
-		// 	'description' => 'What species does this character belong to?',
-		// 	'placeholder' => 'Select a species...',
-		// 	'required' => false
-		// ]);
 
 		/**
 		 * Populate Custom Field Options
@@ -145,9 +135,22 @@ class TabletopiaSeeder extends Seeder
 				'description' => $character['desc'],
 				'appearance'  => isset($character['appearance'])	? join(",", $character['appearance'])		: null,
 				'personality' => isset($character['personality'])	? join(",", $character['personality'])		: null,
-				// 'location_id' => isset($character['location'])		? $locations[$character['location']]->id	: null,
 			]);
-			if ($character['species']) {
+			if (isset($character['class'])) {
+				CustomFieldValue::create([
+					'fieldable_id' => $characters[$slug]->id,
+					'custom_field_id' => $fields['class']->id,
+					'value'           => $character['class'],
+				]);
+			}
+			if (isset($character['level'])) {
+				CustomFieldValue::create([
+					'fieldable_id' => $characters[$slug]->id,
+					'custom_field_id' => $fields['level']->id,
+					'value'           => $character['level'],
+				]);
+			}
+			if (isset($character['species'])) {
 				CustomFieldValue::create([
 					'fieldable_id' => $characters[$slug]->id,
 					'custom_field_id' => $fields['species']->id,

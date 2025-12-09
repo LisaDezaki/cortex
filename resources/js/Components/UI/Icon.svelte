@@ -1,4 +1,7 @@
 <script>
+	import ArrowBendDownRight from "phosphor-svelte/lib/ArrowBendDownRight"
+	import ArrowBendLeftUp from "phosphor-svelte/lib/ArrowBendLeftUp"
+	import ArrowCircleRight from "phosphor-svelte/lib/ArrowCircleRight"
 	import ArrowElbowUpLeft from "phosphor-svelte/lib/ArrowElbowUpLeft"
 	import ArrowLeft from "phosphor-svelte/lib/ArrowLeft"
 	import ArrowRight from "phosphor-svelte/lib/ArrowRight"
@@ -38,6 +41,7 @@
 	import DotsThreeOutlineVertical from "phosphor-svelte/lib/DotsThreeOutlineVertical"
 	import DotsThreeVertical from "phosphor-svelte/lib/DotsThreeVertical"
 	import Eye from "phosphor-svelte/lib/Eye"
+	import EyeClosed from "phosphor-svelte/lib/EyeClosed"
 	import File from "phosphor-svelte/lib/File"
 	import FileAudio from "phosphor-svelte/lib/FileAudio"
 	import FileImage from "phosphor-svelte/lib/FileImage"
@@ -127,10 +131,14 @@
 	import UsersThree from "phosphor-svelte/lib/UsersThree"
 	import Wrench from "phosphor-svelte/lib/Wrench"
 	import X from "phosphor-svelte/lib/X"
+	import XCircle from "phosphor-svelte/lib/XCircle"
     import Inline from "@/Components/Core/Inline.svelte"
     import clsx from "clsx"
 
 	const icons = {
+		'ArrowBendDownRight': ArrowBendDownRight,
+		'ArrowBendLeftUp': ArrowBendLeftUp,
+		'ArrowCircleRight': ArrowCircleRight,
 		'ArrowElbowUpLeft': ArrowElbowUpLeft,
 		'ArrowLeft': ArrowLeft,
 		'ArrowRight': ArrowRight,
@@ -170,6 +178,7 @@
 		'DotsThreeOutlineVertical': DotsThreeOutlineVertical,
 		'DotsThreeVertical': DotsThreeVertical,
 		'Eye': Eye,
+		'EyeClosed': EyeClosed,
 		'File': File,
 		'FileAudio': FileAudio,
 		'FileImage': FileImage,
@@ -259,6 +268,7 @@
 		'UsersThree': UsersThree,
 		'Wrench': Wrench,
 		'X': X,
+		'XCircle': XCircle
 	}
 
 	const sizes = {

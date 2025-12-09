@@ -46,6 +46,13 @@
 	{/snippet}
 
     {#snippet article()}
+		<Flex justify="center" class="py-12">
+			<Media
+				class="relative aspect-square bg-neutral-softest rounded-full w-48"
+				media={user.getMedia('avatar')}
+				onclick={() => user.openModal('setAvatar')}
+			/>
+		</Flex>
 		<Flex justify="center" gap={12} class="py-12">
 			<PageMenu items={[
 				{ icon: "UserList", label: "Profile Info",    href: "#profile",  active: $page.url.endsWith('#profile') },
@@ -54,12 +61,6 @@
 			]} />
 
 			<Container gap={12} size="2xl">
-
-				<Media
-					class="relative aspect-square bg-neutral-softest rounded-full w-48"
-					media={user.getMedia('avatar')}
-					onclick={() => user.openModal('setAvatar')}
-				/>
 
 				<Section id="profile" class="max-w-[64ch]">
 					<Stack gap={1.5}>
@@ -71,22 +72,11 @@
 
 				<Section id="password" class="max-w-[64ch]">
 					<Stack gap={1.5}>
-						<Heading is="h3" as="h6">Update Password</Heading>
+						<Heading is="h3" as="h5">Update Password</Heading>
 						<p>Ensure your account is using a long, random password to stay secure.</p>
 					</Stack>
 					<UpdatePasswordForm />
 				</Section>
-
-				<!-- <Section id="delete" class="max-w-[64ch]">
-					<Stack gap={1.5}>
-						<Heading is="h3" as="h6">Delete Account</Heading>
-						<p>Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.</p>
-					</Stack>
-					<Button style="hard" theme="danger" class="mt-3"
-						label="Delete Account"
-						onclick={() => user.delete()}
-					/>
-				</Section> -->
 
 			</Container>
 		</Flex>

@@ -48,18 +48,22 @@
 
 	import CustomFieldModal      from '@/Modals/CustomField.svelte';
 	
+	import SelectOneModal 			 	 from '@/Modals/SelectOne.svelte';
+	import SelectManyModal 		 		 from '@/Modals/SelectMany.svelte';
     import SelectLocationModal 			 from '@/Modals/SelectLocation.svelte';
     import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte';
+	import SetCustomFieldValueModal 	 from '@/Modals/SetCustomFieldValue.svelte';
     import SetLocationModal 			 from '@/Modals/SetLocation.svelte';
     import SetTagsModal 			 	 from '@/Modals/SetTags.svelte';
+	import SetValueModal 			 	 from '@/Modals/SetValue.svelte';
     import UploadMediaModal 			 from '@/Modals/UploadMedia.svelte';
 	
 	//	2. Create a modal registry map
 
     const modals = {
 
-		characterFactions:	CharacterFactionsModal,
-		characterRelationships: CharacterRelationshipsModal,
+		// characterFactions:	CharacterFactionsModal,
+		// characterRelationships: CharacterRelationshipsModal,
 
         createCharacter: 	CreateCharacterModal,
         createCollection: 	CreateCollectionModal,
@@ -82,10 +86,14 @@
 
 		customField:				CustomFieldModal,
 
+		selectOne:					SelectOneModal,
+		selectMany:					SelectManyModal,
 		selectLocation:				SelectLocationModal,
-		setCharacterRelationship:	SetCharacterRelationshipModal,
+		// setCharacterRelationship:	SetCharacterRelationshipModal,
+		setCustomFieldValue:		SetCustomFieldValueModal,
 		setLocation:				SetLocationModal,
 		setTags:					SetTagsModal,
+		setValue:					SetValueModal,
 		uploadMedia:				UploadMediaModal
     };
 

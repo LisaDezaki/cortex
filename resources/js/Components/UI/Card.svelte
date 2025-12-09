@@ -51,7 +51,7 @@
 			'group-hover:mix-blend-multiply': image,
 		}),
 		icon: clsx('card-icon aspect-square h-full max-h-[60%] max-w-[60%] opacity-35 p-6 rounded-full text-neutral-softest w-full'),
-		main: clsx('px-1 w-full'),
+		main: clsx('pl-1 w-full'),
 		details: clsx({
 			'card-details pb-0.5 -space-y-0.5 w-full': true,
 			'opacity-35 pointer-events-none': restProps.disabled
@@ -86,23 +86,15 @@
 				<span class={cx.subtitle}>{subtitle}</span>
 			{/if}
 		</Stack>
-		{#if active}
-			<Icon name="CheckCircle" size="md" />
-		{/if}
+		<Button class="opacity-0 rounded-full {active ? 'text-danger' : 'text-accent'} group-hover:opacity-100 {active ? 'opacity-100' : ''}"
+			size="sm" theme={active ? undefined : "accent"}
+			icon={active ? "XCircle" : "ArrowCircleRight"} iconSize="lg" iconWeight="light"
+		/>
 	</Flex>
 
 	{#if href}
 		<Link class={cx.link} href={href} />
 	{/if}
-
-	<!-- {#if options}
-		<ContextMenu
-			class="flex items-center justify-center absolute bottom-1 right-0 h-7 w-7 show-on-hover hover:bg-neutral-softest rounded-full z-10"
-			icon="DotsThreeOutlineVertical" iconWeight="fill"
-			iconOptions={iconOptions}
-			options={options}
-		/>
-	{/if} -->
 
 	{#if starrable}
 		<Button

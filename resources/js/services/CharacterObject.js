@@ -79,19 +79,40 @@ export default class CharacterObject {
 			case 'delete':
 				modalActions.open('deleteCharacter', { character: this }); break;
 			case 'rename':
-				modalActions.open('renameCharacter', { character: this }); break;
-			case 'factions':
-				modalActions.open('characterFactions', { character: this }); break;
+				modalActions.open('setValue', {
+					entity: this,
+					endpoint: this.routes.update,
+					field: {
+						name: 'name',
+						type: 'text',
+					},
+					title: 'Rename character: ' + this.name,
+					...props
+				}); break;
 			case 'location':
 				modalActions.open('setLocation', {
 					entity: this,
 					endpoint: this.routes.update,
 					...props
 				}); break;
-			case 'relationship':
-				modalActions.open('setCharacterRelationship', { character: this, ...props }); break;
+			case 'factions':
+				modalActions.open('selectMany', {
+					entity: this,
+					endpoint: this.routes.update,
+					field: 'factions',
+					selected: this.factions.items?.map(f => f.id) || [],
+					title: "Set which factions" + this.name + "is a member of",
+					...props
+				}); break;
 			case 'relationships':
-				modalActions.open('characterRelationships', { character: this }); break;
+				modalActions.open('selectMany', {
+					entity: this,
+					endpoint: this.routes.update,
+					field: 'relationships',
+					selected: this.relationships.items?.map(r => r.id) || [],
+					title: "Set " + this.name + "'s relationships with other characters",
+					...props
+				}); break;
 			case 'setMedia':
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-square',
@@ -107,21 +128,26 @@ export default class CharacterObject {
 				modalActions.open('setTags', {
 					entity: this,
 					endpoint: this.routes.update,
+					reloadPageProps: ['activeProject', 'character.appearance', 'characters.appearance'],
 					title: 'Set ' + this.name + '\'s appearance',
-					tags: this.appearance.split(','),
+					tags: this.appearance?.split(','),
 					...props
 				}); break;
 			case 'personality':
 				modalActions.open('setTags', {
 					entity: this,
 					endpoint: this.routes.update,
+					reloadPageProps: ['activeProject', 'character.personality', 'characters.personality'],
 					title: 'Set ' + this.name + '\'s personality',
-					tags: this.personality.split(','),
+					tags: this.personality?.split(','),
 					...props
 				}); break;
 			case 'customField':
-				modalActions.open('customField', {
-					
+				modalActions.open('setCustomFieldValue', {
+					entity: this,
+					endpoint: this.routes.update,
+					reloadPageProps: ['activeProject', 'character.customFieldValues', 'characters.customFieldValues'],
+					...props
 				}); break;
 			default:
 				console.log('CharacterObject.openModal', modalName, props)

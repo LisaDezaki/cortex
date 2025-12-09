@@ -52,18 +52,5 @@
 	}}
 	title={title}
 >
-	<Stack gap={3} class="max-h-[60vh] overflow-y-auto px-6 py-3">
-		<Stack>
-			{#each ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'] as letter}
-				<Flex align="start" class="border-b last-of-type:border-none p-1">
-					<Box class="sticky top-0 min-w-8 max-w-8 w-8 text-neutral-softest text-lg">{letter.toUpperCase()}</Box>
-					<Flex wrap>
-						{#each options.filter(opt => opt.substr(0,1).toLowerCase() === letter) as option}
-							<Tag class="{$form.tags.includes(option) ? cx.active : cx.tag} cursor-pointer m-0.5" onclick={() => toggleTag(option)}>{option}</Tag>
-						{/each}
-					</Flex>
-				</Flex>
-			{/each}
-		</Stack>
-	</Stack>
+	Select One
 </ModalForm>

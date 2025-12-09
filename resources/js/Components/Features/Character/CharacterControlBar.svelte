@@ -53,6 +53,9 @@
 	}
 
 	function customSortFunction(a,b,f) {
+		if (!isNaN(a.customFieldValues.find(v => v.name === f.name)?.value)) {
+			return Number(a.customFieldValues.find(v => v.name === f.name)?.value) < Number(b.customFieldValues.find(v => v.name === f.name)?.value) ? -1 : 1
+		}
 		return a.customFieldValues.find(v => v.name === f.name)?.value < b.customFieldValues.find(v => v.name === f.name)?.value ? -1 : 1
 	}
 
@@ -111,6 +114,7 @@
 			return (a.location?.name || '_') < (b.location?.name || '_') ? -1 : 1 } },
 		{ label: "By faction", value: 'faction', sortFunction: (a,b) => {
 			return (a.factions?.items?.[0]?.name || '_') < (b.factions?.items?.[0]?.name || '_') ? -1 : 1 } },
+		{ separator: true },
 		...customFields?.map(f => {
 			return { label: `By ${f.label.toLowerCase()}`, value: f.name, sortFunction: (a,b) => customSortFunction(a,b,f) }
 		}),

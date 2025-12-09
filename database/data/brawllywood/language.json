@@ -1,0 +1,18 @@
+{
+	
+	"hindi": {
+		"name": "Hindi"
+	},
+	"kannada": {
+		"name": "Kannada"
+	},
+	"malayalam": {
+		"name": "Malayalam"
+	},
+	"tamil": {
+		"name": "Tamil"
+	},
+	"telugu": {
+		"name": "Telugu"
+	}
+}

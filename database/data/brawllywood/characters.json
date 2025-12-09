@@ -3,119 +3,119 @@
 		"name": "Mahendra Shivudu, Bahubali",
 		"from": "Bahubali: The Beginning (2015)",
 		"actor": "Prabhas",
-		"language": "Telugu",
+		"language": "telugu",
 		"description": "When a mysterious child is found by a tribal couple near a roaring waterfall, they raise him as their own. But fate calls. As he grows, Sivudu is drawn to the world beyond the cliffs, where he discovers the ancient kingdom of Mahishmati, ruled by a cruel tyrant, haunted by rebellion, and bound to his past. What begins as a quest for love soon unravels a legacy of betrayal, sacrifice, and a forgotten prince. To reclaim his father’s throne, Mahendra Baahubali must rise against all odds."
 	},
 	"bhairava": {
 		"name": "Bhairava",
 		"from": "Kalki 2898-AD (2024)",
 		"actor": "Prabhas",
-		"language": "Telugu",
+		"language": "telugu",
 		"description": ""
 	},
 	"bheem": {
 		"name": "Komaram Bheem",
 		"from": "RRR (2022)",
 		"actor": "N.T. Rama Roa Jr.",
-		"language": "Telugu",
+		"language": "telugu",
 		"description": ""
 	},
 	"chandra": {
 		"name": "Chandra",
 		"from": "Lokah Chapter 1: Chandra (2025)",
 		"actor": "Kalyani Priyadarshan",
-		"language": "Malayalam",
+		"language": "malayalam",
 		"description": ""
 	},
 	"chitti": {
 		"name": "Chitti",
 		"from": "Enthiran (2010)",
 		"actor": "Rajinikanth",
-		"language": "Tamil",
+		"language": "tamil",
 		"description": ""
 	},
 	"chittibabu": {
 		"name": "Chitti Babu",
 		"from": "Rangasthalam (2018)",
 		"actor": "Ram Charan",
-		"language": "Telugu",
+		"language": "telugu",
 		"description": "Chittibabu, a partially deaf and grumpy resident of Rangasthalam, irrigates fields using an electric motor."
 	},
 	"dixit": {
 		"name": "ACP Jai Dixit",
 		"from": "Dhoom (2004)",
 		"actor": "Abhishek Bachchan",
-		"language": "Hindi",
+		"language": "hindi",
 		"description": ""
 	},
 	"g.one": {
 		"name": "G.One",
 		"from": "Ra.One (2011)",
 		"actor": "Shah Rukh Khan",
-		"language": "Hindi",
+		"language": "hindi",
 		"description": ""
 	},
 	"gangubai": {
 		"name": "Gangubai Kathiawadi",
 		"from": "Gangubai Kathiawadi (2022)",
 		"actor": "Alia Bhatt",
-		"language": "Hindi",
+		"language": "hindi",
 		"description": "Duped and sold to a brothel, a young woman fearlessly reclaims her power, using underworld connections to preside over the world she was once a pawn in."
 	},
 	"kalabhairava": {
 		"name": "Kala Bhairava",
 		"from": "Magadheera (2009)",
 		"actor": "Ram Charan",
-		"language": "Telugu",
+		"language": "telugu",
 		"description": ""
 	},
 	"krrish": {
 		"name": "Krishna Mehra",
 		"from": "Krrish (2006)",
 		"actor": "Hrithik Roshan",
-		"language": "Hindi",
+		"language": "hindi",
 		"description": "In Singapore, Krishna is forced by circumstances to use his superpowers and become a masked superhero named Krrish, before getting drawn towards his lost legacy."
 	},
 	"nani": {
 		"name": "Nani The Fly",
 		"from": "Eega (2012)",
 		"actor": "Sudeep",
-		"language": "Telugu",
+		"language": "telugu",
 		"description": ""
 	},
 	"pushpa": {
 		"name": "Pushpa",
 		"from": "Pushpa: The Rise (2021)",
 		"actor": "Allu Arjun",
-		"language": "Telugu",
+		"language": "telugu",
 		"description": "Pushpa Raj is a coolie who rises in the world of red sandalwood smuggling. Along the way, he doesn't shy away from making an enemy or two."
 	},
 	"raju": {
 		"name": "Alluri Sitarama Raju",
 		"from": "RRR (2022)",
 		"actor": "Ram Charan",
-		"language": "Telugu",
+		"language": "telugu",
 		"description": ""
 	},
 	"ranga": {
 		"name": "Ranjith \"Ranga\" Gangadharan",
 		"from": "Aavesham (2024)",
 		"actor": "Fahadh Faasil",
-		"language": "Malayalam",
+		"language": "malayalam",
 		"description": "An eccentric gangster."
 	},
 	"sanjay-singhania": {
 		"name": "Sanjay Singhania",
 		"from": "Ghajini (2008)",
 		"actor": "Aamir Khan",
-		"language": "Hindi",
+		"language": "hindi",
 		"description": "An man with anterograde amnesia (short-term memory loss) is hunting down the man who killed his fiancee."
 	},
 	"singham": {
 		"name": "Bajirao Singham",
 		"from": "Singham (2011)",
 		"actor": "Ajay Devgn",
-		"language": "Hindi",
+		"language": "hindi",
 		"description": "An honest, small town cop is transferred to a big city that is controlled by a crime boss that he had once humiliated."
 	}
 }

@@ -39,13 +39,13 @@
 		sidebar:  "bg-slate-50 sticky top-0 h-screen overflow-y-auto shadow-xl z-10 " + className,
 		banner:   "relative bg-slate-200 hover:inner-shadow-lg h-40 place-self-center shrink-0 text-neutral-softest w-full transition-all",
 		portrait: "relative bg-slate-200 hover:inner-shadow-lg border border-slate-50 h-32 -mt-16 place-self-center rounded shrink-0 text-neutral-softest w-32 transition-all",
-		info:     "font-light min-h-8 py-1",
+		info:     "font-light group min-h-8 py-0.5",
 		label:    "text-xs text-neutral-soft min-w-20",
 		value:    "text-sm text-neutral my-1",
 		empty:    "text-sm text-neutral-softest italic",
 		button: {
-			edit:    "h-5 w-5 ml-auto rounded-full text-accent hover:bg-accent-softest",
-			confirm: "h-5 w-5 ml-auto rounded-full bg-accent text-white",
+			edit:    "opacity-0 group-hover:opacity-100 h-6 w-6 ml-auto mt-0.5 place-self-start rounded-full text-accent hover:bg-accent-softest",
+			confirm: "opacity-0 group-hover:opacity-100 h-6 w-6 ml-auto mt-0.5 place-self-start rounded-full bg-accent text-white",
 			view:    "sticky bottom-3 line-clamp-1 mx-6 mt-auto rounded-full"
 		}
 	}
@@ -142,7 +142,7 @@
 			<!-- Custom Fields -->
 	
 			{#each customFields as field}
-				<Flex align="center" class={cx.info}>
+				<Flex align="baseline" class={cx.info}>
 					<p class={cx.label}>{field?.label}</p>
 					<p class={cx.value}>
 						{#if editField === field.name}
@@ -151,8 +151,10 @@
 								size="sm"
 								value={character.customFieldValues?.find(f => f.name === field.name)?.value}
 							/>
-						{:else}
+						{:else if character.customFieldValues?.find(f => f.name === field.name)}
 							{character.customFieldValues?.find(f => f.name === field.name)?.displayValue}
+						{:else}
+							<span class={cx.empty}>None</span>
 						{/if}
 					</p>
 					{#if editField === field.name}
@@ -162,7 +164,7 @@
 					{:else if !editField}
 						<Button class={cx.button.edit} size="sm"
 							icon="PencilSimple" iconSize="xs"
-							onclick={() => editField = field.name}
+							onclick={() => character.openModal('customField', { field: field, value: character.customFieldValues?.find(f => f.name === field.name)?.value })}
 						/>
 					{/if}
 				</Flex>
@@ -172,7 +174,7 @@
 
 			<!-- Factions -->
 	
-			<Flex align="center" class={cx.info}>
+			<Flex align="baseline" class={cx.info}>
 				<p class={cx.label}>Factions</p>
 				<p class={cx.value}>
 					{#if character.factions?.items.length > 0}
@@ -188,7 +190,7 @@
 				<Button class={cx.button.edit}
 					style="plain" theme="accent" size="md"
 					icon="PencilSimple" iconSize="xs"
-					onclick={() => character.openModal('factions')}
+					onclick={() => character.openModal('factions', { options: $page.props.activeProject?.data?.factions })}
 				/>
 			</Flex>
 			<Separator />
@@ -196,7 +198,7 @@
 
 			<!-- Location -->
 	
-			<Flex align="center" class={cx.info}>
+			<Flex align="baseline" class={cx.info}>
 				<p class={cx.label}>Location</p>
 				<p class={cx.value}>
 					{#if character.location}
@@ -218,7 +220,7 @@
 
 			<!-- Relationships -->
 	
-			<Flex align="center" class={cx.info}>
+			<Flex align="baseline" class={cx.info}>
 				<p class={cx.label}>Relationships</p>
 				<p class={cx.value}>
 					{#if character.relationships?.items.length > 0}
@@ -234,7 +236,7 @@
 				<Button class={cx.button.edit}
 					style="plain" theme="accent" size="sm"
 					icon="PencilSimple" iconSize="xs"
-					onclick={() => character.openModal('relationships')}
+					onclick={() => character.openModal('relationships', { options: $page.props.activeProject?.data?.characters.filter(c => c.id !== character.id) })}
 				/>
 			</Flex>
 			<Separator />
@@ -242,7 +244,7 @@
 
 			<!-- Appearance -->
 	
-			<Flex align="center" class={cx.info}>
+			<Flex align="baseline" class={cx.info}>
 				<p class={cx.label}>Appearance</p>
 				<p class="{cx.value} line-clamp-2">
 					{#if character.appearance}
@@ -263,8 +265,8 @@
 
 
 			<!-- Personality -->
-	
-			<Flex align="center" class={cx.info}>
+
+			<Flex align="baseline" class={cx.info}>
 				<p class={cx.label}>Personality</p>
 				<p class="{cx.value} line-clamp-2">
 					{#if character.personality}
@@ -283,6 +285,12 @@
 			</Flex>
 		</Stack>
 
+		<Button class={cx.button.view}
+			size="xl" style="hard" theme="accent"
+			icon="Eye" iconWeight="fill"
+			label="View {character?.name}"
+			href={character?.routes.show}
+		/>
 
 	{:else}
 		<Thumbnail class="max-h-40 rounded-none w-full" />
@@ -296,42 +304,52 @@
 				<Skeleton class="bg-transparent h-6 rounded-full w-6" />
 			</Inline>
 		</Stack>
-		<Stack gap={2} class="mb-2 px-6">
+		<Stack gap={2} class="mb-8 mx-1 px-6">
 			<Skeleton class="h-3 mr-5" />
 			<Skeleton class="h-3 mr-1" />
 			<Skeleton class="h-3 mr-24" />
-			<!-- <Skeleton class="h-5 mx-auto my-1 rounded-full w-20" color="bg-accent-softest" /> -->
-			<Separator class="mt-6 mb-3" />
-			<Flex align="center" class="w-full">
-				<Skeleton class="h-3 w-16" />
-				<Skeleton class="h-7 ml-auto w-44" />
-			</Flex>
-			<Flex align="center" class="w-full">
-				<Skeleton class="h-3 w-16" />
-				<Skeleton class="h-7 ml-auto w-44" />
-			</Flex>
-			<Flex align="center" class="w-full">
-				<Skeleton class="h-3 w-16" />
-				<Skeleton class="h-7 ml-auto w-44" />
-			</Flex>
-			<Flex align="center" class="w-full">
-				<Skeleton class="h-3 w-24" />
-				<Skeleton class="h-7 ml-auto w-44" />
-			</Flex>
-			<Flex align="center" class="w-full">
+		</Stack>
+		<Stack class="-mt-[2px] px-4">
+			<Flex align="center" class="border-t py-2.5 w-full">
+				<Skeleton class="h-3 w-8 mr-12" />
 				<Skeleton class="h-3 w-20" />
 			</Flex>
-			<Flex align="center" class="w-full">
+			<Flex align="center" class="border-t py-2.5 w-full">
+				<Skeleton class="h-3 w-8 mr-12" />
+				<Skeleton class="h-3 w-6" />
+			</Flex>
+			<Flex align="center" class="border-t py-2.5 w-full">
+				<Skeleton class="h-3 w-12 mr-8" />
+				<Skeleton class="h-3 w-20" />
+			</Flex>
+			<Flex align="center" class="border-t py-2.5 w-full">
+				<Skeleton class="h-3 w-12 mr-8" />
+				<Skeleton class="h-3 w-20" />
+			</Flex>
+			<Flex align="center" class="border-t py-2.5 w-full" wrap>
+				<Skeleton class="h-3 w-12 mr-8" />
+				<Skeleton class="h-3 w-28" />
+			</Flex>
+			<Flex align="center" class="border-t py-2.5 w-full" wrap>
+				<Skeleton class="h-3 w-16 mr-4" />
+				<Skeleton class="h-3 w-12 mr-1" />
+				<Skeleton class="h-3 w-12" />
+			</Flex>
+			<Flex align="center" class="border-t py-2.5 w-full" wrap>
+				<Skeleton class="h-3 w-16 mr-4" />
+				<Skeleton class="h-3 w-8 mr-1" />
+				<Skeleton class="h-3 w-12 mr-1" />
 				<Skeleton class="h-3 w-16" />
+			</Flex>
+			<Flex align="center" class="border-t py-2.5 w-full" wrap>
+				<Skeleton class="h-3 w-16 mr-4" />
+				<Skeleton class="h-3 w-12 mr-1" />
+				<Skeleton class="h-3 w-12 mr-1" />
+				<Skeleton class="h-3 w-10" />
 			</Flex>
 		</Stack>
 
+		<Skeleton class="sticky bottom-3 bg-accent-softest h-[50px] mx-6 mt-auto rounded-full" />
 
 	{/if}
-	<Button class={cx.button.view}
-		size="xl" style="hard" theme="accent"
-		icon="Eye" iconWeight="fill"
-		label="View {character?.name}"
-		href={character?.routes.show}
-	/>
 </Sidebar>

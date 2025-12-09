@@ -5,8 +5,7 @@
 		"name": "from",
 		"label": "From",
 		"description": "What movie is this character known for?",
-		"placeholder": "Movie name",
-		"required": false
+		"placeholder": "Movie name"
 	},
 	"actor": {
 		"fieldable_type": "character",
@@ -14,16 +13,14 @@
 		"name": "actor",
 		"label": "Actor",
 		"description": "Who is this character portrayed by?",
-		"placeholder": "Actor name",
-		"required": false
+		"placeholder": "Actor name"
 	},
 	"language": {
 		"fieldable_type": "character",
-		"type": "text",
+		"type": "select",
 		"name": "language",
 		"label": "Language",
 		"description": "What language does this character speak (primarily)?",
-		"placeholder": "Language",
-		"required": false
+		"placeholder": "Language"
 	}
 }

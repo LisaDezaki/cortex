@@ -39,8 +39,6 @@ class CharacterController extends Controller
 		'alias'                 => ['sometimes', 'nullable', 'string', 'max:255'],
 		'description'           => ['sometimes', 'nullable', 'string'],
 		'starred'				=> ['sometimes', 'boolean'],
-		// 'faction_id'            => ['sometimes', 'nullable', 'string', 'uuid', 'exists:factions,id'],
-		// 'location_id'           => ['sometimes', 'nullable', 'string', 'uuid', 'exists:locations,id'],
 
 		'media'					=> ['sometimes', 'nullable', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],
@@ -57,6 +55,10 @@ class CharacterController extends Controller
 		'relationships.*.character_role'  		 => ['required',  'string'],
 		'relationships.*.related_character_id'	 => ['required',  'string', 'uuid', 'distinct', 'exists:characters,id'],
 		'relationships.*.related_character_role' => ['required',  'string'],
+
+		'customField'			=> ['sometimes', 'array'],
+		'customField.id'    	=> ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'customField.value' 	=> ['nullable'],
 
 		'custom_fields'			=> ['sometimes', 'array'],
 		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
@@ -156,10 +158,10 @@ class CharacterController extends Controller
 	public function edit(Character $character) {}
 	public function update(Request $request, Character $character): RedirectResponse
 	{
-
+		
 		//	Validate
 		$validatedData = $request->validate($this->validationRules);
-		
+
 		//	Media
 		if ($request->has('media') && $request['media'] !== null) {
 			foreach ($request['media'] as $media) {
@@ -167,7 +169,7 @@ class CharacterController extends Controller
 			}
 			unset($validatedData['media']);
 		}
-		
+
 		//	Factions
 		if ($request->has('factions')) {
 			$character->factions()->sync($request['factions']);
@@ -193,6 +195,10 @@ class CharacterController extends Controller
 		}
 
 		//	Custom Fields
+		if ($request->has('customField')) {
+			$this->handleCustomFields([$validatedData['customField']], $character);
+		}
+
 		if ($request->has('custom_fields')) {
 			$this->handleCustomFields($validatedData['custom_fields'], $character);
 		}

@@ -146,11 +146,11 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section gap={0} class="h-full overflow-y-auto">
+		<Section size="7xl" gap={0} class="h-full overflow-y-auto">
 
 			<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-20 py-2"
+			<PageHeader class="px-6 py-2"
 				title="Location List"
 				tabs={[
 					{ label: "List",		active: true },
@@ -173,7 +173,7 @@
 
 			<!-- Main Body -->
 
-			<Flex align="start" class="px-20 pt-3 pb-6">
+			<Flex align="start" class="px-6 pt-3 pb-6">
 				{#if activeProject && results.length > 0}
 
 					<!-- Grid -->

@@ -52,6 +52,21 @@ class BrawllywoodSeeder extends Seeder
 			]);
 		}
 
+		/**
+		 * Populate Custom Field Options
+		 */
+
+		$language_list = [];
+		$json = File::get(database_path('data/brawllywood/language.json'));
+		$json_language = json_decode($json, true);
+		foreach ($json_language as $slug => $language) {
+			$language_list[$slug] = CustomFieldOption::create([
+				'custom_field_id' => $fields['language']->id,
+				'value'           => $slug,
+				'label'           => $language['name'],
+			]);
+		}
+
 
 		//	CHARACTERS
 

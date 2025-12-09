@@ -37,7 +37,7 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<PageHeader class="px-20 py-2"
+		<PageHeader size="7xl" class="px-20 py-2"
 			title={ activeProject ? null : "Projects" }
 			tabs={ activeProject ? [
 				{ label: 'Dashboard', active: true },
@@ -54,9 +54,9 @@
 
 			<!-- Banner Image -->
 
-			<Section>
+			<Section class="mb-24">
 				<Media
-					class="relative aspect-[7/3] bg-neutral-softest overflow-hidden text-neutral-softest w-full"
+					class="relative aspect-[7/3] bg-neutral-softest max-h-[60vh] overflow-hidden text-neutral-softest w-full"
 					media={active.getMedia('banner')}
 					onclick={() => active.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]'})}
 				/>
@@ -65,7 +65,7 @@
 
 			<!-- Project Header -->
 
-			<Section class="relative mt-24 px-20">
+			<Section size="7xl" class="px-6 py-6 w-full">
 				<Grid cols={2} gap={12}>
 
 					<Stack gap={0}>
@@ -126,7 +126,7 @@
 
 
 			{#if active.characters?.items.length > 0}
-				<Section class="px-20 py-6">
+				<Section size="7xl" class="px-6 py-6">
 					<Heading is="h3" as="h5" class="mb-3">Recently updated Characters</Heading>
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each active.characters.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as character}
@@ -146,7 +146,7 @@
 
 
 			{#if active.factions?.items.length > 0}
-				<Section class="px-20 py-6">
+				<Section size="7xl" class="px-20 py-6">
 					<Heading is="h3" as="h5" class="mb-3">Recently updated Factions</Heading>
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each active.factions.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as faction}
@@ -166,7 +166,7 @@
 
 
 			{#if active.locations?.items.length > 0}
-				<Section class="px-20 py-6">
+				<Section size="7xl" class="px-20 py-6">
 					<Heading is="h3" as="h5" class="mb-3">Recently updated Locations</Heading>
 					<Flex justify="start" gap={2} class="overflow-x-auto w-full">
 						{#each active.locations.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as location}
@@ -186,7 +186,7 @@
 		{:else}
 
 		
-			<Section class="p-20 pt-16">
+			<Section size="7xl" class="p-20 pt-16">
 				{#if projects}
 					<Grid gap={3} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
 						{#each projectList.items as project}

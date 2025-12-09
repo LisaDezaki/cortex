@@ -1,11 +1,26 @@
 {
+	"class": {
+		"fieldable_type": "character",
+		"type": "text",
+		"name": "class",
+		"label": "Class",
+		"description": "What class or profession does this character belong to?",
+		"placeholder": "Enter a class..."
+	},
+	"level": {
+		"fieldable_type": "character",
+		"type": "number",
+		"name": "level",
+		"label": "Level",
+		"description": "What level is this character?",
+		"placeholder": "Enter a level..."
+	},
 	"species": {
 		"fieldable_type": "character",
 		"type": "select",
 		"name": "species",
 		"label": "Species",
 		"description": "What species does this character belong to?",
-		"placeholder": "Select a species...",
-		"required": false
+		"placeholder": "Select a species..."
 	}
 }
