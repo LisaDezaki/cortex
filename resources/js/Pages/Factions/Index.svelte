@@ -149,7 +149,7 @@
 
 <AuthenticatedLayout>	
 	{#snippet article()}
-		<Section size="7xl" gap={0} class="h-full overflow-y-auto">
+		<Section size="5xl" gap={0} class="h-full overflow-y-auto">
 
 
 			<!-- Fixed/Sticky Header -->

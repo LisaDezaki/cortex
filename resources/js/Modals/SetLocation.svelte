@@ -14,19 +14,16 @@
     let {
 		entity,
 		endpoint,
+		field = 'location',
 	} = $props()
 
 	const form = useForm({
-		location: entity.location?.id || locations.getWorldMap().id,
+		[field]: entity[field]?.id || locations.getWorldMap().id,
 		coordinates: [0,0]
 	})
 
-	// function updateLocation(id) {
-	// 	$form.location = id
-	// }
-
 	function mapClick(item) {
-		$form.location = item.mappable?.id || item.location?.id
+		$form[field] = item.mappable?.id || item[field]?.id
 	}
 
 </script>
@@ -43,7 +40,7 @@
 >
 	<Map.Context
 		class="flex-col w-full"
-		location={locations.find($form.location)}
+		location={locations.find($form[field])}
 	>
 		<Map.Preview
 			class="aspect-square w-full"

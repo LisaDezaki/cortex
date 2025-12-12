@@ -68,6 +68,15 @@ export default class LocationObject {
 				modalActions.open('deleteLocation', { location: this }); break;
 			case 'rename':
 				modalActions.open('renameLocation', { location: this }); break;
+			case 'climate':
+				modalActions.open('setTags', {
+					entity: this,
+					endpoint: this.routes.update,
+					reloadPageProps: ['activeProject', 'location.climate', 'locations.climate'],
+					title: 'Set ' + this.name + '\'s climate',
+					tags: this.climate?.split(','),
+					...props
+				}); break;
 			case 'setMedia':
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-square',

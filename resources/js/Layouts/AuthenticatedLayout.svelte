@@ -66,20 +66,20 @@
 		// characterRelationships: CharacterRelationshipsModal,
 
         createCharacter: 	CreateCharacterModal,
-        createCollection: 	CreateCollectionModal,
+        // createCollection: 	CreateCollectionModal,
         createFaction: 		CreateFactionModal,
         createLocation: 	CreateLocationModal,
 		createProject:		CreateProjectModal,
 
 		deleteCharacter: 	DeleteCharacterModal,
-		deleteCollection:	DeleteCollectionModal,
+		// deleteCollection:	DeleteCollectionModal,
 		deleteFaction:		DeleteFactionModal,
 		deleteLocation:		DeleteLocationModal,
 		deleteProject:		DeleteProjectModal,
 		deleteUser:			DeleteUserModal,
 
-		renameCharacter:	RenameCharacterModal,
-		renameCollection:	RenameCollectionModal,
+		// renameCharacter:	RenameCharacterModal,
+		// renameCollection:	RenameCollectionModal,
 		renameFaction:		RenameFactionModal,
 		renameLocation:		RenameLocationModal,
 		renameProject:		RenameProjectModal,
@@ -88,7 +88,7 @@
 
 		selectOne:					SelectOneModal,
 		selectMany:					SelectManyModal,
-		selectLocation:				SelectLocationModal,
+		// selectLocation:				SelectLocationModal,
 		// setCharacterRelationship:	SetCharacterRelationshipModal,
 		setCustomFieldValue:		SetCustomFieldValueModal,
 		setLocation:				SetLocationModal,

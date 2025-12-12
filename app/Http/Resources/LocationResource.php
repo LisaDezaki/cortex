@@ -22,6 +22,7 @@ class LocationResource extends JsonResource
 			'type'        => $this->type,
 			'icon'        => $this->icon,
 			'description' => $this->description,
+			'climate'	  => $this->climate,
 			'starred'	  => $this->starred,
 			'isWorldMap'  => $this->is_world_map,
 
@@ -46,6 +47,7 @@ class LocationResource extends JsonResource
 			// ],
 
 			'characters'  => CharacterResource::collection($this->whenLoaded('characters')),
+			'customFieldValues' => CustomFieldValueResource::collection($this->whenLoaded('customFieldValues')),
 
 			'meta' => [
 				'projectId' => $this->project_id,

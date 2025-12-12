@@ -18,6 +18,7 @@ return new class extends Migration
 			$table->string('type');
 			$table->string('name');
 			$table->string('label');
+			$table->string('default')->nullable();
 			$table->string('description')->nullable();
 			$table->string('placeholder')->nullable();
 			$table->boolean('required');

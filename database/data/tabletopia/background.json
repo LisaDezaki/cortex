@@ -1,0 +1,97 @@
+{
+	
+	"acolyte": {
+		"name": "Acolyte"
+	},
+	"anthropologist": {
+		"name": "Anthropologist"
+	},
+	"archaeologist": {
+		"name": "Archaeologist"
+	},
+	"bandit": {
+		"name": "Bandit"
+	},
+	"bounty-hunter": {
+		"name": "Bounty Hunter"
+	},
+	"charlatan": {
+		"name": "Charlatan"
+	},
+	"city-watch": {
+		"name": "City Watch"
+	},
+	"clan-crafter": {
+		"name": "Clan Crafter"
+	},
+	"courtesan": {
+		"name": "Courtesan"
+	},
+	"courtier": {
+		"name": "Courtier"
+	},
+	"criminal": {
+		"name": "Criminal"
+	},
+	"entertainer": {
+		"name": "Entertainer"
+	},
+	"faction-agent": {
+		"name": "Faction Agent"
+	},
+	"far-traveler": {
+		"name": "Far Traveler"
+	},
+	"folk-hero": {
+		"name": "Folk Hero"
+	},
+	"gladiator": {
+		"name": "Gladiator"
+	},
+	"guild-artisan": {
+		"name": "Guild Artisan"
+	},
+	"haunted-one": {
+		"name": "Haunted One"
+	},
+	"hermit": {
+		"name": "Hermit"
+	},
+	"inheritor": {
+		"name": "Inheritor"
+	},
+	"knight": {
+		"name": "Knight"
+	},
+	"mercenary-veteran": {
+		"name": "Mercenary Veteran"
+	},
+	"noble": {
+		"name": "Noble"
+	},
+	"outlander": {
+		"name": "Outlander"
+	},
+	"pirate": {
+		"name": "Pirate"
+	},
+	"prostitute": {
+		"name": "Prostitute"
+	},
+	"sage": {
+		"name": "Sage"
+	},
+	"sailor": {
+		"name": "Sailor"
+	},
+	"scholar": {
+		"name": "Scholar"
+	},
+	"soldier": {
+		"name": "Soldier"
+	},
+	"urchin": {
+		"name": "Urchin"
+	}
+
+}

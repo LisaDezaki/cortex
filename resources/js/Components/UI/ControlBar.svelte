@@ -1,8 +1,10 @@
 <script>
 
-	import { Flex, Grid, Inline } from '@/Components/Core'
+	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
+	import Button	from '@/Components/UI/Button.svelte'
 	import Dropdown	from '@/Components/UI/Dropdown.svelte'
 	import Input	from '@/Components/UI/Input.svelte'
+	import Label	from '@/Components/UI/Inputs/Label.svelte'
     import clsx from 'clsx'
 
 	let {
@@ -38,7 +40,7 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		bar: clsx('control-bar shrink-0 w-full z-10', className),
+		bar: clsx('control-bar mt-3 shrink-0 w-full z-10', className),
 		input: clsx('w-32'),
 		result: clsx('bg-emerald-500/10 border-b border-accent-softest h-8 mt-auto mr-auto p-md rounded text-accent text-sm whitespace-nowrap')
 	})
@@ -129,10 +131,24 @@
 
 	<!-- Layout -->
 
-	<Input type="select" size="md" bind:value={layout}
+	<!-- <Input type="select" size="md" bind:value={layout}
 		class={cx.input} contentClass={cx.input}
 		label="Layout" labelIcon="Layout"
 		options={layoutOptions}
-	/>
+	/> -->
+
+	<Stack>
+		<Label>Layout</Label>
+		<Inline>
+			{#each layoutOptions as option, i}
+				<Button
+					class="{i === 0 ? "rounded-l" : "-ml-[1px]"} {i === layoutOptions.length-1 ? "rounded-r" : ""}"
+					size="sm" style="soft" theme={option.value === layout ? "accent" : "neutral"} icon={option.icon}
+					onclick={() => layout = option.value}
+				/>
+			{/each}
+		</Inline>
+	</Stack>
+
 
 </Flex>

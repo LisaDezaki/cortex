@@ -37,6 +37,12 @@ class CharacterRelationshipResource extends JsonResource
 					? $this->pivot->related_character_role
 					: $this->pivot->character_role;
 			}),
+
+			'routes' => [
+				'show'    => route('characters.show',    ['character' => $this->slug]),
+				'update'  => route('characters.update',  ['character' => $this->slug]),
+				'destroy' => route('characters.destroy', ['character' => $this->slug])
+			]
 		];
     }
 }

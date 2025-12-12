@@ -89,10 +89,22 @@ export default class CharacterObject {
 					title: 'Rename character: ' + this.name,
 					...props
 				}); break;
+			case 'alias':
+				modalActions.open('setValue', {
+					entity: this,
+					endpoint: this.routes.update,
+					field: {
+						name: 'alias',
+						type: 'text',
+					},
+					title: 'Set alias for ' + this.name,
+					...props
+				}); break;
 			case 'location':
 				modalActions.open('setLocation', {
 					entity: this,
 					endpoint: this.routes.update,
+					field: 'location',
 					...props
 				}); break;
 			case 'factions':

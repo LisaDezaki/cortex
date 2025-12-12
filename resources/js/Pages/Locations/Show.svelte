@@ -44,7 +44,7 @@
 					{ icon: "Trash", 		label: "Delete", 		onclick: () => location.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="4xl">
+			<Container size="5xl">
 
 
 				<!-- Details -->

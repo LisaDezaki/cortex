@@ -28,7 +28,8 @@
 	let {
 		class: className,
 		onBackClick,
-		onItemClick
+		onItemClick,
+		navigable = true
 	} = $props()
 
 	/**
@@ -74,17 +75,19 @@
 	backgroundImage="/img/grid.png"
 	onclick={handlePreviewClick}
 >
-	<Inline class="absolute backdrop-blur-sm bg-white/20 top-1 left-1 min-h-8 rounded text-white z-10">
-		{#if getLocation().mapData}
-			<Button size="xs" class="h-8 w-8 rounded-l hover:bg-white/20"
-				icon="ArrowLeft"
-				onclick={() => {
-					onBackClick(getLocation().mapData)
-				}}
-			/>
-		{/if}
-		<Heading is="h4" as="h6" class="px-2">{getLocation().name}</Heading>
-	</Inline>
+	{#if navigable}
+		<Inline class="absolute backdrop-blur-sm bg-white/20 top-1 left-1 min-h-8 rounded text-white z-10">
+			{#if getLocation().mapData}
+				<Button size="xs" class="h-8 w-8 rounded-l hover:bg-white/20"
+					icon="ArrowLeft"
+					onclick={() => {
+						onBackClick(getLocation().mapData)
+					}}
+				/>
+			{/if}
+			<Heading is="h4" as="h6" class="px-2">{getLocation().name}</Heading>
+		</Inline>
+	{/if}
 
 	{#if getMap?.()}
 

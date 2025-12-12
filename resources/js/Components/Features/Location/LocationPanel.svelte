@@ -5,23 +5,25 @@
 
 	//	Layout & Components
 
-	import Flex					from '@/Components/Core/Flex.svelte'
-	import Grid					from '@/Components/Core/Grid.svelte'
-	import Inline				from '@/Components/Core/Inline.svelte'
-	import Map					from '@/Components/Core/Map'
-	import Stack				from '@/Components/Core/Stack.svelte'
-	import Button				from '@/Components/UI/Button.svelte'
-	import Collapsible			from '@/Components/UI/Collapsible.svelte'
-	import Heading				from '@/Components/UI/Heading.svelte'
-	import Separator			from '@/Components/UI/Separator.svelte'
-	import Sidebar				from '@/Components/UI/Sidebar.svelte'
-	import Skeleton				from '@/Components/UI/Skeleton.svelte'
-	import Thumbnail			from '@/Components/UI/Thumbnail.svelte'
+	import Flex				from '@/Components/Core/Flex.svelte'
+	import Grid				from '@/Components/Core/Grid.svelte'
+	import Inline			from '@/Components/Core/Inline.svelte'
+	import Map				from '@/Components/Core/Map'
+	import Stack			from '@/Components/Core/Stack.svelte'
+	import Button			from '@/Components/UI/Button.svelte'
+	import Collapsible		from '@/Components/UI/Collapsible.svelte'
+	import Heading			from '@/Components/UI/Heading.svelte'
+	import Separator		from '@/Components/UI/Separator.svelte'
+	import Sidebar			from '@/Components/UI/Sidebar.svelte'
+	import SidebarListItem 	from '@/Components/UI/SidebarListItem.svelte'
+	import Skeleton			from '@/Components/UI/Skeleton.svelte'
+	import Thumbnail		from '@/Components/UI/Thumbnail.svelte'
 
 
 	//	Page & Component props
 
 	const customFields = $state($page.props.customFields?.data)
+	const climate   = $state($page.props.options.locationTags)
 
 	let {
 		location,
@@ -35,9 +37,10 @@
 		sidebar:  "bg-slate-50 sticky top-0 h-screen overflow-y-auto shadow-xl z-10 " + className,
 		banner:   "relative bg-slate-200 hover:inner-shadow-lg h-40 place-self-center shrink-0 text-neutral-softest w-full transition-all",
 		emblem:   "relative bg-slate-200 hover:inner-shadow-lg border border-slate-50 h-32 -mt-16 place-self-center rounded shrink-0 text-neutral-softest w-32 transition-all",
-		label:    "min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5",
-		value:    "min-h-5 text-sm text-neutral",
-		empty:    "min-h-5 text-sm text-neutral-softest italic",
+		info:     "font-light group px-1 py-2",
+		label:    "text-xs text-neutral-soft min-w-20 pt-0.5",
+		value:    "text-sm text-neutral",
+		empty:    "text-sm text-neutral-softest italic",
 		button: {
 			edit: "h-5 w-5 ml-auto rounded-full",
 			view: "sticky bottom-3 line-clamp-1 mx-6 mt-auto rounded-full"
@@ -117,30 +120,27 @@
 				<Separator />
 
 		</Stack>
-		<Stack gap={0} class="relative px-4 py-3">
-
-
-
-				<!-- Custom Fields -->
-	
-				{#each customFields as field}
-					<Flex align="start" class="font-light py-1.5">
-						<p class={cx.label}>{field?.label}</p>
-						<p class={cx.value}>{location.customFieldValues?.find(f => f.name === field.name)?.displayValue}</p>
-						<Button class={cx.button.edit}
-							style="plain" theme="accent" size="sm"
-							icon="PencilSimple" iconSize="xs"
-							onclick={() => location.setCustomField()}
-						/>
-					</Flex>
-					<Separator />
-				{/each}
-
-	
+		<Stack gap={0} class="relative px-4">
 	
 				<!-- MapItems -->
+				<Map.Legend class="grid grid-cols-2 mb-6" />
 
-				<Map.Legend class="grid grid-cols-2" />
+				<!-- Climate -->
+				<SidebarListItem
+					label="Climate"
+					onclick={() => location.openModal('climate', { options: climate })}
+					value={location.climate?.split(',').join(', ') || undefined}
+				/>
+
+				<!-- Custom Fields -->
+				{#each customFields as field}
+					<SidebarListItem
+						label={field.label}
+						onclick={() => location.setCustomField()}
+						value={location.customFieldValues?.find(f => f.name === field.name)?.displayValue}
+					/>
+				{/each}
+
 			</Stack>	
 		</Map.Context>
 

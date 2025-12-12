@@ -81,6 +81,11 @@ class Faction extends Model
 		return $this->morphMany(CustomField::class, 'fieldable');
 	}
 
+	public function customFieldValues(): HasMany
+	{
+		return $this->hasMany(CustomFieldValue::class, 'fieldable_id');
+	}
+
 	/**
 	 * Media relationships.
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation

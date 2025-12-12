@@ -28,8 +28,8 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		legend:     clsx('pt-3', legendClass),
-		title: 		clsx('min-h-6 min-w-20 pt-0.5 text-xs text-neutral-soft'),
+		legend:     clsx('pb-3', legendClass),
+		title: 		clsx('font-light min-h-6 min-w-20 pt-0.5 px-0.5 text-xs text-neutral-soft'),
 		list: 		clsx('grid grid-cols-2 gap-[1px] min-w-48 shrink-0 w-full'),
 		item: 		clsx('cursor-pointer text-sm text-neutral'),
 		itemHover: 	clsx('bg-accent-softest text-accent'),
@@ -54,8 +54,8 @@
 	{ title: 'Characters', defaultIcon: 'User',			list: getItems().characters }
 ] as mapItems}
 	{#if mapItems.list?.length > 0}
-		<Stack class={cx.legend} gap={1}>
-			<p class={cx.title}>{mapItems.title}</p>
+		<Stack class={cx.legend}>
+			<span class={cx.title}>{mapItems.title}</span>
 			<ul class={cx.list}>
 				{#each mapItems.list as item}
 					<li class="col-span-1">

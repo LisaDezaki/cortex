@@ -149,15 +149,14 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section size="7xl" gap={0} class="h-full overflow-y-auto">
+		<Section size="5xl" gap={0} class="h-full overflow-y-auto">
 
 			<!-- Fixed/Sticky Header -->
 
 			<PageHeader class="px-6 py-2"
-				title="Character List"
 				tabs={[
-					{ label: "List",		active: true },
-					{ label: "Settings",	href: route('characters.settings') },
+					{ label: "Character List",	active: true },
+					{ label: "Settings",		href: route('characters.settings') },
 				]}
 				actions={[
 					{ icon: "Plus", label: "New", theme: "accent", onclick: () => characters.create() },

@@ -51,11 +51,11 @@
 				<Stack gap={0} class="mt-3 ml-12">
 					<strong class="font-style-large mt-6">Character</strong>
 					<Flex align="center" gap={0}><Input type="checkbox" checked />OpenModal()</Flex>
-					<Flex align="center" gap={0}><Input type="checkbox" />SetData(Name,Alias,Description)</Flex>
 					<Flex align="center" gap={0}><Input type="checkbox" checked />SetRelated(Characters,Factions,Locations)</Flex>
 					<Flex align="center" gap={0}><Input type="checkbox" checked />SetMedia(Portrait,Banner)</Flex>
 					<Flex align="center" gap={0}><Input type="checkbox" checked />SetTags(Appearance,Personality)</Flex>
-					<Flex align="center" gap={0}><Input type="checkbox" />SetCustomField(Class,Level,Species)</Flex>
+					<Flex align="center" gap={0}><Input type="checkbox" checked />SetValue(Name,Alias,Description)</Flex>
+					<Flex align="center" gap={0}><Input type="checkbox" checked />SetCustomFieldValue(Class,Level,Species)</Flex>
 					
 					<strong class="font-style-large mt-6">Faction</strong>
 					<Flex align="center" gap={0}><Input type="checkbox" checked />OpenModal()</Flex>

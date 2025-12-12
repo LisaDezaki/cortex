@@ -39,6 +39,7 @@ class LocationController extends Controller
 		'name'					=> ['sometimes', 'string'],
 		'description'			=> ['nullable',  'string'],
 		'starred'				=> ['sometimes', 'boolean'],
+		'climate'				=> ['sometimes', 'string'],
 
 		'mapItems'					=> ['sometimes', 'array'],
 		'mapItems.*.mappable_id'	=> ['required', 'string'],
@@ -69,14 +70,9 @@ class LocationController extends Controller
 			'project_id', Auth::user()->active_project
 		)->distinct()->orderBy('type')->pluck('type')->filter()->values()->all();
 
-		$collections = Collection::where([
-			'project_id' => Auth::user()->active_project,
-			'collection_type' => Location::class
-		])->with(['items'])->get();
-
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => 'faction'
+			'fieldable_type' => Location::class
 		])->with('options')->get();
 
 		// $worldTree = Location::where([
@@ -86,22 +82,21 @@ class LocationController extends Controller
 
         return Inertia::render('Locations/Index', [
 			'locationTypes' => $locationTypes,
-			'collections'	=> CollectionResource::collection($collections),
 			'customFields'	=> CustomFieldResource::collection($customFields),
 			// 'worldTree'		=> new LocationResource($worldTree)
 		]);
     }
-	public function collections()
-	{
-		$collections = Collection::where([
-			'project_id' => Auth::user()->active_project,
-			'collection_type' => Location::class
-		])->with(['items'])->get();
+	// public function collections()
+	// {
+	// 	$collections = Collection::where([
+	// 		'project_id' => Auth::user()->active_project,
+	// 		'collection_type' => Location::class
+	// 	])->with(['items'])->get();
 
-		return Inertia::render('Locations/Collections', [
-			'collections'	=> CollectionResource::collection($collections),
-		]);
-	}
+	// 	return Inertia::render('Locations/Collections', [
+	// 		'collections'	=> CollectionResource::collection($collections),
+	// 	]);
+	// }
 
 	/**
 	 * CREATE / STORE
@@ -230,6 +225,13 @@ class LocationController extends Controller
 
 	public function settings(Request $request): Response
     {
-    	return Inertia::render('Locations/Settings');
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => Location::class
+		])->with('options')->get();
+
+    	return Inertia::render('Locations/Settings', [
+			'customFields' => CustomFieldResource::collection($customFields)
+		]);
     }
 }

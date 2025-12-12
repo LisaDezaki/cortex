@@ -20,6 +20,7 @@
 	import Tag     		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 	import CharacterObject from '@/services/CharacterObject';
+	import url from '@/stores/urlStore'
 
 	/**
 	 * Active character instance
@@ -38,7 +39,7 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
+		<Flex justify="center" gap={12} class="h-full overflow-y-auto px-6 py-12">
 			<PageMenu
 				backTo={route('characters')} backToLabel="Character List"
 				items={[
@@ -49,11 +50,10 @@
 					{ icon: "Backpack",         label: "Inventory",     href: "#items"         },
 					{ icon: "MapPinSimpleArea", label: "Location",      href: "#location"      },
 					{ icon: "ImagesSquare",     label: "Gallery",       href: "#gallery"       },
-					{ icon: "FolderSimple",     label: "Collections",  	href: "#collections"   },
 					{ icon: "Trash", 			label: "Delete", 		onclick: () => character.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="4xl">
+			<Container size="3xl">
 
 
 				<!-- Details -->
@@ -62,12 +62,12 @@
 
 					<ArticleBanner>
 						<Media
-							class="absolute inset-0 aspect-[3/1] bg-slate-200 border border-neutral-softest hover:border-accent rounded-lg overflow-hidden text-neutral-softest w-full"
+							class="absolute inset-0 aspect-[3/1] bg-slate-200 hover:inner-shadow-lg rounded-lg overflow-hidden text-neutral-softest transition-all w-full"
 							media={character.getMedia('banner')}
 							onclick={() => character.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]' })}
 						/>
 						<Media
-							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 hover:border-accent right-12 -bottom-16 rounded-lg overflow-hidden text-neutral-softest w-48"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border-2 border-slate-100 hover:inner-shadow-lg right-12 -bottom-16 rounded-lg overflow-hidden text-neutral-softest transition-all w-48"
 							media={character.getMedia('portrait')}
 							onclick={() => character.openModal('setMedia', { type: 'portrait', aspect: 'aspect-[1/1]' })}
 						/>
@@ -79,27 +79,29 @@
 					</ArticleBanner>
 
 					<Stack class="max-w-[64ch] mx-6">
+
+						<Heading is="h3" as="h4" class="mt-9 mb-6 text-neutral-softest">Details</Heading>
 						
-						<Heading is="h3" as="h6" class="mt-9 mb-6">Description</Heading>
+						<Heading is="h3" as="h6" class="mb-6">Description</Heading>
 						<Collapsible collapsed={true}
 							collapsedClass="line-clamp-3 overflow-hidden">
 							{character.description}
 						</Collapsible>
 
 						<Heading is="h3" as="h6" class="mt-9 mb-6">Appearance</Heading>
-						<Flex wrap>
+						<Flex wrap class="gap-[2px]">
 							{#each character.appearance?.split(',') as tag}
-								<Tag plain class="bg-neutral-softest border border-transparent hover:border-neutral-softest cursor-pointer text-neutral px-2 py-1">{tag}</Tag>
+								<Tag plain class="bg-neutral-softest border border-transparent text-neutral px-2 py-1">{tag}</Tag>
 							{/each}
-							<Button icon="Plus" size="xs" style="plain" theme="accent" class="rounded-full h-7 w-7" />
+							<Button icon="Plus" size="xs" style="plain" theme="accent" class="rounded-full h-7 my-1 w-7" />
 						</Flex>
 	
 						<Heading is="h3" as="h6" class="mt-9 mb-6">Personality</Heading>
-						<Flex wrap>
+						<Flex wrap class="gap-[2px]">
 							{#each character.personality?.split(',') as tag}
-								<Tag plain class="bg-neutral-softest border border-transparent hover:border-neutral-softest cursor-pointer text-neutral px-2 py-1">{tag}</Tag>
+								<Tag plain class="bg-neutral-softest border border-transparent text-neutral px-2 py-1">{tag}</Tag>
 							{/each}
-							<Button icon="Plus" size="xs" style="plain" theme="accent" class="rounded-full h-7 w-7" />
+							<Button icon="Plus" size="xs" style="plain" theme="accent" class="rounded-full h-7 my-1 w-7" />
 						</Flex>
 						
 					</Stack>
@@ -113,14 +115,14 @@
 				<Section id="custom" class="p-6">
 
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h6">Custom Fields</Heading>
+						<Heading is="h3" as="h4" class="text-neutral-softest">Custom Fields</Heading>
 					</Flex>
 
 					{#if customFields && customFields.length > 0}
 						{#each customFields as field, i}
-							<Flex gap={3}>
-								<span class="font-bold w-20">{field.label}:</span>
-								<span class="line-clamp-1 {field.displayValue ? '' : 'font-style-placeholder'}">{field.displayValue || "undefined"}</span>
+							<Flex gap={3} class="max-w-[64ch] py-1.5">
+								<span class="font-semibold w-32">{field.label}:</span>
+								<span class="line-clamp-1 {character.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{character.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span>
 							</Flex>
 						{/each}
 						<Flex class="pt-3">
@@ -131,21 +133,22 @@
 					{/if}
 				</Section>
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
+				<Separator class="max-w-[64ch] mx-6 my-6 w-[64ch]" />
 		
 
 				<!-- Relationships -->
 		
 				<Section id="relationships" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h6">Relationships</Heading>
+						<Heading is="h3" as="h4" class="text-neutral-softest">Relationships</Heading>
 					</Flex>
 					<Grid cols={4} gap={6}>
 						{#if character.relationships?.items?.length > 0}
 							{#each character.relationships.items as rel, i}
 
 								<Link href={route('characters.show', { character: rel.slug })} class="flex items-center gap-3 p-1 w-96 hover:text-accent">
-									<Thumbnail class="aspect-square bg-surface border border-surface rounded-full w-12"
+									<Thumbnail class="aspect-square bg-neutral-softest border border-surface w-16"
+										icon="User"
 										src={rel.image?.url}
 									/>
 									<Stack class="w-48">
@@ -174,7 +177,7 @@
 		
 				<Section id="factions" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h6">Factions</Heading>
+						<Heading is="h3" as="h4" class="text-neutral-softest">Factions</Heading>
 					</Flex>
 					{#if character.factions?.items?.length > 0}
 						<Grid cols={4} gap={3}>
@@ -207,9 +210,14 @@
 		
 				<Section id="items" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h6">Inventory</Heading>
+						<Heading is="h3" as="h4" class="text-neutral-softest">Inventory</Heading>
 					</Flex>
-					<Grid cols={6}>
+					<Grid cols={6} gap={1} class="max-w-[64ch]">
+						{#each new Array(12) as item, i}
+							<Thumbnail aspect="square"
+								class="aspect-square bg-neutral-softest"
+							/>
+						{/each}
 						{#each character.inventory as item, i}
 							<Card aspect="square"
 								icon="User"
@@ -217,9 +225,9 @@
 								subtitle={item.category}
 							/>
 						{/each}
-						<CardNew aspect="square"
+						<!-- <CardNew aspect="square"
 							onclick={() => {}}
-						/>
+						/> -->
 					</Grid>
 				</Section>
 
@@ -230,12 +238,14 @@
 		
 				<Section id="location" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h6">Location</Heading>
+						<Heading is="h3" as="h4" class="text-neutral-softest">Location</Heading>
 					</Flex>
 					{#if character.mapData?.location}
 						<!-- <pre>{JSON.stringify(character.location,null,3)}</pre> -->
 						<Map.Context class="aspect-video rounded-lg shadow w-[64ch]"
 							location={character?.location}
+							navigable={false}
+							onUpload={() => character.openModal('location')}
 						/>
 					{:else}
 						<p class="font-style-placeholder">{character.name} hasn't been assigned a location yet.</p>
@@ -249,12 +259,21 @@
 				<!-- Media -->
 		
 				<Section id="gallery" class="px-6 py-12">
-					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h4" class="text-neutral-softest">Gallery</Heading>
+					</Flex>
 					<!-- <MediaGrid cols={6}
 						media={media_gallery}
 						type="gallery"
 						addable
 					/> -->
+					<Grid cols={4} class="gap-[2px] max-w-[64ch]">
+						{#each new Array(8) as item, i}
+							<Thumbnail aspect="square"
+								class="aspect-square bg-neutral-softest rounded-none hover:inner-shadow-sm transition-all"
+							/>
+						{/each}
+					</Grid>
 				</Section>
 
 				<Separator class="mx-6 my-6 w-[64ch]" />
@@ -262,7 +281,7 @@
 
 				<!-- Collections -->
 		
-				<Section id="collections" class="p-6">
+				<!-- <Section id="collections" class="p-6">
 					<Stack class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h6">Collections</Heading>
 					</Stack>
@@ -279,7 +298,7 @@
 							onclick={() => {}}
 						/>
 					</Grid>
-				</Section>
+				</Section> -->
 				
 			</Container>
 		</Flex>

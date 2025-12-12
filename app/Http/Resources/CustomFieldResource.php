@@ -21,6 +21,7 @@ class CustomFieldResource extends JsonResource
 			'type'		  => $this->type,
 			'name'        => $this->name,
 			'label'	      => $this->label,
+			'default'	  => $this->default,
 			'description' => $this->description,
 			'placeholder' => $this->placeholder,
 			'required'	  => $this->required,

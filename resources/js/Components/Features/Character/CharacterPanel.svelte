@@ -5,19 +5,20 @@
 
 	//	Layout & Components
 
-	import Flex			from '@/Components/Core/Flex.svelte'
-	import Inline		from '@/Components/Core/Inline.svelte'
-	import Stack		from '@/Components/Core/Stack.svelte'
-	import Button		from '@/Components/UI/Button.svelte'
-	import Collapsible	from '@/Components/UI/Collapsible.svelte'
-	import Heading		from '@/Components/UI/Heading.svelte'
-	import Icon			from '@/Components/UI/Icon.svelte'
-	import Input		from '@/Components/UI/Input.svelte'
-	import Media		from '@/Components/UI/Media.svelte'
-	import Separator	from '@/Components/UI/Separator.svelte'
-	import Sidebar		from '@/Components/UI/Sidebar.svelte'
-	import Skeleton		from '@/Components/UI/Skeleton.svelte'
-	import Thumbnail	from '@/Components/UI/Thumbnail.svelte'
+	import Flex				from '@/Components/Core/Flex.svelte'
+	import Inline			from '@/Components/Core/Inline.svelte'
+	import Stack			from '@/Components/Core/Stack.svelte'
+	import Button			from '@/Components/UI/Button.svelte'
+	import Collapsible		from '@/Components/UI/Collapsible.svelte'
+	import Heading			from '@/Components/UI/Heading.svelte'
+	import Icon				from '@/Components/UI/Icon.svelte'
+	import Input			from '@/Components/UI/Input.svelte'
+	import Media			from '@/Components/UI/Media.svelte'
+	import Separator		from '@/Components/UI/Separator.svelte'
+	import Sidebar			from '@/Components/UI/Sidebar.svelte'
+	import SidebarListItem 	from '@/Components/UI/SidebarListItem.svelte'
+	import Skeleton			from '@/Components/UI/Skeleton.svelte'
+	import Thumbnail		from '@/Components/UI/Thumbnail.svelte'
 
 
 	//	Page & Component props
@@ -39,13 +40,7 @@
 		sidebar:  "bg-slate-50 sticky top-0 h-screen overflow-y-auto shadow-xl z-10 " + className,
 		banner:   "relative bg-slate-200 hover:inner-shadow-lg h-40 place-self-center shrink-0 text-neutral-softest w-full transition-all",
 		portrait: "relative bg-slate-200 hover:inner-shadow-lg border border-slate-50 h-32 -mt-16 place-self-center rounded shrink-0 text-neutral-softest w-32 transition-all",
-		info:     "font-light group min-h-8 py-0.5",
-		label:    "text-xs text-neutral-soft min-w-20",
-		value:    "text-sm text-neutral my-1",
-		empty:    "text-sm text-neutral-softest italic",
 		button: {
-			edit:    "opacity-0 group-hover:opacity-100 h-6 w-6 ml-auto mt-0.5 place-self-start rounded-full text-accent hover:bg-accent-softest",
-			confirm: "opacity-0 group-hover:opacity-100 h-6 w-6 ml-auto mt-0.5 place-self-start rounded-full bg-accent text-white",
 			view:    "sticky bottom-3 line-clamp-1 mx-6 mt-auto rounded-full"
 		}
 	}
@@ -98,7 +93,7 @@
 							<Button class="ml-1 rounded-full"
 								size="sm" theme="accent"
 								icon="PencilSimple" iconSize="xs"
-								onclick={() => character.setAlias()}
+								onclick={() => character.openModal('alias')}
 							/>
 						</div>
 					</Inline>
@@ -136,153 +131,51 @@
 			{/if}
 		</Stack>
 		<Stack gap={0} class="relative px-4 py-3">
-			<Separator />
-
-
-			<!-- Custom Fields -->
-	
-			{#each customFields as field}
-				<Flex align="baseline" class={cx.info}>
-					<p class={cx.label}>{field?.label}</p>
-					<p class={cx.value}>
-						{#if editField === field.name}
-							<Input {...field}
-								label={undefined}
-								size="sm"
-								value={character.customFieldValues?.find(f => f.name === field.name)?.value}
-							/>
-						{:else if character.customFieldValues?.find(f => f.name === field.name)}
-							{character.customFieldValues?.find(f => f.name === field.name)?.displayValue}
-						{:else}
-							<span class={cx.empty}>None</span>
-						{/if}
-					</p>
-					{#if editField === field.name}
-						<Button class={cx.button.confirm} size="sm"
-							icon="Check" iconSize="xs"
-						/>
-					{:else if !editField}
-						<Button class={cx.button.edit} size="sm"
-							icon="PencilSimple" iconSize="xs"
-							onclick={() => character.openModal('customField', { field: field, value: character.customFieldValues?.find(f => f.name === field.name)?.value })}
-						/>
-					{/if}
-				</Flex>
-				<Separator />
-			{/each}
-
 
 			<!-- Factions -->
-	
-			<Flex align="baseline" class={cx.info}>
-				<p class={cx.label}>Factions</p>
-				<p class={cx.value}>
-					{#if character.factions?.items.length > 0}
-						{#each character.factions?.items as fac,i}
-							<Link href={fac.routes?.show}>
-								{fac.name}
-							</Link>{character.factions?.items.length-1 !== i ? ', ' : ''}
-						{/each}
-					{:else}
-						<span class={cx.empty}>None</span>
-					{/if}
-				</p>
-				<Button class={cx.button.edit}
-					style="plain" theme="accent" size="md"
-					icon="PencilSimple" iconSize="xs"
-					onclick={() => character.openModal('factions', { options: $page.props.activeProject?.data?.factions })}
-				/>
-			</Flex>
-			<Separator />
-
+			<SidebarListItem
+				label="Factions"
+				onclick={() => character.openModal('factions', { options: $page.props.activeProject?.data?.factions })}
+				value={character.factions.items.length > 0 ? character.factions?.items.map(f => ({ value: f.name, href: f.routes?.show })) : undefined}
+			/>
 
 			<!-- Location -->
-	
-			<Flex align="baseline" class={cx.info}>
-				<p class={cx.label}>Location</p>
-				<p class={cx.value}>
-					{#if character.location}
-						<Link href={character.location.routes?.show}>
-							{character.location?.name}
-						</Link>
-					{:else}
-						<span class={cx.empty}>None</span>
-					{/if}
-				</p>
-				<Button class={cx.button.edit}
-					style="plain" theme="accent" size="sm"
-					icon="PencilSimple" iconSize="xs"
-					onclick={() => character.openModal('location')}
-				/>
-			</Flex>
-			<Separator />
-
+			<SidebarListItem
+				label="Location"
+				onclick={() => character.openModal('location')}
+				value={character.location ? [{ value: character.location?.name, href: character.location?.routes?.show }] : undefined}
+			/>
 
 			<!-- Relationships -->
-	
-			<Flex align="baseline" class={cx.info}>
-				<p class={cx.label}>Relationships</p>
-				<p class={cx.value}>
-					{#if character.relationships?.items.length > 0}
-						{#each character.relationships?.items as rel,i}
-							<Link href={rel.routes?.show}>
-								{rel.name}
-							</Link>{character.relationships?.items.length-1 !== i ? ', ' : ''}
-						{/each}
-					{:else}
-						<span class={cx.empty}>None</span>
-					{/if}
-				</p>
-				<Button class={cx.button.edit}
-					style="plain" theme="accent" size="sm"
-					icon="PencilSimple" iconSize="xs"
-					onclick={() => character.openModal('relationships', { options: $page.props.activeProject?.data?.characters.filter(c => c.id !== character.id) })}
-				/>
-			</Flex>
-			<Separator />
-
+			<SidebarListItem
+				label="Relationships"
+				onclick={() => character.openModal('relationships', { options: $page.props.activeProject?.data?.characters.filter(c => c.id !== character.id) })}
+				value={character.relationships?.items.length > 0 ? [ ...character.relationships?.items.map(rel => ({ value: rel.name, href: rel?.routes?.show })) ] : undefined}
+			/>
 
 			<!-- Appearance -->
-	
-			<Flex align="baseline" class={cx.info}>
-				<p class={cx.label}>Appearance</p>
-				<p class="{cx.value} line-clamp-2">
-					{#if character.appearance}
-						{#each character.appearance.split(',') as trait,i}
-							{trait}{character.appearance.split(',').length-1 !== i ? ', ' : ''}
-						{/each}
-					{:else}
-						<span class={cx.empty}>None</span>
-					{/if}
-				</p>
-				<Button class={cx.button.edit}
-					style="plain" theme="accent" size="sm"
-					icon="PencilSimple" iconSize="xs"
-					onclick={() => character.openModal('appearance', { options: appearance })}
-				/>
-			</Flex>
-			<Separator />
-
+			<SidebarListItem
+				label="Appearance"
+				onclick={() => character.openModal('appearance', { options: appearance })}
+				value={character.appearance?.split(',').join(', ') || undefined}
+			/>
 
 			<!-- Personality -->
+			<SidebarListItem
+				label="Personality"
+				onclick={() => character.openModal('personality', { options: personality })}
+				value={character.personality?.split(',').join(', ') || undefined}
+			/>
 
-			<Flex align="baseline" class={cx.info}>
-				<p class={cx.label}>Personality</p>
-				<p class="{cx.value} line-clamp-2">
-					{#if character.personality}
-						{#each character.personality.split(',') as trait,i}
-							{trait}{character.personality.split(',').length-1 !== i ? ', ' : ''}
-						{/each}
-					{:else}
-						<span class={cx.empty}>None</span>
-					{/if}
-				</p>
-				<Button class={cx.button.edit}
-					style="plain" theme="accent" size="sm"
-					icon="PencilSimple" iconSize="xs"
-					onclick={() => character.openModal('personality', { options: personality })}
+			<!-- Custom Fields -->
+			{#each customFields as field}
+				<SidebarListItem
+					label={field.label}
+					onclick={() => character.openModal('customField', { field: field, value: character.customFieldValues?.find(f => f.name === field.name)?.value })}
+					value={character.customFieldValues?.find(f => f.name === field.name)?.displayValue}
 				/>
-			</Flex>
+			{/each}
+
 		</Stack>
 
 		<Button class={cx.button.view}

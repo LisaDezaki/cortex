@@ -69,10 +69,24 @@ export default class FactionObject {
 				modalActions.open('deleteFaction', { faction: this }); break;
 			case 'rename':
 				modalActions.open('renameFaction', { faction: this }); break;
-			case 'setHeadquarters':
-				modalActions.open('setHeadquarters', ...props); break;
+			case 'headquarters':
+				modalActions.open('setLocation', {
+					entity: this,
+					endpoint: this.routes.update,
+					field: 'headquarters',
+					...props
+				}); break;
 			case 'member':
 				modalActions.open('setFactionMember', { character: this, ...props }); break;
+			case 'members':
+				modalActions.open('selectMany', {
+					entity: this,
+					endpoint: this.routes.update,
+					field: 'members',
+					selected: this.members.items?.map(m => m.id) || [],
+					title: "Set members of the " + this.name + " faction",
+					...props
+				}); break;
 			case 'setMedia':
 				modalActions.open('uploadMedia', {
 					aspect: 'aspect-square',

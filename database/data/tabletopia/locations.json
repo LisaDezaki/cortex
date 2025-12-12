@@ -230,6 +230,7 @@
 		"type": "Safehouse",
 		"icon": "BeerStein",
 		"desc": "To step inside The Lucky Die is to be enveloped in a haze of pipe smoke, roasting meat, and the rich scent of spilled ale. The lighting is low, provided by flickering lanterns and a massive hearth that casts dancing shadows across a clientele of adventurers fresh from the diorama dungeons, dockworkers ending their shift, and everyone in between.\n\nThe air thrums with the clatter of dice cups, the strum of a bard's lute from a corner stage, and the layered din of a dozen overlapping conversations, arguments, and tales of narrow escapes. It's a place of worn wood, sticky floors, and undeniable charm, where the line between friend and foe is as blurred as the vision of a patron on their fifth tankard.\n\nBeyond the familiar faces of Rodrik, Bogdan, and Willow, the tavern is always buzzing with a cast of regulars. There's \"Weeping\" Willem, a grizzled, one-eyed dwarf forever losing at dice and blaming his misfortunes on a long-forgotten curse. At the end of the bar is Madame Zara, a seemingly ancient human fortune teller who reads the dregs in ale cups instead of tea leaves, offering dubious prophecies for the price of a drink. And always near the fire is Soren, a quiet, scholarly half-elf who meticulously cleans and maintains his party's gear, flinching every time a brawl inevitably erupts. They, along with a dozen other souls, make the Die a sanctuary of merriment and misery.",
+		"safehouse": true,
 		"mapdata": {
 			"location": "downtown",
 			"x": "79.5", "y": "26"
@@ -241,6 +242,7 @@
 		"type": "Safehouse",
 		"icon": "Sailboat",
 		"desc": "Moored in a secluded, rocky inlet just beyond the main docks of New Miniport, The Crimson Tide is a vessel that wears its history proudly. This is no sleek, generic raider; it's a sturdy caravel, its hull a mosaic of repaired battle damage, its sails patched with canvas stolen from a dozen different merchant vessels. The wood is dark with salt and age, and the ship's figurehead—a fierce mermaid wielding a cutlass and a ledger—embodies its unique mission. The Tide is less a warship and more a mobile command center for righteous rebellion, a symbol of hope for the oppressed and a stark warning to the corrupt. It smells of tar, sea spray, gunpowder, and the distinct aroma of its unique crew.\n\nLife aboard is a testament to its captain's code. The deck, though often cluttered with barrels of supplies and Duggan's intimidating cannon, is meticulously maintained. The crew's quarters are cramped but personal, filled with scavenged hammocks and the few treasures each member holds dear.\n\nThe heart of the ship is the helm, where Abigail's navigation charts are spread out, her precise calculations and keen perception guiding them through treacherous waters and away from Council patrols. Below, Stitches has his infirmary set up near the magazine, Barrel's galley constantly emits hearty smells, and Silas the kenku can be found perched in the rigging, his keen eyes scanning the horizon. It is a floating fortress, a home, and a legend, all rolled into one—a steadfast reminder that even in a world of draconic greed, there are still those who fight for what's right.",
+		"safehouse": true,
 		"mapdata": {
 			"location": "downtown",
 			"x": "30", "y": "93"
@@ -299,6 +301,7 @@
 		"type": "Safehouse",
 		"parent": "outskirts",
 		"desc": "Tucked away in the sun-bleached, scrubland outskirts of New Miniport, the Dusty Springs Trailer Park is a vibrant, ramshackle community forged not by wealth, but by shared resilience. It's a symphony of mismatched mobile homes, patched roofs, and creatively engineered additions—a porch made of pallets here, a garden nurtured in old tires there.\n\nThe air, thick with dust and the scent of dry earth, is frequently cut by the rich smoke of a communal barbecue and the loud, joyous noise of a rowdy gathering. This is a place where privacy is scarce, but camaraderie is abundant; everyone knows everyone else's business, and a problem for one is a problem for all.\n\nHere, the residents—a diverse collection of working poor, artists, fugitives, and folks just down on their luck—have carved out a defiant, spirited existence. Laundry lines become banners of different lives, and a shared fire pit serves as the town hall, news source, and party central.\n\nIt's a place of loud arguments and even louder laughter, where a potluck dinner can materialize in an instant and a neighbor will loan you their last few coins without a second thought.\n\nIt's also home to fiercely independent souls like Gack, the kobold, who sees his trailer as a fortress in this kingdom of the overlooked. Dusty Springs isn't pretty by Hightown's standards, but it possesses a gritty, authentic heart that the polished districts lost long ago.",
+		"safehouse": true,
 		"mapdata": {
 			"location": "outskirts",
 			"x": "55", "y": "15"
@@ -320,6 +323,7 @@
 		"name": "Abandoned Cabin",
 		"type": "Safehouse",
 		"desc": "Deep within the Cursed Forest, the Abandoned Cabin stands as a monument to a mystery no one remembers. Its logs are rotted and slick with moss, the porch sags like a broken spine, and the single window is a dark, vacant eye.\n\nAn unnatural chill perpetually radiates from its walls, and the air smells of wet earth and old pine.",
+		"safehouse": true,
 		"mapdata": {
 			"location": "forest",
 			"x": "5", "y": "65"
@@ -425,6 +429,7 @@
 		"name": "Empty Lighthouse",
 		"type": "Dungeon",
 		"desc": "An old lighthouse, but the keeper is nowhere to be found.",
+		"safehouse": true,
 		"mapdata": {
 			"location": "island",
 			"x": "54", "y": "18.5"

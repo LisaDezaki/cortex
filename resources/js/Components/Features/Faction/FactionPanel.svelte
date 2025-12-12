@@ -14,6 +14,7 @@
 	import Media		from '@/Components/UI/Media.svelte'
 	import Separator	from '@/Components/UI/Separator.svelte'
 	import Sidebar		from '@/Components/UI/Sidebar.svelte'
+	import SidebarListItem from '@/Components/UI/SidebarListItem.svelte'
 	import Skeleton		from '@/Components/UI/Skeleton.svelte'
 	import Thumbnail	from '@/Components/UI/Thumbnail.svelte'
 
@@ -34,12 +35,12 @@
 		sidebar:  "bg-slate-50 sticky top-0 h-screen overflow-y-auto shadow-xl z-10 " + className,
 		banner:   "relative bg-slate-200 hover:inner-shadow-lg h-40 place-self-center shrink-0 text-neutral-softest w-full transition-all",
 		emblem:   "relative bg-slate-200 hover:inner-shadow-lg border border-slate-50 h-32 -mt-16 place-self-center rounded shrink-0 text-neutral-softest w-32 transition-all",
-		info:     "font-light px-1 py-1.5",
-		label:    "min-h-5 text-xs text-neutral-soft min-w-20 pt-0.5",
-		value:    "min-h-5 text-sm text-neutral",
-		empty:    "min-h-5 text-sm text-neutral-softest italic",
+		info:     "font-light group px-1 py-2",
+		label:    "text-xs text-neutral-soft min-w-20 pt-0.5",
+		value:    "text-sm text-neutral",
+		empty:    "text-sm text-neutral-softest italic",
 		button: {
-			edit: "h-5 w-5 ml-auto rounded-full",
+			edit: "opacity-0 group-hover:opacity-100 h-5 w-5 ml-auto place-self-start rounded-full",
 			view: "sticky bottom-3 line-clamp-1 mx-6 mt-auto rounded-full"
 		}
 	}
@@ -110,70 +111,30 @@
 			{/if}
 		</Stack>
 		<Stack gap={0} class="relative px-4 py-3">
-			<Separator />
+
+			<!-- Headquarters -->
+			<SidebarListItem
+				label="Headquarters"
+				onclick={() => faction.openModal('headquarters')}
+				value={faction.headquarters ? [{ value: faction.headquarters?.name, href: faction.headquarters?.routes?.show }] : undefined}
+			/>
+
+			<!-- Members -->
+			<SidebarListItem
+				label="Members"
+				onclick={() => faction.openModal('members', { options: $page.props.activeProject?.data?.characters })}
+				value={faction.members.length > 0 ? [ ...faction.members?.items.map(m => ({ value: m.name, href: m.routes?.show })) ] : undefined}
+			/>
 
 			<!-- Custom Fields -->
 	
 			{#each customFields as field}
-				<Flex align="start" class={cx.info}>
-					<p class={cx.label}>{field?.label}</p>
-					<p class={cx.value}>{faction.customFieldValues?.find(f => f.name === field.name)?.displayValue}</p>
-					<Button class={cx.button.edit}
-						style="plain" theme="accent" size="sm"
-						icon="PencilSimple" iconSize="xs"
-						onclick={() => faction.setCustomField()}
-					/>
-				</Flex>
-				<Separator />
+				<SidebarListItem
+					label={field.label}
+					onclick={() => faction.openModal('customField', { field: field, value: faction.customFieldValues?.find(f => f.name === field.name)?.value })}
+					value={faction.customFieldValues?.find(f => f.name === field.name)?.displayValue}
+				/>
 			{/each}
-
-
-
-			<!-- Headquarters -->
-	
-			<Flex align="start" class={cx.info}>
-				<p class={cx.label}>Headquarters</p>
-				<p class={cx.value}>
-					{#if faction.headquarters}
-						<Link href={faction.headquarters.routes?.show}>
-							{faction.headquarters?.name}
-						</Link>
-					{:else}
-						<span class={cx.empty}>None</span>
-					{/if}
-				</p>
-				<Button class={cx.button.edit}
-					style="plain" theme="accent" size="sm"
-					icon="PencilSimple" iconSize="xs"
-					onclick={() => faction.setHeadquarters()}
-				/>
-			</Flex>
-			<Separator />
-
-
-	
-			<!-- Members -->
-	
-			<Flex align="start" class={cx.info}>
-				<p class={cx.label}>Members</p>
-				<p class={cx.value}>
-					{#if faction.members?.items.length > 0}
-						{#each faction.members?.items as member,i}
-							<Link href={member.routes?.show}>
-								{member.name}
-							</Link>{faction.members?.items.length-1 !== i ? ', ' : ''}
-						{/each}
-					{:else}
-						<span class={cx.empty}>None</span>
-					{/if}
-				</p>
-				<Button class={cx.button.edit}
-					style="plain" theme="accent" size="sm"
-					icon="PencilSimple" iconSize="xs"
-					onclick={() => character.setRelationships()}
-				/>
-			</Flex>
-			<Separator />
 		</Stack>
 
 

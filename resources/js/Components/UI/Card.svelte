@@ -53,11 +53,11 @@
 		icon: clsx('card-icon aspect-square h-full max-h-[60%] max-w-[60%] opacity-35 p-6 rounded-full text-neutral-softest w-full'),
 		main: clsx('pl-1 w-full'),
 		details: clsx({
-			'card-details pb-0.5 -space-y-0.5 w-full': true,
+			'card-details pb-0.5 -space-y-0.5 shrink-1 w-full': true,
 			'opacity-35 pointer-events-none': restProps.disabled
 		}),
-		title:   clsx('font-style-small font-semibold line-clamp-1 w-full'),
-		subtitle: clsx('font-style-tiny line-clamp-1 w-full', subtitleClass),
+		title:   clsx('font-style-small font-semibold line-clamp-1 truncate w-full'),
+		subtitle: clsx('font-style-tiny line-clamp-1 truncate w-full', subtitleClass),
 		link: clsx('card-link absolute inset-0 text-transparent z-10'),
 	})
 
@@ -86,7 +86,7 @@
 				<span class={cx.subtitle}>{subtitle}</span>
 			{/if}
 		</Stack>
-		<Button class="opacity-0 rounded-full {active ? 'text-danger' : 'text-accent'} group-hover:opacity-100 {active ? 'opacity-100' : ''}"
+		<Button class="rounded-full {active ? 'text-danger' : 'text-accent'} {active ? 'inline' : 'hidden group-hover:inline'}"
 			size="sm" theme={active ? undefined : "accent"}
 			icon={active ? "XCircle" : "ArrowCircleRight"} iconSize="lg" iconWeight="light"
 		/>

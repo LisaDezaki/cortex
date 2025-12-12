@@ -40,6 +40,7 @@ class TabletopiaSeeder extends Seeder
 				'type' => $field['type'],
 				'name' => $field['name'],
 				'label' => $field['label'],
+				'default' => $field['default'] ?? null,
 				'description' => $field['description'] ?? null,
 				'placeholder' => $field['placeholder'] ?? null,
 				'required' => $field['required'] ?? false
@@ -50,6 +51,17 @@ class TabletopiaSeeder extends Seeder
 		/**
 		 * Populate Custom Field Options
 		 */
+
+		$background_list = [];
+		$json = File::get(database_path('data/tabletopia/background.json'));
+		$json_backgrounds = json_decode($json, true);
+		foreach ($json_backgrounds as $slug => $background) {
+			$background_list[$slug] = CustomFieldOption::create([
+				'custom_field_id' => $fields['background']->id,
+				'value'           => $slug,
+				'label'           => $background['name'],
+			]);
+		}
 
 		$species_list = [];
 		$json = File::get(database_path('data/tabletopia/species.json'));
@@ -95,6 +107,14 @@ class TabletopiaSeeder extends Seeder
 					'mappable_id'	=> $locations[$slug]['id'],
 					'x'			  => $location['mapdata']['x'] ?? null,
 					'y'			  => $location['mapdata']['y'] ?? null
+				]);
+			}
+
+			if (isset($location['safehouse'])) {
+				CustomFieldValue::create([
+					'fieldable_id' => $locations[$slug]->id,
+					'custom_field_id' => $fields['safehouse']->id,
+					'value'           => $location['safehouse'],
 				]);
 			}
 

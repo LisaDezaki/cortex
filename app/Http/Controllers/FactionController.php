@@ -68,32 +68,26 @@ class FactionController extends Controller
 
     public function index()
     {
-		$collections = Collection::where([
-			'project_id' => Auth::user()->active_project,
-			'collection_type' => Faction::class
-		])->with(['items'])->get();
-
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Faction::class
 		])->with('options')->get();
 
 		return Inertia::render('Factions/Index', [
-			'collections'	=> CollectionResource::collection($collections),
 			'customFields' => CustomFieldResource::collection($customFields)
 		]);
     }
-	public function collections()
-	{
-		$collections = Collection::where([
-			'project_id' => Auth::user()->active_project,
-			'collection_type' => Faction::class
-		])->with(['items'])->get();
+	// public function collections()
+	// {
+	// 	$collections = Collection::where([
+	// 		'project_id' => Auth::user()->active_project,
+	// 		'collection_type' => Faction::class
+	// 	])->with(['items'])->get();
 
-		return Inertia::render('Factions/Collections', [
-			'collections'	=> CollectionResource::collection($collections),
-		]);
-	}
+	// 	return Inertia::render('Factions/Collections', [
+	// 		'collections'	=> CollectionResource::collection($collections),
+	// 	]);
+	// }
 
 
 	/**
@@ -232,7 +226,14 @@ class FactionController extends Controller
 
 	public function settings(Request $request): Response
     {
-    	return Inertia::render('Factions/Settings');
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => Faction::class
+		])->with('options')->get();
+
+    	return Inertia::render('Factions/Settings', [
+			'customFields' => CustomFieldResource::collection($customFields)
+		]);
     }
 
 	// public function handleBanner(Request $request, Faction $faction)

@@ -76,6 +76,7 @@ class HandleInertiaRequests extends Middleware
 				'locations.media',
 				'locations.mapData.location',
 				'locations.mapItems.mappable.media',
+				'locations.customFieldValues.customField',
 				// 'locations.characters.image',
 				'customFields.options'
 			])->find($user->active_project)
@@ -85,6 +86,8 @@ class HandleInertiaRequests extends Middleware
 		$appearance = json_decode($appearance, true);
 		$personality = File::get(database_path('data/options/personality.json'));
 		$personality = json_decode($personality, true);
+		$locationTags = File::get(database_path('data/options/location_tags.json'));
+		$locationTags = json_decode($locationTags, true);
 
         return array_merge(parent::share($request), [
 			'appName' => config('app.name'),
@@ -103,7 +106,8 @@ class HandleInertiaRequests extends Middleware
 			'projects' => $projects ? ProjectResource::collection($projects) : [],
 			'activeProject' => $activeProject ? new ProjectResource($activeProject) : [],
 			'options.appearance' => $appearance,
-			'options.personality' => $personality
+			'options.personality' => $personality,
+			'options.locationTags' => $locationTags,
 		]);
     }
 }

@@ -1,20 +1,20 @@
 <script>
-	import { page } from '@inertiajs/svelte'
+	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import FactionSettingsForm from '@/Forms/Settings/FactionSettings.svelte'
-	import Flex			from '@/Components/Core/Flex.svelte'
-	import Stack		from '@/Components/Core/Stack.svelte'
-	import Container	from '@/Components/UI/Container.svelte'
-	import Heading		from '@/Components/UI/Heading.svelte'
-	import PageHeader	from '@/Components/UI/PageHeader.svelte'
-	import PageMenu		from '@/Components/UI/PageMenu.svelte'
-	import Section		from '@/Components/UI/Section.svelte'
+	import Flex   	  from '@/Components/Core/Flex.svelte'
+	import Inline     from '@/Components/Core/Inline.svelte'
+	import Stack   	  from '@/Components/Core/Stack.svelte'
+	import Button  	  from '@/Components/UI/Button.svelte'
+	import Heading    from '@/Components/UI/Heading.svelte'
+	import Input      from '@/Components/UI/Input.svelte'
+	import PageHeader from '@/Components/UI/PageHeader.svelte'
+	import PageMenu   from '@/Components/UI/PageMenu.svelte'
+	import Section    from '@/Components/UI/Section.svelte'
+	import Separator  from '@/Components/UI/Separator.svelte'
+	import { modalActions } from '@/stores/modalStore'
 
-	/**
-	 * Active character instance
-	 * @type {CharacterObject}
-	 */
 	const customFields = $page.props.customFields?.data
 	const settings     = $page.props.settings?.factions?.data
 
@@ -28,7 +28,7 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section size="7xl" gap={0} class="h-full overflow-hidden">
+		<Section size="5xl" gap={0} class="h-full overflow-hidden">
 
 
 			<PageHeader class="px-6 py-2"
@@ -64,7 +64,39 @@
 						<Flex align="center" class="mb-6 max-w-[32ch]">
 							<Heading is="h4" as="h6">Custom Fields</Heading>
 						</Flex>
-						Custom Fields
+						<p class="mb-3">These custom fields will apply to all factions in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
+
+						{#if customFields?.length > 0}
+							<Stack>
+								<Flex align="center">
+									<Inline class="font-style-label w-32">Name</Inline>
+									<Inline class="font-style-label w-16">Type</Inline>
+									<Inline class="font-style-label">Field</Inline>
+								</Flex>
+								{#each customFields as field}
+									<Flex align="center" class="my-1">
+										<Inline class="shrink-0 text-sm min-w-32">{field.label}</Inline>
+										<Inline class="shrink-0 text-sm min-w-16 capitalize">{field.type}</Inline>
+										<Input {...field} id={undefined} label={undefined} class="mr-2 w-full" />
+										<Button class="ml-auto rounded-full"
+											style="soft" theme="accent"
+											icon="PencilSimple" iconSize="sm"
+											onclick={() => modalActions.open('customField', { field })}
+										/>
+									</Flex>
+									<Separator class="opacity-50" />
+									<!-- {#if field.options}
+										<Flex>
+											{#each field.options as option}
+												<Inline>{option.label}</Inline>
+											{/each}
+										</Flex>
+									{/if} -->
+								{/each}
+							</Stack>
+						{:else}
+							<span class="mx-auto text-neutral-softest">There are no custom fields yet.</span>
+						{/if}
 					</Section>
 
 				</Stack>

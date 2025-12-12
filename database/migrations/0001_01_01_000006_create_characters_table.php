@@ -19,16 +19,13 @@ return new class extends Migration
 			$table->string('alias')->nullable();
 			$table->boolean('starred')->default(false);
 			$table->text('description')->nullable();
-			$table->text('motivations')->nullable();
 			$table->text('appearance')->nullable();
 			$table->text('personality')->nullable();
-			// $table->foreignUuid('location_id')->nullable()->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->timestamps();
 			$table->softDeletes();
 		});
 
 		Schema::create('character_relationships', function (Blueprint $table) {
-			// $table->uuid('id')->primary()->index();
 			$table->foreignUuid('character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignUuid('related_character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->text('character_role')->nullable();

@@ -24,7 +24,7 @@
 		header: clsx({
 			'page-header sticky top-0 min-h-14 shrink-0 w-full z-10': true,
 		}, color, className),
-		tabs: clsx('bg-neutral-gradient border border-neutral-softest flex-0 shrink-0 min-w-48 w-auto px-0.5 rounded-full overflow-hidden')
+		tabs: clsx('bg-neutral-gradient border border-neutral-softest flex-0 shrink-0 w-auto px-0.5 rounded-full overflow-hidden')
 	})
 
 </script>
@@ -47,7 +47,7 @@
 					{#each tabs as tab}
 						{#if !tab.hasOwnProperty('if') || tab.if === true}
 							<Button
-								class="rounded-full w-32 {tab.active ? '' : 'hover:text-accent'}"
+								class="min-w-32 rounded-full px-6 {tab.active ? '' : 'hover:text-accent'}"
 								style={tab.active ? 'hard'   : 'plain'}
 								theme={tab.active ? 'accent' : 'neutral'}
 								{...tab}
@@ -63,7 +63,7 @@
 					<Inline gap={3}>
 						{#each actions as action}
 							{#if !action.hasOwnProperty('if') || action.if === true}
-								<Button class="pr-3 rounded-full" type="button" style={action.style || "hard"} {...action} />
+								<Button class="pr-3 rounded-full" type="button" style={action.style || "soft"} {...action} />
 							{/if}
 						{/each}
 					</Inline>

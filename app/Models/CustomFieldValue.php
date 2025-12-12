@@ -49,6 +49,10 @@ class CustomFieldValue extends Model
 
 	public function getDisplayValue()
 	{
+		if (gettype($this->value) === 'boolean') {
+			return $this->value ? 'true' : 'false';
+		}
+
 		if (!$this->customField->hasOptions()) {
 			return $this->value;
 		}

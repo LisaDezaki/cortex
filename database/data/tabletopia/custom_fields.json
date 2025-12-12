@@ -1,4 +1,12 @@
 {
+	"background": {
+		"fieldable_type": "character",
+		"type": "text",
+		"name": "background",
+		"label": "Background",
+		"description": "What background or history does this character have?",
+		"placeholder": "Enter a background..."
+	},
 	"class": {
 		"fieldable_type": "character",
 		"type": "text",
@@ -13,7 +21,8 @@
 		"name": "level",
 		"label": "Level",
 		"description": "What level is this character?",
-		"placeholder": "Enter a level..."
+		"placeholder": "Enter a level...",
+		"default": 1
 	},
 	"species": {
 		"fieldable_type": "character",
@@ -22,5 +31,40 @@
 		"label": "Species",
 		"description": "What species does this character belong to?",
 		"placeholder": "Select a species..."
+	},
+	"wealth": {
+		"fieldable_type": "character",
+		"type": "text",
+		"name": "wealth",
+		"label": "Wealth",
+		"description": "How wealthy is this character?",
+		"placeholder": "Average",
+		"default": "Average"
+	},
+
+	"affinity": {
+		"fieldable_type": "faction",
+		"type": "number",
+		"name": "affinity",
+		"label": "Affinity",
+		"description": "How much does this faction like the player characters?",
+		"default": 0
+	},
+	"influence": {
+		"fieldable_type": "faction",
+		"type": "number",
+		"name": "influence",
+		"label": "Influence",
+		"description": "How much influence does this faction have in the world?",
+		"default": 25
+	},
+
+	"safehouse": {
+		"fieldable_type": "location",
+		"type": "switch",
+		"name": "safehouse",
+		"label": "Safehouse",
+		"description": "Is this location useable by player characters as a safehouse?",
+		"default": false
 	}
 }

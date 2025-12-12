@@ -7,7 +7,6 @@
 	import Inline     from '@/Components/Core/Inline.svelte'
 	import Stack   	  from '@/Components/Core/Stack.svelte'
 	import Button  	  from '@/Components/UI/Button.svelte'
-	import Container  from '@/Components/UI/Container.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
 	import Input      from '@/Components/UI/Input.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
@@ -16,10 +15,6 @@
 	import Separator  from '@/Components/UI/Separator.svelte'
 	import { modalActions } from '@/stores/modalStore'
 
-	/**
-	 * Active character instance
-	 * @type {CharacterObject}
-	 */
 	const customFields = $page.props.customFields?.data
 	const settings     = $page.props.settings?.characters?.data
 
@@ -33,12 +28,11 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section size="7xl" gap={0} class="h-full overflow-hidden">
+		<Section size="5xl" gap={0} class="h-full overflow-y-auto">
 
 			<PageHeader class="px-6 py-2"
-				title="Character Settings"
 				tabs={[
-					{ label: "List",			href: route('characters') },
+					{ label: "Character List",	href: route('characters') },
 					{ label: "Settings", 		active: true },
 				]}
 			/>
@@ -52,6 +46,8 @@
 					]}
 				/>
 				<Stack>
+
+					<Heading is="h1" as="h3" class="mb-12 text-neutral-softest">Character Settings</Heading>
 
 					<Section id="overview" class="pb-12">
 						<CharacterSettingsForm />
@@ -70,19 +66,23 @@
 						</Flex>
 						<p class="mb-3">These custom fields will apply to all characters in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
 						
-						{#if customFields.length > 0}
+						{#if customFields?.length > 0}
 							<Stack>
 								<Flex align="center">
-									<Inline class="font-style-button text-neutral-softest text-sm w-32">Name</Inline>
-									<Inline class="font-style-button text-neutral-softest text-sm w-16">Type</Inline>
-									<Inline class="font-style-button text-neutral-softest text-sm">Field</Inline>
+									<Inline class="font-style-label w-24">Name</Inline>
+									<Inline class="font-style-label w-20">Type</Inline>
+									<Inline class="font-style-label w-24">Default</Inline>
+									<Inline class="font-style-label w-32">Placeholder</Inline>
+									<!-- <Inline class="font-style-label">Field</Inline> -->
 								</Flex>
 								{#each customFields as field}
-									<Flex align="center" class="my-1">
-										<Inline class="shrink-0 text-sm min-w-32">{field.label}</Inline>
-										<Inline class="shrink-0 text-sm min-w-16 capitalize">{field.type}</Inline>
-										<Input {...field} id={undefined} label={undefined} class="mr-2 w-full" />
-										<Button class="ml-auto rounded-full"
+									<Flex align="center" class="group my-1">
+										<Inline class="shrink-0 text-sm min-w-24">{field.label}</Inline>
+										<Inline class="shrink-0 text-sm min-w-20 capitalize">{field.type}</Inline>
+										<Inline class="shrink-0 text-sm min-w-24 {field.default ? null : 'text-neutral-softest'}">{field.default || 'None'}</Inline>
+										<Inline class="shrink-0 text-sm min-w-32">{field.placeholder}</Inline>
+										<!-- <Input {...field} id={undefined} label={undefined} class="mr-2 w-full" /> -->
+										<Button class="opacity-0 group-hover:opacity-100 ml-auto rounded-full"
 											style="soft" theme="accent"
 											icon="PencilSimple" iconSize="sm"
 											onclick={() => modalActions.open('customField', { field })}

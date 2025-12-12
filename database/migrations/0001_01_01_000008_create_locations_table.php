@@ -14,25 +14,22 @@ return new class extends Migration
 		Schema::create('locations', function (Blueprint $table) {
 			$table->uuid('id')->primary()->index();
 			$table->foreignUuid('project_id')->constrained('projects')->cascadeOnUpdate()->cascadeOnDelete();
-			// $table->foreignUuid('parent_location_id')->nullable()->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
+			$table->string('slug')->nullable();
 			$table->string('name');
 			$table->string('icon')->nullable();
 			$table->string('type')->nullable();
-			$table->string('slug')->nullable();
 			$table->boolean('starred')->default(false);
 			$table->text('description')->nullable();
-			// $table->string('coordinates_x')->nullable();
-			// $table->string('coordinates_y')->nullable();
+			$table->text('climate')->nullable();
 			$table->boolean('is_world_map')->default(false);
 			$table->timestamps();
 			$table->softDeletes();
-			// $table->index('parent_location_id');
 		});
 
 		Schema::create('map_items', function (Blueprint $table) {
 			$table->uuid('id')->primary()->index();
 			$table->foreignUuid('location_id')->constrained('locations')->cascadeOnUpdate()->cascadeOnDelete();
-			$table->uuidMorphs('mappable'); // Polymorphic relationship
+			$table->uuidMorphs('mappable'); // Polymorphic relationship adds "mappable_id" and "mappable_type" columns
 			$table->string('x')->nullable();
 			$table->string('y')->nullable();
 			$table->index(['location_id', 'mappable_id']);

@@ -125,10 +125,17 @@ class Location extends Model
 	{
 		return $this->morphMany(CustomField::class, 'fieldable');
 	}
+
+	public function customFieldValues(): HasMany
+	{
+		return $this->hasMany(CustomFieldValue::class, 'fieldable_id');
+	}
+
 	public function mapData(): MorphOne
 	{
 		return $this->morphOne(MapItem::class, 'mappable');
 	}
+	
 	public function mapItems(): HasMany
 	{
 		return $this->hasMany(MapItem::class, 'location_id');

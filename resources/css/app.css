@@ -387,7 +387,7 @@
 	.font-style-regular		{ @apply text-base; }
 	.font-style-small		{ @apply text-sm; }
 	.font-style-tiny		{ @apply text-xs; }
-	.font-style-label		{ @apply text-[0.675rem]; }
+	.font-style-label		{ @apply text-xs font-light opacity-50; }
 
 	.font-style-button		{ @apply font-medium text-xs uppercase leading-4 tracking-wider; }
 	.font-style-input		{ @apply font-normal text-sm;
@@ -428,7 +428,8 @@
 		}
 	}
 
-	p > a {
+	p > a,
+	span > a {
 		color: var(--text-accent);
 		&:hover {
 			text-decoration: underline;
