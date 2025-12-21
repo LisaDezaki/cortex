@@ -31,6 +31,7 @@
 	import Check from "phosphor-svelte/lib/Check"
 	import CheckCircle from "phosphor-svelte/lib/CheckCircle"
 	import CheckFat from "phosphor-svelte/lib/CheckFat"
+	import CircleHalfTilt from "phosphor-svelte/lib/CircleHalfTilt"
 	import CircleNotch from "phosphor-svelte/lib/CircleNotch"
 	import Compass from "phosphor-svelte/lib/Compass"
 	import CompassRose from "phosphor-svelte/lib/CompassRose"
@@ -40,6 +41,7 @@
 	import DotsThreeOutline from "phosphor-svelte/lib/DotsThreeOutline"
 	import DotsThreeOutlineVertical from "phosphor-svelte/lib/DotsThreeOutlineVertical"
 	import DotsThreeVertical from "phosphor-svelte/lib/DotsThreeVertical"
+	import Empty from "phosphor-svelte/lib/Empty"
 	import Eye from "phosphor-svelte/lib/Eye"
 	import EyeClosed from "phosphor-svelte/lib/EyeClosed"
 	import File from "phosphor-svelte/lib/File"
@@ -92,6 +94,7 @@
 	import MapTrifold from "phosphor-svelte/lib/MapTrifold"
 	import Minus from "phosphor-svelte/lib/Minus"
 	import Moon from "phosphor-svelte/lib/Moon"
+	import Palette from "phosphor-svelte/lib/Palette"
 	import Password from "phosphor-svelte/lib/Password"
 	import Pen from "phosphor-svelte/lib/Pen"
 	import PencilSimple from "phosphor-svelte/lib/PencilSimple"
@@ -168,6 +171,7 @@
 		'Check': Check,
 		'CheckCircle': CheckCircle,
 		'CheckFat': CheckFat,
+		'CircleHalfTilt': CircleHalfTilt,
 		'CircleNotch': CircleNotch,
 		'Crane': Crane,
 		'Compass': Compass,
@@ -177,6 +181,7 @@
 		'DotsThreeOutline': DotsThreeOutline,
 		'DotsThreeOutlineVertical': DotsThreeOutlineVertical,
 		'DotsThreeVertical': DotsThreeVertical,
+		'Empty': Empty,
 		'Eye': Eye,
 		'EyeClosed': EyeClosed,
 		'File': File,
@@ -229,6 +234,7 @@
 		'MapTrifold': MapTrifold,
 		'Minus': Minus,
 		'Moon': Moon,
+		'Palette': Palette,
 		'Password': Password,
 		'Pen': Pen,
 		'PencilSimple': PencilSimple,

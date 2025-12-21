@@ -47,7 +47,7 @@
 		{/if}
 
 		{#if badge}
-			<Badge plain label={badge} class={cx.badge} />
+			<Badge text={badge} class={cx.badge} />
 		{/if}
 		
 	</Link>

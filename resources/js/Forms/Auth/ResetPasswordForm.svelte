@@ -64,7 +64,7 @@
 		<Button style="hard" theme="accent"
 			size="lg"
 			type="submit" 
-			label="Reset Password"
+			text="Reset Password"
 		/>
 
 	</Stack>

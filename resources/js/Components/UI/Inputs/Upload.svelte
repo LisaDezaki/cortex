@@ -15,12 +15,13 @@
 		altText = '',
 		accept = 'image/*',
 		handleUpload,
-		icon,
+		icon = "File",
 		id,
 		maxSizeMB = null,
-		placeholder,
+		placeholder = "Upload a file...",
 		disabled = false,
 		preview = null,
+		size = "md",
 		value = $bindable(),
 		...restProps
 	} = $props();
@@ -87,17 +88,18 @@
 </script>
 
 <UploadContext bind:value={value}>
-	<UploadTrigger label="Upload Portrait" class="input flex-col p-2 {className}">
+	<UploadTrigger label="Upload File" class="input flex-col p-1.5 {className}">
 
 		<UploadPreview class="{aspect} rounded-md overflow-hidden" />
 
 		<Flex align="center" gap={2} class="p-1 w-full">
-			<Icon name={icon || "File"} size="md" />
+			{#if icon}
+				<Icon name={icon} size={size} />
+			{/if}
 			{#if value}
 				<span class="inline-flex items-center h-8 line-clamp-1 truncate">{value}</span>
-				<!-- <Button class="input-action ml-auto" icon="X" iconSize="sm" theme="danger" onclick={handleRemoveClick} disabled={disabled} /> -->
 			{:else}
-				<span class="input-placeholder inline-flex items-center h-8 line-clamp-1 truncate">{placeholder || "Upload a file..."}</span>
+				<span class="input-placeholder inline-flex items-center h-8 line-clamp-1 truncate">{placeholder}</span>
 			{/if}
 		</Flex>
 

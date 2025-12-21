@@ -123,11 +123,11 @@
 		<div class="mt-6">
 			<Button style="hard" theme="neutral"
 				onclick={closeModal}
-				label="Cancel"
+				text="Cancel"
 			/>
 			<Button style="hard" theme="accent"
 				onclick={submit}
-				label="Confirm"
+				text="Confirm"
 				disabled={$avatarForm.loading}
 				loading={$avatarForm.loading}
 			/>
@@ -171,20 +171,6 @@
 		.preview-image {
 			@apply block h-auto object-cover rounded w-full;
 		}
-
-		/* .image-controls {
-			@apply absolute top-0 left-0 h-full w-full;
-			@apply backdrop-blur-sm transition-all;
-			opacity: 0;
-
-			.image-replace {
-				@apply absolute top-0 left-0 h-full w-full text-white;
-			}
-
-			:global(.image-remove) {
-				@apply absolute top-1 right-1 h-8 w-8 z-10;
-			}
-		} */
 	}
 
 </style>

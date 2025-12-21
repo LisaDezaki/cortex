@@ -1,4 +1,5 @@
 <script>
+	import Inline from '@/Components/Core/Inline.svelte'
 	import Icon    from '@/Components/UI/Icon.svelte'
 	import Tag     from '@/Components/UI/Tag.svelte'
 	import Tooltip from '@/Components/UI/Tooltip.svelte'
@@ -8,9 +9,11 @@
         children,
 		description,
 		for: labelFor,
+		icon,
 		info,
 		inline,
 		required,
+		text,
         value,
         ...restProps
     } = $props()
@@ -19,12 +22,17 @@
 <label
 	for={labelFor}
 	{...restProps}
-	class="label font-style-tiny {className}"
+	class="label font-style-label {className}"
 	class:disabled={restProps.disabled}
 	class:inline={inline}
 >
-    {#if value}
-        {value}
+    {#if text}
+		<Inline align="center" gap={1} class="my-0.5">
+			{#if icon}
+				<Icon name={icon} size="xs" weight="regular" />
+			{/if}
+			<span class="font-light">{text}</span>
+		</Inline>
     {:else if children}
         {@render children()}
     {/if}

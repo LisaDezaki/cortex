@@ -7,6 +7,7 @@
 	import Icon     from '@/Components/UI/Icon.svelte'
 
     let {
+		active,
 		aspect,
 		children,
 		class: className,
@@ -15,6 +16,8 @@
 		icon,
 		onclick,
 		options,
+		state,
+		text,
 		title,
 		subtitle,
 		subtitleClass,
@@ -29,11 +32,14 @@
 	 */
 	let cx = $derived({
 		chip: clsx({
-			'chip': true,
-			'cursor-pointer': href || onclick
+			'chip border px-2 py-0.5 rounded': true,
+			'border-neutral-softest': state !== 'active',
+			'bg-accent-softest border-transparent text-accent': state === 'active',
+			'cursor-pointer': href || onclick,
+			'pl-1.5': state === 'active' || icon,
 		}, className),
 		visual: clsx({
-			'chip-visual aspect-square rounded-full overflow-hidden w-12': true,
+			'chip-visual aspect-square rounded-full overflow-hidden': true,
 		})
 	})
 
@@ -41,51 +47,34 @@
 
 
 
-<Flex class="chip {clickable ? "cursor-pointer" : null} {className}"
-	align="center" gap={3} onclick={onclick}
+<Flex class={cx.chip}
+	align="center" gap={1} onclick={onclick}
 {...restProps}>
 
-	<div class={cx.visual}>
-		{#if image}
-			<img class="chip-image" src={image} alt={title} />
-		{:else if icon}
-			<Icon class="chip-icon" name={icon} size={32} />
-		{/if}
-	</div>
-
-	<Flex class="w-full" justify="start">
-		<div class="chip-details -space-y-0.5">
-			{#if children}
-				<span class="font-semibold line-clamp-1 w-full">{@render children()}</span>
-			{:else if title}
-				<span class="font-semibold line-clamp-1 w-full">{title}</span>
-			{/if}
-			{#if subtitle}
-				<span class="font-style-small line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
+	{#if image || icon || state === 'active'}
+		<div class={cx.visual}>
+			{#if image}
+				<img class="chip-image" src={image} alt={title} />
+			{:else if icon}
+				<Icon class="chip-icon" name={icon} size="sm" />
+			{:else if state === 'active'}
+				<Icon class="chip-icon" name="Check" size="sm" weight="bold" />
 			{/if}
 		</div>
-		{#if options}
+	{/if}
 
-			<!-- <Dropdown class="chip-dropdown"
-				icon="DotsThreeOutlineVertical"
-				options={options}
-			/> -->
-	
-			<Popover class="chip-dropdown">
-				<Button style="plain" theme="neutral" class="chip-item-options-button rounded-full" icon="DotsThreeOutlineVertical" iconSize={16} iconWeight="fill" />
-				{#snippet content()}
-					<Stack class="py-1">
-						{#each options as option}
-							<Link class="flex gap-2 px-2 py-1 hover:bg-slate-500/10" {...option}>
-								<Icon class="mt-[2px]" name={option.icon} />
-								{option.label}
-							</Link>
-						{/each}
-					</Stack>
-				{/snippet}
-			</Popover>
+	<div class="chip-details">
+		{#if children}
+			<span class="line-clamp-1 break-all w-full">{@render children()}</span>
+		{:else if title}
+			<span class="line-clamp-1 break-all w-full">{title}</span>
+		{:else if text}
+			<span class="line-clamp-1 break-all w-full">{text}</span>
 		{/if}
-	</Flex>
+		<!-- {#if subtitle}
+			<span class="font-style-small line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
+		{/if} -->
+	</div>
 
 	{#if href}
 		<Link class="card-link" href={href}></Link>

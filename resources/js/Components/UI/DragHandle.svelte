@@ -12,7 +12,8 @@ const {
 } = getContext('reorderable-list-context');
 
 let {
-	item
+	item,
+	size = 'md'
 } = $props();
 
 let handleElement;
@@ -46,7 +47,7 @@ function handlePointerDown(e) {
 	bind:this={handleElement}
 	onpointerdown={handlePointerDown}
 >
-	<Icon name="DotsSixVertical" size={24} />
+	<Icon name="DotsSixVertical" size={size} weight="bold" />
 </Flex>
 
 <style lang="postcss">

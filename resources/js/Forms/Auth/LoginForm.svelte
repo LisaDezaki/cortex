@@ -51,7 +51,7 @@
 		<Button style="hard" theme="accent"
 			size="lg"
 			type="submit" 
-			label="Log in"
+			text="Log in"
 		/>
 
 		<Flex justify="center" gap={6} class="w-full">

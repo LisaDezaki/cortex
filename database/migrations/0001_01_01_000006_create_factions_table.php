@@ -19,6 +19,8 @@ return new class extends Migration
 			$table->string('type')->nullable();
 			$table->boolean('starred')->default(false);
 			$table->text('description')->nullable();
+			$table->text('aesthetics')->nullable();
+			$table->text('ideology')->nullable();
 			$table->foreignUuid('headquarters_id')->nullable()->constrained('locations')->cascadeOnUpdate()->nullOnDelete();
 			$table->timestamps();
 			$table->softDeletes();

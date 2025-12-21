@@ -3,6 +3,7 @@
 	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
 	import Button	from '@/Components/UI/Button.svelte'
 	import Dropdown	from '@/Components/UI/Dropdown.svelte'
+	import Icon		from '@/Components/UI/Icon.svelte'
 	import Input	from '@/Components/UI/Input.svelte'
 	import Label	from '@/Components/UI/Inputs/Label.svelte'
     import clsx from 'clsx'
@@ -40,9 +41,8 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		bar: clsx('control-bar mt-3 shrink-0 w-full z-10', className),
-		input: clsx('w-32'),
-		result: clsx('bg-emerald-500/10 border-b border-accent-softest h-8 mt-auto mr-auto p-md rounded text-accent text-sm whitespace-nowrap')
+		bar: clsx('control-bar mt-1.5 shrink-0 w-full z-10', className),
+		result: clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-md rounded text-accent text-sm whitespace-nowrap')
 	})
 
 	function onQuery() {
@@ -61,20 +61,22 @@
 
 
 
-<Flex cols={6} gap={3} class={cx.bar} {...restProps}>
+<Flex align="center" cols={6} gap={3} class={cx.bar} {...restProps}>
 	
 
 	<!-- Search -->
 
 	{#if searchable}
-		<Input bind:value={query}
-			type="search"
-			class={cx.input} size="md"
-			label="Search" labelIcon="MagnifyingGlass"
-			name="search"
-			placeholder="Search..."
-			oninput={onQuery}
-		/>
+		<Stack>
+			<Label icon="MagnifyingGlass" text="Search" />
+			<Input bind:value={query}
+				type="search"
+				name="search"
+				oninput={onQuery}
+				placeholder="Search..."
+				size="md"
+			/>
+		</Stack>
 	{/if}
 
 
@@ -85,31 +87,38 @@
 				even when clicking items in submenus. -->
 
 	{#if filterable}
-		<Dropdown size="md" bind:value={filter}
-			class={cx.input} contentClass={cx.input}
-			label="Filter" labelIcon="FunnelSimple"
-			options={filterOptions}
-			onUpdate={onFilter}
-		/>
+		<Stack>
+			<Label icon="FunnelSimple" text="Filter" />
+			<Dropdown
+				options={filterOptions}
+				onUpdate={onFilter}
+				placeholder="Filter..."
+				size="md"
+				bind:value={filter}
+			/>
+		</Stack>
 	{/if}
 
 
 	<!-- Sort -->
 
 	{#if sortable}
-		<Input type="select" size="md" bind:value={sort}
-			class={cx.input} contentClass={cx.input}
-			label="Sort" labelIcon="SortAscending"
-			placeholder="Sort by"
-			options={sortOptions}
-			onUpdate={onSort}
-		/>
+		<Stack>
+			<Label icon="SortAscending" text="Sort" />
+			<Input type="select"
+				options={sortOptions}
+				onUpdate={onSort}
+				placeholder="Sort by"
+				size="md"
+				bind:value={sort}
+			/>
+		</Stack>
 	{/if}
 
 
 	<!-- Result Count -->
 
-	<Flex class="w-full">
+	<Flex class="place-self-end w-full">
 		<Inline class={cx.result}>
 			{results?.length} {results?.length !== 1 ? 'results' : 'result'}
 		</Inline>
@@ -118,37 +127,31 @@
 
 	<!-- Size -->
 
-	<Input bind:value={size}
-		type="slider"
-		class={cx.input}
-		label="Size" labelIcon="Resize"
-		style="none"
-		showTicks={true}
-		showValue={false}
-		{min} {max}
-	/>
+	<Stack>
+		<Label icon="Resize" text="Size" />
+		<Input bind:value={size}
+			type="slider"
+			style="none"
+			showTicks={true}
+			showValue={false}
+			{min} {max}
+		/>
+	</Stack>
 
 
 	<!-- Layout -->
 
-	<!-- <Input type="select" size="md" bind:value={layout}
-		class={cx.input} contentClass={cx.input}
-		label="Layout" labelIcon="Layout"
-		options={layoutOptions}
-	/> -->
-
 	<Stack>
-		<Label>Layout</Label>
+		<Label icon="Layout" text="Layout" />
 		<Inline>
 			{#each layoutOptions as option, i}
 				<Button
-					class="{i === 0 ? "rounded-l" : "-ml-[1px]"} {i === layoutOptions.length-1 ? "rounded-r" : ""}"
-					size="sm" style="soft" theme={option.value === layout ? "accent" : "neutral"} icon={option.icon}
+					class="{i === 0 ? "rounded-l" : "-ml-[1px] rounded-none"} {i === layoutOptions.length-1 ? "rounded-r" : "rounded-none"} bg-slate-50"
+					size="md" style="soft" theme={option.value === layout ? "accent" : ""} icon={option.icon}
 					onclick={() => layout = option.value}
 				/>
 			{/each}
 		</Inline>
 	</Stack>
-
 
 </Flex>

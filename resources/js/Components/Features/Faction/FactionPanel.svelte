@@ -185,7 +185,7 @@
 		size="xl" style="hard" theme="accent"
 		class="sticky bottom-3 line-clamp-1 mx-6 mt-auto rounded-full"
 		icon="Eye" iconWeight="fill"
-		label="View {faction?.name}"
+		text="View {faction?.name}"
 		href={faction?.routes.show}
 	/>
 </Sidebar>

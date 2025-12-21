@@ -19,11 +19,12 @@
 		label,
 		labelIcon,
 		multiple = false,
+		onUpdate = () => {},
 		options,
 		overrideLabel,
 		placeholder = "Select one...",
-		onUpdate = () => {},
 		rootClass,
+		size = "md",
 		value = $bindable(),
         ...restProps
     } = $props()
@@ -73,6 +74,7 @@
 
 
 
+
 {#snippet optionItem(item)}
 	<Select.Item
 		label={item?.label}
@@ -94,38 +96,18 @@
 	onValueChange={updateSelection}
 {...restProps}>
 
-	<Stack gap={0.5} class={rootClass}>
-
-		<!-- Label -->
-
-		{#if label}
-			<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft">
-				{#if labelIcon}
-					<Icon name={labelIcon} size="xs" />
-				{/if}
-				<Label
-					class="font-style-label"
-					value={label}
-				/>
-			</Flex>
+	<Select.Trigger class="input p-{size} {className}">
+		{#if icon}
+			<Icon name={icon} size={size} />
 		{/if}
+		{#if value !== ''}
+			<InputItem item={selectedOption} class={inputClass} />
+		{:else}
+			<span class="font-style-placeholder line-clamp-1 px-1 text-left">{placeholder}</span>
+		{/if}
+		<Icon class="ml-auto" name="CaretUpDown" size="xs" />
+	</Select.Trigger>
 
-		<!-- Trigger -->
-	
-		<Select.Trigger class="input p-1 {className}">
-			{#if value !== ''}
-				<!-- <span class="font-style-input line-clamp-1 text-left">{getLabel(value)}</span> -->
-				<InputItem item={selectedOption} class={inputClass} />
-			{:else}
-				<span class="font-style-placeholder line-clamp-1 px-1 text-left">{placeholder}</span>
-			{/if}
-			<Icon class="ml-auto" name="CaretUpDown" size="xs" />
-		</Select.Trigger>
-	</Stack>
-
-
-	<!-- Content -->
-	 
 	<Select.Portal class="z-50 {contentClass}">
 		<Select.Content
 			class="input-content {contentClass} min-w-[var(--bits-select-anchor-width)] px-0.5 py-0.5 z-50"

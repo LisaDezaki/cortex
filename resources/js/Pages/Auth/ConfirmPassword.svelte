@@ -47,7 +47,7 @@
             <Button style="hard" theme="accent"
 				class="ms-4 {$form.processing && 'opacity-25'}"
 				disabled={$form.processing}
-				label="Confirm"
+				text="Confirm"
 			/>
         </div>
     </Form>

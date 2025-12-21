@@ -75,7 +75,7 @@
 	<Button
 		style="soft" theme="accent"
 		icon="Plus"
-		label="Add a custom field"
+		text="Add a custom field"
 		onclick={createCustomField}
 	/>
 </Flex>

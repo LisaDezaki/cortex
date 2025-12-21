@@ -38,8 +38,8 @@
 			<PageHeader class="px-6 py-2"
 				title="Location Settings"
 				tabs={[
-					{ label: "List",			href: route('locations') },
-					{ label: "Settings", 		active: true },
+					{ text: "Location List",	href: route('locations') },
+					{ text: "Settings", 		active: true },
 				]}
 			/>
 			

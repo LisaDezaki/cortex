@@ -33,8 +33,6 @@
 			listBottom = listElement.getBoundingClientRect().bottom
 			mouseY     = e.clientY;
 
-			
-			
 			setPlaceholder()
 			listElement.setAttribute('data-active', true)
 		},

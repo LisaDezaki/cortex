@@ -5,7 +5,15 @@
 	import { Checkbox } from "bits-ui";
 	import Icon from '@/Components/UI/Icon.svelte';
 	import Label from './Label.svelte';
+    import clsx from "clsx"
 
+	/**
+	 * Component Props
+	 * @type {Object}
+	 * @property {boolean} checked  | Checkbox checked state
+	 * @property {string} className | Additional class names
+	 * @property {boolean} label    | Text to display beside checkbox
+	 */
     let {
         checked = $bindable(false),
         class: className,
@@ -13,40 +21,18 @@
 		labelText,
         ...restProps
     } = $props()
+
+	/**
+	 * Classnames
+	 * @type {Object}
+	 */
+	let cx = $derived({
+		wrapper: clsx('flex items-start gap-3 min-h-10 py-2 cursor-pointer'),
+		checkbox: clsx('appearance-none min-h-6 min-w-6 rounded-md shrink-0 inline-flex items-center justify-center', className),
+		label: clsx('font-style-placeholder text-center opacity-50')
+	})
 	
 </script>
-
-
-
-<!-- STRUCTURE -->
-
-<Label
-	id="{restProps.id}-label"
-	for={restProps.id}
-	class="checkbox-label {className}"
-	description={restProps.description}
-	disabled={restProps.disabled}
-	required={restProps.required}
->
-	<Checkbox.Root
-		aria-labelledby="{restProps.id}-label"
-		id={restProps.id}
-		class="checkbox"
-		bind:checked
-		disabled={restProps.disabled}
-	{...restProps}>
-		{#snippet children({ checked, indeterminate })}
-			{#if indeterminate}
-				<Icon name="Minus" size={20} weight="bold" />
-			{:else if checked}
-				<Icon name="Check" size={20} weight="bold" />
-			{/if}
-		{/snippet}
-	</Checkbox.Root>
-
-	<span class="font-style-regular">{labelText}</span>
-</Label>
-
 
 
 <!-- STYLE -->
@@ -79,3 +65,37 @@
 	}
 
 </style>
+
+
+
+<!-- STRUCTURE -->
+
+<Label
+	id="{restProps.id}-label"
+	for={restProps.id}
+	class={cx.wrapper}
+	description={restProps.description}
+	disabled={restProps.disabled}
+	required={restProps.required}
+>
+	<Checkbox.Root
+		aria-labelledby="{restProps.id}-label"
+		id={restProps.id}
+		class="checkbox"
+		bind:checked
+		disabled={restProps.disabled}
+	{...restProps}>
+		{#snippet children({ checked, indeterminate })}
+			{#if indeterminate}
+				<Icon name="Minus" size={20} weight="bold" />
+			{:else if checked}
+				<Icon name="Check" size={20} weight="bold" />
+			{/if}
+		{/snippet}
+	</Checkbox.Root>
+
+	<span class="font-style-regular">{labelText}</span>
+</Label>
+
+
+

@@ -5,12 +5,13 @@
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
+	import Grid					from '@/Components/Core/Grid.svelte'
+	import Stack				from '@/Components/Core/Stack.svelte'
 	import Empty     		 	from '@/Components/UI/Empty.svelte'
+	import Entity     		 	from '@/Components/UI/Entity.svelte'
 	import PageHeader		 	from '@/Components/UI/PageHeader.svelte'
 	import Section      	 	from '@/Components/UI/Section.svelte'
-	import FactionCard 		 	from '@/Components/Features/Faction/FactionCard.svelte'
 	import FactionControlBar 	from '@/Components/Features/Faction/FactionControlBar.svelte'
-	import FactionGrid 		 	from '@/Components/Features/Faction/FactionGrid.svelte'
 	import FactionPanel 	 	from '@/Components/Features/Faction/FactionPanel.svelte'
 	import FactionTable 	 	from '@/Components/Features/Faction/FactionTable.svelte'
 	import ProjectObject 	from '@/services/ProjectObject'
@@ -154,14 +155,13 @@
 
 			<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-6 py-2"
-				title="Faction List"
+			<PageHeader class="px-6 py-3"
 				tabs={[
-					{ label: "List",		active: true },
-					{ label: "Settings",	href: route('factions.settings') },
+					{ text: "Faction List",	active: true },
+					{ text: "Settings",		href: route('factions.settings') },
 				]}
 				actions={[
-					{ icon: "Plus", label: "New", theme: "accent", onclick: () => factions.create() },
+					{ icon: "Plus", text: "New", theme: "accent", onclick: () => factions.create() },
 				]}
 			>
 				<FactionControlBar
@@ -179,78 +179,28 @@
 
 			<!-- Main Body -->
 
-			<Flex align="start" class="px-6 pt-3 pb-6">
-				{#if activeProject && results.length > 0}
+			<Stack class="px-6 pt-3 pb-6">
+				{#if activeProject && factions.items.length > 0}
 
-				
+
 					<!-- Grid -->
 
 					{#if parameters.layout == 'grid'}
-						<FactionGrid
-							factions={results}
-							cols={gridCols}
-							gap={1.5}
-						>
-							{#snippet gridItem(faction)}
-								<FactionCard
-									active={parameters.selected === faction.slug}
-									faction={faction}
-									subtitle={getSubtitle(faction)}
-									onclick={() => selectFaction(faction)}
-									iconOptions={[
-										{ icon: "Star", 		onclick: () => faction.star(), iconWeight: faction.starred ? 'fill' : 'regular' },
-										{ icon: "Eye", 			href: faction.routes.show },
-										{ icon: "Textbox", 		onclick: () => faction.openModal('rename') },
-										{ icon: "UploadSimple", onclick: () => faction.openModal('setEmblem') },
-										{ icon: "Trash", 		onclick: () => faction.openModal('delete'), theme: "danger" },
-									]}
-									options={[{
-										icon: 'HouseLine', iconWeight: 'regular',
-										label: "Set Headquarters",
-										options: [ ...locations.items.map(l => ({
-											...l,
-											active: l.id === faction.headquarters?.id,
-											label: l.name,
-											onclick: () => faction.setHeadquarters(l)
-										})) ]
-									},{
-										icon: 'UserPlus', iconWeight: 'regular',
-										label: "Add Member",
-										options: [ ...characters.items.map(c => ({
-											...c,
-											active: faction.members?.items.map(m => m.name.toLowerCase()).includes(c.name.toLowerCase()),
-											label: c.name,
-											onclick: () => faction.addMember(c)
-										})) ]
-									},{
-										separator: true
-									},{
-										icon: 'FolderSimple', iconWeight: 'regular',
-										label: "Add to Collection",
-										create: () => collections.create(),
-										options: [ ...collections.items.map(c => ({
-											...c,
-											label: c.name,
-											onclick: () => faction.addToCollection(c),
-											disabled:   c.items.map(i => i.collectionable_id).includes(faction.id),
-											iconWeight: c.items.map(i => i.collectionable_id).includes(faction.id) ? 'fill' : 'light'
-										}))]
-									},{
-										icon: 'TagSimple', iconWeight: 'regular',
-										label: "Add Tags",
-										onclick: () => faction.applyTags()
-									},{
-										separator: true
-									},{
-										icon: 'Trash', iconWeight: 'regular',
-										label: "Delete Faction",
-										onclick: () => faction.delete(),
-										theme: "danger"
-									}
-									]}
-								/>
-							{/snippet}
-						</FactionGrid>
+						<Grid cols={gridCols} gap={3}>
+							{#if results.length > 0}
+								{#each results as faction}
+									<Entity
+										active={parameters.selected === faction.slug}
+										entity={faction}
+										layout="stack"
+										size="auto"
+										onclick={() => selectFaction(faction)}
+									/>
+								{/each}
+							{:else}
+								<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
+							{/if}
+						</Grid>
 					
 
 					<!-- Table -->
@@ -266,8 +216,7 @@
 
 					<Empty
 						icon="FlagBannerFold"
-						containerClass="w-full"
-						message="There are no factions for this project yet."
+						text="There are no factions for this project yet."
 						buttonLabel="Create one?"
 						buttonClick={() => factions.create()}
 					/>
@@ -275,7 +224,7 @@
 				{/if}
 
 
-			</Flex>
+			</Stack>
 		</Section>
 	{/snippet}
 

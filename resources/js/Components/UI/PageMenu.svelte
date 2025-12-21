@@ -22,7 +22,7 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		menu: clsx('page-menu min-w-48 w-48 max-w-48 rounded-lg sticky top-0 place-self-start', className),
+		menu: clsx('page-menu min-w-48 w-48 max-w-48 rounded-lg overflow-y-auto', className),
 		back: clsx('border border-neutral-softest flex items-center gap-3 mb-3 place-self-start pl-3 pr-5 py-1.5 rounded-full hover:border-accent hover:text-accent'),
 		item: clsx('page-menu-item flex items-center gap-3 px-3 py-1.5 rounded w-full')
 	})
@@ -78,7 +78,9 @@
 			class:text-accent={item.active || $url.hash === item.href}
 			class:text-danger={item.theme == "danger"}
 		{...item}>
-			<Icon name={item.icon} size="md" />
+			{#if item.icon}
+				<Icon name={item.icon} size="md" />
+			{/if}
 
 			<div class="font-style-regular flex-shrink truncate">
 				{#if item.label}

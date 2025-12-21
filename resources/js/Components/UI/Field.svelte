@@ -33,7 +33,7 @@
 {#snippet labelBlock()}
 	<Label
 		for={name}
-		value={label}
+		text={label}
 		class="field-label font-style-label {labelSrOnly ? 'sr-only' : ''}"
 	/>
 {/snippet}

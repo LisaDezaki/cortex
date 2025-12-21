@@ -14,7 +14,7 @@
 <style lang="postcss">
 
 	:global(.tabs-list[data-orientation="horizontal"]) {
-		@apply flex gap-0.5 p-0.5 rounded-lg mb-4 border;
+		@apply flex gap-0.5 p-0.5 rounded-md mb-1.5 border;
 		background-color: var(--bg-neutral-softest);
 		border-color: var(--border-neutral-softest);
 		&[data-orientation="vertical"] {

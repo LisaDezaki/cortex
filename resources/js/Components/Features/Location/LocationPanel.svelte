@@ -231,7 +231,7 @@
 	<Button class={cx.button.view}
 		size="xl" style="hard" theme="accent"
 		icon="Eye" iconWeight="fill"
-		label="View {location?.name}"
+		text="View {location?.name}"
 		href={location?.routes.show}
 	/>
 </Sidebar>

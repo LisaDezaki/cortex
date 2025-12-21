@@ -5,12 +5,13 @@
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
+	import Grid					from '@/Components/Core/Grid.svelte'
+	import Stack				from '@/Components/Core/Stack.svelte'
 	import Empty   	  			from '@/Components/UI/Empty.svelte'
+	import Entity				from '@/Components/UI/Entity.svelte'
 	import PageHeader 			from '@/Components/UI/PageHeader.svelte'
 	import Section    			from '@/Components/UI/Section.svelte'
-	import LocationCard			from '@/Components/Features/Location/LocationCard.svelte'
 	import LocationControlBar 	from '@/Components/Features/Location/LocationControlBar.svelte'
-	import LocationGrid			from '@/Components/Features/Location/LocationGrid.svelte'
 	import LocationPanel		from '@/Components/Features/Location/LocationPanel.svelte'
 	import LocationTable		from '@/Components/Features/Location/LocationTable.svelte'
 	import ProjectObject 	from '@/services/ProjectObject'
@@ -150,14 +151,13 @@
 
 			<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-6 py-2"
-				title="Location List"
+			<PageHeader class="px-6 py-3"
 				tabs={[
-					{ label: "List",		active: true },
-					{ label: "Settings",	href: route('locations.settings') },
+					{ text: "Location List",	active: true },
+					{ text: "Settings",			href: route('locations.settings') },
 				]}
 				actions={[
-					{ icon: "Plus", label: "New", theme: "accent", onclick: () => locations.create(), },
+					{ icon: "Plus", text: "New", theme: "accent", onclick: () => locations.create(), },
 				]}
 			>
 				<LocationControlBar
@@ -173,55 +173,27 @@
 
 			<!-- Main Body -->
 
-			<Flex align="start" class="px-6 pt-3 pb-6">
-				{#if activeProject && results.length > 0}
+			<Stack class="px-6 pt-3 pb-6">
+				{#if activeProject && locations.items.length > 0}
 
 					<!-- Grid -->
 
-					{#if parameters.layout == 'grid'}
-						<LocationGrid
-							cols={gridCols}
-							locations={results}
-							gap={1.5}
-						>
-							{#snippet gridItem(location)}
-								<LocationCard
-									active={parameters.selected === location.slug}
-									location={location}
-									subtitle={getSubtitle(location)}
-									onclick={() => selectLocation(location)}
-									iconOptions={[
-										{ icon: "Star", 		onclick: () => location.star(), iconWeight: location.starred ? 'fill' : 'regular' },
-										{ icon: "Eye", 			href: location.routes.show },
-										{ icon: "Textbox", 		onclick: () => location.openModal('rename') },
-										{ icon: "UploadSimple", onclick: () => location.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3'}) },
-										{ icon: "Trash", 		onclick: () => location.openModal('delete'), theme: "danger" },
-									]}
-									options={[{
-										icon: 'FolderSimple', iconWeight: 'regular',
-										label: "Add to Collection",
-										create: () => collections.create('locations', [location]),
-										options: [ ...collections.items.map(collection => ({
-											label: collection.name,
-											onclick: 	collection.items.map(i => i.collectionable_id).includes(location.id) ? () => collection.removeItem(location) : () => collection.addItem(location),
-											disabled:   collection.items.map(i => i.collectionable_id).includes(location.id),
-											iconWeight: collection.items.map(i => i.collectionable_id).includes(location.id) ? 'fill' : 'light'
-										}))]
-									},{
-										icon: 'TagSimple', iconWeight: 'regular',
-										label: "Add Tags",
-										onclick: () => location.applyTags()
-									},{
-										separator: true
-									},{
-										icon: 'Trash', iconWeight: 'regular',
-										label: "Delete Location",
-										onclick: () => location.delete(),
-										theme: "danger"
-									}]}
-								/>
-							{/snippet}
-						</LocationGrid>
+					{#if parameters.layout === 'grid'}
+						<Grid cols={gridCols} gap={3}>
+							{#if results.length > 0}
+								{#each results as location}
+									<Entity
+										active={parameters.selected === location.slug}
+										entity={location}
+										layout="stack"
+										size="auto"
+										onclick={() => selectLocation(location)}
+									/>
+								{/each}
+							{:else}
+								<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
+							{/if}
+						</Grid>
 
 
 					<!-- Table -->
@@ -247,14 +219,13 @@
 
 					<Empty
 						icon="MapPin"
-						containerClass="w-full"
-						message="There are no locations for this project yet."
+						text="There are no locations for this project yet."
 						buttonLabel="Create one?"
 						buttonClick={() => location.create()}
 					/>
 				{/if}
 
-			</Flex>
+			</Stack>
 		</Section>
 	{/snippet}
 	{#snippet sidebar()}

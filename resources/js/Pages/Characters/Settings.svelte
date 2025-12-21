@@ -32,8 +32,8 @@
 
 			<PageHeader class="px-6 py-2"
 				tabs={[
-					{ label: "Character List",	href: route('characters') },
-					{ label: "Settings", 		active: true },
+					{ text: "Character List",	href: route('characters') },
+					{ text: "Settings", 		active: true },
 				]}
 			/>
 
@@ -104,7 +104,7 @@
 
 						<Button class="mt-3 mx-auto rounded-full"
 							style="hard" theme="accent"
-							icon="Plus" label="Add Custom Field"
+							icon="Plus" text="Add Custom Field"
 							onclick={() => modalActions.open('customField', {})}
 						/>
 					</Section>

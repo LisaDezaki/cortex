@@ -5,12 +5,13 @@
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
+	import Grid					from '@/Components/Core/Grid.svelte'
+	import Stack				from '@/Components/Core/Stack.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
+	import Entity				from '@/Components/UI/Entity.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
 	import Section				from '@/Components/UI/Section.svelte'
-	import CharacterCard		from '@/Components/Features/Character/CharacterCard.svelte'
 	import CharacterControlBar 	from '@/Components/Features/Character/CharacterControlBar.svelte'
-	import CharacterGrid 		from '@/Components/Features/Character/CharacterGrid.svelte'
 	import CharacterPanel 		from '@/Components/Features/Character/CharacterPanel.svelte'
 	import CharacterTable		from '@/Components/Features/Character/CharacterTable.svelte'
 	import ProjectObject 		from '@/services/ProjectObject'
@@ -153,13 +154,13 @@
 
 			<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-6 py-2"
+			<PageHeader class="px-6 py-3"
 				tabs={[
-					{ label: "Character List",	active: true },
-					{ label: "Settings",		href: route('characters.settings') },
+					{ text: "Character List",	active: true },
+					{ text: "Settings",			href: route('characters.settings') },
 				]}
 				actions={[
-					{ icon: "Plus", label: "New", theme: "accent", onclick: () => characters.create() },
+					{ icon: "Plus", text: "New", theme: "accent", onclick: () => characters.create() },
 				]}
 			>
 				<CharacterControlBar
@@ -174,30 +175,33 @@
 				/>
 			</PageHeader>
 
+
 			<!-- Main Body -->
 
-			<Flex align="start" class="px-6 pt-3 pb-6">
-				{#if activeProject && results.length > 0}
+			<Stack class="px-6 pt-3 pb-6">
+				{#if activeProject && characters.items.length > 0}
 	
+
 					<!-- Grid -->
 	
 					{#if parameters.layout === 'grid'}
-						<CharacterGrid
-							characters={results}
-							cols={gridCols}
-							gap={1.5}
-						>
-							{#snippet gridItem(character)}
-								<CharacterCard
-									active={parameters.selected === character.slug}
-									character={character}
-									subtitle={getSubtitle(character)}
-									onclick={() => selectCharacter(character)}
-								/>
-							{/snippet}
-						</CharacterGrid>
-					
-				
+						<Grid cols={gridCols} gap={3}>
+							{#if results.length > 0}
+								{#each results as character}
+									<Entity
+										active={parameters.selected === character.slug}
+										entity={character}
+										layout="stack"
+										size="auto"
+										onclick={() => selectCharacter(character)}
+									/>
+								{/each}
+							{:else}
+								<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
+							{/if}
+						</Grid>
+
+
 					<!-- Table -->
 	
 					{:else if parameters.layout === 'table'}
@@ -209,10 +213,8 @@
 					<!-- Graph -->
 	
 					{:else if parameters.layout === 'graph'}
-						<Empty
-							containerClass="px-20 py-6"
-							icon="Graph"
-							message="This layout type isn't working yet. Try again later."
+						<Empty class="h-96"
+							icon="Graph" text="This layout type isn't working yet. Try again later."
 						/>
 
 
@@ -221,14 +223,13 @@
 
 					<Empty
 						icon="User"
-						containerClass="w-full"
-						message="There are no characters for this project yet."
+						text="There are no characters for this project yet."
 						buttonLabel="Create one?"
 						buttonClick={() => characters.create()}
 					/>
 
 				{/if}
-			</Flex>
+			</Stack>
 		</Section>
 	{/snippet}
 	{#snippet sidebar()}

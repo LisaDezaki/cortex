@@ -21,9 +21,9 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		thumbnail: clsx('thumbnail overflow-hidden shrink-0', {'rounded-lg': !className.includes('rounded-')}, aspect, className),
+		thumbnail: clsx('thumbnail overflow-hidden shrink-0', aspect, className),
 		image:     clsx('thumbnail-image min-h-full min-w-full object-cover', imageClass),
-		fallback:  clsx('thumbnail-fallback font-black h-full rounded-md text-neutral-softer text-5xl tracking-tighter w-full'),
+		fallback:  clsx('thumbnail-fallback font-black h-full text-neutral-softer text-5xl tracking-tighter w-full'),
 		icon:      clsx('thumbnail-icon text-neutral-softest opacity-50')
 	})
 

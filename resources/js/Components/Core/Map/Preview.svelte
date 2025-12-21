@@ -118,7 +118,7 @@
 		<!-- Upload Button -->
 
 		<Button style="soft" theme="accent"
-			label="Upload" onclick={handleFileUpload}
+			text="Upload" onclick={handleFileUpload}
 		/>
 	{/if}
 </PanZoom>

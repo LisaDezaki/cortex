@@ -17,7 +17,7 @@
 	let updatedSubmitProps = $state({
 		style: 'hard',
 		theme: 'accent',
-		label: 'Submit',
+		text: 'Submit',
 		...submitProps
 	})
 
@@ -40,7 +40,7 @@
 			<Button style="hard" theme="neutral"
 				class="rounded-none grow"
 				type="button"
-				label="Cancel"
+				text="Cancel"
 				onclick={modalActions.close}
 			/>
 			<Button

@@ -367,12 +367,12 @@
 				<div class="flex items-center justify-center gap-3 pt-2">
 					<Button style="hard" theme="neutral"
 						type="button"
-						label="Cancel"
+						text="Cancel"
 						onclick={oncancel}
 					/>
 					<Button style="hard" theme="accent"
 						type="submit"
-						label="Save Custom Field"
+						text="Save Custom Field"
 					/>
 				</div>
 			</div> -->
@@ -384,13 +384,13 @@
 		<Button style="hard" theme="neutral" class="border-none rounded-none px-4 w-1/2"
 			type="button"
 			icon="X"
-			label="Cancel"
+			text="Cancel"
 			onclick={oncancel}
 		/>
 		<Button style="hard" theme="accent" class="border-none rounded-none px-4 w-1/2"
 			type="submit"
 			icon="Check"
-			label="Save"
+			text="Save"
 		/>
 	</Flex> -->
 

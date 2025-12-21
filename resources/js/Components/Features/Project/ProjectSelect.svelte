@@ -52,7 +52,7 @@
 
 <!-- <Button size="xs"
 	icon="GlobeStand" iconSize="xs" iconWeight="bold"
-	label="View all projects"
+	text="View all projects"
 	class="text-xs"
 	onclick={() => active.deactivate()}
 /> -->

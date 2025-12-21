@@ -4,7 +4,9 @@
 
     let {
         class: className,
-		label,
+		text,
+		style,
+		theme,
         ...restProps
     } = $props()
 
@@ -13,14 +15,20 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		badge: 	clsx({
-			'border-none inline-flex items-center justify-center min-h-2 min-w-2 shrink-0 font-normal text-xs': true,
-			'bg-accent rounded-full': !restProps.plain,
-			'bg-accent-gradient text-white': restProps.primary,
-			'bg-accent-softer text-accent': restProps.secondary,
-			'bg-neutral-softer text-neutral-softer': restProps.disabled
+		badge: clsx({
+			'inline-flex items-center justify-center shrink-0': true,
+			'border-none min-h-2 min-w-2 rounded-full text-xs': true,
+			'bg-accent-gradient text-white':    style === 'hard'  && theme === 'accent',
+			'bg-accent-softer text-accent':     style === 'soft'  && theme === 'accent',
+			'bg-transparent text-accent':	    style === 'plain' && theme === 'accent',
+			'bg-neutral-gradient text-neutral': style === 'hard'  && theme === 'neutral',
+			'bg-neutral-softer text-neutral':   style === 'soft'  && theme === 'neutral',
+			'bg-transparent text-neutral':		style === 'plain' && theme === 'neutral',
+			'bg-danger-gradient text-white':	style === 'hard'  && theme === 'danger',
+			'bg-danger-softest text-danger':	style === 'soft'  && theme === 'danger',
+			'bg-transparent text-danger':		style === 'plain' && theme === 'danger'
 		}, className),
-		label: 	clsx('text-center min-w-6 px-1 py-0.5')
+		text: 	clsx('text-center min-w-6 px-1 py-0.5')
 	})
 
 </script>
@@ -34,7 +42,7 @@
 	class:secondary={restProps.secondary}
 	class:disabled={restProps.disabled}
 >
-    {#if label}
-		<span class={cx.label}>{label}</span>
+    {#if text}
+		<span class={cx.text}>{text}</span>
 	{/if}
 </span>

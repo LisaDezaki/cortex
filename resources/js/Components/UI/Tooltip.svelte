@@ -16,8 +16,8 @@
 	 */
 	let cx = $derived({
 		tooltip: clsx(
-			'border max-w-[45ch] mx-8 px-3 py-2 rounded-lg shadow-md text-sm z-50',
-			'bg-emerald-500 border-emerald-600 text-white',
+			'max-w-[45ch] mx-8 px-3 py-2 rounded-lg shadow-md text-sm z-50',
+			'bg-emerald-600 text-white',
 			className),
 		trigger: clsx('tooltip-trigger flex items-center'),
 	})
@@ -37,7 +37,7 @@
 			{#if content}
 				{@render content()}
 			{/if}
-			<Tooltip.Arrow />
+			<Tooltip.Arrow class="text-emerald-600 -mt-[1px]" />
 		</Tooltip.Content>
 	</Tooltip.Portal>
 </Tooltip.Root>

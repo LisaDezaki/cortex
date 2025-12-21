@@ -41,34 +41,20 @@
 
 
 
-<Stack gap={0.5}>
-
-	{#if label}
-		<Flex align="center" justify="start" gap={1} class="font-light text-neutral-soft w-full">
-			{#if labelIcon}
-				<Icon name={labelIcon} size="xs" />
-			{/if}
-			<Label
-				class="font-style-label"
-				value={label}
-			/>
-		</Flex>
+<Flex align="center" justify="start" class="input p-{size} text-{size} {className} {restProps.disabled ? 'disabled' : ''} {hasFocus ? 'focus' : ''}">
+	
+	{#if icon}
+		<Icon name={icon} size={size} weight="regular" />
 	{/if}
 
-	<Flex align="center" justify="start" class="input p-1 {className} {restProps.disabled ? 'disabled' : ''} {hasFocus ? 'focus' : ''}">
-		{#if icon}
-			<Icon name={icon} size={iconSize} weight="regular" />
-		{/if}
-	
-		<input
-			aria-disabled={restProps.disabled ? 'true' : undefined}
-			bind:value
-			bind:this={input}
-			class="input-element p-0 {inputClass}"
-			onfocus={checkFocus}
-			onblur={checkFocus}
-			{...restProps}
-		/>
-	</Flex>
+	<input
+		aria-disabled={restProps.disabled ? 'true' : undefined}
+		bind:value
+		bind:this={input}
+		class="input-element p-0 {inputClass}"
+		onfocus={checkFocus}
+		onblur={checkFocus}
+		{...restProps}
+	/>
 
-</Stack>
+</Flex>

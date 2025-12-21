@@ -28,14 +28,6 @@
 		value = $bindable()
     } = $props()
 
-	const padSizes = {
-		xs: "py-0",
-		sm: "py-0.25",
-		md: "py-0.5",
-		lg: "py-1",
-		xl: "py-1.5"
-	}
-
 	let suboptionQuery 		= $state('')
 	let suboptions	   		= $state(null)
 	let filteredSuboptions 	= $derived(suboptions?.filter(s => `${s.value} ${s.label}`.toLowerCase().includes(suboptionQuery.toLowerCase()) ))
@@ -85,22 +77,17 @@
 {/snippet} -->
 
 <Popover.Root bind:open={isOpen}>
-	<Stack gap={0.5}>
-		{#if label}
-			<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft w-full">
-				{#if labelIcon}
-					<Icon name={labelIcon} size="xs" />
-				{/if}
-				<Label
-					class="font-style-label"
-					value={label}
-				/>
-			</Flex>
+
+	<Popover.Trigger class="input p-{size} {className}">
+		{#if value !== ''}
+			<InputItem item={selected} />
+		{:else}
+			{#if icon}
+				<Icon name={icon} size={size} />
+			{/if}
+			<span class="font-style-placeholder px-1">{placeholder || ''}</span>
 		{/if}
-		<Popover.Trigger class="input p-1 {className}">
-			<InputItem item={selected} class={padSizes[size]} />
-		</Popover.Trigger>
-	</Stack>
+	</Popover.Trigger>
 
 	<Popover.Portal>
 		<Popover.Content

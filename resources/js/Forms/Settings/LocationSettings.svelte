@@ -55,12 +55,12 @@
 	{#snippet actions()}
 		<Button style="hard" theme="neutral"
 			type="button"
-			label="Cancel"
+			text="Cancel"
 			onclick={oncancel ? oncancel : () => history.back()}
 		/>
 		<Button style="hard" theme="accent"
 			type="submit"
-			label="Save changes"
+			text="Save changes"
 			onclick={updateSettings}
 		/>
 	{/snippet}

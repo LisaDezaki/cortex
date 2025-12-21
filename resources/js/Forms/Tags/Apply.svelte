@@ -63,12 +63,12 @@
 			<Flex gap={0} class="border-t flex-0 min-h-12">
 				<Button style="hard" theme="neutral" class="border-none rounded-none w-1/2"
 					type="button"
-					label="Cancel"
+					text="Cancel"
 					onclick={oncancel}
 				/>
 				<Button style="hard" theme="accent" class="border-none rounded-none w-1/2"
 					type="submit"
-					label="Apply tags"
+					text="Apply tags"
 				/>
 			</Flex>
 

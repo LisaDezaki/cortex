@@ -181,7 +181,7 @@
 		<Button class={cx.button.view}
 			size="xl" style="hard" theme="accent"
 			icon="Eye" iconWeight="fill"
-			label="View {character?.name}"
+			text="View {character?.name}"
 			href={character?.routes.show}
 		/>
 

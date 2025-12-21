@@ -39,7 +39,7 @@
         <div class="flex items-center justify-between gap-3 mt-6">
             <Button style="hard" theme="accent"
 				class={$form.processing && 'opacity-25'} disabled={$form.processing}
-				label="Resend Verification Email"
+				text="Resend Verification Email"
 			/>
 
             <button style="hard" theme="danger"

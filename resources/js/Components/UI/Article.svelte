@@ -12,7 +12,7 @@
     let {
         children,
 		class: className,
-		noscroll,
+		noscroll = true,
 		...restProps
     } = $props()
 

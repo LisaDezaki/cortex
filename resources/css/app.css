@@ -387,7 +387,7 @@
 	.font-style-regular		{ @apply text-base; }
 	.font-style-small		{ @apply text-sm; }
 	.font-style-tiny		{ @apply text-xs; }
-	.font-style-label		{ @apply text-xs font-light opacity-50; }
+	.font-style-label		{ @apply text-xs; }
 
 	.font-style-button		{ @apply font-medium text-xs uppercase leading-4 tracking-wider; }
 	.font-style-input		{ @apply font-normal text-sm;
@@ -437,7 +437,10 @@
 		}
 	}
 
-	
+	code {
+		background-color: var(--bg-neutral-softest);
+		@apply px-1 py-0.5 rounded;
+	}
 
 }
 
@@ -499,27 +502,30 @@ select:focus {
 	}
 }
 
-/* .card-grid-2  { @apply grid grid-cols-2;  }
-.card-grid-3  { @apply grid grid-cols-3;  }
-.card-grid-4  { @apply grid grid-cols-4;  }
-.card-grid-5  { @apply grid grid-cols-5;  }
-.card-grid-6  { @apply grid grid-cols-6;  }
-.card-grid-7  { @apply grid grid-cols-7;  }
-.card-grid-8  { @apply grid grid-cols-8;  }
-.card-grid-9  { @apply grid grid-cols-9;  }
-.card-grid-10 { @apply grid grid-cols-10; }
-.card-grid-11 { @apply grid grid-cols-11; }
-.card-grid-12 { @apply grid grid-cols-12; } */
 
 
-/* .p-xs { @apply px-1   py-0;   }
+/*	Padding  */
+
+.p-xs { @apply px-1   py-0; }
 .p-sm { @apply px-1.5 py-0.5; }
-.p-md { @apply px-2   py-1;	  }
-.p-lg { @apply px-3   py-1.5; }
-.p-xl { @apply px-4   py-2;   } */
+.p-md { @apply px-2   py-1; }
+.p-lg { @apply px-3   py-2; }
+.p-xl { @apply px-6   py-4; }
 
-.p-xs { @apply px-1   py-0;   }
-.p-sm { @apply px-1.5 py-0.5; }
-.p-md { @apply px-2   py-1;	  }
-.p-lg { @apply px-3   py-1.5; }
-.p-xl { @apply px-4   py-2;   }
+.px-xs { @apply px-1; }
+.px-sm { @apply px-1.5; }
+.px-md { @apply px-2; }
+.px-lg { @apply px-3; }
+.px-xl { @apply px-6; }
+
+.py-xs { @apply py-0; }
+.py-sm { @apply py-0.5; }
+.py-md { @apply py-1; }
+.py-lg { @apply py-2; }
+.py-xl { @apply py-4; }
+
+.shadow-accent-strong	{ box-shadow: inset 0 -1px var(--border-accent-strong);   }
+.shadow-accent-softest	{ box-shadow: inset 0 -1px var(--border-accent-softest);  }
+.shadow-neutral-softest { box-shadow: inset 0 -1px var(--border-neutral-softest); }
+.shadow-danger-strong   { box-shadow: inset 0 -1px var(--border-danger-strong);   }
+.shadow-danger-softest  { box-shadow: inset 0 -1px var(--border-danger-softest);  }

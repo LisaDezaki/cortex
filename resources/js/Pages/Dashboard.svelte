@@ -40,12 +40,12 @@
 		<PageHeader size="7xl" class="px-20 py-2"
 			title={ activeProject ? null : "Projects" }
 			tabs={ activeProject ? [
-				{ label: 'Dashboard', active: true },
-				{ label: 'Settings',  href: route('projects.settings') }
+				{ text: 'Dashboard', active: true },
+				{ text: 'Settings',  href: route('projects.settings') }
 			] : undefined }
 			actions={[
-				{ icon: "X", 	label: "Deactivate",	 theme: "danger", onclick: () => active.deactivate(), 	if: !!activeProject },
-				{ icon: "Plus", label: "Create Project", theme: "accent", onclick: () => projectList.create(),	if: !activeProject }
+				{ icon: "X", 	text: "Deactivate",	 	theme: "danger", onclick: () => active.deactivate(), 	if: !!activeProject },
+				{ icon: "Plus", text: "Create Project", theme: "accent", onclick: () => projectList.create(),	if: !activeProject }
 			]}
 		/>
 

@@ -39,8 +39,8 @@
     {#snippet header()}
 		<PageHeader
 			tabs={[
-				{ label: "Profile",		active: true },
-				{ label: "Settings",	href: route('user.settings') },
+				{ text: "Profile",		active: true },
+				{ text: "Settings",	href: route('user.settings') },
 			]}
 		/>
 	{/snippet}

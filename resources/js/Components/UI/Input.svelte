@@ -32,35 +32,35 @@
 		xl: 20,
 	}
 
-	const hSizes = {
-		xs: "h-6",
-		sm: "h-7",
-		md: "h-8",
-		lg: "h-9",
-		xl: "h-10"
-	}
+	// const hSizes = {
+	// 	xs: "h-6",
+	// 	sm: "h-7",
+	// 	md: "h-8",
+	// 	lg: "h-9",
+	// 	xl: "h-10"
+	// }
 
-	const padSizes = {
-		xs: "py-0",
-		sm: "py-0.25",
-		md: "py-0.5",
-		lg: "py-1",
-		xl: "py-1.5"
-	}
+	// const padSizes = {
+	// 	xs: "py-0",
+	// 	sm: "py-0.25",
+	// 	md: "py-0.5",
+	// 	lg: "py-1",
+	// 	xl: "py-1.5"
+	// }
 
 	/**
 	 * Classnames
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		input: clsx('input relative inline-flex items-center min-w-32 rounded', hSizes[size], className),
-		placeholder: clsx('input-placeholder italic opacity-75 text-neutral-softer'),
-		icon: clsx('input-icon absolute left-1 inline-flex items-center justify-center aspect-square h-7 -mr-1 rounded w-7'),
-		value: clsx('input-value bg-transparent border-none inline-flex items-center gap-2 line-clamp-1 rounded text-left text-sm w-full'),
-		element: clsx('input-element bg-transparent border-none h-full px-1 rounded-sm text-sm w-full focus:appearance-none'),
-		action: clsx('input-action aspect-square hover:bg-neutral-softest inline-flex items-center justify-center h-7 rounded shrink-0 w-7'),
-		content: clsx('input-content block border border-accent font-body max-h-96 min-w-32 overflow-y-auto rounded shadow-lg text-neutral z-10', contentClass),
-		option: clsx('input-option flex items-center cursor-pointer h-7 pl-1.5 pr-0.5 rounded-sm text-sm hover:bg-neutral-softest')
+		input:		clsx('input relative inline-flex items-center min-w-32 rounded', `p-${size}`, className),
+		placeholder:clsx('input-placeholder italic opacity-75 text-neutral-softer'),
+		icon:		clsx('input-icon absolute left-1 inline-flex items-center justify-center aspect-square h-7 -mr-1 rounded w-7'),
+		value:		clsx('input-value bg-transparent border-none inline-flex items-center gap-2 line-clamp-1 rounded text-left text-sm w-full'),
+		element:	clsx('input-element bg-transparent border-none h-full px-1 rounded-sm text-sm w-full focus:appearance-none'),
+		action:		clsx('input-action aspect-square hover:bg-neutral-softest inline-flex items-center justify-center h-7 rounded shrink-0 w-7'),
+		content:	clsx('input-content block border border-accent font-body max-h-96 min-w-32 overflow-y-auto rounded shadow-lg text-neutral z-10', contentClass),
+		option:		clsx('input-option flex items-center cursor-pointer h-7 pl-1.5 pr-0.5 rounded-sm text-sm hover:bg-neutral-softest')
 	})
 
 </script>
@@ -70,8 +70,6 @@
 {#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(type)}
 	<Input id={name} bind:value={value}
 		class={cx.input}
-		iconSize={iconSizes[size]}
-		inputClass={padSizes[size]}
 		type={type}
 	{...restProps} />
 {/if}
@@ -80,8 +78,6 @@
 {#if type == 'textarea'}
 	<Textarea id={name} bind:value={value}
 		class={cx.input}
-		iconSize={iconSizes[size]}
-		inputClass={padSizes[size]}
 	{...restProps} />
 {/if}
 
@@ -89,8 +85,6 @@
 {#if type == 'number'}
 	<Number id={name} bind:value={value}
 		class={cx.input}
-		iconSize={iconSizes[size]}
-		inputClass={padSizes[size]}
 	{...restProps} />
 {/if}
 
@@ -98,9 +92,7 @@
 {#if type == 'select'}
 	<Select id={name} bind:value={value}
 		class={cx.input}
-		iconSize={iconSizes[size]}
-		inputClass={padSizes[size]}
-		options={options} contentClass="input-content {contentClass}"
+		options={options}
 	{...restProps} />
 {/if}
 
@@ -108,9 +100,7 @@
 {#if type == 'combobox'}
 	<Combobox id={name} bind:value={value}
 		class="input {className}"
-		iconSize={iconSizes[size]}
-		inputClass={padSizes[size]}
-		options={options} contentClass="input-content {contentClass}"
+		options={options}
 	{...restProps} />
 {/if}
 
@@ -177,10 +167,12 @@
 
 	:global(.input) {
 		@apply relative inline-flex items-center min-w-32 rounded;
+		@apply border-b;
 		background-color: var(--bg-input);
-		border: none;
+		/* border: none; */
+		border-color: var(--border-neutral-softest);
 		color: var(--text-input);
-		box-shadow: 0 1px 0 var(--shadow-lowlight);
+		/* box-shadow: 0 1px 0 var(--shadow-lowlight); */
 
 		&.input-slider {
 			@apply min-h-4;

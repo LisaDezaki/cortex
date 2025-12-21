@@ -34,8 +34,8 @@
 			<PageHeader class="px-6 py-2"
 				title="Faction Settings"
 				tabs={[
-					{ label: "List",			href: route('factions') },
-					{ label: "Settings", 		active: true },
+					{ text: "Faction List",		href: route('factions') },
+					{ text: "Settings", 		active: true },
 				]}
 			/>
 

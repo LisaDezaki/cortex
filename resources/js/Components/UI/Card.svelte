@@ -87,7 +87,7 @@
 			{/if}
 		</Stack>
 		<Button class="rounded-full {active ? 'text-danger' : 'text-accent'} {active ? 'inline' : 'hidden group-hover:inline'}"
-			size="sm" theme={active ? undefined : "accent"}
+			theme={active ? undefined : "accent"}
 			icon={active ? "XCircle" : "ArrowCircleRight"} iconSize="lg" iconWeight="light"
 		/>
 	</Flex>

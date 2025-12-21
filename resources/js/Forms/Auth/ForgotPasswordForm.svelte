@@ -34,7 +34,7 @@
 		<Button style="hard" theme="accent"
 			class="w-full {$forgotPasswordForm.processing && 'opacity-25'}"
 			disabled={$forgotPasswordForm.processing}
-			label="Email Password Reset Link"
+			text="Email Password Reset Link"
 		/>
 
 		<Flex justify="center" gap={6} class="w-full">

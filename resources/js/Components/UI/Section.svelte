@@ -25,7 +25,7 @@
 
 <Flex as="section" {direction} class={cx.section} {...restProps}>
 	{#if size}
-		<Container {size} {direction} class="mx-auto">
+		<Container {size} {direction} class="max-h-full mx-auto">
 			{@render children?.()}
 		</Container>
 	{:else}

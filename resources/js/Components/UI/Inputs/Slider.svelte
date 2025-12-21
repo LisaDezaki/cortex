@@ -3,6 +3,7 @@
 	import { Flex, Stack } from '@/Components/Core'
 	import Icon from '@/Components/UI/Icon.svelte'
 	import Label from '@/Components/UI/Inputs/Label.svelte'
+	import clsx from 'clsx'
 
 	let {
         class: className,
@@ -23,14 +24,6 @@
 		...restProps
     } = $props()
 
-	const marginSizes = {
-		xs: "my-0",
-		sm: "my-0.25",
-		md: "my-0.5",
-		lg: "my-1",
-		xl: "my-1.5"
-	}
-
 	// Compute the actual min/max values based on reverse
     // const actualMin = $derived(reverse ? Math.max(min, max) : Math.min(min, max))
     // const actualMax = $derived(reverse ? Math.min(min, max) : Math.max(min, max))
@@ -41,108 +34,58 @@
     //     return reverse ? actualMax - val + actualMin : val
     // }
 
+	let cx = $derived({
+		slider: clsx('slider relative inline-flex items-center min-w-32 touch-none select-none', `py-${size}`, {
+			'style-disabled': restProps.disabled
+		}, className),
+		track: clsx('slider-track relative h-3 w-full grow overflow-hidden my-1 rounded-full', {
+			'bg-accent shadow-accent-strong': 	style === 'empty' || style === 'both',
+			'bg-white shadow-neutral-softest': 	style === 'fill'  || style === 'none'
+		}),
+		range: clsx('slider-range relative h-full rounded-full', {
+			'bg-accent shadow-accent-strong': 	style === 'fill'  || style === 'both',
+			'bg-white shadow-neutral-softest': 	style === 'empty' || style === 'none'
+		}),
+		thumb: clsx('border cursor-pointer flex items-center justify-center min-h-5 min-w-5 rounded-full shadow-sm text-sm z-10',
+			'focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2',
+			'bg-white border-neutral-soft text-white',
+			'hover:min-h-6 hover:min-w-6 hover:border-accent'
+		),
+		ticks: clsx('absolute flex items-center justify-between px-2 h-full w-full'),
+		tick: clsx('h-1 w-1 bg-black/15 rounded-full'),
+	})
+
 </script>
 
 
 
-<Stack align="between" gap={0.5} class="shrink-0 {className}">
-	
-	{#if label}
-		<Flex align="center" justify="start" gap={1} class="font-light pt-0.5 pl-1 text-neutral-soft w-full">
-			{#if labelIcon}
-				<Icon name={labelIcon} size="xs" />
-			{/if}
-			<Label
-				class="font-style-label"
-				value={label}
-			/>
-		</Flex>
-	{/if}
-	
-	<Slider.Root
-		class="input-slider {marginSizes[size]} {restProps.disabled ? "style-disabled" : ""}"
-		type={multiple ? "multiple" : "single"}
-		bind:value
-		{min} {max} {step}
-		{...restProps}
-	>
-		{#snippet children({ ticks, thumbs })}
-			<span class="input-slider-track {["empty","both"].includes(style) ? "accent" : "neutral"}">
-				<Slider.Range class="slider-range {["fill","both"].includes(style) ? "accent" : "neutral"}" />
-			</span>
-	
-			{#each thumbs as thumb}
-				<Slider.Thumb index={thumb} class="slider-thumb">
-					{#if showValue}
-						{multiple ? value[thumb] : value}
-					{/if}
-				</Slider.Thumb>
-			{/each}
-	
-			{#if showTicks}
-				<div class="ticks">
-					{#each ticks as tick}
-						<Slider.Tick class="slider-tick" />
-					{/each}
-				</div>
-			{/if}
-	
-		{/snippet}
-	</Slider.Root>
-</Stack>
+<Slider.Root
+	class={cx.slider}
+	type={multiple ? "multiple" : "single"}
+	bind:value
+	{min} {max} {step}
+	{...restProps}
+>
+	{#snippet children({ ticks, thumbs })}
+		<span class={cx.track}>
+			<Slider.Range class={cx.range} />
+		</span>
 
+		{#each thumbs as thumb}
+			<Slider.Thumb index={thumb} class={cx.thumb}>
+				{#if showValue}
+					{multiple ? value[thumb] : value}
+				{/if}
+			</Slider.Thumb>
+		{/each}
 
-<style lang="postcss">
+		{#if showTicks}
+			<div class={cx.ticks}>
+				{#each ticks as tick}
+					<Slider.Tick class={cx.tick} />
+				{/each}
+			</div>
+		{/if}
 
-	:global(.input-slider) {
-		@apply relative inline-flex items-center w-full;
-		@apply touch-none select-none;
-	}
-
-	.input-slider-track {
-		@apply relative h-4 w-full grow overflow-hidden my-1;
-		@apply border-none rounded-full;
-		border: none;
-		box-shadow: 0 1px 0 var(--shadow-lowlight);
-		&.accent {
-			background: var(--bg-accent-gradient);
-		}
-		&.neutral {
-			background-color: var(--bg-input);
-		}
-	}
-
-	:global(.slider-range) {
-		@apply relative h-full rounded-full;
-		&.accent {
-			background: var(--bg-accent-gradient);
-		}
-		&.neutral {
-			background-color: var(--bg-input);
-		}
-	}
-
-	:global(.slider-thumb) {
-		@apply flex items-center justify-center min-h-5 min-w-5 z-10;
-		@apply border rounded-full;
-		@apply cursor-pointer shadow-sm;
-		@apply text-sm;
-		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
-		background-color: var(--bg-white);
-		border-color: var(--border-neutral-soft);
-		color: var(--text-white);
-		&:hover {
-			@apply min-h-6 min-w-6;
-			border-color: var(--border-accent);
-		}
-	}
-
-	.ticks {
-		@apply absolute flex items-center justify-between px-2 h-full w-full;
-	}
-
-	:global(.slider-tick) {
-		@apply h-1 w-1 bg-black/15 rounded-full;
-	}
-
-</style>
+	{/snippet}
+</Slider.Root>

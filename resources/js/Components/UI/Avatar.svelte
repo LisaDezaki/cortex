@@ -1,5 +1,5 @@
 <script>
-
+	import Icon from '@/Components/UI/Icon.svelte'
 	import clsx from 'clsx'
 	import { Avatar } from "bits-ui"
 
@@ -7,8 +7,8 @@
 		alt,
 		children,
 		class: className,
-		fallback = "AB",
-		if: showIf = true,
+		fallback,
+		status,
 		src,
 		...restProps
 	} = $props()
@@ -23,13 +23,18 @@
 		fallback: clsx('bg-neutral-softer flex items-center justify-center h-full rounded-full text-neutral-soft w-full')
 	})
 
+	let emptyText = $derived(fallback || "—")
+
 </script>
 
 
 
-{#if showIf}
-	<Avatar.Root class="{cx.avatar} {restProps.square ? 'square' : ''}" {...restProps}>
-		<Avatar.Image class={cx.image} src={src} alt={alt}></Avatar.Image>
-		<Avatar.Fallback class={cx.fallback}>{fallback}</Avatar.Fallback>
-	</Avatar.Root>
-{/if}
+<Avatar.Root class="{cx.avatar} {restProps.square ? 'square' : ''}" data-status={status} {...restProps}>
+	{#if status === 'loading'}
+		<Icon name="CircleNotch" class="bg-accent-softest p-1 rounded-full text-accent" animation="animate-spin" />
+	{:else if status === 'loaded'}
+		<Avatar.Image class={cx.image} src={src} alt={alt} data-status={status}></Avatar.Image>
+	{:else}
+		<Avatar.Fallback class={cx.fallback} data-status={status}>{emptyText}</Avatar.Fallback>
+	{/if}
+</Avatar.Root>
