@@ -72,6 +72,7 @@ class HandleInertiaRequests extends Middleware
 				'factions.headquarters.image',
 				'factions.ranks',
 				'factions.members.image',
+				'items',
 				'locations.image',
 				'locations.media',
 				'locations.mapData.location',

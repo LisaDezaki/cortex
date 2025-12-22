@@ -33,11 +33,15 @@ class ProjectResource extends JsonResource
 				return $this->characters->sortBy('name');
 			})),
 
-			'factions'		=> FactionResource::collection(  $this->whenLoaded('factions', function() {
+			'factions'		=> FactionResource::collection($this->whenLoaded('factions', function() {
 				return $this->factions->sortBy('name');
 			})),
 
-			'locations'		=> LocationResource::collection( $this->whenLoaded('locations', function() {
+			'items'			=> ItemResource::collection($this->whenLoaded('items', function() {
+				return $this->items->sortBy('name');
+			})),
+
+			'locations'		=> LocationResource::collection($this->whenLoaded('locations', function() {
 				return $this->locations->sortBy('name');
 			})),
 

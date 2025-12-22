@@ -154,7 +154,7 @@
 
 			<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-6 py-3"
+			<PageHeader class="px-6 py-2"
 				tabs={[
 					{ text: "Character List",	active: true },
 					{ text: "Settings",			href: route('characters.settings') },

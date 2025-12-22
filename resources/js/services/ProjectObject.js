@@ -12,6 +12,7 @@ import { route } from 'momentum-trail'
 import { modalActions } from '@/stores/modalStore';
 import CharacterList from '@/services/CharacterList'
 import FactionList from '@/services/FactionList'
+import ItemList from '@/services/ItemList'
 import LocationList from '@/services/LocationList'
 
 /**
@@ -54,6 +55,13 @@ export default class ProjectObject {
 			 * @readonly
 			 */
 			factions:   projectData.factions   ? new FactionList(projectData.factions)		: null,
+
+			/**
+			 * An ItemList instance
+			 * @type {ItemList}
+			 * @readonly
+			 */
+			items:   projectData.items   ? new ItemList(projectData.items)		: null,
 			
 			/**
 			 * A LocationList instance

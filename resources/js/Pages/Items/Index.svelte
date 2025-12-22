@@ -3,28 +3,27 @@
 	import { onMount } from 'svelte';
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
-    import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+    import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
 	import Stack				from '@/Components/Core/Stack.svelte'
-	import Empty   	  			from '@/Components/UI/Empty.svelte'
+	import Empty				from '@/Components/UI/Empty.svelte'
 	import Entity				from '@/Components/UI/Entity.svelte'
-	import PageHeader 			from '@/Components/UI/PageHeader.svelte'
-	import Section    			from '@/Components/UI/Section.svelte'
-	import LocationControlBar 	from '@/Components/Features/Location/LocationControlBar.svelte'
-	import LocationPanel		from '@/Components/Features/Location/LocationPanel.svelte'
-	import LocationTable		from '@/Components/Features/Location/LocationTable.svelte'
-	import ProjectObject 	from '@/services/ProjectObject'
-	import LocationList 	from '@/services/LocationList'
-	import LocationObject 	from '@/services/LocationObject'
+	import PageHeader			from '@/Components/UI/PageHeader.svelte'
+	import Section				from '@/Components/UI/Section.svelte'
+	import ItemControlBar 		from '@/Components/Features/Item/ItemControlBar.svelte'
+	import ItemPanel 			from '@/Components/Features/Item/ItemPanel.svelte'
+	import ItemTable			from '@/Components/Features/Item/ItemTable.svelte'
+	import ProjectObject 		from '@/services/ProjectObject'
 
 
 	/**
 	 * Active project instance
 	 * @type {ProjectObject}
 	 */
-	const activeProject   = $state(new ProjectObject($page.props.activeProject.data))
-	const locations       = $state(activeProject?.locations)
+	const activeProject	  = new ProjectObject($page.props.activeProject.data)
+	// const characters      = activeProject?.characters
+	const items			= activeProject?.items
 
 
 	/**
@@ -46,17 +45,17 @@
 	 * @property {string} selected - Slug of currently selected faction
 	 */
 
-	 /**
+	/**
 	 * Reactive state parameters for filtering, sorting, and layout
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
-		query: 		urlParams.get('q') 		|| '',
+		query: 		urlParams.get('q')		|| '',
 		filter: 	urlParams.get('filter') || '',
-		sort: 		urlParams.get('sort') 	|| 'name',
-		direction: 	urlParams.get('dir') 	|| 'desc',
-		size: 		urlParams.get('size') 	|| 3,
-		layout: 	urlParams.get('layout') || 'grid',
+		sort: 		urlParams.get('sort')	|| 'name',
+		direction: 	urlParams.get('dir')	|| 'desc',
+		size: 		urlParams.get('size')	|| 6,
+		layout: 	urlParams.get('layout')	|| 'grid',
 		selected: 	urlParams.get('selected') || ''
 	})
 
@@ -64,13 +63,13 @@
 	 * Derived grid columns calculation based on size parameter
 	 * @type {number}
 	 */
-	let gridCols = $derived(8-parameters.size)
+	let gridCols = $derived(12-parameters.size)
 
 	/**
 	 * Derived filtered/sorted results
 	 * @type {Array<CharacterObject>}
 	 */
-	let results  = $derived(locations.items)
+	let results  = $derived(items?.items || [])
 
 
 	/**
@@ -82,14 +81,13 @@
 		parameters = {
 			query: 		urlParams.get('q') 		|| '',
 			filter: 	urlParams.get('filter') || '',
-			size: 		urlParams.get('size') 	|| 3,
 			sort: 		urlParams.get('sort') 	|| 'name',
 			direction: 	urlParams.get('dir') 	|| 'desc',
+			size: 		urlParams.get('size') 	|| 6,
 			layout: 	urlParams.get('layout') || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};
 	});
-
 
 	/**
 	 * Update URL - Sync URL params with state changes (without page reload)
@@ -111,30 +109,36 @@
 
 
 	/**
-	 * Get Subtitle
-	 * @param {LocationObject} location | A LocationObject class instance
-	 * @return {string} Subtitle to display on Location Cards
+	 * Generate subtitle text for item cards based on current sort criteria
+	 * @param {ItemObject} item | A ItemObject class instance
+	 * @returns {string} subtitle to display on Item Cards
 	 */
-	function getSubtitle(location) {
+	function getSubtitle(item) {
 		switch (parameters.sort) {
+			// case 'popularity':
+			// 	return item.relationships?.items?.length + ' Relationships'
+			// case 'location':
+			// 	return item.location?.name || '--'
+			// case 'faction':
+			// 	return item.factions?.items?.[0]?.name || '--'
 			case 'created_at':
-				return new Date(location.meta?.createdAt).toLocaleString() || '--'
+				return new Date(item.meta?.createdAt).toLocaleString() || '--'
 			case 'updated_at':
-				return new Date(location.meta?.updatedAt).toLocaleString() || '--'
+				return new Date(item.meta?.updatedAt).toLocaleString() || '--'
 			default:
-				return location.type || '--'
+				return item.customFieldValues.find(v => v.name === parameters.sort)?.displayValue || item.alias
 		}
 	}
 
 	/**
-	 * Select Location
-	 * @param {LocationObject} location | A LocationObject class instance
+	 * Select or deselect a item in the UI
+	 * @param {ItemObject} item | An ItemObject class instance
 	 * @return {void}
 	 */
-	function selectLocation(location) {
+	function selectItem(item) {
 		const url = new URL(window.location);
-		url.searchParams.set('selected', location?.slug)
-		parameters.selected = parameters.selected === location?.slug ? null : location.slug
+		url.searchParams.set('selected', item?.slug)
+		parameters.selected = parameters.selected === item.slug ? null : item.slug
 	}
 
 </script>
@@ -142,7 +146,7 @@
 
 
 <svelte:head>
-    <title>Location List</title>
+    <title>Item List</title>
 </svelte:head>
 
 <AuthenticatedLayout>
@@ -153,41 +157,44 @@
 
 			<PageHeader class="px-6 py-2"
 				tabs={[
-					{ text: "Location List",	active: true },
-					{ text: "Settings",			href: route('locations.settings') },
+					{ text: "Item List",	active: true },
+					{ text: "Settings",		href: route('items.settings') },
 				]}
 				actions={[
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => locations.create(), },
+					{ icon: "Plus", text: "New", theme: "accent", onclick: () => items.create() },
 				]}
 			>
-				<LocationControlBar
-					data={locations} project={activeProject}
+				<ItemControlBar
+					data={items} project={activeProject}
 					bind:query={parameters.query}
 					bind:filter={parameters.filter}
 					bind:sort={parameters.sort}
 					bind:size={parameters.size}
 					bind:layout={parameters.layout}
 					bind:results
+					min={4} max={8}
 				/>
 			</PageHeader>
+
 
 			<!-- Main Body -->
 
 			<Stack class="px-6 pt-3 pb-6">
-				{#if activeProject && locations.items.length > 0}
+				{#if activeProject && items?.items.length > 0}
+	
 
 					<!-- Grid -->
-
+	
 					{#if parameters.layout === 'grid'}
 						<Grid cols={gridCols} gap={3}>
 							{#if results.length > 0}
-								{#each results as location}
+								{#each results as item}
 									<Entity
-										active={parameters.selected === location.slug}
-										entity={location}
+										active={parameters.selected === item.slug}
+										entity={item}
 										layout="stack"
 										size="auto"
-										onclick={() => selectLocation(location)}
+										onclick={() => selectItem(item)}
 									/>
 								{/each}
 							{:else}
@@ -197,38 +204,28 @@
 
 
 					<!-- Table -->
-					
-					{:else if parameters.layout == 'table'}
-						<LocationTable
-							locations={results}
+	
+					{:else if parameters.layout === 'table'}
+						<ItemTable
+							items={results}
 						/>
-
-					
-					<!-- Map -->
-
-					{:else if parameters.layout == 'map'}
-						<!-- <LocationMap
-							constrain={false}
-							class="bg-black/50 max-h-full rounded-lg"
-							location={worldTree}
-						/> -->
 
 
 					{/if}
 				{:else}
 
 					<Empty
-						icon="MapPin"
-						text="There are no locations for this project yet."
+						icon="Package"
+						text="There are no items for this project yet."
 						buttonLabel="Create one?"
-						buttonClick={() => location.create()}
+						buttonClick={() => items.create()}
 					/>
-				{/if}
 
+				{/if}
 			</Stack>
 		</Section>
 	{/snippet}
 	{#snippet sidebar()}
-		<LocationPanel location={locations.items.find(l => l.slug === parameters.selected)} />
+		<ItemPanel item={items?.items.find(i => i.slug === parameters.selected)} />
 	{/snippet}
 </AuthenticatedLayout>

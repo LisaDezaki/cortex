@@ -10,6 +10,7 @@
 
 	let {
 		active,
+		aspect,
 		entity,
 		layout = "inline",
 		onclick = () => {},
@@ -20,7 +21,7 @@
 		card:	clsx('cursor-pointer'),
 
 		thumbnail: {
-			base: clsx('aspect-square rounded', {
+			base: clsx('rounded', aspect, {
 				'bg-accent-softer':    active,
 				'bg-neutral-softest': !active
 			}),

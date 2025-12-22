@@ -35,6 +35,7 @@
 	import CircleNotch from "phosphor-svelte/lib/CircleNotch"
 	import Compass from "phosphor-svelte/lib/Compass"
 	import CompassRose from "phosphor-svelte/lib/CompassRose"
+	import Coins from "phosphor-svelte/lib/Coins"
 	import Crane from "phosphor-svelte/lib/Crane"
 	import DiamondsFour from "phosphor-svelte/lib/DiamondsFour"
 	import DotsSixVertical from "phosphor-svelte/lib/DotsSixVertical"
@@ -44,6 +45,7 @@
 	import Empty from "phosphor-svelte/lib/Empty"
 	import Eye from "phosphor-svelte/lib/Eye"
 	import EyeClosed from "phosphor-svelte/lib/EyeClosed"
+	import Feather from "phosphor-svelte/lib/Feather"
 	import File from "phosphor-svelte/lib/File"
 	import FileAudio from "phosphor-svelte/lib/FileAudio"
 	import FileImage from "phosphor-svelte/lib/FileImage"
@@ -84,6 +86,7 @@
 	import Link from "phosphor-svelte/lib/Link"
 	import List from "phosphor-svelte/lib/List"
 	import ListBullets from "phosphor-svelte/lib/ListBullets"
+	import LockKey from "phosphor-svelte/lib/LockKey"
 	import MagnifyingGlass from "phosphor-svelte/lib/MagnifyingGlass"
 	import MagnifyingGlassMinus from "phosphor-svelte/lib/MagnifyingGlassMinus"
 	import MagnifyingGlassPlus from "phosphor-svelte/lib/MagnifyingGlassPlus"
@@ -94,6 +97,7 @@
 	import MapTrifold from "phosphor-svelte/lib/MapTrifold"
 	import Minus from "phosphor-svelte/lib/Minus"
 	import Moon from "phosphor-svelte/lib/Moon"
+	import Package from "phosphor-svelte/lib/Package"
 	import Palette from "phosphor-svelte/lib/Palette"
 	import Password from "phosphor-svelte/lib/Password"
 	import Pen from "phosphor-svelte/lib/Pen"
@@ -174,6 +178,7 @@
 		'CircleHalfTilt': CircleHalfTilt,
 		'CircleNotch': CircleNotch,
 		'Crane': Crane,
+		'Coins': Coins,
 		'Compass': Compass,
 		'CompassRose': CompassRose,
 		'DiamondsFour': DiamondsFour,
@@ -184,6 +189,7 @@
 		'Empty': Empty,
 		'Eye': Eye,
 		'EyeClosed': EyeClosed,
+		'Feather': Feather,
 		'File': File,
 		'FileAudio': FileAudio,
 		'FileImage': FileImage,
@@ -224,6 +230,7 @@
 		'Link': Link,
 		'List': List,
 		'ListBullets': ListBullets,
+		'LockKey': LockKey,
 		'MagnifyingGlass': MagnifyingGlass,
 		'MagnifyingGlassMinus': MagnifyingGlassMinus,
 		'MagnifyingGlassPlus': MagnifyingGlassPlus,
@@ -234,6 +241,7 @@
 		'MapTrifold': MapTrifold,
 		'Minus': Minus,
 		'Moon': Moon,
+		'Package': Package,
 		'Palette': Palette,
 		'Password': Password,
 		'Pen': Pen,

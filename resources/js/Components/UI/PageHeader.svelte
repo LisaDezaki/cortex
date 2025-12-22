@@ -48,9 +48,8 @@
 						{#if !tab.hasOwnProperty('if') || tab.if === true}
 							<Button
 								size="md"
-								class="min-w-32 rounded-full {tab.active ? '' : 'hover:text-accent'}"
-								style={tab.active ? 'hard'   : 'plain'}
-								theme={tab.active ? 'accent' : 'neutral'}
+								class="min-w-32 rounded-full {tab.active ? 'bg-emerald-600 text-white' : 'hover:text-accent'}"
+								style="plain"
 								{...tab}
 							/>
 						{/if}

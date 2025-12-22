@@ -1,0 +1,107 @@
+{
+	"backpack": {
+		"name": "Backpack",
+		"type": "Container",
+		"desc": "",
+		"cost": 50,
+		"weight": 10,
+		"isContainer": true
+	},
+
+	"compass": {
+		"name": "Compass",
+		"type": "Tool",
+		"desc": "",
+		"cost": 50,
+		"weight": 10,
+		"craft": {
+			"metal": 3,
+			"mechanisms": 2
+		},
+		"scrap": {
+			"metal": 1,
+			"mechanisms": 1
+		}
+	},
+
+	"fabric": {
+		"name": "Fabric",
+		"type": "Resource",
+		"desc": "",
+		"cost": 10,
+		"weight": 10
+	},
+
+	"mechanisms": {
+		"name": "Mechanisms",
+		"type": "Resource",
+		"desc": "",
+		"cost": 20,
+		"weight": 10
+	},
+
+	"metal": {
+		"name": "Metal",
+		"type": "Resource",
+		"desc": "",
+		"cost": 15,
+		"weight": 20
+	},
+
+	"sextant": {
+		"name": "Sextant",
+		"type": "Tool",
+		"desc": "",
+		"cost": 75,
+		"weight": 5,
+		"craft": {
+			"metal": 3,
+			"mechanisms": 2
+		},
+		"scrap": {
+			"metal": 1,
+			"mechanisms": 1
+		}
+	},
+
+	"shortbow": {
+		"name": "Shortbow",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 20,
+		"weight": 15
+	},
+
+	"shortsword": {
+		"name": "Shortsword",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 25,
+		"weight": 25
+	},
+
+	"telescope": {
+		"name": "Telescope",
+		"type": "Tool",
+		"desc": "",
+		"cost": 75,
+		"weight": 5,
+		"craft": {
+			"metal": 3,
+			"glass": 2
+		},
+		"scrap": {
+			"metal": 1,
+			"glass": 1
+		}
+	},
+
+	"wood": {
+		"name": "Wood",
+		"type": "Resource",
+		"desc": "",
+		"cost": 5,
+		"weight": 10
+	}
+
+}

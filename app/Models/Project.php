@@ -88,6 +88,11 @@ class Project extends Model
 		return $this->hasMany(Faction::class)->orderBy('slug', 'ASC');
 	}
 
+	public function items(): HasMany
+	{
+		return $this->hasMany(Item::class)->orderBy('slug', 'ASC');
+	}
+
 	public function locations(): HasMany
 	{
 		return $this->hasMany(Location::class)->orderBy('slug', 'ASC');

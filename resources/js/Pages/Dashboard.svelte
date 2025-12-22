@@ -11,11 +11,12 @@
 	import Button		from '@/Components/UI/Button.svelte'
 	import Card			from '@/Components/UI/Card.svelte'
 	import Collapsible	from '@/Components/UI/Collapsible.svelte'
+	import Entity		from '@/Components/UI/Entity.svelte'
 	import Heading		from '@/Components/UI/Heading.svelte'
 	import Media		from '@/Components/UI/Media.svelte'
 	import PageHeader	from '@/Components/UI/PageHeader.svelte'
+	import PageHeading	from '@/Components/UI/PageHeading.svelte'
 	import Section		from '@/Components/UI/Section.svelte'
-	import ProjectCard	from '@/Components/Features/Project/ProjectCard.svelte'
 
 	import ProjectList 	 from '@/services/ProjectList'
 	import ProjectObject from '@/services/ProjectObject'
@@ -38,7 +39,6 @@
 <AuthenticatedLayout>
 	{#snippet article()}
 		<PageHeader size="7xl" class="px-20 py-2"
-			title={ activeProject ? null : "Projects" }
 			tabs={ activeProject ? [
 				{ text: 'Dashboard', active: true },
 				{ text: 'Settings',  href: route('projects.settings') }
@@ -186,17 +186,23 @@
 		{:else}
 
 		
-			<Section size="7xl" class="p-20 pt-16">
+			<Section size="7xl" class="px-20">
+
+				<PageHeading
+					title="Projects"
+					subtitle="View and manage your projects from here."
+					class="mb-12"
+				/>
+
 				{#if projects}
-					<Grid gap={3} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
+					<Grid gap={6} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
 						{#each projectList.items as project}
-							<ProjectCard
-								project={project}
+							<Entity
+								aspect="aspect-video"
+								entity={project}
+								layout="stack"
+								size="auto"
 								onclick={() => project.activate()}
-								options={[
-									{ icon: 'Textbox', 	label: 'Rename', 			onclick: () => renameProject(project) },
-									{ icon: 'Trash', 	label: 'Delete Project',	onclick: () => deleteProject(project), theme: 'danger' },
-								]}
 							/>
 						{/each}
 					</Grid>
@@ -205,7 +211,6 @@
 				{/if}
 			</Section>
 
-			
 		{/if}
 	{/snippet}
 </AuthenticatedLayout>

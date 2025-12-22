@@ -7,6 +7,7 @@ use App\Models\CustomField;
 use App\Models\CustomFieldOption;
 use App\Models\CustomFieldValue;
 use App\Models\Faction;
+use App\Models\Item;
 use App\Models\Location;
 use App\Models\MapItem;
 use Illuminate\Database\Seeder;
@@ -133,7 +134,24 @@ class TabletopiaSeeder extends Seeder
 		}
 
 
+		/**
+		 * ITEMS
+		 */
 
+		$items = [];
+		$json = File::get(database_path('data/tabletopia/items.json'));
+		$json_items = json_decode($json, true);
+
+		foreach ($json_items as $slug => $item) {
+			$items[$slug] = Item::create([
+				'project_id'	=> $projects['tabletopia']->id,
+				'name'			=> $item['name'],
+				'type'			=> $item['type'],
+				'description'	=> $item['desc'] ?? null,
+				'cost'			=> $item['cost'] ?? null,
+				'weight'		=> $item['weight'] ?? null,
+			]);
+		}
 		
 
 

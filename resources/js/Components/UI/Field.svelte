@@ -4,6 +4,7 @@
 	import Input from '@/Components/UI/Input.svelte'
 	import Error from '@/Components/UI/Inputs/Error.svelte'
 	import Label from '@/Components/UI/Inputs/Label.svelte'
+	import clsx  from 'clsx'
 	
 	const { form } = getContext("form");
 
@@ -16,67 +17,29 @@
 		inputClass,
 		label,
 		labelSrOnly = false,
-		layout,
+		layout = 'stack',
 		name,
-		size,
-		type,
+		size = 'md',
+		type = 'text',
         ...restProps
     } = $props()
 
 	if (!name) { console.error(`The Field component requires a "name" field. You may have mistakenly used "id", which is set to ${restProps.id}`) }
 	if (!$form[name]) { $form[name] = defaultValue || null }
 
+	let cx = {
+		field:	clsx({
+			'relative grid grid-cols-2 gap-6 w-full': layout === 'block',
+			'relative flex flex-col': layout !== 'block'
+		}),
+		label:	clsx({ 'sr-only': labelSrOnly }),
+		desc:	clsx('mt-1 px-1.5 text-sm text-neutral'),
+		error:	clsx(''),
+	}
+
 </script>
 
 
-
-{#snippet labelBlock()}
-	<Label
-		for={name}
-		text={label}
-		class="field-label font-style-label {labelSrOnly ? 'sr-only' : ''}"
-	/>
-{/snippet}
-
-{#snippet descriptionBlock()}
-	<div class="font-style-small text-slate-400">{description}</div>
-{/snippet}
-
-{#snippet inputBlock()}
-	{#if type}
-		<Input {name} {type} {size}
-			class={inputClass}
-			label={label}
-			bind:value={$form[name]}
-		{...restProps} />
-	{/if}
-{/snippet}
-
-{#snippet errorBlock()}
-	<Error message={errors} />
-{/snippet}
-
-<div class="form-field {className} {layout}">
-
-	{#if layout == 'block'}
-		<div class="col-span-1">
-			{@render labelBlock()}
-			{@render descriptionBlock()}
-		</div>
-		<div class="col-span-1">
-			{@render inputBlock()}
-			{@render errorBlock()}
-		</div>
-	{:else}
-		<!-- {@render labelBlock()} -->
-		{@render descriptionBlock()}
-		{@render inputBlock()}
-		{@render errorBlock()}
-	{/if}
-
-	{@render children?.()}
-
-</div>
 
 <style lang="postcss">
 
@@ -94,10 +57,10 @@
 		@apply relative flex flex-col;
 	}
 
-	.field-description {
+	/* .field-description {
 		@apply mt-1 px-1.5 text-sm;
 		color: var(--text-neutral-soft);
-	}
+	} */
 
 	.field-errors {
 		@apply mt-1 px-1.5 text-sm;
@@ -105,3 +68,55 @@
 	}
 
 </style>
+
+
+
+{#snippet labelBlock()}
+	<Label
+		for={name}
+		text={label}
+		class={cx.label}
+	/>
+{/snippet}
+
+{#snippet descriptionBlock()}
+	<div class={cx.desc}>{description}</div>
+{/snippet}
+
+{#snippet inputBlock()}
+	{#if type}
+		<Input {name} {type} {size}
+			class={inputClass}
+			label={label}
+			bind:value={$form[name]}
+		{...restProps} />
+	{/if}
+{/snippet}
+
+{#snippet errorBlock()}
+	<Error class={cx.error} message={errors} />
+{/snippet}
+
+
+<div class={cx.field}>
+
+	{#if layout == 'block'}
+		<div class="col-span-1">
+			{@render labelBlock()}
+			{@render descriptionBlock()}
+		</div>
+		<div class="col-span-1">
+			{@render inputBlock()}
+			{@render errorBlock()}
+		</div>
+	{:else}
+		{@render labelBlock()}
+		{@render descriptionBlock()}
+		{@render inputBlock()}
+		{@render errorBlock()}
+	{/if}
+
+	{@render children?.()}
+
+</div>
+
