@@ -8,8 +8,8 @@
 	import Stack   	  from '@/Components/Core/Stack.svelte'
 	import Button  	  from '@/Components/UI/Button.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
-	import Input      from '@/Components/UI/Input.svelte'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
+	import PageHeading from '@/Components/UI/PageHeading.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
 	import Separator  from '@/Components/UI/Separator.svelte'
@@ -47,7 +47,11 @@
 				/>
 				<Stack>
 
-					<Heading is="h1" as="h3" class="mb-12 text-neutral-softest">Character Settings</Heading>
+					<PageHeading
+						title="Character Settings"
+						subtitle="Manage the Character Settings for this project."
+						class="mb-12 text-neutral-softest"
+					/>
 
 					<Section id="overview" class="pb-12">
 						<CharacterSettingsForm />

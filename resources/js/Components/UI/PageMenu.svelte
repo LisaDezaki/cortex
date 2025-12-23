@@ -4,7 +4,7 @@
 	
 	import { Inline, Stack } from '@/Components/Core'
 	import Icon      from '@/Components/UI/Icon.svelte'
-	import Input     from '@/Components/UI/Input.svelte'
+	import Input     from '@/Components/UI/Input'
 	import url from '@/stores/urlStore'
 
     let {
@@ -48,7 +48,7 @@
 
 	{#if searchable}
 		<div class="flex-shrink-0 px-1.5">
-			<Input type="search"
+			<Input.Text type="search"
 				class="page-menu-search"
 				icon="MagnifyingGlass"
 				placeholder="Search"

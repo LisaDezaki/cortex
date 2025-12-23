@@ -1,4 +1,6 @@
 <script>
+    import clsx from "clsx"
+
 
     let {
 		children,
@@ -6,19 +8,22 @@
 		shrink = false,
         ...restProps
     } = $props()
+
+	let cx = {
+		cell: clsx('py-1', {
+			'shrink': shrink
+		}, className)
+	}
 </script>
 
-<td class="{className} {shrink ? 'shrink' : ''}" {...restProps}>
-	<div class="cell">
-		{@render children()}
-	</div>
+<td class={cx.cell} {...restProps}>
+	<!-- <div class="cell"> -->
+	{@render children()}
+	<!-- </div> -->
 </td>
 
 <style lang="postcss">
 
-	td {
-		@apply inline-flex items-center overflow-hidden;
-	}
 	td.shrink {
 		@apply min-w-12 basis-0;
 	}
@@ -26,8 +31,8 @@
 		@apply flex-grow basis-1;
 	}
 
-	td .cell {
-		@apply inline-flex items-center gap-3 p-1 w-full;
-	}
+	/* td .cell {
+		@apply inline-flex flex-col items-start gap-3 py-1 w-full;
+	} */
 
 </style>

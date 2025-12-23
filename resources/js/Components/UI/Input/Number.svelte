@@ -1,13 +1,15 @@
 <script>
-    import { onMount } from 'svelte'
+    import { onDestroy, onMount } from 'svelte'
 
-	import Button from '@/Components/UI/Button.svelte'
+	import Flex from '@/Components/Core/Flex.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
+	import clsx from 'clsx'
 
     let {
         class: className,
 		icon,
 		inputClass,
+		size = "md",
         value = $bindable(),
         ...restProps
     } = $props()
@@ -26,9 +28,15 @@
 
     onMount(() => {
         if (restProps.autofocus && input) {
+			hasFocus = true
             input.focus()
+			input.click()
         }
     })
+
+	onDestroy(() => {
+		hasFocus = false
+	})
 
 	function decrement() {
 		if (restProps.min && Number(restProps.min) > Number(value) - step) { return }
@@ -40,41 +48,34 @@
 		value = Number(value) + step
 	}
 
+	let cx = $derived({
+		input: clsx('input input-number', `p-${size}`, `text-${size}`, {
+			'disabled': restProps.disabled,
+			'focus': hasFocus
+		}, className)
+	})
+
 </script>
 
 
 
 
 
-<div class="input-number {className}" class:disabled={restProps.disabled} class:focus={hasFocus}>
+<Flex align="center" justify="start" class={cx.input}>
 
 	{#if icon}
-		<Icon class="input-icon" name={icon} size={20} weight="regular" />
+		<Icon class="input-icon" name={icon} size={size} weight="regular" />
 	{/if}
 
-	<input type="number"
-		aria-disabled={restProps.disabled ? 'true' : undefined}
-		class="input-element {icon ? "pl-icon" : ""} {inputClass}"
-		bind:value
+	<input
 		bind:this={input}
+		bind:value
+		type="number"
+		aria-disabled={restProps.disabled ? 'true' : undefined}
+		class="input-element {inputClass}"
 		onfocus={checkFocus}
 		onblur={checkFocus}
 		{...restProps}
 	/>
 
-	<!-- <div class="flex items-center">
-		<Button style="plain" theme={value - step < restProps.min ? "neutral" : "accent"}
-			class="input-action"
-			disabled={value - step < restProps.min || restProps.disabled}
-			icon="Minus" iconSize={16}
-			onclick={decrement}
-		/>
-		<Button style="plain" theme={value + step > restProps.max ? "neutral" : "accent"}
-			class="input-action"
-			disabled={value + step > restProps.max || restProps.disabled}
-			icon="Plus" iconSize={16}
-			onclick={increment}
-		/>
-	</div> -->
-
-</div>
+</Flex>

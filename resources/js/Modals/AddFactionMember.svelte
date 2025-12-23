@@ -6,7 +6,7 @@
 
 	import Button    from '@/Components/UI/Button.svelte'
 	import Icon		 from '@/Components/UI/Icon.svelte'
-	import Input     from '@/Components/UI/Input.svelte'
+	import Input     from '@/Components/UI/Input'
 	import ModalForm from '@/Components/UI/ModalForm.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
@@ -84,10 +84,10 @@
 		</Flex>
 
 		<Flex justify="center" class="p-6 pt-3 w-full">
-			<Input bind:value={$form.relationships[0].character_role} placeholder="Label (e.g, Parent)"
+			<Input.Text bind:value={$form.relationships[0].character_role} placeholder="Label (e.g, Parent)"
 				class="w-48"
 			/>
-			<Input bind:value={$form.relationships[0].related_character_role} placeholder="Label (e.g, Child)"
+			<Input.Text bind:value={$form.relationships[0].related_character_role} placeholder="Label (e.g, Child)"
 				class="w-48"
 			/>
 		</Flex>

@@ -5,9 +5,7 @@
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import { Flex, Form, Stack } from '@/Components/Core'
 	import Container   	from '@/Components/UI/Container.svelte';
-	import Field   		from '@/Components/UI/Field.svelte';
 	import Heading 		from '@/Components/UI/Heading.svelte';
-	import Input   		from '@/Components/UI/Input.svelte';
 	import PageHeader  	from '@/Components/UI/PageHeader.svelte'
 	import PageMenu  	from '@/Components/UI/PageMenu.svelte'
 	import Section 		from '@/Components/UI/Section.svelte';

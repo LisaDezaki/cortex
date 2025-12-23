@@ -1,10 +1,9 @@
 <script>
     import { onDestroy, onMount } from 'svelte'
 
-	import { Flex, Inline, Popover, Stack } from '@/Components/Core'
-	import Button from '@/Components/UI/Button.svelte'
+	import Flex from '@/Components/Core/Flex.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
-	import Label  from '@/Components/UI/Inputs/Label.svelte'
+    import clsx from 'clsx'
 
     let {
         class: className,
@@ -14,6 +13,7 @@
 		label,
 		labelIcon,
 		size = "md",
+		type = "text",
         value = $bindable(),
         ...restProps
     } = $props()
@@ -37,21 +37,30 @@
 		hasFocus = false
 	})
 
+	let cx = $derived({
+		input: clsx('input', `p-${size}`, {
+			'disabled': restProps.disabled,
+			'focus': hasFocus
+		}, className),
+		element: clsx('input-element', `px-${size} py-0 text-${size}`, inputClass)
+	})
+
 </script>
 
 
 
-<Flex align="center" justify="start" class="input p-{size} text-{size} {className} {restProps.disabled ? 'disabled' : ''} {hasFocus ? 'focus' : ''}">
-	
+<Flex align="center" justify="start" class={cx.input}>
+
 	{#if icon}
-		<Icon name={icon} size={size} weight="regular" />
+		<Icon class="input-icon" name={icon} size={size} weight="regular" />
 	{/if}
 
 	<input
-		aria-disabled={restProps.disabled ? 'true' : undefined}
-		bind:value
 		bind:this={input}
-		class="input-element p-0 {inputClass}"
+		bind:value
+		type={type}
+		aria-disabled={restProps.disabled ? 'true' : undefined}
+		class={cx.element}
 		onfocus={checkFocus}
 		onblur={checkFocus}
 		{...restProps}

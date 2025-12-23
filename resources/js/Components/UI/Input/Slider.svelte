@@ -2,7 +2,7 @@
 	import { Slider } from "bits-ui";
 	import { Flex, Stack } from '@/Components/Core'
 	import Icon from '@/Components/UI/Icon.svelte'
-	import Label from '@/Components/UI/Inputs/Label.svelte'
+	import Label from '@/Components/UI/Label.svelte'
 	import clsx from 'clsx'
 
 	let {

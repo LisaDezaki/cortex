@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Chivo+Mono:ital,wght@0,100..900;1,100..900&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -442,6 +442,11 @@
 		@apply px-1 py-0.5 rounded;
 	}
 
+	code,
+	pre {
+		font-family: 'Chivo Mono';
+	}
+
 }
 
 
@@ -506,11 +511,11 @@ select:focus {
 
 /*	Padding  */
 
-.p-xs { @apply px-1   py-0; }
-.p-sm { @apply px-1.5 py-0.5; }
-.p-md { @apply px-2   py-1; }
-.p-lg { @apply px-3   py-2; }
-.p-xl { @apply px-6   py-4; }
+.p-xs { @apply p-0.5; }
+.p-sm { @apply p-1; }
+.p-md { @apply p-1.5; }
+.p-lg { @apply p-2; }
+.p-xl { @apply p-4; }
 
 .px-xs { @apply px-1; }
 .px-sm { @apply px-1.5; }

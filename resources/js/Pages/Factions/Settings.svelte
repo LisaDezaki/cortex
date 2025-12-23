@@ -8,7 +8,7 @@
 	import Stack   	  from '@/Components/Core/Stack.svelte'
 	import Button  	  from '@/Components/UI/Button.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
-	import Input      from '@/Components/UI/Input.svelte'
+	import Input      from '@/Components/UI/Input'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'

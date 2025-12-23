@@ -7,7 +7,7 @@
 	import Button  from '@/Components/UI/Button.svelte'
 	import Field   from '@/Components/UI/Field.svelte'
 	import Heading from '@/Components/UI/Heading.svelte'
-	import Input   from '@/Components/UI/Input.svelte'
+	import Input   from '@/Components/UI/Input'
 
 	const customFields = $page.props.customFields?.data
 	const settings = $page.props.settings?.characters?.data
@@ -37,8 +37,7 @@
 		<Heading is="h3" as="h5">Overview</Heading>
 	</Flex>
 
-	<Input name="enabled"
-		type="switch"
+	<Input.Switch name="enabled"
 		label="Enable Factions"
 	/>
 

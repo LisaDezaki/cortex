@@ -1,7 +1,7 @@
 <script>
 
 	import { Switch } from "bits-ui";
-	import Label from './Label.svelte'
+	import Label from '@/Components/UI/Label.svelte'
 
     let {
 		checked = $bindable(false),
@@ -41,17 +41,25 @@
 	}
 
 	:global(.switch) {
-		@apply inline-flex rounded-full h-6 w-10 p-1 border flex-shrink-0;
+		@apply inline-flex rounded-full h-6 w-10 p-1 border-b flex-shrink-0;
 		@apply focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2;
+		&[data-state="unchecked"] {
+			background: var(--bg-neutral-softest);
+			border-color: var(--border-neutral-softest);
+		}
 		&[data-state="checked"] {
-			background: var(--bg-accent-gradient);
-			border-color: var(--border-accent);
+			background: var(--bg-accent);
+			border-color: var(--border-accent-strong);
 		}
 
 		:global(.switch-thumb) {
-			@apply rounded-full h-full aspect-square border transition;
+			@apply rounded-full h-full aspect-square border-b transition;
 			background-color: var(--bg-neutral-soft);
 			border-color: var(--border-neutral-soft);
+			&[data-state="unchecked"] {
+				background: var(--bg-neutral-soft);
+				border-color: var(--border-neutral-soft);
+			}
 			&[data-state="checked"] {
 				background-color: var(--bg-white);
 				border-color: var(--border-white);

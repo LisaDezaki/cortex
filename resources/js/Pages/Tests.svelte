@@ -4,12 +4,15 @@
 	
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import { Flex, Grid, Inline, PanZoom, Stack } from '@/Components/Core'
+	import Flex		from '@/Components/Core/Flex.svelte'
+	import Grid		from '@/Components/Core/Grid.svelte'
+	import Inline	from '@/Components/Core/Inline.svelte'
+	import PanZoom	from '@/Components/Core/PanZoom.svelte'
+	import Stack	from '@/Components/Core/Stack.svelte'
 
 	import Avatar    	from '@/Components/UI/Avatar.svelte'
 	import Badge     	from '@/Components/UI/Badge.svelte'
 	import Button    	from '@/Components/UI/Button.svelte'
-	import Checkbox  	from '@/Components/UI/Inputs/Checkbox.svelte'
 	import Chip    		from '@/Components/UI/Chip.svelte'
 	import Code    		from '@/Components/UI/Code.svelte'
 	import Demo  		from '@/Components/UI/Demo.svelte'
@@ -19,42 +22,37 @@
 	import Field     	from '@/Components/UI/Field.svelte'
 	import Heading   	from '@/Components/UI/Heading.svelte'
 	import Icon 		from '@/Components/UI/Icon.svelte'
-	import Input     	from '@/Components/UI/Input.svelte'
+	import Input		from '@/Components/UI/Input'
 	import PageHeader	from '@/Components/UI/PageHeader.svelte'
 	import PageHeading	from '@/Components/UI/PageHeading.svelte'
 	import PageMenu  	from '@/Components/UI/PageMenu.svelte'
 	import ReorderableList from '@/Components/Core/ReorderableList.svelte'
 	import Section   	from '@/Components/UI/Section.svelte'
-	import Select		from '@/Components/UI/Inputs/Select.svelte'
 	import Separator 	from '@/Components/UI/Separator.svelte'
-	import Slider		from '@/Components/UI/Inputs/Slider.svelte'
 	import Table     	from '@/Components/UI/Table'
 	import Tabs     	from '@/Components/UI/Tabs'
 	import Tag     		from '@/Components/UI/Tag.svelte'
 	import Thumbnail 	from '@/Components/UI/Thumbnail.svelte'
 	import Toast 		from '@/Components/UI/Toast.svelte'
 	import Tooltip 		from '@/Components/UI/Tooltip.svelte'
-	import Upload 		from '@/Components/UI/Inputs/Upload.svelte'
 
 	import CharacterList from '@/services/CharacterList.js'
-	import FactionList from '@/services/FactionList.js'
-	import LocationList from '@/services/LocationList.js'
 
 	const activeProject = $page.props.activeProject?.data
 	const characters	= $state(activeProject ? new CharacterList(activeProject.characters) : [])
-	// const factions		= new FactionList(activeProject?.factions)
-	// const locations		= new LocationList(activeProject?.locations)
 
-	let active = $state('slider')
+	let active = $state('avatar')
 
 	let test = $state({
 		avatar: {
-			fallback: 	null,
+			fallback: 	'AB',
 			size: 		32,
 			src: 		'/img/avatar-1.png',
 			status:		'loaded'
 		},
 		badge: {
+			disabled:	false,
+			error:		false,
 			text: 		99,
 			style:		'hard',
 			theme: 		'accent'
@@ -82,7 +80,9 @@
 			icon: 		'Books',
 			label: 		'Dropdown',
 			placeholder:'Placeholder...',
-			value: 		null
+			size:		'md',
+			text:		'Dropdown',
+			value: 		''
 		},
 		entity: {
 			count: 		12,
@@ -153,6 +153,11 @@
 			name:		'switch',
 			size:		'md'
 		},
+		table: {
+			selected:	null,
+			sortBy:		'name',
+			sortFn:		(a,b) => a.name.toLowerCase() < b.name.toLowerCase ? -1 : 1
+		},
 		tabs: {
 			value:		'tabs_1'
 		},
@@ -194,9 +199,9 @@
 <AuthenticatedLayout>
 	
 	{#snippet article()}
-		<Section size="5xl" class="max-h-full overflow-hidden">
-			<Flex class="max-h-full overflow-hidden w-full">
-				<PageMenu class="overflow-y-auto py-12 pr-6"
+		<Section size="5xl" class="h-full overflow-y-auto">
+			<Flex class="w-full">
+				<PageMenu class="sticky top-0 py-12 pr-6"
 					items={[
 						{ label: 'Avatar',		active: active === 'avatar',   	onclick: () => active = "avatar" 	},
 						{ label: 'Badge',		active: active === 'badge',    	onclick: () => active = "badge" 	},
@@ -225,7 +230,7 @@
 						{ label: 'Upload',		active: active === 'upload',	onclick: () => active = "upload" 	},
 					]}
 				/>
-				<Stack gap={12} class="min-w-96 overflow-y-auto p-12 w-full">
+				<Stack gap={12} class="h-full min-w-96 overflow-y-auto p-12 w-full">
 
 					{#if      active === 'avatar'}
 		
@@ -241,23 +246,27 @@
 								<Avatar {...test.avatar} class="w-{test.avatar.size}" />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" icon="ImageSquare"  name="src" bind:value={test.avatar.src} placeholder="Image URL..." class="w-24" options={[
+								<Input.Select bind:value={test.avatar.src} icon="ImageSquare" placeholder="Image URL..." class="w-24" options={[
 									{ label: 'Blue',   value: '/img/avatar-1.png' },
 									{ label: 'Green',  value: '/img/avatar-2.png' },
 									{ label: 'Pink',   value: '/img/avatar-3.png' },
 									{ label: 'Red',    value: '/img/avatar-4.png' },
 									{ label: 'Orange', value: '/img/avatar-5.png' },
 								]} />
-								<Input size="sm" type="text" icon="TextAa" name="fallback" bind:value={test.avatar.fallback} placeholder="Fallback" class="w-24" />
-								<Input size="sm" type="select" name="status" bind:value={test.avatar.status} placeholder="Status" options={[
+								<Input.Text bind:value={test.avatar.fallback} icon="TextAa" placeholder="Fallback" class="w-24" />
+								<Input.Select bind:value={test.avatar.status} placeholder="Status" options={[
 									{ label: 'Loaded',	value: 'loaded' },
 									{ label: 'Loading',	value: 'loading' },
 									{ label: 'Error',	value: 'error' }
 								]} />
-								<Input size="sm" type="slider" name="size" bind:value={test.avatar.size} min={8} max={64} step={4} class="ml-auto w-32" />
+								<Input.Slider name="size" bind:value={test.avatar.size} min={8} max={64} step={4} class="ml-auto w-32" />
 							</Flex>
 							<Code code={
-`<Avatar
+`<script>
+	import Avatar from '@/Components/UI/Avatar'
+</script>
+
+<Avatar
 	fallback="${test.avatar.fallback}"
 	src="${test.avatar.src}"
 	status="${test.avatar.status}"
@@ -270,41 +279,24 @@
 								heading="API Reference"
 								class="text-neutral"
 							/>
-							<table class="text-sm">
-								<thead>
-									<tr>
-										<th class="text-left">Property</th>
-										<th class="text-left">Type</th>
-										<th class="text-left">Description</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>fallback</code></td>
-										<td class="align-top p-3 pl-0 min-w-32"><pre>string</pre></td>
-										<td class="align-top p-3 pl-0">The text to display in case an image is not provided or fails to load.
-											<pre>Default: &mdash;</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>src</code></td>
-										<td class="align-top p-3 pl-0 min-w-32"><pre>string</pre></td>
-										<td class="align-top p-3 pl-0">The image URL to display in this component.
-											<pre>Default: &mdash;</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>status</code></td>
-										<td class="align-top p-3 pl-0 min-w-32">
-											<pre>enum</pre>
-											<pre class="text-neutral-soft text-xs">'live|away|busy|gone'</pre>
-										</td>
-										<td class="align-top p-3 pl-0">The image URL to display in this component.
-											<pre>Default: &mdash;</pre>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+
+							{#snippet headRow()}
+								<Table.Head class="max-w-32" sortable={true}>Property</Table.Head>
+								<Table.Head class="max-w-32" sortable={true}>Type</Table.Head>
+								<Table.Head class="" sortable={true}>Description</Table.Head>
+							{/snippet}
+			
+							{#snippet bodyRow(item)}
+								<Table.Cell class="align-top py-2 max-w-32"><code>{item.property}</code></Table.Cell>
+								<Table.Cell class="align-top py-2 max-w-32"><pre>{item.type}</pre></Table.Cell>
+								<Table.Cell class="align-top py-2">{item.description}<br/><pre class="text-xs text-neutral-soft">Default: {item.default}</pre></Table.Cell>
+							{/snippet}
+
+							<Table class="min-w-96 text-sm" {headRow} {bodyRow} data={[
+								{ id: 1, property: 'fallback',	type: 'string',	description: 'The text to display in case an image is not provided or fails to load.', default: '—' },
+								{ id: 2, property: 'src',		type: 'string',	description: 'The image URL to display in this component.', default: '—' },
+								{ id: 3, property: 'status',	type: 'enum',	description: 'The image URL to display in this component.', default: '—' }
+							]} />
 						</Stack>
 
 					{:else if active === 'badge'}
@@ -313,31 +305,37 @@
 
 						<PageHeading
 							title="Badge"
-							subtitle="Represents an item count or notification on other components."
+							subtitle="Badges show notifications, counts, or status information on navigation items and icons."
 						/>
 
 						<Stack>
 							<Demo name="Badge">
-								<Flex align="center" justify="between" class="bg-neutral-softest p-2 rounded w-64">
+								<Flex align="center" justify="between" class="bg-neutral-softest p-2 rounded w-48">
 									<span class="px-1 text-neutral-softest text-sm">List Item</span>
 									<Badge {...test.badge} />
 								</Flex>
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="number" icon="Hash" name="count" bind:value={test.badge.text} placeholder="Text" />
-								<Input size="sm" type="select" icon="CircleHalfTilt" name="style" bind:value={test.badge.style} placeholder="Style" options={[
+								<Input.Number bind:value={test.badge.text}  icon="Hash"           placeholder="Text" />
+								<Input.Select bind:value={test.badge.style} icon="CircleHalfTilt" placeholder="Style" options={[
 									{ label: 'Hard',	value: 'hard'  },
 									{ label: 'Soft',	value: 'soft'  },
 									{ label: 'Plain',	value: 'plain' },
 								]} />
-								<Input size="sm" type="select" icon="Palette" name="theme" bind:value={test.badge.theme} placeholder="Theme" options={[
+								<Input.Select bind:value={test.badge.theme} icon="Palette" placeholder="Theme" options={[
 									{ label: 'Accent',	value: 'accent'  },
 									{ label: 'Neutral',	value: 'neutral' },
 									{ label: 'Danger',	value: 'danger'  },
 								]} />
+								<Input.Switch bind:checked={test.badge.disabled} label="Disabled"	/>
+								<Input.Switch bind:checked={test.badge.error}	 label="Error"		/>
 							</Flex>
 							<Code code={
-`<Badge
+`<script>
+	import Badge from '@/Components/UI/Badge'
+</script>
+
+<Badge
 	text="${test.badge.text}"
 	style="${test.badge.style}"
 	theme="${test.badge.theme}"
@@ -350,25 +348,22 @@
 								heading="API Reference"
 								class="text-neutral"
 							/>
-							A table showing the properties, types, and description of each property, along with its default value if applicable.
-							<table>
-								<thead>
-									<tr>
-										<th class="text-left">Property</th>
-										<th class="text-left">Type</th>
-										<th class="text-left">Description</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><pre>label</pre></td>
-										<td><pre>number</pre></td>
-										<td>The number to display
-											<pre>Default: null</pre>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+
+							{#snippet headRow()}
+								<Table.Head class="max-w-32" sortable={true}>Property</Table.Head>
+								<Table.Head class="max-w-32" sortable={true}>Type</Table.Head>
+								<Table.Head class="" sortable={true}>Description</Table.Head>
+							{/snippet}
+			
+							{#snippet bodyRow(item)}
+								<Table.Cell class="align-top py-2 max-w-32"><code>{item.property}</code></Table.Cell>
+								<Table.Cell class="align-top py-2 max-w-32"><pre>{item.type}</pre></Table.Cell>
+								<Table.Cell class="align-top py-2">{item.description}<br/><pre class="text-xs text-neutral-soft">Default: {item.default}</pre></Table.Cell>
+							{/snippet}
+
+							<Table class="min-w-96 text-sm" {headRow} {bodyRow} data={[
+								{ id: 1, property: 'label',	type: 'number',	description: 'The number to display.', default: '—' },
+							]} />
 						</Stack>
 
 					{:else if active === 'button'}
@@ -385,24 +380,25 @@
 								<Button {...test.button} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" icon="CircleHalfTilt" name="style" bind:value={test.button.style} placeholder="Style" options={[
+								<Input.Select icon="CircleHalfTilt" name="style" bind:value={test.button.style} placeholder="Style" options={[
 									{ label: 'Hard',	value: 'hard' },
 									{ label: 'Soft',	value: 'soft' },
 									{ label: 'Plain',	value: 'plain' }
 								]} />
-								<Input size="sm" type="select" icon="Palette" name="theme" bind:value={test.button.theme} placeholder="Theme" options={[
+								<Input.Select icon="Palette" name="theme" bind:value={test.button.theme} placeholder="Theme" options={[
 									{ label: 'Accent',	value: 'accent'  },
 									{ label: 'Neutral',	value: 'neutral' },
 									{ label: 'Danger',	value: 'danger'  }
 								]} />
-								<Input size="sm" type="select" icon="Resize" name="size" bind:value={test.button.size} placeholder="Size" options={[
+								<Input.Select icon="Resize" name="size" bind:value={test.button.size} placeholder="Size" options={[
 									{ label: 'Tiny',	value: 'xs' },
 									{ label: 'Small',	value: 'sm' },
 									{ label: 'Medium',	value: 'md' },
 									{ label: 'Large',	value: 'lg' },
 									{ label: 'Huge',	value: 'xl' }
 								]} />
-								<Input size="sm" type="select" name="icon" bind:value={test.button.icon} placeholder="Icon" options={[
+								<Input.Select name="icon" bind:value={test.button.icon} placeholder="Icon" options={[
+									{ value: '',		label: 'None' },
 									{ value: 'At',		label: 'At',   		icon: 'At' 			},
 									{ value: 'Books',	label: 'Books',		icon: 'Books' 		},
 									{ value: 'Chats',	label: 'Chats',		icon: 'Chats' 		},
@@ -412,13 +408,17 @@
 									{ value: 'Funnel',		label: 'Funnel',		icon: 'Funnel' 		},
 									{ value: 'List',		label: 'List',		icon: 'List' 		},
 								]} />
-								<Input size="sm" name="text" icon="TextAa" bind:value={test.button.text} placeholder="Text" />
+								<Input.Text icon="TextAa" bind:value={test.button.text} placeholder="Text" />
 							</Flex>
 							<Code code={
-`<Button
+`<script>
+	import Button from '@/Components/UI/Button'
+</script>
+
+<Button
 	icon="${test.button.icon}"
-	text="${test.button.text}"
 	size="${test.button.size}"
+	text="${test.button.text}"
 	onclick={() => {}}
 />`							} />
 						</Stack>
@@ -428,89 +428,30 @@
 								heading="API Reference"
 								class="text-neutral"
 							/>
-							<table class="text-sm">
-								<thead>
-									<tr>
-										<th class="text-left text-neutral-softer">Property</th>
-										<th class="text-left text-neutral-softer">Type</th>
-										<th class="text-left text-neutral-softer">Description</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>disabled</code></td>
-										<td class="align-top p-3 pl-0 min-w-32"><pre>boolean</pre></td>
-										<td class="align-top p-3 pl-0">Whether or not the button is disabled. When disabled, the button cannot be interacted with.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: false</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>href</code></td>
-										<td class="align-top p-3 pl-0 min-w-32"><pre>string</pre></td>
-										<td class="align-top p-3 pl-0">An optional prop that when passed converts the button into an anchor tag.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: &mdash;</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>icon</code></td>
-										<td class="align-top p-3 pl-0 min-w-32"><pre>enum</pre></td>
-										<td class="align-top p-3 pl-0">The name of a Phosphor icon. You can also provide an array containing up to 3 values, representing the icon's name, size, and weight.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: &mdash;</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>label</code></td>
-										<td class="align-top p-3 pl-0 min-w-32"><pre>string</pre></td>
-										<td class="align-top p-3 pl-0">The text label on the button.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: &mdash;</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>loading</code></td>
-										<td class="align-top p-3 pl-0 min-w-32"><pre>boolean</pre></td>
-										<td class="align-top p-3 pl-0">Whether or not the button is loading. If the button is loading, it will display a loading icon, and be unavailable to click until its process is resolved.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: false</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>onclick</code></td>
-										<td class="align-top p-3 pl-0 min-w-32"><pre>function</pre></td>
-										<td class="align-top p-3 pl-0">A function for the button to perform when clicked. If <code>href</code> is provided, then this is not necessary.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: &mdash;</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>size</code></td>
-										<td class="align-top p-3 pl-0 min-w-32">
-											<pre>enum:</pre>
-											<pre class="text-neutral-soft text-xs">'xs'|'sm'|'md'|'lg'|'xl'</pre>
-										</td>
-										<td class="align-top p-3 pl-0">The size code for this button.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: "md"</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>style</code></td>
-										<td class="align-top p-3 pl-0 min-w-32">
-											<pre>enum:</pre>
-											<pre class="text-neutral-soft text-xs">'hard'|'soft'|'plain'</pre>
-										</td>
-										<td class="align-top p-3 pl-0">The style preset for this button.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: "plain"</pre>
-										</td>
-									</tr>
-									<tr class="border-t">
-										<td class="align-top p-3 pl-0 min-w-32"><code>theme</code></td>
-										<td class="align-top p-3 pl-0 min-w-32">
-											<pre>enum:</pre>
-											<pre class="text-neutral-soft text-xs">'accent'|'neutral'|'danger'</pre>
-										</td>
-										<td class="align-top p-3 pl-0">The theme for this button. This should be combined with the <code>style</code> to establish the button's semantic meaning.
-											<pre class="mt-3 text-xs text-neutral-soft">Default: "neutral"</pre>
-										</td>
-									</tr>
-								</tbody>
-							</table>
+
+							{#snippet headRow()}
+								<Table.Head class="max-w-32" sortable={true}>Property</Table.Head>
+								<Table.Head class="max-w-32" sortable={true}>Type</Table.Head>
+								<Table.Head class="" sortable={true}>Description</Table.Head>
+							{/snippet}
+			
+							{#snippet bodyRow(item)}
+								<Table.Cell class="align-top py-2 max-w-32"><code>{item.property}</code></Table.Cell>
+								<Table.Cell class="align-top py-2 max-w-32"><pre>{item.type}</pre></Table.Cell>
+								<Table.Cell class="align-top py-2">{item.description}<br/><pre class="text-xs text-neutral-soft">Default: {item.default}</pre></Table.Cell>
+							{/snippet}
+
+							<Table class="min-w-96 text-sm" {headRow} {bodyRow} data={[
+								{ id: 1, property: 'disabled', type: 'boolean',  default: false,     description: 'Whether or not the button is disabled. When disabled, the button cannot be interacted with.' },
+								{ id: 2, property: 'href',     type: 'string',   default: null,      description: 'An optional prop that when passed converts the button into an anchor tag.' },
+								{ id: 3, property: 'icon',     type: 'enum',     default: null,      description: 'The name of a Phosphor icon. You can also provide an array containing up to 3 values, representing the icon\'s name, size, and weight.' },
+								{ id: 4, property: 'label',    type: 'string',   default: null,      description: 'The text label on the button.' },
+								{ id: 5, property: 'loading',  type: 'boolean',  default: false,     description: 'Whether or not the button is loading. If the button is loading, it will display a loading icon, and be unavailable to click until its process is resolved.' },
+								{ id: 6, property: 'onclick',  type: 'function', default: null,      description: 'A function for the button to perform when clicked. If <code>href</code> is provided, then this is not necessary.' },
+								{ id: 7, property: 'size',     type: 'enum',     default: 'md',      description: 'The style preset for this button.' },
+								{ id: 8, property: 'style',    type: 'enum',     default: 'plain',   description: 'The size code for this button.' },
+								{ id: 9, property: 'theme',    type: 'enum',     default: 'neutral', description: 'The theme for this button. This should be combined with the <code>style</code> to establish the button\'s semantic meaning.' },
+							]} />
 						</Stack>
 
 					{:else if active === 'checkbox'}
@@ -524,14 +465,18 @@
 
 						<Stack>
 							<Demo name="Checkbox">
-								<Checkbox bind:checked={test.checkbox.checked} labelText={test.checkbox.label} class="w-40" />
+								<Input.Checkbox bind:checked={test.checkbox.checked} labelText={test.checkbox.label} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="checkbox" name="checked" bind:checked={test.checkbox.checked} labelText="Checked" />
-								<Input size="sm" type="text" name="label" bind:value={test.checkbox.label} />
+								<Input.Text bind:value={test.checkbox.label} icon="TextAa" />
+								<Input.Switch bind:checked={test.checkbox.checked} label="Checked" labelText="Checked" />
 							</Flex>
 							<Code code={
-`<Checkbox
+`<script>
+	import Input from '@/Components/UI/Input'
+</script>
+
+<Input.Checkbox
 	bind:checked="${test.checkbox.checked}"
 	labelText="${test.checkbox.label}"
 />`
@@ -552,16 +497,29 @@
 								<Chip {...test.chip} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="text" name="text" bind:value={test.chip.text} placeholder="Text" />
-								<Input size="sm" type="select" name="state" bind:value={test.chip.state} placeholder="Default" options={[
+								<Input.Select bind:value={test.chip.icon} placeholder="Icon" options={[
+									{ value: '',		label: 'None',   	icon: null 			},
+									{ value: 'At',		label: 'At',   		icon: 'At' 			},
+									{ value: 'Books',	label: 'Books',		icon: 'Books' 		},
+									{ value: 'Chats',	label: 'Chats',		icon: 'Chats' 		},
+									{ value: 'Compass',	label: 'Compass',	icon: 'Compass' 	},
+									{ value: 'Eye',		label: 'Eye',		icon: 'Eye' 		},
+									{ value: 'Funnel',	label: 'Funnel',	icon: 'Funnel' 		},
+								]} />
+								<Input.Text  bind:value={test.chip.text} icon="TextAa" placeholder="Text" />
+								<Input.Select bind:value={test.chip.state} placeholder="Default" options={[
 									{ label: 'Default',	value: '' },
 									{ label: 'Active',  value: 'active' }
 								]} />
 							</Flex>
 							<Code code={
-`<Chip
-	text="${test.chip.text}"
+`<script>
+	import Chip from '@/Components/UI/Chip'
+</script>
+
+<Chip
 	state="${test.chip.state}"
+	text="${test.chip.text}"
 />`
 							} />
 						</Stack>
@@ -573,8 +531,8 @@
 
 						<Stack>
 							<Flex gap={1.5} class="mb-1.5">
-								<Input size="sm" type="text" name="text" bind:value={test.chip.text} placeholder="Text" />
-								<Input size="sm" type="select" name="state" bind:value={test.chip.state} placeholder="State" options={[
+								<Input type="text" name="text" bind:value={test.chip.text} placeholder="Text" />
+								<Input type="select" name="state" bind:value={test.chip.state} placeholder="State" options={[
 									{ label: 'Default',	value: '' },
 									{ label: 'Active',  value: 'active' }
 								]} />
@@ -585,41 +543,35 @@
 						</Stack> -->
 
 					{:else if active === 'dropdown'}
-		
+
 						<!-- Dropdown -->
 
-						<Stack>
-							<Heading is="h2" as="h3">Dropdown</Heading>
-							<p class="text-neutral-softer text-lg">Displays a menu of items that users can select from when triggered.</p>
-						</Stack>
+						<PageHeading
+							title="Dropdown"
+							subtitle="Displays a menu of items that users can select from when triggered."
+						/>
 
 						<Stack>
 							<Demo name="Dropdown">
-								<Dropdown
-									bind:value={test.dropdown.value}
-									icon={test.dropdown.icon}
-									label={test.dropdown.label}
-									placeholder={test.dropdown.placeholder}
-									options={[
-										{ label: 'Value 1', value: 'dropdown1' },
-										{ label: 'Value 2', value: 'dropdown2' },
-										{ label: 'Value 3', value: 'dropdown3', options: [
-											{ label: 'Value 3.1', value: 'dropdown3.1' },
-											{ label: 'Value 3.2', value: 'dropdown3.2' },
-											{ label: 'Value 3.3', value: 'dropdown3.3' }
-										] },
-										{ label: 'Value 4', value: 'dropdown4' },
-										{ label: 'Value 5', value: 'dropdown5', options: [
-											{ label: 'Value 5.1', value: 'dropdown5.1' },
-											{ label: 'Value 5.2', value: 'dropdown5.2' },
-											{ label: 'Value 5.3', value: 'dropdown5.3' }
-										] },
-										{ label: 'Value 6', value: 'dropdown6' },
-									]}
-								/>
+								<Dropdown bind:value={test.dropdown.value} {...test.dropdown} options={[
+									{ label: 'Value 1', value: 'dropdown1' },
+									{ label: 'Value 2', value: 'dropdown2' },
+									{ label: 'Value 3', value: 'dropdown3', options: [
+										{ label: 'Value 3.1', value: 'dropdown3.1' },
+										{ label: 'Value 3.2', value: 'dropdown3.2' },
+										{ label: 'Value 3.3', value: 'dropdown3.3' }
+									] },
+									{ label: 'Value 4', value: 'dropdown4' },
+									{ label: 'Value 5', value: 'dropdown5', options: [
+										{ label: 'Value 5.1', value: 'dropdown5.1' },
+										{ label: 'Value 5.2', value: 'dropdown5.2' },
+										{ label: 'Value 5.3', value: 'dropdown5.3' }
+									] },
+									{ label: 'Value 6', value: 'dropdown6' },
+								]} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" name="state" bind:value={test.dropdown.icon} placeholder="Icon" options={[
+								<Input.Select bind:value={test.dropdown.icon} placeholder="Icon" options={[
 									{ value: '',		label: 'None',   	icon: null 			},
 									{ value: 'At',		label: 'At',   		icon: 'At' 			},
 									{ value: 'Books',	label: 'Books',		icon: 'Books' 		},
@@ -628,11 +580,22 @@
 									{ value: 'Eye',		label: 'Eye',		icon: 'Eye' 		},
 									{ value: 'Funnel',	label: 'Funnel',	icon: 'Funnel' 		},
 								]} />
-								<Input size="sm" type="text" name="label" bind:value={test.dropdown.label} placeholder="Label" />
-								<Input size="sm" type="text" name="placeholder" bind:value={test.dropdown.placeholder} placeholder="Placeholder" />
+								<Input.Text bind:value={test.dropdown.label} icon="TextAa" placeholder="Text" />
+								<Input.Text bind:value={test.dropdown.placeholder} placeholder="Placeholder" />
+								<Input.Select bind:value={test.dropdown.size} icon="Resize" placeholder="Size" class="ml-auto" options={[
+									{ label: 'Tiny',	value: 'xs' },
+									{ label: 'Small',	value: 'sm' },
+									{ label: 'Medium',	value: 'md' },
+									{ label: 'Large',	value: 'lg' },
+									{ label: 'Huge',	value: 'xl' }
+								]} />
 							</Flex>
 							<Code code={
-`<Dropdown
+`<script>
+	import Dropdown from '@/Components/UI/Dropdown'
+</script>
+
+<Dropdown
 	icon="${test.dropdown.icon}"
 	label="${test.dropdown.label}"
 	placeholder="${test.dropdown.placeholder}"
@@ -659,18 +622,18 @@
 								</Grid>
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" name="size" bind:value={test.entity.size} placeholder="Size" options={[
+								<Input.Select bind:value={test.entity.size} placeholder="Size" options={[
 									{ label: 'Tiny',	value: 'xs' },
 									{ label: 'Small',	value: 'sm' },
 									{ label: 'Medium',	value: 'md' },
 									{ label: 'Large',	value: 'lg' },
 									{ label: 'Huge',	value: 'xl' }
 								]} />
-								<Input size="sm" type="select" name="layout" bind:value={test.entity.layout} placeholder="Layout" options={[
+								<Input.Select bind:value={test.entity.layout} placeholder="Layout" options={[
 									{ label: 'Inline',	value: 'inline' },
 									{ label: 'Stack',	value: 'stack'  }
 								]} />
-								<Input size="sm" type="slider" name="text" bind:value={test.entity.count} min={8} max={24} step={4} class="ml-auto w-36" />
+								<Input.Slider bind:value={test.entity.count} min={8} max={24} step={4} class="ml-auto" />
 							</Flex>
 							<Code code={
 `<Entity
@@ -688,14 +651,14 @@
 
 						<!-- <Stack>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" name="size" bind:value={test.entity.size} placeholder="Size" options={[
+								<Input type="select" name="size" bind:value={test.entity.size} placeholder="Size" options={[
 									{ label: 'Tiny',	value: 'xs' },
 									{ label: 'Small',	value: 'sm' },
 									{ label: 'Medium',	value: 'md' },
 									{ label: 'Large',	value: 'lg' },
 									{ label: 'Huge',	value: 'xl' }
 								]} />
-								<Input size="sm" type="slider" name="text" bind:value={test.entity.count} min={8} max={24} step={4} class="w-36" />
+								<Input type="slider" name="text" bind:value={test.entity.count} min={8} max={24} step={4} class="w-36" />
 							</Flex>
 							
 						</Stack> -->
@@ -760,14 +723,14 @@
 								<!-- <Field {...test.field} /> -->
 							</Demo>
 							<!-- <Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" name="size" bind:value={test.entity.size} placeholder="Size" options={[
+								<Input type="select" name="size" bind:value={test.entity.size} placeholder="Size" options={[
 									{ label: 'Tiny',	value: 'xs' },
 									{ label: 'Small',	value: 'sm' },
 									{ label: 'Medium',	value: 'md' },
 									{ label: 'Large',	value: 'lg' },
 									{ label: 'Huge',	value: 'xl' }
 								]} />
-								<Input size="sm" type="slider" name="text" bind:value={test.entity.count} min={8} max={24} step={4} class="w-36" />
+								<Input type="slider" name="text" bind:value={test.entity.count} min={8} max={24} step={4} class="w-36" />
 							</Flex> -->
 							<Code code={
 `<Field
@@ -790,14 +753,14 @@
 								<Icon {...test.icon} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" icon="Resize" name="size" bind:value={test.icon.size} placeholder="Size" options={[
+								<Input.Select bind:value={test.icon.size} icon="Resize" placeholder="Size" options={[
 									{ label: 'Tiny',	value: 'xs' },
 									{ label: 'Small',	value: 'sm' },
 									{ label: 'Medium',	value: 'md' },
 									{ label: 'Large',	value: 'lg' },
 									{ label: 'Huge',	value: 'xl' }
 								]} />
-								<Input size="sm" type="select" icon="Barbell" name="weight" bind:value={test.icon.weight} placeholder="Weight" options={[
+								<Input.Select bind:value={test.icon.weight} icon="Barbell" placeholder="Weight" options={[
 									{ label: 'Thin',	value: 'thin' },
 									{ label: 'Light',	value: 'light' },
 									{ label: 'Regular',	value: 'regular' },
@@ -805,8 +768,8 @@
 									{ label: 'Fill',	value: 'fill' },
 									{ label: 'Duotone',	value: 'duotone' }
 								]} />
-								<!-- <Input size="sm" type="text" icon="TextAa" name="name" bind:value={test.icon.name} placeholder="Name" class="w-24" /> -->
-								<!-- <Input size="sm" type="slider" icon="Resize" name="size" bind:value={test.icon.size} min={8} max={64} step={4} class="ml-auto w-32" /> -->
+								<!-- <Input.Text bind:value={test.icon.name} icon="TextAa" placeholder="Name" /> -->
+								<!-- <Input.Slider bind:value={test.icon.size} icon="Resize" min={8} max={64} step={4} class="ml-auto" /> -->
 							</Flex>
 							<Code code={
 `<Icon
@@ -826,26 +789,25 @@
 							title="Input"
 							subtitle="Enables users to input a value, usually to submit to a server via a form."
 						/>
-
 						
 						<Stack>
 							<Demo name="Input">
 								<Input {...test.input} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" icon="Textbox" name="type" bind:value={test.input.type} placeholder="Type" options={[
+								<Input.Select bind:value={test.input.type} icon="Textbox" placeholder="Type" options={[
 									{ label: 'Number', value: 'number' },
 									{ label: 'Select', value: 'select' },
 									{ label: 'Text',   value: 'text' },
 								]} />
-								<Input size="sm" type="select" icon="Resize" name="size" bind:value={test.input.size} placeholder="Size" options={[
+								<Input.Select bind:value={test.input.size} icon="Resize" placeholder="Size" options={[
 									{ label: 'Tiny',	value: 'xs' },
 									{ label: 'Small',	value: 'sm' },
 									{ label: 'Medium',	value: 'md' },
 									{ label: 'Large',	value: 'lg' },
 									{ label: 'Huge',	value: 'xl' }
 								]} />
-								<Input size="sm" type="select" name="icon" bind:value={test.input.icon} placeholder="Icon" options={[
+								<Input.Select bind:value={test.input.icon} placeholder="Icon" options={[
 									{ value: 'At',		label: 'At',   		icon: 'At' 			},
 									{ value: 'Books',	label: 'Books',		icon: 'Books' 		},
 									{ value: 'Chats',	label: 'Chats',		icon: 'Chats' 		},
@@ -854,7 +816,7 @@
 									{ value: 'Eye',		label: 'Eye',		icon: 'Eye' 		},
 									{ value: 'Funnel',		label: 'Funnel',		icon: 'Funnel' 		},
 								]} />
-								<Input size="sm" name="placeholder" bind:value={test.input.placeholder} placeholder="Placeholder" />
+								<Input.Text bind:value={test.input.placeholder} placeholder="Placeholder" />
 							</Flex>
 							<Code code={
 `<Input name={INPUT_NAME}
@@ -931,19 +893,28 @@
 
 						<Stack>
 							<Demo name="Radio">
-								<Input type="radio" options={[
+								<Input.Radio bind:value={test.radio.value} options={[
 									{ label: 'Radio #1', value: 'radio1' },
 									{ label: 'Radio #2', value: 'radio2' },
 									{ label: 'Radio #3', value: 'radio3', disabled: true },
-								]} bind:value={test.radio.value} />
+								]} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
 							</Flex>
 							<Code code={
-`<Input
-	options={RADIO_OPTIONS}
+`<script>
+	import Input from '@/Components/UI/Input'
+</script>
+
+<Input.Radio
 	type="radio"
 	bind:value="${test.radio.value}"
+	options={[
+		{ label: 'Radio #1', value: 'radio1' },
+		{ label: 'Radio #2', value: 'radio2' },
+		{ label: 'Radio #3', value: 'radio3', disabled: true }
+	]}
+
 />`
 							} />
 						</Stack>
@@ -993,25 +964,40 @@
 
 						<Stack>
 							<Demo name="Select">
-								<Input type="select" {...test.select} />
+								<Input.Select {...test.select} options={[
+									{ label: 'Value 1', value: 'dropdown1' },
+									{ label: 'Value 2', value: 'dropdown2' },
+									{ label: 'Value 3', value: 'dropdown3', options: [
+										{ label: 'Value 3.1', value: 'dropdown3.1' },
+										{ label: 'Value 3.2', value: 'dropdown3.2' },
+										{ label: 'Value 3.3', value: 'dropdown3.3' }
+									] },
+									{ label: 'Value 4', value: 'dropdown4' },
+									{ label: 'Value 5', value: 'dropdown5', options: [
+										{ label: 'Value 5.1', value: 'dropdown5.1' },
+										{ label: 'Value 5.2', value: 'dropdown5.2' },
+										{ label: 'Value 5.3', value: 'dropdown5.3' }
+									] },
+									{ label: 'Value 6', value: 'dropdown6' },
+								]} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<!-- <Input size="sm" type="select" icon="Textbox" name="type" bind:value={test.select.type} placeholder="Type" options={[
+								<Input.Select bind:value={test.select.type} icon="Textbox" placeholder="Type" options={[
 									{ label: 'Number', value: 'number' },
 									{ label: 'Select', value: 'select' },
 									{ label: 'Text',   value: 'text' },
-								]} /> -->
-								<Input size="sm" type="select" name="icon" bind:value={test.select.icon} placeholder="Icon" options={[
+								]} />
+								<Input.Select bind:value={test.select.icon} placeholder="Icon" options={[
 									{ value: 'At',		label: 'At',   		icon: 'At' 			},
 									{ value: 'Books',	label: 'Books',		icon: 'Books' 		},
 									{ value: 'Chats',	label: 'Chats',		icon: 'Chats' 		},
 									{ value: 'Compass',	label: 'Compass',	icon: 'Compass' 	},
-									{ value: 'DiamondsFour',	label: 'DiamondsFour',	icon: 'DiamondsFour' 	},
+									{ value: 'DiamondsFour', label: 'DiamondsFour',	icon: 'DiamondsFour' 	},
 									{ value: 'Eye',		label: 'Eye',		icon: 'Eye' 		},
-									{ value: 'Funnel',		label: 'Funnel',		icon: 'Funnel' 		},
+									{ value: 'Funnel',	label: 'Funnel',	icon: 'Funnel' 		},
 								]} />
-								<Input size="sm" name="placeholder" bind:value={test.select.placeholder} placeholder="Placeholder" />
-								<Input size="sm" type="select" icon="Resize" name="size" bind:value={test.select.size} placeholder="Size" options={[
+								<Input.Text bind:value={test.select.placeholder} placeholder="Placeholder" />
+								<Input.Select bind:value={test.select.size} icon="Resize" placeholder="Size" options={[
 									{ label: 'Tiny',	value: 'xs' },
 									{ label: 'Small',	value: 'sm' },
 									{ label: 'Medium',	value: 'md' },
@@ -1039,10 +1025,10 @@
 
 						<Stack>
 							<Demo name="Slider">
-								<Input type="slider" {...test.slider} bind:value={test.slider.value} />
+								<Input.Slider {...test.slider} bind:value={test.slider.value} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input size="sm" type="select" name="style" bind:value={test.slider.style} placeholder="Style" options={[
+								<Input.Select bind:value={test.slider.style} placeholder="Style" options={[
 									{ label: 'Fill',	value: 'fill'  },
 									{ label: 'Empty',	value: 'empty' },
 									{ label: 'Both',	value: 'both'  },
@@ -1070,7 +1056,7 @@
 
 						<Stack>
 							<Demo name="Switch">
-								<Input type="switch" {...test.switch} />
+								<Input.Switch {...test.switch} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
 							</Flex>
@@ -1095,14 +1081,12 @@
 						<Stack>
 							<Demo name="Table">
 								{#snippet headRow()}
-									<!-- <Table.Head shrink={true}><Checkbox checked={false} /></Table.Head> -->
 									<Table.Head sortable={true}>Name</Table.Head>
 									<Table.Head sortable={true}>Role</Table.Head>
 									<Table.Head sortable={true}>Color</Table.Head>
 								{/snippet}
 				
 								{#snippet bodyRow(item)}
-									<!-- <Table.Cell shrink={true}><Checkbox checked={false} /></Table.Cell> -->
 									<Table.Cell>{item.name}</Table.Cell>
 									<Table.Cell>{item.role}</Table.Cell>
 									<Table.Cell>{item.color}</Table.Cell>
@@ -1114,8 +1098,22 @@
 									{ id: 3, name: 'McCoy', role: 'Doctor', color: 'Blue' }
 								]} />
 							</Demo>
+							<Flex gap={1.5} class="my-1.5">
+
+							</Flex>
+							<Code code={
+`<script>
+	import Table from '@/Components/UI/Table'
+</script>
+
+<Table
+	data={TABLE_DATA}
+	headRow={headRow}
+	bodyRow={bodyRow}
+	sortBy="${test.table.sortBy}"
+/>`
+							} />
 						</Stack>
-		
 
 					{:else if active === 'tabs'}
 
@@ -1171,24 +1169,24 @@
 								<Tag {...test.tag} />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<!-- <Input size="sm" type="select" icon="Resize" name="size" bind:value={test.tag.size} placeholder="Size" options={[
+								<Input.Select bind:value={test.tag.size} icon="Resize" placeholder="Size" options={[
 									{ label: 'Tiny',	value: 'xs' },
 									{ label: 'Small',	value: 'sm' },
 									{ label: 'Medium',	value: 'md' },
 									{ label: 'Large',	value: 'lg' },
 									{ label: 'Huge',	value: 'xl' }
-								]} /> -->
-								<Input size="sm" type="select" icon="CircleHalfTilt" name="style" bind:value={test.tag.style} placeholder="Style" options={[
+								]} />
+								<Input.Select bind:value={test.tag.style} icon="CircleHalfTilt" placeholder="Style" options={[
 									{ label: 'Hard',	value: 'hard' },
 									{ label: 'Soft',	value: 'soft' },
 									{ label: 'Plain',	value: 'plain' }
 								]} />
-								<Input size="sm" type="select" icon="Palette" name="theme" bind:value={test.tag.theme} placeholder="Theme" options={[
+								<Input.Select bind:value={test.tag.theme} icon="Palette" placeholder="Theme" options={[
 									{ label: 'Accent',	value: 'accent'  },
 									{ label: 'Neutral',	value: 'neutral' },
 									{ label: 'Danger',	value: 'danger'  }
 								]} />
-								<Input size="sm" type="text" icon="TextAa" name="text" bind:value={test.tag.text} placeholder="Text" />
+								<Input.Text bind:value={test.tag.text} icon="TextAa" placeholder="Text" />
 							</Flex>
 							<Code code={
 `<Tag
@@ -1213,15 +1211,15 @@
 								<Thumbnail {...test.thumbnail} class="w-{test.thumbnail.size}" />
 							</Demo>
 							<Flex gap={1.5} class="my-1.5">
-								<Input class="w-24" size="md" icon="ImageSquare" type="select" name="src" bind:value={test.thumbnail.src} placeholder="Image URL..." options={[
+								<Input.Select bind:value={test.thumbnail.src} icon="ImageSquare" placeholder="Image URL..." options={[
 									{ label: 'Blue',   value: '/img/avatar-1.png' },
 									{ label: 'Green',  value: '/img/avatar-2.png' },
 									{ label: 'Pink',   value: '/img/avatar-3.png' },
 									{ label: 'Red',    value: '/img/avatar-4.png' },
 									{ label: 'Orange', value: '/img/avatar-5.png' },
 								]} />
-								<Input size="md" type="text" icon="TextAa" name="alt" bind:value={test.thumbnail.alt} placeholder="Alt text..." />
-								<Input size="md" type="slider" name="size" bind:value={test.thumbnail.size} min={4} max={64} step={4} />
+								<Input.Text   bind:value={test.thumbnail.alt} icon="TextAa" placeholder="Alt text..." />
+								<Input.Slider bind:value={test.thumbnail.size} min={4} max={64} step={4} />
 							</Flex>
 							<Code code={
 `<Thumbnail
@@ -1374,9 +1372,7 @@
 
 				</Stack>
 			</Flex>
-
-
 		</Section>
 	{/snippet}
-	
+
 </AuthenticatedLayout>

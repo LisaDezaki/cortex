@@ -4,7 +4,7 @@
 
 	import { Flex, Grid, Stack } from '@/Components/Core'
 
-	import Input     from '@/Components/UI/Input.svelte'
+	import Input     from '@/Components/UI/Input'
 	import ModalForm from '@/Components/UI/ModalForm.svelte'
 
 	import CharacterCard from '@/Components/Features/Character/CharacterCard.svelte'
@@ -38,7 +38,7 @@
 	method="patch"
 	reloadPageProps={['characters']}
 >
-	<Input class="mx-3" type="search" icon="MagnifyingGlass" placeholder="Search..." />
+	<Input.Text class="mx-3" type="search" icon="MagnifyingGlass" placeholder="Search..." />
 	<Grid cols={4} gap={1} class="max-h-[60vh] overflow-y-auto p-3">
 		{#each characters.filter(c => c.id !== character.id) as char}
 			<CharacterCard character={char}

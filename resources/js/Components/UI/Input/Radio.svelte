@@ -1,6 +1,6 @@
 <script>
 	import { RadioGroup } from "bits-ui";
-	import Label from './Label.svelte'
+	import Label from '@/Components/UI/Label.svelte'
 
 	let {
 		checked = $bindable(),
@@ -57,7 +57,7 @@
 		:global(.radio-label) {
 			/* outline: 1px solid red;
 			outline-offset: -1px; */
-			@apply flex items-start gap-3 min-h-10 py-2 cursor-pointer;
+			@apply flex items-center gap-3 min-h-10 py-2 cursor-pointer;
 			&[disabled="true"] {
 				cursor: not-allowed;
 				opacity: 50%;

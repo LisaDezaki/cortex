@@ -5,7 +5,7 @@
 	import { Box, Flex, Stack, UploadContext } from '@/Components/Core'
 	import Map from '@/Components/Core/Map'
 	import Field  from '@/Components/UI/Field.svelte'
-	import Input  from '@/Components/UI/Input.svelte'
+	import Input  from '@/Components/UI/Input'
 	import ModalForm  from '@/Components/UI/ModalForm.svelte'
 
     let {

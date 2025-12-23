@@ -1,5 +1,6 @@
 <script>
 	import Icon from '@/Components/UI/Icon.svelte'
+	import clsx from "clsx"
 
     let {
 		checkbox,
@@ -9,32 +10,31 @@
 		sortable = false,
         ...restProps
     } = $props()
+
+	let cx = {
+		cell: clsx('inline-flex font-medium gap-1 py-1 text-left text-neutral', {
+			'shrink': shrink
+		}, className)
+	}
 </script>
 
-<th class="{className} {shrink ? 'shrink' : ''}" {...restProps}>
-	<div class="cell font-label">
-		{@render children()}
-		{#if sortable}
-			<Icon name="SortAscending" size={16} />
-		{/if}
-	</div>
+<th class={cx.cell} {...restProps}>
+	{@render children()}
+	{#if sortable}
+		<Icon name="SortAscending" size={16} />
+	{/if}
 </th>
 
 <style lang="postcss">
 
 	th {
-		@apply inline-flex items-center font-medium;
-		box-shadow: inset 0 -1px  0 var(--shadow-lowlight);
+		border-bottom: 2px solid var(--border-neutral-softest);
 	}
 	th.shrink {
 		@apply min-w-12 basis-0;
 	}
 	th:not(.shrink) {
 		@apply flex-grow basis-1;
-	}
-
-	th .cell {
-		@apply inline-flex items-center gap-2 px-1.5 py-0.5 w-full;
 	}
 
 </style>

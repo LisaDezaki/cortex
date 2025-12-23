@@ -3,9 +3,8 @@
 	import { Flex, Grid, Inline, Stack } from '@/Components/Core'
 	import Button	from '@/Components/UI/Button.svelte'
 	import Dropdown	from '@/Components/UI/Dropdown.svelte'
-	import Icon		from '@/Components/UI/Icon.svelte'
-	import Input	from '@/Components/UI/Input.svelte'
-	import Label	from '@/Components/UI/Inputs/Label.svelte'
+	import Input	from '@/Components/UI/Input'
+	import Label	from '@/Components/UI/Label.svelte'
     import clsx from 'clsx'
 
 	let {
@@ -42,7 +41,7 @@
 	 */
 	let cx = $derived({
 		bar: clsx('control-bar mt-1.5 shrink-0 w-full z-10', className),
-		result: clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-md rounded text-accent text-sm whitespace-nowrap')
+		result: clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-sm rounded text-accent text-sm whitespace-nowrap')
 	})
 
 	function onQuery() {
@@ -69,12 +68,12 @@
 	{#if searchable}
 		<Stack>
 			<Label icon="MagnifyingGlass" text="Search" />
-			<Input bind:value={query}
+			<Input.Text bind:value={query}
 				type="search"
 				name="search"
 				oninput={onQuery}
 				placeholder="Search..."
-				size="md"
+				size="sm"
 			/>
 		</Stack>
 	{/if}
@@ -93,7 +92,7 @@
 				options={filterOptions}
 				onUpdate={onFilter}
 				placeholder="Filter..."
-				size="md"
+				size="sm"
 				bind:value={filter}
 			/>
 		</Stack>
@@ -105,11 +104,11 @@
 	{#if sortable}
 		<Stack>
 			<Label icon="SortAscending" text="Sort" />
-			<Input type="select"
+			<Input.Select
 				options={sortOptions}
 				onUpdate={onSort}
 				placeholder="Sort by"
-				size="md"
+				size="sm"
 				bind:value={sort}
 			/>
 		</Stack>
@@ -129,8 +128,8 @@
 
 	<Stack>
 		<Label icon="Resize" text="Size" />
-		<Input bind:value={size}
-			type="slider"
+		<Input.Slider bind:value={size}
+			size="sm"
 			style="none"
 			showTicks={true}
 			showValue={false}
@@ -146,8 +145,8 @@
 		<Inline>
 			{#each layoutOptions as option, i}
 				<Button
-					class="{i === 0 ? "rounded-l" : "-ml-[1px] rounded-none"} {i === layoutOptions.length-1 ? "rounded-r" : "rounded-none"} bg-slate-50"
-					size="md" style="soft" theme={option.value === layout ? "accent" : ""} icon={option.icon}
+					class="border-b {i === 0 ? "rounded-l" : "-ml-[1px] rounded-none"} {i === layoutOptions.length-1 ? "rounded-r" : "rounded-none"} {option.value === layout ? "bg-accent-softest border-accent-softer text-accent" : "bg-slate-50 border-neutral-softest"}"
+					size="sm" icon={option.icon}
 					onclick={() => layout = option.value}
 				/>
 			{/each}

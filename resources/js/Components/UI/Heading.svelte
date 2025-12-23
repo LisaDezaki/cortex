@@ -4,7 +4,6 @@
 	import { Flex, Inline, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
-	import Input  from '@/Components/UI/Input.svelte'
     import clsx from 'clsx'
 
     let {

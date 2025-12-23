@@ -7,7 +7,7 @@
 	import Button  from '@/Components/UI/Button.svelte'
 	import Field   from '@/Components/UI/Field.svelte'
 	import Heading from '@/Components/UI/Heading.svelte'
-	import Input   from '@/Components/UI/Input.svelte'
+	import Input   from '@/Components/UI/Input'
 	import PageHeading from '@/Components/UI/PageHeading.svelte'
 
 	const customFields = $page.props.customFields?.data
@@ -42,8 +42,8 @@
 		<Heading is="h3" as="h5" class="text-neutral-soft">Overview</Heading>
 	</Flex>
 
-	<Field name="enabled"
-		type="switch"
+	<Field type="switch"
+		name="enabled"
 		label="Enable Items"
 	/>
 

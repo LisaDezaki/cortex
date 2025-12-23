@@ -207,6 +207,7 @@
 	
 					{:else if parameters.layout === 'table'}
 						<ItemTable
+							class="text-sm"
 							items={results}
 						/>
 

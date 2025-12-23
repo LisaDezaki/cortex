@@ -16,13 +16,13 @@
 	let customFields = $page.props.customFields?.data
 
     let {
-		characters,
 		class: className,
+		items = [],
 		selected = [],
 		selectionMode
 	} = $props()
 
-	let columns = $state(['name', 'faction', 'relationships', 'location'])
+	let columns = $state(['name', 'type', 'cost', 'weight', 'unique'])
 
 	function selectAll() {
 		// if (selected.length == characters.length) {
@@ -50,120 +50,72 @@
 	{#if selectionMode}
 		<Table.Head shrink><Form.Checkbox onclick={selectAll} /></Table.Head>
 	{/if}
-	<Table.Head sortable class="font-light text-xs uppercase">Name</Table.Head>
-	{#if columns.includes('faction')}
-		<Table.Head sortable class="font-light text-xs uppercase">Faction</Table.Head>
+	<Table.Head sortable>Name</Table.Head>
+	{#if columns.includes('type')}
+		<Table.Head sortable>Type</Table.Head>
 	{/if}
-	{#if columns.includes('relationships')}
-		<Table.Head sortable class="font-light text-xs uppercase">Relationships</Table.Head>
+	{#if columns.includes('cost')}
+		<Table.Head sortable class="max-w-24">Cost</Table.Head>
 	{/if}
-	{#if columns.includes('location')}
-		<Table.Head sortable class="font-light text-xs uppercase">Location</Table.Head>
+	{#if columns.includes('weight')}
+		<Table.Head sortable class="max-w-24">Weight</Table.Head>
+	{/if}
+	{#if columns.includes('unique')}
+		<Table.Head sortable class="max-w-24">Unique</Table.Head>
 	{/if}
 	{#each customFields as field}
 		{#if columns.includes(field.name)}
-			<Table.Head sortable class="font-light text-xs uppercase">{field.label}</Table.Head>
+			<Table.Head sortable>{field.label}</Table.Head>
 		{/if}
 	{/each}
 {/snippet}
 
-{#snippet bodyRow(character)}
+{#snippet bodyRow(item)}
 	{#if selectionMode}
 		<Table.Cell shrink>
-			<Form.Checkbox checked={selected.includes(character.id)} onclick={() => selectRow(character.id)} />
+			<Form.Checkbox checked={selected.includes(item.id)} onclick={() => selectRow(item.id)} />
 		</Table.Cell>
 	{/if}
 	<Table.Cell>
-		<Link href={route('characters.show', {character: character.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
+		<Link class="flex items-center gap-1.5 py-0.5 hover:text-emerald-500" href={route('items.show', {item: item.slug})}>
 			<Thumbnail
-				class="h-7 w-7 rounded-full"
-				src={character.image?.url}
-				icon="User"
+				class="bg-neutral-softest h-6 w-6 rounded-full"
+				src={item.image?.url}
 			/>
-			<div class="-space-y-0.5">
-				<div class="font-style-small line-clamp-1">{character.name}</div>
-				<div class="font-style-tiny line-clamp-1 opacity-65">{character.subtitle}</div>
-			</div>
+			<Inline>{item.name}</Inline>
 		</Link>
 	</Table.Cell>
-	{#if columns.includes('faction')}
-		<Table.Cell>
-			{#if character?.factions?.items.length > 0}
-				<Inline gap={1}>
-					{#each character?.factions?.items as faction}
-						<Link href={route('factions.show', {faction: faction.slug})} class="flex items-center gap-2 hover:text-emerald-500">
-							<Thumbnail
-								class="h-7 w-7"
-								src={faction.image?.url}
-								icon="FlagBannerFold"
-							/>
-							<!-- <div class="-space-y-0.5">
-								<div class="font-style-regular line-clamp-1">{faction.name}</div>
-								<div class="font-style-tiny line-clamp-1 opacity-65">{faction.members?.length} member{faction.members?.length !== 1 ? 's' : ''}</div>
-							</div> -->
-						</Link>
-					{/each}
-				</Inline>
-			{:else}
-				<Button size="sm" style="soft" theme="accent"
-					icon="Plus" iconSize="sm" iconWeight="light"
-					class="h-7 w-7 rounded-lg"
-					onclick={() => character.addFaction()}
-				/>
-			{/if}
+	{#if columns.includes('type')}
+		<Table.Cell class="flex items-center gap-1.5 py-0.5">
+			<Inline>{item.type}</Inline>
 		</Table.Cell>
 	{/if}
-	{#if columns.includes('relationships')}
-		<Table.Cell>
-			{#if character?.relationships?.items.length > 0}
-				<Flex align="center" class="h-full w-full">
-					{#each character?.relationships?.items as relationship, i}
-						<Link href={route('characters.show', {character: relationship?.slug})} class="flex items-center">
-							<Thumbnail
-								class="bg-white h-7 rounded-full w-7"
-								icon="User" iconSize="sm" iconWeight="fill"
-								src={relationship?.image?.url}
-							/>
-						</Link>
-					{/each}
-				</Flex>
-			{:else}
-				<Button size="sm" style="soft" theme="accent"
-					icon="Plus" iconSize="sm" iconWeight="light"
-					class="h-7 w-7 rounded-full"
-					onclick={() => character.openModal('relationship')}
-				/>
-			{/if}
+	{#if columns.includes('cost')}
+		<Table.Cell class="flex items-center gap-1.5 py-0.5 max-w-24">
+			<Inline>{item.cost}</Inline>
 		</Table.Cell>
 	{/if}
-	{#if columns.includes('location')}
-		<Table.Cell>
-			{#if character?.location}
-				<Link href={route('locations.show', {location: character.location.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
-					<Thumbnail
-						class="h-7 w-7"
-						src={character.location.image?.url}
-						icon="MapPinArea"
-					/>
-					<div class="-space-y-0.5">
-						<div class="font-style-small line-clamp-1">{character?.location.name}</div>
-						<div class="font-style-tiny line-clamp-1 opacity-65">{character?.location.region?.name}</div>
-					</div>
-				</Link>
-			{:else}
-				<Button size="sm" style="soft" theme="accent"
-					icon="Plus" iconSize="sm" iconWeight="light"
-					class="h-7 w-7 rounded-lg"
-					onclick={() => character.openModal('location')}
-				/>
-			{/if}
+	{#if columns.includes('weight')}
+		<Table.Cell class="flex items-center gap-1.5 py-0.5 max-w-24">
+			<Inline>{item.weight}</Inline>
+		</Table.Cell>
+	{/if}
+	{#if columns.includes('unique')}
+		<Table.Cell class="flex items-center gap-1.5 py-0.5 max-w-24">
+			<Inline>
+				{#if item.unique}
+					<Icon class="text-accent" name="CheckCircle" weight="fill" />
+				{:else}
+					<Icon class="text-danger" name="XCircle" weight="fill" />
+				{/if}
+			</Inline>
 		</Table.Cell>
 	{/if}
 
 	{#each customFields as field}
 		{#if columns.includes(field.name)}
 			<Table.Cell>
-				{character.customFieldValues.find(f => f.customFieldId === field.id).value}
+				{item.customFieldValues.find(f => f.customFieldId === field.id).value}
 			</Table.Cell>
 		{/if}
 	{/each}
@@ -171,6 +123,6 @@
 
 <Table
 	class="w-full {className}"
-	data={characters}
+	data={items}
 	{headRow} {bodyRow}
 />

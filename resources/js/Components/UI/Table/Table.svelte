@@ -55,20 +55,19 @@
 			border-color: var(--border-neutral-softest);
 		}
 
-		:global(tr th:first-of-type),
+		/* :global(tr th:first-of-type),
 		:global(tr td:first-of-type) {
 			@apply pl-3;
-		}
+		} */
 
-		:global(tr th:last-of-type),
+		/* :global(tr th:last-of-type),
 		:global(tr td:last-of-type) {
 			@apply pr-3;
-		}
+		} */
 		
-		:global(tbody tr:hover) {
+		/* :global(tbody tr:hover) {
 			background-color: var(--bg-neutral-softest);
-			/* box-shadow: none; */
-		}
+		} */
 	}
 
 </style>

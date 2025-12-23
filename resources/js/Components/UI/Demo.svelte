@@ -2,6 +2,7 @@
 	import Box from '@/Components/Core/Box.svelte'
 	import Flex from '@/Components/Core/Flex.svelte'
 	import Inline from '@/Components/Core/Inline.svelte'
+	import Stack from '@/Components/Core/Stack.svelte'
 	import Icon from '@/Components/UI/Icon.svelte'
 	import clsx from 'clsx'
 
@@ -19,14 +20,14 @@
 	}
 </script>
 
-<Flex {align} {justify} gap={2} class={cx.demo} style="background-image: url('/img/grid.png'); background-size: 16px; background-position: 8px 8px;">
+<Flex {align} {justify} gap={2} class={cx.demo} style="background-image: url('/img/dots.png');">
 	<Box class={cx.overlay}></Box>
 	<Inline gap={1.5} class="absolute top-0 left-0 p-2 text-neutral-softest text-sm uppercase"><Icon name="DiamondsFour" size="md" weight="light" />{name}</Inline>
-	<Flex class='relative p-6' gap={3}>
+	<Stack {align} {justify} class='relative p-6' gap={3}>
 		<div class="h-2 w-2 border-t border-l border-accent-soft absolute top-0 left-0"></div>
 		<div class="h-2 w-2 border-t border-r border-accent-soft absolute top-0 right-0"></div>
 		<div class="h-2 w-2 border-b border-l border-accent-soft absolute bottom-0 left-0"></div>
 		<div class="h-2 w-2 border-b border-r border-accent-soft absolute bottom-0 right-0"></div>
 		{@render children?.()}
-	</Flex>
+	</Stack>
 </Flex>

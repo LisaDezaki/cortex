@@ -1,0 +1,77 @@
+<script>
+
+	import Flex      from '@/Components/Core/Flex.svelte'
+	import Icon      from '@/Components/UI/Icon.svelte'
+	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
+    import clsx from 'clsx'
+
+	let {
+		active = false,
+        class: className,
+		checked = false,
+		icon,
+		image,
+		isOpen = $bindable(false),
+		item,
+		label,
+		onclick,
+		options,
+		placeholder,
+		size = 'md',
+		value
+    } = $props()
+
+	let cx = {
+		option: clsx('input-option flex items-center w-full', {
+			'active': active || checked
+		}, className),
+		text:	clsx('break-all line-clamp-1 px-1.5 text-left w-full', `text-${size}`),
+		value:	clsx('text-neutral'),
+		placeholder: clsx('text-neutral-softer italic')
+	}
+
+</script>
+
+
+
+<Flex
+	class={cx.option}
+	onclick={onclick}
+>
+	{#if icon || item?.icon}
+		<Icon
+			name={icon || item?.icon}
+			size={size}
+		/>
+	{:else if image || item?.image}
+		<Thumbnail
+			class="rounded-full p-[1px] w-6"
+			iconSize={16}
+			imageClass="rounded-full"
+			src={image || item?.image}
+		/>
+	{/if}
+
+	{#if label && label || item?.label}
+		<span class="{cx.text} {cx.value}">{label || item?.label}</span>
+	{:else if placeholder || item?.placeholder}
+		<span class="{cx.text} {cx.placeholder}">{placeholder || item?.placeholder}</span>
+	{/if}
+
+	{#if options || item?.options}
+		<Icon
+			name="CaretRight"
+			size="sm"
+			class="text-neutral-softest ml-auto"
+		/>
+	{/if}
+
+	{#if checked || item?.checked}
+		<Icon
+			name="Check"
+			size="sm"
+			class="ml-auto"
+		/>
+	{/if}
+
+</Flex>

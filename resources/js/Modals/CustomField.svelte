@@ -13,8 +13,8 @@
 	import Field        from '@/Components/UI/Field.svelte'
 	import Heading      from '@/Components/UI/Heading.svelte'
 	import Icon         from '@/Components/UI/Icon.svelte'
-	import Input        from '@/Components/UI/Input.svelte'
-	import Label        from '@/Components/UI/Inputs/Label.svelte'
+	import Input        from '@/Components/UI/Input'
+	import Label        from '@/Components/UI/Label.svelte'
 	import ModalForm    from '@/Components/UI/ModalForm.svelte'
 
 	//  Props
@@ -229,8 +229,7 @@
 						{#snippet itemTemplate(item, index)}
 							<li class="flex items-center gap-1 w-full mb-1">
 								<DragHandle />
-								<Input
-									type="text"
+								<Input.Text
 									name="option_{index+1}"
 									class="flex-grow"
 									placeholder="Option {index+1}"

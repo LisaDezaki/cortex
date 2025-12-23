@@ -4,8 +4,8 @@
 
 	import { Flex, Stack } from '@/Components/Core'
 	import Icon      from '@/Components/UI/Icon.svelte'
-	import InputItem from '@/Components/UI/Inputs/InputItem.svelte'
-	import Label     from '@/Components/UI/Inputs/Label.svelte'
+	import Input 	 from '@/Components/UI/Input'
+	import Label     from '@/Components/UI/Label.svelte'
 	import Separator from '@/Components/UI/Separator.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
@@ -34,7 +34,7 @@
 	let selection = $state(null)
 	let isEmpty   = $derived(value == null || value == '' || value == [])
 
-	let selectedOption = $derived(options.find(o => o.value === value))
+	let selectedOption = $derived(options.find(o => o.value === value) || {icon, placeholder, value})
 
 	function checkFocus() {
 		hasFocus = document.activeElement === input;
@@ -81,7 +81,8 @@
 		value={item?.value}
 		disabled={item?.disabled}
 	>
-		<InputItem item={item} />
+		<!-- <Input.Option item={item} /> -->
+		 {item?.label}
 	</Select.Item>
 {/snippet}
 
@@ -97,15 +98,7 @@
 {...restProps}>
 
 	<Select.Trigger class="input p-{size} {className}">
-		{#if icon}
-			<Icon name={icon} size={size} />
-		{/if}
-		{#if value !== ''}
-			<InputItem item={selectedOption} class={inputClass} />
-		{:else}
-			<span class="font-style-placeholder line-clamp-1 px-1 text-left">{placeholder}</span>
-		{/if}
-		<Icon class="ml-auto" name="CaretUpDown" size="xs" />
+		<Input.Option {...selectedOption} size={size} />
 	</Select.Trigger>
 
 	<Select.Portal class="z-50 {contentClass}">
@@ -113,9 +106,9 @@
 			class="input-content {contentClass} min-w-[var(--bits-select-anchor-width)] px-0.5 py-0.5 z-50"
 			align="start" sideOffset={-1}
 		>
-			<Select.ScrollUpButton class="flex w-full items-center justify-center opacity-50">
+			<!-- <Select.ScrollUpButton class="flex w-full items-center justify-center opacity-50">
 				<Icon name="CaretDoubleUp" size="xs" />
-			</Select.ScrollUpButton>
+			</Select.ScrollUpButton> -->
 
 			<Select.Viewport>
 				<Stack>
@@ -123,16 +116,18 @@
 						{#if option.separator}
 							<Separator class="mx-2 my-0.5 w-auto" />
 						{:else if option.options}
-							<div class="font-medium opacity-50 px-2 py-1 text-sm">{option.label}</div>
-							{#each option.options as opt}
-								<!-- {opt.icon} -->
-								{@render optionItem(opt)}
-								<!-- <InputItem item={opt} /> -->
-							{/each}
+							<div class="font-medium opacity-50 px-2 py-1">{option.label}</div>
+							<Stack>
+								{#each option.options as opt}
+									<Select.Item {...opt}>
+										<Input.Option item={opt} class="p-{size}" size={size} />
+									</Select.Item>
+								{/each}
+							</Stack>
 						{:else}
-							<!-- {option.icon} -->
-							{@render optionItem(option)}
-							<!-- <InputItem item={option} /> -->
+							<Select.Item {...option}>
+								<Input.Option item={option} class="p-{size}" size={size} />
+							</Select.Item>
 						{/if}
 					{:else}
 						<span class="block px-3 py-1.5 text-sm text-muted-foreground">
@@ -142,11 +137,10 @@
 				</Stack>
 			</Select.Viewport>
 
-			<Select.ScrollDownButton class="flex w-full items-center justify-center opacity-50">
+			<!-- <Select.ScrollDownButton class="flex w-full items-center justify-center opacity-50">
 				<Icon name="CaretDoubleDown" size="xs" />
-			</Select.ScrollDownButton>
+			</Select.ScrollDownButton> -->
 
 		</Select.Content>
 	</Select.Portal>
-
 </Select.Root>

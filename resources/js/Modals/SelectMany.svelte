@@ -7,7 +7,7 @@
 	import Field	 from '@/Components/UI/Field.svelte'
 	import Heading	 from '@/Components/UI/Heading.svelte'
 	import Icon		 from '@/Components/UI/Icon.svelte'
-	import Input	 from '@/Components/UI/Input.svelte'
+	import Input	 from '@/Components/UI/Input'
 	import ModalForm from '@/Components/UI/ModalForm.svelte'
 	import Tag		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
@@ -63,7 +63,7 @@
 	title={title}
 >
 	<Flex class="px-4 pb-1.5">
-		<Input icon="MagnifyingGlass" />
+		<Input.Text type="search" icon="MagnifyingGlass" />
 		<Inline class="ml-auto -space-x-[1px]">
 			<Button class="rounded-l" size="sm" style="hard" theme={layout === 'grid' ? "accent" : "neutral"} icon="GridFour"		onclick={() => setLayout('grid')} />
 			<Button class="rounded-r" size="sm" style="hard" theme={layout === 'list' ? "accent" : "neutral"} icon="ListBullets"	onclick={() => setLayout('list')} />

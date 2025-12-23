@@ -1,9 +1,9 @@
 <script>
 	import { getContext } from "svelte";
 
-	import Input from '@/Components/UI/Input.svelte'
-	import Error from '@/Components/UI/Inputs/Error.svelte'
-	import Label from '@/Components/UI/Inputs/Label.svelte'
+	import Input from '@/Components/UI/Input'
+	import Error from '@/Components/UI/Error.svelte'
+	import Label from '@/Components/UI/Label.svelte'
 	import clsx  from 'clsx'
 	
 	const { form } = getContext("form");

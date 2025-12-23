@@ -59,7 +59,7 @@
 <Menubar.Root class="dropdown" onOpenChange={checkFocus} {...restProps}>
 	<Menubar.Menu>
 
-	<Menubar.Trigger class="input input-dropdown-trigger min-w-48 {icon ? "pl-icon" : ""} {className}">
+	<Menubar.Trigger class="input input-dropdown-trigger min-w-48 {className}">
 		{#if icon}
 			<Icon class="input-icon" name={icon} size="md" />
 		{/if}
@@ -67,10 +67,10 @@
 			<span class="input-label line-clamp-1 text-left w-full">{label}</span>
 		{/if}
 		<!-- {#if !label && placeholder}
-			<span class="font-style-placeholder input-value line-clamp-1 truncate {icon ? "pl-icon" : ""}">{placeholder}</span>
+			<span class="font-style-placeholder input-value line-clamp-1 truncate">{placeholder}</span>
 		{/if} -->
 		{#if value}
-			<span class="input-value line-clamp-1 truncate {icon ? "pl-icon" : ""}">{value}</span>
+			<span class="input-value line-clamp-1 truncate">{value}</span>
 		{/if}
 		{#if options}
 			<Icon class="input-action ml-auto" name="CaretUpDown" size="sm" weight="light" />

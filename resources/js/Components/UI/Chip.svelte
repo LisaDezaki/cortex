@@ -16,7 +16,7 @@
 		icon,
 		onclick,
 		options,
-		state,
+		state = 'default',
 		text,
 		title,
 		subtitle,
@@ -55,10 +55,10 @@
 		<div class={cx.visual}>
 			{#if image}
 				<img class="chip-image" src={image} alt={title} />
-			{:else if icon}
-				<Icon class="chip-icon" name={icon} size="sm" />
 			{:else if state === 'active'}
-				<Icon class="chip-icon" name="Check" size="sm" weight="bold" />
+				<Icon class="chip-icon text-accent" name="Check" size="sm" weight="bold" />
+			{:else if icon}
+				<Icon class="chip-icon text-accent" name={icon} size="sm" />
 			{/if}
 		</div>
 	{/if}
