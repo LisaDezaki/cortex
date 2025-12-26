@@ -15,7 +15,7 @@
 	} = $props()
 
 	let cx = {
-		demo:    clsx('bg-neutral-softest min-h-96 relative overflow-y-auto p-6 rounded w-full', className),
+		demo:    clsx('bg-neutral-softest min-h-96 relative overflow-y-auto p-12 rounded w-full', className),
 		overlay: clsx('absolute inset-0 bg-[radial-gradient(169.40%,89.55%_at_94.76%_6.29%,rgba(0,0,0,0.40)_0%,rgba(255,255,255,0.00)_100%)')
 	}
 </script>

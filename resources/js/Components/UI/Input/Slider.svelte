@@ -39,11 +39,11 @@
 			'style-disabled': restProps.disabled
 		}, className),
 		track: clsx('slider-track relative h-3 w-full grow overflow-hidden my-1 rounded-full', {
-			'bg-accent shadow-accent-strong': 	style === 'empty' || style === 'both',
+			'bg-accent-gradient shadow-accent-strong': 	style === 'empty' || style === 'both',
 			'bg-white shadow-neutral-softest': 	style === 'fill'  || style === 'none'
 		}),
 		range: clsx('slider-range relative h-full rounded-full', {
-			'bg-accent shadow-accent-strong': 	style === 'fill'  || style === 'both',
+			'bg-accent-gradient shadow-accent-strong': 	style === 'fill'  || style === 'both',
 			'bg-white shadow-neutral-softest': 	style === 'empty' || style === 'none'
 		}),
 		thumb: clsx('border cursor-pointer flex items-center justify-center min-h-5 min-w-5 rounded-full shadow-sm text-sm z-10',

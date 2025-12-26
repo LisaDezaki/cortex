@@ -9,15 +9,15 @@
 	import Table     from '@/Components/UI/Table'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
-	import CharacterIcon from '@/Components/Features/Character/CharacterIcon.svelte'
-
     let {
 		class: className,
-		locations,
+		locations = [],
 		selected = [],
 		selectionMode,
 		...restProps
 	} = $props()
+
+	let columns = $state(['name', 'items'])
 
 	function selectAll() {
 		// if (selected.length == characters.length) {
@@ -43,9 +43,9 @@
 	{#if selectionMode}
 		<Table.Head shrink><Form.Checkbox onclick={selectAll} /></Table.Head>
 	{/if}
-	<Table.Head sortable class="font-style-button">Name</Table.Head>
-	<Table.Head sortable class="font-style-button">Type</Table.Head>
-	<Table.Head sortable class="font-style-button">Regulars</Table.Head>
+	<Table.Head sortable class="max-w-64">Name</Table.Head>
+	<Table.Head sortable class="max-w-40">Type</Table.Head>
+	<Table.Head sortable class="max-w-64">Regulars</Table.Head>
 {/snippet}
 
 {#snippet bodyRow(location)}
@@ -54,34 +54,27 @@
 			<Form.Checkbox checked={selected.includes(location.id)} onclick={() => selectRow(location.id)} />
 		</Table.Cell>
 	{/if}
-	<Table.Cell>
+	<Table.Cell class="inline-flex items-center gap-0.5 py-0.5 max-w-64">
 		<Link href={route('locations.show', {location: location.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
 			<Thumbnail
-				class="h-6 w-9 rounded"
-				icon="MapPinArea"
+				class="bg-neutral-softest h-6 w-9 rounded"
 				src={location.image?.url}
 			/>
-			<div class="-space-y-0.5">
-				<div class="font-style-small line-clamp-1">{location.name}</div>
-				<div class="font-style-tiny line-clamp-1 opacity-65">{location.region?.name}</div>
-			</div>
+			<Inline>{location.name}</Inline>
 		</Link>
 	</Table.Cell>
-	<Table.Cell>
+	<Table.Cell class="inline-flex items-center gap-0.5 py-0.5 max-w-40">
 		<div class="font-style-small line-clamp-1">{location.type}</div>
 	</Table.Cell>
-	<Table.Cell>
+	<Table.Cell class="inline-flex items-center gap-0.5 py-0.5 max-w-64">
 		{#if location.mapItems.characters?.length > 0}
-			<Inline gap={0.5} class="w-full">
-				{#each location.mapItems.characters as mapItem, i}
-					<Thumbnail
-						class="h-7 w-7 rounded-full"
-						href={route('characters.show', {character: mapItem.mappable?.slug})}
-						icon="User" iconSize="sm"
-						src={mapItem.mappable?.image?.url}
-					/>
-				{/each}
-			</Inline>
+			{#each location.mapItems.characters as mapItem, i}
+				<Thumbnail
+					class="bg-neutral-softest h-6 w-6 rounded"
+					href={route('characters.show', {character: mapItem.mappable?.slug})}
+					src={mapItem.mappable?.image?.url}
+				/>
+			{/each}
 		{/if}
 	</Table.Cell>
 {/snippet}

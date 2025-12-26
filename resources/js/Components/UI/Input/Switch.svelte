@@ -9,35 +9,33 @@
 		id,
 		label,
 		name,
+		size = 'md',
         ...restProps
     } = $props()
 
 </script>
 
+
+
 {#if label}
-	<Label class="form-switch {restProps.disabled ? 'disabled' : ''}">
+	<label class="form-switch text-{size} {restProps.disabled ? 'disabled' : ''}">
 		<span class="switch-label">{label}</span>
 		<Switch.Root class="switch style-input {className}" id={id} name={name} bind:checked {...restProps}>
 			<Switch.Thumb class="switch-thumb"></Switch.Thumb>
 		</Switch.Root>
-	</Label>
+	</label>
 {:else}
 	<Switch.Root class="switch style-input {className}" id={id} name={name} bind:checked {...restProps}>
 		<Switch.Thumb class="switch-thumb"></Switch.Thumb>
 	</Switch.Root>
 {/if}
 
+
+
 <style lang="postcss">
 
 	:global(.form-switch) {
 		@apply inline-flex items-center gap-2 min-h-10 px-3 py-2;
-		/* @apply border rounded-lg; */
-		/* background-color: transparent;
-		border-color: var(--border-neutral-softest);
-		color: var(--text-neutral-soft); */
-		&:hover {
-			/* border-color: var(--border-neutral-softest); */
-		}
 	}
 
 	:global(.switch) {
@@ -48,7 +46,7 @@
 			border-color: var(--border-neutral-softest);
 		}
 		&[data-state="checked"] {
-			background: var(--bg-accent);
+			background: var(--bg-accent-gradient);
 			border-color: var(--border-accent-strong);
 		}
 
@@ -89,8 +87,8 @@
 		color: var(--text-disabled);
 	}
 
-	.switch-label {
+	/* .switch-label {
 		@apply text-base w-full;
-	}
+	} */
 
 </style>

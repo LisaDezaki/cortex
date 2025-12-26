@@ -25,6 +25,7 @@
 		option: clsx('input-option flex items-center w-full', {
 			'active': active || checked
 		}, className),
+		icon:	clsx('input-icon'),
 		text:	clsx('break-all line-clamp-1 px-1.5 text-left w-full', `text-${size}`),
 		value:	clsx('text-neutral'),
 		placeholder: clsx('text-neutral-softer italic')
@@ -39,7 +40,7 @@
 	onclick={onclick}
 >
 	{#if icon || item?.icon}
-		<Icon
+		<Icon class={cx.icon}
 			name={icon || item?.icon}
 			size={size}
 		/>

@@ -7,6 +7,7 @@
 		children,
 		class: className,
 		content,
+		delayDuration = 500,
 		...restProps
     } = $props()
 
@@ -26,7 +27,7 @@
 
 
 
-<Tooltip.Root>
+<Tooltip.Root delayDuration={delayDuration}>
 	<Tooltip.Trigger class={cx.trigger} {...restProps}>
 		{#if children}
 			{@render children()}

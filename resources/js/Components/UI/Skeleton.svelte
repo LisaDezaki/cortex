@@ -15,7 +15,7 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		skeleton: clsx(border, color, className)
+		skeleton: clsx('inline-block', border, color, className)
 	})
 
 </script>

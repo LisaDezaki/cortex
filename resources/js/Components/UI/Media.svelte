@@ -5,13 +5,16 @@
 	import Icon 	from '@/Components/UI/Icon.svelte'
 
 	let {
+		alt,
 		class: className,
 		imageClass,
 		icon,
 		iconSize = "xl",
 		iconWeight = "light",
 		media,
+		name,
 		onclick,
+		url
 	} = $props()
 
 	/**
@@ -30,6 +33,10 @@
 
 
 <Flex align="center" justify="center" class={cx.media}>
+
+	{#if url}
+		<img class={cx.img} src={url} alt={alt} />
+	{/if}
 	{#if media}
 		<img class={cx.img} src={media.url} alt={media.name} />
 	{:else if icon}

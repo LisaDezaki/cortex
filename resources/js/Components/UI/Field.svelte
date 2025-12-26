@@ -20,7 +20,7 @@
 		layout = 'stack',
 		name,
 		size = 'md',
-		type = 'text',
+		type,
         ...restProps
     } = $props()
 
@@ -29,11 +29,11 @@
 
 	let cx = {
 		field:	clsx({
-			'relative grid grid-cols-2 gap-6 w-full': layout === 'block',
+			'relative grid grid-cols-2 gap-x-6 w-full': layout === 'block',
 			'relative flex flex-col': layout !== 'block'
 		}),
 		label:	clsx({ 'sr-only': labelSrOnly }),
-		desc:	clsx('mt-1 px-1.5 text-sm text-neutral'),
+		desc:	clsx(''),
 		error:	clsx(''),
 	}
 
@@ -86,10 +86,13 @@
 {#snippet inputBlock()}
 	{#if type}
 		<Input {name} {type} {size}
-			class={inputClass}
+			class="{inputClass} w-full"
 			label={label}
+			bind:checked={$form[name]}
 			bind:value={$form[name]}
 		{...restProps} />
+	{:else if children}
+		{@render children()}
 	{/if}
 {/snippet}
 
@@ -101,8 +104,10 @@
 <div class={cx.field}>
 
 	{#if layout == 'block'}
-		<div class="col-span-1">
+		<div class="col-span-2">
 			{@render labelBlock()}
+		</div>
+		<div class="col-span-1">
 			{@render descriptionBlock()}
 		</div>
 		<div class="col-span-1">
@@ -116,7 +121,4 @@
 		{@render errorBlock()}
 	{/if}
 
-	{@render children?.()}
-
 </div>
-

@@ -32,7 +32,7 @@
 	 */
 	let cx = $derived({
 		chip: clsx({
-			'chip border px-2 py-0.5 rounded': true,
+			'chip border px-1 py-0.5 rounded': true,
 			'border-neutral-softest': state !== 'active',
 			'bg-accent-softest border-transparent text-accent': state === 'active',
 			'cursor-pointer': href || onclick,
@@ -65,16 +65,21 @@
 
 	<div class="chip-details">
 		{#if children}
-			<span class="line-clamp-1 break-all w-full">{@render children()}</span>
+			<span class="line-clamp-1 break-all px-1 w-full">{@render children()}</span>
 		{:else if title}
-			<span class="line-clamp-1 break-all w-full">{title}</span>
+			<span class="line-clamp-1 break-all px-1 w-full">{title}</span>
 		{:else if text}
-			<span class="line-clamp-1 break-all w-full">{text}</span>
+			<span class="line-clamp-1 break-all px-1 w-full">{text}</span>
 		{/if}
 		<!-- {#if subtitle}
 			<span class="font-style-small line-clamp-1 w-full {subtitleClass}">{subtitle}</span>
 		{/if} -->
 	</div>
+
+	{#if state === 'input'}
+		<Button icon="X" size="xs" iconWeight="bold" />
+		<!-- <Icon name="X" size="xs" weight="bold" /> -->
+	{/if}
 
 	{#if href}
 		<Link class="card-link" href={href}></Link>

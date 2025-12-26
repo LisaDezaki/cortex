@@ -207,6 +207,7 @@
 
 					{:else if parameters.layout == 'table'}
 						<FactionTable
+							class="text-sm"
 							factions={results}
 						/>
 

@@ -1,17 +1,19 @@
 <script>
 
-	import { Link } from '@inertiajs/svelte'
+	import { Link, page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 
 	import Form          from '@/Components/Core/Form.svelte'
+	import Inline        from '@/Components/Core/Inline.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
 	import Table         from '@/Components/UI/Table'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
-	import CharacterIcon from '@/Components/Features/Character/CharacterIcon.svelte'
+	
+	let customFields = $page.props.customFields?.data
 
     let {
 		class: className,
-		factions,
+		factions = [],
 		selected = [],
 		selectionMode
 	} = $props()
@@ -44,9 +46,9 @@
 	{#if selectionMode}
 		<Table.Head shrink><Form.Checkbox onclick={selectAll} /></Table.Head>
 	{/if}
-	<Table.Head sortable class="font-style-button">Name</Table.Head>
-	<Table.Head sortable class="font-style-button">Members</Table.Head>
-	<Table.Head sortable class="font-style-button">Headquarters</Table.Head>
+	<Table.Head sortable class="max-w-60">Name</Table.Head>
+	<Table.Head sortable class="max-w-40">Members</Table.Head>
+	<Table.Head sortable class="max-w-52">Headquarters</Table.Head>
 {/snippet}
 
 {#snippet bodyRow(faction)}
@@ -56,54 +58,44 @@
 			<Form.Checkbox checked={selected.includes(faction.id)} onclick={() => selectRow(faction.id)} />
 		</Table.Cell>
 	{/if}
-	<Table.Cell>
-		<Link href={route('factions.show', {faction: faction.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
+	<Table.Cell class="max-w-60">
+		<Link class="flex items-center gap-1.5 py-0.5 hover:text-emerald-500" href={route('factions.show', {faction: faction.slug})}>
 			<Thumbnail
-				class="h-7 w-7"
+				class="bg-neutral-softest h-6 w-6 rounded"
 				src={faction.image?.url}
-				icon="FlagBannerFold"
 			/>
-			<div class="-space-y-0.5">
-				<div class="font-style-small">{faction.name}</div>
-				<div class="font-style-tiny line-clamp-1 opacity-65">{faction.type}</div>
-			</div>
+			<Inline>{faction.name}</Inline>
 		</Link>
 	</Table.Cell>
-	<Table.Cell>
-		{#if faction.members.length > 0}
-			<div class="flex w-full">
-				{#each faction.members as member, i}
-					<CharacterIcon
-						class="outline-emerald-500 outline-offset-2 hover:outline outline-1 {i !== 0 ? "-ml-3 " : ""}"
-						href={route('characters.show', {character: member.slug})}
+	<Table.Cell class="flex items-center gap-0.5 py-0.5 max-w-40">
+		{#if faction.members.items.length > 0}
+			{#each faction.members.items as member, i}
+				<Link href={route('characters.show', {character: member.slug})} class="flex items-center gap-1 hover:text-emerald-500">
+					<Thumbnail
+						class="bg-neutral-softest h-6 w-6 rounded"
 						src={member.image?.url}
 					/>
-				{/each}
-			</div>
+					<!-- <Inline>{member.name}</Inline> -->
+				</Link>
+			{/each}
 		{:else}
-			<Button style="soft" theme="accent"
-				icon="Plus" iconSize={20} iconWeight="light"
-				class="h-7 w-7 rounded-full"
+			<Button size="sm" style="soft" theme="accent"
+				icon="Plus" class="h-6 w-6 rounded"
 			/>
 		{/if}
 	</Table.Cell>
-	<Table.Cell>
+	<Table.Cell class="flex items-center gap-1.5 py-0.5 max-w-52">
 		{#if faction.headquarters}
-			<Link href={route('locations.show', {location: faction.headquarters.slug})} class="flex items-center gap-2 w-full hover:text-emerald-500">
+			<Link href={route('locations.show', {location: faction.headquarters.slug})} class="flex items-center gap-1 hover:text-emerald-500">
 				<Thumbnail
-					class="h-7 w-7"
+					class="bg-neutral-softest h-6 w-6 rounded"
 					src={faction.headquarters.image?.url}
-					icon="MapPinArea"
 				/>
-				<div class="-space-y-0.5">
-					<div class="font-style-small line-clamp-1">{faction.headquarters.name}</div>
-					<div class="font-style-tiny line-clamp-1 opacity-65">{faction?.headquarters?.region?.name}</div>
-				</div>
+				<Inline>{faction.headquarters.name}</Inline>
 			</Link>
 		{:else}
-			<Button style="soft" theme="accent"
-				icon="Plus" iconSize={20} iconWeight="light"
-				class="h-7 w-7"
+			<Button size="sm" style="soft" theme="accent"
+				icon="Plus" class="h-6 w-6 rounded"
 			/>
 		{/if}
 	</Table.Cell>

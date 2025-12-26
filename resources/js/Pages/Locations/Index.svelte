@@ -184,6 +184,7 @@
 								{#each results as location}
 									<Entity
 										active={parameters.selected === location.slug}
+										aspect="aspect-video"
 										entity={location}
 										layout="stack"
 										size="auto"
@@ -200,6 +201,7 @@
 					
 					{:else if parameters.layout == 'table'}
 						<LocationTable
+							class="text-sm"
 							locations={results}
 						/>
 

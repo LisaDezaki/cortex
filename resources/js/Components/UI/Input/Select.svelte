@@ -33,8 +33,9 @@
 	let hasFocus  = $state(false)
 	let selection = $state(null)
 	let isEmpty   = $derived(value == null || value == '' || value == [])
+	let type	  = $derived(multiple ? 'multiple' : 'single')
 
-	let selectedOption = $derived(options.find(o => o.value === value) || {icon, placeholder, value})
+	let selectedOption = $derived(options.find(o => o.value === value) || {placeholder, value})
 
 	function checkFocus() {
 		hasFocus = document.activeElement === input;
@@ -90,7 +91,7 @@
 <Select.Root class="select"
 	bind:this={input}
 	bind:value={value}
-	type={multiple ? "multiple" : "single"}
+	type={type}
 	items={options}
 	onfocus={checkFocus}
 	onblur={checkFocus}
@@ -98,6 +99,9 @@
 {...restProps}>
 
 	<Select.Trigger class="input p-{size} {className}">
+		{#if icon}
+			<Icon class="input-icon" name={icon} size={size} />
+		{/if}
 		<Input.Option {...selectedOption} size={size} />
 	</Select.Trigger>
 
@@ -116,7 +120,7 @@
 						{#if option.separator}
 							<Separator class="mx-2 my-0.5 w-auto" />
 						{:else if option.options}
-							<div class="font-medium opacity-50 px-2 py-1">{option.label}</div>
+							<div class="opacity-50 px-2 py-1">{option.label}</div>
 							<Stack>
 								{#each option.options as opt}
 									<Select.Item {...opt}>

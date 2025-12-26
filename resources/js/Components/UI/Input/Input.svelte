@@ -146,7 +146,8 @@
 		}
 		&[data-state="open"],
 		&.focus {
-			box-shadow: 0 1px 0 var(--bg-accent);
+			/* @apply border-b; */
+			/* border-color: var(--border-accent); */
 			color: var(--text-accent);
 			outline: 1px solid var(--border-accent);
 			outline-offset: -1px;
@@ -164,6 +165,7 @@
 
 		:global(.input-icon) {
 			@apply inline-flex items-center justify-center aspect-square rounded;
+			color: var(--text-neutral-soft);
 		}
 
 		:global(.input-value) {

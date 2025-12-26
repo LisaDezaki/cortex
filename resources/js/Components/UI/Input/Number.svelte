@@ -49,10 +49,11 @@
 	}
 
 	let cx = $derived({
-		input: clsx('input input-number', `p-${size}`, `text-${size}`, {
+		input: clsx('input', `p-${size}`, `text-${size}`, {
 			'disabled': restProps.disabled,
 			'focus': hasFocus
-		}, className)
+		}, className),
+		element: clsx('input-element', `px-${size} py-0 text-${size}`)
 	})
 
 </script>
@@ -72,7 +73,7 @@
 		bind:value
 		type="number"
 		aria-disabled={restProps.disabled ? 'true' : undefined}
-		class="input-element {inputClass}"
+		class={cx.element}
 		onfocus={checkFocus}
 		onblur={checkFocus}
 		{...restProps}

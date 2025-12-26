@@ -38,11 +38,11 @@
 	})
 
 	let cx = $derived({
-		input: clsx('input', `p-${size}`, {
+		input: clsx('input', `p-${size} text-${size}`, {
 			'disabled': restProps.disabled,
 			'focus': hasFocus
 		}, className),
-		element: clsx('input-element', `px-${size} py-0 text-${size}`, inputClass)
+		element: clsx('input-element', `px-${size} py-0 text-${size}`)
 	})
 
 </script>

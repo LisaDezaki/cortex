@@ -1,6 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 
+	import Inline	from '@/Components/Core/Inline.svelte'
+	import Button	from '@/Components/UI/Button.svelte'
+
 	let {
 		backgroundImage,
 		children,
@@ -156,19 +159,22 @@
 	class="relative overflow-hidden {className}"
 	onpointerdown={dragStart}
 	onwheel={handleScroll}
-	style="background-image: url('{backgroundImage}'); background-size: 24px; background-position: {position.x+transform.x}px {position.y+transform.y}px"
+	style="background-image: url('{backgroundImage}'); background-size: {zoomable ? 24*zoom : 24}px; background-position: {position.x+transform.x}px {position.y+transform.y}px"
 {...restProps}>
 
 	{#if debug}
-		<ul class="absolute space-y-1 bottom-3 left-3 backdrop-blur-sm hover:backdrop-blur-md border border-white/40 bg-white/15 p-2 pointer-events-none rounded text-xs text-white z-10">
+		<ul class="absolute space-y-1 bottom-3 left-3 backdrop-blur-sm hover:backdrop-blur-md bg-neutral-softer border-b border-neutral-softer p-2 pointer-events-none rounded text-xs text-white z-10">
 			<!-- <li>constraints: X:{Math.floor(constrainX.min)}-{Math.floor(constrainX.max)}, Y:{Math.floor(constrainY.min)}-{Math.floor(constrainY.max)}</li>
 			<li>isDragging: {isDragging}</li>
 			<li>clickStart: {Math.floor(clickStart.x)}, {Math.floor(clickStart.y)}</li> -->
 			<li>origin: {Math.floor(origin.x)}, {Math.floor(origin.y)}</li>
 			<!-- <li>dragVector: {Math.floor(dragVector.x)}, {Math.floor(dragVector.y)}</li> -->
-			<li>zoom: {Math.floor(zoom*100)}%</li>
 			<li>transform: {Math.floor(transform.x)}, {Math.floor(transform.y)}</li>
 			<li>position: {Math.floor(position.x)}, {Math.floor(position.y)}</li>
+			{#if zoomable}
+				<li>zoom: {Math.floor(zoom*100)}%</li>
+			{/if}
+			<li>background-size: {zoomable ? 24*zoom : 24}px</li>
 			{#if typeof debug == "object"}
 				{#each Object.entries(debug) as [key,val]}
 					<li>{key}: {val}</li>
@@ -183,13 +189,24 @@
 
 	<div bind:this={contentRef}
 		class="draggable min-h-full min-w-full {contentClass}"
-		style="transform: scale({zoom}) translate({(position.x+transform.x)/zoom}px, {(position.y+transform.y)/zoom}px); transform-origin: {origin.x}px {origin.y}px"
+		style="transform: scale({zoomable ? zoom : 1}) translate({(position.x+transform.x)/zoom}px, {(position.y+transform.y)/zoom}px); transform-origin: {origin.x}px {origin.y}px"
 	>
 		{@render children?.()}
 	</div>
 
 	{#if legend}
 		{@render legend()}
+	{/if}
+
+	{#if pannable}
+		asdf
+	{/if}
+
+	{#if zoomable}
+		<Inline class="absolute top-0 right-0 gap-[1px] p-3">
+			<Button icon="Minus" size="sm" class="backdrop-blur-sm bg-neutral-softer border-b border-neutral-softest rounded-l-md text-white" />
+			<Button icon="Plus"  size="sm" class="backdrop-blur-sm bg-neutral-softer border-b border-neutral-softest rounded-r-md text-white" />
+		</Inline>
 	{/if}
 
 </div>

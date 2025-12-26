@@ -206,6 +206,7 @@
 	
 					{:else if parameters.layout === 'table'}
 						<CharacterTable
+							class="text-sm"
 							characters={results}
 						/>
 	

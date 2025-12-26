@@ -31,11 +31,11 @@
 			'cursor-not-allowed opacity-50': 	disabled,
 			'rounded': 							!className?.includes('rounded-'),
 			
-			'bg-accent 				shadow-accent-strong 	text-white 	hover:bg-accent-alt':  				style === 'hard'  && theme === 'accent',
+			'bg-accent-gradient		shadow-accent-strong 	text-white 	hover:bg-accent-gradient-alt':  	style === 'hard'  && theme === 'accent',
 			'bg-accent-softest 		shadow-accent-softest 	text-accent hover:bg-accent-softer': 			style === 'soft'  && theme === 'accent',
 			'bg-transparent 		shadow-transparent 		text-accent hover:bg-accent-softest': 			style === 'plain' && theme === 'accent',
 
-			'bg-slate-50			shadow-neutral-softest 	text-neutral hover:bg-neutral-gradient-alt': 	style === 'hard'  && theme === 'neutral',
+			'bg-neutral-gradient	shadow-neutral-softest 	text-neutral hover:bg-neutral-gradient-alt': 	style === 'hard'  && theme === 'neutral',
 			'bg-neutral-softest		shadow-neutral-softest 	text-neutral hover:bg-neutral-softer': 			style === 'soft'  && theme === 'neutral',
 			'bg-transparent			shadow-transparent 		text-neutral hover:bg-neutral-softest':			style === 'plain' && theme === 'neutral',
 

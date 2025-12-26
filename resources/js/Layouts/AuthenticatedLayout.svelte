@@ -6,6 +6,7 @@
 	import Navigation 	from '@/Components/UI/Navigation.svelte'
     import Main       	from '@/Components/UI/Main.svelte'
     import Page       	from '@/Components/UI/Page.svelte'
+	import Snackbar		from '@/Components/UI/Snackbar.svelte'
 	import Toast		from '@/Components/UI/Toast.svelte'
 	import ProjectObject from '@/services/ProjectObject'
 
@@ -115,7 +116,8 @@
 	} = $props()
 
 	let cx = {
-		width: ['w-0', 'w-4', 'w-8', 'w-12', 'w-16', 'w-20', 'w-24', 'w-28', 'w-32', 'w-36', 'w-40', 'w-44', 'w-48', 'w-52', 'w-56', 'w-60', 'w-64']
+		gap:	['gap-0', 'gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-8', 'gap-20'],
+		width:	['w-0', 'w-4', 'w-8', 'w-12', 'w-16', 'w-20', 'w-24', 'w-28', 'w-32', 'w-36', 'w-40', 'w-44', 'w-48', 'w-52', 'w-56', 'w-60', 'w-64']
 	}
 
 </script>
@@ -126,13 +128,21 @@
 	<Navigation {active} />
 	<Main>
 		<Article {noscroll}>
-			{#if $page.props.flash}
-				<Toast {...$page.props.flash} />
-			{/if}
 			{@render article?.()}
 		</Article>
 		{@render sidebar?.()}
 	</Main>
+	{#if $page.props.flash}
+		<Stack class="overlay fixed bottom-4 left-1/2 translate-x-[-50%]">
+			{#if $page.props.flash.success}
+				<Snackbar theme="accent" icon="CheckCircle" text={$page.props.flash.success} />
+			{:else if $page.props.flash.error}
+				<Snackbar theme="danger" icon="" text={$page.props.flash.error} />
+			{:else if $page.props.flash.message}
+				<Snackbar theme="neutral" text={$page.props.flash.message} />
+			{/if}
+		</Stack>
+	{/if}
 </Page>
 
 {#if CurrentModal}

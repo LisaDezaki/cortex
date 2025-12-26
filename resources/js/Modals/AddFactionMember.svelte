@@ -5,12 +5,11 @@
 	import { Flex, Grid, Stack } from '@/Components/Core'
 
 	import Button    from '@/Components/UI/Button.svelte'
+	import Entity    from '@/Components/UI/Entity.svelte'
 	import Icon		 from '@/Components/UI/Icon.svelte'
 	import Input     from '@/Components/UI/Input'
 	import ModalForm from '@/Components/UI/ModalForm.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
-
-	import CharacterCard from '@/Components/Features/Character/CharacterCard.svelte'
 
 	let characters = $page.props.activeProject?.data.characters
 
@@ -51,15 +50,13 @@
 
 		<Grid cols={5} class="px-6 pt-0 pb-3">
 			{#each characters.filter(c => c.id !== character.id) as char}
-				<CharacterCard
-					character={char}
+				<Entity
+					entity={char}
+					layout="stack"
+					size="md"
 					onclick={(e) => selectRelatedCharacter(e,char)}
 					disabled={existingRelationshipSlugs.includes(char.slug)}
-				>
-					{#if existingRelationshipSlugs.includes(char.slug)}
-						<Icon name="Handshake" class="absolute bg-accent-gradient border-accent-strong p-2 rounded-full text-white" />
-					{/if}
-				</CharacterCard>
+				/>
 			{/each}
 		</Grid>
 

@@ -42,6 +42,8 @@ function handlePointerDown(e) {
 }
 </script>
 
+
+
 <Flex align="center" justify="center"
 	class="drag-handle"
 	bind:this={handleElement}

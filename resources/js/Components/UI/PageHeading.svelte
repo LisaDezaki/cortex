@@ -5,16 +5,20 @@
 
 	let {
 		class: className,
+		is = 'h1',
+		as = 'h3',
 		title,
 		subtitle
 	} = $props()
 
 	let cx = {
-		heading: clsx('', className)
+		heading: 	clsx('', className),
+		title:	 	clsx('text-neutral'),
+		subtitle:	clsx('text-lg text-neutral-softer')
 	}
 </script>
 
 <Stack class={cx.heading}>
-	<Heading is="h1" as="h3" class="text-neutral">{title}</Heading>
-	<p class="text-lg text-neutral-softer">{subtitle}</p>
+	<Heading {is} {as} class={cx.title}>{title}</Heading>
+	<p class={cx.subtitle}>{subtitle}</p>
 </Stack>

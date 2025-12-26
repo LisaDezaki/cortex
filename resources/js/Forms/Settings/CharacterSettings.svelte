@@ -27,8 +27,6 @@
 
 
 
-
-
 <Form {form} {oncancel}
 	class="flex flex-col gap-6 {className}"
 	enctype="multipart/form-data"

@@ -11,8 +11,6 @@
 	import Table         from '@/Components/UI/Table'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 
-	import CharacterIcon from '@/Components/Features/Character/CharacterIcon.svelte'
-
 	let customFields = $page.props.customFields?.data
 
     let {
@@ -79,7 +77,7 @@
 	<Table.Cell>
 		<Link class="flex items-center gap-1.5 py-0.5 hover:text-emerald-500" href={route('items.show', {item: item.slug})}>
 			<Thumbnail
-				class="bg-neutral-softest h-6 w-6 rounded-full"
+				class="bg-neutral-softest h-6 w-6 rounded"
 				src={item.image?.url}
 			/>
 			<Inline>{item.name}</Inline>

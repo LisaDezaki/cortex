@@ -136,6 +136,7 @@
 	import UserPlus from "phosphor-svelte/lib/UserPlus"
 	import UsersFour from "phosphor-svelte/lib/UsersFour"
 	import UsersThree from "phosphor-svelte/lib/UsersThree"
+	import Warning from "phosphor-svelte/lib/Warning"
 	import Wrench from "phosphor-svelte/lib/Wrench"
 	import X from "phosphor-svelte/lib/X"
 	import XCircle from "phosphor-svelte/lib/XCircle"
@@ -280,6 +281,7 @@
 		'UserPlus': UserPlus,
 		'UsersFour': UsersFour,
 		'UsersThree': UsersThree,
+		'Warning': Warning,
 		'Wrench': Wrench,
 		'X': X,
 		'XCircle': XCircle

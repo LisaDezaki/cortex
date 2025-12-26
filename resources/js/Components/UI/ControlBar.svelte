@@ -41,7 +41,7 @@
 	 */
 	let cx = $derived({
 		bar: clsx('control-bar mt-1.5 shrink-0 w-full z-10', className),
-		result: clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-sm rounded text-accent text-sm whitespace-nowrap')
+		result: clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-sm px-md rounded text-accent text-sm whitespace-nowrap')
 	})
 
 	function onQuery() {
