@@ -29,94 +29,103 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section size="5xl" gap={0} class="h-full overflow-y-auto">
 
-			<PageHeader class="px-6 py-2"
-				tabs={[
-					{ text: "Items List",		href: route('items') },
-					{ text: "Settings", 		active: true },
-				]}
-			/>
+		<PageHeader size="7xl" class="px-20 py-2" tabs={[
+			{ text: "Items List",		href: route('items') },
+			{ text: "Settings", 		active: true },
+		]} />
 
-			<Flex gap={12} class="px-6 py-6 w-full">
-				<PageMenu
-					items={[
-						{ icon: "UserList",		label: "Overview",		href: "#overview"	},
-						{ icon: "ImagesSquare",	label: "Media",			href: "#media"		},
-						{ icon: "Textbox",		label: "Custom Fields",	href: "#custom"		},
-						{ icon: "Coins",		label: "Currencies",	href: "#currencies"	}
-					]}
+		<Flex justify="center" gap={12} class="flex-1 overflow-y-auto px-20 py-12 w-full">
+			<PageMenu items={[
+				{ icon: "UserList",		label: "Overview",		href: "#overview"	},
+				{ icon: "Coins",		label: "Currencies",	href: "#currencies"	},
+				{ icon: "ImagesSquare",	label: "Media",			href: "#media"		},
+				{ icon: "Textbox",		label: "Custom Fields",	href: "#custom"		},
+			]} />
+			<Stack class="max-w-5xl w-full">
+
+				<PageHeading
+					title="Item Settings"
+					subtitle="Manage the Item Settings for this project."
+					class="mb-12 text-neutral-softest"
 				/>
-				<Stack>
 
-					<PageHeading
-						title="Item Settings"
-						subtitle="Settings for items"
-						class="mb-12"
-					/>
+				<Section id="overview" gap={6}>
+					<Heading is="h4" as="h5">Overview</Heading>
+					<ItemSettingsForm />
+				</Section>
 
-					<Section id="overview" class="pb-12">
-						<ItemSettingsForm />
-					</Section>
+				<Separator class="my-12" />
 
-					<!-- <Section id="media" class="pb-12">
-						<Flex align="center" class="mb-6 max-w-[32ch]">
-							<Heading is="h4" as="h5">Media</Heading>
-						</Flex>
-						<p class="mb-3">These media settings apply to all characters in this project.</p>
-					</Section> -->
+				<Section id="currencies" gap={6}>
+					<Heading is="h4" as="h5">Currencies</Heading>
+					<!-- <ItemSettingsForm /> -->
+				</Section>
 
-					<Section id="custom" class="max-w-lg pb-12" gap={3}>
-						<Flex align="center" class="mb-2 max-w-[32ch]">
-							<Heading is="h4" as="h5" class="text-neutral-soft">Custom Fields</Heading>
-						</Flex>
-						<p class="mb-3">These custom fields will apply to all characters in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
-						
-						{#if customFields?.length > 0}
-							<Stack>
-								<Flex align="center">
-									<Inline class="font-style-label w-24">Name</Inline>
-									<Inline class="font-style-label w-20">Type</Inline>
-									<Inline class="font-style-label w-24">Default</Inline>
-									<Inline class="font-style-label w-32">Placeholder</Inline>
-									<!-- <Inline class="font-style-label">Field</Inline> -->
+				<Separator class="my-12" />
+
+				<Section id="crafting" gap={6}>
+					<Heading is="h4" as="h5">Crafting</Heading>
+					<!-- <ItemSettingsForm /> -->
+				</Section>
+
+				<Separator class="my-12" />
+
+				<Section id="media" gap={6}>
+					<Heading is="h4" as="h5">Media</Heading>
+					<p class="mb-3">These media settings apply to all characters in this project.</p>
+				</Section>
+
+				<Separator class="my-12" />
+
+				<Section id="custom" gap={6}>
+					<Heading is="h4" as="h5">Custom Fields</Heading>
+					<p class="mb-3">These custom fields will apply to all characters in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
+					
+					{#if customFields?.length > 0}
+						<Stack>
+							<Flex align="center">
+								<Inline class="font-style-label w-24">Name</Inline>
+								<Inline class="font-style-label w-20">Type</Inline>
+								<Inline class="font-style-label w-24">Default</Inline>
+								<Inline class="font-style-label w-32">Placeholder</Inline>
+								<!-- <Inline class="font-style-label">Field</Inline> -->
+							</Flex>
+							{#each customFields as field}
+								<Flex align="center" class="group my-1">
+									<Inline class="shrink-0 text-sm min-w-24">{field.label}</Inline>
+									<Inline class="shrink-0 text-sm min-w-20 capitalize">{field.type}</Inline>
+									<Inline class="shrink-0 text-sm min-w-24 {field.default ? null : 'text-neutral-softest'}">{field.default || 'None'}</Inline>
+									<Inline class="shrink-0 text-sm min-w-32">{field.placeholder}</Inline>
+									<!-- <Input {...field} id={undefined} label={undefined} class="mr-2 w-full" /> -->
+									<Button class="opacity-0 group-hover:opacity-100 ml-auto rounded-full"
+										style="soft" theme="accent"
+										icon="PencilSimple" iconSize="sm"
+										onclick={() => modalActions.open('customField', { field })}
+									/>
 								</Flex>
-								{#each customFields as field}
-									<Flex align="center" class="group my-1">
-										<Inline class="shrink-0 text-sm min-w-24">{field.label}</Inline>
-										<Inline class="shrink-0 text-sm min-w-20 capitalize">{field.type}</Inline>
-										<Inline class="shrink-0 text-sm min-w-24 {field.default ? null : 'text-neutral-softest'}">{field.default || 'None'}</Inline>
-										<Inline class="shrink-0 text-sm min-w-32">{field.placeholder}</Inline>
-										<!-- <Input {...field} id={undefined} label={undefined} class="mr-2 w-full" /> -->
-										<Button class="opacity-0 group-hover:opacity-100 ml-auto rounded-full"
-											style="soft" theme="accent"
-											icon="PencilSimple" iconSize="sm"
-											onclick={() => modalActions.open('customField', { field })}
-										/>
+								<Separator class="opacity-50" />
+								<!-- {#if field.options}
+									<Flex>
+										{#each field.options as option}
+											<Inline>{option.label}</Inline>
+										{/each}
 									</Flex>
-									<Separator class="opacity-50" />
-									<!-- {#if field.options}
-										<Flex>
-											{#each field.options as option}
-												<Inline>{option.label}</Inline>
-											{/each}
-										</Flex>
-									{/if} -->
-								{/each}
-							</Stack>
-						{:else}
-							<span class="mx-auto text-neutral-softest">There are no custom fields yet.</span>
-						{/if}
+								{/if} -->
+							{/each}
+						</Stack>
+					{:else}
+						<span class="mx-auto text-neutral-softest">There are no custom fields yet.</span>
+					{/if}
 
-						<Button class="mt-3 mx-auto rounded-full"
-							style="soft" theme="accent"
-							icon="Plus" text="Add Custom Field"
-							onclick={() => modalActions.open('customField', {})}
-						/>
-					</Section>
-				</Stack>
-			</Flex>
-		</Section>
+					<Button class="mt-3 mx-auto rounded-full"
+						style="soft" theme="accent"
+						icon="Plus" text="Add Custom Field"
+						onclick={() => modalActions.open('customField', {})}
+					/>
+				</Section>
+			</Stack>
+		</Flex>
 	{/snippet}
 
 	{#snippet sidebar()}

@@ -38,9 +38,6 @@
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
-	<Flex align="center" class="mb-6 max-w-[32ch]">
-		<Heading is="h3" as="h5" class="text-neutral-soft">Overview</Heading>
-	</Flex>
 
 	<Field type="switch"
 		name="enabled"

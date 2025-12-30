@@ -14,6 +14,7 @@ import CharacterList from '@/services/CharacterList'
 import FactionList from '@/services/FactionList'
 import ItemList from '@/services/ItemList'
 import LocationList from '@/services/LocationList'
+import CustomFieldList from '@/services/CustomFieldList'
 
 /**
  * Class: Project Object
@@ -40,35 +41,43 @@ export default class ProjectObject {
 			 * Laravel's Model location as printed by Project::class
 			 * @type {string}
 			 */
-			laravelClass:	"App\Models\Project",
+			laravelClass: "App\Models\Project",
 
 			/**
 			 * A CharacterList instance
 			 * @type {CharacterList}
 			 * @readonly
 			 */
-			characters: projectData.characters ? new CharacterList(projectData.characters)	: null,
+			characters: projectData.characters ? new CharacterList(projectData.characters) : null,
 			
 			/**
 			 * A FactionList instance
 			 * @type {FactionList}
 			 * @readonly
 			 */
-			factions:   projectData.factions   ? new FactionList(projectData.factions)		: null,
+			factions: projectData.factions ? new FactionList(projectData.factions) : null,
 
 			/**
 			 * An ItemList instance
 			 * @type {ItemList}
 			 * @readonly
 			 */
-			items:   projectData.items   ? new ItemList(projectData.items)		: null,
+			items: projectData.items ? new ItemList(projectData.items) : null,
 			
 			/**
 			 * A LocationList instance
 			 * @type {LocationList}
 			 * @readonly
 			 */
-			locations:  projectData.locations  ? new LocationList(projectData.locations)	: null,
+			locations: projectData.locations ? new LocationList(projectData.locations) : null,
+
+			/**
+			 * Custom Fields
+			 * @type {Array<Object>}
+			 * @readonly
+			 */
+			customFields: projectData.customFields ? new CustomFieldList(projectData.customFields) : null,
+
 			
 			/**
 			 * API routes for project operations
@@ -118,6 +127,167 @@ export default class ProjectObject {
 				console.log('ProjectObject.openModal', modalName, props)
 		}
 	}
+
+	/**
+	 * Get Options
+	 * Fetch the options for various dropdown lists that relate to this project specifically.
+	 * @param {string} entity    | the type of entity to get options for
+	 * @param {Array}  optionSet | the set of options to retrieve for this entity
+	 */
+	getOptions(entity, optionSet) {
+
+		if (entity === 'characters') {
+			switch (optionSet) {
+				case 'filter':
+					return [
+						{ label: 'All characters',	value: '*',		  						filterFunction: (ch) => { return ch } },
+						{ label: 'Starred',			value: 'starred', 						filterFunction: (ch) => { return ch.starred } },
+						{ separator: true },
+						{ label: 'Faction',			value: 'factions',						options: this.factions?.items?.map(f => ({
+							label: f.name,				value: `factions.${f.slug}`,		filterFunction: (ch) => ch.factions?.items.map(fa => fa.slug).includes(f.slug),
+							image: f.image?.url || '',	imageIcon: 'FlagBannerFold'
+						}))	},
+						{ label: 'Location',			value: 'location',					options: this.locations?.items?.map(l => ({
+							label: l.name,				value: `location.${l.slug}`,		filterFunction: (ch) => ch.location?.slug == l.slug,
+							image: l.image?.url || '',	imageIcon: 'MapPinArea',
+						}))	},
+						{ label: 'Relationship',		value: 'relationships',				options: this.characters?.items?.map(c => ({
+							label: c.name,				value: `relationship.${c.slug}`,	filterFunction: (ch) => ch.relationships?.items?.map(r => r.slug).includes(c.slug),
+							image: c.image?.url || '',	imageIcon: 'User'
+						}))	},
+						{ separator: true,	if: this.customFields?.getByFieldable('character').length > 0 },
+						...this.customFields?.getByFieldable('character').map(cf => ({
+							label: cf.label,			value: cf.name,						options: cf.options ? cf.options.map(opt => ({
+								label: opt.label,		value: `${cf.name}.${opt.value}`,	filterFunction: (ent) => ent.customFieldValues.find(f => f.name === cf.name)?.value === opt.value
+							})) : undefined
+						})),
+						{ separator: true },
+						{ label: 'Created',				value: 'created',					options: [
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This week',		value: 'created.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+						]},
+						{ label: 'Updated',				value: 'updated',					options: [
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+						]}
+					]
+				case 'sort':
+					return [
+						{ label: "By name",				value: 'name',						sortFunction: (a,b) => a.name < b.name ? -1 : 1 },
+						{ label: "By alias",			value: 'alias',						sortFunction: (a,b) => a.alias < b.alias ? -1 : 1 },
+						{ separator: true },
+						{ label: "By location",			value: 'location',					sortFunction: (a,b) => (a.location?.name || '_') < (b.location?.name || '_') ? -1 : 1 },
+						{ label: "By faction",			value: 'faction',					sortFunction: (a,b) => (a.factions?.items?.[0]?.name || '_') < (b.factions?.items?.[0]?.name || '_') ? -1 : 1 },
+						{ label: "By popularity",		value: 'popularity',				sortFunction: (a,b) => a.relationships?.items?.length > b.relationships?.items?.length 	? -1 : 1 },
+						{ separator: true, if: this.customFields?.getByFieldable('character').length > 0 },
+						...this.customFields?.getByFieldable('character').map(cf => ({
+							label: `By ${cf.label.toLowerCase()}`,	value: cf.name,			sortFunction: (a,b) => {
+								a = a.customFieldValues.find(v => v.name === cf.name)?.value
+								b = b.customFieldValues.find(v => v.name === cf.name)?.value
+								return !isNaN(a) && !isNaN(b)
+									? (Number(a) < Number(b) ? -1 : 1)
+									: (a < b ? -1 : 1)
+							}
+						})),
+						{ separator: true },
+						{ label: "Date Created", 		value: 'created_at', 				sortFunction: (a,b) => a.meta.createdAt < b.meta.createdAt ? -1 : 1 },
+						{ label: "Date Updated", 		value: 'updated_at', 				sortFunction: (a,b) => a.meta.updatedAt < b.meta.updatedAt ? -1 : 1 },
+						{ label: "Randomly", 			value: 'random',     				sortFunction: (a,b) => Math.random() < 0.5 ? -1 : 1 },
+					]
+				case 'layout':
+					return [
+						{ label: "As Graph", 			value: "graph", 		icon: "Graph"	  	},
+						{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
+						{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+					]
+				default:
+					return this.characters?.items?.map(c => ({
+						label: c.name,
+						value: `relationship.*.${c.slug}`,
+						imageIcon: 'User',
+						image: c.image?.url || '',
+						filterFunction: (ch) => ch.relationships?.items?.map(r => r.slug).includes(filter.split('.')[2])
+					}))
+			}
+		}
+
+		if (entity === 'factions') {
+			switch (optionSet) {
+				case 'filter':
+					return [
+						{ label: 'All characters', 	value: '',		  	filterFunction: (ch) => { return ch } },
+						{ label: 'Starred', 		value: 'starred', 	filterFunction: (ch) => { return ch.starred } },
+						{ 	separator: true },
+						// { label: 'Faction',			showImage: true, 	options: this.getOptions('factions') },
+						// { label: 'Location',		showImage: true, 	options: this.getOptions('locations') },
+						// { label: 'Relationship',	showImage: true, 	options: this.getOptions('characters') },
+						// { 	separator: true, hideIf: !this.customFields || this.customFields.length === 0 },
+						// ...this.getCustomFieldsAsOptions()
+					]; break;
+				case 'sort':
+					break;
+				case 'layout':
+					break;
+				default:
+					return this.factions?.items?.map(f => ({
+						label: f.name,
+						value: `factions.${f.slug}`,
+						imageIcon: 'FlagBannerFold',
+						image: f.image?.url || '',
+						filterFunction: (f) => f.factions.map(fa => fa.slug).includes(f.slug)
+					}))
+			}
+		}
+
+		if (entity === 'items') {
+			switch (optionSet) {
+				case 'filter':
+					break;
+				case 'sort':
+					break;
+				case 'layout':
+					break;
+				default:
+
+			}
+		}
+
+		if (entity === 'locations') {
+			switch (optionSet) {
+				case 'filter':
+					break;
+				case 'sort':
+					break;
+				case 'layout':
+					break;
+				default:
+					return this.locations?.items?.map(l => ({
+						label: l.name,
+						value: `location.${l.slug}`,
+						imageIcon: 'MapPinArea',
+						image: l.image?.url || '',
+						filterFunction: (ch) => ch.location?.slug == l.slug
+					}))
+			}
+		}
+
+		if (entity === 'customFields') {
+			return this.customFields?.getByFieldable(optionSet).map(cf => ({
+				label: cf.label,
+				value: cf.name,
+				options: cf.options ? cf.options.map(opt => ({
+					label: opt.label,
+					value: `${cf.name}.${opt.value}`,
+					filterFunction: (ent) => ent.customFieldValues.find(f => f.name === cf.name)?.value === opt.value
+				})) : undefined
+			}))
+		}
+	}
+
 
 
 	/**

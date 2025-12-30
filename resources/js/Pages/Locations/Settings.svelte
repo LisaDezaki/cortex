@@ -10,6 +10,7 @@
 	import Heading    from '@/Components/UI/Heading.svelte'
 	import Input      from '@/Components/UI/Input'
 	import PageHeader from '@/Components/UI/PageHeader.svelte'
+	import PageHeading from '@/Components/UI/PageHeading.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
 	import Separator  from '@/Components/UI/Separator.svelte'
@@ -32,80 +33,79 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section size="5xl" gap={0} class="h-full overflow-hidden">
 
+		<PageHeader size="7xl" class="px-20 py-2" tabs={[
+			{ text: "Location List",	href: route('locations') },
+			{ text: "Settings", 		active: true },
+		]} />
+		
+		<Flex justify="center" gap={12} class="flex-1 overflow-y-auto px-20 py-12 w-full">
+			<PageMenu items={[
+				{ icon: "UserList",       label: "Overview",      href: "#overview"	},
+				{ icon: "ImagesSquare",   label: "Media",         href: "#media"	},
+				{ icon: "Textbox",        label: "Custom Fields", href: "#custom"	}
+			]} />
+			<Stack class="max-w-5xl w-full">
 
-			<PageHeader class="px-6 py-2"
-				title="Location Settings"
-				tabs={[
-					{ text: "Location List",	href: route('locations') },
-					{ text: "Settings", 		active: true },
-				]}
-			/>
-			
-			<Flex gap={12} class="px-6 py-6 w-full">
-				<PageMenu
-					items={[
-						{ icon: "UserList",       label: "Overview",      href: "#overview"	},
-						{ icon: "ImagesSquare",   label: "Media",         href: "#media"	},
-						{ icon: "Textbox",        label: "Custom Fields", href: "#custom"	}
-					]}
+				<PageHeading
+					title="Location Settings"
+					subtitle="Manage the Location Settings for this project."
+					class="mb-12 text-neutral-softest"
 				/>
-				<Stack>
-	
-					<Section id="overview" class="pb-12">
-						<LocationSettingsForm />
-					</Section>
-	
-					<Section id="media" class="pb-12">
-						<Flex align="center" class="mb-6 max-w-[32ch]">
-							<Heading is="h3" as="h5">Media</Heading>
-						</Flex>
-						Media
-					</Section>
-	
-					<Section id="custom" class="pb-12">
-						<Flex align="center" class="mb-6 max-w-[32ch]">
-							<Heading is="h3" as="h5">Custom Fields</Heading>
-						</Flex>
-						<p class="mb-3">These custom fields will apply to all locations in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
 
-						{#if customFields?.length > 0}
-							<Stack>
-								<Flex align="center">
-									<Inline class="font-style-label w-32">Name</Inline>
-									<Inline class="font-style-label w-16">Type</Inline>
-									<Inline class="font-style-label">Field</Inline>
+				<Section id="overview" gap={6}>
+					<Heading is="h3" as="h5">Overview</Heading>
+					<LocationSettingsForm />
+				</Section>
+
+				<Separator class="my-12" />
+
+				<Section id="media" gap={6}>
+					<Heading is="h3" as="h5">Media</Heading>
+					Media
+				</Section>
+
+				<Separator class="my-12" />
+
+				<Section id="custom" gap={6}>
+					<Heading is="h3" as="h5">Custom Fields</Heading>
+					<p class="mb-3">These custom fields will apply to all locations in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
+
+					{#if customFields?.length > 0}
+						<Stack>
+							<Flex align="center">
+								<Inline class="font-style-label w-32">Name</Inline>
+								<Inline class="font-style-label w-16">Type</Inline>
+								<Inline class="font-style-label">Field</Inline>
+							</Flex>
+							{#each customFields as field}
+								<Flex align="center" class="my-1">
+									<Inline class="shrink-0 text-sm min-w-32">{field.label}</Inline>
+									<Inline class="shrink-0 text-sm min-w-16 capitalize">{field.type}</Inline>
+									<Input {...field} id={undefined} label={undefined} class="mr-2 w-full" />
+									<Button class="ml-auto rounded-full"
+										style="soft" theme="accent"
+										icon="PencilSimple" iconSize="sm"
+										onclick={() => modalActions.open('customField', { field })}
+									/>
 								</Flex>
-								{#each customFields as field}
-									<Flex align="center" class="my-1">
-										<Inline class="shrink-0 text-sm min-w-32">{field.label}</Inline>
-										<Inline class="shrink-0 text-sm min-w-16 capitalize">{field.type}</Inline>
-										<Input {...field} id={undefined} label={undefined} class="mr-2 w-full" />
-										<Button class="ml-auto rounded-full"
-											style="soft" theme="accent"
-											icon="PencilSimple" iconSize="sm"
-											onclick={() => modalActions.open('customField', { field })}
-										/>
+								<Separator class="opacity-50" />
+								<!-- {#if field.options}
+									<Flex>
+										{#each field.options as option}
+											<Inline>{option.label}</Inline>
+										{/each}
 									</Flex>
-									<Separator class="opacity-50" />
-									<!-- {#if field.options}
-										<Flex>
-											{#each field.options as option}
-												<Inline>{option.label}</Inline>
-											{/each}
-										</Flex>
-									{/if} -->
-								{/each}
-							</Stack>
-						{:else}
-							<span class="mx-auto text-neutral-softest">There are no custom fields yet.</span>
-						{/if}
-					</Section>
-	
-				</Stack>
-			</Flex>
-		</Section>
+								{/if} -->
+							{/each}
+						</Stack>
+					{:else}
+						<span class="mx-auto text-neutral-softest">There are no custom fields yet.</span>
+					{/if}
+				</Section>
+
+			</Stack>
+		</Flex>
 	{/snippet}
 
 	{#snippet sidebar()}

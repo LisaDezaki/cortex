@@ -310,9 +310,10 @@
 
 	"forest": {
 		"icon": "TreeEvergreen",
-		"name": "Cursed Forest",
+		"name": "The Ghostwoods",
+		"alias": "Spectral Forest",
 		"type": "Region",
-		"desc": "The edge of New Miniport's map is marked by the Cursed Forest, a dense, ancient expanse of gnarled oaks and whispering pines that seems to swallow sound and light. The air within is perpetually cool and still, carrying the loamy scent of decay and the faint, electric hum of something old and watchful.\n\nNo one can agree on the source of its “curse”—whether it's the lingering magic of a forgotten battle, the presence of primordial spirits, or simply the profound unease it stirs in the heart—but the name has stuck for generations.\n\nIt's a place where the path behind you seems to vanish and the shadows hold shapes that are just a little too deliberate.\n\nThis foreboding tranquility is now under threat. The distant, grating whine of Hugo's chainsaw and the shouted protests of activists are a new, invasive species of noise, stirring the forest's ancient residents to alarm.\n\nDeep within its heart lie its secrets: the Abandoned Cabin, whose doors swing open on windless nights and whose interior seems to shift when no one is looking; the Black Lake, a body of water so deep and dark it seems to hold not reflections, but glimpses of other, stranger times; and the Fungal Grotto, a phosphorescent cavern where bioluminescent mushrooms form a glowing canopy over a intricate, tiny society of peaceful myconids, who are now trembling with the vibrations of approaching deforestation. \n\nThe forest may be cursed, but the true evil, it seems, is coming from the outside.",
+		"desc": "The edge of New Miniport's map is marked by the Spectral Forest, colloquially known as the \"Ghostwoods\", a dense, ancient expanse of gnarled oaks and whispering pines that seems to swallow sound and light. The air within is perpetually cool and still, carrying the loamy scent of decay and the faint, electric hum of something old and watchful.\n\nNo one can agree on the source of its “curse”—whether it's the lingering magic of a forgotten battle, the presence of primordial spirits, or simply the profound unease it stirs in the heart—but the name has stuck for generations.\n\nIt's a place where the path behind you seems to vanish and the shadows hold shapes that are just a little too deliberate.\n\nThis foreboding tranquility is now under threat. The distant, grating whine of Hugo's chainsaw and the shouted protests of activists are a new, invasive species of noise, stirring the forest's ancient residents to alarm.\n\nDeep within its heart lie its secrets: the Abandoned Cabin, whose doors swing open on windless nights and whose interior seems to shift when no one is looking; the Black Lake, a body of water so deep and dark it seems to hold not reflections, but glimpses of other, stranger times; and the Fungal Grotto, a phosphorescent cavern where bioluminescent mushrooms form a glowing canopy over a intricate, tiny society of peaceful myconids, who are now trembling with the vibrations of approaching deforestation. \n\nThe forest may be haunted, but the true evil, it seems, is coming from the outside.",
 		"mapdata": {
 			"location": "newminiport",
 			"x": "70", "y": "30"
@@ -343,7 +344,7 @@
 	"lake": {
 		"name": "Black Lake",
 		"type": "Boss Arena",
-		"desc": "Nestled in a silent, sunless hollow deep within the Cursed Forest lies the Black Lake. The water is a profound, lightless void, a sheet of obsidian so perfectly still it seems like a hole punched through the world. Its surface reflects nothing—not the surrounding skeletal trees, not the sky, not a face leaning over its edge. It absorbs all light and sound, creating a pocket of profound, unnerving silence.\n\nThe lake's true nature is its depth and what it contains. It is bottomless, or so the tales say, a vertical tunnel into the very bedrock of the world. Its icy, black waters are not empty, but are home to things that have never known light—pale, blind fish that swim in the abyss, and far older, more patient shapes that move in the profound dark.\n\nMost terrifying of all are the lake's \"gifts\". On rare nights when the moon is right and the forest holds its breath, the lake does not reflect. Instead, it shows. It offers brief, shimmering glimpses of other times, other places, or potential futures on its surface. These visions are never clear, always fragmented and open to terrifying misinterpretation. To gaze into the Black Lake is to risk seeing a truth you were never meant to know.",
+		"desc": "Nestled in a silent, sunless hollow deep within the Ghostwoods lies the Black Lake. The water is a profound, lightless void, a sheet of obsidian so perfectly still it seems like a hole punched through the world. Its surface reflects nothing—not the surrounding skeletal trees, not the sky, not a face leaning over its edge. It absorbs all light and sound, creating a pocket of profound, unnerving silence.\n\nThe lake's true nature is its depth and what it contains. It is bottomless, or so the tales say, a vertical tunnel into the very bedrock of the world. Its icy, black waters are not empty, but are home to things that have never known light—pale, blind fish that swim in the abyss, and far older, more patient shapes that move in the profound dark.\n\nMost terrifying of all are the lake's \"gifts\". On rare nights when the moon is right and the forest holds its breath, the lake does not reflect. Instead, it shows. It offers brief, shimmering glimpses of other times, other places, or potential futures on its surface. These visions are never clear, always fragmented and open to terrifying misinterpretation. To gaze into the Black Lake is to risk seeing a truth you were never meant to know.",
 		"mapdata": {
 			"location": "forest",
 			"x": "65", "y": "25"
@@ -353,11 +354,17 @@
 	"protest-site": {
 		"name": "Protest Site",
 		"type": "Point of interest",
-		"desc": "In one specific area, the serene, ominous aura of the Cursed Forest is temporarily shattered. At its threshold, a stark line has been drawn in the churned-up mud. On one side stands Hugo the troll, a mountain of impatient muscle, his industrial chainsaw silent for now but humming with potential violence. Behind him, the yellowed official notices from the Dragon Council are nailed to trees, their draconic seals gleaming with cold authority. The air is thick with the smell of diesel, troll cigars, and simmering rage.\n\nFacing him is a vibrant, desperate, and noisy wall of defiance. Binksy's magical graffiti already pulses on nearby boulders, swirling with hypnotic patterns meant to disorient and dissuade. Nocturna is at the forefront, her voice sharp and clear as she shouts down Hugo's grumbled threats, her presence a rallying point. From the crowd, the unmistakable sound of Lafferty's voice rises above the din, not with a joke, but with a powerful, rallying cry that turns anxiety into courage. They are joined by a diverse mix of townsfolk: students with hand-painted signs, myconids from the fungal grotto trembling silently at the edge of the trees, worried parents, and old-timers who remember the forest's older, darker tales. This is no longer just about trees; it's a raw, chaotic battle for the very soul of New Miniport, a physical manifestation of the struggle between cold, corporate progress and the messy, passionate fight to preserve a world's hidden magic.",
+		"desc": "In one specific area, the serene, ominous aura of the Spectral Forest is temporarily shattered. At its threshold, a stark line has been drawn in the churned-up mud. On one side stands Hugo the troll, a mountain of impatient muscle, his industrial chainsaw silent for now but humming with potential violence. Behind him, the yellowed official notices from the Dragon Council are nailed to trees, their draconic seals gleaming with cold authority. The air is thick with the smell of diesel, troll cigars, and simmering rage.\n\nFacing him is a vibrant, desperate, and noisy wall of defiance. Binksy's magical graffiti already pulses on nearby boulders, swirling with hypnotic patterns meant to disorient and dissuade. Nocturna is at the forefront, her voice sharp and clear as she shouts down Hugo's grumbled threats, her presence a rallying point. From the crowd, the unmistakable sound of Lafferty's voice rises above the din, not with a joke, but with a powerful, rallying cry that turns anxiety into courage. They are joined by a diverse mix of townsfolk: students with hand-painted signs, myconids from the fungal grotto trembling silently at the edge of the trees, worried parents, and old-timers who remember the forest's older, darker tales. This is no longer just about trees; it's a raw, chaotic battle for the very soul of New Miniport, a physical manifestation of the struggle between cold, corporate progress and the messy, passionate fight to preserve a world's hidden magic.",
 		"mapdata": {
 			"location": "forest",
 			"x": "70", "y": "30"
 		}
+	},
+
+	"sawmill": {
+		"name": "Packard Sawmill",
+		"type": "Industrial",
+		"desc": "The Packard Sawmill has recently reopened following new council legislation, in direct contradiction to the Treaty of _____, signed over 100 years ago by the mayor of New Miniport after a private liaison with the Spectral Guardian."
 	},
 
 	"mountains": {
@@ -373,7 +380,7 @@
 	"mine": {
 		"name": "Derelict Mine",
 		"type": "Dungeon",
-		"desc": "An old abandoned crystal mine that closed after the goblin problem became unmanageable.",
+		"desc": "An old abandoned mana mine and refinery tapped directly into a layline. Closed after the goblin problem became unmanageable.",
 		"mapdata": {
 			"location": "mountains",
 			"x": "58", "y": "47"

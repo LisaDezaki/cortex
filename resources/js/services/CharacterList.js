@@ -8,6 +8,7 @@ import { route } from 'momentum-trail'
 import { modalActions } from '@/stores/modalStore';
 import CharacterObject from '@/services/CharacterObject'
 
+
 /**
  * Class: Character List
  * Represents a collection of Character records
@@ -17,6 +18,7 @@ import CharacterObject from '@/services/CharacterObject'
  */
 
 export default class CharacterList {
+
 
 	/**
 	 * Creates a new CharacterList instance
@@ -57,14 +59,6 @@ export default class CharacterList {
 		this._saveToHistory(); // Save initial state to history
 	}
 
-	/**
-	 * Create
-	 * Open the modal for creating a new character entity
-	 * @returns {void}
-	 */
-	create() {
-		modalActions.open('createCharacter')
-	}
 
 	/**
 	 * Filter
@@ -74,11 +68,24 @@ export default class CharacterList {
 	 * @param {string} sort
 	 * @returns {Array}
 	 */
-	filter(query, filter, sort) {
-		return this.items
-			.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
-			.filter(filter).sort(sort)
+	applyFilters(query, filter, sort) {
+		let response = this.items
+		if (query)  {	response = response.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))	}
+		if (filter) {	response = response.filter(filter)	}
+		if (sort)   {	response = response.sort(sort)	}
+		return response
 	}
+
+
+	/**
+	 * Create
+	 * Open the modal for creating a new character entity
+	 * @returns {void}
+	 */
+	create() {
+		modalActions.open('createCharacter')
+	}
+
 
 	/**
 	 * Find
@@ -89,6 +96,7 @@ export default class CharacterList {
 	find(id) {
 		return this.items.find(item => item.id === id)
 	}
+
 
 	/**
 	 * History / Undo

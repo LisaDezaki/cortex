@@ -200,7 +200,7 @@
 	}
 
 	:global(.input-content) {
-		@apply block max-h-96 min-w-32 overflow-y-auto z-10;
+		@apply block max-h-72 min-w-32 max-w-48 overflow-y-auto z-10;
 		@apply border rounded shadow-lg;
 		background-color: var(--bg-input);
 		border-color: var(--border-accent);

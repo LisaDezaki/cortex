@@ -22,7 +22,6 @@
 	 * @type {ProjectObject}
 	 */
 	const activeProject	  = new ProjectObject($page.props.activeProject.data)
-	// const characters      = activeProject?.characters
 	const items			= activeProject?.items
 
 
@@ -151,80 +150,78 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section size="5xl" gap={0} class="h-full overflow-y-auto">
 
-			<!-- Fixed/Sticky Header -->
+		<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-6 py-2"
-				tabs={[
-					{ text: "Item List",	active: true },
-					{ text: "Settings",		href: route('items.settings') },
-				]}
-				actions={[
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => items.create() },
-				]}
-			>
-				<ItemControlBar
-					data={items} project={activeProject}
-					bind:query={parameters.query}
-					bind:filter={parameters.filter}
-					bind:sort={parameters.sort}
-					bind:size={parameters.size}
-					bind:layout={parameters.layout}
-					bind:results
-					min={4} max={8}
-				/>
-			</PageHeader>
-
-
-			<!-- Main Body -->
-
-			<Stack class="px-6 pt-3 pb-6">
-				{#if activeProject && items?.items.length > 0}
-	
-
-					<!-- Grid -->
-	
-					{#if parameters.layout === 'grid'}
-						<Grid cols={gridCols} gap={3}>
-							{#if results.length > 0}
-								{#each results as item}
-									<Entity
-										active={parameters.selected === item.slug}
-										entity={item}
-										layout="stack"
-										size="auto"
-										onclick={() => selectItem(item)}
-									/>
-								{/each}
-							{:else}
-								<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
-							{/if}
-						</Grid>
+		<PageHeader size="7xl" class="px-20 py-2"
+			tabs={[
+				{ text: "Item List",	active: true },
+				{ text: "Settings",		href: route('items.settings') },
+			]}
+			actions={[
+				{ icon: "Plus", text: "New", theme: "accent", onclick: () => items.create() },
+			]}
+		>
+			<ItemControlBar
+				data={items} project={activeProject}
+				bind:query={parameters.query}
+				bind:filter={parameters.filter}
+				bind:sort={parameters.sort}
+				bind:size={parameters.size}
+				bind:layout={parameters.layout}
+				bind:results
+				min={4} max={8}
+			/>
+		</PageHeader>
 
 
-					<!-- Table -->
-	
-					{:else if parameters.layout === 'table'}
-						<ItemTable
-							class="text-sm"
-							items={results}
-						/>
+		<!-- Main Body -->
+
+		<Stack align="center" class="flex-1 overflow-y-auto px-20 pt-3 pb-12">
+			{#if activeProject && items?.items.length > 0}
 
 
-					{/if}
-				{:else}
+				<!-- Grid -->
 
-					<Empty
-						icon="Package"
-						text="There are no items for this project yet."
-						buttonLabel="Create one?"
-						buttonClick={() => items.create()}
+				{#if parameters.layout === 'grid'}
+					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
+						{#if results.length > 0}
+							{#each results as item}
+								<Entity
+									active={parameters.selected === item.slug}
+									entity={item}
+									layout="stack"
+									size="auto"
+									onclick={() => selectItem(item)}
+								/>
+							{/each}
+						{:else}
+							<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
+						{/if}
+					</Grid>
+
+
+				<!-- Table -->
+
+				{:else if parameters.layout === 'table'}
+					<ItemTable
+						class="max-w-7xl text-sm w-full"
+						items={results}
 					/>
 
+
 				{/if}
-			</Stack>
-		</Section>
+			{:else}
+
+				<Empty
+					icon="Package"
+					text="There are no items for this project yet."
+					buttonLabel="Create one?"
+					buttonClick={() => items.create()}
+				/>
+
+			{/if}
+		</Stack>
 	{/snippet}
 	{#snippet sidebar()}
 		<ItemPanel item={items?.items.find(i => i.slug === parameters.selected)} />

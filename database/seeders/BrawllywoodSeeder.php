@@ -66,6 +66,30 @@ class BrawllywoodSeeder extends Seeder
 				'label'           => $language['name'],
 			]);
 		}
+		
+
+
+		/**
+		 * LOCATIONS
+		 */
+
+		$locations = [];
+		$json = File::get(database_path('data/brawllywood/locations.json'));
+		$json_locations = json_decode($json, true);
+		foreach ($json_locations as $slug => $location) {
+			$locations[$slug] = Location::create([
+				'project_id'  => $projects['brawllywood']->id,
+				// 'parent_location_id' => null,
+				'name'        => $location['name'],
+				'type'        => $location['type'] ?? null,
+				'icon'		  => $location['icon'] ?? null,
+				'slug'        => $slug,
+				'description' => $location['desc'] ?? null,
+				// 'coordinates_x' => $location['coordinates']['x'] ?? null,
+				// 'coordinates_y' => $location['coordinates']['y'] ?? null,
+				'is_world_map'  => $location['is_world_map'] ?? false,
+			]);
+		}
 
 
 		//	CHARACTERS

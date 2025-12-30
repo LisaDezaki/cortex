@@ -8,6 +8,7 @@
 		class: className,
 		href,
 		icon,
+		text,
 		...restProps
 	} = $props()
 
@@ -16,7 +17,7 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		back: clsx('rounded-full h-10 w-10 border border-neutral-softest hover:text-emerald-500', className),
+		back: clsx('rounded-full border border-neutral-softest hover:text-emerald-500', className),
 	})
 
 </script>
@@ -25,5 +26,6 @@
 
 <Button {href} 
 	class={cx.back}
-	icon={icon || "ArrowLeft"} iconSize="lg" iconWeight="bold"
+	icon={icon || "ArrowLeft"} iconSize="lg" iconWeight="regular"
+	text={text}
 {...restProps} />

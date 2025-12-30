@@ -39,7 +39,7 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="h-full overflow-y-auto px-6 py-12">
+		<Flex justify="center" gap={12} class="h-full overflow-y-auto px-20 py-12">
 			<PageMenu
 				backTo={route('characters')} backToLabel="Character List"
 				items={[
@@ -53,7 +53,7 @@
 					{ icon: "Trash", 			label: "Delete", 		onclick: () => character.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="3xl">
+			<Container size="5xl">
 
 
 				<!-- Details -->

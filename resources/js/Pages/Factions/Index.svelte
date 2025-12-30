@@ -150,83 +150,80 @@
 
 <AuthenticatedLayout>	
 	{#snippet article()}
-		<Section size="5xl" gap={0} class="h-full overflow-y-auto">
+
+		<!-- Fixed/Sticky Header -->
+
+		<PageHeader size="7xl" class="px-20 py-2"
+			tabs={[
+				{ text: "Faction List",	active: true },
+				{ text: "Settings",		href: route('factions.settings') },
+			]}
+			actions={[
+				{ icon: "Plus", text: "New", theme: "accent", onclick: () => factions.create() },
+			]}
+		>
+			<FactionControlBar
+				data={factions} project={activeProject}
+				bind:query={parameters.query}
+				bind:filter={parameters.filter}
+				bind:sort={parameters.sort}
+				bind:size={parameters.size}
+				bind:layout={parameters.layout}
+				bind:results={results}
+				min={4} max={8}
+			/>
+		</PageHeader>
 
 
-			<!-- Fixed/Sticky Header -->
+		<!-- Main Body -->
 
-			<PageHeader class="px-6 py-2"
-				tabs={[
-					{ text: "Faction List",	active: true },
-					{ text: "Settings",		href: route('factions.settings') },
-				]}
-				actions={[
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => factions.create() },
-				]}
-			>
-				<FactionControlBar
-					data={factions} project={activeProject}
-					bind:query={parameters.query}
-					bind:filter={parameters.filter}
-					bind:sort={parameters.sort}
-					bind:size={parameters.size}
-					bind:layout={parameters.layout}
-					bind:results={results}
-					min={4} max={8}
-				/>
-			</PageHeader>
+		<Stack align="center" class="flex-1 overflow-y-auto px-20 pt-3 pb-12">
+			{#if activeProject && factions.items.length > 0}
 
 
-			<!-- Main Body -->
+				<!-- Grid -->
 
-			<Stack class="px-6 pt-3 pb-6">
-				{#if activeProject && factions.items.length > 0}
+				{#if parameters.layout == 'grid'}
+					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
+						{#if results.length > 0}
+							{#each results as faction}
+								<Entity
+									active={parameters.selected === faction.slug}
+									entity={faction}
+									layout="stack"
+									size="auto"
+									onclick={() => selectFaction(faction)}
+								/>
+							{/each}
+						{:else}
+							<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
+						{/if}
+					</Grid>
+				
 
+				<!-- Table -->
 
-					<!-- Grid -->
-
-					{#if parameters.layout == 'grid'}
-						<Grid cols={gridCols} gap={3}>
-							{#if results.length > 0}
-								{#each results as faction}
-									<Entity
-										active={parameters.selected === faction.slug}
-										entity={faction}
-										layout="stack"
-										size="auto"
-										onclick={() => selectFaction(faction)}
-									/>
-								{/each}
-							{:else}
-								<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
-							{/if}
-						</Grid>
-					
-
-					<!-- Table -->
-
-					{:else if parameters.layout == 'table'}
-						<FactionTable
-							class="text-sm"
-							factions={results}
-						/>
-
-
-					{/if}
-				{:else}
-
-					<Empty
-						icon="FlagBannerFold"
-						text="There are no factions for this project yet."
-						buttonLabel="Create one?"
-						buttonClick={() => factions.create()}
+				{:else if parameters.layout == 'table'}
+					<FactionTable
+						class="max-w-7xl text-sm w-full"
+						factions={results}
 					/>
 
+
 				{/if}
+			{:else}
+
+				<Empty
+					icon="FlagBannerFold"
+					text="There are no factions for this project yet."
+					buttonLabel="Create one?"
+					buttonClick={() => factions.create()}
+				/>
+
+			{/if}
 
 
-			</Stack>
-		</Section>
+		</Stack>
 	{/snippet}
 
 	{#snippet sidebar()}

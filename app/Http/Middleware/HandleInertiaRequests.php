@@ -83,11 +83,11 @@ class HandleInertiaRequests extends Middleware
 			])->find($user->active_project)
 			: null;
 
-		$appearance = File::get(database_path('data/options/appearance.json'));
+		$appearance = File::get(database_path('data/options/tags_character_appearance.json'));
 		$appearance = json_decode($appearance, true);
-		$personality = File::get(database_path('data/options/personality.json'));
+		$personality = File::get(database_path('data/options/tags_character_personality.json'));
 		$personality = json_decode($personality, true);
-		$locationTags = File::get(database_path('data/options/location_tags.json'));
+		$locationTags = File::get(database_path('data/options/tags_location_description.json'));
 		$locationTags = json_decode($locationTags, true);
 
         return array_merge(parent::share($request), [

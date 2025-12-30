@@ -7,6 +7,7 @@
 	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
 	import Stack				from '@/Components/Core/Stack.svelte'
+	import ControlBarGeneric	from '@/Components/UI/ControlBarGeneric.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import Entity				from '@/Components/UI/Entity.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
@@ -35,24 +36,15 @@
 	/**
 	 * Reactive application state parameters
 	 * @typedef {Object} AppParameters
-	 * @property {string} query - Search query string
-	 * @property {string} filter - Current filter type
-	 * @property {string} sort - Sort field name
-	 * @property {string} direction - Sort direction ('asc' or 'desc')
 	 * @property {number} size - Grid size/layout parameter
 	 * @property {string} layout - Display layout ('grid' or 'table')
 	 * @property {string} selected - Slug of currently selected faction
 	 */
-
 	/**
 	 * Reactive state parameters for filtering, sorting, and layout
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
-		query: 		urlParams.get('q')		|| '',
-		filter: 	urlParams.get('filter') || '',
-		sort: 		urlParams.get('sort')	|| 'name',
-		direction: 	urlParams.get('dir')	|| 'desc',
 		size: 		urlParams.get('size')	|| 6,
 		layout: 	urlParams.get('layout')	|| 'grid',
 		selected: 	urlParams.get('selected') || ''
@@ -78,10 +70,6 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			query: 		urlParams.get('q') 		|| '',
-			filter: 	urlParams.get('filter') || '',
-			sort: 		urlParams.get('sort') 	|| 'name',
-			direction: 	urlParams.get('dir') 	|| 'desc',
 			size: 		urlParams.get('size') 	|| 6,
 			layout: 	urlParams.get('layout') || 'grid',
 			selected: 	urlParams.get('selected') || ''
@@ -94,13 +82,7 @@
 	 */
 	$effect(() => {
 		const url = new URL(window.location);
-		if (parameters.query)	{ url.searchParams.set('q', parameters.query); }
-		else 					{ url.searchParams.delete('q'); }
-		if (parameters.filter)	{ url.searchParams.set('filter', parameters.filter); }
-		else					{ url.searchParams.delete('filter'); }
 		url.searchParams.set('size',		parameters.size);
-		url.searchParams.set('sort',		parameters.sort);
-		url.searchParams.set('direction',	parameters.direction);
 		url.searchParams.set('layout',		parameters.layout);
 		url.searchParams.set('selected',	parameters.selected);
 		window.history.replaceState({}, '', url);
@@ -150,88 +132,82 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section size="5xl" gap={0} class="h-full overflow-y-auto">
 
-			<!-- Fixed/Sticky Header -->
+		<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-6 py-2"
-				tabs={[
-					{ text: "Character List",	active: true },
-					{ text: "Settings",			href: route('characters.settings') },
-				]}
-				actions={[
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => characters.create() },
-				]}
-			>
-				<CharacterControlBar
-					data={characters} project={activeProject}
-					bind:query={parameters.query}
-					bind:filter={parameters.filter}
-					bind:sort={parameters.sort}
-					bind:size={parameters.size}
-					bind:layout={parameters.layout}
-					bind:results
-					min={4} max={8}
-				/>
-			</PageHeader>
+		<PageHeader size="7xl" class="px-20 py-2"
+			tabs={[
+				{ text: "Character List",	active: true },
+				{ text: "Settings",			href: route('characters.settings') },
+			]}
+			actions={[
+				{ icon: "Plus", text: "New", theme: "accent", onclick: () => characters.create() },
+			]}
+		>
+			<ControlBarGeneric
+				data={characters} bind:results bind:layout={parameters.layout}
+				filterOptions={activeProject.getOptions('characters', 'filter')}
+				sortOptions={activeProject.getOptions('characters', 'sort')}
+				layoutOptions={activeProject.getOptions('characters', 'layout')}
+			/>
+		</PageHeader>
 
 
-			<!-- Main Body -->
+		<!-- Main Body -->
 
-			<Stack class="px-6 pt-3 pb-6">
-				{#if activeProject && characters.items.length > 0}
-	
-
-					<!-- Grid -->
-	
-					{#if parameters.layout === 'grid'}
-						<Grid cols={gridCols} gap={3}>
-							{#if results.length > 0}
-								{#each results as character}
-									<Entity
-										active={parameters.selected === character.slug}
-										entity={character}
-										layout="stack"
-										size="auto"
-										onclick={() => selectCharacter(character)}
-									/>
-								{/each}
-							{:else}
-								<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
-							{/if}
-						</Grid>
+		<Stack align="center" class="flex-1 overflow-y-auto px-20 pt-3 pb-12">
+			{#if activeProject && characters.items.length > 0}
 
 
-					<!-- Table -->
-	
-					{:else if parameters.layout === 'table'}
-						<CharacterTable
-							class="text-sm"
-							characters={results}
-						/>
-	
-	
-					<!-- Graph -->
-	
-					{:else if parameters.layout === 'graph'}
-						<Empty class="h-96"
-							icon="Graph" text="This layout type isn't working yet. Try again later."
-						/>
+				<!-- Grid -->
+
+				{#if parameters.layout === 'grid'}
+					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
+						{#if results.length > 0}
+							{#each results as character}
+								<Entity
+									active={parameters.selected === character.slug}
+									entity={character}
+									layout="stack"
+									size="auto"
+									onclick={() => selectCharacter(character)}
+								/>
+							{/each}
+						{:else}
+							<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
+						{/if}
+					</Grid>
 
 
-					{/if}
-				{:else}
+				<!-- Table -->
 
-					<Empty
-						icon="User"
-						text="There are no characters for this project yet."
-						buttonLabel="Create one?"
-						buttonClick={() => characters.create()}
+				{:else if parameters.layout === 'table'}
+					<CharacterTable
+						class="max-w-7xl text-sm w-full"
+						characters={results}
 					/>
 
+
+				<!-- Graph -->
+
+				{:else if parameters.layout === 'graph'}
+					<Empty class="h-96 max-w-7xl w-full"
+						icon="Graph" text="This layout type isn't working yet. Try again later."
+					/>
+
+
 				{/if}
-			</Stack>
-		</Section>
+			{:else}
+
+				<Empty
+					icon="User"
+					text="There are no characters for this project yet."
+					buttonLabel="Create one?"
+					buttonClick={() => characters.create()}
+				/>
+
+			{/if}
+		</Stack>
 	{/snippet}
 	{#snippet sidebar()}
 		<CharacterPanel character={characters.items.find(c => c.slug === parameters.selected)} />

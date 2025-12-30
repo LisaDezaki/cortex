@@ -8,6 +8,22 @@
 		"isContainer": true
 	},
 
+	"chainsaw": {
+		"name": "Chainsaw",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 75,
+		"weight": 40
+	},
+
+	"cleaver": {
+		"name": "Cleaver",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 25,
+		"weight": 10
+	},
+
 	"compass": {
 		"name": "Compass",
 		"type": "Tool",
@@ -32,6 +48,22 @@
 		"weight": 10
 	},
 
+	"flintlock": {
+		"name": "Flintlock Pistol",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 125,
+		"weight": 15
+	},
+
+	"iron-knuckles": {
+		"name": "Iron Knuckles",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 25,
+		"weight": 10
+	},
+
 	"mechanisms": {
 		"name": "Mechanisms",
 		"type": "Resource",
@@ -46,6 +78,14 @@
 		"desc": "",
 		"cost": 15,
 		"weight": 20
+	},
+
+	"metzkers-map": {
+		"name": "Metzker's Map",
+		"type": "Map",
+		"desc": "The only known map of the Ancient Ruins in existence.",
+		"cost": 100,
+		"weight": 1
 	},
 
 	"sextant": {
@@ -78,6 +118,22 @@
 		"desc": "",
 		"cost": 25,
 		"weight": 25
+	},
+
+	"shotgun": {
+		"name": "Double-Barelled Shotgun",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 175,
+		"weight": 25
+	},
+
+	"spraypaint": {
+		"name": "Magical Spray Paint Can",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 500,
+		"weight": 5
 	},
 
 	"telescope": {

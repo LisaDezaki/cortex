@@ -27,7 +27,7 @@
 		back: clsx('border border-neutral-softest flex items-center gap-3 mb-3 place-self-start pl-3 pr-5 py-1.5 rounded-full hover:border-accent hover:text-accent'),
 		item: clsx('page-menu-item flex items-center gap-3 p-1.5 pl-3 rounded w-full'),
 		itemDefault: clsx('hover:bg-neutral-softest'),
-		itemDanger:  clsx('hover:bg-danger-softest'),
+		itemDanger:  clsx('text-danger hover:bg-danger-softest'),
 		itemActive:  clsx('bg-accent-softest text-accent pointer-events-none')
 	})
 

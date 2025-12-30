@@ -127,7 +127,6 @@
 	])
 
 	const layoutOptions = $state([
-		{ label: "As Graph", value: "graph", icon: "Graph"	  },
 		{ label: "As Grid",  value: "grid",	 icon: "GridFour" },
 		{ label: "As Table", value: "table", icon: "Table"	  }
 	])

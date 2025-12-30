@@ -1,5 +1,6 @@
 <script>
 	
+	import Stack from '@/Components/Core/Stack.svelte'
     import clsx from "clsx"
 
 	/**
@@ -33,10 +34,10 @@
 
 
 
-<article class={cx.article} {...restProps}>
+<Stack as="article" class={cx.article} {...restProps}>
 	{#if children}
 		{@render children()}
 	{:else}
 		<p class={cx.empty}>No content available.</p>
 	{/if}
-</article>
+</Stack>

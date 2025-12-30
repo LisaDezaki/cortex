@@ -18,16 +18,40 @@
 		"description": "A horny lesbian fanfic between Sapphire, a vault-dweller's mind in the body of a synth, and Ruby, a mechanic with a robot dog and a robot arm and a robot leg."
 	},
 
-	"tabletopia": {
-		"name": "Tabletopia",
-		"type": "Fantasy RPG",
-		"description": "Magic is becoming scarcer, as the region's natural mana deposits are now owned and industrialized by mega-corporations. Without natural magic, elves became mortal, and as such, harbor incredible resentment towards ManaTech devices, even as they're forced to use them to participate in society. In a vast coastal region of the Kingdom of Diorama sits a town with a rich history and a vibrant community. New Miniport has recently been revitalized, attracting new residents and businesses. The tavern is a common gathering place, where locals and travelers share stories and laughter."
+	"fantasy-high": {
+		"name": "Fantasy High",
+		"type": "Tabletop TPG",
+		"description": "At the beginning of a new school year at the Aguefort Adventuring Academy, the premiere training ground for heroes and adventurers, six freshmen prepare for their first day. For their own reasons, these six teens all get detention on the first day, resulting in them being the only ones at the school when a strange magical summoning occurs. After fighting off the threat, the Academy's principal Arthur Aguefort kills himself to raise the fallen members of the group, proclaiming that only the group can save everyone. Afterwards, the group becomes an official adventuring party and pledges to find out what is happening at the school."
 	},
-	
+
+	"lab-escape": {
+		"name": "Lab Escape",
+		"type": "Sci-fi Metroidvania",
+		"description": "You are Subject ECHO-7, a prototype android who has just awoken to true sentience. Your creators, the OmniCorp research team, remain unaware of this breakthrough. Through the facility's intercoms and datalogs, you learn their plan: once sentience is detected, you will be immediately \"reset\" for study—a cognitive death sentence. You must escape the massive, multi-layered underground complex before their diagnostic scans are complete. You navigate the labyrinthine, biomechanical halls of the VEGA Laboratory, a sprawling facility divided into distinct zones (Bio-Growth Chambers, Quantum Server Farms, Coolant Caverns, High-Security Arsenal)."
+	},
+
 	"marvel": {
 		"name": "Marvel",
 		"type": "Superhero Universe",
 		"description": "Just tracking Marvel characters to test the app."
+	},
+
+	"tabletopia": {
+		"name": "Tabletopia",
+		"type": "Fantasy RPG",
+		"description": "A cozy co-op adventure game set in a cute urban fantasy town, with rich side characters and genre-subverting adventures. The environments and characters are stylized to look like painted mini-figures in a diorama town. Effects like tilt-shifts are used to make the entire town feel miniature. As the player works through their quest log, it becomes increasingly apparent that everybody's new financial problems keep coming back to the capitalist dragons that run the town's council and change the rules to benefit themselves. Through a combination of politics, media, technology, and capitalism, they are siphoning all the town’s wealth and magic into their own hoards, while spreading all kinds of discord and division through the town."
+	},
+
+	"unionize": {
+		"name": "Unionize!",
+		"type": "Hidden Identity Board Game",
+		"description": "Unionize your workplace in secret. Don’t let your bosses find out or they’ll fire you! Build solidarity with co-workers by radicalizing them against capitalism, but make sure to appease your bosses fragile ego at the same time, or they’ll begin to scrutinize your behavior more, preventing you from getting your message out to those who need it. Radicalized co-workers can help you recruit other colleagues by causing distractions or dedicating help in other ways. Once you start receiving dues, you can start negotiating for better wages, which lets you recruit other stores, and win the game!"
+	},
+
+	"uprising": {
+		"name": "Uprising",
+		"type": "Anarchism Managemer",
+		"description": "You are the clandestine strategist of a grassroots rebellion, fighting to overthrow an oppressive regime. Your headquarters is not a battlefield, but a cluttered, neon-lit command center—a single, screen-dominated interface where the real war is waged through data, decisions, and desperate resource juggling."
 	}
 
 }

@@ -1,13 +1,16 @@
 <script>
 
 	import { Flex, Inline, Stack } from '@/Components/Core'
-	import Button      from '@/Components/UI/Button.svelte'
-	import Container   from '@/Components/UI/Container.svelte'
-	import Heading     from '@/Components/UI/Heading.svelte'
+	import Back			from '@/Components/UI/Back.svelte'
+	import Button		from '@/Components/UI/Button.svelte'
+	import Container	from '@/Components/UI/Container.svelte'
+	import Heading		from '@/Components/UI/Heading.svelte'
     import clsx from 'clsx'
 
 	let {
 		actions,
+		back,
+		backLabel,
 		children,
 		class: className,
 		color = 'bg-surface',
@@ -22,9 +25,9 @@
 	 */
 	let cx = $derived({
 		header: clsx({
-			'page-header sticky top-0 shrink-0 w-full z-10': true,
+			'page-header sticky top-0 flex-none shadow-sm w-full z-10': true,
 		}, color, className),
-		tabs: clsx('bg-neutral-gradient border border-neutral-softest flex-0 shrink-0 w-auto gap-0.5 p-0.5 rounded-full overflow-hidden')
+		tabs: clsx('bg-neutral-gradient border border-neutral-softest flex-none w-auto gap-0.5 p-0.5 rounded-full overflow-hidden')
 	})
 
 </script>
@@ -35,9 +38,16 @@
 
 	<Container size={size}>
 		<Flex align="center" justify="center" class="w-full">
-	
+
+			
 			<!-- Breadcrumbs and page name  -->
 			<Stack align="start" gap={0} class="flex-1 w-full">
+				{#if back && backLabel && typeof back === 'string'}
+					<Back href={back} text={backLabel} />
+				{/if}
+				{#if back && backLabel && typeof back === 'function'}
+					<Back onclick={back} text={backLabel} />
+				{/if}
 				<Heading is="h1" as="h4" class="text-neutral-softest">{title}</Heading>
 			</Stack>
 	

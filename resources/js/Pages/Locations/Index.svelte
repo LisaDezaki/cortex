@@ -147,88 +147,89 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Section size="5xl" gap={0} class="h-full overflow-y-auto">
 
-			<!-- Fixed/Sticky Header -->
+		<!-- Fixed/Sticky Header -->
 
-			<PageHeader class="px-6 py-2"
-				tabs={[
-					{ text: "Location List",	active: true },
-					{ text: "Settings",			href: route('locations.settings') },
-				]}
-				actions={[
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => locations.create(), },
-				]}
-			>
-				<LocationControlBar
-					data={locations} project={activeProject}
-					bind:query={parameters.query}
-					bind:filter={parameters.filter}
-					bind:sort={parameters.sort}
-					bind:size={parameters.size}
-					bind:layout={parameters.layout}
-					bind:results
-				/>
-			</PageHeader>
+		<PageHeader size="7xl" class="px-20 py-2"
+			tabs={[
+				{ text: "Location List",	active: true },
+				{ text: "Settings",			href: route('locations.settings') },
+			]}
+			actions={[
+				{ icon: "Plus", text: "New", theme: "accent", onclick: () => locations.create(), },
+			]}
+		>
+			<LocationControlBar
+				data={locations} project={activeProject}
+				bind:query={parameters.query}
+				bind:filter={parameters.filter}
+				bind:sort={parameters.sort}
+				bind:size={parameters.size}
+				bind:layout={parameters.layout}
+				bind:results
+			/>
+		</PageHeader>
 
-			<!-- Main Body -->
+		<!-- Main Body -->
 
-			<Stack class="px-6 pt-3 pb-6">
-				{#if activeProject && locations.items.length > 0}
+		<Stack align="center" class="flex-1 overflow-y-auto px-20 pt-3 pb-12">
+			{#if activeProject && locations.items.length > 0}
 
-					<!-- Grid -->
+				<!-- Grid -->
 
-					{#if parameters.layout === 'grid'}
-						<Grid cols={gridCols} gap={3}>
-							{#if results.length > 0}
-								{#each results as location}
-									<Entity
-										active={parameters.selected === location.slug}
-										aspect="aspect-video"
-										entity={location}
-										layout="stack"
-										size="auto"
-										onclick={() => selectLocation(location)}
-									/>
-								{/each}
-							{:else}
-								<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
-							{/if}
-						</Grid>
-
-
-					<!-- Table -->
-					
-					{:else if parameters.layout == 'table'}
-						<LocationTable
-							class="text-sm"
-							locations={results}
-						/>
-
-					
-					<!-- Map -->
-
-					{:else if parameters.layout == 'map'}
-						<!-- <LocationMap
-							constrain={false}
-							class="bg-black/50 max-h-full rounded-lg"
-							location={worldTree}
-						/> -->
+				{#if parameters.layout === 'grid'}
+					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
+						{#if results.length > 0}
+							{#each results as location}
+								<Entity
+									active={parameters.selected === location.slug}
+									aspect="aspect-video"
+									entity={location}
+									layout="stack"
+									size="auto"
+									onclick={() => selectLocation(location)}
+								/>
+							{/each}
+						{:else}
+							<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
+						{/if}
+					</Grid>
 
 
-					{/if}
-				{:else}
-
-					<Empty
-						icon="MapPin"
-						text="There are no locations for this project yet."
-						buttonLabel="Create one?"
-						buttonClick={() => location.create()}
+				<!-- Table -->
+				
+				{:else if parameters.layout == 'table'}
+					<LocationTable
+						class="max-w-7xl text-sm w-full"
+						locations={results}
 					/>
-				{/if}
 
-			</Stack>
-		</Section>
+				
+				<!-- Map -->
+
+				{:else if parameters.layout == 'map'}
+					<Empty class="h-96 max-w-7xl w-full"
+						icon="Compass" text="This layout type isn't working yet. Try again later."
+					/>
+					<!-- <LocationMap
+						constrain={false}
+						class="bg-black/50 max-h-full rounded-lg"
+						location={worldTree}
+					/> -->
+
+
+				{/if}
+			{:else}
+
+				<Empty
+					icon="MapPin"
+					text="There are no locations for this project yet."
+					buttonLabel="Create one?"
+					buttonClick={() => location.create()}
+				/>
+			{/if}
+
+		</Stack>
 	{/snippet}
 	{#snippet sidebar()}
 		<LocationPanel location={locations.items.find(l => l.slug === parameters.selected)} />

@@ -1,0 +1,57 @@
+{
+	"bengaluru": {
+		"name": "Bengaluru",
+		"from": "Aavesham (2024)",
+		"type": "",
+		"desc": ""
+	},
+
+	"delhi": {
+		"name": "1920s Delhi",
+		"from": "RRR (2022)",
+		"type": "",
+		"desc": ""
+	},
+
+	"goa": {
+		"name": "Goa",
+		"from": "Singham (2011)",
+		"type": "",
+		"desc": ""
+	},
+
+	"kashi": {
+		"name": "Kashi",
+		"from": "Kalki 2898 AD (2024)",
+		"type": "",
+		"desc": ""
+	},
+
+	"kathiawad": {
+		"name": "Kathiawad",
+		"from": "Gangubai Kathiawadi (2022)",
+		"type": "",
+		"desc": ""
+	},
+
+	"mahishmati": {
+		"name": "Mahishmati",
+		"from": "Bahubali (2015)",
+		"type": "",
+		"desc": ""
+	},
+
+	"mumbai": {
+		"name": "Contemporary Mumbai",
+		"from": "Dhoom (2004)",
+		"type": "",
+		"desc": ""
+	},
+
+	"seshachalam": {
+		"name": "Seshachalam Forest",
+		"from": "Pushpa: The Rise (2021)",
+		"type": "",
+		"desc": "The Sheshachalam forest of Andhra Pradesh are where you can find red sandalwood trees."
+	}
+}

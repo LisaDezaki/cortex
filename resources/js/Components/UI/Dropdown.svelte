@@ -49,7 +49,7 @@
 <Popover.Root bind:open={isOpen}>
 
 	<Popover.Trigger class="input p-{size} text-{size} {className}">
-		<Input.Option {icon} {label} {placeholder} {text} {value} />
+		<Input.Option item={selected} {placeholder} />
 	</Popover.Trigger>
 
 	<Popover.Portal>
@@ -57,7 +57,7 @@
 			class="input-content overflow-hidden"
 			align="start" sideOffset={-1}
 		>
-			<Grid cols={2} gap={0} class="max-h-96 w-[200%] {suboptions ? 'translate-x-[-50%]' : ''} transition-transform">
+			<Grid cols={2} gap={0} class="h-full w-[200%] {suboptions ? 'translate-x-[-50%]' : ''} transition-transform">
 				<Stack class="p-0.5">
 					{#each options as option}
 						{#if !option.hideIf}

@@ -170,7 +170,7 @@ class ProjectController extends Controller
 		$user->update();
 
 		Session::flash('success', "Project deactivated.");
-        return Redirect::back();
+        return Redirect::route('dashboard');
 	}
 	
 }
