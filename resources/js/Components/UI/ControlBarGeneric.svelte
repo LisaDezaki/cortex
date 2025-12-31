@@ -24,9 +24,9 @@
 		layoutable	= true,
 		resizeable  = true,
 
-		filterOptions,
-		sortOptions,
-		layoutOptions,
+		filterOptions	= [],
+		sortOptions		= [],
+		layoutOptions	= [],
 
 		...restProps
 	} = $props()
@@ -129,7 +129,10 @@
 	}
 
 	function refreshResults() {
-		results = data.applyFilters(query, filterOption.filterFunction, sortOption.sortFunction)
+		if (!data.applyFilters) {
+			console.error('The control bar cannot affect entities without an `applyFilters` method.')
+		}
+		results = data.applyFilters?.(query, filterOption.filterFunction, sortOption.sortFunction) || data.items
 	}
 
 

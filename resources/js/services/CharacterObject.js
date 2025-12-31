@@ -158,6 +158,7 @@ export default class CharacterObject {
 				modalActions.open('setCustomFieldValue', {
 					entity: this,
 					endpoint: this.routes.update,
+					field: { fieldableType: 'character' },
 					reloadPageProps: ['activeProject', 'character.customFieldValues', 'characters.customFieldValues'],
 					...props
 				}); break;

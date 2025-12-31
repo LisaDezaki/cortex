@@ -31,7 +31,7 @@
 	{#if actions?.length > 0}
 		<Inline>
 			{#each actions as action}
-				<Button class="rounded-full" size="xl" style="soft" theme="accent" {...action} />
+				<Button class="rounded-full" size="lg" style="soft" theme="accent" {...action} />
 			{/each}
 		</Inline>
 	{/if}

@@ -56,14 +56,12 @@
 
 
 {#snippet content()}
-	<Thumbnail class="{cx.thumbnail.base} {cx.thumbnail[size]}" src={entity.image} />
+	<Thumbnail class="{cx.thumbnail.base} {cx.thumbnail[size]}" src={entity.image?.url} />
 	<Stack class="{cx.text.base} {cx.text[size]}">
 		<p class={cx.line.primary}>{entity.name}</p>
 		<p class={cx.line.secondary}>{entity.type || entity.alias}</p>
 	</Stack>
 {/snippet}
-
-
 
 {#if layout === "inline"}
 	<Inline class={cx.card} gap={0.5} onclick={onclick}>

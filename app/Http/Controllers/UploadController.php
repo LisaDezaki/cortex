@@ -55,27 +55,17 @@ class UploadController extends Controller
 		//	Store temporary files
 		$filesData = [];
 		$files = $request->file('files');
-		foreach ($files as $file) {
-			$fileInfo = $this->mediaService->storeTempFile($file);
-			$filesData[] = $fileInfo;
+		try {
+			foreach ($files as $file) {
+				$fileInfo = $this->mediaService->storeTempFile($file);
+				$filesData[] = $fileInfo;
+			}
+		} catch (\Exception $e) {
+			return back()->withErrors($e);
 		}
-
-		// return Redirect::back()->with([
-			// 'success' => true,
-			// 'uploadedFiles' => $filesData
-		// ]);
 
 		Session::flash('success', $filesData);
 		return Redirect::back();
-
-		// return [
-		// 	'success' => true,
-			// 'uploadedFiles' => $filesData
-		// ];
-		// return response()->json([
-		// 	'success' => true,
-		// 	'files' => $filesData
-		// ]);
 	}
 
 	public function moveToPermanent(Request $request)

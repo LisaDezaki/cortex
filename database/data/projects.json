@@ -3,7 +3,8 @@
 	"brawllywood": {
 		"name": "Brawllywood",
 		"type": "Bollywood Brawler",
-		"description": "An old school Beat 'Em Up inspired by Indian cinema's greatest heroes and villains."
+		"description": "An old school Beat 'Em Up inspired by Indian cinema's greatest heroes and villains.",
+		"owner": "Various owners"
 	},
 
 	"deadworld": {
@@ -15,13 +16,15 @@
 	"fallout": {
 		"name": "Fallout",
 		"type": "Fanfiction",
-		"description": "A horny lesbian fanfic between Sapphire, a vault-dweller's mind in the body of a synth, and Ruby, a mechanic with a robot dog and a robot arm and a robot leg."
+		"description": "A horny lesbian fanfic between Sapphire, a vault-dweller's mind in the body of a synth, and Ruby, a mechanic with a robot dog and a robot arm and a robot leg.",
+		"owner": "Bethesda"
 	},
 
 	"fantasy-high": {
 		"name": "Fantasy High",
-		"type": "Tabletop TPG",
-		"description": "At the beginning of a new school year at the Aguefort Adventuring Academy, the premiere training ground for heroes and adventurers, six freshmen prepare for their first day. For their own reasons, these six teens all get detention on the first day, resulting in them being the only ones at the school when a strange magical summoning occurs. After fighting off the threat, the Academy's principal Arthur Aguefort kills himself to raise the fallen members of the group, proclaiming that only the group can save everyone. Afterwards, the group becomes an official adventuring party and pledges to find out what is happening at the school."
+		"type": "Tabletop RPG",
+		"description": "At the beginning of a new school year at the Aguefort Adventuring Academy, the premiere training ground for heroes and adventurers, six freshmen prepare for their first day. For their own reasons, these six teens all get detention on the first day, resulting in them being the only ones at the school when a strange magical summoning occurs. After fighting off the threat, the Academy's principal Arthur Aguefort kills himself to raise the fallen members of the group, proclaiming that only the group can save everyone. Afterwards, the group becomes an official adventuring party and pledges to find out what is happening at the school.",
+		"owner": "Dropout / Dimension 20"
 	},
 
 	"lab-escape": {
@@ -33,7 +36,8 @@
 	"marvel": {
 		"name": "Marvel",
 		"type": "Superhero Universe",
-		"description": "Just tracking Marvel characters to test the app."
+		"description": "Just tracking Marvel characters to test the app.",
+		"owner": "Disney"
 	},
 
 	"tabletopia": {

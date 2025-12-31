@@ -11,6 +11,7 @@
 	import Button		from '@/Components/UI/Button.svelte'
 	import Card			from '@/Components/UI/Card.svelte'
 	import Collapsible	from '@/Components/UI/Collapsible.svelte'
+	import ControlBarGeneric	from '@/Components/UI/ControlBarGeneric.svelte'
 	import Entity		from '@/Components/UI/Entity.svelte'
 	import Heading		from '@/Components/UI/Heading.svelte'
 	import Media		from '@/Components/UI/Media.svelte'
@@ -29,6 +30,8 @@
 
 	let active			= $derived( activeProject ? new ProjectObject(activeProject) : null )
 	let projectList		= $derived( projects      ? new ProjectList(projects)		 : null )
+
+	let results			= $state(projects      ? new ProjectList(projects)		 : [])
 
 </script>
 
@@ -52,10 +55,8 @@
 			/>
 			
 			<Stack class="flex-1 overflow-y-auto">
-				<!-- <pre>{JSON.stringify(active.customFields,null,3)}</pre> -->
-				<!-- <pre>{JSON.stringify([...active.getCharacterFilterOptions()],null,3)}</pre> -->
 
-				<Section class="mb-12">
+				<Section>
 					<Media
 						class="relative aspect-[7/3] bg-neutral-softest max-h-[60vh] overflow-hidden text-neutral-softest w-full hover:inner-shadow-lg transition-all"
 						media={active.getMedia('banner')}
@@ -63,7 +64,7 @@
 					/>
 				</Section>
 
-				<Flex justify="center" gap={20} class="flex-1 min-h-64 px-20 py-12 w-full">
+				<Flex align="start" justify="center" gap={12} class="flex-1 px-20 py-12">
 					<PageMenu
 						backTo={route('characters')} backToLabel="All Projects"
 						items={[
@@ -71,7 +72,7 @@
 							{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   },
 						]}
 					/>
-					<Stack class="flex-1 min-w-2xl max-w-5xl">
+					<Stack class="flex-1 max-w-5xl">
 						
 						<!-- Project Header -->
 			
@@ -214,6 +215,22 @@
 							{ icon: 'Plus', text: 'New Project', onclick: () => projectList.create() }
 						]}
 					/>
+
+					<ControlBarGeneric
+						class="mb-3" data={projectList} bind:results
+						filterOptions={[
+							{ label: 'All Projects',	value: '*',			filterFunction: (proj) => proj },
+							{ label: 'Starred',			value: 'starred',	filterFunction: (proj) => proj.starred },
+						]}
+						sortOptions={[
+							{ label: 'By name',			value: 'name',		sortFunction: (a,b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1 }
+						]}
+						layoutOptions={[
+							
+						]}
+					/>
+
+					<!-- <pre>{JSON.stringify(results,null,3)}</pre> -->
 	
 					{#if projects}
 						<Grid gap={3} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">

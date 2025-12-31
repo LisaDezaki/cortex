@@ -7,7 +7,7 @@
 		children,
 		class: className,
 		href,
-		icon,
+		icon = 'ArrowLeft',
 		text,
 		...restProps
 	} = $props()
@@ -26,6 +26,6 @@
 
 <Button {href} 
 	class={cx.back}
-	icon={icon || "ArrowLeft"} iconSize="lg" iconWeight="regular"
+	icon={icon} iconSize="lg" iconWeight="regular"
 	text={text}
 {...restProps} />

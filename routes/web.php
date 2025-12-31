@@ -75,7 +75,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 	Route::get(   '/characters',				[CharacterController::class, 'index'   		])->name('characters');
 	Route::get(   '/characters/settings',		[CharacterController::class, 'settings'		])->name('characters.settings');
-	Route::get(   '/characters/custom-fields',	[CharacterController::class, 'customfields' ])->name('characters.customfields');
 	Route::get(   '/characters/{character}',	[CharacterController::class, 'show'    		])->name('characters.show');
 	Route::post(  '/characters',				[CharacterController::class, 'store'   		])->name('characters.store');
 	Route::patch( '/characters/{character}',	[CharacterController::class, 'update'  		])->name('characters.update');
@@ -110,6 +109,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 	Route::post(  '/locations',					[LocationController::class, 'store'   		])->name('locations.store');
 	Route::patch( '/locations/{location}', 		[LocationController::class, 'update'  		])->name('locations.update');
 	Route::delete('/locations/{location}', 		[LocationController::class, 'destroy' 		])->name('locations.destroy');
+
+
+	/*	Custom Fields  */
+
+	Route::post(	'/customFields',			[CustomFieldController::class, 'store'		])->name('customFields.store');
+	Route::patch(	'/customFields',			[CustomFieldController::class, 'update'		])->name('customFields.update');
 
 });
 

@@ -58,6 +58,24 @@ export default class ProjectList {
 		this._saveToHistory(); // Save initial state to history
 	}
 
+
+	/**
+	 * Filter
+	 * Returns a filtered list of items based on the strings provided
+	 * @param {string} query
+	 * @param {string} filter
+	 * @param {string} sort
+	 * @returns {Array}
+	 */
+	applyFilters(query, filter, sort) {
+		let response = this.items
+		if (query)  {	response = response.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))	}
+		if (filter) {	response = response.filter(filter)	}
+		if (sort)   {	response = response.sort(sort)	}
+		return response
+	}
+
+
 	/**
 	 * Create
 	 * Open the modal for creating a new project entity
@@ -66,6 +84,7 @@ export default class ProjectList {
 	create() {
 		modalActions.open('createProject')
 	}
+
 
 	/**
 	 * Filter
@@ -81,6 +100,7 @@ export default class ProjectList {
 			.filter(filter).sort(sort)
 	}
 
+
 	/**
 	 * Find
 	 * Returns the item with the provided id, if it exists
@@ -91,6 +111,7 @@ export default class ProjectList {
 		return this.items.find(item => item.id === id)
 	}
 
+	
 	/**
 	 * History / Undo
 	 * Keep only the last 50 states to prevent memory issues

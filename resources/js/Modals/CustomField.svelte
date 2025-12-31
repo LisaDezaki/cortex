@@ -31,13 +31,13 @@
 		name: '',
 		default: '',
 		description: '',
-		label: '',
 		filetype: 'image',
-		placeholder: '',
-		required: false,
-		options: [ "", "" ],
+		label: '',
 		min: '',
 		max: '',
+		options: [ "", "" ],
+		placeholder: '',
+		required: false,
 		rows: ''
 	}
 
@@ -45,7 +45,7 @@
 	let inputType = $state('text')
 
 	//  The form object needs to be reactive to changes in the data prop
-	let form = useForm(field || blankData)
+	let form = useForm({...blankData, ...field})
 	$effect(() => {
 		for (const [key, value] of Object.entries(field || blankData)) {
 			$form[key] = value
@@ -58,6 +58,9 @@
     
 	function setType(type) {
 		inputType = type
+		// if (type !== 'select') {
+		// 	$form.options = []
+		// }
 	}
 
 	function setData() {
@@ -104,34 +107,35 @@
 		}
 
 		//  Map options to form data if applicable
-		// $form.options = $form.type == 'select'
-		// 	? $form.options
-		// 	: null
+		$form.options = $form.type == 'select'
+			? $form.options
+			: null
 
 		//  Post data to server and handle response
-		// if (data.id) {
-		// 	$form.post( route('customfields.update', { field: data.id }, {
-		// 		onSuccess: () => {
-		// 			oncancel()
-		// 		}
-		// 	}) )
-		// } else {
-		// 	$form.post( route('customfields.store'), {
-		// 		onSuccess: (a,b) => {
-		// 			oncancel()
-		// 		}
-		// 	} )
-		// }
+		if ($form.id) {
+			$form.post( route('customFields.update', { field: data.id }, {
+				onSuccess: () => {
+					oncancel()
+				}
+			}) )
+		} else {
+			$form.post( route('customFields.store'), {
+				onSuccess: (a,b) => {
+					oncancel()
+				}
+			} )
+		}
 	}
 
 </script>
 
 <ModalForm size="lg"
-	endpoint={route('characters.customfields')}
+	endpoint={route('customFields.store')}
 	form={form}
 	method="post"
 	submitProps={{
-		label: 'Update'
+		label: 'Update',
+		onclick: submit
 	}}
 >
 	<Flex class="border-b px-4 py-3">
@@ -162,6 +166,8 @@
 		</Stack>
 
 		<Stack gap={3} class="p-6 h-full min-h-[420px] overflow-y-auto w-96">
+
+			<pre>{JSON.stringify($form,null,2)}</pre>
 
 			<!-- Name -->
 	

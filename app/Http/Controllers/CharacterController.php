@@ -57,11 +57,11 @@ class CharacterController extends Controller
 		'relationships.*.related_character_role' => ['required',  'string'],
 
 		'customField'			=> ['sometimes', 'array'],
-		'customField.id'    	=> ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'customField.id'    	=> ['required_with:customField',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
 		'customField.value' 	=> ['nullable'],
 
 		'custom_fields'			=> ['sometimes', 'array'],
-		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'custom_fields.*.id'    => ['required_with:custom_fields',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
 		'custom_fields.*.value' => ['nullable',  'string']
 	];
 
@@ -99,7 +99,13 @@ class CharacterController extends Controller
 	public function create() {}		//	Character creation is handled through a simple modal
 	public function store(Request $request): RedirectResponse
 	{
-		$validatedData = $request->validate($this->validationRules);
+		// dd($request);
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			dd($e);
+		}
+		// dd($validatedData);
 		$character = Auth::user()->activeProject()->characters()->create($validatedData);
 
 		if ($request->has('media') && $request['media'] !== null) {

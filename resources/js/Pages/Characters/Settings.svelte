@@ -105,7 +105,7 @@
 					<Button class="mt-3 mx-auto rounded-full"
 						style="hard" theme="accent"
 						icon="Plus" text="Add Custom Field"
-						onclick={() => modalActions.open('customField', {})}
+						onclick={() => modalActions.open('customField', { field: { fieldableType: 'character' } })}
 					/>
 				</Section>
 			</Stack>

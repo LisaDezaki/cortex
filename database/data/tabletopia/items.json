@@ -85,7 +85,8 @@
 		"type": "Map",
 		"desc": "The only known map of the Ancient Ruins in existence.",
 		"cost": 100,
-		"weight": 1
+		"weight": 1,
+		"unique": true
 	},
 
 	"sextant": {

@@ -65,7 +65,7 @@
 								<Separator class="mx-2 my-0.5 w-auto" />
 							{:else}
 								<Flex align="center" value={option.value} onclick={() => selectItem(option)}>
-									<Input.Option {...option} class="py-{size}" size={size} onclick={() => selectItem(option)} />
+									<Input.Option {...option} class="p-{size}" size={size} onclick={() => selectItem(option)} />
 								</Flex>
 							{/if}
 						{/if}
@@ -73,14 +73,14 @@
 				</Stack>
 				<Stack class="relative max-h-full overflow-hidden">
 					<Flex align="center" gap={0} class="bg-white p-0.5 w-full">
-						<Button style="plain" theme="neutral" size="md" icon="CaretLeft" iconSize="sm" class="hover:bg-neutral-softest text-neutral-softest focus:outline-none border-none" onclick={back} />
-						<input bind:value={suboptionQuery} class="border-none p-1 rounded text-neutral w-28" placeholder="Search" />
+						<Button style="plain" theme="neutral" size={size} icon="CaretLeft" iconSize="sm" class="hover:bg-neutral-softest text-neutral-softest focus:outline-none border-none" onclick={back} />
+						<input bind:value={suboptionQuery} class="border-none p-1 rounded text-neutral text-{size} w-28" placeholder="Search" />
 					</Flex>
 					<Separator class="mx-2 w-auto" />
 					<div class="overflow-y-auto p-0.5 max-h-80">
 						{#each filteredSuboptions as suboption}
 							 <Flex align="center" value={suboption.value} onclick={() => selectItem(suboption)}>
-								<Input.Option {...suboption} class="py-{size}" size={size} onclick={() => selectItem(suboption)} />
+								<Input.Option {...suboption} class="p-{size}" size={size} onclick={() => selectItem(suboption)} />
 							</Flex>
 						{:else}
 							<p class="font-style-placeholder text-center">0 results.</p>
