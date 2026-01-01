@@ -100,6 +100,11 @@ class Character extends Model
 		return $this->belongsToMany(Faction::class, 'faction_members')->withPivot('rank_id');
 	}
 
+	// public function inventory(): BelongsToMany
+	// {
+	// 	return $this->belongsToMany(Item::class, 'character_inventories');
+	// }
+
 	// public function location()
 	// {
 	// 	return $this->hasOne(Location::class)

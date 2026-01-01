@@ -9,9 +9,8 @@
 	import Stack		from '@/Components/Core/Stack.svelte'
 
 	import Button		from '@/Components/UI/Button.svelte'
-	import Card			from '@/Components/UI/Card.svelte'
 	import Collapsible	from '@/Components/UI/Collapsible.svelte'
-	import ControlBarGeneric	from '@/Components/UI/ControlBarGeneric.svelte'
+	import ControlBar	from '@/Components/UI/ControlBar.svelte'
 	import Entity		from '@/Components/UI/Entity.svelte'
 	import Heading		from '@/Components/UI/Heading.svelte'
 	import Media		from '@/Components/UI/Media.svelte'
@@ -20,6 +19,7 @@
 	import PageMenu		from '@/Components/UI/PageMenu.svelte'
 	import Section		from '@/Components/UI/Section.svelte'
 	import Separator	from '@/Components/UI/Separator.svelte'
+	import Thumbnail	from '@/Components/UI/Thumbnail.svelte'
 
 	import ProjectList 	 from '@/services/ProjectList'
 	import ProjectObject from '@/services/ProjectObject'
@@ -32,6 +32,7 @@
 	let projectList		= $derived( projects      ? new ProjectList(projects)		 : null )
 
 	let results			= $state(projects      ? new ProjectList(projects)		 : [])
+	let layout			= $state('table')
 
 </script>
 
@@ -45,7 +46,7 @@
 	{#snippet article()}
 		{#if active}
 
-			<PageHeader size="7xl" class="px-20 py-2"
+			<PageHeader size="6xl" class="px-20 py-2"
 				back={() => active.deactivate()}
 				backLabel="All Projects"
 				tabs={[
@@ -72,12 +73,12 @@
 							{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   },
 						]}
 					/>
-					<Stack class="flex-1 max-w-5xl">
+					<Stack class="flex-1">
 						
 						<!-- Project Header -->
 			
-						<Section size="5xl" class="px-12 py-6 w-full">
-							<Flex gap={20}>
+						<Section size="3xl" class="px-12 py-6 w-full">
+							<Flex gap={20} class="flex-col">
 			
 								<Stack gap={0} class="w-2/3">
 									<Flex align="start" gap={3}>
@@ -138,7 +139,7 @@
 						<Separator class="my-12" />
 		
 						{#if active.characters?.items.length > 0}
-							<Section size="5xl" class="px-12 py-6 w-full">
+							<Section size="3xl" class="px-12 py-6 w-full">
 								<Heading is="h3" as="h5" class="mb-3 text-neutral-softer">Recently updated Characters</Heading>
 								<Flex justify="start" gap={2} class="pb-3 overflow-visible w-full">
 									{#each active.characters.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as character}
@@ -158,7 +159,7 @@
 						<Separator class="my-12" />
 			
 						{#if active.factions?.items.length > 0}
-							<Section size="5xl" class="px-12 py-6 w-full">
+							<Section size="3xl" class="px-12 py-6 w-full">
 								<Heading is="h3" as="h5" class="mb-3 text-neutral-softer">Recently updated Factions</Heading>
 								<Flex justify="start" gap={2} class="pb-3 overflow-visible w-full">
 									{#each active.factions.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as faction}
@@ -178,7 +179,7 @@
 						<Separator class="my-12" />
 			
 						{#if active.locations?.items.length > 0}
-							<Section size="5xl" class="px-12 py-6 w-full">
+							<Section size="3xl" class="px-12 py-6 w-full">
 								<Heading is="h3" as="h5" class="mb-3 text-neutral-softer">Recently updated Locations</Heading>
 								<Flex justify="start" gap={2} class="pb-3 overflow-visible w-full">
 									{#each active.locations.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as location}
@@ -205,7 +206,7 @@
 		{:else}
 
 			<Stack class="flex-1 overflow-y-auto">
-				<Section size="7xl" class="px-20 py-12">
+				<Section size="6xl" class="px-20 py-12">
 	
 					<PageHeading
 						title="Projects"
@@ -216,8 +217,8 @@
 						]}
 					/>
 
-					<ControlBarGeneric
-						class="mb-3" data={projectList} bind:results
+					<ControlBar
+						class="mb-3" data={projectList} bind:results bind:layout
 						filterOptions={[
 							{ label: 'All Projects',	value: '*',			filterFunction: (proj) => proj },
 							{ label: 'Starred',			value: 'starred',	filterFunction: (proj) => proj.starred },
@@ -226,15 +227,16 @@
 							{ label: 'By name',			value: 'name',		sortFunction: (a,b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1 }
 						]}
 						layoutOptions={[
-							
+							{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
+							{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
 						]}
 					/>
 
 					<!-- <pre>{JSON.stringify(results,null,3)}</pre> -->
 	
-					{#if projects}
+					{#if projects && layout === 'grid'}
 						<Grid gap={3} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
-							{#each projectList.items as project}
+							{#each results as project}
 								<Entity
 									aspect="aspect-video"
 									entity={project}
@@ -244,6 +246,24 @@
 								/>
 							{/each}
 						</Grid>
+					{:else if projects && layout === 'table'}
+						<Stack>
+							{#each results as project}
+								<Flex align="center" justify="start" class="border-b border-neutral-softest group p-1.5">
+									<Entity
+										aspect="aspect-video"
+										entity={project}
+										layout="inline"
+										size="md"
+										onclick={() => project.activate()}
+									/>
+									<Button class="group-hover:opacity-100 ml-auto opacity-0"
+										size="sm" style="soft" theme="accent"
+										text="Activate" onclick={() => project.activate()}
+									/>
+								</Flex>
+							{/each}
+						</Stack>
 					{:else}
 						No projects
 					{/if}

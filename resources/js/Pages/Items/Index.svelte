@@ -4,14 +4,12 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
-	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
 	import Stack				from '@/Components/Core/Stack.svelte'
+	import ControlBar			from '@/Components/UI/ControlBar.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import Entity				from '@/Components/UI/Entity.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
-	import Section				from '@/Components/UI/Section.svelte'
-	import ItemControlBar 		from '@/Components/Features/Item/ItemControlBar.svelte'
 	import ItemPanel 			from '@/Components/Features/Item/ItemPanel.svelte'
 	import ItemTable			from '@/Components/Features/Item/ItemTable.svelte'
 	import ProjectObject 		from '@/services/ProjectObject'
@@ -162,15 +160,11 @@
 				{ icon: "Plus", text: "New", theme: "accent", onclick: () => items.create() },
 			]}
 		>
-			<ItemControlBar
-				data={items} project={activeProject}
-				bind:query={parameters.query}
-				bind:filter={parameters.filter}
-				bind:sort={parameters.sort}
-				bind:size={parameters.size}
-				bind:layout={parameters.layout}
-				bind:results
-				min={4} max={8}
+			<ControlBar
+				data={items} bind:results bind:layout={parameters.layout}
+				filterOptions={activeProject.getOptions('items', 'filter')}
+				sortOptions={activeProject.getOptions('items', 'sort')}
+				layoutOptions={activeProject.getOptions('items', 'layout')}
 			/>
 		</PageHeader>
 

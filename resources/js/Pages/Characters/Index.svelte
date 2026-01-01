@@ -4,15 +4,12 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
-	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
 	import Stack				from '@/Components/Core/Stack.svelte'
-	import ControlBarGeneric	from '@/Components/UI/ControlBarGeneric.svelte'
+	import ControlBar			from '@/Components/UI/ControlBar.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import Entity				from '@/Components/UI/Entity.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
-	import Section				from '@/Components/UI/Section.svelte'
-	import CharacterControlBar 	from '@/Components/Features/Character/CharacterControlBar.svelte'
 	import CharacterPanel 		from '@/Components/Features/Character/CharacterPanel.svelte'
 	import CharacterTable		from '@/Components/Features/Character/CharacterTable.svelte'
 	import ProjectObject 		from '@/services/ProjectObject'
@@ -45,8 +42,8 @@
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
-		size: 		urlParams.get('size')	|| 6,
-		layout: 	urlParams.get('layout')	|| 'grid',
+		size: 		urlParams.get('size')	  || 6,
+		layout: 	urlParams.get('layout')	  || 'grid',
 		selected: 	urlParams.get('selected') || ''
 	})
 
@@ -70,11 +67,12 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			size: 		urlParams.get('size') 	|| 6,
-			layout: 	urlParams.get('layout') || 'grid',
+			size: 		urlParams.get('size') 	  || 6,
+			layout: 	urlParams.get('layout')   || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};
 	});
+
 
 	/**
 	 * Update URL - Sync URL params with state changes (without page reload)
@@ -144,7 +142,7 @@
 				{ icon: "Plus", text: "New", theme: "accent", onclick: () => characters.create() },
 			]}
 		>
-			<ControlBarGeneric
+			<ControlBar
 				data={characters} bind:results bind:layout={parameters.layout}
 				filterOptions={activeProject.getOptions('characters', 'filter')}
 				sortOptions={activeProject.getOptions('characters', 'sort')}

@@ -26,6 +26,25 @@
 			<Heading is="h2" as="h4">Todo List</Heading>
 			<Stack gap={0}>
 
+				<Flex align="center" gap={0} class="font-style-h6 mt-12"><Input type="checkbox" />Reduce custom entity components</Flex>
+				<Stack gap={0} class="mt-3 ml-12">
+					<Flex align="center" gap={0}><Input.Checkbox />Generic ControlBar component for all index pages</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />Generic SidePanel component for all index pages</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />Generic EntityTable component for all index pages</Flex>
+				</Stack>
+
+				<Flex align="center" gap={0} class="font-style-h6 mt-12"><Input type="checkbox" />Input fixes</Flex>
+				<Stack gap={0} class="mt-3 ml-12">
+					<Flex align="center" gap={0}><Input.Checkbox />X to clear input value (top right corner)</Flex>
+				</Stack>
+
+				<Flex align="center" gap={0} class="font-style-h6 mt-12"><Input type="checkbox" />Breakpoints</Flex>
+				<Stack gap={0} class="mt-3 ml-12">
+					<Flex align="center" gap={0}><Input.Checkbox />Collapsed min-nav on left</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />Horizontal nav bar for mobile</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />Pad-X & Container Max for articles</Flex>
+				</Stack>
+
 				<Flex align="center" gap={0} class="font-style-h6 mt-12"><Input type="checkbox" />PanZoom</Flex>
 				<Stack gap={0} class="mt-3 ml-12">
 					<Flex align="center" gap={0}><Input.Checkbox />PanZoom component fixed</Flex>

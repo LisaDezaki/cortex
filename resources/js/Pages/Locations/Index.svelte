@@ -4,16 +4,14 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
-	import Flex					from '@/Components/Core/Flex.svelte'
-	import Grid					from '@/Components/Core/Grid.svelte'
-	import Stack				from '@/Components/Core/Stack.svelte'
-	import Empty   	  			from '@/Components/UI/Empty.svelte'
-	import Entity				from '@/Components/UI/Entity.svelte'
-	import PageHeader 			from '@/Components/UI/PageHeader.svelte'
-	import Section    			from '@/Components/UI/Section.svelte'
-	import LocationControlBar 	from '@/Components/Features/Location/LocationControlBar.svelte'
-	import LocationPanel		from '@/Components/Features/Location/LocationPanel.svelte'
-	import LocationTable		from '@/Components/Features/Location/LocationTable.svelte'
+	import Grid				from '@/Components/Core/Grid.svelte'
+	import Stack			from '@/Components/Core/Stack.svelte'
+	import ControlBar   	from '@/Components/UI/ControlBar.svelte'
+	import Empty   	  		from '@/Components/UI/Empty.svelte'
+	import Entity			from '@/Components/UI/Entity.svelte'
+	import PageHeader 		from '@/Components/UI/PageHeader.svelte'
+	import LocationPanel	from '@/Components/Features/Location/LocationPanel.svelte'
+	import LocationTable	from '@/Components/Features/Location/LocationTable.svelte'
 	import ProjectObject 	from '@/services/ProjectObject'
 	import LocationList 	from '@/services/LocationList'
 	import LocationObject 	from '@/services/LocationObject'
@@ -159,14 +157,11 @@
 				{ icon: "Plus", text: "New", theme: "accent", onclick: () => locations.create(), },
 			]}
 		>
-			<LocationControlBar
-				data={locations} project={activeProject}
-				bind:query={parameters.query}
-				bind:filter={parameters.filter}
-				bind:sort={parameters.sort}
-				bind:size={parameters.size}
-				bind:layout={parameters.layout}
-				bind:results
+			<ControlBar
+				data={locations} bind:results bind:layout={parameters.layout}
+				filterOptions={activeProject.getOptions('locations', 'filter')}
+				sortOptions={activeProject.getOptions('locations', 'sort')}
+				layoutOptions={activeProject.getOptions('locations', 'layout')}
 			/>
 		</PageHeader>
 

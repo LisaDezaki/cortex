@@ -140,10 +140,10 @@ export default class ProjectObject {
 			switch (optionSet) {
 				case 'filter':
 					return [
-						{ label: 'All characters',	value: '*',		  						filterFunction: (ch) => { return ch } },
-						{ label: 'Starred',			value: 'starred', 						filterFunction: (ch) => { return ch.starred } },
+						{ label: 'All characters',		value: '*',		  					filterFunction: (ch) => { return ch } },
+						{ label: 'Starred',				value: 'starred', 					filterFunction: (ch) => { return ch.starred } },
 						{ separator: true },
-						{ label: 'Faction',			value: 'factions',						options: this.factions?.items?.map(f => ({
+						{ label: 'Faction',				value: 'factions',					options: this.factions?.items?.map(f => ({
 							label: f.name,				value: `factions.${f.slug}`,		filterFunction: (ch) => ch.factions?.items.map(fa => fa.slug).includes(f.slug),
 							image: f.image?.url || '',	imageIcon: 'FlagBannerFold'
 						}))	},
@@ -210,7 +210,7 @@ export default class ProjectObject {
 						value: `relationship.*.${c.slug}`,
 						imageIcon: 'User',
 						image: c.image?.url || '',
-						filterFunction: (ch) => ch.relationships?.items?.map(r => r.slug).includes(filter.split('.')[2])
+						filterFunction: (c) => c.relationships?.items?.map(r => r.slug).includes(filter.split('.')[2])
 					}))
 			}
 		}
@@ -219,19 +219,62 @@ export default class ProjectObject {
 			switch (optionSet) {
 				case 'filter':
 					return [
-						{ label: 'All characters', 	value: '',		  	filterFunction: (ch) => { return ch } },
-						{ label: 'Starred', 		value: 'starred', 	filterFunction: (ch) => { return ch.starred } },
+						{ label: 'All factions', 		value: '*',		  				filterFunction: (fac) => { return fac } },
+						{ label: 'Starred', 			value: 'starred', 				filterFunction: (fac) => { return fac.starred } },
 						{ 	separator: true },
-						// { label: 'Faction',			showImage: true, 	options: this.getOptions('factions') },
-						// { label: 'Location',		showImage: true, 	options: this.getOptions('locations') },
-						// { label: 'Relationship',	showImage: true, 	options: this.getOptions('characters') },
-						// { 	separator: true, hideIf: !this.customFields || this.customFields.length === 0 },
-						// ...this.getCustomFieldsAsOptions()
-					]; break;
+						{ label: 'Headquarters',		value: 'location',				options: this.locations?.items?.map(l => ({
+							label: l.name,				value: `location.${l.slug}`,	filterFunction: (fac) => fac.headquarters?.slug == l.slug,
+							image: l.image?.url || '',	imageIcon: 'MapPinArea',
+						}))	},
+						{ label: 'Member',				value: 'member',				options: this.characters?.items?.map(c => ({
+							label: c.name,				value: `member.*.${c.slug}`,	filterFunction: (fac) => fac.members?.items.map(m => m.slug).includes(c.slug),
+							image: c.image?.url || '',	imageIcon: 'FlagBannerFold'
+						})) },
+						{ separator: true,	if: this.customFields?.getByFieldable('faction').length > 0 },
+						...this.customFields?.getByFieldable('faction').map(cf => ({
+							label: cf.label,			value: cf.name,						options: cf.options ? cf.options.map(opt => ({
+								label: opt.label,		value: `${cf.name}.${opt.value}`,	filterFunction: (ent) => ent.customFieldValues.find(f => f.name === cf.name)?.value === opt.value
+							})) : undefined
+						})),
+						{ separator: true },
+						{ label: 'Created',				value: 'created',					options: [
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This week',		value: 'created.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+						]},
+						{ label: 'Updated',				value: 'updated',					options: [
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+						]}
+					]
 				case 'sort':
-					break;
+					return [
+						{ label: "By name",				value: 'name',						sortFunction: (a,b) => a.name < b.name ? -1 : 1 },
+						{ label: "By type",				value: 'type',						sortFunction: (a,b) => a.type < b.type ? -1 : 1 },
+						{ label: "By member count",		value: 'members',					sortFunction: (a,b) => a.members?.items.length > b.members?.items.length	? -1 : 1 },
+						{	separator: true, if: this.customFields?.getByFieldable('faction').length > 0 },
+						...this.customFields?.getByFieldable('faction').map(cf => ({
+							label: `By ${cf.label.toLowerCase()}`,	value: cf.name,			sortFunction: (a,b) => {
+								// a = a.customFieldValues.find(v => v.name === cf.name)?.value
+								// b = b.customFieldValues.find(v => v.name === cf.name)?.value
+								// return !isNaN(a) && !isNaN(b)
+								// 	? (Number(a) < Number(b) ? -1 : 1)
+								// 	: (a < b ? -1 : 1)
+							}
+						})),
+						{ 	separator: true },
+						{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
+						{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
+						{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } },
+					]
 				case 'layout':
-					break;
+					return [
+						{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
+						{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+					]
 				default:
 					return this.factions?.items?.map(f => ({
 						label: f.name,
@@ -246,11 +289,60 @@ export default class ProjectObject {
 		if (entity === 'items') {
 			switch (optionSet) {
 				case 'filter':
-					break;
+					return [
+						{ label: 'All items', 		value: '*',		  				filterFunction: (item) => { return item } },
+						{ label: 'Starred', 		value: 'starred', 				filterFunction: (item) => { return item.starred } },
+						{ label: 'Unique', 			value: 'unique', 				filterFunction: (item) => { return item.unique } },
+						{ 	separator: true },
+						{ label: 'Type',			value: 'type',					options: this.items.items.map(item => ({
+							label: item.type,		value: 'type'+item.type,		filterFunction: (item) => item.type === type
+						})) },
+						{	separator: true,		if: this.customFields?.getByFieldable('item').length > 0 },
+						...this.customFields?.getByFieldable('item').map(cf => ({
+							label: cf.label,			value: cf.name,						options: cf.options ? cf.options.map(opt => ({
+								label: opt.label,		value: `${cf.name}.${opt.value}`,	filterFunction: (ent) => ent.customFieldValues.find(f => f.name === cf.name)?.value === opt.value
+							})) : undefined
+						})),
+						{ separator: true },
+						{ label: 'Created',				value: 'created',					options: [
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This week',		value: 'created.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+						]},
+						{ label: 'Updated',				value: 'updated',					options: [
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+						]}
+					]
 				case 'sort':
-					break;
+					return [
+						{ label: "By name",				value: 'name',						sortFunction: (a,b) => a.name < b.name ? -1 : 1 },
+						{ label: "By type",				value: 'type',						sortFunction: (a,b) => a.type < b.type ? -1 : 1 },
+						{ label: "By cost",				value: 'cost',						sortFunction: (a,b) => a.cost < b.cost	? -1 : 1 },
+						{ label: "By weight",			value: 'weight',					sortFunction: (a,b) => a.weight < b.weight	? -1 : 1 },
+						{	separator: true, if: this.customFields?.getByFieldable('item').length > 0 },
+						...this.customFields?.getByFieldable('item').map(cf => ({
+							label: `By ${cf.label.toLowerCase()}`,	value: cf.name,			sortFunction: (a,b) => {
+								// a = a.customFieldValues.find(v => v.name === cf.name)?.value
+								// b = b.customFieldValues.find(v => v.name === cf.name)?.value
+								// return !isNaN(a) && !isNaN(b)
+								// 	? (Number(a) < Number(b) ? -1 : 1)
+								// 	: (a < b ? -1 : 1)
+							}
+						})),
+						{ 	separator: true },
+						{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
+						{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
+						{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } }
+					]
 				case 'layout':
-					break;
+					return [
+						{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
+						{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+					]
 				default:
 
 			}
@@ -259,11 +351,60 @@ export default class ProjectObject {
 		if (entity === 'locations') {
 			switch (optionSet) {
 				case 'filter':
-					break;
+					return [
+						{ label: 'All locations', 		value: '*',		  				filterFunction: (location) => location				},
+						{ label: 'Starred', 			value: 'starred', 				filterFunction: (location) => location.starred		},
+						{ label: 'Type',				value: 'type',					options: this.locations?.items?.reduce((acc,item) => acc.includes(item.type) ? acc : [...acc, item.type], []).sort((a,b) => a<b ? -1:1).map(type => ({
+							label: type,				value: 'type.'+type,			filterFunction: (location) => location.type === type
+						}))},
+						{ label: 'Parent location',		value: 'parent',				options: this.locations?.items?.filter(l => l.mapItems?.locations?.length > 0).map(l => ({
+							label: l.name, 				value: 'parent.'+l.slug,		filterFunction: (location) => location.mapData?.location?.slug == l.slug,
+							image: l.image?.url || '',	imageIcon: 'MapPin'
+						}))},
+						{	separator: true,		if: this.customFields?.getByFieldable('location').length > 0 },
+						...this.customFields?.getByFieldable('location').map(cf => ({
+							label: cf.label,			value: cf.name,					options: cf.options ? cf.options.map(opt => ({
+								label: opt.label,		value: cf.name+'.'+opt.value,	filterFunction: (ent) => ent.customFieldValues.find(f => f.name === cf.name)?.value === opt.value
+							})) : undefined
+						})),
+						{ separator: true },
+						{ label: 'Created',				value: 'created',					options: [
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This week',		value: 'created.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+						]},
+						{ label: 'Updated',				value: 'updated',					options: [
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+						]}
+					]
 				case 'sort':
-					break;
+					return [
+						{ label: "By name",				value: 'name',					sortFunction: (a,b) => a.name < b.name ? -1 : 1 },
+						{ label: "By type",				value: 'type',					sortFunction: (a,b) => a.type < b.type ? -1 : 1 },
+						{	separator: true, if: this.customFields?.getByFieldable('location').length > 0 },
+						...this.customFields?.getByFieldable('location').map(cf => ({
+							label: `By ${cf.label.toLowerCase()}`,	value: cf.name,			sortFunction: (a,b) => {
+								a = a.customFieldValues.find(v => v.name === cf.name)?.value
+								b = b.customFieldValues.find(v => v.name === cf.name)?.value
+								return !isNaN(a) && !isNaN(b)
+									? (Number(a) < Number(b) ? -1 : 1)
+									: (a < b ? -1 : 1)
+							}
+						})),
+						{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
+						{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
+						{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } }
+					]
 				case 'layout':
-					break;
+					return [
+						{ label: "As Map",  			value: "map",			icon: "Compass"		},
+						{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
+						{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+					]
 				default:
 					return this.locations?.items?.map(l => ({
 						label: l.name,

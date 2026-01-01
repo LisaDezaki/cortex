@@ -76,10 +76,9 @@
 				<Inline align="center" gap={0} class="place-self-center">
 					<Heading is="h3" as="h4" heading={character.name} class="text-center" />
 					<div class="relative place-self-start w-0">
-						<Button size="sm" theme="accent"
-							icon="PencilSimple" iconSize="xs"
-							class="absolute ml-1 rounded-full"
-							onclick={() => character.openModal('rename')}
+						<Button class="ml-1.5 rounded-full"
+							size="xs" style="plain" theme="accent"
+							icon="PencilSimple" onclick={() => character.openModal('rename')}
 						/>
 					</div>
 				</Inline>
@@ -88,9 +87,8 @@
 						<p class="text-neutral-soft text-sm">{character.alias}</p>
 						<div class="relative w-0">
 							<Button class="ml-1 rounded-full"
-								size="sm" theme="accent"
-								icon="PencilSimple" iconSize="xs"
-								onclick={() => character.openModal('alias')}
+								size="xs" style="plain" theme="accent"
+								icon="PencilSimple" onclick={() => character.openModal('alias')}
 							/>
 						</div>
 					</Inline>
@@ -133,7 +131,7 @@
 			<SidebarListItem
 				label="Factions"
 				onclick={() => character.openModal('factions', { options: $page.props.activeProject?.data?.factions })}
-				value={character.factions.items.length > 0 ? character.factions?.items.map(f => ({ value: f.name, href: f.routes?.show })) : undefined}
+				value={character.factions.items.length > 0 ? character.factions?.items.map(fac => ({ value: fac.name, href: fac.routes?.show })) : undefined}
 			/>
 
 			<!-- Location -->
@@ -147,8 +145,15 @@
 			<SidebarListItem
 				label="Relationships"
 				onclick={() => character.openModal('relationships', { options: $page.props.activeProject?.data?.characters.filter(c => c.id !== character.id) })}
-				value={character.relationships?.items.length > 0 ? [ ...character.relationships?.items.map(rel => ({ value: rel.name, href: rel?.routes?.show })) ] : undefined}
+				value={character.relationships?.items.length > 0 ? [ ...character.relationships?.items.map(rel => ({ value: rel.name, href: rel?.routes?.show, appendix: rel.role })) ] : undefined}
 			/>
+
+			<!-- Inventory -->
+			<!-- <SidebarListItem
+				label="Inventory"
+				onclick={() => character.openModal('inventory')}
+				value={character.inventory.items.length > 0 ? character.items?.items.map(item => ({ value: item.name, href: item.routes?.show })) : undefined}
+			/> -->
 
 			<!-- Appearance -->
 			<SidebarListItem

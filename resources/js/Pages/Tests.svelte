@@ -277,6 +277,9 @@
 					{ label: 'Switch', 		active: active === 'switch', 	onclick: () => active = 'switch' 	},
 					{ label: 'Upload',		active: active === 'upload',	onclick: () => active = 'upload' 	},
 
+					{ group: true, label: 'Custom' },
+					{ label: 'Map',			active: active === 'map', 		onclick: () => active = 'map' 		},
+
 				]}
 			/>
 			<Stack gap={12} class="h-full p-12 flex-none w-[80ch]">

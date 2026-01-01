@@ -7,7 +7,6 @@
 	import Input     from '@/Components/UI/Input'
 	import ModalForm from '@/Components/UI/ModalForm.svelte'
 
-	import FactionCard from '@/Components/Features/Faction/FactionCard.svelte'
 	import FactionList from '@/services/FactionList';
 
 	const factions = new FactionList($page.props.activeProject?.data?.factions)
@@ -40,8 +39,8 @@
 	<Input.Text class="mx-3" type="search" icon="MagnifyingGlass" placeholder="Search..." />
 	<Grid cols={4} gap={1} class="max-h-[60vh] overflow-y-auto p-3">
 		{#each factions.items as faction}
-			<FactionCard faction={faction}
-				class="cursor-pointer"
+			<Entity
+				entity={faction}
 				active={$form.factions.includes(faction.id)}
 				onclick={() => toggleFaction(faction.id)}
 			/>

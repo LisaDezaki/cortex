@@ -4,17 +4,15 @@
 	import { page } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
-	import Flex					from '@/Components/Core/Flex.svelte'
 	import Grid					from '@/Components/Core/Grid.svelte'
 	import Stack				from '@/Components/Core/Stack.svelte'
+	import ControlBar			from '@/Components/UI/ControlBar.svelte'
 	import Empty     		 	from '@/Components/UI/Empty.svelte'
 	import Entity     		 	from '@/Components/UI/Entity.svelte'
 	import PageHeader		 	from '@/Components/UI/PageHeader.svelte'
-	import Section      	 	from '@/Components/UI/Section.svelte'
-	import FactionControlBar 	from '@/Components/Features/Faction/FactionControlBar.svelte'
 	import FactionPanel 	 	from '@/Components/Features/Faction/FactionPanel.svelte'
 	import FactionTable 	 	from '@/Components/Features/Faction/FactionTable.svelte'
-	import ProjectObject 	from '@/services/ProjectObject'
+	import ProjectObject 		from '@/services/ProjectObject'
 
 
 	/**
@@ -22,9 +20,7 @@
 	 * @type {ProjectObject}
 	 */
 	const activeProject   = $state(new ProjectObject($page.props.activeProject.data))
-	const characters      = $state(activeProject?.characters)
 	const factions    	  = $state(activeProject?.factions)
-	const locations    	  = $state(activeProject?.locations)
 
 
 	/**
@@ -37,26 +33,17 @@
 	/**
 	 * Reactive application state parameters
 	 * @typedef {Object} AppParameters
-	 * @property {string} query - Search query string
-	 * @property {string} filter - Current filter type
-	 * @property {string} sort - Sort field name
-	 * @property {string} direction - Sort direction ('asc' or 'desc')
 	 * @property {number} size - Grid size/layout parameter
 	 * @property {string} layout - Display layout ('grid' or 'table')
 	 * @property {string} selected - Slug of currently selected faction
 	 */
-
 	 /**
 	 * Reactive state parameters for filtering, sorting, and layout
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
-		query: 		urlParams.get('q')		|| '',
-		filter: 	urlParams.get('filter') || '',
-		sort: 		urlParams.get('sort')	|| 'name',
-		direction: 	urlParams.get('dir') 	|| 'desc',
-		size: 		urlParams.get('size') 	|| 6,
-		layout: 	urlParams.get('layout') || 'grid',
+		size: 		urlParams.get('size')	  || 6,
+		layout: 	urlParams.get('layout')	  || 'grid',
 		selected: 	urlParams.get('selected') || ''
 	})
 
@@ -80,12 +67,8 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			query: 		urlParams.get('q') 		|| '',
-			filter: 	urlParams.get('filter') || '',
-			size: 		urlParams.get('size') 	|| 6,
-			sort: 		urlParams.get('sort') 	|| 'name',
-			direction: 	urlParams.get('dir') 	|| 'desc',
-			layout: 	urlParams.get('layout') || 'grid',
+			size: 		urlParams.get('size') 	  || 6,
+			layout: 	urlParams.get('layout')   || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};
 	});
@@ -97,13 +80,7 @@
 	 */
 	$effect(() => {
 		const url = new URL(window.location);
-		if (parameters.query)	{ url.searchParams.set('q', parameters.query); }
-		else 					{ url.searchParams.delete('q'); }
-		if (parameters.filter)	{ url.searchParams.set('filter', parameters.filter); }
-		else					{ url.searchParams.delete('filter'); }
 		url.searchParams.set('size',		parameters.size);
-		url.searchParams.set('sort',		parameters.sort);
-		url.searchParams.set('direction',	parameters.direction);
 		url.searchParams.set('layout',		parameters.layout);
 		url.searchParams.set('selected',	parameters.selected);
 		window.history.replaceState({}, '', url);
@@ -162,15 +139,11 @@
 				{ icon: "Plus", text: "New", theme: "accent", onclick: () => factions.create() },
 			]}
 		>
-			<FactionControlBar
-				data={factions} project={activeProject}
-				bind:query={parameters.query}
-				bind:filter={parameters.filter}
-				bind:sort={parameters.sort}
-				bind:size={parameters.size}
-				bind:layout={parameters.layout}
-				bind:results={results}
-				min={4} max={8}
+			<ControlBar
+				data={factions} bind:results bind:layout={parameters.layout}
+				filterOptions={activeProject.getOptions('factions', 'filter')}
+				sortOptions={activeProject.getOptions('factions', 'sort')}
+				layoutOptions={activeProject.getOptions('factions', 'layout')}
 			/>
 		</PageHeader>
 

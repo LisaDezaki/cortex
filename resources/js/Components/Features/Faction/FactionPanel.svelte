@@ -130,7 +130,7 @@
 			<SidebarListItem
 				label="Members"
 				onclick={() => faction.openModal('members', { options: $page.props.activeProject?.data?.characters })}
-				value={faction.members.length > 0 ? [ ...faction.members?.items.map(m => ({ value: m.name, href: m.routes?.show })) ] : undefined}
+				value={faction.members?.items.length > 0 ? [ ...faction.members?.items.map(m => ({ value: m.name, href: m.routes?.show, appendix: m.rank?.name })) ] : undefined}
 			/>
 
 			<!-- Custom Fields -->

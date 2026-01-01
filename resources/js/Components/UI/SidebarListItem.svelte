@@ -3,8 +3,10 @@
 
 	//	Layout & Components
 
-	import Flex					from '@/Components/Core/Flex.svelte'
-	import Button				from '@/Components/UI/Button.svelte'
+	import Flex		from '@/Components/Core/Flex.svelte'
+	import Inline	from '@/Components/Core/Inline.svelte'
+	import Stack	from '@/Components/Core/Stack.svelte'
+	import Button	from '@/Components/UI/Button.svelte'
 
 
 	//	Page & Component props
@@ -36,19 +38,31 @@
 	{#if children}
 		<span>{@render children()}</span>
 	{:else if value}
-		<span>
+		<!-- <span class="break-all"> -->
 			{#if typeof value === 'object' && Array.isArray(value)}
-				{#each value as item, i}
-					{#if item.href}
-						<Link class="break-all line-clamp-1" href={item.href}>{item.value}{value.length-1 !== i ? ', ' : ''}</Link>
-					{:else}
-						<span class="break-all line-clamp-1">{item.value}{value.length-1 !== i ? ', ' : ''}</span>
-					{/if}
-				{/each}
+				<Stack>
+					{#each value as item, i}
+						<Inline>
+							<span class="line-clamp-1">
+								{#if item.href}
+									<Link href={item.href}>{item.value}</Link>
+								{:else}
+									{item.value}
+								{/if}
+								{#if item.appendix}
+									<span class="text-neutral-soft">({item.appendix})</span>{value.length-1 !== i ? ', ' : ''}
+								{:else}
+									{value.length-1 !== i ? ', ' : ''}
+								{/if}
+							</span>
+						</Inline>
+					{/each}
+				</Stack>
 			{:else}
-				{value}
+				<span>{value}</span>
 			{/if}
-		</span>
+			
+		<!-- </span> -->
 	{:else}
 		<span class={cx.empty}>None</span>
 	{/if}

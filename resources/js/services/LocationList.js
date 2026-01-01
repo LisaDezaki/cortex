@@ -57,6 +57,24 @@ export default class LocationList {
 		this._saveToHistory(); // Save initial state to history
 	}
 
+	
+	/**
+	 * Filter
+	 * Returns a filtered list of items based on the strings provided
+	 * @param {string} query
+	 * @param {string} filter
+	 * @param {string} sort
+	 * @returns {Array}
+	 */
+	applyFilters(query, filter, sort) {
+		let response = this.items
+		if (query)  {	response = response.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))	}
+		if (filter) {	response = response.filter(filter)	}
+		if (sort)   {	response = response.sort(sort)	}
+		return response
+	}
+
+
 	/**
 	 * Create
 	 * Open the modal for creating a new faction entity
@@ -66,19 +84,6 @@ export default class LocationList {
 		modalActions.open('createLocation')
 	}
 
-	/**
-	 * Filter
-	 * Returns a filtered list of items based on the strings provided
-	 * @param {string} query
-	 * @param {string} filter
-	 * @param {string} sort
-	 * @returns {Array}
-	 */
-	filter(query, filter, sort) {
-		return this.items
-			.filter(item => item.name.toLowerCase().includes(query.toLowerCase()))
-			.filter(filter).sort(sort)
-	}
 
 	/**
 	 * Find
