@@ -27,8 +27,8 @@ class ItemResource extends JsonResource
 
 			'mapData'	  => new MapItemResource($this->whenLoaded('mapData')),
 
-			// 'image'		  => new MediaResource($this->whenLoaded('image')),
-			// 'media'		  => MediaResource::collection($this->whenLoaded('media')),
+			'image'		  => new MediaResource($this->whenLoaded('image')),
+			'media'		  => MediaResource::collection($this->whenLoaded('media')),
 
 			'factions'    => FactionResource::collection($this->whenLoaded('factions')),
 			

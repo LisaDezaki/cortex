@@ -58,6 +58,7 @@
     import SetTagsModal 			 	 from '@/Modals/SetTags.svelte';
 	import SetValueModal 			 	 from '@/Modals/SetValue.svelte';
     import UploadMediaModal 			 from '@/Modals/UploadMedia.svelte';
+    import { Tooltip } from 'bits-ui'
 	
 	//	2. Create a modal registry map
 
@@ -90,7 +91,7 @@
 		selectOne:					SelectOneModal,
 		selectMany:					SelectManyModal,
 		// selectLocation:				SelectLocationModal,
-		// setCharacterRelationship:	SetCharacterRelationshipModal,
+		setCharacterRelationship:	SetCharacterRelationshipModal,
 		setCustomFieldValue:		SetCustomFieldValueModal,
 		setLocation:				SetLocationModal,
 		setTags:					SetTagsModal,
@@ -124,27 +125,28 @@
 
 
 
-<Page>
-	<Navigation {active} />
-	<Main>
-		<Article {noscroll}>
-			{@render article?.()}
-		</Article>
-		{@render sidebar?.()}
-	</Main>
-	{#if $page.props.flash}
-		<Stack class="overlay fixed bottom-4 left-1/2 translate-x-[-50%]">
-			{#if $page.props.flash.success}
-				<Snackbar theme="accent" icon="CheckCircle" text={$page.props.flash.success} />
-			{:else if $page.props.flash.error}
-				<Snackbar theme="danger" icon="" text={$page.props.flash.error} />
-			{:else if $page.props.flash.message}
-				<Snackbar theme="neutral" text={$page.props.flash.message} />
-			{/if}
-		</Stack>
+<Tooltip.Provider>
+	<Page>
+		<Navigation {active} />
+		<Main>
+			<Article {noscroll}>
+				{@render article?.()}
+			</Article>
+			{@render sidebar?.()}
+		</Main>
+		{#if $page.props.flash}
+			<Stack class="overlay fixed bottom-4 left-1/2 translate-x-[-50%]">
+				{#if $page.props.flash.success}
+					<Snackbar theme="accent" icon="CheckCircle" text={$page.props.flash.success} />
+				{:else if $page.props.flash.error}
+					<Snackbar theme="danger" icon="Warning" text={$page.props.flash.error} />
+				{:else if $page.props.flash.message}
+					<Snackbar theme="neutral" text={$page.props.flash.message} />
+				{/if}
+			</Stack>
+		{/if}
+	</Page>
+	{#if CurrentModal}
+		<CurrentModal {...$modalStore.modalProps} />
 	{/if}
-</Page>
-
-{#if CurrentModal}
-	<CurrentModal {...$modalStore.modalProps} />
-{/if}
+</Tooltip.Provider>

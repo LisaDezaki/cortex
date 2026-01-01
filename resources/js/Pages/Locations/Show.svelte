@@ -179,8 +179,4 @@
 		</Flex>
 	{/snippet}
 
-	{#snippet sidebar()}
-		<div class="min-w-96"></div>
-	{/snippet}
-
 </AuthenticatedLayout>

@@ -89,6 +89,19 @@ export default class CharacterObject {
 					title: 'Rename character: ' + this.name,
 					...props
 				}); break;
+			case 'description':
+				modalActions.open('setValue', {
+					entity: this,
+					endpoint: this.routes.update,
+					field: {
+						name: 'description',
+						label: 'Description',
+						type: 'textarea',
+						rows: 12
+					},
+					title: 'Describe character: ' + this.name,
+					...props
+				}); break;
 			case 'alias':
 				modalActions.open('setValue', {
 					entity: this,
@@ -115,6 +128,12 @@ export default class CharacterObject {
 					selected: this.factions.items?.map(f => f.id) || [],
 					title: "Set which factions" + this.name + "is a member of",
 					...props
+				}); break;
+			case 'relationship':
+				modalActions.open('setCharacterRelationship', {
+					character: this,
+					endpoint: this.routes.update,
+					title: "Set relationship for "+this.name
 				}); break;
 			case 'relationships':
 				modalActions.open('selectMany', {
@@ -158,7 +177,7 @@ export default class CharacterObject {
 				modalActions.open('setCustomFieldValue', {
 					entity: this,
 					endpoint: this.routes.update,
-					field: { fieldableType: 'character' },
+					field: { fieldableType: this.laravelClass },
 					reloadPageProps: ['activeProject', 'character.customFieldValues', 'characters.customFieldValues'],
 					...props
 				}); break;

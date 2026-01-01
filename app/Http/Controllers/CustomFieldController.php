@@ -23,47 +23,23 @@ class CustomFieldController extends Controller
 {
 	protected $validationRules = [
 		'id'			=> ['string', 'sometimes', 'nullable'],
-		'fieldableType'	=> ['string', 'required', 'in:character,faction,location'],
+		'fieldableType'	=> ['string', 'required'],
 		'type'       	=> ['string', 'required', 'in:text,number,range,switch,select,entity,upload'],
 		'name'       	=> ['string', 'required'],
 		'label'      	=> ['string', 'nullable'],
 		'placeholder'	=> ['string', 'nullable'],
 		'description'	=> ['string', 'nullable'],
+		'default'		=> ['string', 'nullable'],
+		'rows'			=> ['numeric','nullable'],
+		'min'			=> ['numeric','nullable','sometimes'],
+		'max'			=> ['numeric','nullable','sometimes'],
 		'required'   	=> ['boolean'],
 		'options'    	=> ['array', 'nullable', 'min:2', 'required_if:type,select'], // At least 2 items
     	'options.*'  	=> ['string', 'distinct'] // Each item must be a unique string
 	];
 
-
-	/**
-     * Display a listing of the characters.
-     *
-	 * @return \Inertia\Response
-	 */
-	public function index(): Response|RedirectResponse
-	{
-		$project = Auth::user()->activeProject();
-		if (!$project) {
-			return Redirect::route("dashboard");
-		}
-		$customFields = $project->customFields()->with('options')->get();
-		return Inertia::render('CustomFields/Index', [
-			'customFields' => $customFields
-		]);
-	}
-
-
-
-	/**
-	 * Display the character creation view.
-	 *
-	 * @return \Inertia\Response
-	 */
-	public function create(): Response
-	{
-		return Inertia::render('CustomFields/Create');
-	}
-
+	public function index() {}
+	public function create() {}
 
 
 	/**
@@ -73,30 +49,23 @@ class CustomFieldController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		//  Validate custom field data
-
-		$validatedData = $request->validate($this->validationRules);
-		$fieldOptions  = $validatedData['options'];
-
-		$fieldable_types = [
-			"character"		=> Character::class,
-			"faction"		=> Faction::class,
-			"item"			=> Item::class,
-			"location"		=> Location::class
-		];
-		
-		//  Create the new custom field
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to create custom field: ".$e);
+        	return Redirect::back();
+		}
 		$field              = new CustomField($validatedData);
 		$field->project_id  = Auth::user()->active_project;
-		$field->label       = $field->label       ?: $field->name;
+
+		$field->label       = $field->label ?: $field->name;
 		$field->placeholder = $validatedData['placeholder'] ?: null;
-		$field->fieldable_type = $fieldable_types[$validatedData['fieldableType']];
+
+		$fieldOptions  = $validatedData['options'];
 		unset($field->options);
 		$field->save();
 
-		if ($fieldOptions && $field->type == 'select') {
-
-			dd($fieldOptions);
+		if ($field->type == 'select' && $fieldOptions) {
 
 			foreach ($fieldOptions as $option) {
 
@@ -115,7 +84,7 @@ class CustomFieldController extends Controller
 			}
 		}
 
-		Session::flash('success', "Added a new custom field: ".$field['name']);
+		Session::flash('success', "Added custom field: ".$field['label']);
         return Redirect::back();
 
 		// return Inertia::render('customfields', [
@@ -165,16 +134,23 @@ class CustomFieldController extends Controller
 	 * @param  \Illuminate\Http\Request  $request
 	 */
 
-	public function update(CustomField $field, Request $request)
+	public function update(Request $request)
 	{
-		$validatedData = $request->validate($this->validationRules);
-		$fieldOptions  = $validatedData['options'];
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to update custom field: ".$e);
+        	return Redirect::back();
+		}
 
+		$field = CustomField::find($validatedData['id']);
 		$field->fill($validatedData);
-		$field->label       = $field->label       ?: $field->name;
-		$field->placeholder = $validatedData['placeholder'] ?: null;
-		unset($field->options);
 
+		$field->label = $field->label ?: $field->name;
+		$field->placeholder = $validatedData['placeholder'] ?: null;
+
+		$fieldOptions = $validatedData['options'];
+		unset($field->options);
 		$field->save();
 
 		if ($field->type == 'select' && $fieldOptions) {
@@ -195,37 +171,8 @@ class CustomFieldController extends Controller
 			}
 		}
 
-		// if ($field->type && $options) {
-		// 	foreach ($options as $option) {
-		// 		$field_option = new CustomFieldOption();
-		// 		$field_option->custom_field_id = $field->id;
-		// 		$field_option->label = $option;
-		// 		$field_option->value = Str::slug($option);
-		// 		$field_option->save();
-		// 	}
-		// }
-
-		return Inertia::render('customfields', [
-			'success' => true,
-			'message' => 'Field created!',
-		]);
-		
-		// return Redirect::route("customfields");
-
-
-
-		// Validate user request
-		// $validatedData = $request->validate($this->validationRules);
-		// $character->fill($validatedData);
-
-		//	Move temporary image to permanent location.
-		// $character->image = $this->storeFile($request, $character);
-
-		// Redirect user to new character page.
-		// $character->update();
-		// return Redirect::route("characters.show", [
-		// 	'character' => $character->slug
-		// ]);
+		Session::flash('success', "Updated custom field: ".$field['label']);
+        return Redirect::back();
 	}
 
 		/**

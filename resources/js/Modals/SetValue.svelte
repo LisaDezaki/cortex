@@ -12,6 +12,7 @@
 		endpoint,
 		entity,
 		field,
+		label,
 		title = 'Set Value',
 	} = $props()
 
@@ -32,11 +33,6 @@
 	}}
 >
 	<Box class="px-4 pb-4">
-		<Input
-			{...field}
-			id={undefined}
-			label={undefined}
-			bind:value={$form[field.name]}
-		/>
+		<Field {...field} />
 	</Box>
 </ModalForm>

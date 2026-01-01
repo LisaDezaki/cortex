@@ -122,16 +122,16 @@ class Item extends Model
 
 	public function image()
 	{
-		return $this->portrait();
+		return $this->main();
 	}
 	public function media(): MorphMany
 	{
 		return $this->morphMany(Media::class, 'mediable');
 	}
-	// public function portrait(): MorphOne
-	// {
-	// 	return $this->morphOne(Media::class, 'mediable')->where('type', 'portrait');
-	// }
+	public function main(): MorphOne
+	{
+		return $this->morphOne(Media::class, 'mediable')->where('type', 'main');
+	}
 	public function banner(): MorphOne
 	{
 		return $this->morphOne(Media::class, 'mediable')->where('type', 'banner');

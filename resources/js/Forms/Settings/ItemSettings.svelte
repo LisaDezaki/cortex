@@ -74,6 +74,12 @@
 		/>
 	{/if}
 
+	<Field name="enable_ownership"
+		type="switch" layout="block"
+		label="Enable ownership"
+		description="Ownership allows for stealing."
+	/>
+
 	<Field name="enable_weight"
 		type="switch" layout="block"
 		label="Item weight"

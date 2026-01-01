@@ -82,11 +82,7 @@ class CharacterController extends Controller
 			'customFields'	=> CustomFieldResource::collection($customFields)
 		]);
 	}
-	// public function collections()
-	// {
-	// 	return Inertia::render('Characters/Collections', [
-	// 	]);
-	// }
+
 
 	/**
 	 * CREATE / STORE
@@ -99,13 +95,12 @@ class CharacterController extends Controller
 	public function create() {}		//	Character creation is handled through a simple modal
 	public function store(Request $request): RedirectResponse
 	{
-		// dd($request);
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
-			dd($e);
+			Session::flash('error', "Failed to create character: ".$e);
+        	return Redirect::back();
 		}
-		// dd($validatedData);
 		$character = Auth::user()->activeProject()->characters()->create($validatedData);
 
 		if ($request->has('media') && $request['media'] !== null) {
@@ -130,7 +125,6 @@ class CharacterController extends Controller
 
 	public function show(Character $character): Response
 	{
-
 		$character->load([
 			'image',
 			'media',
@@ -205,9 +199,9 @@ class CharacterController extends Controller
 			$this->handleCustomFields([$validatedData['customField']], $character);
 		}
 
-		if ($request->has('custom_fields')) {
-			$this->handleCustomFields($validatedData['custom_fields'], $character);
-		}
+		// if ($request->has('custom_fields')) {
+		// 	$this->handleCustomFields($validatedData['custom_fields'], $character);
+		// }
 
 		//	Update
 		// $character->fill($validatedData);

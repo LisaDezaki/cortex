@@ -51,9 +51,10 @@ class FactionController extends Controller
 		'media.*.url'			=> ['nullable',	 'string'],
 
 		'members'				=> ['sometimes', 'nullable', 'array'],
-		'members.*.id'			=> ['required',	 'string', 'uuid', 'distinct', 'exists:characters,id'],
-		'members.*.name'		=> ['nullable',  'string'],
-		'members.*.rank'		=> ['nullable',	 'string'],
+		'members.*'				=> ['string', 'uuid', 'distinct', 'exists:characters,id'],
+		// 'members.*.id'			=> ['required',	 'string', 'uuid', 'distinct', 'exists:characters,id'],
+		// 'members.*.name'		=> ['nullable',  'string'],
+		// 'members.*.rank'		=> ['nullable',	 'string'],
 
 		'custom_fields' 	  	=> ['sometimes', 'array'],
 		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
@@ -166,6 +167,9 @@ class FactionController extends Controller
     public function edit(Faction $faction) {}
     public function update(Request $request, Faction $faction)
     {
+
+		// dd($request->all());
+		
 		//	Validate
 		$validatedData = $request->validate($this->validationRules);
 
@@ -180,7 +184,8 @@ class FactionController extends Controller
 		//	Members
 		if ($request->has('members')) {
 			foreach ($validatedData['members'] as $member) {
-				$member = Character::find($member['id']);
+				// $member = Character::find($member['id']);
+				$member = Character::find($member);
 				$faction->members()->attach($member);
 			}
 			unset($validatedData['members']);

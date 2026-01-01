@@ -12,6 +12,7 @@
 	import CardNew       from '@/Components/UI/CardNew.svelte'
 	import Collapsible	 from '@/Components/UI/Collapsible.svelte'
 	import Container	 from '@/Components/UI/Container.svelte'
+	import Entity		 from '@/Components/UI/Entity.svelte'
 	import Heading		 from '@/Components/UI/Heading.svelte'
 	import Icon		 	 from '@/Components/UI/Icon.svelte'
 	import Media     	 from '@/Components/UI/Media.svelte'
@@ -45,37 +46,41 @@
 				items={[
 					{ icon: "Info",      	label: "Details",    	href: "#details"	},
 					{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
+					{ icon: "Textbox",      label: "Custom Fields", href: "#custom"     },
 					{ icon: "ImagesSquare", label: "Gallery",       href: "#gallery" 	},
 					{ icon: "Trash", 		label: "Delete",		onclick: () => faction.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="5xl">
+			<Container size="4xl">
 
 				
 				<!-- Details -->
 		
-				<Section id="details" class="pb-6">
+				<Section id="details" class="pb-12">
 
 					<ArticleBanner>
 						<Media
-							class="absolute inset-0 aspect-[3/1] rounded-lg overflow-hidden"
+							class="absolute inset-0 aspect-[3/1] bg-slate-200 rounded-lg overflow-hidden"
 							media={faction.getMedia('banner')}
 							onclick={() => faction.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]'})}
 						/>
 						<Media
-							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border border-slate-300 text-white right-12 -bottom-16 rounded-lg overflow-hidden w-48 transition-all"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border-2 border-slate-100 right-12 -bottom-16 rounded-lg overflow-hidden w-48"
 							media={faction.getMedia('emblem')}
 							onclick={() => faction.openModal('setMedia', { type: 'emblem', aspect: 'aspect-[1/1]'})}
 						/>
-						<Heading is="h1" as="h3"
-							class="mt-auto w-3/4 z-10 {faction.getMedia('banner') ? 'text-white' : ''}"
-							heading={faction.name}
-							headingClass="whitespace-pre-wrap"
-							subheading={faction.type}
-						/>
+						<Inline align="start" justify="start" class="z-10">
+							<Heading is="h1" as="h3"
+								class="max-w-3/4 mt-auto {faction.getMedia('banner') ? 'text-white' : ''}"
+								heading={faction.name}
+								headingClass="whitespace-pre-wrap"
+								subheading={faction.type}
+							/>
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => faction.openModal('rename')} />
+						</Inline>
 					</ArticleBanner>
 
-					<Stack gap={6} class="p-6">
+					<Stack class="max-w-[64ch] mx-6 mt-12">
 
 						<Grid cols={3} gap={6} class="w-3/4">
 							<Stack gap={1.5}>
@@ -85,19 +90,25 @@
 								</Inline>
 
 								{#if faction.headquarters}
-									<Link
+									<Entity
+										entity={faction.headquarters}
+										layout="inline"
+										href={route("locations.show", { location: faction.headquarters?.slug})}
+										size="sm"
+									/>
+									<!-- <Link
 										class="bg-white border border-neutral-softest inline-flex gap-3 p-1 rounded-lg w-auto hover:bg-accent-softest hover:border-accent-softest hover:text-accent"
 										href={route("locations.show", { location: faction.headquarters?.slug})}>
 										<Thumbnail
 											class="aspect-square bg-neutral-softest rounded h-11 max-w-11"
-											icon="User"
+											icon="MapPin"
 											src={faction.headquarters.image?.url}
 										/>
 										<Stack justify="center">
 											<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
 											<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
 										</Stack>
-									</Link>
+									</Link> -->
 								{:else}
 									<p class="font-style-placeholder">There is no headquarters for this Faction yet.</p>
 								{/if}
@@ -131,49 +142,41 @@
 							</Stack>
 						</Grid>
 
-						<Heading is="h3" as="h6" class="mt-9">Description</Heading>
+						<Heading is="h3" as="h4" class="mt-9 mb-6">Details</Heading>
 
-						<Collapsible collapsed={true}
-							class="max-w-[64ch]"
-							collapsedClass="line-clamp-3 overflow-hidden">
-							{faction.description}
-						</Collapsible>
-
-						<!-- <Heading is="h3" as="h6" class="mt-9">Headquarters</Heading>
-						{#if faction.headquarters}
-							<Link
-								class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
-								href={route("locations.show", { location: faction.headquarters?.slug})}>
-								<Thumbnail
-									class="aspect-square bg-neutral-softest rounded h-12 max-w-12"
-									icon="User"
-									src={faction.headquarters.image?.url}
-								/>
-								<Stack justify="center">
-									<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
-									<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
-								</Stack>
-							</Link>
+						<Heading is="h3" as="h6" class="mb-6 text-neutral-soft">Description
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('description')} />
+						</Heading>
+						{#if faction.description}
+							<Collapsible collapsed={true}
+								class="max-w-[64ch]"
+								collapsedClass="line-clamp-3 overflow-hidden">
+								{faction.description}
+							</Collapsible>
 						{:else}
-							<p class="font-style-placeholder">There is no headquarters for this Faction yet.</p>
-						{/if} -->
-	
-						<Heading is="h3" as="h6" class="mt-9">Custom Fields</Heading>
-						{#if customFields && customFields.length > 0}
-							{#each customFields as field, i}
-								<Flex gap={3}>
-									<span class="font-bold w-20">{field.label}:</span>
-									<span class="line-clamp-1 {field.displayValue ? '' : 'font-style-placeholder'}">{field.displayValue || "undefined"}</span>
-								</Flex>
-							{/each}
-						{:else}
-							<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
+							<span class="text-neutral-softest">No description</span>
 						{/if}
+
+						<Heading is="h3" as="h6" class="mt-9 mb-6 text-neutral-soft">Ideology
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('appearance')} />
+						</Heading>
+						<Flex wrap class="gap-[2px]">
+							{#if faction.ideology}
+								{#each faction.ideology?.split(',') as tag}
+									<Tag plain class="bg-neutral-softest border border-transparent text-neutral px-2 py-1">{tag}</Tag>
+								{/each}
+							{:else}
+								<span class="text-neutral-softest">No ideology</span>
+							{/if}
+						</Flex>
+
 					</Stack>
-		
 				</Section>
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
+				<Separator class="my-12" />
+
+
+				
 
 
 				<!-- Headquarters -->
@@ -207,81 +210,64 @@
 				<!-- Membership -->
 
 				<Section id="members" class="p-6">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h6">Membership</Heading>
-					</Flex>
-					<Grid cols={4} gap={3}>
-						{#each faction.members?.items as member, i}
-							<Link
-								class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
-								href={route("characters.show", { character: member.slug})}>
-								<Thumbnail
-									class="aspect-square bg-neutral-softest rounded h-11 max-w-11"
-									icon="User"
-									src={member.image?.url}
+					<Heading is="h3" as="h4" class="mb-6">Membership</Heading>
+					<Grid cols={6} gap={3}>
+						{#if faction.members?.items?.length > 0}
+							{#each faction.members?.items as member, i}
+								<Entity
+									entity={member}
+									subtitle={member.rank?.name || 'Member'}
+									href={route('characters.show', { character: member.slug })}
 								/>
-								<Stack justify="center">
-									<div class="font-bold leading-[1.125rem] line-clamp-1">{member.name}</div>
-									<div class="text-sm leading-[1.125rem] line-clamp-1">{member.rank?.name}</div>
-								</Stack>
-							</Link>
-						{/each}
+							{/each}
+						{:else}
+							<p class="font-style-placeholder">{faction.name} doesn't have any members yet.</p>
+							<p><button class="text-accent hover:underline" onclick={() => faction.openModal('addMember')}>Create one?</button></p>
+						{/if}
 					</Grid>
 				</Section>
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
+				<Separator class="my-12" />
+
+
+				<!-- Custom Fields -->
+
+				<Section id="custom" class="p-6">
+					<Heading is="h3" as="h4" class="mb-6">Custom Fields</Heading>
+					{#if customFields && customFields.length > 0}
+						{#each customFields as field, i}
+							<Flex gap={3}>
+								<span class="font-bold w-20">{field.label}:</span>
+								<span class="line-clamp-1 {field.displayValue ? '' : 'font-style-placeholder'}">{field.displayValue || "undefined"}</span>
+							</Flex>
+						{/each}
+						<Flex class="pt-3">
+							<Button size="md" style="soft" theme="accent" icon="Plus" iconSize="sm" iconWeight="regular" label="New custom field" onclick={() => {}} />
+						</Flex>
+					{:else}
+						<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
+					{/if}
+				</Section>
+
+				<Separator class="my-12" />
 
 
 				<!-- Media -->
 	
 				<Section id="gallery" class="px-6 py-12">
-					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
-					<!-- <MediaGrid cols={6}
-						media={media_gallery}
-						type="gallery"
-						addable
-					/> -->
+					<Heading is="h3" as="h4" class="mb-6">Gallery</Heading>
+					<Grid cols={6} class="gap-[2px]">
+						{#each new Array(6) as item, i}
+							<Thumbnail aspect="square"
+								class="aspect-square bg-neutral-softest rounded-none hover:inner-shadow-sm transition-all"
+							/>
+						{/each}
+					</Grid>
 				</Section>
+
+				<Separator class="my-12" />
 	
 			</Container>
-	
-			<!-- <Stack gap={12}>
-				<Section id="#details">
-					<Heading is="h2" as="h3" class="my-12"
-						eyebrowIcon="FlagBannerFold" eyebrow="Faction"
-						heading={faction.name}
-						subheading={faction.type}
-					/>
-					<p>{faction.description}</p>
-				</Section>
-	
-				{#if faction.ranks.length > 0}
-					<Section id="membership">
-						<Heading is="h4" as="h6" class="mb-6"
-							heading="Membership"
-						/>
-						{#each faction.ranks as rank}
-							<span class="bg-slate-500/10 font-style-large px-2 py-1 rounded-full">
-								{rank.name}
-							</span>
-							<Grid cols={6} class="mt-2">
-								{#each faction.members.filter(m => m.rank.id == rank.id) as member}
-									<Card
-										aspect="square"
-										title={member.name}
-										subtitle={member.rank.name}
-										icon="User"
-										image={member.portrait?.url}
-										href={route('characters.show', {character: member.slug})}
-									/>
-								{/each}
-							</Grid>
-						{/each}
-					</Section>
-				{/if}
-			</Stack> -->
-			
 		</Flex>
 	{/snippet}
-	
 </AuthenticatedLayout>

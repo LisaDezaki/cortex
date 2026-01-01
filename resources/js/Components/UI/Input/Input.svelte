@@ -36,7 +36,7 @@
 		value:		clsx('input-value bg-transparent border-none inline-flex items-center gap-2 line-clamp-1 rounded text-left text-sm w-full'),
 		element:	clsx('input-element bg-transparent border-none h-full px-1 rounded-sm text-sm w-full focus:appearance-none'),
 		action:		clsx('input-action aspect-square hover:bg-neutral-softest inline-flex items-center justify-center h-7 rounded shrink-0 w-7'),
-		content:	clsx('input-content block border border-accent font-body max-h-96 min-w-32 overflow-y-auto rounded shadow-lg text-neutral z-10', contentClass),
+		content:	clsx('input-content block border border-accent max-h-96 min-w-32 overflow-y-auto rounded shadow-lg text-neutral z-10', contentClass),
 		option:		clsx('input-option flex items-center cursor-pointer h-7 pl-1.5 pr-0.5 rounded-sm text-sm hover:bg-neutral-softest')
 	})
 
@@ -128,7 +128,7 @@
 
 	:global(.input) {
 		@apply relative inline-flex items-center min-w-[12ch] rounded;
-		@apply border-b;
+		@apply border-b font-light;
 		background-color: var(--bg-input);
 		border-color: var(--border-neutral-softest);
 		color: var(--text-input);
@@ -209,7 +209,7 @@
 
 		:global(.input-option) {
 			@apply flex items-center rounded-sm;
-			@apply cursor-pointer;
+			@apply cursor-pointer font-light;
 			&:hover,
 			&[data-highlighted] {
 				background-color: var(--bg-neutral-softest);

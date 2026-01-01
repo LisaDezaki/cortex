@@ -12,13 +12,15 @@
 		active,
 		aspect,
 		entity,
-		layout = "inline",
-		onclick = () => {},
-		size = "sm"
+		href,
+		layout = "stack",
+		onclick,
+		size = "auto",
+		subtitle
 	} = $props()
 
 	let cx = $derived({
-		card:	clsx('cursor-pointer'),
+		card:	clsx('cursor-pointer relative'),
 
 		thumbnail: {
 			base: clsx('rounded', aspect, {
@@ -59,8 +61,11 @@
 	<Thumbnail class="{cx.thumbnail.base} {cx.thumbnail[size]}" src={entity.image?.url} />
 	<Stack class="{cx.text.base} {cx.text[size]}">
 		<p class={cx.line.primary}>{entity.name}</p>
-		<p class={cx.line.secondary}>{entity.type || entity.alias}</p>
+		<p class={cx.line.secondary}>{subtitle || entity.type || entity.alias}</p>
 	</Stack>
+	{#if href}
+		<Link class="absolute inset-0 text-transparent" href={href}>View</Link>
+	{/if}
 {/snippet}
 
 {#if layout === "inline"}

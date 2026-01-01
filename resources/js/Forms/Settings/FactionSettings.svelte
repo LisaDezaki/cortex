@@ -48,6 +48,13 @@
 		})}
 	/>
 
+	<Field name="enable_ranks"
+		layout="block"
+		type="switch"
+		label="Enable faction ranks?"
+		description="Adds hierarchical ranks to faction members so that some members can outrank others."
+	/>
+
 	{#snippet actions()}
 		<Button style="hard" theme="neutral"
 			type="button"

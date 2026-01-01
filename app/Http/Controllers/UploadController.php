@@ -41,7 +41,7 @@ class UploadController extends Controller
 		//	Validation
 		$validator = Validator::make($request->all(), [
 			'files' => 'array',
-            'files.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // 2MB max
+            'files.*' => 'image|mimes:jpeg,png,jpg,gif,webp|max:2048', // 2MB max
         ], [
 			'files.array' => 'Files must be provided as an array.',
             'files.*.image' => 'The uploaded image is not valid.',

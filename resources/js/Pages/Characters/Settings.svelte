@@ -67,27 +67,27 @@
 					<p class="mb-3">These custom fields will apply to all characters in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
 					
 					{#if customFields?.length > 0}
-						<Stack>
-							<Flex align="center">
+						<Stack align="start">
+							<Inline align="center">
 								<Inline class="font-style-label w-24">Name</Inline>
 								<Inline class="font-style-label w-20">Type</Inline>
 								<Inline class="font-style-label w-24">Default</Inline>
 								<Inline class="font-style-label w-32">Placeholder</Inline>
 								<!-- <Inline class="font-style-label">Field</Inline> -->
-							</Flex>
+							</Inline>
 							{#each customFields as field}
-								<Flex align="center" class="group my-1">
-									<Inline class="shrink-0 text-sm min-w-24">{field.label}</Inline>
-									<Inline class="shrink-0 text-sm min-w-20 capitalize">{field.type}</Inline>
-									<Inline class="shrink-0 text-sm min-w-24 {field.default ? null : 'text-neutral-softest'}">{field.default || 'None'}</Inline>
-									<Inline class="shrink-0 text-sm min-w-32">{field.placeholder}</Inline>
+								<Inline align="center" class="group my-1">
+									<Inline class="shrink-0 text-sm w-24">{field.label}</Inline>
+									<Inline class="shrink-0 text-sm w-20 capitalize">{field.type}</Inline>
+									<Inline class="shrink-0 text-sm w-24 {field.default ? null : 'text-neutral-softest'}">{field.default || 'None'}</Inline>
+									<Inline class="shrink-0 text-sm w-32">{field.placeholder}</Inline>
 									<!-- <Input {...field} id={undefined} label={undefined} class="mr-2 w-full" /> -->
 									<Button class="opacity-0 group-hover:opacity-100 ml-auto rounded-full"
-										style="soft" theme="accent"
-										icon="PencilSimple" iconSize="sm"
+										size="sm" style="soft" theme="accent"
+										icon="PencilSimple"
 										onclick={() => modalActions.open('customField', { field })}
 									/>
-								</Flex>
+								</Inline>
 								<Separator class="opacity-50" />
 								<!-- {#if field.options}
 									<Flex>

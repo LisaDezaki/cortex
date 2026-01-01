@@ -4,6 +4,7 @@
 	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
 	import Grid 		 from '@/Components/Core/Grid.svelte'
+	import Inline 		 from '@/Components/Core/Inline.svelte'
 	import Map			 from '@/Components/Core/Map'
 	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
@@ -39,7 +40,7 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="h-full overflow-y-auto px-6 py-12">
+		<Flex justify="center" gap={12} class="h-full overflow-y-auto px-20 py-12">
 			<PageMenu
 				backTo={route('items')} backToLabel="Item List"
 				items={[
@@ -51,7 +52,7 @@
 					{ icon: "Trash", 			label: "Delete", 		onclick: () => item.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="3xl">
+			<Container size="4xl">
 
 
 				<!-- Details -->
@@ -60,31 +61,42 @@
 
 					<ArticleBanner>
 						<Media
-							class="absolute inset-0 aspect-[3/1] bg-slate-200 hover:inner-shadow-lg rounded-lg overflow-hidden text-neutral-softest transition-all w-full"
+							class="absolute inset-0 aspect-[3/1] bg-slate-200 rounded-lg overflow-hidden"
 							media={item.getMedia('banner')}
 							onclick={() => item.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]' })}
 						/>
 						<Media
-							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border-2 border-slate-100 hover:inner-shadow-lg right-12 -bottom-16 rounded-lg overflow-hidden text-neutral-softest transition-all w-48"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border-2 border-slate-100 right-12 -bottom-16 rounded-lg overflow-hidden w-48"
 							media={item.getMedia('portrait')}
 							onclick={() => item.openModal('setMedia', { type: 'portrait', aspect: 'aspect-[1/1]' })}
 						/>
-						<Heading is="h1" as="h3"
-							class="max-w-3/4 mt-auto z-10 {item.getMedia('banner') ? 'text-white' : ''}"
-							heading={item.name}
-							subheading={item.type}
-						/>
+						<Inline align="start" justify="start" class="z-10">
+							<Heading is="h1" as="h3"
+								class="max-w-3/4 mt-auto {item.getMedia('banner') ? 'text-white' : ''}"
+								heading={item.name}
+								headingClass="whitespace-pre-wrap"
+								subheading={item.type}
+							/>
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => item.openModal('rename')} />
+						</Inline>
 					</ArticleBanner>
 
 					<Stack class="max-w-[64ch] mx-6">
 
-						<Heading is="h3" as="h4" class="mt-9 mb-6 text-neutral-softest">Details</Heading>
+						<Heading is="h3" as="h4" class="mt-9 mb-6">Details</Heading>
 						
-						<Heading is="h3" as="h6" class="mb-6">Description</Heading>
-						<Collapsible collapsed={true}
-							collapsedClass="line-clamp-3 overflow-hidden">
-							{item.description}
-						</Collapsible>
+						<Heading is="h3" as="h6" class="mb-6 text-neutral-soft">Description
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => item.openModal('description')} />
+						</Heading>
+						{#if item.description}
+							<Collapsible collapsed={true}
+								class="max-w-[64ch]"
+								collapsedClass="line-clamp-3 overflow-hidden">
+								{item.description}
+							</Collapsible>
+						{:else}
+							<span class="text-neutral-softest">No description</span>
+						{/if}
 
 						<!-- <Heading is="h3" as="h6" class="mt-9 mb-6">Appearance</Heading>
 						<Flex wrap class="gap-[2px]">
@@ -105,17 +117,13 @@
 					</Stack>
 				</Section>
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
+				<Separator class="my-12" />
 
 
 				<!-- Custom Fields -->
 		
 				<Section id="custom" class="p-6">
-
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h4" class="text-neutral-softest">Custom Fields</Heading>
-					</Flex>
-
+					<Heading is="h3" as="h4" class="mb-6">Custom Fields</Heading>
 					{#if customFields && customFields.length > 0}
 						{#each customFields as field, i}
 							<Flex gap={3} class="max-w-[64ch] py-1.5">
@@ -131,7 +139,7 @@
 					{/if}
 				</Section>
 
-				<Separator class="max-w-[64ch] mx-6 my-6 w-[64ch]" />
+				<Separator class="my-12" />
 		
 
 				<!-- Relationships -->

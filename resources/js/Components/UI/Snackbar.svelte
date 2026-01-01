@@ -16,6 +16,7 @@
 		text,
 		success,
 		dismissable = true,
+		duration = 10000,
 		onDismiss,
 		theme
 	} = $props()
@@ -26,12 +27,12 @@
 	 */
 	let cx = $derived({
 		snackbar: clsx({
-			'snackbar border-b px-2 py-1.5 rounded shadow-xl text-white z-50': true,
+			'snackbar border-b max-h-48  px-2 py-1.5 rounded shadow-xl text-white z-50': true,
 			'bg-accent-gradient	border-accent-strong	text-white':	theme === 'accent',
 			'bg-slate-50		border-neutral-softer	text-neutral':	theme === 'neutral',
 			'bg-danger-gradient	border-danger-strong	text-white':	theme === 'danger'
 		}, className),
-		text:	clsx('px-1'),
+		text:	clsx('max-h-48 overflow-y-auto px-1'),
 		button: clsx({
 			'ml-3 rounded-full': true,
 			'bg-accent-gradient-flip': success
@@ -47,7 +48,7 @@
 
 	onMount(() => {
 		visible = true
-		timeoutId = setTimeout(dismiss,5000)
+		timeoutId = setTimeout(dismiss, duration)
 	});
 
 	onDestroy(() => {
@@ -57,14 +58,15 @@
 </script>
 
 
-
-<Inline class={cx.snackbar} align="center" gap={1}>
-	<Icon name={icon} size="md" />
-	<span class={cx.text}>{text}</span>
-	{#if action}
-		<Button class="bg-white/10 font-style-button ml-1.5" onclick={action.onclick}>{action.label}</Button>
-	{/if}
-	{#if dismissable}
-		<Button class="ml-1.5" icon="X" size="sm" onclick={dismiss} />
-	{/if}
-</Inline>
+{#if visible}
+	<Inline class={cx.snackbar} align="center" gap={1}>
+		<Icon name={icon} size="md" />
+		<span class={cx.text}>{text}</span>
+		{#if action}
+			<Button class="bg-white/10 font-style-button ml-1.5" onclick={action.onclick}>{action.label}</Button>
+		{/if}
+		{#if dismissable}
+			<Button class="ml-1.5" icon="X" size="sm" onclick={dismiss} />
+		{/if}
+	</Inline>
+{/if}

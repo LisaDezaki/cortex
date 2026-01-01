@@ -29,7 +29,7 @@
 
 </script>
 
-<!-- <pre>{JSON.stringify(value,null,3)}</pre> -->
+
 
 <Flex align="baseline" justify="start" gap={2} class={cx.item}>
 	<span class={cx.label}>{label}</span>
@@ -40,9 +40,9 @@
 			{#if typeof value === 'object' && Array.isArray(value)}
 				{#each value as item, i}
 					{#if item.href}
-						<Link href={item.href}>{item.value}</Link>{value.length-1 !== i ? ', ' : ''}
+						<Link class="break-all line-clamp-1" href={item.href}>{item.value}{value.length-1 !== i ? ', ' : ''}</Link>
 					{:else}
-						{item.value}{value.length-1 !== i ? ', ' : ''}
+						<span class="break-all line-clamp-1">{item.value}{value.length-1 !== i ? ', ' : ''}</span>
 					{/if}
 				{/each}
 			{:else}
@@ -54,8 +54,8 @@
 	{/if}
 	{#if onclick}
 		<Button class={cx.edit}
-			style="plain" theme="accent" size="sm"
-			icon="PencilSimple" iconSize="xs"
+			style="plain" theme="accent" size="XS"
+			icon="PencilSimple"
 			onclick={onclick}
 		/>
 	{/if}

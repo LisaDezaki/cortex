@@ -146,7 +146,7 @@
 	let cx = $derived({
 		bar:	clsx('control-bar mt-1.5 shrink-0 w-full z-10', className),
 		input:	clsx('w-32'),
-		result:	clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-sm px-md rounded text-accent text-sm whitespace-nowrap')
+		result:	clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-md rounded text-accent text-md whitespace-nowrap')
 	})
 
 </script>
@@ -172,7 +172,6 @@
 				name="search"
 				oninput={onQuery}
 				placeholder="Search..."
-				size="sm"
 			/>
 		</Stack>
 	{/if}
@@ -188,7 +187,6 @@
 				options={filterOptions}
 				onUpdate={onFilter}
 				placeholder="Filter..."
-				size="sm"
 				bind:value={filter}
 			/>
 		</Stack>
@@ -205,7 +203,6 @@
 				options={sortOptions}
 				onUpdate={onSort}
 				placeholder="Sort by"
-				size="sm"
 				bind:value={sort}
 			/>
 		</Stack>
@@ -243,7 +240,7 @@
 			{#each layoutOptions as option, i}
 				<Button
 					class="border-b {i === 0 ? "rounded-l" : "-ml-[1px] rounded-none"} {i === layoutOptions.length-1 ? "rounded-r" : "rounded-none"} {option.value === layout ? "bg-accent-softest border-accent-softer text-accent" : "bg-slate-50 border-neutral-softest"}"
-					size="sm" icon={option.icon}
+					icon={option.icon}
 					onclick={() => layout = option.value}
 				/>
 			{/each}

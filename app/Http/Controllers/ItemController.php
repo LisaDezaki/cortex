@@ -38,15 +38,15 @@ class ItemController extends Controller
 
 	protected $validationRules = [
 		'name'                  => ['sometimes', 'string', 'max:255'],
-		'alias'                 => ['sometimes', 'nullable', 'string', 'max:255'],
+		'type'                  => ['sometimes', 'nullable', 'string', 'max:255'],
 		'description'           => ['sometimes', 'nullable', 'string'],
 		'starred'				=> ['sometimes', 'boolean'],
 
-		// 'media'					=> ['sometimes', 'nullable', 'array'],
-		// 'media.*.name'			=> ['nullable',	 'string'],
-		// 'media.*.path'			=> ['nullable',  'string'],
-		// 'media.*.type'			=> ['required',  'string', 'in:banner,gallery,portrait'],
-		// 'media.*.url'			=> ['nullable',  'string'],
+		'media'					=> ['sometimes', 'nullable', 'array'],
+		'media.*.name'			=> ['nullable',	 'string'],
+		'media.*.path'			=> ['nullable',  'string'],
+		'media.*.type'			=> ['required',  'string', 'in:banner,gallery,main'],
+		'media.*.url'			=> ['nullable',  'string'],
 
 		// 'factions'         		=> ['sometimes', 'nullable', 'array'],
 		// 'factions.*'  			=> ['required',  'string', 'uuid', 'distinct', 'exists:factions,id'],
@@ -59,11 +59,11 @@ class ItemController extends Controller
 		// 'relationships.*.related_character_role' => ['required',  'string'],
 
 		'customField'			=> ['sometimes', 'array'],
-		'customField.id'    	=> ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'customField.id'    	=> ['required_with:customField',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
 		'customField.value' 	=> ['nullable'],
 
 		'custom_fields'			=> ['sometimes', 'array'],
-		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'custom_fields.*.id'    => ['required_with:custom_fields',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
 		'custom_fields.*.value' => ['nullable',  'string']
 	];
 
@@ -84,11 +84,7 @@ class ItemController extends Controller
 			'customFields'	=> CustomFieldResource::collection($customFields)
 		]);
 	}
-	// public function collections()
-	// {
-	// 	return Inertia::render('Characters/Collections', [
-	// 	]);
-	// }
+
 
 	/**
 	 * CREATE / STORE
@@ -101,20 +97,25 @@ class ItemController extends Controller
 	public function create() {}		//	Character creation is handled through a simple modal
 	public function store(Request $request): RedirectResponse
 	{
-		$validatedData = $request->validate($this->validationRules);
-		$character = Auth::user()->activeProject()->characters()->create($validatedData);
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to create item: ".$e);
+        	return Redirect::back();
+		}
+		$item = Auth::user()->activeProject()->items()->create($validatedData);
 
 		if ($request->has('media') && $request['media'] !== null) {
 			foreach ($request['media'] as $media) {
-				$this->mediaService->attachMedia($character, $media['type'], $media);
+				$this->mediaService->attachMedia($item, $media['type'], $media);
 			}
 			unset($validatedData['media']);
 		}
 		
-		$character->save();
-		Session::flash('success', "$character->name created successfully.");
+		$item->save();
+		Session::flash('success', "$item->name created successfully.");
 		return Redirect::route("items.show", [
-			'character' => $character->slug
+			'item' => $item->slug
 		]);
 	}
 
@@ -150,39 +151,27 @@ class ItemController extends Controller
 	 * Character model to update, and so it must be updated on a per-item basis.
 	 */
 
-	public function edit(Character $character) {}
-	public function update(Request $request, Character $character): RedirectResponse
+	public function edit(Item $item) {}
+	public function update(Request $request, Item $item): RedirectResponse
 	{
-		
-		//	Validate
-		$validatedData = $request->validate($this->validationRules);
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to create item: ".$e);
+        	return Redirect::back();
+		}
 
 		//	Media
 		if ($request->has('media') && $request['media'] !== null) {
 			foreach ($request['media'] as $media) {
-				$this->mediaService->attachMedia($character, $media['type'], $media);
+				$this->mediaService->attachMedia($item, $media['type'], $media);
 			}
 			unset($validatedData['media']);
 		}
 
-		//	Factions
-		if ($request->has('factions')) {
-			$character->factions()->sync($request['factions']);
-			unset($validatedData['factions']);
-		}
-
-		//	Relationships
-		if ($request->has('relationships')) {
-			foreach ($validatedData['relationships'] as $rel) {
-				$relatedCharacter = Character::find($rel['related_character_id']);
-				$character->relationships()->save($relatedCharacter, $rel);
-			}
-			unset($validatedData['relationships']);
-		}
-
 		//	Location
 		if ($request->has('location')) {
-			$character->mapData()->updateOrCreate([], [
+			$item->mapData()->updateOrCreate([], [
 				'location_id' => $validatedData['location']
 				//	other pivot data
 			]);
@@ -190,18 +179,18 @@ class ItemController extends Controller
 		}
 
 		//	Custom Fields
-		if ($request->has('customField')) {
-			$this->handleCustomFields([$validatedData['customField']], $character);
-		}
+		// if ($request->has('customField')) {
+		// 	$this->handleCustomFields([$validatedData['customField']], $item);
+		// }
 
-		if ($request->has('custom_fields')) {
-			$this->handleCustomFields($validatedData['custom_fields'], $character);
-		}
+		// if ($request->has('custom_fields')) {
+		// 	$this->handleCustomFields($validatedData['custom_fields'], $item);
+		// }
 
 		//	Update
-		// $character->fill($validatedData);
-		$character->update($validatedData);
-		Session::flash('success', "$character->name updated successfully.");
+		// $item->fill($validatedData);
+		$item->update($validatedData);
+		Session::flash('success', "$item->name updated successfully.");
         return Redirect::back();
 	}
 

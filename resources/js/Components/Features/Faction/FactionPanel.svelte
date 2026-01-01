@@ -76,7 +76,14 @@
 			<!-- Heading -->
 
 			<Stack gap={0.5} class="px-6 -space-y-1">
-				<Heading is="h3" as="h4" class="place-self-center text-center">{faction.name}</Heading>
+				<Inline align="center" gap={0} class="place-self-center">
+					<Heading is="h3" as="h4">{faction.name}</Heading>
+					<Button size="xs" style="plain" theme="accent"
+						icon="PencilSimple"
+						class="ml-1.5 place-self-start rounded-full"
+						onclick={() => faction.openModal('rename')}
+					/>
+				</Inline>
 				<p class="place-self-center text-neutral-soft text-sm">{faction.type}</p>
 			</Stack>
 

@@ -1,10 +1,12 @@
 <script>
-
+	import { onMount } from 'svelte'
     import { page, useForm } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
+	import Box 			from '@/Components/Core/Box.svelte'
 	import Flex 		from '@/Components/Core/Flex.svelte'
 	import Form 		from '@/Components/Core/Form.svelte'
+	import Inline 		from '@/Components/Core/Inline.svelte'
 	import ReorderableList from '@/Components/Core/ReorderableList.svelte'
 	import Stack 		from '@/Components/Core/Stack.svelte'
 
@@ -17,11 +19,13 @@
 	import Label        from '@/Components/UI/Label.svelte'
 	import ModalForm    from '@/Components/UI/ModalForm.svelte'
 
+	import { modalActions } from '@/stores/modalStore';
+
 	//  Props
     let {
 		class: className,
 		field,
-        oncancel = () => {}
+        oncancel
     } = $props()
 
 	//  State & Reactivity
@@ -52,14 +56,19 @@
 		}
 	})
 
+	onMount(() => {
+
+	})
+
 	
 
 	//  Methods
     
 	function setType(type) {
 		inputType = type
+		$form.type = type
 		// if (type !== 'select') {
-		// 	$form.options = []
+		// 	$form.options = null
 		// }
 	}
 
@@ -99,29 +108,33 @@
 
 		console.log('submitting')
 
-		//  Map prop data to form data
-		if (field) {
-			for (const [key, value] of Object.entries(field)) {
-				$form[key] = value
-			}
+		if ($form.type !== 'select') {
+			$form.options = null
 		}
 
-		//  Map options to form data if applicable
-		$form.options = $form.type == 'select'
-			? $form.options
-			: null
+		//  Map prop data to form data
+		// if (field) {
+		// 	for (const [key, value] of Object.entries(field)) {
+		// 		$form[key] = value
+		// 	}
+		// }
 
+		//  Map options to form data if applicable
+		// $form.options = $form.type == 'select'
+		// 	? $form.options
+		// 	: null
+		
 		//  Post data to server and handle response
 		if ($form.id) {
-			$form.post( route('customFields.update', { field: data.id }, {
-				onSuccess: () => {
-					oncancel()
+			$form.patch( route('customFields.update'), {
+				onFinish: (a,b) => {
+					modalActions.close
 				}
-			}) )
+			})
 		} else {
 			$form.post( route('customFields.store'), {
-				onSuccess: (a,b) => {
-					oncancel()
+				onFinish: (a,b) => {
+					modalActions.close
 				}
 			} )
 		}
@@ -129,7 +142,7 @@
 
 </script>
 
-<ModalForm size="lg"
+<ModalForm size="xl"
 	endpoint={route('customFields.store')}
 	form={form}
 	method="post"
@@ -142,45 +155,76 @@
 		<Heading is="h4" as="h6">Defining custom field: <span class="text-accent">{$form.label}</span></Heading>
 	</Flex>
 
-	<Flex class="flex-1 overflow-hidden">
+	<Flex class="flex-1 overflow-hidden p-3 pt-1.5" gap={3}>
 
-		<Stack class="border-r py-2 w-40">
+		<Stack class="py-5 w-40">
 			{#each [
 				{ value: 'text',   label: 'Text',    icon: 'TextAa' },
 				{ value: 'number', label: 'Number',  icon: 'Hash' },
 				{ value: 'link',   label: 'Link',    icon: 'Link' },
 				{ value: 'switch', label: 'Switch',  icon: 'ToggleRight' },
 				{ value: 'select', label: 'Options', icon: 'RowsPlusBottom' },
-				{ value: 'entity', label: 'Entity',  icon: 'Table' },
-				{ value: 'upload', label: 'File',    icon: 'File' }
+				{ value: 'entity', label: 'Entity Link',	icon: 'Table' },
+				{ value: 'upload', label: 'File Upload',	icon: 'File' }
 			] as type}
 				<button type="button"
-					class="flex gap-2 px-3 py-1.5 w-full {type.value == inputType ? 'bg-accent-softest text-emerald-500' : 'hover:bg-slate-500/10'}"
+					class="flex gap-2 pl-3 py-1.5 pr-1 rounded w-full {type.value == inputType ? 'bg-accent-softest text-emerald-500' : 'hover:bg-slate-500/10'}"
 					onclick={() => setType(type.value)}
 				>
 					<Icon name={type.icon} size="md" weight="regular" />
 					<span class="text-sm">{type.label}</span>
+					{#if type.value == inputType}
+						<Icon class="ml-auto" name="CaretRight" size="sm" weight="regular" />
+					{/if}
 				</button>
 			{/each}
 
 		</Stack>
 
-		<Stack gap={3} class="p-6 h-full min-h-[420px] overflow-y-auto w-96">
+		<Stack gap={3} class="h-full min-h-[420px] overflow-y-auto w-96">
 
-			<pre>{JSON.stringify($form,null,2)}</pre>
+			<!-- <pre>{JSON.stringify($form,null,3)}</pre> -->
 
-			<!-- Name -->
+			<!-- Data Type Disambiguation -->
+
+			<!-- {#if inputType === 'switch'}
+				<Inline>
+					<Button text="Checkbox" />
+					<Button text="Switch" />
+					<Button text="Toggle" />
+				</Inline>
+			{/if} -->
+
+			<!-- {#if inputType === 'select'}
+				<Inline>
+					<Button text="Radio" />
+					<Button text="Select" />
+				</Inline>
+			{/if} -->
+
+			<Flex gap={3}>
+				
+				<!-- Name -->
+				<Field
+					name="name"
+					type="text"
+					label="Name"
+					placeholder="Custom field name"
+					autofocus
+					required
+				/>
 	
-			<Field
-				type="text"
-				required
-				name="name"
-				label="Name"
-				placeholder="Custom field name"
-				bind:value={$form.label}
-				errors={$form.errors.label}
-				autofocus
-			/>
+				<!-- Label -->
+				<Field
+					name="label"
+					type="text"
+					label="Label"
+					placeholder="Custom field label"
+					required
+				/>
+
+			</Flex>
+
 
 			<!-- Placeholder -->
 	
@@ -188,23 +232,19 @@
 				<Field
 					type="text"
 					name="placeholder"
-					errors={$form.errors.placeholder}
-					label="Placeholder"
+					label="Placeholder text"
 					placeholder={inputType == 'number' ? "0" : "Empty"}
-					bind:value={$form.placeholder}
 				/>
 			{/if}
 
 			<!-- Description -->
 	
-			{#if ['text', 'textarea', 'number', 'select', 'upload', 'entity'].includes(inputType)}
+			{#if ['text', 'textarea', 'link', 'number', 'select', 'upload', 'entity'].includes(inputType)}
 				<Field
 					type="text"
 					name="description"
-					label="Description"
+					label="Description text"
 					placeholder="Describe the field..."
-					bind:value={$form.description}
-					errors={$form.errors.description}
 				/>
 			{/if}
 
@@ -227,14 +267,14 @@
 			{#if inputType == 'select'}
 
 				<div>
-					<Field
-						label="Field options"
+					<Label
+						text="Field options"
 						description="There must be at least two options available."
 					/>
 					<ReorderableList bind:items={$form.options}>
 						{#snippet itemTemplate(item, index)}
 							<li class="flex items-center gap-1 w-full mb-1">
-								<DragHandle />
+								<DragHandle item={item} />
 								<Input.Text
 									name="option_{index+1}"
 									class="flex-grow"
@@ -243,8 +283,8 @@
 									errors={$form.errors.options?.[index]}
 								/>
 								{#if $form.options.length > 2}
-									<Button style="plain" theme="danger"
-										icon="X" iconSize="md"
+									<Button size="sm" style="plain" theme="danger"
+										icon="X"
 										onclick={() => removeOption(index)}
 									/>
 								{/if}
@@ -252,7 +292,7 @@
 						{/snippet}
 					</ReorderableList>
 					<div class="flex justify-center">
-						<Button style="soft" theme="accent" class="h-10 mx-auto w-12" type="button" icon="Plus" onclick={addOption} />
+						<Button size="sm" style="soft" theme="accent" class="h-10 mx-auto w-12" type="button" icon="Plus" onclick={addOption} />
 					</div>
 				</div>
 			{/if}
@@ -301,9 +341,10 @@
 					bind:value={$form.filetype}
 					errors={$form.errors.filetype}
 					options={[
-						{ icon: 'User',           label: 'Character', value: 'character' },
-						{ icon: 'FlagBannerFold', label: 'Faction', value: 'faction' },
-						{ icon: 'MapPinArea',     label: 'Location', value: 'location' }
+						{ icon: 'User',				label: 'Character',		value: 'character'	},
+						{ icon: 'FlagBannerFold',	label: 'Faction',		value: 'faction'	},
+						{ icon: 'Backpack', 		label: 'Item',			value: 'item'		},
+						{ icon: 'MapPinArea',		label: 'Location',		value: 'location'	}
 					]}
 				/>
 			{/if}

@@ -31,11 +31,11 @@
 
 
 
-<Inline class={cx.thumbnail} {...restProps}>
+<Inline align="center" justify="center" class={cx.thumbnail} {...restProps}>
 	{#if src}
 		<img class={cx.image} {src} {alt} />
 	{:else}
-		<Inline class={cx.fallback}>
+		<Inline align="center" justify="center" class={cx.fallback}>
 			{#if icon}
 				<Icon class={cx.icon} name={icon} size={iconSize} weight="fill" />
 			{/if}

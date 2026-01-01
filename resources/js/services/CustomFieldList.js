@@ -98,8 +98,7 @@ export default class CustomFieldList {
 	 * @returns {Array<Object>}
 	 */
 	getByFieldable(fieldable) {
-		return this.items.filter(item => item.fieldable.toLowerCase() === `app\\models\\${fieldable}`)
-		// return this.items.filter(item => item.fieldable.toLowerCase() === `app\\models\\${fieldable}`)
+		return this.items.filter(item => item.fieldableType.toLowerCase() === `app\\models\\${fieldable}`)
 	}
 
 	/**

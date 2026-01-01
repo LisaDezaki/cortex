@@ -37,6 +37,7 @@ class LocationController extends Controller
 
 	protected $validationRules = [
 		'name'					=> ['sometimes', 'string'],
+		'type'					=> ['sometimes', 'string', 'nullable'],
 		'description'			=> ['nullable',  'string'],
 		'starred'				=> ['sometimes', 'boolean'],
 		'climate'				=> ['sometimes', 'string'],
@@ -47,7 +48,7 @@ class LocationController extends Controller
 		'mapItems.*.x'				=> ['nullable', 'numeric'],
 		'mapItems.*.y'				=> ['nullable', 'numeric'],
 
-		'media'  				=> ['sometimes', 'array'],
+		'media'  				=> ['sometimes', 'nullable', 'array'],
 		'media.*.name'			=> ['nullable',	 'string'],
 		'media.*.path'			=> ['nullable',	 'string'],
 		'media.*.type'			=> ['required',	 'string', 'in:banner,gallery,icon,map'],

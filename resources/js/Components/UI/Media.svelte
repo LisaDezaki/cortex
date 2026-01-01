@@ -22,7 +22,9 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		media:  clsx('media overflow-hidden', className),
+		media:  clsx('media overflow-hidden', {
+			'hover:inner-shadow-lg transition-all': onclick
+		}, className),
 		img:    clsx('min-h-full min-w-full object-cover', imageClass),
 		icon:   clsx('opacity-50 text-neutral-softest'),
 		button: clsx('absolute inset-0')

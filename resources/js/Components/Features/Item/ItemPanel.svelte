@@ -59,8 +59,8 @@
 		/>
 		<Media
 			class={cx.portrait}
-			media={item.getMedia('portrait')}
-			onclick={() => item.openModal('setMedia', {type: 'portrait', aspect: 'aspect-[1/1]'})}
+			media={item.getMedia('main')}
+			onclick={() => item.openModal('setMedia', {type: 'main', aspect: 'aspect-[1/1]'})}
 			icon="Package" iconWeight="fill"
 		/>
 

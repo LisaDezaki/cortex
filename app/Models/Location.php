@@ -26,6 +26,7 @@ class Location extends Model
 	 */
 	protected $fillable = [
 		'name',
+		'type',
 		'description',
 		'starred',
 		'is_world_map',

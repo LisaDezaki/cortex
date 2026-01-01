@@ -26,6 +26,21 @@
 			<Heading is="h2" as="h4">Todo List</Heading>
 			<Stack gap={0}>
 
+				<Flex align="center" gap={0} class="font-style-h6 mt-12"><Input type="checkbox" />PanZoom</Flex>
+				<Stack gap={0} class="mt-3 ml-12">
+					<Flex align="center" gap={0}><Input.Checkbox />PanZoom component fixed</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />MapMarkers don't resize when base image resizes (zooms)</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />Zoom based on mouse position</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />Set location coordinates for Map Marker items</Flex>
+				</Stack>
+
+				<Flex align="center" gap={0} class="font-style-h6 mt-12"><Input type="checkbox" />Reorderable List</Flex>
+				<Stack gap={0} class="mt-3 ml-12">
+					<Flex align="center" gap={0}><Input.Checkbox />Reorderable.List component fixed</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />Reorderable custom fields</Flex>
+					<Flex align="center" gap={0}><Input.Checkbox />Reorderable custom field options</Flex>
+				</Stack>
+
 
 				<Flex align="center" gap={0} class="font-style-h6 mt-12"><Input type="checkbox" />Modals and/or methods for ALL possible entity update interactions</Flex>
 				<Stack gap={0} class="mt-3 ml-12">

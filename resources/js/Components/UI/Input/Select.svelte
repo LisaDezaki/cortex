@@ -103,6 +103,7 @@
 			<Icon class="input-icon" name={icon} size={size} />
 		{/if}
 		<Input.Option {...selectedOption} size={size} />
+		<Icon name="CaretUpDown" size="xs" />
 	</Select.Trigger>
 
 	<Select.Portal class="z-50 {contentClass}">
