@@ -1,6 +1,7 @@
 <script>
 
 	import Flex      from '@/Components/Core/Flex.svelte'
+	import Badge     from '@/Components/UI/Badge.svelte'
 	import Icon      from '@/Components/UI/Icon.svelte'
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
     import clsx from 'clsx'
@@ -9,6 +10,8 @@
 		active = false,
         class: className,
 		checked = false,
+		count,
+		hideCount = false,
 		icon,
 		image,
 		isOpen = $bindable(false),
@@ -57,6 +60,10 @@
 		<span class="{cx.text} {cx.value}">{label || item?.label}</span>
 	{:else if placeholder || item?.placeholder}
 		<span class="{cx.text} {cx.placeholder}">{placeholder || item?.placeholder}</span>
+	{/if}
+
+	{#if (count || item?.count) && !hideCount}
+		<Badge style="soft" theme="accent" text={count || item?.count} />
 	{/if}
 
 	{#if options || item?.options}

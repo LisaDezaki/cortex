@@ -49,7 +49,7 @@
 <Popover.Root bind:open={isOpen}>
 
 	<Popover.Trigger class="input p-{size} text-{size} {className}">
-		<Input.Option item={selected} {placeholder} />
+		<Input.Option item={selected} {placeholder} hideCount />
 	</Popover.Trigger>
 
 	<Popover.Portal>

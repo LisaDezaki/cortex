@@ -163,16 +163,16 @@ export default class ProjectObject {
 						})),
 						{ separator: true },
 						{ label: 'Created',				value: 'created',					options: [
-							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This week',		value: 'created.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This Week',		value: 'created.week',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]},
 						{ label: 'Updated',				value: 'updated',					options: [
-							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]}
 					]
 				case 'sort':
@@ -238,16 +238,16 @@ export default class ProjectObject {
 						})),
 						{ separator: true },
 						{ label: 'Created',				value: 'created',					options: [
-							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This week',		value: 'created.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This Week',		value: 'created.week',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]},
 						{ label: 'Updated',				value: 'updated',					options: [
-							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]}
 					]
 				case 'sort':
@@ -305,16 +305,16 @@ export default class ProjectObject {
 						})),
 						{ separator: true },
 						{ label: 'Created',				value: 'created',					options: [
-							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This week',		value: 'created.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This Week',		value: 'created.week',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]},
 						{ label: 'Updated',				value: 'updated',					options: [
-							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]}
 					]
 				case 'sort':
@@ -369,22 +369,22 @@ export default class ProjectObject {
 						})),
 						{ separator: true },
 						{ label: 'Created',				value: 'created',					options: [
-							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This week',		value: 'created.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This Week',		value: 'created.week',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => new Date(ent.meta.createdAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]},
 						{ label: 'Updated',				value: 'updated',					options: [
-							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => ent.meta.createdAt > 0 },
-							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => ent.meta.createdAt > 0 },
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => new Date(ent.meta.updatedAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]}
 					]
 				case 'sort':
 					return [
-						{ label: "By name",				value: 'name',					sortFunction: (a,b) => a.name < b.name ? -1 : 1 },
-						{ label: "By type",				value: 'type',					sortFunction: (a,b) => a.type < b.type ? -1 : 1 },
+						{ label: "By name",				value: 'name',						sortFunction: (a,b) => a.name < b.name ? -1 : 1 },
+						{ label: "By type",				value: 'type',						sortFunction: (a,b) => a.type < b.type ? -1 : 1 },
 						{	separator: true, if: this.customFields?.getByFieldable('location').length > 0 },
 						...this.customFields?.getByFieldable('location').map(cf => ({
 							label: `By ${cf.label.toLowerCase()}`,	value: cf.name,			sortFunction: (a,b) => {
@@ -395,9 +395,9 @@ export default class ProjectObject {
 									: (a < b ? -1 : 1)
 							}
 						})),
-						{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 } },
-						{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 } },
-						{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } }
+						{ label: "Date Created",		value: 'created_at', 				sortFunction: (a,b) => a.meta.createdAt		< b.meta.createdAt 			? -1 : 1 },
+						{ label: "Date Updated",		value: 'updated_at', 				sortFunction: (a,b) => a.meta.updatedAt		< b.meta.updatedAt 			? -1 : 1 },
+						{ label: "Randomly",			value: 'random',     				sortFunction: (a,b) => Math.random()        < 0.5 						? -1 : 1 }
 					]
 				case 'layout':
 					return [

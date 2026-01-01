@@ -146,7 +146,7 @@
 	let cx = $derived({
 		bar:	clsx('control-bar mt-1.5 shrink-0 w-full z-10', className),
 		input:	clsx('w-32'),
-		result:	clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-md rounded text-accent text-md whitespace-nowrap')
+		result:	clsx('bg-emerald-500/10 border-b border-accent-softest mt-auto mr-auto p-sm rounded text-accent text-sm whitespace-nowrap')
 	})
 
 </script>
@@ -172,6 +172,7 @@
 				name="search"
 				oninput={onQuery}
 				placeholder="Search..."
+				size="sm"
 			/>
 		</Stack>
 	{/if}
@@ -182,12 +183,17 @@
 	{#if filterable}
 		<Stack>
 			<Label icon="FunnelSimple" text="Filter" />
-			<Dropdown
+			<Dropdown bind:value={filter}
 				class={cx.input}
-				options={filterOptions}
+				options={filterOptions.map(opt => ({ ...opt,
+					count: opt.filterFunction ? data.items.filter(opt.filterFunction).length : null,
+					options: opt.options ? opt.options?.map(o => ({ ...o,
+						count: o.filterFunction ? data.items.filter(o.filterFunction).length : null,
+					})) : undefined
+				}))}
 				onUpdate={onFilter}
 				placeholder="Filter..."
-				bind:value={filter}
+				size="sm"
 			/>
 		</Stack>
 	{/if}
@@ -198,12 +204,12 @@
 	{#if sortable}
 		<Stack>
 			<Label icon="SortAscending" text="Sort" />
-			<Input.Select
+			<Input.Select bind:value={sort}
 				class={cx.input}
 				options={sortOptions}
 				onUpdate={onSort}
 				placeholder="Sort by"
-				bind:value={sort}
+				size="sm"
 			/>
 		</Stack>
 	{/if}
@@ -240,7 +246,7 @@
 			{#each layoutOptions as option, i}
 				<Button
 					class="border-b {i === 0 ? "rounded-l" : "-ml-[1px] rounded-none"} {i === layoutOptions.length-1 ? "rounded-r" : "rounded-none"} {option.value === layout ? "bg-accent-softest border-accent-softer text-accent" : "bg-slate-50 border-neutral-softest"}"
-					icon={option.icon}
+					icon={option.icon} size="sm"
 					onclick={() => layout = option.value}
 				/>
 			{/each}
