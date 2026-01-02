@@ -28,9 +28,9 @@
 	if (!$form[name]) { $form[name] = defaultValue || null }
 
 	let cx = {
-		field:	clsx({
+		field:	clsx('field', {
 			'relative grid grid-cols-2 gap-x-6 w-full': layout === 'block',
-			'relative flex flex-col': layout !== 'block'
+			'relative flex flex-col w-full': layout !== 'block'
 		}),
 		label:	clsx({ 'sr-only': labelSrOnly }),
 		desc:	clsx(''),

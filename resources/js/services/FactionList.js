@@ -58,6 +58,21 @@ export default class FactionList {
 	}
 
 
+	openModal(modalName, props) {
+
+		const storeProps   = { entity: this, endpoint: this.routes.store   }
+
+		switch(modalName) {
+			case 'create':
+				modalActions.open('createEntity', { ...storeProps,
+					title: 'Create faction:',
+				...props }); break;
+			default:
+				console.log('FactionList.openModal', modalName, props)
+		}
+	}
+
+
 	/**
 	 * Filter
 	 * Returns a filtered list of items based on the strings provided

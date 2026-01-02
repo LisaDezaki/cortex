@@ -10,7 +10,7 @@
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import Entity				from '@/Components/UI/Entity.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
-	import ItemPanel 			from '@/Components/Features/Item/ItemPanel.svelte'
+	import PageHeading			from '@/Components/UI/PageHeading.svelte'
 	import ItemTable			from '@/Components/Features/Item/ItemTable.svelte'
 	import ProjectObject 		from '@/services/ProjectObject'
 
@@ -148,56 +148,48 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
+		<Stack class="overflow-y-auto px-20 py-12">
 
-		<!-- Fixed/Sticky Header -->
+			<PageHeading
+				title="Item List"
+				subtitle="Index page"
+				actions={[
+					{ icon: "GearFine", theme: "neutral", href: route('items.settings') },
+					{ icon: "Plus", text: "New", theme: "accent", onclick: () => items.openModal('create') },
+				]}
+			/>
 
-		<PageHeader size="7xl" class="px-20 py-2"
-			tabs={[
-				{ text: "Item List",	active: true },
-				{ text: "Settings",		href: route('items.settings') },
-			]}
-			actions={[
-				{ icon: "Plus", text: "New", theme: "accent", onclick: () => items.create() },
-			]}
-		>
-			<ControlBar
+			<ControlBar class="py-3"
 				data={items} bind:results bind:layout={parameters.layout}
 				filterOptions={activeProject.getOptions('items', 'filter')}
 				sortOptions={activeProject.getOptions('items', 'sort')}
 				layoutOptions={activeProject.getOptions('items', 'layout')}
 			/>
-		</PageHeader>
 
-
-		<!-- Main Body -->
-
-		<Stack align="center" class="flex-1 overflow-y-auto px-20 pt-3 pb-12">
 			{#if activeProject && items?.items.length > 0}
 
-
-				<!-- Grid -->
-
 				{#if parameters.layout === 'grid'}
+
+					<!-- Grid -->
+
 					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
 						{#if results.length > 0}
 							{#each results as item}
 								<Entity
 									active={parameters.selected === item.slug}
 									entity={item}
-									layout="stack"
-									size="auto"
-									onclick={() => selectItem(item)}
+									href={item.routes.show}
 								/>
 							{/each}
 						{:else}
 							<Empty class="col-span-full" icon="Empty" text="No results found. Try changing your filters." />
 						{/if}
 					</Grid>
-
-
-				<!-- Table -->
-
+					
 				{:else if parameters.layout === 'table'}
+
+					<!-- Table -->
+
 					<ItemTable
 						class="max-w-7xl text-sm w-full"
 						items={results}
@@ -206,6 +198,8 @@
 
 				{/if}
 			{:else}
+
+				<!-- Empty -->
 
 				<Empty
 					icon="Package"
@@ -216,8 +210,5 @@
 
 			{/if}
 		</Stack>
-	{/snippet}
-	{#snippet sidebar()}
-		<ItemPanel item={items?.items.find(i => i.slug === parameters.selected)} />
 	{/snippet}
 </AuthenticatedLayout>

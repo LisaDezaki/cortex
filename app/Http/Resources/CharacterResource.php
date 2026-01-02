@@ -51,8 +51,14 @@ class CharacterResource extends JsonResource
 
 			'meta' => [
 				'projectId' => $this->project_id,
-				'createdAt' => $this->created_at->diffForHumans(),
-				'updatedAt' => $this->updated_at->diffForHumans(),
+				'created' => [
+					'at'  => $this->created_at,
+					'ago' => $this->created_at->diffForHumans()
+				],
+				'updated' => [
+					'at'  => $this->updated_at,
+					'ago' => $this->updated_at->diffForHumans()
+				]
 			],
 
 			'routes' => [

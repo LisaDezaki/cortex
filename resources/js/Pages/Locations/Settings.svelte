@@ -9,17 +9,12 @@
 	import Button  	  from '@/Components/UI/Button.svelte'
 	import Heading    from '@/Components/UI/Heading.svelte'
 	import Input      from '@/Components/UI/Input'
-	import PageHeader from '@/Components/UI/PageHeader.svelte'
 	import PageHeading from '@/Components/UI/PageHeading.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
 	import Separator  from '@/Components/UI/Separator.svelte'
 	import { modalActions } from '@/stores/modalStore'
 
-	/**
-	 * Active character instance
-	 * @type {CharacterObject}
-	 */
 	const customFields = $page.props.customFields?.data
 	const settings     = $page.props.settings?.locations?.data
 
@@ -33,24 +28,24 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-
-		<PageHeader size="7xl" class="px-20 py-2" tabs={[
-			{ text: "Location List",	href: route('locations') },
-			{ text: "Settings", 		active: true },
-		]} />
-		
 		<Flex justify="center" gap={12} class="flex-1 overflow-y-auto px-20 py-12 w-full">
-			<PageMenu items={[
-				{ icon: "UserList",       label: "Overview",      href: "#overview"	},
-				{ icon: "ImagesSquare",   label: "Media",         href: "#media"	},
-				{ icon: "Textbox",        label: "Custom Fields", href: "#custom"	}
-			]} />
+			<PageMenu
+				back={{ text: 'Location List', href: route('locations') }}
+				items={[
+					{ icon: "UserList",       label: "Overview",      href: "#overview"	},
+					{ icon: "ImagesSquare",   label: "Media",         href: "#media"	},
+					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"	}
+				]}
+			/>
 			<Stack class="max-w-5xl w-full">
 
-				<PageHeading
+				<PageHeading class="mb-12 text-neutral-softest"
 					title="Location Settings"
 					subtitle="Manage the Location Settings for this project."
-					class="mb-12 text-neutral-softest"
+					actions={[
+						// { icon: "GearFine", theme: "neutral", href: route('locations.settings') },
+						// { icon: "Plus", text: "New", theme: "accent", onclick: () => locations.create() },
+					]}
 				/>
 
 				<Section id="overview" gap={6}>
@@ -106,9 +101,5 @@
 
 			</Stack>
 		</Flex>
-	{/snippet}
-
-	{#snippet sidebar()}
-		<div class="bg-slate-50 min-w-80 shadow-lg"></div>
 	{/snippet}
 </AuthenticatedLayout>

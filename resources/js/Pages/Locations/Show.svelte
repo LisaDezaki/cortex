@@ -36,7 +36,7 @@
 	{#snippet article()}
 		<Flex justify="center" gap={6} class="h-full overflow-y-auto py-12">
 			<PageMenu
-				backTo={route('locations')} backToLabel="Location List"
+				back={{ text: 'Location List', href: route('locations') }}
 				items={[
 					{ icon: "Info",   		label: "Details",       href: "#details"	},
 					{ icon: "Compass",      label: "Map",           href: "#map"		},

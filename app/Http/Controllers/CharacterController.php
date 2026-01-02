@@ -95,12 +95,15 @@ class CharacterController extends Controller
 	public function create() {}		//	Character creation is handled through a simple modal
 	public function store(Request $request): RedirectResponse
 	{
+		//	Attempt to validated the $request
+		//	Flash an error if validation fails
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
 			Session::flash('error', "Failed to create character: ".$e);
         	return Redirect::back();
 		}
+		
 		$character = Auth::user()->activeProject()->characters()->create($validatedData);
 
 		if ($request->has('media') && $request['media'] !== null) {
@@ -111,7 +114,7 @@ class CharacterController extends Controller
 		}
 		
 		$character->save();
-		Session::flash('success', "$character->name created successfully.");
+		Session::flash('success', "Character created: $character->name.");
 		return Redirect::route("characters.show", [
 			'character' => $character->slug
 		]);
@@ -159,8 +162,14 @@ class CharacterController extends Controller
 	public function update(Request $request, Character $character): RedirectResponse
 	{
 		
-		//	Validate
-		$validatedData = $request->validate($this->validationRules);
+		//	Attempt to validated the $request
+		//	Flash an error if validation fails
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to create character: ".$e);
+        	return Redirect::back();
+		}
 
 		//	Media
 		if ($request->has('media') && $request['media'] !== null) {
@@ -206,7 +215,7 @@ class CharacterController extends Controller
 		//	Update
 		// $character->fill($validatedData);
 		$character->update($validatedData);
-		Session::flash('success', "$character->name updated successfully.");
+		Session::flash('success', "Character updated: $character->name.");
         return Redirect::back();
 	}
 
@@ -223,7 +232,7 @@ class CharacterController extends Controller
 	{
 		//	TODO:	Make sure logged in user is authorized before proceeding.
 
-		Session::flash('success', "$character->name has been deleted.");
+		Session::flash('success', "Character deleted: $character->name.");
 		$character->delete();
 		return Redirect::route("characters");
 	}

@@ -41,9 +41,12 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="h-full overflow-y-auto px-20 py-12">
+		<Flex justify="center" gap={12} class="overflow-y-auto px-20 py-12">
+
+			<!-- Page Menu -->
+
 			<PageMenu
-				backTo={route('characters')} backToLabel="Character List"
+				back={{ text: 'Character List', href: route('characters') }}
 				items={[
 					{ icon: "Info",         	label: "Details",       href: "#details"       },
 					{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        },
@@ -55,13 +58,11 @@
 					{ icon: "Trash", 			label: "Delete", 		onclick: () => character.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="4xl">
+			<Container size="3xl">
 
+				<!-- Header -->
 
-				<!-- Details -->
-			
-				<Section id="details" class="pb-12">
-
+				<Section id="header">
 					<ArticleBanner>
 						<Media
 							class="absolute inset-0 aspect-[3/1] bg-slate-200 rounded-lg overflow-hidden"
@@ -78,11 +79,18 @@
 								class="max-w-3/4 mt-auto {character.getMedia('banner') ? 'text-white' : ''}"
 								heading={character.name}
 								headingClass="whitespace-pre-wrap"
-								subheading={character.alias}
 							/>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('rename')} />
 						</Inline>
+						<Inline class="z-10">{character.alias}
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('alias')} />
+						</Inline>
 					</ArticleBanner>
+				</Section>
+
+				<!-- Details -->
+
+				<Section id="details">
 
 					<Stack class="max-w-[64ch] mx-6 mt-12">
 
@@ -138,20 +146,20 @@
 				<Section id="custom" class="p-6">
 					<Heading is="h3" as="h4" class="mb-6">Custom Fields</Heading>
 					{#if customFields && customFields.length > 0}
-						{#each customFields as field, i}
-							<Flex gap={3}>
-								<span class="font-semibold w-32">{field.label}:</span>
-								<span class="line-clamp-1 {character.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{character.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span>
-							</Flex>
-						{/each}
-						<Flex class="pt-3">
-							<Button size="md" style="soft" theme="accent" icon="Plus" iconSize="sm" iconWeight="regular" label="New custom field" onclick={() => {}} />
-						</Flex>
+						<Stack gap={3}>
+							{#each customFields as field, i}
+								<Flex align="baseline" gap={3}>
+									<span class="font-semibold w-32">{field.label}:</span>
+									<span class="line-clamp-1 w-32 {character.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{character.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span>
+									<Button class="place-self-start rounded-full"
+										size="xs" style="plain" theme="accent" icon="PencilSimple"
+										onclick={() => character.openModal('customField', { field: field, value: character.customFieldValues?.find(f => f.name === field.name)?.value })}
+									/>
+								</Flex>
+							{/each}
+						</Stack>
 					{:else}
-						<p class="font-style-placeholder">There are no custom fields for Characters yet.</p>
-						<Flex class="pt-3">
-							<Button size="md" style="soft" theme="accent" icon="Plus" iconSize="sm" iconWeight="regular" label="New custom field" onclick={() => {}} />
-						</Flex>
+						<span class="text-neutral-softer">There are no custom fields for characters in this project yet.</span>
 					{/if}
 				</Section>
 
@@ -224,15 +232,10 @@
 							/>
 						{/each}
 						{#each character.inventory as item, i}
-							<Card aspect="square"
-								icon="User"
-								title={item.name}
-								subtitle={item.category}
+							<Entity
+								entity={item}
 							/>
 						{/each}
-						<!-- <CardNew aspect="square"
-							onclick={() => {}}
-						/> -->
 					</Grid>
 				</Section>
 

@@ -39,24 +39,17 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-
-		<PageHeader size="7xl" class="px-20 py-2"
-			back={() => active.deactivate()}
-			backLabel="All Projects"
-			tabs={[
-				{ text: 'Dashboard', href: route('dashboard') },
-				{ text: 'Settings',  active: true }
-			]}
-		/>
-
 		<Flex justify="center" gap={20} class="flex-1 min-h-64 overflow-y-auto px-20 py-12 w-full">
-			<PageMenu items={[
-				{ icon: "UserList",       label: "Overview",      href: "#overview" },
-				{ icon: "Palette",        label: "Appearance",    href: "#appearance" },
-				{ icon: "ImagesSquare",   label: "Media",         href: "#media"    },
-				{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   },
-				{ icon: "Trash",	 	  label: "Delete",		  onclick: () => active.openModal('delete'), theme: "danger" }
-			]} />
+			<PageMenu
+				back={{ text: 'Dashboard', href: route('dashboard') }}
+				items={[
+					{ icon: "UserList",       label: "Overview",      href: "#overview" },
+					{ icon: "Palette",        label: "Appearance",    href: "#appearance" },
+					{ icon: "ImagesSquare",   label: "Media",         href: "#media"    },
+					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   },
+					{ icon: "Trash",	 	  label: "Delete",		  onclick: () => active.openModal('delete'), theme: "danger" }
+				]}
+			/>
 			<Stack class="flex-1 min-w-2xl max-w-5xl">
 
 				<PageHeading class="mb-12"

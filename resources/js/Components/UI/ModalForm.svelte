@@ -1,7 +1,7 @@
 <script>
 	import { modalActions } from '@/stores/modalStore';
 
-	import { Form, Grid } from '@/Components/Core'
+	import { Flex, Form, Grid } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Modal  from '@/Components/UI/Modal.svelte'
 
@@ -36,20 +36,18 @@
 
 		{@render children?.()}
 
-		<Grid cols={2} gap={0} class="flex-0 min-h-12">
-			<Button style="hard" theme="neutral"
-				class="rounded-none grow"
+		<Flex align="center" justify="between" gap={1.5} class="flex-0 p-lg">
+			<Button style="plain" theme="neutral"
 				type="button"
 				text="Cancel"
 				onclick={modalActions.close}
 			/>
 			<Button
-				class="rounded-none grow"
 				type="submit"
 				loading={$form.processing}
 				disabled={$form.processing}
 				{...updatedSubmitProps}
 			/>
-		</Grid>
+		</Flex>
 	</Form>
 </Modal>

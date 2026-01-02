@@ -56,7 +56,21 @@ export default class ItemList {
 		/** @private */
 		this._saveToHistory(); // Save initial state to history
 	}
+	
 
+	openModal(modalName, props) {
+
+		const storeProps   = { entity: this, endpoint: this.routes.store   }
+
+		switch(modalName) {
+			case 'create':
+				modalActions.open('createEntity', { ...storeProps,
+					title: 'Create item:',
+				...props }); break;
+			default:
+				console.log('ItemList.openModal', modalName, props)
+		}
+	}
 
 	/**
 	 * Filter

@@ -3,14 +3,14 @@
     import clsx from 'clsx'
 	
 	import { Inline, Stack } from '@/Components/Core'
+	import Button      from '@/Components/UI/Button.svelte'
 	import Heading      from '@/Components/UI/Heading.svelte'
 	import Icon      from '@/Components/UI/Icon.svelte'
 	import Input     from '@/Components/UI/Input'
 	import url from '@/stores/urlStore'
 
     let {
-		backTo,
-		backToLabel = "Back",
+		back,
 		children,
 		class: className,
 		items,
@@ -24,7 +24,7 @@
 	 */
 	let cx = $derived({
 		menu: clsx('page-menu sticky top-0 flex-none min-w-48 w-48 max-w-48 rounded-lg overflow-y-auto pr-2', className),
-		back: clsx('border border-neutral-softest flex items-center gap-3 mb-3 place-self-start pl-3 pr-5 py-1.5 rounded-full hover:border-accent hover:text-accent'),
+		back: clsx('border border-neutral-softest gap-1.5 mb-3 place-self-start rounded-full hover:border-accent hover:text-accent'),
 		item: clsx('page-menu-item flex items-center gap-3 p-1.5 pl-3 rounded w-full'),
 		itemDefault: clsx('hover:bg-neutral-softest'),
 		itemDanger:  clsx('text-danger hover:bg-danger-softest'),
@@ -43,11 +43,8 @@
 
 <Stack class={cx.menu} {...restProps}>
 
-	{#if backTo}
-		<Link class={cx.back} href={backTo}>
-			<Icon name="ArrowElbowUpLeft" size="md" />
-			<span>{backToLabel}</span>
-		</Link>
+	{#if back}
+		<Button class={cx.back} icon="ArrowElbowUpLeft" {...back} />
 	{/if}
 
 	{#if searchable}

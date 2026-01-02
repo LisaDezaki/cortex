@@ -25,35 +25,17 @@
 
 	import { modalStore } from '@/stores/modalStore';
 
-	import CharacterFactionsModal		from '@/Modals/CharacterFactions.svelte'
-	import CharacterRelationshipsModal	from '@/Modals/CharacterRelationships.svelte'
+    import CreateEntityModal		from '@/Modals/CreateEntity.svelte';
+	import CustomFieldModal			from '@/Modals/CustomField.svelte';
+	import CustomFieldValueModal	from '@/Modals/CustomFieldValue.svelte';
 
-    import CreateCharacterModal  from '@/Modals/CreateCharacter.svelte';
-    import CreateCollectionModal from '@/Modals/CreateCollection.svelte';
-    import CreateFactionModal 	 from '@/Modals/CreateFaction.svelte';
-    import CreateLocationModal 	 from '@/Modals/CreateLocation.svelte';
-    import CreateProjectModal  	 from '@/Modals/CreateProject.svelte';
-
-	import DeleteCharacterModal  from '@/Modals/DeleteCharacter.svelte';
-    import DeleteCollectionModal from '@/Modals/DeleteCollection.svelte';
-    import DeleteFactionModal 	 from '@/Modals/DeleteFaction.svelte';
-    import DeleteLocationModal 	 from '@/Modals/DeleteLocation.svelte';
-    import DeleteProjectModal 	 from '@/Modals/DeleteProject.svelte';
-    import DeleteUserModal 	 from '@/Modals/DeleteUser.svelte';
-	
-    import RenameCharacterModal  from '@/Modals/RenameCharacter.svelte';
-    import RenameCollectionModal from '@/Modals/RenameCollection.svelte';
-    import RenameFactionModal 	 from '@/Modals/RenameFaction.svelte';
-    import RenameLocationModal 	 from '@/Modals/RenameLocation.svelte';
-    import RenameProjectModal 	 from '@/Modals/RenameProject.svelte';
-
-	import CustomFieldModal      from '@/Modals/CustomField.svelte';
+	import DeleteEntityModal	from '@/Modals/DeleteEntity.svelte';
+    import DeleteProjectModal	from '@/Modals/DeleteProject.svelte';
+    import DeleteUserModal		from '@/Modals/DeleteUser.svelte';
 	
 	import SelectOneModal 			 	 from '@/Modals/SelectOne.svelte';
 	import SelectManyModal 		 		 from '@/Modals/SelectMany.svelte';
-    import SelectLocationModal 			 from '@/Modals/SelectLocation.svelte';
     import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte';
-	import SetCustomFieldValueModal 	 from '@/Modals/SetCustomFieldValue.svelte';
     import SetLocationModal 			 from '@/Modals/SetLocation.svelte';
     import SetTagsModal 			 	 from '@/Modals/SetTags.svelte';
 	import SetValueModal 			 	 from '@/Modals/SetValue.svelte';
@@ -63,40 +45,19 @@
 	//	2. Create a modal registry map
 
     const modals = {
-
-		// characterFactions:	CharacterFactionsModal,
-		// characterRelationships: CharacterRelationshipsModal,
-
-        createCharacter: 	CreateCharacterModal,
-        // createCollection: 	CreateCollectionModal,
-        createFaction: 		CreateFactionModal,
-        createLocation: 	CreateLocationModal,
-		createProject:		CreateProjectModal,
-
-		deleteCharacter: 	DeleteCharacterModal,
-		// deleteCollection:	DeleteCollectionModal,
-		deleteFaction:		DeleteFactionModal,
-		deleteLocation:		DeleteLocationModal,
+        createEntity: 		CreateEntityModal,
+		customField:		CustomFieldModal,
+		customFieldValue:	CustomFieldValueModal,
+		deleteEntity:		DeleteEntityModal,
 		deleteProject:		DeleteProjectModal,
 		deleteUser:			DeleteUserModal,
-
-		// renameCharacter:	RenameCharacterModal,
-		// renameCollection:	RenameCollectionModal,
-		renameFaction:		RenameFactionModal,
-		renameLocation:		RenameLocationModal,
-		renameProject:		RenameProjectModal,
-
-		customField:				CustomFieldModal,
-
-		selectOne:					SelectOneModal,
-		selectMany:					SelectManyModal,
-		// selectLocation:				SelectLocationModal,
-		setCharacterRelationship:	SetCharacterRelationshipModal,
-		setCustomFieldValue:		SetCustomFieldValueModal,
-		setLocation:				SetLocationModal,
-		setTags:					SetTagsModal,
-		setValue:					SetValueModal,
-		uploadMedia:				UploadMediaModal
+		selectOne:			SelectOneModal,
+		selectMany:			SelectManyModal,
+		setCharacterRelationship: SetCharacterRelationshipModal,
+		setLocation:		SetLocationModal,
+		setTags:			SetTagsModal,
+		setValue:			SetValueModal,
+		uploadMedia:		UploadMediaModal
     };
 
 	const CurrentModal = $derived(modals[$modalStore.activeModal])

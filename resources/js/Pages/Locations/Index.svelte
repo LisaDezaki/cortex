@@ -10,7 +10,7 @@
 	import Empty   	  		from '@/Components/UI/Empty.svelte'
 	import Entity			from '@/Components/UI/Entity.svelte'
 	import PageHeader 		from '@/Components/UI/PageHeader.svelte'
-	import LocationPanel	from '@/Components/Features/Location/LocationPanel.svelte'
+	import PageHeading 		from '@/Components/UI/PageHeading.svelte'
 	import LocationTable	from '@/Components/Features/Location/LocationTable.svelte'
 	import ProjectObject 	from '@/services/ProjectObject'
 	import LocationList 	from '@/services/LocationList'
@@ -49,10 +49,6 @@
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
-		query: 		urlParams.get('q') 		|| '',
-		filter: 	urlParams.get('filter') || '',
-		sort: 		urlParams.get('sort') 	|| 'name',
-		direction: 	urlParams.get('dir') 	|| 'desc',
 		size: 		urlParams.get('size') 	|| 3,
 		layout: 	urlParams.get('layout') || 'grid',
 		selected: 	urlParams.get('selected') || ''
@@ -78,11 +74,7 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			query: 		urlParams.get('q') 		|| '',
-			filter: 	urlParams.get('filter') || '',
 			size: 		urlParams.get('size') 	|| 3,
-			sort: 		urlParams.get('sort') 	|| 'name',
-			direction: 	urlParams.get('dir') 	|| 'desc',
 			layout: 	urlParams.get('layout') || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};
@@ -145,35 +137,31 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
+		<Stack class="overflow-y-auto px-20 py-12">
 
-		<!-- Fixed/Sticky Header -->
+			<PageHeading
+				title="Locations List"
+				subtitle="Index page"
+				actions={[
+					{ icon: "GearFine", theme: "neutral", href: route('locations.settings') },
+					{ icon: "Plus", text: "New", theme: "accent", onclick: () => locations.openModal('create') },
+				]}
+			/>
 
-		<PageHeader size="7xl" class="px-20 py-2"
-			tabs={[
-				{ text: "Location List",	active: true },
-				{ text: "Settings",			href: route('locations.settings') },
-			]}
-			actions={[
-				{ icon: "Plus", text: "New", theme: "accent", onclick: () => locations.create(), },
-			]}
-		>
-			<ControlBar
+			<ControlBar class="py-3"
 				data={locations} bind:results bind:layout={parameters.layout}
 				filterOptions={activeProject.getOptions('locations', 'filter')}
 				sortOptions={activeProject.getOptions('locations', 'sort')}
 				layoutOptions={activeProject.getOptions('locations', 'layout')}
 			/>
-		</PageHeader>
 
-		<!-- Main Body -->
-
-		<Stack align="center" class="flex-1 overflow-y-auto px-20 pt-3 pb-12">
 			{#if activeProject && locations.items.length > 0}
 
-				<!-- Grid -->
-
 				{#if parameters.layout === 'grid'}
-					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
+
+					<!-- Grid -->
+
+					<Grid class="py-3 w-full" cols={gridCols} gap={3}>
 						{#if results.length > 0}
 							{#each results as location}
 								<Entity
@@ -182,7 +170,7 @@
 									entity={location}
 									layout="stack"
 									size="auto"
-									onclick={() => selectLocation(location)}
+									href={location.routes.show}
 								/>
 							{/each}
 						{:else}
@@ -190,28 +178,22 @@
 						{/if}
 					</Grid>
 
-
-				<!-- Table -->
-				
 				{:else if parameters.layout == 'table'}
+
+					<!-- Table -->
+				
 					<LocationTable
 						class="max-w-7xl text-sm w-full"
 						locations={results}
 					/>
-
 				
-				<!-- Map -->
-
 				{:else if parameters.layout == 'map'}
+
+					<!-- Map -->
+
 					<Empty class="h-96 max-w-7xl w-full"
 						icon="Compass" text="This layout type isn't working yet. Try again later."
 					/>
-					<!-- <LocationMap
-						constrain={false}
-						class="bg-black/50 max-h-full rounded-lg"
-						location={worldTree}
-					/> -->
-
 
 				{/if}
 			{:else}
@@ -225,8 +207,5 @@
 			{/if}
 
 		</Stack>
-	{/snippet}
-	{#snippet sidebar()}
-		<LocationPanel location={locations.items.find(l => l.slug === parameters.selected)} />
 	{/snippet}
 </AuthenticatedLayout>

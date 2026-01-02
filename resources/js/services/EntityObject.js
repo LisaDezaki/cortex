@@ -31,9 +31,8 @@ export default class EntityObject {
 			throw new TypeError('EntityObject constructor requires a valid entity object');
 		}
 
-		Object.assign(this, {
-			laravelClass: "App\Models\\"+entityData.singular,	//	e.g, App\Models\Character
-			items: list.map(i => new EntityObject(i)),
+		Object.assign(this, entityData, {
+			laravelClass: "App\\Models\\",	//	e.g, App\Models\Character
 		})
 	}
 

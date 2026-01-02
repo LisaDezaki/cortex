@@ -31,8 +31,14 @@ class UserResource extends JsonResource
 
 			'meta' => [
 				'email_verified_at' => $this->email_verified_at,
-				'created_at' => $this->created_at,
-				'updated_at' => $this->updated_at
+				'created' => [
+					'at'  => $this->created_at,
+					'ago' => $this->created_at->diffForHumans()
+				],
+				'updated' => [
+					'at'  => $this->updated_at,
+					'ago' => $this->updated_at->diffForHumans()
+				]
 			]
 		];
     }

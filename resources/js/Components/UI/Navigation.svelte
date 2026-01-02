@@ -9,7 +9,7 @@
 	import Navatar     from '@/Components/UI/Navatar.svelte'
 	import ThemeSwitch from '@/Components/UI/ThemeSwitch.svelte'
 
-	import ProjectSelect from '@/Components/Features/Project/ProjectSelect.svelte'
+	import ProjectSelect from '@/Components/Custom/ProjectSelect.svelte'
 
 	const user = $page.props.auth.user.data;
 	const projects = $page.props.projects.data;
@@ -44,7 +44,7 @@
 			<!-- <Nav.Item icon="Wrench"         label="Mechanics"  href="/mechanics"  			active={$page.url.startsWith('/mechanics')}  badge={activeProject?.mechanics?.length}  /> -->
 			<!-- <Nav.Item icon="Trophy"         label="Quests"     href="/quests"     			active={$page.url.startsWith('/quests')}     badge={activeProject?.quests?.length}  /> -->
 			<!-- <Nav.Item icon="Butterfly"      label="Wildlife"   href="/wildlife"   			active={$page.url.startsWith('/wildlife')}   badge={activeProject?.wildlife?.length}  /> -->
-			<Nav.Item icon="Books"          label="Glossary"   href="/glossary"   			active={$page.url.startsWith('/glossary')}   badge={activeProject?.glossary?.length}  />
+			<Nav.Item icon="Books"          label="Codex"		href="/codex"   			active={$page.url.startsWith('/codex')}   badge={activeProject?.codex?.length}  />
 		</Stack>
 	{/if}
 

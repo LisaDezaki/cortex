@@ -8,7 +8,9 @@
 	import Thumbnail from '@/Components/UI/Thumbnail.svelte'
 
     let {
-		character
+		entity,
+		entityName,
+		...restProps
 	} = $props()
 
 	const form = useForm({});
@@ -16,27 +18,24 @@
 
 
 
-
-
-<ModalForm title="Deleting {character?.name}" size="md"
-	endpoint={route('characters.destroy', { character: character.slug})}
+<ModalForm title="Delete {entityName}: {entity?.name}" size="xl"
 	form={form}
 	method="delete"
-	reloadPageProps={['characters']}
 	submitProps={{
-		label: 'Yes, Delete',
+		text: 'Yes, Delete',
 		theme: 'danger'
 	}}
+	{...restProps}
 >
-	<Flex align="center" gap={6} class="p-3 pt-0">
-		{#if character && character.image}
-			<Thumbnail class="aspect-square w-24" src={character.image?.url} />
+	<Flex align="center" gap={6} class="px-4">
+		{#if entity && entity.image}
+			<Thumbnail class="aspect-square rounded w-32" src={entity.image?.url} />
 		{:else}
 			<Icon class="aspect-square bg-danger-softest my-1 p-2 rounded-full text-danger" name="Trash" size={24} />
 		{/if}
 		<Stack gap={2}>
-			<p>This process will remove this character and all associated data from the database.</p>
-			<p><strong>Are you sure you want to delete this character?</strong></p>
+			<p>This process will remove this {entityName} and all associated data from the database.</p>
+			<p><strong>Are you sure you want to delete this {entityName}?</strong></p>
 		</Stack>
 	</Flex>
 </ModalForm>

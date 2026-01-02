@@ -12,6 +12,7 @@
 		endpoint,
 		entity,
 		field,
+		title
 	} = $props()
 
 	const form = useForm({
@@ -25,7 +26,7 @@
 
 
 
-<ModalForm title="Set {field.name} for {entity.name}" size="xl"
+<ModalForm title={title || `Set ${field.name}: ${entity.name}`} size="sm"
 	endpoint={endpoint}
 	form={form}
 	method="patch"
@@ -33,8 +34,8 @@
 		label: 'Save'
 	}}
 >
-	<Box class="px-4 pb-4">
-		<Input
+	<Box class="px-2">
+		<Input class="w-full"
 			{...field}
 			label={undefined}
 			bind:value={$form.customField.value}

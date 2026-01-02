@@ -76,94 +76,56 @@ export default class ItemObject {
 	 */
 	openModal(modalName, props) {
 
+		const updateProps  = { entity: this, endpoint: this.routes.update  }
+		const destroyProps = { entity: this, endpoint: this.routes.destroy }
+
 		switch(modalName) {
-			case 'delete':
-				modalActions.open('deleteItem', { item: this }); break;
 			case 'rename':
-				modalActions.open('setValue', {
-					entity: this,
-					endpoint: this.routes.update,
-					field: {
-						name: 'name',
-						type: 'text',
-					},
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'name', type: 'text' },
 					title: 'Rename item: ' + this.name,
-					...props
-				}); break;
+				...props }); break;
 			case 'alias':
-				modalActions.open('setValue', {
-					entity: this,
-					endpoint: this.routes.update,
-					field: {
-						name: 'alias',
-						type: 'text',
-					},
-					title: 'Set alias for ' + this.name,
-					...props
-				}); break;
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'alias', type: 'text' },
+					title: 'Set alias: ' + this.name,
+				...props }); break;
 			case 'location':
-				modalActions.open('setLocation', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setLocation', { ...updateProps,
 					field: 'location',
-					...props
-				}); break;
-			case 'factions':
-				modalActions.open('selectMany', {
-					entity: this,
-					endpoint: this.routes.update,
-					field: 'factions',
-					selected: this.factions.items?.map(f => f.id) || [],
-					title: "Set which factions" + this.name + "is a member of",
-					...props
-				}); break;
-			case 'relationships':
-				modalActions.open('selectMany', {
-					entity: this,
-					endpoint: this.routes.update,
-					field: 'relationships',
-					selected: this.relationships.items?.map(r => r.id) || [],
-					title: "Set " + this.name + "'s relationships with other characters",
-					...props
-				}); break;
+					title: 'Set location: ' + this.name,
+				...props }); break;
 			case 'setMedia':
-				modalActions.open('uploadMedia', {
+				modalActions.open('uploadMedia', { ...updateProps,
 					aspect: 'aspect-square',
-					endpoint: this.routes.update,
 					media: this.getMedia(props.type),
 					method: 'patch',
 					reloadPageProps: ['character.media', 'characters.media'],
 					title: 'Upload ' + props.type + ' for ' + this.name,
 					type: props.type,
-					...props
-				}); break;
+				...props }); break;
 			case 'appearance':
-				modalActions.open('setTags', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setTags', { ...updateProps,
 					reloadPageProps: ['activeProject', 'character.appearance', 'characters.appearance'],
 					title: 'Set ' + this.name + '\'s appearance',
 					tags: this.appearance?.split(','),
-					...props
-				}); break;
+				...props }); break;
 			case 'personality':
-				modalActions.open('setTags', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setTags', { ...updateProps,
 					reloadPageProps: ['activeProject', 'character.personality', 'characters.personality'],
 					title: 'Set ' + this.name + '\'s personality',
 					tags: this.personality?.split(','),
-					...props
-				}); break;
+				...props }); break;
 			case 'customField':
-				modalActions.open('setCustomFieldValue', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setCustomFieldValue', { ...updateProps,
 					reloadPageProps: ['activeProject', 'character.customFieldValues', 'characters.customFieldValues'],
-					...props
-				}); break;
+				...props }); break;
+			case 'delete':
+				modalActions.open('deleteEntity', { ...destroyProps,
+					entityName: 'item',
+				...props }); break;
 			default:
-				console.log('CharacterObject.openModal', modalName, props)
+				console.log('ItemObject.openModal', modalName, props)
 		}
 	}
 

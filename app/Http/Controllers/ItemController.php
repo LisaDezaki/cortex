@@ -97,12 +97,15 @@ class ItemController extends Controller
 	public function create() {}		//	Character creation is handled through a simple modal
 	public function store(Request $request): RedirectResponse
 	{
+		//	Attempt to validated the $request
+		//	Flash an error if validation fails
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
-			Session::flash('error', "Failed to create item: ".$e);
+			Session::flash('error', "Failed to create character: ".$e);
         	return Redirect::back();
 		}
+
 		$item = Auth::user()->activeProject()->items()->create($validatedData);
 
 		if ($request->has('media') && $request['media'] !== null) {
@@ -154,10 +157,12 @@ class ItemController extends Controller
 	public function edit(Item $item) {}
 	public function update(Request $request, Item $item): RedirectResponse
 	{
+		//	Attempt to validated the $request
+		//	Flash an error if validation fails
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
-			Session::flash('error', "Failed to create item: ".$e);
+			Session::flash('error', "Failed to create character: ".$e);
         	return Redirect::back();
 		}
 

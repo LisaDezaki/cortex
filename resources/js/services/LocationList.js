@@ -57,6 +57,21 @@ export default class LocationList {
 		this._saveToHistory(); // Save initial state to history
 	}
 
+
+	openModal(modalName, props) {
+
+		const storeProps   = { entity: this, endpoint: this.routes.store   }
+
+		switch(modalName) {
+			case 'create':
+				modalActions.open('createEntity', { ...storeProps,
+					title: 'Create location:',
+				...props }); break;
+			default:
+				console.log('LocationList.openModal', modalName, props)
+		}
+	}
+
 	
 	/**
 	 * Filter

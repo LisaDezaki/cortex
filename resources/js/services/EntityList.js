@@ -108,24 +108,24 @@ export default class EntityList {
 					{ label: 'Starred',				value: 'starred', 					filterFunction: entity => entity.starred },
 					{ separator: true },
 					{ label: 'Created',				value: 'created',					options: [
-						{   label: 'Today',			value: 'created.today',				filterFunction: entity => new Date(entity.meta.createdAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
-						{   label: 'This week',		value: 'created.week',				filterFunction: entity => new Date(entity.meta.createdAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
-						{   label: 'This month',	value: 'created.month',				filterFunction: entity => new Date(entity.meta.createdAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
-						{   label: 'This year',		value: 'created.year',				filterFunction: entity => new Date(entity.meta.createdAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
+						{   label: 'Today',			value: 'created.today',				filterFunction: entity => new Date(entity.meta.created.at) >= new Date(new Date().getTime() - 24 * 60 * 60 * 1000) },
+						{   label: 'This week',		value: 'created.week',				filterFunction: entity => new Date(entity.meta.created.at) >= new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000) },
+						{   label: 'This month',	value: 'created.month',				filterFunction: entity => new Date(entity.meta.created.at) >= new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000) },
+						{   label: 'This year',		value: 'created.year',				filterFunction: entity => new Date(entity.meta.created.at) >= new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000) },
 					]},
 					{ label: 'Updated',				value: 'updated',					options: [
-						{   label: 'Today',			value: 'updated.today',				filterFunction: entity => new Date(entity.meta.createdAt) >= new Date(now.getTime() - 24 * 60 * 60 * 1000) },
-						{   label: 'This week',		value: 'updated.week',				filterFunction: entity => new Date(entity.meta.createdAt) >= new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000) },
-						{   label: 'This month',	value: 'updated.month',				filterFunction: entity => new Date(entity.meta.createdAt) >= new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000) },
-						{   label: 'This year',		value: 'updated.year',				filterFunction: entity => new Date(entity.meta.createdAt) >= new Date(now.getTime() - 365 * 24 * 60 * 60 * 1000) },
+						{   label: 'Today',			value: 'updated.today',				filterFunction: entity => new Date(entity.meta.updated.at) >= new Date(new Date().getTime() - 24 * 60 * 60 * 1000) },
+						{   label: 'This week',		value: 'updated.week',				filterFunction: entity => new Date(entity.meta.updated.at) >= new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000) },
+						{   label: 'This month',	value: 'updated.month',				filterFunction: entity => new Date(entity.meta.updated.at) >= new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000) },
+						{   label: 'This year',		value: 'updated.year',				filterFunction: entity => new Date(entity.meta.updated.at) >= new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000) },
 					]}
 				]
 			case 'sort':
 				return [
 					{ label: "By name",				value: 'name',						sortFunction: (a,b) => a.name < b.name ? -1 : 1 },
 					{ separator: true },
-					{ label: "Date Created", 		value: 'created_at', 				sortFunction: (a,b) => a.meta.createdAt < b.meta.createdAt ? -1 : 1 },
-					{ label: "Date Updated", 		value: 'updated_at', 				sortFunction: (a,b) => a.meta.updatedAt < b.meta.updatedAt ? -1 : 1 },
+					{ label: "Date Created", 		value: 'created_at', 				sortFunction: (a,b) => a.meta.created.at < b.meta.created.at ? -1 : 1 },
+					{ label: "Date Updated", 		value: 'updated_at', 				sortFunction: (a,b) => a.meta.updated.at < b.meta.updated.at ? -1 : 1 },
 					{ label: "Randomly", 			value: 'random',     				sortFunction: (a,b) => Math.random() < 0.5 ? -1 : 1 },
 				]
 			default:

@@ -29,19 +29,16 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-
-		<PageHeader size="7xl" class="px-20 py-2" tabs={[
-			{ text: "Items List",		href: route('items') },
-			{ text: "Settings", 		active: true },
-		]} />
-
-		<Flex justify="center" gap={12} class="flex-1 overflow-y-auto px-20 py-12 w-full">
-			<PageMenu items={[
-				{ icon: "UserList",		label: "Overview",		href: "#overview"	},
-				{ icon: "Coins",		label: "Currencies",	href: "#currencies"	},
-				{ icon: "ImagesSquare",	label: "Media",			href: "#media"		},
-				{ icon: "Textbox",		label: "Custom Fields",	href: "#custom"		},
-			]} />
+		<Flex justify="center" gap={12} class="overflow-y-auto px-20 py-12 w-full">
+			<PageMenu
+				back={{ text: 'Item List', href: route('items') }}
+				items={[
+					{ icon: "UserList",		label: "Overview",		href: "#overview"	},
+					{ icon: "Coins",		label: "Currencies",	href: "#currencies"	},
+					{ icon: "ImagesSquare",	label: "Media",			href: "#media"		},
+					{ icon: "Textbox",		label: "Custom Fields",	href: "#custom"		},
+				]}
+			/>
 			<Stack class="max-w-5xl w-full">
 
 				<PageHeading
@@ -128,7 +125,7 @@
 		</Flex>
 	{/snippet}
 
-	{#snippet sidebar()}
+	<!-- {#snippet sidebar()}
 		<div class="bg-slate-50 min-w-80 shadow-lg"></div>
-	{/snippet}
+	{/snippet} -->
 </AuthenticatedLayout>

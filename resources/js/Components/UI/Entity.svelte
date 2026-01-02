@@ -20,10 +20,11 @@
 	} = $props()
 
 	let cx = $derived({
-		card:	clsx('cursor-pointer relative'),
+		card:	clsx('cursor-pointer group relative'),
 
 		thumbnail: {
 			base: clsx('rounded', aspect, {
+				'group-hover:bg-accent-softer': href || onclick,
 				'bg-accent-softer':    active,
 				'bg-neutral-softest': !active
 			}),
@@ -37,7 +38,8 @@
 
 		text: {
 			base: clsx('px-1', {
-				'text-accent': active
+				'group-hover:text-accent': href || onclick,
+				'text-accent': active,
 			}),
 			xs:	  clsx("px-1 -space-y-1"),
 			sm:	  clsx("px-1 -space-y-0.5"),

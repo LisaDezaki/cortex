@@ -64,40 +64,55 @@ export default class FactionObject {
 	 */
 	openModal(modalName, props) {
 
+		const updateProps  = { entity: this, endpoint: this.routes.update  }
+		const destroyProps = { entity: this, endpoint: this.routes.destroy }
+
 		switch(modalName) {
-			case 'delete':
-				modalActions.open('deleteFaction', { faction: this }); break;
 			case 'rename':
-				modalActions.open('renameFaction', { faction: this }); break;
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'name', type: 'text' },
+					title: 'Rename faction: ' + this.name,
+				...props }); break;
+			case 'type':
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'type', type: 'text' },
+					title: 'Set type: ' + this.name,
+				...props }); break;
+			case 'description':
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'description', label: 'Description', type: 'textarea', rows: 12 },
+					title: 'Describe faction: ' + this.name,
+				...props }); break;
+			case 'ideology':
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'ideology', label: 'Ideology', type: 'textarea', rows: 12 },
+					title: 'Describe ideology: ' + this.name,
+				...props }); break;
 			case 'headquarters':
-				modalActions.open('setLocation', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setLocation', { ...updateProps,
 					field: 'headquarters',
-					...props
-				}); break;
+				...props }); break;
 			case 'member':
 				modalActions.open('setFactionMember', { character: this, ...props }); break;
 			case 'members':
-				modalActions.open('selectMany', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('selectMany', { ...updateProps,
 					field: 'members',
 					selected: this.members.items?.map(m => m.id) || [],
 					title: "Set members of the " + this.name + " faction",
-					...props
-				}); break;
+				...props }); break;
 			case 'setMedia':
-				modalActions.open('uploadMedia', {
+				modalActions.open('uploadMedia', { ...updateProps,
 					aspect: 'aspect-square',
-					endpoint: this.routes.update,
 					media: this.getMedia(props.type),
 					method: 'patch',
 					reloadPageProps: ['character.media', 'characters.media'],
 					title: 'Upload ' + props.type + ' for ' + this.name,
 					type: props.type,
-					...props
-				}); break;
+				...props }); break;
+			case 'delete':
+				modalActions.open('deleteEntity', { ...destroyProps,
+					entityName: 'faction',
+				...props }); break;
 			default:
 				console.log('FactionObject.openModal', modalName, props)
 		}

@@ -24,6 +24,17 @@
 		}
 	}
 
+	--animate-progress: progress 10s linear;
+	
+	@keyframes progress {
+		0% {
+			@apply w-[0%];
+		}
+		100% {
+			@apply w-[100%];
+		}
+	}
+
 	--animate-wiggle: wiggle 0.5s linear infinite;
 	
 	@keyframes wiggle {

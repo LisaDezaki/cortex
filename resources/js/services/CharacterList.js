@@ -59,6 +59,20 @@ export default class CharacterList {
 		this._saveToHistory(); // Save initial state to history
 	}
 
+	openModal(modalName, props) {
+
+		const storeProps   = { entity: this, endpoint: this.routes.store   }
+
+		switch(modalName) {
+			case 'create':
+				modalActions.open('createEntity', { ...storeProps,
+					title: 'Create character:',
+				...props }); break;
+			default:
+				console.log('CharacterList.openModal', modalName, props)
+		}
+	}
+
 
 	/**
 	 * Filter

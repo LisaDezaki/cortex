@@ -75,112 +75,78 @@ export default class CharacterObject {
 	 */
 	openModal(modalName, props) {
 
+		const updateProps  = { entity: this, endpoint: this.routes.update  }
+		const destroyProps = { entity: this, endpoint: this.routes.destroy }
+
 		switch(modalName) {
-			case 'delete':
-				modalActions.open('deleteCharacter', { character: this }); break;
 			case 'rename':
-				modalActions.open('setValue', {
-					entity: this,
-					endpoint: this.routes.update,
-					field: {
-						name: 'name',
-						type: 'text',
-					},
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'name', type: 'text' },
 					title: 'Rename character: ' + this.name,
-					...props
-				}); break;
-			case 'description':
-				modalActions.open('setValue', {
-					entity: this,
-					endpoint: this.routes.update,
-					field: {
-						name: 'description',
-						label: 'Description',
-						type: 'textarea',
-						rows: 12
-					},
-					title: 'Describe character: ' + this.name,
-					...props
-				}); break;
+				...props }); break;
 			case 'alias':
-				modalActions.open('setValue', {
-					entity: this,
-					endpoint: this.routes.update,
-					field: {
-						name: 'alias',
-						type: 'text',
-					},
-					title: 'Set alias for ' + this.name,
-					...props
-				}); break;
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'alias', type: 'text' },
+					title: 'Set alias: ' + this.name,
+				...props }); break;
+			case 'description':
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'description', label: 'Description', type: 'textarea', rows: 12 },
+					title: 'Describe character: ' + this.name,
+				...props }); break;
 			case 'location':
-				modalActions.open('setLocation', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setLocation', { ...updateProps,
 					field: 'location',
-					...props
-				}); break;
+					title: 'Set location: ' + this.name,
+				...props }); break;
 			case 'factions':
-				modalActions.open('selectMany', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('selectMany', { ...updateProps,
 					field: 'factions',
 					selected: this.factions.items?.map(f => f.id) || [],
-					title: "Set which factions" + this.name + "is a member of",
-					...props
-				}); break;
+					title: "Set factions membership: " + this.name,
+				...props }); break;
 			case 'relationship':
-				modalActions.open('setCharacterRelationship', {
+				modalActions.open('setCharacterRelationship', { ...updateProps,
 					character: this,
-					endpoint: this.routes.update,
-					title: "Set relationship for "+this.name
-				}); break;
+					title: "Set relationship: " + this.name,
+				...props }); break;
 			case 'relationships':
-				modalActions.open('selectMany', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('selectMany', { ...updateProps,
 					field: 'relationships',
 					selected: this.relationships.items?.map(r => r.id) || [],
-					title: "Set " + this.name + "'s relationships with other characters",
-					...props
-				}); break;
+					title: "Set relationships: " + this.name,
+				...props }); break;
 			case 'setMedia':
-				modalActions.open('uploadMedia', {
+				modalActions.open('uploadMedia', { ...updateProps,
 					aspect: 'aspect-square',
-					endpoint: this.routes.update,
 					media: this.getMedia(props.type),
 					method: 'patch',
 					reloadPageProps: ['character.media', 'characters.media'],
-					title: 'Upload ' + props.type + ' for ' + this.name,
+					title: 'Upload ' + props.type + ': ' + this.name,
 					type: props.type,
-					...props
-				}); break;
+				...props }); break;
 			case 'appearance':
-				modalActions.open('setTags', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setTags', { ...updateProps,
 					reloadPageProps: ['activeProject', 'character.appearance', 'characters.appearance'],
-					title: 'Set ' + this.name + '\'s appearance',
+					title: 'Set appearance: ' + this.name,
 					tags: this.appearance?.split(','),
-					...props
-				}); break;
+				...props }); break;
 			case 'personality':
-				modalActions.open('setTags', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setTags', { ...updateProps,
 					reloadPageProps: ['activeProject', 'character.personality', 'characters.personality'],
-					title: 'Set ' + this.name + '\'s personality',
+					title: 'Set personality: ' + this.name,
 					tags: this.personality?.split(','),
-					...props
-				}); break;
+				...props }); break;
 			case 'customField':
-				modalActions.open('setCustomFieldValue', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setCustomFieldValue', { ...updateProps,
 					field: { fieldableType: this.laravelClass },
 					reloadPageProps: ['activeProject', 'character.customFieldValues', 'characters.customFieldValues'],
-					...props
-				}); break;
+					title: 'Set ' + props?.field?.name + ': ' + this.name,
+				...props }); break;
+			case 'delete':
+				modalActions.open('deleteEntity', { ...destroyProps,
+					entityName: 'character',
+				...props }); break;
 			default:
 				console.log('CharacterObject.openModal', modalName, props)
 		}

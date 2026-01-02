@@ -102,7 +102,15 @@ class FactionController extends Controller
     public function create() {}
     public function store(Request $request): RedirectResponse
     {
-        $validatedData = $request->validate($this->validationRules);
+        //	Attempt to validated the $request
+		//	Flash an error if validation fails
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to create character: ".$e);
+        	return Redirect::back();
+		}
+
 		$faction = Auth::user()->activeProject()->factions()->create($validatedData);
 
 		if ($request->has('media') && $request['media'] !== null) {
@@ -125,7 +133,7 @@ class FactionController extends Controller
 		// $this->handleCustomFields($validatedData['custom_fields'], $character);
 
 		$faction->save();
-		Session::flash('success', "$faction->name created successfully.");
+		Session::flash('success', "Faction created: $faction->name.");
 		return Redirect::route("factions.show", [
 			'faction' => $faction->slug
 		]);
@@ -168,10 +176,14 @@ class FactionController extends Controller
     public function update(Request $request, Faction $faction)
     {
 
-		// dd($request->all());
-		
-		//	Validate
-		$validatedData = $request->validate($this->validationRules);
+		//	Attempt to validated the $request
+		//	Flash an error if validation fails
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to create character: ".$e);
+        	return Redirect::back();
+		}
 
 		//	Media
 		if ($request->has('media') && $request['media'] !== null) {
@@ -208,7 +220,7 @@ class FactionController extends Controller
 		//	Update
 		$faction->fill($validatedData);
 		$faction->update();
-		Session::flash('success', "$faction->name updated successfully.");
+		Session::flash('success', "Faction updated: $faction->name.");
         return Redirect::back();
     }
 
@@ -224,10 +236,12 @@ class FactionController extends Controller
     {
 		//	TODO:	Make sure logged in user is authorized before proceeding.
 		
-		Session::flash('success', "$faction->name has been deleted.");
+		Session::flash('success', "Faction deleted: $faction->name.");
         $faction->delete();
 		return Redirect::route("factions");
     }
+
+
 
 	public function settings(Request $request): Response
     {

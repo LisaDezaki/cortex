@@ -63,31 +63,34 @@ export default class LocationObject {
 	 */
 	openModal(modalName, props) {
 
+		const updateProps  = { entity: this, endpoint: this.routes.update  }
+		const destroyProps = { entity: this, endpoint: this.routes.destroy }
+
 		switch(modalName) {
-			case 'delete':
-				modalActions.open('deleteLocation', { location: this }); break;
 			case 'rename':
-				modalActions.open('renameLocation', { location: this }); break;
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'name', type: 'text' },
+					title: 'Rename location: ' + this.name,
+				...props }); break;
 			case 'climate':
-				modalActions.open('setTags', {
-					entity: this,
-					endpoint: this.routes.update,
+				modalActions.open('setTags', { ...updateProps,
 					reloadPageProps: ['activeProject', 'location.climate', 'locations.climate'],
-					title: 'Set ' + this.name + '\'s climate',
+					title: 'Set climate: ' + this.name,
 					tags: this.climate?.split(','),
-					...props
-				}); break;
+				...props }); break;
 			case 'setMedia':
-				modalActions.open('uploadMedia', {
+				modalActions.open('uploadMedia', { ...updateProps,
 					aspect: 'aspect-square',
-					endpoint: this.routes.update,
 					media: this.getMedia(props.type),
 					method: 'patch',
-					reloadPageProps: ['character.media', 'characters.media'],
-					title: 'Upload ' + props.type + ' for ' + this.name,
+					reloadPageProps: ['location.media', 'locations.media'],
+					title: 'Upload ' + props.type + ': ' + this.name,
 					type: props.type,
-					...props
-				}); break;
+				...props }); break;
+			case 'delete':
+				modalActions.open('deleteEntity', { ...destroyProps,
+					entityName: 'location',
+				...props }); break;
 			default:
 				console.log('LocationObject.openModal', modalName, props)
 		}

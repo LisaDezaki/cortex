@@ -16,7 +16,7 @@
 	} = $props()
 
 	let cx = {
-		heading: 	clsx('', className),
+		heading: 	clsx('w-full', className),
 		title:	 	clsx('text-neutral'),
 		subtitle:	clsx('text-lg text-neutral-softer')
 	}
@@ -29,7 +29,7 @@
 	</Stack>
 
 	{#if actions?.length > 0}
-		<Inline>
+		<Inline gap={3}>
 			{#each actions as action}
 				<Button class="rounded-full" size="lg" style="soft" theme="accent" {...action} />
 			{/each}

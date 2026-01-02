@@ -58,6 +58,20 @@ export default class ProjectList {
 		this._saveToHistory(); // Save initial state to history
 	}
 
+	openModal(modalName, props) {
+
+		const storeProps   = { entity: this, endpoint: this.routes.store   }
+
+		switch(modalName) {
+			case 'create':
+				modalActions.open('createEntity', { ...storeProps,
+					title: 'Create project:',
+				...props }); break;
+			default:
+				console.log('ProjectList.openModal', modalName, props)
+		}
+	}
+
 
 	/**
 	 * Filter

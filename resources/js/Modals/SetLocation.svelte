@@ -15,6 +15,7 @@
 		entity,
 		endpoint,
 		field = 'location',
+		title,
 	} = $props()
 
 	const form = useForm({
@@ -30,12 +31,12 @@
 
 
 
-<ModalForm title="Set the location for {entity.name}" size="xl"
+<ModalForm title={title || `Set location: ${entity.name}`} size="7xl"
 	endpoint={endpoint}
 	form={form}
 	method="patch"
 	submitProps={{
-		label: 'Save'
+		text: 'Confirm'
 	}}
 >
 	<Map.Context
@@ -43,7 +44,7 @@
 		location={locations.find($form[field])}
 	>
 		<Map.Preview
-			class="aspect-square w-full"
+			class="aspect-[2/3] sm:aspect-square md:aspect-video max-h-[80vh] w-full"
 			onBackClick={mapClick}
 			onItemClick={mapClick}
 		/>

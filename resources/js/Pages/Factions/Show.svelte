@@ -42,7 +42,7 @@
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="h-full overflow-y-auto py-12">
 			<PageMenu
-				backTo={route('factions')} backToLabel="Faction List"
+				back={{ text: 'Faction List', href: route('factions') }}
 				items={[
 					{ icon: "Info",      	label: "Details",    	href: "#details"	},
 					{ icon: "UsersFour", 	label: "Membership", 	href: "#members"	},
@@ -74,9 +74,11 @@
 								class="max-w-3/4 mt-auto {faction.getMedia('banner') ? 'text-white' : ''}"
 								heading={faction.name}
 								headingClass="whitespace-pre-wrap"
-								subheading={faction.type}
 							/>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => faction.openModal('rename')} />
+						</Inline>
+						<Inline class="z-10">{faction.type}
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => faction.openModal('type')} />
 						</Inline>
 					</ArticleBanner>
 
@@ -145,7 +147,7 @@
 						<Heading is="h3" as="h4" class="mt-9 mb-6">Details</Heading>
 
 						<Heading is="h3" as="h6" class="mb-6 text-neutral-soft">Description
-							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('description')} />
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => faction.openModal('description')} />
 						</Heading>
 						{#if faction.description}
 							<Collapsible collapsed={true}
@@ -158,7 +160,7 @@
 						{/if}
 
 						<Heading is="h3" as="h6" class="mt-9 mb-6 text-neutral-soft">Ideology
-							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('appearance')} />
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => faction.openModal('ideology')} />
 						</Heading>
 						<Flex wrap class="gap-[2px]">
 							{#if faction.ideology}

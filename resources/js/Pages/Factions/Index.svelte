@@ -10,7 +10,7 @@
 	import Empty     		 	from '@/Components/UI/Empty.svelte'
 	import Entity     		 	from '@/Components/UI/Entity.svelte'
 	import PageHeader		 	from '@/Components/UI/PageHeader.svelte'
-	import FactionPanel 	 	from '@/Components/Features/Faction/FactionPanel.svelte'
+	import PageHeading		 	from '@/Components/UI/PageHeading.svelte'
 	import FactionTable 	 	from '@/Components/Features/Faction/FactionTable.svelte'
 	import ProjectObject 		from '@/services/ProjectObject'
 
@@ -130,7 +130,7 @@
 
 		<!-- Fixed/Sticky Header -->
 
-		<PageHeader size="7xl" class="px-20 py-2"
+		<!-- <PageHeader size="7xl" class="px-20 py-2"
 			tabs={[
 				{ text: "Faction List",	active: true },
 				{ text: "Settings",		href: route('factions.settings') },
@@ -145,27 +145,42 @@
 				sortOptions={activeProject.getOptions('factions', 'sort')}
 				layoutOptions={activeProject.getOptions('factions', 'layout')}
 			/>
-		</PageHeader>
+		</PageHeader> -->
 
 
 		<!-- Main Body -->
 
-		<Stack align="center" class="flex-1 overflow-y-auto px-20 pt-3 pb-12">
+		<Stack align="center" class="overflow-y-auto px-20 py-12">
+
+			<PageHeading
+				title="Faction List"
+				subtitle="Index page"
+				actions={[
+					{ icon: "GearFine", theme: "neutral", href: route('factions.settings') },
+					{ icon: "Plus", text: "New", theme: "accent", onclick: () => factions.openModal('create') },
+				]}
+			/>
+
+			<ControlBar class="py-3"
+				data={factions} bind:results bind:layout={parameters.layout}
+				filterOptions={activeProject.getOptions('factions', 'filter')}
+				sortOptions={activeProject.getOptions('factions', 'sort')}
+				layoutOptions={activeProject.getOptions('factions', 'layout')}
+			/>
+
 			{#if activeProject && factions.items.length > 0}
 
 
 				<!-- Grid -->
 
 				{#if parameters.layout == 'grid'}
-					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
+					<Grid class="w-full" cols={gridCols} gap={3}>
 						{#if results.length > 0}
 							{#each results as faction}
 								<Entity
 									active={parameters.selected === faction.slug}
 									entity={faction}
-									layout="stack"
-									size="auto"
-									onclick={() => selectFaction(faction)}
+									href={faction.routes.show}
 								/>
 							{/each}
 						{:else}
@@ -197,9 +212,5 @@
 
 
 		</Stack>
-	{/snippet}
-
-	{#snippet sidebar()}
-		<FactionPanel faction={factions.items.find(f => f.slug === parameters.selected)} />
 	{/snippet}
 </AuthenticatedLayout>

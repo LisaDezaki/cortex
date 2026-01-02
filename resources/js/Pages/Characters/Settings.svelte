@@ -3,16 +3,16 @@
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout	 from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharacterSettingsForm from '@/Forms/Settings/CharacterSettings.svelte'
-	import Flex   	  from '@/Components/Core/Flex.svelte'
-	import Inline     from '@/Components/Core/Inline.svelte'
-	import Stack   	  from '@/Components/Core/Stack.svelte'
-	import Button  	  from '@/Components/UI/Button.svelte'
-	import Heading    from '@/Components/UI/Heading.svelte'
-	import PageHeader from '@/Components/UI/PageHeader.svelte'
-	import PageHeading from '@/Components/UI/PageHeading.svelte'
-	import PageMenu   from '@/Components/UI/PageMenu.svelte'
-	import Section    from '@/Components/UI/Section.svelte'
-	import Separator  from '@/Components/UI/Separator.svelte'
+	import Flex			from '@/Components/Core/Flex.svelte'
+	import Inline		from '@/Components/Core/Inline.svelte'
+	import Stack		from '@/Components/Core/Stack.svelte'
+	import Button		from '@/Components/UI/Button.svelte'
+	import Container	from '@/Components/UI/Container.svelte'
+	import Heading		from '@/Components/UI/Heading.svelte'
+	import PageHeading	from '@/Components/UI/PageHeading.svelte'
+	import PageMenu		from '@/Components/UI/PageMenu.svelte'
+	import Section		from '@/Components/UI/Section.svelte'
+	import Separator	from '@/Components/UI/Separator.svelte'
 	import { modalActions } from '@/stores/modalStore'
 
 	const customFields = $page.props.customFields?.data
@@ -28,19 +28,21 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
+		<Flex justify="center" gap={12} class="overflow-y-auto px-20 py-12">
 
-		<PageHeader size="7xl" class="px-20 py-2" tabs={[
-			{ text: "Character List",	href: route('characters') },
-			{ text: "Settings", 		active: true },
-		]} />
+			<!-- Page Menu -->
 
-		<Flex justify="center" gap={12} class="flex-1 overflow-y-auto px-20 py-12 w-full">
-			<PageMenu items={[
-				{ icon: "UserList",       label: "Overview",      href: "#overview" },
-				{ icon: "ImagesSquare",   label: "Media",         href: "#media"    },
-				{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   }
-			]} />
-			<Stack class="max-w-5xl w-full">
+			<PageMenu
+				back={{ text: 'Character List', href: route('characters') }}
+				items={[
+					{ icon: "UserList",       label: "Overview",      href: "#overview" },
+					{ icon: "ImagesSquare",   label: "Media",         href: "#media"    },
+					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   }
+				]}
+			/>
+			<Container size="3xl">
+
+				<!-- Page Menu -->
 
 				<PageHeading
 					title="Character Settings"
@@ -108,11 +110,7 @@
 						onclick={() => modalActions.open('customField', { field: { fieldableType: 'character' } })}
 					/>
 				</Section>
-			</Stack>
+			</Container>
 		</Flex>
-	{/snippet}
-
-	{#snippet sidebar()}
-		<div class="bg-slate-50 min-w-80 shadow-lg"></div>
 	{/snippet}
 </AuthenticatedLayout>

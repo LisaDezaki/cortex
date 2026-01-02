@@ -110,7 +110,15 @@ class LocationController extends Controller
     public function create() {}
     public function store(Request $request)
     {
-        $validatedData = $request->validate($this->validationRules);
+        //	Attempt to validated the $request
+		//	Flash an error if validation fails
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to create character: ".$e);
+        	return Redirect::back();
+		}
+
 		$location = Auth::user()->activeProject()->locations()->create($validatedData);
 		$location->save();
 		Session::flash('success', "$location->name created successfully.");
@@ -155,9 +163,14 @@ class LocationController extends Controller
     public function edit(Location $location) {}
     public function update(Request $request, Location $location)
     {
-		// dd($request->all());
-		$validatedData = $request->validate($this->validationRules);
-		// dd($validatedData);
+		//	Attempt to validated the $request
+		//	Flash an error if validation fails
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Failed to create character: ".$e);
+        	return Redirect::back();
+		}
 
 		//	Handle media
 		if ($request->has('media')) {

@@ -37,7 +37,7 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		portal:  clsx('fixed inset-0 z-50 overflow-y-auto px-4 py-6 sm:px-0'),
+		portal:  clsx('fixed inset-0 z-50 overflow-y-auto px-4 md:px-8 lg:px-12 xl:px-20 py-6 lg:py-12'),
 		wrap:    clsx('fixed inset-0 transform transition-all animate-[blur-in_500ms_forwards]'),
 		overlay: clsx('absolute inset-0 bg-black/40 animate-[blur-in_500ms_forwards]'),
 		modal:   clsx('modal flex flex-col items-stretch bg-surface font-body max-h-full mb-6 overflow-hidden rounded-lg transform shadow-xl text-neutral transition-all sm:mx-auto w-full', maxWidthClass, className),

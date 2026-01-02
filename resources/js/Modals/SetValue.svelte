@@ -32,7 +32,7 @@
 		label: 'Save'
 	}}
 >
-	<Box class="px-4 pb-4">
-		<Field {...field} />
+	<Box class="px-3">
+		<Field size="lg" {...field} />
 	</Box>
 </ModalForm>

@@ -48,10 +48,20 @@ class ProjectResource extends JsonResource
 			'customFields'	=> CustomFieldResource::collection($this->whenLoaded('customFields')),
 			
 			'meta' => [
-				'created_at' => $this->created_at,
-				'updated_at' => $this->updated_at,
-				'deleted_at' => $this->deleted_at,
-			]
+				'projectId' => $this->project_id,
+				'created' => [
+					'at'  => $this->created_at,
+					'ago' => $this->created_at->diffForHumans()
+				],
+				'updated' => [
+					'at'  => $this->updated_at,
+					'ago' => $this->updated_at->diffForHumans()
+				],
+				// 'deleted' => [
+				// 	'at'  => $this->deleted_at,
+				// 	'ago' => $this->deleted_at->diffForHumans()
+				// ]
+			],
 		];
     }
 }

@@ -42,7 +42,7 @@
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="h-full overflow-y-auto px-20 py-12">
 			<PageMenu
-				backTo={route('items')} backToLabel="Item List"
+				back={{ text: 'Item List', href: route('items') }}
 				items={[
 					{ icon: "Info",         	label: "Details",       href: "#details"       },
 					{ icon: "Textbox",          label: "Custom Fields", href: "#custom"        },

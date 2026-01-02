@@ -4,6 +4,7 @@
 
 	import { Box, Flex, Grid, Inline, Stack, UploadContext } from '@/Components/Core'
 	import Button	 from '@/Components/UI/Button.svelte'
+	import Entity	 from '@/Components/UI/Entity.svelte'
 	import Field	 from '@/Components/UI/Field.svelte'
 	import Heading	 from '@/Components/UI/Heading.svelte'
 	import Icon		 from '@/Components/UI/Icon.svelte'
@@ -62,8 +63,8 @@
 	}}
 	title={title}
 >
-	<Flex class="px-4 pb-1.5">
-		<Input.Text type="search" icon="MagnifyingGlass" />
+	<Flex class="px-3 pb-1.5">
+		<Input.Text type="search" size="sm" icon="MagnifyingGlass" />
 		<Inline class="ml-auto -space-x-[1px]">
 			<Button class="rounded-l" size="sm" style="hard" theme={layout === 'grid' ? "accent" : "neutral"} icon="GridFour"		onclick={() => setLayout('grid')} />
 			<Button class="rounded-r" size="sm" style="hard" theme={layout === 'list' ? "accent" : "neutral"} icon="ListBullets"	onclick={() => setLayout('list')} />
@@ -71,35 +72,25 @@
 	</Flex>
 
 	{#if layout === 'list'}
-		<Stack class="max-h-[60vh] overflow-y-auto py-4">
+		<Stack class="max-h-[60vh] overflow-y-auto px-3 py-1.5" gap={1.5}>
 			{#each options as option}
-				<Flex gap={3} class="cursor-pointer px-6 py-1.5 {isActive(option.id) ? 'bg-accent-softest rounded text-accent' : ''}" onclick={() => toggleSelection(option.id)}>
-					<Thumbnail class="bg-neutral-softest h-8 rounded w-8" src={option.image?.url} />
-					<Stack class="-space-y-1 pt-0.5">
-						<span class="text-sm">{option.name}</span>
-						<span class="text-xs opacity-65">{option.alias}</span>
-					</Stack>
-					{#if $form[field]?.includes(option.id)}
-						<Icon name="CheckCircle" size="sm" class="ml-auto text-accent" />
-					{/if}
-				</Flex>
+				<Entity
+					entity={option}
+					active={$form[field]?.includes(option.id)}
+					onclick={() => toggleSelection(option.id)}
+					layout="inline"
+					size="sm"
+				/>
 			{/each}
 		</Stack>
 	{:else if layout === 'grid'}
-		<Grid cols={4} gap={1} class="max-h-[60vh] overflow-y-auto p-4">
+		<Grid cols={4} gap={1.5} class="max-h-[60vh] overflow-y-auto px-3 py-1.5">
 			{#each options as option}
-				<Stack gap={1} class="col-span-1 cursor-pointer p-1 {isActive(option.id) ? 'bg-accent-softest rounded text-accent' : '' }" onclick={() => toggleSelection(option.id)}>
-					<Thumbnail class="aspect-square bg-neutral-softest place-self-center rounded w-full" src={option.image?.url} />
-					<Flex class="pl-1">
-						<Stack class="-space-y-0.5">
-							<span class="text-sm line-clamp-1 font-semibold">{option.name}</span>
-							<span class="text-xs line-clamp-1 opacity-65">{option.alias}</span>
-						</Stack>
-						{#if isActive(option.id)}
-							<Icon name="CheckCircle" size="md" class="ml-auto text-accent" />
-						{/if}
-					</Flex>
-				</Stack>
+				<Entity
+					entity={option}
+					active={$form[field]?.includes(option.id)}
+					onclick={() => toggleSelection(option.id)}
+				/>
 			{/each}
 		</Grid>
 	{/if}

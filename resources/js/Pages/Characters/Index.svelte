@@ -10,7 +10,7 @@
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import Entity				from '@/Components/UI/Entity.svelte'
 	import PageHeader			from '@/Components/UI/PageHeader.svelte'
-	import CharacterPanel 		from '@/Components/Features/Character/CharacterPanel.svelte'
+	import PageHeading			from '@/Components/UI/PageHeading.svelte'
 	import CharacterTable		from '@/Components/Features/Character/CharacterTable.svelte'
 	import ProjectObject 		from '@/services/ProjectObject'
 
@@ -130,45 +130,37 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
+		<Stack class="overflow-y-auto px-20 py-12">
 
-		<!-- Fixed/Sticky Header -->
-
-		<PageHeader size="7xl" class="px-20 py-2"
-			tabs={[
-				{ text: "Character List",	active: true },
-				{ text: "Settings",			href: route('characters.settings') },
-			]}
-			actions={[
-				{ icon: "Plus", text: "New", theme: "accent", onclick: () => characters.create() },
-			]}
-		>
-			<ControlBar
+			<PageHeading
+				title="Character List"
+				subtitle="Index page"
+				actions={[
+					{ icon: "GearFine", theme: "neutral", href: route('characters.settings') },
+					{ icon: "Plus", text: "New", theme: "accent", onclick: () => characters.openModal('create') },
+				]}
+			/>
+			
+			<ControlBar class="py-3"
 				data={characters} bind:results bind:layout={parameters.layout}
 				filterOptions={activeProject.getOptions('characters', 'filter')}
 				sortOptions={activeProject.getOptions('characters', 'sort')}
 				layoutOptions={activeProject.getOptions('characters', 'layout')}
 			/>
-		</PageHeader>
 
-
-		<!-- Main Body -->
-
-		<Stack align="center" class="flex-1 overflow-y-auto px-20 pt-3 pb-12">
 			{#if activeProject && characters.items.length > 0}
-
-
-				<!-- Grid -->
-
+			
 				{#if parameters.layout === 'grid'}
-					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
+
+					<!-- Grid -->
+
+					<Grid class="py-3 w-full" cols={gridCols} gap={3}>
 						{#if results.length > 0}
 							{#each results as character}
 								<Entity
 									active={parameters.selected === character.slug}
 									entity={character}
-									layout="stack"
-									size="auto"
-									onclick={() => selectCharacter(character)}
+									href={character.routes.show}
 								/>
 							{/each}
 						{:else}
@@ -176,19 +168,19 @@
 						{/if}
 					</Grid>
 
-
-				<!-- Table -->
-
 				{:else if parameters.layout === 'table'}
+
+					<!-- Table -->
+
 					<CharacterTable
 						class="max-w-7xl text-sm w-full"
 						characters={results}
 					/>
-
-
-				<!-- Graph -->
-
+					
 				{:else if parameters.layout === 'graph'}
+
+					<!-- Graph -->
+
 					<Empty class="h-96 max-w-7xl w-full"
 						icon="Graph" text="This layout type isn't working yet. Try again later."
 					/>
@@ -196,6 +188,8 @@
 
 				{/if}
 			{:else}
+
+				<!-- Empty -->
 
 				<Empty
 					icon="User"
@@ -206,8 +200,5 @@
 
 			{/if}
 		</Stack>
-	{/snippet}
-	{#snippet sidebar()}
-		<CharacterPanel character={characters.items.find(c => c.slug === parameters.selected)} />
 	{/snippet}
 </AuthenticatedLayout>

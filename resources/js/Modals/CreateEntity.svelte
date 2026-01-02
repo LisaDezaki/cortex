@@ -2,39 +2,36 @@
     import { useForm } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
-	import { Stack }   from '@/Components/Core'
+	import { Flex, Stack, UploadContext } from '@/Components/Core'
 	import Field  from '@/Components/UI/Field.svelte'
-	import ModalForm from '@/Components/UI/ModalForm.svelte'
+	import ModalForm  from '@/Components/UI/ModalForm.svelte'
 
     let {
 		type,
+		...restProps
 	} = $props()
 
 	const form = useForm({
-		collection_type: type,
-		name: '',
-	});
-
+		name:  '',
+	})
 </script>
 
 
 
-
-
-<ModalForm title="Creating Collection" size="sm"
-	endpoint={route('collections.store')}
+<ModalForm
+	size="md"
 	form={form}
 	method="post"
-	reloadPageProps={['collections']}
 	submitProps={{
 		label: 'Create'
 	}}
+	{...restProps}
 >
-	<Stack class="px-3 pb-3">
+	<Flex class="px-2">
 		<Field type="text"
 			name="name"
-			placeholder="Collection name"
+			placeholder="Name"
 			required
 		/>
-	</Stack>
+	</Flex>
 </ModalForm>
