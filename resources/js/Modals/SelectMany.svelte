@@ -19,7 +19,8 @@
 		field,
 		options = [],
 		selected = $bindable([]),
-		title = "Select Many"
+		title = "Select Many",
+		...restProps
 	} = $props()
 
 	const form = useForm({
@@ -58,11 +59,9 @@
 	form={form}
 	method="patch"
 	size="xl"
-	submitProps={{
-		label: 'Save'
-	}}
+	submitProps={{ label: 'Save' }}
 	title={title}
->
+{...restProps}>
 	<Flex class="px-3 pb-1.5">
 		<Input.Text type="search" size="sm" icon="MagnifyingGlass" />
 		<Inline class="ml-auto -space-x-[1px]">

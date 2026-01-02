@@ -51,7 +51,7 @@
 					{ icon: "Trash", 		label: "Delete",		onclick: () => faction.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="4xl">
+			<Container size="3xl">
 
 				
 				<!-- Details -->

@@ -39,7 +39,7 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={20} class="flex-1 min-h-64 overflow-y-auto px-20 py-12 w-full">
+		<Flex justify="center" gap={12} class="flex-1 min-h-64 overflow-y-auto px-20 py-12 w-full">
 			<PageMenu
 				back={{ text: 'Dashboard', href: route('dashboard') }}
 				items={[
@@ -50,7 +50,7 @@
 					{ icon: "Trash",	 	  label: "Delete",		  onclick: () => active.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Stack class="flex-1 min-w-2xl max-w-5xl">
+			<Stack class="flex-1 min-w-2xl max-w-3xl">
 
 				<PageHeading class="mb-12"
 					title="Project Settings"

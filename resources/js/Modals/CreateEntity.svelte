@@ -22,11 +22,8 @@
 	size="md"
 	form={form}
 	method="post"
-	submitProps={{
-		label: 'Create'
-	}}
-	{...restProps}
->
+	submitProps={{ label: 'Create' }}
+{...restProps}>
 	<Flex class="px-2">
 		<Field type="text"
 			name="name"

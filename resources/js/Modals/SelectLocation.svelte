@@ -14,7 +14,8 @@
     let {
 		endpoint,
 		method,
-		title
+		title,
+		...restProps
 	} = $props()
 
 	const form = useForm({
@@ -29,10 +30,8 @@
 	endpoint={endpoint}
 	form={form}
 	method={method}
-	submitProps={{
-		label: 'Select'
-	}}
->
+	submitProps={{ label: 'Select' }}
+{...restProps}>
 	<Stack gap={1.5} class="px-3">
 		{#each locations.items as location}
 			<Entity

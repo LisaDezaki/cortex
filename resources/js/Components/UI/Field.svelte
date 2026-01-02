@@ -102,7 +102,6 @@
 
 
 <div class={cx.field}>
-
 	{#if layout == 'block'}
 		<div class="col-span-2">
 			{@render labelBlock()}
@@ -120,5 +119,4 @@
 		{@render inputBlock()}
 		{@render errorBlock()}
 	{/if}
-
 </div>

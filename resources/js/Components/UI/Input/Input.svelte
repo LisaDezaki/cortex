@@ -42,7 +42,7 @@
 
 </script>
 
-
+<!-- {restProps.autofocus ? 'True' : 'False'} -->
 
 {#if ['text', 'email', 'password', 'url', 'search', 'tel'].includes(type)}
 	<Text id={name} bind:value={value}

@@ -3,7 +3,8 @@
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
-	import Inline 		 from '@/Components/Core/Grid.svelte'
+	import Grid 		 from '@/Components/Core/Grid.svelte'
+	import Inline 		 from '@/Components/Core/Inline.svelte'
 	import Map 			 from '@/Components/Core/Map'
 	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
@@ -15,6 +16,7 @@
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section  	 from '@/Components/UI/Section.svelte'
 	import Separator  	 from '@/Components/UI/Separator.svelte'
+	import Thumbnail  	 from '@/Components/UI/Thumbnail.svelte'
 	import LocationObject from '@/services/LocationObject';
 
 	/**
@@ -34,7 +36,7 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={6} class="h-full overflow-y-auto py-12">
+		<Flex justify="center" gap={6} class="overflow-y-auto px-20 py-12">
 			<PageMenu
 				back={{ text: 'Location List', href: route('locations') }}
 				items={[
@@ -44,14 +46,12 @@
 					{ icon: "Trash", 		label: "Delete", 		onclick: () => location.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="5xl">
+			<Container size="3xl">
 
 
-				<!-- Details -->
+				<!-- Header -->
 
-				<Section id="details" class="pb-6">
-
-
+				<Section id="header">
 					<ArticleBanner>
 						<Media
 							class="absolute inset-0 rounded-lg overflow-hidden"
@@ -63,47 +63,79 @@
 							media={location.getMedia('map')}
 							onclick={() => location.openModal('setMedia', { type: 'map', aspect: 'aspect-[1/1]'})}
 						/>
-						{#if location.parent}
+						<!-- {#if location.mapData?.location.name}
 							<Inline class="relative">
 								<Button style="glass" class="rounded-full"
-									icon={location.parent.icon || "ArrowElbowUpLeft"} label={location.parent.name}
-									href={route('locations.show', { location: location.parent.slug })}
+									icon={location.mapData?.location.icon || "ArrowElbowUpLeft"} text={location.mapData?.location.name}
+									href={route('locations.show', { location: location.mapData?.location.slug })}
 								/>
 							</Inline>
-						{/if}
-						<Heading is="h1" as="h3"
-							class="mt-auto w-3/4 z-10 {location.getMedia('banner') ? 'text-white' : ''}"
-							heading={location.name}
-							subheading={location.type}
-						/>
+						{/if} -->
+						<Inline align="start" justify="start" class="z-10">
+							<Heading is="h1" as="h3"
+								class="max-w-3/4 mt-auto {location.getMedia('banner') ? 'text-white' : ''}"
+								heading={location.name}
+								headingClass="whitespace-pre-wrap"
+							/>
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => location.openModal('rename')} />
+						</Inline>
+						<Inline class="z-10">{location.type}
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => location.openModal('type')} />
+						</Inline>
 					</ArticleBanner>
-
-					<Stack class="max-w-[64ch] mx-6 mb-12">
-						<Heading is="h3" as="h6" class="mt-9 mb-6">Description</Heading>
-						<Collapsible collapsed={true}
-							collapsedClass="line-clamp-3 overflow-hidden">
-							{location.description}
-						</Collapsible>
-					</Stack>
-
-					<Stack class="max-w-[64ch] mx-6">
-						<Heading is="h3" as="h6" class="mb-6">Custom Fields</Heading>
-						{#if location.customFields}
-							Custom Fields
-						{:else}
-							<p class="font-style-placeholder">There aren't any Custom Fields for Locations yet.</p>
-						{/if}
-					</Stack>
-					
 				</Section>
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
+				<!-- Details -->
+
+				<Section id="details">
+					<Stack class="max-w-[64ch] mx-6 mt-12">
+						<Heading is="h3" as="h4" class="mt-9 mb-6">Details</Heading>
+
+						<Heading is="h3" as="h6" class="mb-6 text-neutral-soft">Description
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => location.openModal('description')} />
+						</Heading>
+						{#if location.description}
+							<Collapsible collapsed={true}
+								collapsedClass="line-clamp-3 overflow-hidden">
+								{location.description}
+							</Collapsible>
+						{:else}
+							<span class="text-neutral-softest">No description</span>
+						{/if}
+					</Stack>
+				</Section>
+
+				<Separator class="my-12" />
+
+				<!-- Custom Fields -->
+		
+				<Section id="custom" class="p-6">
+					<Heading is="h3" as="h4" class="mb-6">Custom Fields</Heading>
+					{#if customFields && customFields.length > 0}
+						<Stack gap={3}>
+							{#each customFields as field, i}
+								<Flex align="baseline" gap={3}>
+									<span class="font-semibold w-32">{field.label}:</span>
+									<span class="line-clamp-1 w-32 {character.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{character.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span>
+									<Button class="place-self-start rounded-full"
+										size="xs" style="plain" theme="accent" icon="PencilSimple"
+										onclick={() => character.openModal('customField', { field: field, value: character.customFieldValues?.find(f => f.name === field.name)?.value })}
+									/>
+								</Flex>
+							{/each}
+						</Stack>
+					{:else}
+						<span class="text-neutral-softer">There are no custom fields for characters in this project yet.</span>
+					{/if}
+				</Section>
+
+				<Separator class="my-12" />
 
 
 				<!-- Map -->
 
 				<Section id="map" class="px-6 py-12">
-					<Heading is="h3" as="h6" class="mb-6">Map</Heading>
+					<Heading is="h3" as="h4" class="mb-6">Map</Heading>
 					<Map.Context
 						location={location}
 						mapItems={location.mapItems.all}
@@ -111,7 +143,7 @@
 					/>
 				</Section>
 
-				<Separator class="mx-6 my-6 w-[64ch]" />
+				<Separator class="my-12" />
 
 
 				<!-- Points of Interest -->
@@ -165,15 +197,19 @@
 
 
 				<!-- Gallery -->
-
-				<Section id="gallery" class="px-6 py-12">
-					<Heading is="h3" as="h6" class="mb-6">Gallery</Heading>
-					<!-- <MediaGrid cols={6}
-						media={media_gallery}
-						type="gallery"
-						addable
-					/> -->
+		
+				<Section id="gallery" class="p-6">
+					<Heading is="h3" as="h4" class="mb-6">Gallery</Heading>
+					<Grid cols={6} class="gap-[2px]">
+						{#each new Array(6) as item, i}
+							<Thumbnail aspect="square"
+								class="aspect-square bg-neutral-softest rounded-none hover:inner-shadow-sm transition-all"
+							/>
+						{/each}
+					</Grid>
 				</Section>
+
+				<Separator class="my-12" />
 
 			</Container>
 		</Flex>

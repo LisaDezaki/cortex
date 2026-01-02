@@ -21,12 +21,8 @@
 <ModalForm title="Delete {entityName}: {entity?.name}" size="xl"
 	form={form}
 	method="delete"
-	submitProps={{
-		text: 'Yes, Delete',
-		theme: 'danger'
-	}}
-	{...restProps}
->
+	submitProps={{ text: 'Yes, Delete', theme: 'danger' }}
+{...restProps}>
 	<Flex align="center" gap={6} class="px-4">
 		{#if entity && entity.image}
 			<Thumbnail class="aspect-square rounded w-32" src={entity.image?.url} />

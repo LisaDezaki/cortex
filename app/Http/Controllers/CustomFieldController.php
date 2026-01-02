@@ -29,7 +29,7 @@ class CustomFieldController extends Controller
 		'label'      	=> ['string', 'nullable'],
 		'placeholder'	=> ['string', 'nullable'],
 		'description'	=> ['string', 'nullable'],
-		'default'		=> ['string', 'nullable'],
+		'default'		=> ['nullable'],
 		'rows'			=> ['numeric','nullable'],
 		'min'			=> ['numeric','nullable','sometimes'],
 		'max'			=> ['numeric','nullable','sometimes'],
@@ -49,17 +49,20 @@ class CustomFieldController extends Controller
 	 */
 	public function store(Request $request)
 	{
+
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
 			Session::flash('error', "Failed to create custom field: ".$e);
         	return Redirect::back();
 		}
+
 		$field              = new CustomField($validatedData);
 		$field->project_id  = Auth::user()->active_project;
 
 		$field->label       = $field->label ?: $field->name;
 		$field->placeholder = $validatedData['placeholder'] ?: null;
+		$field->fieldable_type = $validatedData['fieldableType'];
 
 		$fieldOptions  = $validatedData['options'];
 		unset($field->options);
@@ -136,6 +139,7 @@ class CustomFieldController extends Controller
 
 	public function update(Request $request)
 	{
+		
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
@@ -148,6 +152,7 @@ class CustomFieldController extends Controller
 
 		$field->label = $field->label ?: $field->name;
 		$field->placeholder = $validatedData['placeholder'] ?: null;
+		$field->fieldable_type = $validatedData['fieldableType'];
 
 		$fieldOptions = $validatedData['options'];
 		unset($field->options);

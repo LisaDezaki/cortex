@@ -17,6 +17,7 @@
 		character,
 		related = $bindable(),
 		relationship,
+		...restProps
 	} = $props()
 
 	let relatedCharacter		  = $derived(related ? characters.find(c => c.slug === related) : characters.find(c => c.id === relationship?.id))
@@ -44,7 +45,7 @@
 	form={form}
 	method="patch"
 	reloadPageProps={['characters']}
->
+{...restProps}>
 	{#if related == null}
 
 		<Grid cols={5} class="px-6 pt-0 pb-3">

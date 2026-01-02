@@ -9,11 +9,11 @@
 	import ModalForm  from '@/Components/UI/ModalForm.svelte'
 
     let {
-		endpoint,
 		entity,
 		field,
 		label,
 		title = 'Set Value',
+		...restProps
 	} = $props()
 
 	const form = useForm({
@@ -24,15 +24,12 @@
 
 
 
-<ModalForm title={title} size="xl"
-	endpoint={endpoint}
+<ModalForm title={title} size={field.type === 'textarea' ? '2xl' : 'md'}
 	form={form}
 	method="patch"
-	submitProps={{
-		label: 'Save'
-	}}
->
-	<Box class="px-3">
-		<Field size="lg" {...field} />
+	submitProps={{ label: 'Save' }}
+{...restProps}>
+	<Box class="px-2">
+		<Field {...field} autofocus={true} />
 	</Box>
 </ModalForm>

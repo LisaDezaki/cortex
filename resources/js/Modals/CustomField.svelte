@@ -1,6 +1,6 @@
 <script>
 	import { onMount } from 'svelte'
-    import { page, useForm } from '@inertiajs/svelte'
+    import { page, router, useForm } from '@inertiajs/svelte'
     import { route } from 'momentum-trail'
 
 	import Box 			from '@/Components/Core/Box.svelte'
@@ -25,7 +25,8 @@
     let {
 		class: className,
 		field,
-        oncancel
+        oncancel,
+		...restProps
     } = $props()
 
 	//  State & Reactivity
@@ -128,13 +129,19 @@
 		if ($form.id) {
 			$form.patch( route('customFields.update'), {
 				onFinish: (a,b) => {
-					modalActions.close
+					if (restProps.reloadPageProps) {
+						router.visit( $page.url, { only: restProps.reloadPageProps })
+					}
+					modalActions.close()
 				}
 			})
 		} else {
 			$form.post( route('customFields.store'), {
 				onFinish: (a,b) => {
-					modalActions.close
+					if (restProps.reloadPageProps) {
+						router.visit( $page.url, { only: restProps.reloadPageProps })
+					}
+					modalActions.close()
 				}
 			} )
 		}
@@ -146,13 +153,10 @@
 	endpoint={route('customFields.store')}
 	form={form}
 	method="post"
-	submitProps={{
-		label: 'Update',
-		onclick: submit
-	}}
->
+	submitProps={{ label: 'Update', onclick: submit }}
+{...restProps}>
 	<Flex class="border-b px-4 py-3">
-		<Heading is="h4" as="h6">Defining custom field: <span class="text-accent">{$form.label}</span></Heading>
+		<Heading is="h4" as="h6">Custom field: <span class="text-accent">{$form.label}</span></Heading>
 	</Flex>
 
 	<Flex class="flex-1 overflow-hidden p-3 pt-1.5" gap={3}>
@@ -215,13 +219,13 @@
 				/>
 	
 				<!-- Label -->
-				<Field
+				<!-- <Field
 					name="label"
 					type="text"
 					label="Label"
 					placeholder="Custom field label"
 					required
-				/>
+				/> -->
 
 			</Flex>
 

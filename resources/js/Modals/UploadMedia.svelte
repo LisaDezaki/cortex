@@ -26,9 +26,7 @@
 	endpoint={endpoint}
 	form={mediaUploadForm}
 	method={method}
-	submitProps={{
-		label: 'Upload'
-	}}
+	submitProps={{ label: 'Upload' }}
 {...restProps}>
 
 	<UploadContext name="media" {type} {multiple} {aspect}>

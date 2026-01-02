@@ -96,7 +96,7 @@ export default class ProjectList {
 	 * @returns {void}
 	 */
 	create() {
-		modalActions.open('createProject')
+		this.openModal('create')
 	}
 
 

@@ -37,7 +37,7 @@
 
 
 
-<Inline as="header" align="center" class={cx.heading} {...restProps}>
+<Inline align="center" class={cx.heading} {...restProps}>
 
 	<Flex direction="col" align="start" justify="start" gap={0}>
 

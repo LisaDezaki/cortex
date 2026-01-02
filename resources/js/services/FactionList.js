@@ -96,7 +96,7 @@ export default class FactionList {
 	 * @returns {void}
 	 */
 	create() {
-		modalActions.open('createFaction')
+		this.openModal('create')
 	}
 
 	

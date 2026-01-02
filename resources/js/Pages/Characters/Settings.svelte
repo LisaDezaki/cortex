@@ -13,7 +13,16 @@
 	import PageMenu		from '@/Components/UI/PageMenu.svelte'
 	import Section		from '@/Components/UI/Section.svelte'
 	import Separator	from '@/Components/UI/Separator.svelte'
+	import ProjectObject 	from '@/services/ProjectObject'
 	import { modalActions } from '@/stores/modalStore'
+
+
+	/**
+	 * Active project instance
+	 * @type {ProjectObject}
+	 */
+	const activeProject	  = new ProjectObject($page.props.activeProject.data)
+	const characters      = activeProject?.characters
 
 	const customFields = $page.props.customFields?.data
 	const settings     = $page.props.settings?.characters?.data
@@ -87,7 +96,7 @@
 									<Button class="opacity-0 group-hover:opacity-100 ml-auto rounded-full"
 										size="sm" style="soft" theme="accent"
 										icon="PencilSimple"
-										onclick={() => modalActions.open('customField', { field })}
+										onclick={() => characters.openModal('customField', { field })}
 									/>
 								</Inline>
 								<Separator class="opacity-50" />
@@ -107,7 +116,7 @@
 					<Button class="mt-3 mx-auto rounded-full"
 						style="hard" theme="accent"
 						icon="Plus" text="Add Custom Field"
-						onclick={() => modalActions.open('customField', { field: { fieldableType: 'character' } })}
+						onclick={() => characters.openModal('customField', { endpoint: route('customFields.store'), patch: 'post' })}
 					/>
 				</Section>
 			</Container>

@@ -116,7 +116,7 @@ class ItemController extends Controller
 		}
 		
 		$item->save();
-		Session::flash('success', "$item->name created successfully.");
+		Session::flash('success', "Item created: $item->name");
 		return Redirect::route("items.show", [
 			'item' => $item->slug
 		]);
@@ -195,7 +195,7 @@ class ItemController extends Controller
 		//	Update
 		// $item->fill($validatedData);
 		$item->update($validatedData);
-		Session::flash('success', "$item->name updated successfully.");
+		Session::flash('success', "Item updated: $item->name");
         return Redirect::back();
 	}
 
@@ -208,13 +208,13 @@ class ItemController extends Controller
 	 * Characters have soft-deletes, meaning they can be restored.
 	 */
 
-	public function destroy(Request $request, Character $character)
+	public function destroy(Request $request, Item $item)
 	{
 		//	TODO:	Make sure logged in user is authorized before proceeding.
 
-		Session::flash('success', "$character->name has been deleted.");
-		$character->delete();
-		return Redirect::route("characters");
+		Session::flash('success', "Item deleted: $item->name");
+		$item->delete();
+		return Redirect::route("items");
 	}
 
 

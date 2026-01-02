@@ -15,7 +15,8 @@
 		method,
 		options = [],
 		tags = $bindable([]),
-		title = "Set Tags"
+		title = "Set Tags",
+		...restProps
 	} = $props()
 
 	const form = useForm({
@@ -47,11 +48,9 @@
 	form={form}
 	method="patch"
 	size="xl"
-	submitProps={{
-		label: 'Save'
-	}}
+	submitProps={{ label: 'Save' }}
 	title={title}
->
+{...restProps}>
 	<Stack gap={3} class="max-h-[60vh] overflow-y-auto px-6 py-3">
 		<Stack>
 			{#each ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'] as letter}

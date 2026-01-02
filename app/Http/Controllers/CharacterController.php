@@ -70,7 +70,6 @@ class CharacterController extends Controller
 	 * 
 	 * Show the list of Characters
 	 */
-
 	public function index()
 	{
 		$customFields = CustomField::where([
@@ -91,7 +90,6 @@ class CharacterController extends Controller
 	 * method in the CharacterController. The user will likely only be submitting
 	 * a name to initially create a Character.
 	 */
-
 	public function create() {}		//	Character creation is handled through a simple modal
 	public function store(Request $request): RedirectResponse
 	{
@@ -114,7 +112,7 @@ class CharacterController extends Controller
 		}
 		
 		$character->save();
-		Session::flash('success', "Character created: $character->name.");
+		Session::flash('success', "Character created: $character->name");
 		return Redirect::route("characters.show", [
 			'character' => $character->slug
 		]);
@@ -215,7 +213,7 @@ class CharacterController extends Controller
 		//	Update
 		// $character->fill($validatedData);
 		$character->update($validatedData);
-		Session::flash('success', "Character updated: $character->name.");
+		Session::flash('success', "Character updated: $character->name");
         return Redirect::back();
 	}
 
@@ -232,7 +230,7 @@ class CharacterController extends Controller
 	{
 		//	TODO:	Make sure logged in user is authorized before proceeding.
 
-		Session::flash('success', "Character deleted: $character->name.");
+		Session::flash('success', "Character deleted: $character->name");
 		$character->delete();
 		return Redirect::route("characters");
 	}

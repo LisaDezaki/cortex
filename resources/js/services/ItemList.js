@@ -95,7 +95,7 @@ export default class ItemList {
 	 * @returns {void}
 	 */
 	create() {
-		modalActions.open('createItem')
+		this.openModal('create')
 	}
 
 

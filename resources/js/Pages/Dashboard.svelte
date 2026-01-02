@@ -77,9 +77,10 @@
 			
 							<Stack>
 
-								<Inline align="start">
+								<Inline align="center">
 									<Heading is="h1" as="h2">{active.name}</Heading>
-									<Button class="ml-1.5 rounded-full" icon="PencilSimple" size="xs" style="plain" theme="accent" onclick={() => active.openModal('rename')} />
+									<Button class="ml-1.5 place-self-start rounded-full" icon="PencilSimple" size="xs" style="plain" theme="accent" onclick={() => active.openModal('rename')} />
+									<Button class="ml-auto rounded-full" icon="GearFine" size="xl" style="soft" theme="neutral" href={route('projects.settings')} />
 								</Inline>
 
 								<Inline align="center">

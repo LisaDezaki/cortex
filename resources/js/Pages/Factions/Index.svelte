@@ -205,7 +205,7 @@
 					icon="FlagBannerFold"
 					text="There are no factions for this project yet."
 					buttonLabel="Create one?"
-					buttonClick={() => factions.create()}
+					buttonClick={() => factions.openModal('create')}
 				/>
 
 			{/if}

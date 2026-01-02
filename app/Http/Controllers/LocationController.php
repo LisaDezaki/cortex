@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\CollectionResource;
 use App\Http\Resources\CustomFieldResource;
 use App\Http\Resources\LocationResource;
 use App\Http\Requests\StoreLocationRequest;
-use App\Models\Collection;
 use App\Models\CustomField;
 use App\Models\Location;
 use App\Models\MapItem;
@@ -64,7 +62,6 @@ class LocationController extends Controller
 	 * 
 	 * Show the list of Characters
 	 */
-
     public function index()
     {
 		$locationTypes = Location::where(
@@ -76,28 +73,12 @@ class LocationController extends Controller
 			'fieldable_type' => Location::class
 		])->with('options')->get();
 
-		// $worldTree = Location::where([
-		// 	'project_id'   => Auth::user()->active_project,
-		// 	'is_world_map' => true
-		// ])->with(['image', 'media'])->first();
-
         return Inertia::render('Locations/Index', [
 			'locationTypes' => $locationTypes,
 			'customFields'	=> CustomFieldResource::collection($customFields),
-			// 'worldTree'		=> new LocationResource($worldTree)
 		]);
     }
-	// public function collections()
-	// {
-	// 	$collections = Collection::where([
-	// 		'project_id' => Auth::user()->active_project,
-	// 		'collection_type' => Location::class
-	// 	])->with(['items'])->get();
 
-	// 	return Inertia::render('Locations/Collections', [
-	// 		'collections'	=> CollectionResource::collection($collections),
-	// 	]);
-	// }
 
 	/**
 	 * CREATE / STORE
@@ -106,7 +87,6 @@ class LocationController extends Controller
 	 * method in the LocationController. The user will likely only be submitting
 	 * a name to initially create a Location.
 	 */
-
     public function create() {}
     public function store(Request $request)
     {
@@ -121,7 +101,7 @@ class LocationController extends Controller
 
 		$location = Auth::user()->activeProject()->locations()->create($validatedData);
 		$location->save();
-		Session::flash('success', "$location->name created successfully.");
+		Session::flash('success', "Location created: $location->name");
 		return Redirect::route("locations.show", [
 			'location' => $location->slug
 		]);
@@ -133,7 +113,6 @@ class LocationController extends Controller
 	 * 
 	 * Render the Location entity page for the requested Location.
 	 */
-
 	public function show(Location $location)
 	{
 		$location->load([
@@ -159,7 +138,6 @@ class LocationController extends Controller
 	 * method in the LocationController. The user may submit any piece of
 	 * Location model to update, and so it must be updated on a per-item basis.
 	 */
-
     public function edit(Location $location) {}
     public function update(Request $request, Location $location)
     {
@@ -216,7 +194,7 @@ class LocationController extends Controller
 		$location->fill($validatedData);
 		$location->update();
 
-		Session::flash('success', "$location->name was updated.");
+		Session::flash('success', "Location updated: $location->name");
 		return Redirect::back();
     }
 
@@ -227,14 +205,27 @@ class LocationController extends Controller
 	 * Remove the entity and all associated data from the database.
 	 * Locations have soft-deletes, meaning they can be restored.
 	 */
-
     public function destroy(Request $request, Location $location)
     {
 		//	TODO:	Make sure logged in user is authorized before proceeding.
 
-		Session::flash('success', "$location->name has been deleted.");
+		Session::flash('success', "Location deleted: $location->name");
 		$location->delete();
-		return Redirect::back();
+		return Redirect::route("locations");
+
+		// $locationTypes = Location::where(
+		// 	'project_id', Auth::user()->active_project
+		// )->distinct()->orderBy('type')->pluck('type')->filter()->values()->all();
+
+		// $customFields = CustomField::where([
+		// 	'project_id' => Auth::user()->active_project,
+		// 	'fieldable_type' => Location::class
+		// ])->with('options')->get();
+
+		// return Inertia::render('Locations/Index', [
+		// 	'locationTypes' => $locationTypes,
+		// 	'customFields'	=> CustomFieldResource::collection($customFields),
+		// ]);
     }
 
 	public function settings(Request $request): Response

@@ -70,7 +70,20 @@ export default class LocationObject {
 			case 'rename':
 				modalActions.open('setValue', { ...updateProps,
 					field: { name: 'name', type: 'text' },
+					reloadPageProps: ['location.rename'],
 					title: 'Rename location: ' + this.name,
+				...props }); break;
+			case 'type':
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'type', type: 'text' },
+					reloadPageProps: ['location.type'],
+					title: 'Set location type: ' + this.name,
+				...props }); break;
+			case 'description':
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'description', label: 'Description', type: 'textarea', rows: 12 },
+					reloadPageProps: ['location.description'],
+					title: 'Describe location: ' + this.name,
 				...props }); break;
 			case 'climate':
 				modalActions.open('setTags', { ...updateProps,

@@ -96,7 +96,7 @@ export default class LocationList {
 	 * @returns {void}
 	 */
 	create() {
-		modalActions.open('createLocation')
+		this.openModal('create')
 	}
 
 

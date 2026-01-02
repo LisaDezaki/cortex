@@ -31,6 +31,8 @@ export default class CharacterList {
 		}
 		Object.assign(this, {
 
+			laravelClass: "App\\Models\\Character",
+
 			/**
 			 * Array of CharacterObject instances
 			 * @type {Array<CharacterObject>}
@@ -67,6 +69,12 @@ export default class CharacterList {
 			case 'create':
 				modalActions.open('createEntity', { ...storeProps,
 					title: 'Create character:',
+					reloadPageProps: ['activeProject.characters'],
+				...props }); break;
+			case 'customField':
+				modalActions.open('customField', {
+					reloadPageProps: ['customFields', 'activeProject.characters.customFields'],
+					field: { ...props?.field, fieldableType: this.laravelClass },
 				...props }); break;
 			default:
 				console.log('CharacterList.openModal', modalName, props)
@@ -97,7 +105,7 @@ export default class CharacterList {
 	 * @returns {void}
 	 */
 	create() {
-		modalActions.open('createCharacter')
+		this.openModal('create')
 	}
 
 

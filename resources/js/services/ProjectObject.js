@@ -115,16 +115,19 @@ export default class ProjectObject {
 			case 'rename':
 				modalActions.open('setValue', { ...updateProps,
 					field: { name: 'name', type: 'text' },
+					reloadPageProps: ['activeProject.name'],
 					title: 'Rename project: ' + this.name,
 				...props }); break;
 			case 'type':
 				modalActions.open('setValue', { ...updateProps,
 					field: { name: 'type', type: 'text' },
+					reloadPageProps: ['activeProject.type'],
 					title: 'Set type: ' + this.name,
 				...props }); break;
 			case 'description':
 				modalActions.open('setValue', { ...updateProps,
 					field: { name: 'description', label: 'Description', type: 'textarea', rows: 12 },
+					reloadPageProps: ['activeProject.description'],
 					title: 'Describe project: ' + this.name,
 				...props }); break;
 			case 'setMedia':
@@ -132,8 +135,8 @@ export default class ProjectObject {
 					aspect: 'aspect-square',
 					media: this.getMedia(props.type),
 					method: 'patch',
-					reloadPageProps: ['activeProject.media', 'projects.media'],
-					title: 'Upload ' + props.type + ' for ' + this.name,
+					reloadPageProps: ['activeProject.media'],
+					title: 'Upload ' + props.type + ': ' + this.name,
 					type: props.type,
 				...props }); break;
 			case 'delete':

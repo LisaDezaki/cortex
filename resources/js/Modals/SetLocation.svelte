@@ -16,6 +16,7 @@
 		endpoint,
 		field = 'location',
 		title,
+		...restProps
 	} = $props()
 
 	const form = useForm({
@@ -35,10 +36,8 @@
 	endpoint={endpoint}
 	form={form}
 	method="patch"
-	submitProps={{
-		text: 'Confirm'
-	}}
->
+	submitProps={{ text: 'Confirm' }}
+{...restProps}>
 	<Map.Context
 		class="flex-col w-full"
 		location={locations.find($form[field])}

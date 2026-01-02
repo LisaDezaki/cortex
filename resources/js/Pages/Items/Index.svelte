@@ -205,7 +205,7 @@
 					icon="Package"
 					text="There are no items for this project yet."
 					buttonLabel="Create one?"
-					buttonClick={() => items.create()}
+					buttonClick={() => items.openModal('create')}
 				/>
 
 			{/if}

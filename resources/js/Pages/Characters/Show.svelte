@@ -91,9 +91,7 @@
 				<!-- Details -->
 
 				<Section id="details">
-
 					<Stack class="max-w-[64ch] mx-6 mt-12">
-
 						<Heading is="h3" as="h4" class="mt-9 mb-6">Details</Heading>
 						
 						<Heading is="h3" as="h6" class="mb-6 text-neutral-soft">Description
@@ -109,7 +107,7 @@
 						{/if}
 
 						<Heading is="h3" as="h6" class="mt-9 mb-6 text-neutral-soft">Appearance
-							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('appearance')} />
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('appearance', { options: $page.props.options.appearance })} />
 						</Heading>
 						<Flex wrap class="gap-[2px]">
 							{#if character.appearance}
@@ -122,7 +120,7 @@
 						</Flex>
 	
 						<Heading is="h3" as="h6" class="mt-9 mb-6 text-neutral-soft">Personality
-							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('personality')} />
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('personality', { options: $page.props.options.personality })} />
 						</Heading>
 						<Flex wrap class="gap-[2px]">
 							{#if character.personality}
@@ -185,8 +183,10 @@
 							</Flex>
 
 						{:else}
-							<p class="font-style-placeholder">{character.name} doesn't have any relationships yet.</p>
-							<p><button class="text-accent hover:underline" onclick={() => character.openModal('relationship')}>Create one?</button></p>
+							<Stack class="col-span-full">
+								<p class="italic text-neutral-softer">{character.name} doesn't have any relationships yet.</p>
+								<p><button class="text-accent hover:underline" onclick={() => character.openModal('relationship')}>Create one?</button></p>
+							</Stack>
 						{/if}
 					</Grid>
 				</Section>
@@ -200,8 +200,8 @@
 					<Flex align="center" class="mb-6 max-w-[32ch]">
 						<Heading is="h3" as="h4">Factions</Heading>
 					</Flex>
-					{#if character.factions?.items?.length > 0}
-						<Grid cols={8} gap={3}>
+					<Grid cols={8} gap={3}>
+						{#if character.factions?.items?.length > 0}
 							{#each character.factions?.items as fac, i}
 								<Entity
 									entity={fac}
@@ -209,16 +209,39 @@
 									href={route('factions.show', { faction: fac.slug })}
 								/>
 							{/each}
-						</Grid>
+						{:else}
+							<Stack class="col-span-full">
+								<p class="italic text-neutral-softer">{character.name} isn't in any factions yet.</p>
+								<p><button class="text-accent hover:underline" onclick={() => character.openModal('faction')}>Add one?</button></p>
+							</Stack>
+						{/if}
+					</Grid>
+				</Section>
+
+				<Separator class="my-12" />
+
+
+				<!-- Location -->
+		
+				<Section id="location" class="p-6">
+					<Flex align="center" class="mb-6 max-w-[32ch]">
+						<Heading is="h3" as="h4">Location</Heading>
+					</Flex>
+					{#if character.mapData?.location}
+						<Map.Context class="aspect-video rounded-lg shadow"
+							location={character?.location}
+							navigable={false}
+							onUpload={() => character.openModal('location')}
+						/>
 					{:else}
-						<p class="font-style-placeholder">{character.name} isn't in any factions yet.</p>
-						<p><Link onclick={() => character.addFaction()}>Add one?</Link></p>
+						<p class="italic text-neutral-softer">{character.name} hasn't been assigned any locations yet.</p>
+						<p><Link onclick={() => character.openModal('location')}>Assign one?</Link></p>
 					{/if}
 				</Section>
 
 				<Separator class="my-12" />
-		
-		
+
+
 				<!-- Inventory -->
 		
 				<Section id="items" class="p-6">
@@ -240,30 +263,9 @@
 				</Section>
 
 				<Separator class="my-12" />
-
-
-				<!-- Location -->
-		
-				<Section id="location" class="p-6">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h4">Location</Heading>
-					</Flex>
-					{#if character.mapData?.location}
-						<Map.Context class="aspect-video rounded-lg shadow"
-							location={character?.location}
-							navigable={false}
-							onUpload={() => character.openModal('location')}
-						/>
-					{:else}
-						<p class="font-style-placeholder">{character.name} hasn't been assigned a location yet.</p>
-						<p><Link onclick={() => character.openModal('location')}>Assign one?</Link></p>
-					{/if}
-				</Section>
-
-				<Separator class="my-12" />
 		
 		
-				<!-- Media -->
+				<!-- Gallery -->
 		
 				<Section id="gallery" class="p-6">
 					<Heading is="h3" as="h4" class="mb-6">Gallery</Heading>

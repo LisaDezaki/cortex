@@ -40,7 +40,7 @@ export default class CharacterObject {
 			 * @type {string}
 			 * @readonly
 			 */
-			laravelClass: "App\Models\Character",
+			laravelClass: "App\\Models\\Character",
 
 			/**
 			 * A FactionList instance
@@ -82,37 +82,52 @@ export default class CharacterObject {
 			case 'rename':
 				modalActions.open('setValue', { ...updateProps,
 					field: { name: 'name', type: 'text' },
+					reloadPageProps: ['character.name'],
 					title: 'Rename character: ' + this.name,
 				...props }); break;
 			case 'alias':
 				modalActions.open('setValue', { ...updateProps,
 					field: { name: 'alias', type: 'text' },
-					title: 'Set alias: ' + this.name,
+					reloadPageProps: ['character.alias'],
+					title: 'Set character alias: ' + this.name,
 				...props }); break;
 			case 'description':
 				modalActions.open('setValue', { ...updateProps,
 					field: { name: 'description', label: 'Description', type: 'textarea', rows: 12 },
+					reloadPageProps: ['character.description'],
 					title: 'Describe character: ' + this.name,
 				...props }); break;
 			case 'location':
 				modalActions.open('setLocation', { ...updateProps,
 					field: 'location',
+					reloadPageProps: ['character.location'],
 					title: 'Set location: ' + this.name,
+				...props }); break;
+			case 'faction':
+				modalActions.open('selectOne', { ...updateProps,
+					field: 'factions',
+					reloadPageProps: ['character.factions'],
+					selected: this.factions.items?.map(f => f.id) || [],
+					title: "Set faction: " + this.name,
 				...props }); break;
 			case 'factions':
 				modalActions.open('selectMany', { ...updateProps,
 					field: 'factions',
+					reloadPageProps: ['character.factions'],
 					selected: this.factions.items?.map(f => f.id) || [],
-					title: "Set factions membership: " + this.name,
+					title: "Set factions: " + this.name,
 				...props }); break;
 			case 'relationship':
 				modalActions.open('setCharacterRelationship', { ...updateProps,
 					character: this,
+					reloadPageProps: ['character.relationships'],
+					selected: this.relationships.items?.map(r => r.id) || [],
 					title: "Set relationship: " + this.name,
 				...props }); break;
 			case 'relationships':
 				modalActions.open('selectMany', { ...updateProps,
 					field: 'relationships',
+					reloadPageProps: ['character.relationships'],
 					selected: this.relationships.items?.map(r => r.id) || [],
 					title: "Set relationships: " + this.name,
 				...props }); break;
@@ -127,18 +142,18 @@ export default class CharacterObject {
 				...props }); break;
 			case 'appearance':
 				modalActions.open('setTags', { ...updateProps,
-					reloadPageProps: ['activeProject', 'character.appearance', 'characters.appearance'],
+					reloadPageProps: ['character.appearance'],
 					title: 'Set appearance: ' + this.name,
 					tags: this.appearance?.split(','),
 				...props }); break;
 			case 'personality':
 				modalActions.open('setTags', { ...updateProps,
-					reloadPageProps: ['activeProject', 'character.personality', 'characters.personality'],
+					reloadPageProps: ['character.personality'],
 					title: 'Set personality: ' + this.name,
 					tags: this.personality?.split(','),
 				...props }); break;
 			case 'customField':
-				modalActions.open('setCustomFieldValue', { ...updateProps,
+				modalActions.open('customFieldValue', { ...updateProps,
 					field: { fieldableType: this.laravelClass },
 					reloadPageProps: ['activeProject', 'character.customFieldValues', 'characters.customFieldValues'],
 					title: 'Set ' + props?.field?.name + ': ' + this.name,

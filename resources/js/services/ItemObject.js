@@ -83,12 +83,20 @@ export default class ItemObject {
 			case 'rename':
 				modalActions.open('setValue', { ...updateProps,
 					field: { name: 'name', type: 'text' },
+					reloadPageProps: ['item.name'],
 					title: 'Rename item: ' + this.name,
 				...props }); break;
-			case 'alias':
+			case 'type':
 				modalActions.open('setValue', { ...updateProps,
-					field: { name: 'alias', type: 'text' },
-					title: 'Set alias: ' + this.name,
+					field: { name: 'type', type: 'text' },
+					reloadPageProps: ['item.type'],
+					title: 'Set type: ' + this.name,
+				...props }); break;
+			case 'description':
+				modalActions.open('setValue', { ...updateProps,
+					field: { name: 'description', label: 'Description', type: 'textarea', rows: 12 },
+					reloadPageProps: ['item.description'],
+					title: 'Describe item: ' + this.name,
 				...props }); break;
 			case 'location':
 				modalActions.open('setLocation', { ...updateProps,

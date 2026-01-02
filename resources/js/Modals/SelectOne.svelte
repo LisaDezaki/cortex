@@ -15,7 +15,8 @@
 		method,
 		options = [],
 		tags = $bindable([]),
-		title = "Set Tags"
+		title = "Set Tags",
+		...restProps
 	} = $props()
 
 	const form = useForm({
@@ -47,10 +48,8 @@
 	form={form}
 	method="patch"
 	size="xl"
-	submitProps={{
-		label: 'Save'
-	}}
+	submitProps={{ label: 'Save' }}
 	title={title}
->
+{...restProps}>
 	Select One
 </ModalForm>

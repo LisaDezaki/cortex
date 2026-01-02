@@ -40,7 +40,10 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="h-full overflow-y-auto px-20 py-12">
+		<Flex justify="center" gap={12} class="overflow-y-auto px-20 py-12">
+
+			<!-- Page Menu -->
+
 			<PageMenu
 				back={{ text: 'Item List', href: route('items') }}
 				items={[
@@ -52,13 +55,11 @@
 					{ icon: "Trash", 			label: "Delete", 		onclick: () => item.openModal('delete'), theme: "danger" }
 				]}
 			/>
-			<Container size="4xl">
+			<Container size="3xl">
 
-
-				<!-- Details -->
+				<!-- Header -->
 			
-				<Section id="details" class="pb-6">
-
+				<Section id="header">
 					<ArticleBanner>
 						<Media
 							class="absolute inset-0 aspect-[3/1] bg-slate-200 rounded-lg overflow-hidden"
@@ -75,14 +76,17 @@
 								class="max-w-3/4 mt-auto {item.getMedia('banner') ? 'text-white' : ''}"
 								heading={item.name}
 								headingClass="whitespace-pre-wrap"
-								subheading={item.type}
 							/>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => item.openModal('rename')} />
 						</Inline>
+						<Inline class="z-10">{item.type}
+							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => item.openModal('type')} />
+						</Inline>
 					</ArticleBanner>
+				</Section>
 
-					<Stack class="max-w-[64ch] mx-6">
-
+				<Section id="details">
+					<Stack class="max-w-[64ch] mx-6 mt-12">
 						<Heading is="h3" as="h4" class="mt-9 mb-6">Details</Heading>
 						
 						<Heading is="h3" as="h6" class="mb-6 text-neutral-soft">Description
@@ -90,12 +94,11 @@
 						</Heading>
 						{#if item.description}
 							<Collapsible collapsed={true}
-								class="max-w-[64ch]"
 								collapsedClass="line-clamp-3 overflow-hidden">
 								{item.description}
 							</Collapsible>
 						{:else}
-							<span class="text-neutral-softest">No description</span>
+							<p class="italic text-neutral-softest">No description</p>
 						{/if}
 
 						<!-- <Heading is="h3" as="h6" class="mt-9 mb-6">Appearance</Heading>
@@ -135,84 +138,14 @@
 							<Button size="md" style="soft" theme="accent" icon="Plus" iconSize="sm" iconWeight="regular" label="New custom field" onclick={() => {}} />
 						</Flex>
 					{:else}
-						<p class="font-style-placeholder">There are no custom fields for Items yet.</p>
+						<p class="italic text-neutral-softest">There are no custom fields for Items yet.</p>
 					{/if}
 				</Section>
 
 				<Separator class="my-12" />
 		
 
-				<!-- Relationships -->
-		
-				<!-- <Section id="relationships" class="p-6">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h4" class="text-neutral-softest">Relationships</Heading>
-					</Flex>
-					<Grid cols={4} gap={6}>
-						{#if item.relationships?.items?.length > 0}
-							{#each item.relationships.items as rel, i}
-
-								<Link href={route('items.show', { item: rel.slug })} class="flex items-center gap-3 p-1 w-96 hover:text-accent">
-									<Thumbnail class="aspect-square bg-neutral-softest border border-surface w-16"
-										icon="User"
-										src={rel.image?.url}
-									/>
-									<Stack class="w-48">
-										<div class="font-bold leading-[1.125rem]">{rel.name}</div>
-										<div class="text-sm leading-[1.125rem]">{rel.role}</div>
-									</Stack>
-								</Link>
-
-							{/each}
-
-							<Flex class="p-1.5">
-								<Button size="xl" style="soft" theme="accent" icon="Plus" onclick={() => item.openModal('relationship')} class="h-12 rounded-full w-12" />
-							</Flex>
-
-						{:else}
-							<p class="font-style-placeholder">{item.name} doesn't have any relationships yet.</p>
-							<p><button class="text-accent hover:underline" onclick={() => item.openModal('relationship')}>Create one?</button></p>
-						{/if}
-					</Grid>
-				</Section>
-
-				<Separator class="mx-6 my-6 w-[64ch]" /> -->
-		
-		
-				<!-- Factions -->
-		
-				<!-- <Section id="factions" class="p-6">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h4" class="text-neutral-softest">Factions</Heading>
-					</Flex>
-					{#if item.factions?.items?.length > 0}
-						<Grid cols={4} gap={3}>
-							{#each item.factions?.items as fac, i}
-								<Link
-									class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
-									href={route("factions.show", { faction: fac.slug})}>
-									<Thumbnail
-										class="aspect-square bg-neutral-softest rounded h-16 max-w-16"
-										icon="FlagBannerFold"
-										src={fac.image?.url}
-									/>
-									<Stack justify="center">
-										<div class="font-bold leading-[1.125rem] line-clamp-1">{fac.name}</div>
-										<div class="text-sm leading-[1.125rem] line-clamp-1">{fac.type}</div>
-									</Stack>
-								</Link>
-							{/each}
-						</Grid>
-					{:else}
-						<p class="font-style-placeholder">{item.name} isn't in any factions yet.</p>
-						<p><Link onclick={() => item.addFaction()}>Add one?</Link></p>
-					{/if}
-				</Section>
-
-				<Separator class="mx-6 my-6 w-[64ch]" /> -->
-		
-		
-				<!-- Inventory -->
+				<!-- Recipe -->
 		
 				<!-- <Section id="items" class="p-6">
 					<Flex align="center" class="mb-6 max-w-[32ch]">
@@ -258,14 +191,12 @@
 				<Separator class="mx-6 my-6 w-[64ch]" /> -->
 		
 		
-				<!-- Media -->
+				<!-- Gallery -->
 		
-				<!-- <Section id="gallery" class="px-6 py-12">
-					<Flex align="center" class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h4" class="text-neutral-softest">Gallery</Heading>
-					</Flex>
-					<Grid cols={4} class="gap-[2px] max-w-[64ch]">
-						{#each new Array(8) as item, i}
+				<Section id="gallery" class="p-6">
+					<Heading is="h3" as="h4" class="mb-6">Gallery</Heading>
+					<Grid cols={6} class="gap-[2px]">
+						{#each new Array(6) as item, i}
 							<Thumbnail aspect="square"
 								class="aspect-square bg-neutral-softest rounded-none hover:inner-shadow-sm transition-all"
 							/>
@@ -273,29 +204,7 @@
 					</Grid>
 				</Section>
 
-				<Separator class="mx-6 my-6 w-[64ch]" /> -->
-
-
-				<!-- Collections -->
-		
-				<!-- <Section id="collections" class="p-6">
-					<Stack class="mb-6 max-w-[32ch]">
-						<Heading is="h3" as="h6">Collections</Heading>
-					</Stack>
-					<Grid cols={6}>
-						{#each item.collections as collection, i}
-							<Card aspect="square"
-								icon="FolderSimple"
-								href={route("collections.show", { collection: collection.slug })}
-								title={collection.name}
-								subtitle={collection.items_count}
-							/>
-						{/each}
-						<CardNew aspect="square"
-							onclick={() => {}}
-						/>
-					</Grid>
-				</Section> -->
+				<Separator class="my-12" />
 				
 			</Container>
 		</Flex>

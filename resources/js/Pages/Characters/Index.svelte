@@ -195,7 +195,7 @@
 					icon="User"
 					text="There are no characters for this project yet."
 					buttonLabel="Create one?"
-					buttonClick={() => characters.create()}
+					buttonClick={() => characters.openModal('create')}
 				/>
 
 			{/if}
