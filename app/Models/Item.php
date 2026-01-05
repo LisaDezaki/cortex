@@ -20,6 +20,8 @@ class Item extends Model
 
 	protected $fillable = [
 		'name',
+		'slug',
+		'type',
 		'description',
 		'starred',
 		'cost',

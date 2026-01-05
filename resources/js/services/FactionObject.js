@@ -93,13 +93,19 @@ export default class FactionObject {
 					field: 'headquarters',
 				...props }); break;
 			case 'member':
-				modalActions.open('setFactionMember', { character: this, ...props }); break;
-			case 'members':
-				modalActions.open('selectMany', { ...updateProps,
+				modalActions.open('linkEntities', { ...updateProps,
+					entityList: 'characters',
 					field: 'members',
-					selected: this.members.items?.map(m => m.id) || [],
-					title: "Set members of the " + this.name + " faction",
+					title: 'Add member: ' + this.name,
 				...props }); break;
+			// case 'member':
+			// 	modalActions.open('setFactionMember', { character: this, ...props }); break;
+			// case 'members':
+			// 	modalActions.open('selectMany', { ...updateProps,
+			// 		field: 'members',
+			// 		selected: this.members.items?.map(m => m.id) || [],
+			// 		title: "Set members of the " + this.name + " faction",
+			// 	...props }); break;
 			case 'setMedia':
 				modalActions.open('uploadMedia', { ...updateProps,
 					aspect: 'aspect-square',

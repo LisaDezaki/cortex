@@ -35,6 +35,7 @@ class LocationController extends Controller
 
 	protected $validationRules = [
 		'name'					=> ['sometimes', 'string'],
+		'slug'					=> ['sometimes', 'string', 'max:255'],
 		'type'					=> ['sometimes', 'string', 'nullable'],
 		'description'			=> ['nullable',  'string'],
 		'starred'				=> ['sometimes', 'boolean'],
@@ -95,7 +96,7 @@ class LocationController extends Controller
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
-			Session::flash('error', "Failed to create character: ".$e);
+			Session::flash('error', "Validation failed: ".$e);
         	return Redirect::back();
 		}
 

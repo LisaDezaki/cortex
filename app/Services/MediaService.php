@@ -53,7 +53,7 @@ class MediaService
     {
 		if ($tempPath === null) { return; }
 
-        $fileName = basename($tempPath);		
+        $fileName = basename($tempPath);
         $newPath = $destinationFolder.'/'.$fileName;
 
 		try {
@@ -103,7 +103,8 @@ class MediaService
 		$projectDir = "project_".substr($user->active_project, 0, 8);
 
 		$relationship = $entity->$type();
-		$entityName   = $entity->getMorphClass();
+		$entityName   = strtolower(class_basename($entity->getMorphClass()));
+
 		$newpath      = "$userDir/$projectDir/$entityName";
 
 		if ($relationship) {

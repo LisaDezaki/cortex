@@ -36,6 +36,7 @@ class CharacterController extends Controller
 
 	protected $validationRules = [
 		'name'                  => ['sometimes', 'string', 'max:255'],
+		'slug'					=> ['sometimes', 'nullable', 'string', 'max:255'],
 		'alias'                 => ['sometimes', 'nullable', 'string', 'max:255'],
 		'description'           => ['sometimes', 'nullable', 'string'],
 		'starred'				=> ['sometimes', 'boolean'],
@@ -47,14 +48,17 @@ class CharacterController extends Controller
 		'media.*.url'			=> ['nullable',  'string'],
 
 		'factions'         		=> ['sometimes', 'nullable', 'array'],
-		'factions.*'  			=> ['required',  'string', 'uuid', 'distinct', 'exists:factions,id'],
+		'factions.*.id'  		=> ['required_with:factions',  'uuid', 'distinct', 'exists:factions,id'],
+		'factions.*.label'		=> ['sometimes', 'nullable', 'string'],
 
 		'location'				=> ['sometimes', 'nullable', 'string', 'uuid', 'exists:locations,id'],
 
-		'relationships'         				 => ['sometimes', 'nullable', 'array'],
-		'relationships.*.character_role'  		 => ['required',  'string'],
-		'relationships.*.related_character_id'	 => ['required',  'string', 'uuid', 'distinct', 'exists:characters,id'],
-		'relationships.*.related_character_role' => ['required',  'string'],
+		'relationships'         => ['sometimes', 'nullable', 'array'],
+		'relationships.*.id'	=> ['required_with:relationships', 'uuid', 'distinct', 'exists:characters,id'],
+		'relationships.*.label' => ['sometimes', 'nullable', 'string'],
+		// 'relationships.*.character_role'  		 => ['required',  'string'],
+		// 'relationships.*.related_character_id'	 => ['required',  'string', 'uuid', 'distinct', 'exists:characters,id'],
+		// 'relationships.*.related_character_role' => ['required',  'string'],
 
 		'customField'			=> ['sometimes', 'array'],
 		'customField.id'    	=> ['required_with:customField',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
@@ -98,19 +102,11 @@ class CharacterController extends Controller
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
-			Session::flash('error', "Failed to create character: ".$e);
+			Session::flash('error', "Validation failed: ".$e);
         	return Redirect::back();
 		}
-		
-		$character = Auth::user()->activeProject()->characters()->create($validatedData);
 
-		if ($request->has('media') && $request['media'] !== null) {
-			foreach ($request['media'] as $media) {
-				$this->mediaService->attachMedia($character, $media['type'], $media);
-			}
-			unset($validatedData['media']);
-		}
-		
+		$character = Auth::user()->activeProject()->characters()->create($validatedData);
 		$character->save();
 		Session::flash('success', "Character created: $character->name");
 		return Redirect::route("characters.show", [
@@ -159,6 +155,8 @@ class CharacterController extends Controller
 	public function edit(Character $character) {}
 	public function update(Request $request, Character $character): RedirectResponse
 	{
+
+		
 		
 		//	Attempt to validated the $request
 		//	Flash an error if validation fails
@@ -179,16 +177,22 @@ class CharacterController extends Controller
 
 		//	Factions
 		if ($request->has('factions')) {
-			$character->factions()->sync($request['factions']);
+			// $character->factions()->sync($request['factions']);
+			foreach ($validatedData['factions'] as $fac) {
+				$faction = Faction::find($fac['id']);
+				$character->factions()->save($faction);
+			}
+			Session::flash('success', "Character factions updated: $character->name");
 			unset($validatedData['factions']);
 		}
 
 		//	Relationships
 		if ($request->has('relationships')) {
 			foreach ($validatedData['relationships'] as $rel) {
-				$relatedCharacter = Character::find($rel['related_character_id']);
-				$character->relationships()->save($relatedCharacter, $rel);
+				$relatedCharacter = Character::find($rel['id']);
+				$character->relationships()->save($relatedCharacter);
 			}
+			Session::flash('success', "Character relationship updated: $character->name");
 			unset($validatedData['relationships']);
 		}
 
@@ -198,6 +202,7 @@ class CharacterController extends Controller
 				'location_id' => $validatedData['location']
 				//	other pivot data
 			]);
+			Session::flash('success', "Character location updated: $character->name");
 			unset($validatedData['location']);
 		}
 
@@ -213,7 +218,7 @@ class CharacterController extends Controller
 		//	Update
 		// $character->fill($validatedData);
 		$character->update($validatedData);
-		Session::flash('success', "Character updated: $character->name");
+		// Session::flash('success', "Character updated: $character->name");
         return Redirect::back();
 	}
 

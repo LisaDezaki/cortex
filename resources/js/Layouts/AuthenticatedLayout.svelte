@@ -25,21 +25,23 @@
 
 	import { modalStore } from '@/stores/modalStore';
 
-    import CreateEntityModal		from '@/Modals/CreateEntity.svelte';
-	import CustomFieldModal			from '@/Modals/CustomField.svelte';
-	import CustomFieldValueModal	from '@/Modals/CustomFieldValue.svelte';
+    import CreateEntityModal		from '@/Modals/CreateEntity.svelte'
+	import CustomFieldModal			from '@/Modals/CustomField.svelte'
+	import CustomFieldValueModal	from '@/Modals/CustomFieldValue.svelte'
 
-	import DeleteEntityModal	from '@/Modals/DeleteEntity.svelte';
-    import DeleteProjectModal	from '@/Modals/DeleteProject.svelte';
-    import DeleteUserModal		from '@/Modals/DeleteUser.svelte';
+	import DeleteEntityModal	from '@/Modals/DeleteEntity.svelte'
+    import DeleteProjectModal	from '@/Modals/DeleteProject.svelte'
+    import DeleteUserModal		from '@/Modals/DeleteUser.svelte'
+
+	import LinkEntitiesModal	from '@/Modals/LinkEntities.svelte'
 	
-	import SelectOneModal 			 	 from '@/Modals/SelectOne.svelte';
-	import SelectManyModal 		 		 from '@/Modals/SelectMany.svelte';
-    import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte';
-    import SetLocationModal 			 from '@/Modals/SetLocation.svelte';
-    import SetTagsModal 			 	 from '@/Modals/SetTags.svelte';
-	import SetValueModal 			 	 from '@/Modals/SetValue.svelte';
-    import UploadMediaModal 			 from '@/Modals/UploadMedia.svelte';
+	import SelectOneModal 			 	 from '@/Modals/SelectOne.svelte'
+	import SelectManyModal 		 		 from '@/Modals/SelectMany.svelte'
+    import SetCharacterRelationshipModal from '@/Modals/SetCharacterRelationship.svelte'
+    import SetLocationModal 			 from '@/Modals/SetLocation.svelte'
+    import SetTagsModal 			 	 from '@/Modals/SetTags.svelte'
+	import SetValueModal 			 	 from '@/Modals/SetValue.svelte'
+    import UploadMediaModal 			 from '@/Modals/UploadMedia.svelte'
     import { Tooltip } from 'bits-ui'
 	
 	//	2. Create a modal registry map
@@ -51,6 +53,7 @@
 		deleteEntity:		DeleteEntityModal,
 		deleteProject:		DeleteProjectModal,
 		deleteUser:			DeleteUserModal,
+		linkEntities:		LinkEntitiesModal,
 		selectOne:			SelectOneModal,
 		selectMany:			SelectManyModal,
 		setCharacterRelationship: SetCharacterRelationshipModal,

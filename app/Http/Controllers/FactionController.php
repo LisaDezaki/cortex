@@ -36,25 +36,21 @@ class FactionController extends Controller
 	 */
 
 	protected $validationRules = [
-		'name'                  => ['sometimes', 'string', 'max:255'],
-		'type'                 => ['sometimes', 'nullable', 'string', 'max:255'],
-		'description'           => ['sometimes', 'string'],
-		'starred'				=> ['sometimes', 'boolean'],
+		'name'				=> ['sometimes', 'string', 'max:255'],
+		'slug'				=> ['sometimes', 'nullable', 'string', 'max:255'],
+		'type'				=> ['sometimes', 'nullable', 'string', 'max:255'],
+		'description'		=> ['sometimes', 'string'],
+		'starred'			=> ['sometimes', 'boolean'],
 
-		// 'parent_location'		=> ['sometimes', 'exists:locations,id'],
-		// 'coordinates'			=> ['sometimes', 'array'],
+		'media'				=> ['sometimes', 'nullable', 'array'],
+		'media.*.name'		=> ['nullable',	 'string'],
+		'media.*.path'		=> ['nullable',	 'string'],
+		'media.*.type'		=> ['required',	 'string', 'in:banner,emblem,gallery'],
+		'media.*.url'		=> ['nullable',	 'string'],
 
-		'media'					=> ['sometimes', 'nullable', 'array'],
-		'media.*.name'			=> ['nullable',	 'string'],
-		'media.*.path'			=> ['nullable',	 'string'],
-		'media.*.type'			=> ['required',	 'string', 'in:banner,emblem,gallery'],
-		'media.*.url'			=> ['nullable',	 'string'],
-
-		'members'				=> ['sometimes', 'nullable', 'array'],
-		'members.*'				=> ['string', 'uuid', 'distinct', 'exists:characters,id'],
-		// 'members.*.id'			=> ['required',	 'string', 'uuid', 'distinct', 'exists:characters,id'],
-		// 'members.*.name'		=> ['nullable',  'string'],
-		// 'members.*.rank'		=> ['nullable',	 'string'],
+		'members'			=> ['sometimes', 'nullable', 'array'],
+		'members.*.id'		=> ['string', 'uuid', 'distinct', 'exists:characters,id'],
+		'members.*.label'	=> ['sometimes', 'nullable', 'string'],
 
 		'custom_fields' 	  	=> ['sometimes', 'array'],
 		'custom_fields.*.id'    => ['required',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
@@ -112,26 +108,6 @@ class FactionController extends Controller
 		}
 
 		$faction = Auth::user()->activeProject()->factions()->create($validatedData);
-
-		if ($request->has('media') && $request['media'] !== null) {
-			foreach ($request['media'] as $media) {
-				$this->mediaService->attachMedia($faction, $media['type'], $media);
-			}
-			unset($validatedData['media']);
-		}
-
-		// if ($request->has('emblem')) {
-		// 	$this->mediaService->attachMedia($faction, 'emblem', $request->emblem);
-		// 	unset($validatedData['emblem']);
-		// }
-
-		// if ($request->has('banner')) {
-		// 	$this->mediaService->attachMedia($faction, 'banner', $request->banner);
-		// 	unset($validatedData['banner']);
-		// }
-
-		// $this->handleCustomFields($validatedData['custom_fields'], $character);
-
 		$faction->save();
 		Session::flash('success', "Faction created: $faction->name");
 		return Redirect::route("factions.show", [

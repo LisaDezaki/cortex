@@ -79,7 +79,8 @@
 							/>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => location.openModal('rename')} />
 						</Inline>
-						<Inline class="z-10">{location.type}
+						<Inline class="z-10">
+							<span class={location.getMedia('banner') ? 'text-white' : ''}>{location.type}</span>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => location.openModal('type')} />
 						</Inline>
 					</ArticleBanner>

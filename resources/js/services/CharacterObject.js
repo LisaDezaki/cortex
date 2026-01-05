@@ -104,33 +104,42 @@ export default class CharacterObject {
 					title: 'Set location: ' + this.name,
 				...props }); break;
 			case 'faction':
-				modalActions.open('selectOne', { ...updateProps,
+				modalActions.open('linkEntities', { ...updateProps,
+					entityList: 'factions',
 					field: 'factions',
-					reloadPageProps: ['character.factions'],
-					selected: this.factions.items?.map(f => f.id) || [],
-					title: "Set faction: " + this.name,
 				...props }); break;
-			case 'factions':
-				modalActions.open('selectMany', { ...updateProps,
-					field: 'factions',
-					reloadPageProps: ['character.factions'],
-					selected: this.factions.items?.map(f => f.id) || [],
-					title: "Set factions: " + this.name,
-				...props }); break;
+			// case 'faction':
+			// 	modalActions.open('selectOne', { ...updateProps,
+			// 		field: 'factions',
+			// 		reloadPageProps: ['character.factions'],
+			// 		selected: this.factions.items?.map(f => f.id) || [],
+			// 		title: "Set faction: " + this.name,
+			// 	...props }); break;
+			// case 'factions':
+			// 	modalActions.open('selectMany', { ...updateProps,
+			// 		field: 'factions',
+			// 		reloadPageProps: ['character.factions'],
+			// 		selected: this.factions.items?.map(f => f.id) || [],
+			// 		title: "Set factions: " + this.name,
+			// 	...props }); break;
 			case 'relationship':
-				modalActions.open('setCharacterRelationship', { ...updateProps,
-					character: this,
-					reloadPageProps: ['character.relationships'],
-					selected: this.relationships.items?.map(r => r.id) || [],
-					title: "Set relationship: " + this.name,
-				...props }); break;
-			case 'relationships':
-				modalActions.open('selectMany', { ...updateProps,
+				modalActions.open('linkEntities', { ...updateProps,
+					entityList: 'characters',
 					field: 'relationships',
-					reloadPageProps: ['character.relationships'],
-					selected: this.relationships.items?.map(r => r.id) || [],
-					title: "Set relationships: " + this.name,
 				...props }); break;
+				// modalActions.open('setCharacterRelationship', { ...updateProps,
+				// 	character: this,
+				// 	reloadPageProps: ['character.relationships'],
+				// 	selected: this.relationships.items?.map(r => r.id) || [],
+				// 	title: "Set relationship: " + this.name,
+				// ...props }); break;
+			// case 'relationships':
+			// 	modalActions.open('selectMany', { ...updateProps,
+			// 		field: 'relationships',
+			// 		reloadPageProps: ['character.relationships'],
+			// 		selected: this.relationships.items?.map(r => r.id) || [],
+			// 		title: "Set relationships: " + this.name,
+			// 	...props }); break;
 			case 'setMedia':
 				modalActions.open('uploadMedia', { ...updateProps,
 					aspect: 'aspect-square',

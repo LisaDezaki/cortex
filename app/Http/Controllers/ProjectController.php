@@ -159,7 +159,7 @@ class ProjectController extends Controller
 			$user->update();
 		}
 
-		Session::flash('success', "$project->name activated.");
+		Session::flash('success', "Project activated: $project->name");
         return Redirect::back();
 	}
 	

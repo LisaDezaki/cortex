@@ -28,7 +28,7 @@
 
 		<Flex align="center" justify="center" class="aspect-square bg-accent-softest mb-6 min-h-24 place-self-center p-3 relative rounded-full">
 			<Icon name="LockKey" size={32} weight="thin" class="text-accent" />
-			<Flex align="center" justify="center" class="absolute inset-0 border-accent rounded-full {$loginForm.processing ? 'animate-spin border-t' : ''}"></Flex>
+			<Flex align="center" justify="center" class="absolute inset-0 border-accent rounded-full {$loginForm.processing ? 'animate-spin border-t border-r' : ''}"></Flex>
 		</Flex>
 
 		<Field name="email" type="email"

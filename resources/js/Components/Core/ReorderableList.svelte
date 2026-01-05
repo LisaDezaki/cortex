@@ -40,7 +40,6 @@
 
 			mouseY = e.clientY
 
-			//	Dragging downwards
 			if (activeIndex !== items.length-1 && mouseY > dragStartY) {
 				items.filter((item,i) => i >= activeIndex).forEach((item) => {
 					let rect  = itemRects.get(item.id)
@@ -50,7 +49,6 @@
 				})
 			}
 
-			//	Dragging upwards
 			if (activeIndex !== 0 && mouseY < dragStartY) {					
 				items.filter((item,i) => i <= activeIndex).reverse().forEach((item) => {
 					let rect  = itemRects.get(item.id)
@@ -67,7 +65,6 @@
 			if (activeId && targetId && activeId !== targetId) {
 				items = items.toSpliced(activeIndex, 1).toSpliced(
 					targetIndex,
-					// targetIndex > activeIndex ? targetIndex - 1 : targetIndex,
 					0,
 					items[activeIndex]
 				)
@@ -114,7 +111,6 @@
 	}
 
 	function setPlaceholder() {
-		// let targetId = items[targetIndex].id
 		let offsetTop    = itemRects.get(targetId).top - listTop
 		let offsetBottom = listBottom - itemRects.get(targetId).bottom
 		placeholderElement.style['top']    = offsetTop+"px"
@@ -155,9 +151,7 @@
 
 	.reorderable-list {
 		@apply relative flex flex-col;
-		/* outline: 1px solid red; */
 		&.active {
-			/* outline: 1px solid lime; */
 		}
 
 		.reorderable-item {

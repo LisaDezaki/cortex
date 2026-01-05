@@ -10,6 +10,7 @@
 	import Inline		from '@/Components/Core/Inline.svelte'
 	import Stack		from '@/Components/Core/Stack.svelte'
 
+	import Background	from '@/Components/UI/Background.svelte'
 	import Button		from '@/Components/UI/Button.svelte'
 	import Collapsible	from '@/Components/UI/Collapsible.svelte'
 	import Container	from '@/Components/UI/Container.svelte'
@@ -35,7 +36,7 @@
 	let projectList		= $derived( projects      ? new ProjectList(projects)		 : null )
 
 	let results			= $state(projects      ? new ProjectList(projects)		 : [])
-	let layout			= $state('table')
+	let layout			= $state('grid')
 
 </script>
 
@@ -51,17 +52,17 @@
 
 			{#if active}
 				<Section id="header">
-					<Media
-						class="relative aspect-[7/3] bg-neutral-softest max-h-[60vh] overflow-hidden text-neutral-softest w-full hover:inner-shadow-lg transition-all"
-						media={active.getMedia('banner')}
-						onclick={() => active.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]'})}
+					<Background
+						class="aspect-video bg-no-repeat bg-center bg-cover bg-neutral-softest max-h-[60vh] overflow-hidden sticky top-0"
+						onclick={() => active.openModal('setMedia', { type: 'banner', aspect: 'aspect-video'})}
+						url={active.getMedia('banner')?.url}
 					/>
 				</Section>
-				<Flex align="start" justify="center" gap={6} class="flex-1 px-20 py-12">
+				<Flex align="start" justify="center" gap={6} class="bg-surface flex-1 px-20 py-12">
 
 					<!-- Page Menu -->
 
-					<PageMenu
+					<PageMenu class="top-12"
 						back={{ text: 'All Projects', onclick: () => active.deactivate() }}
 						items={[
 							{ icon: "GlobeStand",	label: "Overview",		href: "#overview" },
@@ -100,7 +101,7 @@
 								</Collapsible>
 							</Stack>
 		
-							<Box class="grid grid-cols-5 py-12 xl:py-0 w-full xl:w-1/3">
+							<Box class="grid grid-cols-5 py-12 w-full">
 
 								<!-- {#each ['Characters', 'Dialogues', 'Events', 'Factions', 'Items', 'Locations', 'Mechanics', 'Quests', 'Wildlife'] as entity}
 									<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500" href={route(entity.toLowerCase())}>
@@ -144,6 +145,10 @@
 								<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
 									<span class="font-style-h3 {!active.wildlife?.items.length > 0 ? 'opacity-20' : 'opacity-60'}">{active.wildlife?.items.length || 0}</span>
 									<span class="font-style-regular">Wildlife</span>
+								</Link>
+								<Link class="flex flex-col items-center justify-center rounded p-2 w-full hover:bg-emerald-500/10 hover:text-emerald-500">
+									<span class="font-style-h3 {!active.codex?.items.length > 0 ? 'opacity-20' : 'opacity-60'}">{active.codex?.items.length || 0}</span>
+									<span class="font-style-regular">Codex</span>
 								</Link>
 							</Box>
 			

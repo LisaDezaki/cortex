@@ -4,13 +4,14 @@
 	
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 
-	import Box		from '@/Components/Core/Box.svelte'
-	import Flex		from '@/Components/Core/Flex.svelte'
-	import Grid		from '@/Components/Core/Grid.svelte'
-	import Inline	from '@/Components/Core/Inline.svelte'
-	import PanZoom	from '@/Components/Core/PanZoom.svelte'
-	import Popover	from '@/Components/Core/Popover.svelte'
-	import Stack	from '@/Components/Core/Stack.svelte'
+	import Box			from '@/Components/Core/Box.svelte'
+	import Flex			from '@/Components/Core/Flex.svelte'
+	import Grid			from '@/Components/Core/Grid.svelte'
+	import Inline		from '@/Components/Core/Inline.svelte'
+	import PanZoom		from '@/Components/Core/PanZoom.svelte'
+	import Popover		from '@/Components/Core/Popover.svelte'
+	import Reorder		from '@/Components/Core/Reorder'
+	import Stack		from '@/Components/Core/Stack.svelte'
 
 	import Avatar    	from '@/Components/UI/Avatar.svelte'
 	import Badge     	from '@/Components/UI/Badge.svelte'
@@ -42,11 +43,12 @@
 	import Tooltip 		from '@/Components/UI/Tooltip.svelte'
 
 	import CharacterList from '@/services/CharacterList.js'
+    import List from '../Components/Core/Reorder/List.svelte'
 
 	const activeProject = $page.props.activeProject?.data
 	const characters	= $derived( activeProject ? new CharacterList(activeProject.characters) : [] )
 
-	let active = $state('popover')
+	let active = $state('reorder')
 
 	/**
 	 * Classnames
@@ -151,8 +153,14 @@
 			size:		'md',
 			value:		'radio1'
 		},
-		reorderable: {
-			items: ['One', 'Two', 'Three', 'Four', 'Five']
+		reorder: {
+			items: [
+				{ id: 1, text: 'Item #1' },
+				{ id: 2, text: 'Item #2 but it\'s longer for testing.' },
+				{ id: 3, text: 'Item #3' },
+				{ id: 4, text: 'Item #4' },
+				{ id: 5, text: 'Item #5' },
+			]
 		},
 		select: {
 			disabled:	false,
@@ -263,7 +271,7 @@
 					{ label: 'Dropdown',	active: active === 'dropdown', 	onclick: () => active = 'dropdown' 	},
 					{ label: 'PanZoom',		active: active === 'panzoom', 	onclick: () => active = 'panzoom' 	},
 					{ label: 'Popover',		active: active === 'popover', 	onclick: () => active = 'popover' 	},
-					{ label: 'Reorderable', active: active === 'reorder', 	onclick: () => active = 'reorder' 	},
+					{ label: 'Reorder', 	active: active === 'reorder', 	onclick: () => active = 'reorder' 	},
 					{ label: 'Table',		active: active === 'table', 	onclick: () => active = 'table' 	},
 					{ label: 'Tabs',		active: active === 'tabs',		onclick: () => active = 'tabs' 		},
 					
@@ -1126,41 +1134,31 @@
 
 					<PageHeading
 						title="Reorderable"
-						subtitle="Displays additional information on hover or click."
+						subtitle="Allows for vertical reordering of items."
 					/>
 
 					<Stack>
 						<Demo name="Reorderable">
-							<ReorderableList items={[
-								{ name: 'Item #1' },
-								{ name: 'Item #2' },
-								{ name: 'Item #3' }
-							]}>
-								{#snippet itemTemplate(item)}
-									<Inline gap={1.5} class="bg-neutral-softest mb-0.5 min-w-40 p-1.5 rounded text-sm">
-										<DragHandle item={item} size="sm" />
-										<span>{item.name}</span>
-									</Inline>
+							<Reorder.List gap={0.5} items={test.reorder.items}>
+								{#snippet children({item,index})}
+									<Flex gap={1.5} class="bg-slate-100 px-sm py-md rounded text-sm w-40 hover:bg-slate-50">
+										<Reorder.Handle {index} />
+										<span>{item.text}</span>
+									</Flex>
 								{/snippet}
-							</ReorderableList>
+							</Reorder.List>
 						</Demo>
 						<Flex gap={1.5} class="my-1.5">
 						</Flex>
 						<Code code={
-`<Reorderable.List>
-	<Reorderable.Item>
-		<Reorderable.Drag />
-		<span>Item #1</span>
-	</Reorderable.Item>
-	<Reorderable.Item>
-		<Reorderable.Drag />
-		<span>Item #2</span>
-	</Reorderable.Item>
-	<Reorderable.Item>
-		<Reorderable.Drag />
-		<span>Item #3</span>
-	</Reorderable.Item>
-</Reorderable.List>`
+`<Reorder.List items={items}>
+	{#snippet children({item,index})}
+		<div>
+			<Reorder.Handle {index} />
+			<span>{item.text}</span>
+		</div>
+	{/snippet}
+</Reorder.List>`
 						} />
 					</Stack>
 

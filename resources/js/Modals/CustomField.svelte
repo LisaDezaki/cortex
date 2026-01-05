@@ -58,7 +58,7 @@
 	})
 
 	onMount(() => {
-
+		setType(field.type || 'text')
 	})
 
 	

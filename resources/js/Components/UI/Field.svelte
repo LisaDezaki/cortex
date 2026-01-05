@@ -29,9 +29,10 @@
 
 	let cx = {
 		field:	clsx('field', {
+			'w-full': !className || !className.includes('w-'),
 			'relative grid grid-cols-2 gap-x-6 w-full': layout === 'block',
-			'relative flex flex-col w-full': layout !== 'block'
-		}),
+			'relative flex flex-col w-full': layout !== 'block',
+		}, className),
 		label:	clsx({ 'sr-only': labelSrOnly }),
 		desc:	clsx(''),
 		error:	clsx(''),

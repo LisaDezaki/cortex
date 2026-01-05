@@ -15,12 +15,14 @@
 		as = 'div',
 		children,
 		class: className,
+		ref = $bindable(),
 		...restProps
 	} = $props()
 
 </script>
 
 <svelte:element
+	bind:this={ref}
 	this={as}
 	class="box {className}"
 {...restProps}>

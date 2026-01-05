@@ -57,7 +57,7 @@
 
 	"highrise": {
 		"name": "Clocktower Apartments",
-		"type": "Residential",
+		"type": "Safehouse",
 		"icon": "BuildingApartment",
 		"tags": ["Classy", "Clean"],
 		"desc": "This highrise is home to most of the wealthier citizens of New Miniport, including a Wizard's Penthouse.",
@@ -94,7 +94,7 @@
 		"name": "Town Museum",
 		"type": "Point of interest",
 		"tags": ["Educational"],
-		"desc": "Learn all about the town's lore, and let the kids play with some fun (but safe) magic experiments.",
+		"desc": "Learn all about the town's lore, and let the kids play with some fun (but safe) magic experiments. Bak is here all the time.",
 		"mapdata": {
 			"location": "uptown",
 			"x": "40", "y": "12"
@@ -288,7 +288,7 @@
 		"name": "Rusthaven Scrapyard",
 		"icon": "PipeWrench",
 		"type": "Merchant",
-		"desc": "On the dusty, wind-scoured outskirts of New Miniport, where the paved roads give way to hardpan and weeds, lies the Rusthaven Scrapyard. It is a sprawling, chaotic landscape of forgotten history and discarded dreams. Towers of shattered carriage wheels, mountains of bent armor, tangles of copper wire, and the skeletal remains of arcane constructs rise like a metallic forest under the open sky. The air smells of ozone, rust, and old magic, and is filled with the constant, gentle groaning of settling metal and the skittering of tiny, scavenging mechanimals.\n\nPresiding over this kingdom of scrap is its sole resident and curator: a massive, sentient scrap-golem known only as The Curator. Forged from a mismatched assemblage of armor plating, rusted gears, and salvaged machinery, The Curator moves with a surprising, gentle grace through the narrow canyons of its domain.\n\nIt doesn't speak in words, but communicates through a complex language of resonant hums, clanking gestures, and the shifting of its metallic form. It knows the story and potential of every screw and spar in its care, and is surprisingly generous to those who ask politely for a part, often trading for interesting new additions to its archive rather than coin. The the Curator, this is a library of lost things waiting for the right person to give them a new purpose.",
+		"desc": "The owner and proprieter of the Rushaven Scrapyard gets really offended if anybody refers to it as a 'scrapyard'. On the dusty, wind-scoured outskirts of New Miniport, where the paved roads give way to hardpan and weeds, lies the Rusthaven Scrapyard. It is a sprawling, chaotic landscape of forgotten history and discarded dreams. Towers of shattered carriage wheels, mountains of bent armor, tangles of copper wire, and the skeletal remains of arcane constructs rise like a metallic forest under the open sky. The air smells of ozone, rust, and old magic, and is filled with the constant, gentle groaning of settling metal and the skittering of tiny, scavenging mechanimals.\n\nPresiding over this kingdom of scrap is its sole resident and curator: a massive, sentient scrap-golem known only as The Curator. Forged from a mismatched assemblage of armor plating, rusted gears, and salvaged machinery, The Curator moves with a surprising, gentle grace through the narrow canyons of its domain.\n\nIt doesn't speak in words, but communicates through a complex language of resonant hums, clanking gestures, and the shifting of its metallic form. It knows the story and potential of every screw and spar in its care, and is surprisingly generous to those who ask politely for a part, often trading for interesting new additions to its archive rather than coin. The the Curator, this is a library of lost things waiting for the right person to give them a new purpose.",
 		"mapdata": {
 			"location": "outskirts",
 			"x": "15", "y": "45"
@@ -363,7 +363,7 @@
 
 	"sawmill": {
 		"name": "Packard Sawmill",
-		"type": "Industrial",
+		"type": "Dungeon",
 		"desc": "The Packard Sawmill has recently reopened following new council legislation, in direct contradiction to the Treaty of _____, signed over 100 years ago by the mayor of New Miniport after a private liaison with the Spectral Guardian."
 	},
 
@@ -377,10 +377,10 @@
 		}
 	},
 
-	"mine": {
-		"name": "Derelict Mine",
+	"refinery": {
+		"name": "Mana Refinery",
 		"type": "Dungeon",
-		"desc": "An old abandoned mana mine and refinery tapped directly into a layline. Closed after the goblin problem became unmanageable.",
+		"desc": "An old abandoned mana refinery still tapped directly into the city's nearest leyline. Closed and abandoned after the goblin problem became unmanageable.",
 		"mapdata": {
 			"location": "mountains",
 			"x": "58", "y": "47"

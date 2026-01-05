@@ -41,7 +41,7 @@ export default class ProjectObject {
 			 * Laravel's Model location as printed by Project::class
 			 * @type {string}
 			 */
-			laravelClass: "App\Models\Project",
+			laravelClass: "App\\Models\\Project",
 
 			/**
 			 * A CharacterList instance

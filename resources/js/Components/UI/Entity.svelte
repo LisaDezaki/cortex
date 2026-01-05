@@ -26,7 +26,7 @@
 			base: clsx('rounded', aspect, {
 				'group-hover:bg-accent-softer': href || onclick,
 				'bg-accent-softer':    active,
-				'bg-neutral-softest': !active
+				'bg-neutral-softest': !active,
 			}),
 			xs:	  clsx('w-8'),
 			sm:	  clsx('w-12'),
@@ -60,7 +60,7 @@
 
 
 {#snippet content()}
-	<Thumbnail class="{cx.thumbnail.base} {cx.thumbnail[size]}" src={entity.image?.url} />
+	<Thumbnail active class="{cx.thumbnail.base} {cx.thumbnail[size]}" src={entity.image?.url} />
 	<Stack class="{cx.text.base} {cx.text[size]}">
 		<p class={cx.line.primary}>{entity.name}</p>
 		<p class={cx.line.secondary}>{subtitle || entity.type || entity.alias}</p>

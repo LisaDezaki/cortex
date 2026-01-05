@@ -221,10 +221,17 @@
 									subtitle={member.rank?.name || 'Member'}
 									href={route('characters.show', { character: member.slug })}
 								/>
-							{/each}
+								{/each}
+							<Button
+								class="aspect-square w-full"
+								style="soft" theme="accent"
+								icon="Plus" onclick={() => faction.openModal('member')}
+							/>
 						{:else}
-							<p class="font-style-placeholder">{faction.name} doesn't have any members yet.</p>
-							<p><button class="text-accent hover:underline" onclick={() => faction.openModal('addMember')}>Create one?</button></p>
+							<Stack class="col-span-full">
+								<p class="italic text-neutral-softer">{faction.name} doesn't have any members yet.</p>
+								<p><button class="text-accent hover:underline" onclick={() => faction.openModal('member')}>Add a member?</button></p>
+							</Stack>
 						{/if}
 					</Grid>
 				</Section>

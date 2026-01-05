@@ -4,11 +4,15 @@
     import AuthenticatedLayout	 from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharacterSettingsForm from '@/Forms/Settings/CharacterSettings.svelte'
 	import Flex			from '@/Components/Core/Flex.svelte'
+	import Grid			from '@/Components/Core/Grid.svelte'
 	import Inline		from '@/Components/Core/Inline.svelte'
 	import Stack		from '@/Components/Core/Stack.svelte'
 	import Button		from '@/Components/UI/Button.svelte'
 	import Container	from '@/Components/UI/Container.svelte'
 	import Heading		from '@/Components/UI/Heading.svelte'
+	import Icon			from '@/Components/UI/Icon.svelte'
+	import Input		from '@/Components/UI/Input'
+	import Label		from '@/Components/UI/Label.svelte'
 	import PageHeading	from '@/Components/UI/PageHeading.svelte'
 	import PageMenu		from '@/Components/UI/PageMenu.svelte'
 	import Section		from '@/Components/UI/Section.svelte'
@@ -37,11 +41,11 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="overflow-y-auto px-20 py-12">
+		<Flex justify="center" gap={12} class="overflow-y-auto px-20">
 
 			<!-- Page Menu -->
 
-			<PageMenu
+			<PageMenu class="py-12"
 				back={{ text: 'Character List', href: route('characters') }}
 				items={[
 					{ icon: "UserList",       label: "Overview",      href: "#overview" },
@@ -49,7 +53,7 @@
 					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"   }
 				]}
 			/>
-			<Container size="3xl">
+			<Container size="2xl" class="py-12">
 
 				<!-- Page Menu -->
 
@@ -62,63 +66,66 @@
 				<Section id="overview" gap={6}>
 					<Heading is="h4" as="h5">Overview</Heading>
 					<CharacterSettingsForm />
+					<Separator class="my-12" />
 				</Section>
 
-				<Separator class="my-12" />
 
 				<Section id="media" gap={6}>
 					<Heading is="h4" as="h5">Media</Heading>
 					<p class="mb-3">These media settings apply to all characters in this project.</p>
+					<Flex>
+						{#each ['jpg', 'png', 'gif', 'webp'] as fileType, i}
+							<Button icon="CheckCircle" iconWeight="fill" text={fileType} class="bg-slate-50 border-b {i==0 ? 'rounded-l' : 'border-l'} {i==3 ? 'rounded-r' : ''}" />
+						{/each}
+					</Flex>
+					<Separator class="my-12" />
 				</Section>
 
-				<Separator class="my-12" />
 
 				<Section id="custom" gap={6}>
 					<Heading is="h4" as="h5">Custom Fields</Heading>
 					<p class="mb-3">These custom fields will apply to all characters in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
 					
 					{#if customFields?.length > 0}
-						<Stack align="start">
-							<Inline align="center">
-								<Inline class="font-style-label w-24">Name</Inline>
-								<Inline class="font-style-label w-20">Type</Inline>
-								<Inline class="font-style-label w-24">Default</Inline>
-								<Inline class="font-style-label w-32">Placeholder</Inline>
-								<!-- <Inline class="font-style-label">Field</Inline> -->
-							</Inline>
+
+
+						<!-- <Stack class="max-w-96" gap={1.5}>
 							{#each customFields as field}
-								<Inline align="center" class="group my-1">
-									<Inline class="shrink-0 text-sm w-24">{field.label}</Inline>
-									<Inline class="shrink-0 text-sm w-20 capitalize">{field.type}</Inline>
-									<Inline class="shrink-0 text-sm w-24 {field.default ? null : 'text-neutral-softest'}">{field.default || 'None'}</Inline>
-									<Inline class="shrink-0 text-sm w-32">{field.placeholder}</Inline>
-									<!-- <Input {...field} id={undefined} label={undefined} class="mr-2 w-full" /> -->
-									<Button class="opacity-0 group-hover:opacity-100 ml-auto rounded-full"
-										size="sm" style="soft" theme="accent"
-										icon="PencilSimple"
-										onclick={() => characters.openModal('customField', { field })}
-									/>
-								</Inline>
-								<Separator class="opacity-50" />
-								<!-- {#if field.options}
-									<Flex>
-										{#each field.options as option}
-											<Inline>{option.label}</Inline>
-										{/each}
-									</Flex>
-								{/if} -->
+								<Flex gap={1.5}>
+									<Input.Text class="flex-none w-32" value={field.label} />
+									<Button class="flex-1" text="{field.label}: {field.type}" style="soft" theme="neutral" onclick={() => characters.openModal('customField', { field })} />
+								</Flex>
 							{/each}
-						</Stack>
+							<Button class="w-full"
+								icon="Plus" text="Add custom field" style="soft" theme="accent"
+								onclick={() => characters.openModal('customField', { endpoint: route('customFields.store'), patch: 'post' })}
+							/>
+						</Stack> -->
+
+
+						<Grid cols={4} gap={1.5}>
+							{#each customFields as field}
+								<Stack align="center" justify="center" class="bg-neutral-softest cursor-pointer min-h-20 px-3 py-3 rounded hover:bg-neutral-softer" onclick={() => characters.openModal('customField', { field })}>
+									<!-- <Flex align="center" justify="center" class="bg-neutral-softest mb-3 p-3 rounded-full">
+										<Icon name="Textbox" size="xl" />
+									</Flex> -->
+									<Label icon="Textbox" text={field.type.charAt(0).toUpperCase() + field.type.slice(1)} />
+									<!-- <span class="font-style-tiny text-neutral-softer">{field.type}</span> -->
+									<span class="font-style-large">{field.label}</span>
+								</Stack>
+							{/each}
+							<Button class="h-full w-full"
+								icon="Plus" iconWeight="light" size="xl" style="soft" theme="accent"
+								onclick={() => characters.openModal('customField', { endpoint: route('customFields.store'), patch: 'post' })}
+							/>
+						</Grid>
 					{:else}
 						<span class="mx-auto text-neutral-softest">There are no custom fields yet.</span>
 					{/if}
-
-					<Button class="mt-3 mx-auto rounded-full"
-						style="hard" theme="accent"
-						icon="Plus" text="Add Custom Field"
-						onclick={() => characters.openModal('customField', { endpoint: route('customFields.store'), patch: 'post' })}
-					/>
+					<Separator class="my-12" />
 				</Section>
+
+
 			</Container>
 		</Flex>
 	{/snippet}

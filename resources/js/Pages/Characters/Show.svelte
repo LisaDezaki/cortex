@@ -15,6 +15,7 @@
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Entity    	 from '@/Components/UI/Entity.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
+	import Input    	 from '@/Components/UI/Input'
 	import Media     	 from '@/Components/UI/Media.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
@@ -82,8 +83,9 @@
 							/>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('rename')} />
 						</Inline>
-						<Inline class="z-10">{character.alias}
-							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('alias')} />
+						<Inline class="z-10">
+							<span class={character.getMedia('banner') ? 'opacity-75 text-white' : ''}>{character.alias}</span>
+							<Button class="ml-1.5 rounded-full text-accent " size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => character.openModal('alias')} />
 						</Inline>
 					</ArticleBanner>
 				</Section>
@@ -146,13 +148,21 @@
 					{#if customFields && customFields.length > 0}
 						<Stack gap={3}>
 							{#each customFields as field, i}
-								<Flex align="baseline" gap={3}>
+								<!-- <pre>{JSON.stringify(field,null,3)}</pre> -->
+								<Flex align="center" gap={3}>
 									<span class="font-semibold w-32">{field.label}:</span>
-									<span class="line-clamp-1 w-32 {character.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{character.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span>
-									<Button class="place-self-start rounded-full"
+									<Input {...field} value={character.customFieldValues?.find(f => f.name === field.name)?.value} />
+									
+									<!-- <Button
+										icon="GearFine"
+										style="soft" theme="accent"
+										onclick={() => characters.openModal('customField', { field: character.customFieldValues?.find(f => f.name === field.name) })}
+									/> -->
+									<!-- <span class="line-clamp-1 w-48 {character.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{character.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span> -->
+									<!-- <Button class="place-self-start rounded-full"
 										size="xs" style="plain" theme="accent" icon="PencilSimple"
-										onclick={() => character.openModal('customField', { field: field, value: character.customFieldValues?.find(f => f.name === field.name)?.value })}
-									/>
+										onclick={() => character.openModal('customField', { field, value: character.customFieldValues?.find(f => f.name === field.name)?.value })}
+									/> -->
 								</Flex>
 							{/each}
 						</Stack>
@@ -177,11 +187,7 @@
 									href={route('characters.show', { character: rel.slug })}
 								/>
 							{/each}
-
-							<Flex align="center" justify="center" class="aspect-square bg-accent-softest p-1.5 rounded w-full">
-								<Button size="xl" style="soft" theme="accent" icon="Plus" onclick={() => character.openModal('relationship')} class="h-12 rounded-full w-12" />
-							</Flex>
-
+							<Button size="lg" style="soft" theme="accent" icon="Plus" iconWeight="light" onclick={() => character.openModal('relationship')} class="aspect-square rounded w-full" />
 						{:else}
 							<Stack class="col-span-full">
 								<p class="italic text-neutral-softer">{character.name} doesn't have any relationships yet.</p>
@@ -209,6 +215,7 @@
 									href={route('factions.show', { faction: fac.slug })}
 								/>
 							{/each}
+							<Button size="lg" style="soft" theme="accent" icon="Plus" iconWeight="light" onclick={() => character.openModal('relationship')} class="aspect-square rounded w-full" />
 						{:else}
 							<Stack class="col-span-full">
 								<p class="italic text-neutral-softer">{character.name} isn't in any factions yet.</p>

@@ -33,7 +33,7 @@
 
 		{#if !multiple}
 
-			<UploadPreview index={0} navigable={false} class="relative flex items-center justify-center overflow-hidden w-full {aspect}">
+			<UploadPreview index={0} navigable={false} class="relative flex items-center justify-center overflow-hidden w-full {aspect} hover:inner-shadow-lg transition-all">
 				<UploadTrigger class="absolute top-0 left-0 h-full w-full" />
 			</UploadPreview>
 

@@ -27,7 +27,6 @@
 			if ($form && typeof $form[method] === 'function') {
 				$form[ method ]( endpoint, {
 					onSuccess: (res) => {
-						console.log('FORM SUBMIT SUCCESS RELOAD PAGE PROPS:', reloadPageProps)
 						onSuccess?.(res)
 						if (reloadPageProps) {
 							router.visit( reloadPageUrl, {

@@ -38,6 +38,7 @@ class ItemController extends Controller
 
 	protected $validationRules = [
 		'name'                  => ['sometimes', 'string', 'max:255'],
+		'slug'					=> ['sometimes', 'string', 'max:255'],
 		'type'                  => ['sometimes', 'nullable', 'string', 'max:255'],
 		'description'           => ['sometimes', 'nullable', 'string'],
 		'starred'				=> ['sometimes', 'boolean'],
@@ -102,19 +103,11 @@ class ItemController extends Controller
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
-			Session::flash('error', "Failed to create character: ".$e);
+			Session::flash('error', "Validation failed: ".$e);
         	return Redirect::back();
 		}
 
 		$item = Auth::user()->activeProject()->items()->create($validatedData);
-
-		if ($request->has('media') && $request['media'] !== null) {
-			foreach ($request['media'] as $media) {
-				$this->mediaService->attachMedia($item, $media['type'], $media);
-			}
-			unset($validatedData['media']);
-		}
-		
 		$item->save();
 		Session::flash('success', "Item created: $item->name");
 		return Redirect::route("items.show", [

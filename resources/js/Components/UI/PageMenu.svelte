@@ -25,7 +25,7 @@
 	let cx = $derived({
 		menu: clsx('page-menu sticky top-0 flex-none min-w-48 w-48 max-w-48 rounded-lg overflow-y-auto pr-2', className),
 		back: clsx('border border-neutral-softest gap-1.5 mb-3 place-self-start rounded-full hover:border-accent hover:text-accent'),
-		item: clsx('page-menu-item flex items-center gap-3 p-1.5 pl-3 rounded w-full'),
+		item: clsx('page-menu-item flex items-center gap-3 min-h-9 p-md pl-3 rounded w-full'),
 		itemDefault: clsx('hover:bg-neutral-softest'),
 		itemDanger:  clsx('text-danger hover:bg-danger-softest'),
 		itemActive:  clsx('bg-accent-softest text-accent pointer-events-none')

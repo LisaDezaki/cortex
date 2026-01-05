@@ -398,11 +398,11 @@
 		color: var(--text-neutral-softer);
 	}
 
-	.inner-shadow-xs		{ box-shadow: inset 0 0 0.25rem var(--bg-neutral-soft); }
-	.inner-shadow-sm		{ box-shadow: inset 0 0 0.5rem var(--bg-neutral-soft); }
-	.inner-shadow-md		{ box-shadow: inset 0 0 1rem var(--bg-neutral-soft); }
-	.inner-shadow-lg		{ box-shadow: inset 0 0 2rem var(--bg-neutral-soft); }
-	.inner-shadow-xl		{ box-shadow: inset 0 0 4rem var(--bg-neutral-soft); }
+	.inner-shadow-xs		{ box-shadow: inset 0 0 0.25rem rgba(0,0,0,0.25); }
+	.inner-shadow-sm		{ box-shadow: inset 0 0 0.5rem rgba(0,0,0,0.25); }
+	.inner-shadow-md		{ box-shadow: inset 0 0 1rem rgba(0,0,0,0.25); }
+	.inner-shadow-lg		{ box-shadow: inset 0 0 3vw rgba(0,0,0,0.25); }
+	.inner-shadow-xl		{ box-shadow: inset 0 0 6vw rgba(0,0,0,0.25); }
 
 
 
@@ -511,11 +511,11 @@ select:focus {
 
 /*	Padding  */
 
-.p-xs { @apply p-0.5; }
-.p-sm { @apply p-1; }
-.p-md { @apply p-1.5; }
-.p-lg { @apply p-2; }
-.p-xl { @apply p-4; }
+.p-xs { @apply px-1   py-0.5;   }
+.p-sm { @apply px-1.5 py-1; }
+.p-md { @apply px-2   py-1.5;   }
+.p-lg { @apply px-6   py-2;	  }
+.p-xl { @apply px-6   py-4;   }
 
 .px-xs { @apply px-1; }
 .px-sm { @apply px-1.5; }
