@@ -42,6 +42,7 @@
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
+		sort:		urlParams.get('sort')	  || 'name',
 		size: 		urlParams.get('size')	  || 6,
 		layout: 	urlParams.get('layout')	  || 'grid',
 		selected: 	urlParams.get('selected') || ''
@@ -67,6 +68,7 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
+			sort:		urlParams.get('sort')	  || 'name',
 			size: 		urlParams.get('size') 	  || 6,
 			layout: 	urlParams.get('layout')   || 'grid',
 			selected: 	urlParams.get('selected') || ''
@@ -101,11 +103,15 @@
 			case 'faction':
 				return character.factions?.items?.[0]?.name || '--'
 			case 'created_at':
-				return new Date(character.meta?.createdAt).toLocaleString() || '--'
+				return character.meta.created.ago || '--'
 			case 'updated_at':
-				return new Date(character.meta?.updatedAt).toLocaleString() || '--'
+				return character.meta.updated.ago || '--'
 			default:
-				return character.customFieldValues.find(v => v.name === parameters.sort)?.displayValue || character.alias
+				if (parameters.sort?.includes('cf.')) {
+					return character.customFieldValues.find(v => v.name === parameters.sort.split('.')[1])?.displayValue || '--'
+				} else {
+					return character.alias || '--'
+				}
 		}
 	}
 
@@ -142,10 +148,13 @@
 			/>
 			
 			<ControlBar class="py-3"
-				data={characters} bind:results bind:layout={parameters.layout}
+				data={characters} bind:results
+				bind:layout={parameters.layout} bind:sort={parameters.sort} bind:size={parameters.size}
 				filterOptions={activeProject.getOptions('characters', 'filter')}
 				sortOptions={activeProject.getOptions('characters', 'sort')}
 				layoutOptions={activeProject.getOptions('characters', 'layout')}
+				sizeOptions={{ min: 3, max: 7 }}
+				resizeable={parameters.layout === 'grid'}
 			/>
 
 			{#if activeProject && characters.items.length > 0}
@@ -160,6 +169,7 @@
 								<Entity
 									active={parameters.selected === character.slug}
 									entity={character}
+									subtitle={getSubtitle(character)}
 									href={character.routes.show}
 								/>
 							{/each}

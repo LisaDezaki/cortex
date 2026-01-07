@@ -28,6 +28,11 @@
 		sortOptions		= [],
 		layoutOptions	= [],
 
+		sizeOptions		= {
+			min: null,
+			max: null
+		},
+
 		...restProps
 	} = $props()
 
@@ -128,6 +133,10 @@
 		refreshResults()
 	}
 
+	function onLayout(newLayout) {
+		layout = newLayout.value
+	}
+
 	function refreshResults() {
 		if (!data.applyFilters) {
 			console.error('The control bar cannot affect entities without an `applyFilters` method.')
@@ -180,7 +189,7 @@
 
 	<!-- Filter -->
 
-	{#if filterable}
+	{#if filterable && filterOptions}
 		<Stack>
 			<Label icon="FunnelSimple" text="Filter" />
 			<Dropdown bind:value={filter}
@@ -201,14 +210,29 @@
 
 	<!-- Sort -->
 
-	{#if sortable}
+	{#if sortable && sortOptions}
 		<Stack>
 			<Label icon="SortAscending" text="Sort" />
 			<Input.Select bind:value={sort}
 				class={cx.input}
 				options={sortOptions}
 				onUpdate={onSort}
-				placeholder="Sort by"
+				placeholder="Sort by..."
+				size="sm"
+			/>
+		</Stack>
+	{/if}
+
+	<!-- Layout -->
+
+	{#if layoutOptions}
+		<Stack>
+			<Label icon="Shapes" text="Layout" />
+			<Input.Select bind:value={layout}
+				class={cx.input}
+				options={layoutOptions}
+				onUpdate={onLayout}
+				placeholder="As layout..."
 				size="sm"
 			/>
 		</Stack>
@@ -226,21 +250,24 @@
 
 	<!-- Size -->
 
-	<!-- <Stack>
-		<Label icon="Resize" text="Size" />
-		<Input.Slider bind:value={size}
-			size="sm"
-			style="none"
-			showTicks={true}
-			showValue={false}
-			{min} {max}
-		/>
-	</Stack> -->
+	{#if resizeable}
+		<Stack>
+			<Label icon="Resize" text="Size" />
+			<Input.Slider bind:value={size}
+				size="sm"
+				style="none"
+				showTicks={true}
+				showValue={false}
+				min={sizeOptions.min}
+				max={sizeOptions.max}
+			/>
+		</Stack>
+	{/if}
 
 
 	<!-- Layout -->
 
-	<Stack>
+	<!-- <Stack>
 		<Label icon="Layout" text="Layout" />
 		<Inline>
 			{#each layoutOptions as option, i}
@@ -251,6 +278,6 @@
 				/>
 			{/each}
 		</Inline>
-	</Stack>
+	</Stack> -->
 
 </Flex>

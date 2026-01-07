@@ -109,6 +109,7 @@
 	import Resize from "phosphor-svelte/lib/Resize"
 	import RowsPlusBottom from "phosphor-svelte/lib/RowsPlusBottom"
 	import Sailboat from "phosphor-svelte/lib/Sailboat"
+	import Shapes from "phosphor-svelte/lib/Shapes"
 	import SignOut from "phosphor-svelte/lib/SignOut"
 	import Siren from "phosphor-svelte/lib/Siren"
 	import SmileySad from "phosphor-svelte/lib/SmileySad"
@@ -254,6 +255,7 @@
 		'Resize': Resize,
 		'RowsPlusBottom': RowsPlusBottom,
 		'Sailboat': Sailboat,
+		'Shapes': Shapes,
 		'SignOut': SignOut,
 		'Siren': Siren,
 		'SmileySad': SmileySad,

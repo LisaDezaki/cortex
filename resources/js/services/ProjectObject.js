@@ -203,9 +203,12 @@ export default class ProjectObject {
 						{ label: "By popularity",		value: 'popularity',				sortFunction: (a,b) => a.relationships?.items?.length > b.relationships?.items?.length 	? -1 : 1 },
 						{ separator: true, if: this.customFields?.getByFieldable('character').length > 0 },
 						...this.customFields?.getByFieldable('character').map(cf => ({
-							label: `By ${cf.label.toLowerCase()}`,	value: cf.name,			sortFunction: (a,b) => {
-								a = a.customFieldValues.find(v => v.name === cf.name)?.value
-								b = b.customFieldValues.find(v => v.name === cf.name)?.value
+							label: `By ${cf.label.toLowerCase()}`,	value: 'cf.'+cf.name,			sortFunction: (a,b) => {
+								a = a.customFieldValues?.find(v => v.name === cf.name)?.displayValue
+								b = b.customFieldValues?.find(v => v.name === cf.name)?.displayValue
+								// console.log('sorting by', cf.label, {a: !a, b: !b})
+								if (!a) { return  1 }
+								if (!b) { return -1 }
 								return !isNaN(a) && !isNaN(b)
 									? (Number(a) < Number(b) ? -1 : 1)
 									: (a < b ? -1 : 1)
