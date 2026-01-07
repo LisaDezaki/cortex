@@ -206,7 +206,6 @@ export default class ProjectObject {
 							label: `By ${cf.label.toLowerCase()}`,	value: 'cf.'+cf.name,			sortFunction: (a,b) => {
 								a = a.customFieldValues?.find(v => v.name === cf.name)?.displayValue
 								b = b.customFieldValues?.find(v => v.name === cf.name)?.displayValue
-								// console.log('sorting by', cf.label, {a: !a, b: !b})
 								if (!a) { return  1 }
 								if (!b) { return -1 }
 								return !isNaN(a) && !isNaN(b)
@@ -215,15 +214,15 @@ export default class ProjectObject {
 							}
 						})),
 						{ separator: true },
-						{ label: "Date Created", 		value: 'created_at', 				sortFunction: (a,b) => a.meta.created.at < b.meta.created.at ? -1 : 1 },
-						{ label: "Date Updated", 		value: 'updated_at', 				sortFunction: (a,b) => a.meta.updated.at < b.meta.updated.at ? -1 : 1 },
-						{ label: "Randomly", 			value: 'random',     				sortFunction: (a,b) => Math.random() < 0.5 ? -1 : 1 },
+						{ label: "Date Created",	value: 'created_at',	sortFunction: (a,b) => a.meta.created.at < b.meta.created.at ? -1 : 1 },
+						{ label: "Date Updated",	value: 'updated_at',	sortFunction: (a,b) => a.meta.updated.at < b.meta.updated.at ? -1 : 1 },
+						{ label: "Randomly",		value: 'random',		sortFunction: (a,b) => Math.random() < 0.5 ? -1 : 1 },
 					]
 				case 'layout':
 					return [
-						{ label: "As Graph", 			value: "graph", 		icon: "Graph"	  	},
-						{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
-						{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+						{ label: "As Graph",		value: "graph", 		icon: "Graph"	  	},
+						{ label: "As Grid",			value: "grid",			icon: "GridFour"	},
+						{ label: "As Table",		value: "table", 		icon: "Table"	  	}
 					]
 				default:
 					return this.characters?.items?.map(c => ({
@@ -278,18 +277,20 @@ export default class ProjectObject {
 						{ label: "By member count",		value: 'members',					sortFunction: (a,b) => a.members?.items.length > b.members?.items.length	? -1 : 1 },
 						{	separator: true, if: this.customFields?.getByFieldable('faction').length > 0 },
 						...this.customFields?.getByFieldable('faction').map(cf => ({
-							label: `By ${cf.label.toLowerCase()}`,	value: cf.name,			sortFunction: (a,b) => {
-								// a = a.customFieldValues.find(v => v.name === cf.name)?.value
-								// b = b.customFieldValues.find(v => v.name === cf.name)?.value
-								// return !isNaN(a) && !isNaN(b)
-								// 	? (Number(a) < Number(b) ? -1 : 1)
-								// 	: (a < b ? -1 : 1)
+							label: `By ${cf.label.toLowerCase()}`,	value: 'cf.'+cf.name,			sortFunction: (a,b) => {
+								a = a.customFieldValues?.find(v => v.name === cf.name)?.displayValue
+								b = b.customFieldValues?.find(v => v.name === cf.name)?.displayValue
+								if (!a) { return  1 }
+								if (!b) { return -1 }
+								return !isNaN(a) && !isNaN(b)
+									? (Number(a) < Number(b) ? -1 : 1)
+									: (a < b ? -1 : 1)
 							}
 						})),
 						{ 	separator: true },
-						{ label: "Date Created",	value: 'created_at', sortFunction: (a,b) => { return a.meta.created.at		< b.meta.created.at 			? -1 : 1 } },
-						{ label: "Date Updated",	value: 'updated_at', sortFunction: (a,b) => { return a.meta.updated.at		< b.meta.updated.at 			? -1 : 1 } },
-						{ label: "Randomly",		value: 'random',     sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } },
+						{ label: "Date Created",	value: 'created_at',	sortFunction: (a,b) => { return a.meta.created.at		< b.meta.created.at 			? -1 : 1 } },
+						{ label: "Date Updated",	value: 'updated_at',	sortFunction: (a,b) => { return a.meta.updated.at		< b.meta.updated.at 			? -1 : 1 } },
+						{ label: "Randomly",		value: 'random',		sortFunction: (a,b) => { return Math.random()          < 0.5 						? -1 : 1 } },
 					]
 				case 'layout':
 					return [

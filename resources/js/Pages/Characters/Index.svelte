@@ -43,7 +43,7 @@
 	 */
 	let parameters = $state({
 		sort:		urlParams.get('sort')	  || 'name',
-		size: 		urlParams.get('size')	  || 6,
+		size: 		urlParams.get('size')	  || 5,
 		layout: 	urlParams.get('layout')	  || 'grid',
 		selected: 	urlParams.get('selected') || ''
 	})
@@ -52,7 +52,7 @@
 	 * Derived grid columns calculation based on size parameter
 	 * @type {number}
 	 */
-	let gridCols = $derived(12-parameters.size)
+	let gridCols = $derived(10-parameters.size)
 
 	/**
 	 * Derived filtered/sorted results
@@ -69,7 +69,7 @@
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
 			sort:		urlParams.get('sort')	  || 'name',
-			size: 		urlParams.get('size') 	  || 6,
+			size: 		urlParams.get('size') 	  || 5,
 			layout: 	urlParams.get('layout')   || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};
@@ -120,11 +120,11 @@
 	 * @param {CharacterObject} character | A CharacterObject class instance
 	 * @return {void}
 	 */
-	function selectCharacter(character) {
-		const url = new URL(window.location);
-		url.searchParams.set('selected', character?.slug)
-		parameters.selected = parameters.selected === character.slug ? null : character.slug
-	}
+	// function selectCharacter(character) {
+	// 	const url = new URL(window.location);
+	// 	url.searchParams.set('selected', character?.slug)
+	// 	parameters.selected = parameters.selected === character.slug ? null : character.slug
+	// }
 
 </script>
 

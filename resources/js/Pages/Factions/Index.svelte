@@ -42,7 +42,8 @@
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
-		size: 		urlParams.get('size')	  || 6,
+		sort:		urlParams.get('sort')	  || 'name',
+		size: 		urlParams.get('size')	  || 5,
 		layout: 	urlParams.get('layout')	  || 'grid',
 		selected: 	urlParams.get('selected') || ''
 	})
@@ -51,7 +52,7 @@
 	 * Derived grid columns calculation based on size parameter
 	 * @type {number}
 	 */
-	let gridCols = $derived(12-parameters.size)
+	let gridCols = $derived(10-parameters.size)
 
 	/**
 	 * Derived filtered/sorted results
@@ -67,7 +68,8 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			size: 		urlParams.get('size') 	  || 6,
+			sort:		urlParams.get('sort')	  || 'name',
+			size: 		urlParams.get('size') 	  || 5,
 			layout: 	urlParams.get('layout')   || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};
@@ -97,11 +99,15 @@
 			case 'members':
 				return faction.members?.items.length + ' Members'
 			case 'created_at':
-				return new Date(faction.meta?.createdAt).toLocaleString() || '--'
+				return faction.meta.created.ago || '--'
 			case 'updated_at':
-				return new Date(faction.meta?.updatedAt).toLocaleString() || '--'
+				return faction.meta.updated.ago || '--'
 			default:
-				return faction.type || '--'
+				if (parameters.sort?.includes('cf.')) {
+					return faction.customFieldValues.find(v => v.name === parameters.sort.split('.')[1])?.displayValue || '--'
+				} else {
+					return faction.type || '--'
+				}
 		}
 	}
 
@@ -111,11 +117,11 @@
 	 * @param {FactionObject} faction | A FactionObject class instance
 	 * @return {void}
 	 */
-	function selectFaction(faction) {
-		const url = new URL(window.location);
-		url.searchParams.set('selected', faction?.slug)
-		parameters.selected = parameters.selected === faction.slug ? null : faction.slug
-	}
+	// function selectFaction(faction) {
+	// 	const url = new URL(window.location);
+	// 	url.searchParams.set('selected', faction?.slug)
+	// 	parameters.selected = parameters.selected === faction.slug ? null : faction.slug
+	// }
 	
 </script>
 
@@ -127,30 +133,7 @@
 
 <AuthenticatedLayout>	
 	{#snippet article()}
-
-		<!-- Fixed/Sticky Header -->
-
-		<!-- <PageHeader size="7xl" class="px-20 py-2"
-			tabs={[
-				{ text: "Faction List",	active: true },
-				{ text: "Settings",		href: route('factions.settings') },
-			]}
-			actions={[
-				{ icon: "Plus", text: "New", theme: "accent", onclick: () => factions.create() },
-			]}
-		>
-			<ControlBar
-				data={factions} bind:results bind:layout={parameters.layout}
-				filterOptions={activeProject.getOptions('factions', 'filter')}
-				sortOptions={activeProject.getOptions('factions', 'sort')}
-				layoutOptions={activeProject.getOptions('factions', 'layout')}
-			/>
-		</PageHeader> -->
-
-
-		<!-- Main Body -->
-
-		<Stack align="center" class="overflow-y-auto px-20 py-12">
+		<Stack class="overflow-y-auto px-20 py-12">
 
 			<PageHeading
 				title="Faction List"
@@ -162,10 +145,13 @@
 			/>
 
 			<ControlBar class="py-3"
-				data={factions} bind:results bind:layout={parameters.layout}
+				data={factions} bind:results
+				bind:layout={parameters.layout} bind:sort={parameters.sort} bind:size={parameters.size}
 				filterOptions={activeProject.getOptions('factions', 'filter')}
 				sortOptions={activeProject.getOptions('factions', 'sort')}
 				layoutOptions={activeProject.getOptions('factions', 'layout')}
+				sizeOptions={{ min: 3, max: 7 }}
+				resizeable={parameters.layout === 'grid'}
 			/>
 
 			{#if activeProject && factions.items.length > 0}
@@ -174,12 +160,13 @@
 				<!-- Grid -->
 
 				{#if parameters.layout == 'grid'}
-					<Grid class="w-full" cols={gridCols} gap={3}>
+					<Grid class="py-3 w-full" cols={gridCols} gap={3}>
 						{#if results.length > 0}
 							{#each results as faction}
 								<Entity
 									active={parameters.selected === faction.slug}
 									entity={faction}
+									subtitle={getSubtitle(faction)}
 									href={faction.routes.show}
 								/>
 							{/each}

@@ -1,5 +1,5 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { Link, page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
@@ -8,13 +8,12 @@
 	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
-	import Card       	 from '@/Components/UI/Card.svelte'
-	import CardNew       from '@/Components/UI/CardNew.svelte'
 	import Collapsible	 from '@/Components/UI/Collapsible.svelte'
 	import Container	 from '@/Components/UI/Container.svelte'
 	import Entity		 from '@/Components/UI/Entity.svelte'
 	import Heading		 from '@/Components/UI/Heading.svelte'
 	import Icon		 	 from '@/Components/UI/Icon.svelte'
+	import Input    	 from '@/Components/UI/Input'
 	import Media     	 from '@/Components/UI/Media.svelte'
 	import PageMenu		 from '@/Components/UI/PageMenu.svelte'
 	import Section		 from '@/Components/UI/Section.svelte'
@@ -29,6 +28,17 @@
 	 */
 	const faction 	   = new FactionObject($page.props.faction?.data)
 	const customFields = $page.props.customFields?.data
+
+	let customFieldForm = useForm({
+		customFields: customFields?.map((field) => ({
+			id: field.id,
+			value: faction.customFieldValues?.find(cfv => cfv.fieldId === field.id)?.value || null
+		}))
+	})
+
+	function submitCustomFields() {
+		$customFieldForm.patch(faction.routes.update, {})
+	}
 
 </script>
 
@@ -52,12 +62,10 @@
 				]}
 			/>
 			<Container size="3xl">
-
 				
-				<!-- Details -->
+				<!-- Header -->
 		
-				<Section id="details" class="pb-12">
-
+				<Section id="header">
 					<ArticleBanner>
 						<Media
 							class="absolute inset-0 aspect-[3/1] bg-slate-200 rounded-lg overflow-hidden"
@@ -77,11 +85,16 @@
 							/>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => faction.openModal('rename')} />
 						</Inline>
-						<Inline class="z-10">{faction.type}
+						<Inline class="z-10">
+							<span class={faction.getMedia('banner') ? 'opacity-75 text-white' : ''}>{faction.type}</span>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => faction.openModal('type')} />
 						</Inline>
 					</ArticleBanner>
+				</Section>
 
+				<!-- Details -->
+
+				<Section id="details">
 					<Stack class="max-w-[64ch] mx-6 mt-12">
 
 						<Grid cols={3} gap={6} class="w-3/4">
@@ -98,23 +111,9 @@
 										href={route("locations.show", { location: faction.headquarters?.slug})}
 										size="sm"
 									/>
-									<!-- <Link
-										class="bg-white border border-neutral-softest inline-flex gap-3 p-1 rounded-lg w-auto hover:bg-accent-softest hover:border-accent-softest hover:text-accent"
-										href={route("locations.show", { location: faction.headquarters?.slug})}>
-										<Thumbnail
-											class="aspect-square bg-neutral-softest rounded h-11 max-w-11"
-											icon="MapPin"
-											src={faction.headquarters.image?.url}
-										/>
-										<Stack justify="center">
-											<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
-											<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
-										</Stack>
-									</Link> -->
 								{:else}
 									<p class="font-style-placeholder">There is no headquarters for this Faction yet.</p>
 								{/if}
-
 							</Stack>
 
 							<Stack gap={1.5}>
@@ -122,25 +121,6 @@
 									<Icon name="UsersFour" size="sm" />
 									<span>Membership</span>
 								</Inline>
-
-								<!-- {#if faction.headquarters}
-									<Link
-										class="inline-flex gap-3 p-1 rounded-lg w-auto hover:text-accent"
-										href={route("locations.show", { location: faction.headquarters?.slug})}>
-										<Thumbnail
-											class="aspect-square bg-neutral-softest rounded h-11 max-w-11"
-											icon="User"
-											src={faction.headquarters.image?.url}
-										/>
-										<Stack justify="center">
-											<div class="font-bold leading-[1.125rem] line-clamp-1">{faction.headquarters.name}</div>
-											<div class="text-sm leading-[1.125rem] line-clamp-1">{faction.headquarters.type}</div>
-										</Stack>
-									</Link>
-								{:else}
-									<p class="font-style-placeholder">There is no headquarters for this Faction yet.</p>
-								{/if} -->
-
 							</Stack>
 						</Grid>
 
@@ -151,7 +131,6 @@
 						</Heading>
 						{#if faction.description}
 							<Collapsible collapsed={true}
-								class="max-w-[64ch]"
 								collapsedClass="line-clamp-3 overflow-hidden">
 								{faction.description}
 							</Collapsible>
@@ -244,17 +223,20 @@
 				<Section id="custom" class="p-6">
 					<Heading is="h3" as="h4" class="mb-6">Custom Fields</Heading>
 					{#if customFields && customFields.length > 0}
-						{#each customFields as field, i}
-							<Flex gap={3}>
-								<span class="font-bold w-20">{field.label}:</span>
-								<span class="line-clamp-1 {field.displayValue ? '' : 'font-style-placeholder'}">{field.displayValue || "undefined"}</span>
-							</Flex>
-						{/each}
-						<Flex class="pt-3">
-							<Button size="md" style="soft" theme="accent" icon="Plus" iconSize="sm" iconWeight="regular" label="New custom field" onclick={() => {}} />
-						</Flex>
+						<Stack class="flex flex-col gap-1.5" gap={1.5}>
+							{#each customFields as field, i}
+								<Flex align="center" gap={3}>
+									<span class="font-semibold w-20">{field.label}:</span>
+									<Input class="w-64" {...field} bind:value={$customFieldForm.customFields[i].value} />
+								</Flex>
+							{/each}
+							<Button type="submit" class="min-w-32 mt-3 place-self-start"
+								text="Save" onclick={submitCustomFields}
+								size="md" style="hard" theme="accent"
+							/>
+						</Stack>
 					{:else}
-						<p class="font-style-placeholder">There are no custom fields for Factions yet.</p>
+						<p class="text-neutral-softer">There are no custom fields for Factions in this project yet.</p>
 					{/if}
 				</Section>
 

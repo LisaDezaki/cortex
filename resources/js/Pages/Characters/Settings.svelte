@@ -4,30 +4,25 @@
     import AuthenticatedLayout	 from '@/Layouts/AuthenticatedLayout.svelte'
 	import CharacterSettingsForm from '@/Forms/Settings/CharacterSettings.svelte'
 	import Flex			from '@/Components/Core/Flex.svelte'
-	import Grid			from '@/Components/Core/Grid.svelte'
 	import Inline		from '@/Components/Core/Inline.svelte'
 	import Reorder		from '@/Components/Core/Reorder'
-	import Stack		from '@/Components/Core/Stack.svelte'
 	import Button		from '@/Components/UI/Button.svelte'
 	import Container	from '@/Components/UI/Container.svelte'
 	import Heading		from '@/Components/UI/Heading.svelte'
 	import Icon			from '@/Components/UI/Icon.svelte'
-	import Input		from '@/Components/UI/Input'
-	import Label		from '@/Components/UI/Label.svelte'
 	import PageHeading	from '@/Components/UI/PageHeading.svelte'
 	import PageMenu		from '@/Components/UI/PageMenu.svelte'
 	import Section		from '@/Components/UI/Section.svelte'
 	import Separator	from '@/Components/UI/Separator.svelte'
 	import ProjectObject 	from '@/services/ProjectObject'
-	import { modalActions } from '@/stores/modalStore'
 
 
 	/**
 	 * Active project instance
 	 * @type {ProjectObject}
 	 */
-	const activeProject	  = new ProjectObject($page.props.activeProject.data)
-	const characters      = activeProject?.characters
+	const activeProject	= new ProjectObject($page.props.activeProject.data)
+	const characters    = activeProject?.characters
 
 	const customFields = $page.props.customFields?.data
 	const settings     = $page.props.settings?.characters?.data
@@ -37,7 +32,6 @@
 	})
 
 	function submitCustomFields() {
-		console.log($customFieldForm)
 		$customFieldForm.patch(route('customFields.updateOrder', {
 
 		}))
@@ -78,8 +72,6 @@
 			/>
 			<Container size="2xl" class="py-12">
 
-				<!-- Page Menu -->
-
 				<PageHeading
 					title="Character Settings"
 					subtitle="Manage the Character Settings for this project."
@@ -89,9 +81,9 @@
 				<Section id="overview" gap={6}>
 					<Heading is="h4" as="h5">Overview</Heading>
 					<CharacterSettingsForm />
-					<Separator class="my-12" />
 				</Section>
-
+				
+				<Separator class="my-12" />
 
 				<Section id="media" gap={6}>
 					<Heading is="h4" as="h5">Media</Heading>
@@ -101,9 +93,9 @@
 							<Button icon="CheckCircle" iconWeight="fill" text={fileType} class="bg-slate-50 border-b {i==0 ? 'rounded-l' : 'border-l'} {i==3 ? 'rounded-r' : ''}" />
 						{/each}
 					</Flex>
-					<Separator class="my-12" />
 				</Section>
 
+				<Separator class="my-12" />
 
 				<Section id="custom" gap={6}>
 					<Heading is="h4" as="h5">Custom Fields</Heading>
@@ -111,25 +103,11 @@
 					
 					{#if $customFieldForm.customFields?.length > 0}
 
-
-						<!-- <Stack class="max-w-96" gap={1.5}>
-							{#each customFields as field}
-								<Flex gap={1.5}>
-									<Input.Text class="flex-none w-32" value={field.label} />
-									<Button class="flex-1" text="{field.label}: {field.type}" style="soft" theme="neutral" onclick={() => characters.openModal('customField', { field })} />
-								</Flex>
-							{/each}
-							<Button class="w-full"
-								icon="Plus" text="Add custom field" style="soft" theme="accent"
-								onclick={() => characters.openModal('customField', { endpoint: route('customFields.store'), patch: 'post' })}
-							/>
-						</Stack> -->
-
 						<Reorder.List bind:items={$customFieldForm.customFields} class="place-self-start w-96">
 							{#snippet children({item,index})}
 								<Flex align="center" gap={1.5} class="bg-slate-50 group p-md rounded">
 									<Reorder.Handle {index} />
-									<span class="w-32 flex-none">{index+1}. {item.label}</span>
+									<span class="w-32 flex-none">{item.label}</span>
 									<Inline class="w-40 flex-1 text-sm text-neutral-soft" gap={1.5}>
 										<Icon name={customFieldIcons[item.type]} size="sm" />
 										<span>{item.type.charAt(0).toUpperCase() + item.type.slice(1)}</span>
@@ -159,25 +137,12 @@
 								onclick={submitCustomFields}
 							/>
 						</Flex>
-
-						<!-- <Grid cols={4} gap={1.5}>
-							{#each customFields as field}
-								<Stack align="center" justify="center" class="bg-neutral-softest cursor-pointer min-h-20 px-3 py-3 rounded hover:bg-neutral-softer" onclick={() => characters.openModal('customField', { field })}>
-									<Label icon="Textbox" text={field.type.charAt(0).toUpperCase() + field.type.slice(1)} />
-									<span class="font-style-large">{field.label}</span>
-								</Stack>
-							{/each}
-							<Button class="h-full w-full"
-								icon="Plus" iconWeight="light" size="xl" style="soft" theme="accent"
-								onclick={() => characters.openModal('customField', { endpoint: route('customFields.store'), patch: 'post' })}
-							/>
-						</Grid> -->
 					{:else}
 						<span class="mx-auto text-neutral-softest">There are no custom fields yet.</span>
 					{/if}
-					<Separator class="my-12" />
 				</Section>
-
+				
+				<Separator class="my-12" />
 
 			</Container>
 		</Flex>

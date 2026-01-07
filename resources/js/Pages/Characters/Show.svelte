@@ -3,19 +3,15 @@
 	import { route } from 'momentum-trail'
 	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
-	import Form 		 from '@/Components/Core/Form.svelte'
 	import Grid 		 from '@/Components/Core/Grid.svelte'
 	import Inline 		 from '@/Components/Core/Inline.svelte'
 	import Map			 from '@/Components/Core/Map'
 	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
-	import Card       	 from '@/Components/UI/Card.svelte'
-	import CardNew       from '@/Components/UI/CardNew.svelte'
 	import Collapsible   from '@/Components/UI/Collapsible.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Entity    	 from '@/Components/UI/Entity.svelte'
-	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
 	import Input    	 from '@/Components/UI/Input'
 	import Media     	 from '@/Components/UI/Media.svelte'
@@ -25,8 +21,6 @@
 	import Tag     		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 	import CharacterObject from '@/services/CharacterObject';
-	import url from '@/stores/urlStore'
-    import { onMount } from 'svelte'
 
 	/**
 	 * Active character instance
@@ -35,13 +29,8 @@
 	const character    = new CharacterObject($page.props.character?.data)
 	const customFields = $page.props.customFields?.data
 
-	// let customFieldForm = useForm({ customFields: customFields.reduce((acc,curr) => {
-	// 	acc[curr.id] = character.customFieldValues?.find(cfv => cfv.fieldId === curr.id)?.value || null
-	// 	return acc
-	// }, {})})
-
 	let customFieldForm = useForm({
-		customFields: customFields.map((field) => ({
+		customFields: customFields?.map((field) => ({
 			id: field.id,
 			value: character.customFieldValues?.find(cfv => cfv.fieldId === field.id)?.value || null
 		}))
@@ -50,12 +39,6 @@
 	function submitCustomFields() {
 		$customFieldForm.patch(character.routes.update, {})
 	}
-
-	// onMount(() => {
-	// 	customFields.forEach(cf => {
-	// 		$customFieldForm[cf.id] = character.customFieldValues?.find(cfv => cfv.fieldId === cf.id)?.value || null
-	// 	})
-	// })
 
 </script>
 
@@ -68,9 +51,6 @@
 <AuthenticatedLayout>
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="overflow-y-auto px-20 py-12">
-
-			<!-- Page Menu -->
-
 			<PageMenu
 				back={{ text: 'Character List', href: route('characters') }}
 				items={[
@@ -170,7 +150,6 @@
 		
 				<Section id="custom" class="p-6">
 					<Heading is="h3" as="h4" class="mb-6">Custom Fields</Heading>
-					<!-- <pre>{JSON.stringify($customFieldForm,null,3)}</pre> -->
 					{#if customFields && customFields.length > 0}
 						<Stack class="flex flex-col gap-1.5" gap={1.5}>
 							{#each customFields as field, i}
@@ -185,7 +164,7 @@
 							/>
 						</Stack>
 					{:else}
-						<span class="text-neutral-softer">There are no custom fields for characters in this project yet.</span>
+						<p class="text-neutral-softer">There are no custom fields for Characters in this project yet.</p>
 					{/if}
 				</Section>
 

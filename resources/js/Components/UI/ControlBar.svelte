@@ -56,7 +56,7 @@
 		filter: 	urlParams.get('filter') || '',
 		sort: 		urlParams.get('sort')	|| 'name',
 		direction: 	urlParams.get('dir')	|| 'desc',
-		size: 		urlParams.get('size')	|| 6,
+		size: 		urlParams.get('size')	|| 5,
 		layout: 	urlParams.get('layout')	|| 'grid',
 		selected: 	urlParams.get('selected') || ''
 	})
@@ -73,7 +73,7 @@
 			filter: 	urlParams.get('filter') || '',
 			sort: 		urlParams.get('sort') 	|| 'name',
 			direction: 	urlParams.get('dir') 	|| 'desc',
-			size: 		urlParams.get('size') 	|| 6,
+			size: 		urlParams.get('size') 	|| 5,
 			layout: 	urlParams.get('layout') || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};

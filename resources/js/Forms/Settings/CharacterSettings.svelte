@@ -6,11 +6,9 @@
 
 	import Button  from '@/Components/UI/Button.svelte'
 	import Field   from '@/Components/UI/Field.svelte'
-	import Heading from '@/Components/UI/Heading.svelte'
 	import Input   from '@/Components/UI/Input'
 
 	const customFields = $page.props.customFields?.data
-	const settings = $page.props.settings?.characters?.data
 
 	let {
 		class: className,
@@ -35,7 +33,7 @@
 	processing={$form.processing}
 	recentlySuccessful={$form.recentlySuccessful}
 >
-	<Input.Switch name="enabled"
+	<Input.Switch name="enabled" bind:checked={$form.enabled}
 		label="Enable Characters"
 	/>
 

@@ -16,10 +16,14 @@
 
 @layer base {
 
+	body {
+		--nav-width:		'96px';
+		--content-width:	'672px';
+	}
+
 	/* --font-sans: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif; */
 	
 	[data-theme="light"] {
-
 
 		/**
 		 * Background colors

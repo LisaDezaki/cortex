@@ -124,23 +124,23 @@ class FactionController extends Controller
 
     public function show(Faction $faction)
     {
-		$customFields = CustomField::where([
-			'project_id' => Auth::user()->active_project,
-			'fieldable_type' => Faction::class
-		])->with('options')->orderBy('order')->get();
-		
 		$faction->load([
-			// 'banner',
-			// 'emblem',
 			'image',
 			'media',
 			'members.image',
 			'ranks',
 			'headquarters',
-			// 'headquarters.parent.map'
+			'customFieldValues.customField',
 		]);
+
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => Faction::class
+		])->with('options')->orderBy('order')->get();
+
         return Inertia::render('Factions/Show', [
 			'faction' => new FactionResource($faction),
+			'customFields' => CustomFieldResource::collection($customFields)
 		]);
     }
 
