@@ -7,6 +7,7 @@
 	import Flex 		from '@/Components/Core/Flex.svelte'
 	import Form 		from '@/Components/Core/Form.svelte'
 	import Inline 		from '@/Components/Core/Inline.svelte'
+	import Reorder		from '@/Components/Core/Reorder'
 	import ReorderableList from '@/Components/Core/ReorderableList.svelte'
 	import Stack 		from '@/Components/Core/Stack.svelte'
 
@@ -61,16 +62,11 @@
 		setType(field.type || 'text')
 	})
 
-	
-
 	//  Methods
     
 	function setType(type) {
 		inputType = type
 		$form.type = type
-		// if (type !== 'select') {
-		// 	$form.options = null
-		// }
 	}
 
 	function setData() {
@@ -93,7 +89,7 @@
 	function addOption() {
 		$form.options = [
 			...$form.options,
-			""
+			{ label: "", value: "" }
 		]
 	}
 	function removeOption(index) {
@@ -107,9 +103,9 @@
 	function submit(e) {
 		e.preventDefault()
 
-		console.log('submitting')
-
-		if ($form.type !== 'select') {
+		if ($form.type === 'select') {
+			$form.options = $form.options.length > 0 && typeof $form.options[0] === 'object' ? $form.options.map(opt => opt.label) : $form.options
+		} else {
 			$form.options = null
 		}
 
@@ -275,15 +271,15 @@
 						text="Field options"
 						description="There must be at least two options available."
 					/>
-					<ReorderableList bind:items={$form.options}>
-						{#snippet itemTemplate(item, index)}
+					<Reorder.List bind:items={$form.options}>
+						{#snippet children({item, index})}
 							<li class="flex items-center gap-1 w-full mb-1">
-								<DragHandle item={item} />
+								<Reorder.Handle {index} />
 								<Input.Text
 									name="option_{index+1}"
 									class="flex-grow"
 									placeholder="Option {index+1}"
-									bind:value={$form.options[index]}
+									bind:value={$form.options[index].label}
 									errors={$form.errors.options?.[index]}
 								/>
 								{#if $form.options.length > 2}
@@ -294,7 +290,7 @@
 								{/if}
 							</li>
 						{/snippet}
-					</ReorderableList>
+					</Reorder.List>
 					<div class="flex justify-center">
 						<Button size="sm" style="soft" theme="accent" class="h-10 mx-auto w-12" type="button" icon="Plus" onclick={addOption} />
 					</div>
@@ -302,7 +298,7 @@
 			{/if}
 
 			<!-- Min. & Max. -->
-	
+
 			{#if ['number', 'slider'].includes(inputType)}
 				<div class="flex items-center gap-2">
 					<Field

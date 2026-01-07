@@ -1,8 +1,9 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { Link, page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
+	import Form 		 from '@/Components/Core/Form.svelte'
 	import Grid 		 from '@/Components/Core/Grid.svelte'
 	import Inline 		 from '@/Components/Core/Inline.svelte'
 	import Map			 from '@/Components/Core/Map'
@@ -14,6 +15,7 @@
 	import Collapsible   from '@/Components/UI/Collapsible.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Entity    	 from '@/Components/UI/Entity.svelte'
+	import Field    	 from '@/Components/UI/Field.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
 	import Input    	 from '@/Components/UI/Input'
 	import Media     	 from '@/Components/UI/Media.svelte'
@@ -24,6 +26,7 @@
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 	import CharacterObject from '@/services/CharacterObject';
 	import url from '@/stores/urlStore'
+    import { onMount } from 'svelte'
 
 	/**
 	 * Active character instance
@@ -31,6 +34,28 @@
 	 */
 	const character    = new CharacterObject($page.props.character?.data)
 	const customFields = $page.props.customFields?.data
+
+	// let customFieldForm = useForm({ customFields: customFields.reduce((acc,curr) => {
+	// 	acc[curr.id] = character.customFieldValues?.find(cfv => cfv.fieldId === curr.id)?.value || null
+	// 	return acc
+	// }, {})})
+
+	let customFieldForm = useForm({
+		customFields: customFields.map((field) => ({
+			id: field.id,
+			value: character.customFieldValues?.find(cfv => cfv.fieldId === field.id)?.value || null
+		}))
+	})
+
+	function submitCustomFields() {
+		$customFieldForm.patch(character.routes.update, {})
+	}
+
+	// onMount(() => {
+	// 	customFields.forEach(cf => {
+	// 		$customFieldForm[cf.id] = character.customFieldValues?.find(cfv => cfv.fieldId === cf.id)?.value || null
+	// 	})
+	// })
 
 </script>
 
@@ -145,26 +170,19 @@
 		
 				<Section id="custom" class="p-6">
 					<Heading is="h3" as="h4" class="mb-6">Custom Fields</Heading>
+					<!-- <pre>{JSON.stringify($customFieldForm,null,3)}</pre> -->
 					{#if customFields && customFields.length > 0}
-						<Stack gap={3}>
+						<Stack class="flex flex-col gap-1.5" gap={1.5}>
 							{#each customFields as field, i}
-								<!-- <pre>{JSON.stringify(field,null,3)}</pre> -->
 								<Flex align="center" gap={3}>
 									<span class="font-semibold w-32">{field.label}:</span>
-									<Input {...field} value={character.customFieldValues?.find(f => f.name === field.name)?.value} />
-									
-									<!-- <Button
-										icon="GearFine"
-										style="soft" theme="accent"
-										onclick={() => characters.openModal('customField', { field: character.customFieldValues?.find(f => f.name === field.name) })}
-									/> -->
-									<!-- <span class="line-clamp-1 w-48 {character.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{character.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span> -->
-									<!-- <Button class="place-self-start rounded-full"
-										size="xs" style="plain" theme="accent" icon="PencilSimple"
-										onclick={() => character.openModal('customField', { field, value: character.customFieldValues?.find(f => f.name === field.name)?.value })}
-									/> -->
+									<Input class="w-64" {...field} bind:value={$customFieldForm.customFields[i].value} />
 								</Flex>
 							{/each}
+							<Button type="submit" class="min-w-32 mt-3 place-self-start"
+								text="Save" onclick={submitCustomFields}
+								size="md" style="hard" theme="accent"
+							/>
 						</Stack>
 					{:else}
 						<span class="text-neutral-softer">There are no custom fields for characters in this project yet.</span>

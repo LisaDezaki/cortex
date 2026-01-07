@@ -15,12 +15,15 @@ return new class extends Migration
             $table->uuid('id')->primary()->index();
 			$table->foreignUuid('project_id')->constrained('projects')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->string('fieldable_type');
+			$table->unsignedSmallInteger('order')->nullable();
 			$table->string('type');
 			$table->string('name');
 			$table->string('label');
 			$table->string('default')->nullable();
 			$table->string('description')->nullable();
 			$table->string('placeholder')->nullable();
+			$table->integer('min')->nullable();
+			$table->integer('max')->nullable();
 			$table->boolean('required');
 			$table->unique(['project_id','fieldable_type','name']);
         });
@@ -28,8 +31,9 @@ return new class extends Migration
 		Schema::create('custom_field_options', function (Blueprint $table) {
 			$table->uuid('id')->primary()->index();
 			$table->foreignUuid('custom_field_id')->constrained('custom_fields')->cascadeOnUpdate()->cascadeOnDelete();
-			$table->string('value');
+			$table->unsignedSmallInteger('order')->nullable();
 			$table->string('label');
+			$table->string('value');
 			$table->unique(['custom_field_id', 'value']);
 		});
 

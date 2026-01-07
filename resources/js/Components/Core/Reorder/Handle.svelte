@@ -57,6 +57,6 @@
 
 </script>
 
-<button data-drag-handle class={cx.handle} {...restProps} onpointerdown={handlePointerDown}>
+<button type="button" data-drag-handle class={cx.handle} {...restProps} onpointerdown={handlePointerDown}>
 	<Icon name="DotsSixVertical" size="sm" />
 </button>

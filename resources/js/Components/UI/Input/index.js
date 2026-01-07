@@ -1,5 +1,6 @@
 import Input			from '@/Components/UI/Input/Input.svelte';
 import InputCheckbox	from '@/Components/UI/Input/Checkbox.svelte';
+import InputCombobox	from '@/Components/UI/Input/Combobox.svelte';
 import InputNumber		from '@/Components/UI/Input/Number.svelte';
 import InputOption		from '@/Components/UI/Input/Option.svelte';
 import InputRadio		from '@/Components/UI/Input/Radio.svelte';
@@ -11,6 +12,7 @@ import InputTextarea	from '@/Components/UI/Input/Textarea.svelte';
 import InputUpload		from '@/Components/UI/Input/Upload.svelte';
 
 Input.Checkbox	= InputCheckbox;
+Input.Combobox	= InputCombobox;
 Input.Number	= InputNumber;
 Input.Option	= InputOption;
 Input.Radio		= InputRadio;

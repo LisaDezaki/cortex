@@ -48,7 +48,8 @@
 	const activeProject = $page.props.activeProject?.data
 	const characters	= $derived( activeProject ? new CharacterList(activeProject.characters) : [] )
 
-	let active = $state('reorder')
+	let active = $state('combobox')
+	const sortFunc = (a,b) => a.label.toLowerCase() < b.label.toLowerCase() ? -1 : 1
 
 	/**
 	 * Classnames
@@ -88,6 +89,33 @@
 			state: 		'',
 			text: 		'Chip'
 		},
+		// combobox: {
+		// 	icon:		'At',
+		// 	options:	[
+		// 		{ value: "apple", label: "Apple" },
+		// 		{ value: "apricot", label: "Apricot" },
+		// 		{ value: "banana", label: "Banana" },
+		// 		{ value: "blackberry", label: "Blackberry" },
+		// 		{ value: "blueberry", label: "Blueberry" },
+		// 		{ value: "cherry", label: "Cherry" },
+		// 		{ value: "grape", label: "Grape" },
+		// 		{ value: "grapefruit", label: "Grapefruit" },
+		// 		{ value: "kiwi", label: "Kiwi" },
+		// 		{ value: "mango", label: "Mango" },
+		// 		{ value: "orange", label: "Orange" },
+		// 		{ value: "peach", label: "Peach" },
+		// 		{ value: "pear", label: "Pear" },
+		// 		{ value: "pineapple", label: "Pineapple" },
+		// 		{ value: "plum", label: "Plum" },
+		// 		{ value: "raspberry", label: "Raspberry" },
+		// 		{ value: "strawberry", label: "Strawberry" },
+		// 		{ value: "watermelon", label: "Watermelon" },
+		// 	],
+		// 	placeholder:'Placeholder...',
+		// 	size:		'md',
+		// 	type:		'text',
+		// 	value:		''
+		// },
 		dropdown: {
 			icon: 		'Books',
 			label: 		'Dropdown',
@@ -279,6 +307,7 @@
 					{ label: 'Field',		active: active === 'field', 	onclick: () => active = 'field' 	},
 					{ label: 'Input',		active: active === 'input', 	onclick: () => active = 'input' 	},
 					{ label: 'Checkbox',	active: active === 'checkbox',  onclick: () => active = 'checkbox' 	},
+					{ label: 'Combobox',	active: active === 'combobox',  onclick: () => active = 'combobox' 	},
 					{ label: 'Radio', 		active: active === 'radio', 	onclick: () => active = 'radio' 	},
 					{ label: 'Select', 		active: active === 'select', 	onclick: () => active = 'select' 	},
 					{ label: 'Slider', 		active: active === 'slider', 	onclick: () => active = 'slider' 	},
@@ -541,6 +570,55 @@
 						</Flex>
 						<Code code={
 `<Input.Checkbox
+	bind:checked="${test.checkbox.checked}"
+	labelText="${test.checkbox.label}"
+	size="${test.checkbox.size}"
+/>`
+						} />
+					</Stack>
+
+					<Stack gap={6}>
+						<Heading is="h3" as="h5"
+							heading="API Reference"
+							class="text-neutral"
+						/>
+
+						{#snippet headRow()}
+							<Table.Head class="max-w-32" sortable={true}>Property</Table.Head>
+							<Table.Head class="max-w-32" sortable={true}>Type</Table.Head>
+							<Table.Head class="" sortable={true}>Description</Table.Head>
+						{/snippet}
+		
+						{#snippet bodyRow(item)}
+							<Table.Cell class="align-top py-2 max-w-32"><code>{item.property}</code></Table.Cell>
+							<Table.Cell class="align-top py-2 max-w-32"><pre>{item.type}</pre></Table.Cell>
+							<Table.Cell class="align-top py-2">{item.description}<br/><pre class="mt-3 text-xs text-neutral-soft">Default: {item.default}</pre></Table.Cell>
+						{/snippet}
+
+						<Table class="min-w-96 mb-12 text-sm" {headRow} {bodyRow} data={[
+							{ id: 1, property: 'checked',  type: 'boolean', default: false, description: 'Whether or not the checkbox is checked. When disabled, the button cannot be interacted with.' },
+							{ id: 2, property: 'disabled', type: 'boolean', default: false, description: 'If this is set to true, the element will not be interactable.' },
+							{ id: 3, property: 'size',     type: 'enum',    default: "'md'",  description: 'The size of the input.' },
+						]} />
+					</Stack>
+
+				{:else if active === 'combobox'}
+
+					<!-- Combobox -->
+
+					<PageHeading
+						title="Combobox"
+						subtitle="A text input with suggested values."
+					/>
+
+					<Stack>
+						<Demo name="Combobox">
+							<!-- <Input.Combobox options={test.combobox.options} bind:value={test.combobox.value} /> -->
+						</Demo>
+						<Flex gap={1.5} class="my-1.5">
+						</Flex>
+						<Code code={
+`<Input.Combobox
 	bind:checked="${test.checkbox.checked}"
 	labelText="${test.checkbox.label}"
 	size="${test.checkbox.size}"

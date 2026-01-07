@@ -32,8 +32,6 @@
 			activeIndex = index
 			targetIndex = index
 			itemRects = measure()
-			// placeholderElement.style['height'] = itemRects[activeIndex].height+'px'
-			// placeholderElement.style['width'] = itemRects[activeIndex].width+'px'
 			Array.from(listElement.children).forEach((elem,index) => {
 				elem.style['transition'] = index !== activeIndex ? 'transform 0.3s' : 'none'
 				elem.style['z-index']    = index === activeIndex ? '10' : '1'
@@ -65,6 +63,12 @@
 				}
 			}
 
+			// if (moveUp) {
+			// 	placeholderElement.style['bottom'] = targetIndex !== null ? itemRects[targetIndex].bottom-listRect.bottom+'px' : 0
+			// } else if (moveDown) {
+			// 	placeholderElement.style['top'] = targetIndex !== null ? itemRects[targetIndex].top-listRect.top+'px' : 0
+			// }
+
 			Array.from(listElement.children).forEach((elem,index) => {
 
 				if (index === activeIndex) {
@@ -81,11 +85,7 @@
 		},
 		endDrag() {
 			if (activeIndex !== null && targetIndex !== null) {
-				items = items.toSpliced(activeIndex, 1).toSpliced(
-					targetIndex,
-					0,
-					items[activeIndex]
-				)
+				items = items.toSpliced(activeIndex, 1).toSpliced(targetIndex, 0, items[activeIndex])
 			}
 
 			mouseYStart = null
@@ -95,10 +95,11 @@
 			itemRects   = null
 
 			Array.from(listElement.children).forEach((elem,index) => {
-				console.log('element #'+index, elem)
 				elem.style['transform'] = 'translateY(0)'
 				elem.style['transition'] = 'none'
 			})
+			// placeholderElement.style['top'] = 0
+			// placeholderElement.style['height'] = 0
 		}
 	})
 
@@ -113,19 +114,18 @@
 		})
 	})
 
-	$effect(() => {
-		placeholderElement.style['height']			= activeIndex !== null ? itemRects[activeIndex].height+'px' : 0
-		placeholderElement.style['width']			= activeIndex !== null ? itemRects[activeIndex].width +'px' : 0
-		placeholderElement.style['top']				= targetIndex !== null ? itemRects[targetIndex].top-listRect.top+'px' : 0
-	})
+	// $effect(() => {
+	// 	placeholderElement.style['height']			= activeIndex !== null ? itemRects[activeIndex].height+'px' : 0
+	// 	placeholderElement.style['width']			= activeIndex !== null ? itemRects[activeIndex].width +'px' : 0
+	// })
 
-	let cx = {
+	let cx = $derived({
 		list: clsx('reorder list flex flex-col gap-0.5 relative', className),
-		placeholder: clsx('absolute bg-lime-500 rounded'),
+		// placeholder: clsx('absolute bg-neutral-softest rounded z-0'),
 		item: clsx(''),
 		before: clsx(''),
 		after: clsx('')
-	}
+	})
 	
 </script>
 
@@ -139,10 +139,5 @@
 	{:else}
 		{@render children?.()}
 	{/if}
-	<div bind:this={placeholderElement} class={cx.placeholder}></div>
+	<!-- <div bind:this={placeholderElement} class={cx.placeholder}></div> -->
 </ul>
-
-<pre>{JSON.stringify({
-	list: listRect,
-	target: targetIndex ? itemRects[targetIndex] : ''
-},null,3)}</pre>

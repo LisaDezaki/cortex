@@ -33,7 +33,9 @@ class CustomField extends Model
 		'description',
 		'placeholder',
 		'required',
-		'options'
+		'options',
+		'min',
+		'max'
 	];
 
 	protected $guarded = [

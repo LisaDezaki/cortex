@@ -115,6 +115,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 	Route::post(	'/customFields',			[CustomFieldController::class, 'store'		])->name('customFields.store');
 	Route::patch(	'/customFields',			[CustomFieldController::class, 'update'		])->name('customFields.update');
+	Route::patch(	'/customFields/order',		[CustomFieldController::class, 'updateOrder'])->name('customFields.updateOrder');
 
 });
 

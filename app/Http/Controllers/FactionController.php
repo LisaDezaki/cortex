@@ -68,7 +68,7 @@ class FactionController extends Controller
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Faction::class
-		])->with('options')->get();
+		])->with('options')->orderBy('order')->get();
 
 		return Inertia::render('Factions/Index', [
 			'customFields' => CustomFieldResource::collection($customFields)
@@ -124,6 +124,11 @@ class FactionController extends Controller
 
     public function show(Faction $faction)
     {
+		$customFields = CustomField::where([
+			'project_id' => Auth::user()->active_project,
+			'fieldable_type' => Faction::class
+		])->with('options')->orderBy('order')->get();
+		
 		$faction->load([
 			// 'banner',
 			// 'emblem',
@@ -224,7 +229,7 @@ class FactionController extends Controller
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Faction::class
-		])->with('options')->get();
+		])->with('options')->orderBy('order')->get();
 
     	return Inertia::render('Factions/Settings', [
 			'customFields' => CustomFieldResource::collection($customFields)

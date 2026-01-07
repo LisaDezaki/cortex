@@ -98,6 +98,14 @@ export default class CharacterList {
 		return response
 	}
 
+	collectValues(id) {
+		return this.items.reduce((accumulator,current,index,array) => {
+			let value = current.customFieldValues.find(cfv => cfv.fieldId === id)?.value
+			// accumulator.push(value)
+			return accumulator.includes(value) ? accumulator : [...accumulator, value]
+		}, []).sort()
+	}
+
 
 	/**
 	 * Create

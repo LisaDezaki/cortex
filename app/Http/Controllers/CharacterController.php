@@ -64,10 +64,11 @@ class CharacterController extends Controller
 		'customField.id'    	=> ['required_with:customField',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
 		'customField.value' 	=> ['nullable'],
 
-		'custom_fields'			=> ['sometimes', 'array'],
-		'custom_fields.*.id'    => ['required_with:custom_fields',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
-		'custom_fields.*.value' => ['nullable',  'string']
+		'customFields'			=> ['sometimes', 'array'],
+		'customFields.*.id'     => ['required_with:customFields',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+		'customFields.*.value'  => ['nullable']
 	];
+
 
 	/**
 	 * INDEX
@@ -79,7 +80,7 @@ class CharacterController extends Controller
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Character::class
-		])->with('options')->get();
+		])->with('options')->orderBy('order')->get();
 
 		return Inertia::render('Characters/Index', [
 			'customFields'	=> CustomFieldResource::collection($customFields)
@@ -135,7 +136,7 @@ class CharacterController extends Controller
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Character::class
-		])->with('options')->get();
+		])->with('options')->orderBy('order')->get();
 
 		return Inertia::render('Characters/Show', [
 			'character'  => new CharacterResource($character),
@@ -155,9 +156,6 @@ class CharacterController extends Controller
 	public function edit(Character $character) {}
 	public function update(Request $request, Character $character): RedirectResponse
 	{
-
-		
-		
 		//	Attempt to validated the $request
 		//	Flash an error if validation fails
 		try {
@@ -211,6 +209,11 @@ class CharacterController extends Controller
 			$this->handleCustomFields([$validatedData['customField']], $character);
 		}
 
+		if ($request->has('customFields')) {
+			$this->handleCustomFields($validatedData['customFields'], $character);
+			Session::flash('success', "Character custom fields updated: $character->name");
+		}
+
 		// if ($request->has('custom_fields')) {
 		// 	$this->handleCustomFields($validatedData['custom_fields'], $character);
 		// }
@@ -247,7 +250,7 @@ class CharacterController extends Controller
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Character::class
-		])->with('options')->get();
+		])->with('options')->orderBy('order')->get();
 
 		return Inertia::render('Characters/Settings', [
 			'customFields' => CustomFieldResource::collection($customFields)
@@ -259,13 +262,13 @@ class CharacterController extends Controller
 	public function handleCustomFields(array $custom_fields, Character $character)
 	{
 		//  Handle custom fields
-		foreach ($custom_fields as $field) {
+		foreach ($custom_fields as $i => $field) {
 			if (empty($field['value'])) {
 
 				//  Delete custom field value
 				CustomFieldValue::where([
 					'fieldable_id' => $character->id,
-					'custom_field_id' => $field['id']
+					'custom_field_id' => $field['id'],
 				])->delete();
 
 			} else {
@@ -274,9 +277,10 @@ class CharacterController extends Controller
 				CustomFieldValue::updateOrCreate(
 					[
 						'fieldable_id' => $character->id,
-						'custom_field_id' => $field['id']
+						'custom_field_id' => $field['id'],
 					],
 					[
+						'order' => $i,
 						'value' => $field['value']
 					]
 				);

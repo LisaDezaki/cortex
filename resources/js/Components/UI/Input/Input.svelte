@@ -21,7 +21,7 @@
 		name,
 		options = [],
 		type = 'text',
-		value = $bindable(''),
+		value = $bindable(),
         ...restProps
     } = $props()
 

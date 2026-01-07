@@ -34,9 +34,9 @@ class LocationController extends Controller
 	 */
 
 	protected $validationRules = [
-		'name'					=> ['sometimes', 'string'],
-		'slug'					=> ['sometimes', 'string', 'max:255'],
-		'type'					=> ['sometimes', 'string', 'nullable'],
+		'name'					=> ['sometimes', 'string', 'max:255'],
+		'slug'					=> ['sometimes', 'nullable', 'string', 'max:255'],
+		'type'					=> ['sometimes', 'string', 'nullable', 'max:255'],
 		'description'			=> ['nullable',  'string'],
 		'starred'				=> ['sometimes', 'boolean'],
 		'climate'				=> ['sometimes', 'string'],

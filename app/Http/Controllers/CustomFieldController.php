@@ -139,7 +139,6 @@ class CustomFieldController extends Controller
 
 	public function update(Request $request)
 	{
-		
 		try {
 			$validatedData = $request->validate($this->validationRules);
 		} catch (\Exception $e) {
@@ -178,6 +177,25 @@ class CustomFieldController extends Controller
 
 		Session::flash('success', "Updated custom field: ".$field['label']);
         return Redirect::back();
+	}
+
+
+
+
+	public function updateOrder(Request $request)
+	{
+		$validatedData = $request->validate([
+        	'customFields'			=> ['sometimes', 'array'],
+			'customFields.*.id'     => ['required_with:customFields',  'string', 'uuid', 'distinct', 'exists:custom_fields,id'],
+        ]);
+
+		foreach ($validatedData['customFields'] as $index => $field) {
+			CustomField::where('id', $field['id'])->update([ 'order' => $index]);
+		}
+
+		Session::flash('success', "Updated custom fields:");
+        return Redirect::back();
+
 	}
 
 		/**
@@ -232,7 +250,6 @@ class CustomFieldController extends Controller
 	 */
 	public function addCustomField($request)
 	{
-		dd($request);
 		//  Validate custom field data
 		$validatedData = $request->validate($this->validationRules);
 		$fieldOptions  = $validatedData['options'];

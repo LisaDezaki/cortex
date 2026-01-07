@@ -27,6 +27,23 @@
 	if (!name) { console.error(`The Field component requires a "name" field. You may have mistakenly used "id", which is set to ${restProps.id}`) }
 	if (!$form[name]) { $form[name] = defaultValue || null }
 
+	function findValue() {
+		if (name.contains('.')) {
+			parts = name.split('.')
+			if (parts.length === 2) {
+				return $form[parts[0]][parts[1]]
+			}
+			if (parts.length === 3) {
+				return $form[parts[0]][parts[1]][parts[2]]
+			}
+			if (parts.length === 4) {
+				return $form[parts[0]][parts[1]][parts[2]][parts[3]]
+			}
+		} else {
+			return $form[name]
+		}
+	}
+
 	let cx = {
 		field:	clsx('field', {
 			'w-full': !className || !className.includes('w-'),

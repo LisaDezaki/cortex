@@ -149,7 +149,7 @@
 			/>
 
 			{#if activeProject && characters.items.length > 0}
-			
+
 				{#if parameters.layout === 'grid'}
 
 					<!-- Grid -->
