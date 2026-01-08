@@ -112,21 +112,11 @@ export default class ItemObject {
 					title: 'Upload ' + props.type + ' for ' + this.name,
 					type: props.type,
 				...props }); break;
-			case 'appearance':
-				modalActions.open('setTags', { ...updateProps,
-					reloadPageProps: ['activeProject', 'character.appearance', 'characters.appearance'],
-					title: 'Set ' + this.name + '\'s appearance',
-					tags: this.appearance?.split(','),
-				...props }); break;
-			case 'personality':
-				modalActions.open('setTags', { ...updateProps,
-					reloadPageProps: ['activeProject', 'character.personality', 'characters.personality'],
-					title: 'Set ' + this.name + '\'s personality',
-					tags: this.personality?.split(','),
-				...props }); break;
 			case 'customField':
-				modalActions.open('setCustomFieldValue', { ...updateProps,
-					reloadPageProps: ['activeProject', 'character.customFieldValues', 'characters.customFieldValues'],
+				modalActions.open('customFieldValue', { ...updateProps,
+					field: { fieldableType: this.laravelClass },
+					reloadPageProps: ['activeProject', 'item.customFieldValues', 'items.customFieldValues'],
+					title: 'Set ' + props?.field?.name + ': ' + this.name,
 				...props }); break;
 			case 'delete':
 				modalActions.open('deleteEntity', { ...destroyProps,

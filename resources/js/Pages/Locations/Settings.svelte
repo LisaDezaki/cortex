@@ -1,5 +1,5 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { Link, page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
     import AuthenticatedLayout	from '@/Layouts/AuthenticatedLayout.svelte'
 	import LocationSettingsForm from '@/Forms/Settings/LocationSettings.svelte'
@@ -13,10 +13,39 @@
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
 	import Separator  from '@/Components/UI/Separator.svelte'
-	import { modalActions } from '@/stores/modalStore'
+	import ProjectObject 	from '@/services/ProjectObject'
+
+
+	/**
+	 * Active project instance
+	 * @type {ProjectObject}
+	 */
+	const activeProject	= new ProjectObject($page.props.activeProject.data)
+	const characters    = activeProject?.characters
 
 	const customFields = $page.props.customFields?.data
 	const settings     = $page.props.settings?.locations?.data
+
+	let customFieldForm = useForm({
+		customFields: customFields
+	})
+
+	function submitCustomFields() {
+		$customFieldForm.patch(route('customFields.updateOrder', {
+
+		}))
+
+	}
+
+	const customFieldIcons = {
+		text:	'TextAa',
+		number:	'Hash',
+		link:	'Link',
+		switch:	'ToggleRight',
+		select:	'RowsPlusBottom',
+		entity:	'Table',
+		upload:	'File'
+	}
 
 </script>
 
@@ -28,8 +57,8 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="flex-1 overflow-y-auto px-20 py-12 w-full">
-			<PageMenu
+		<Flex justify="center" gap={12} class="overflow-y-auto px-20">
+			<PageMenu class="py-12"
 				back={{ text: 'Location List', href: route('locations') }}
 				items={[
 					{ icon: "UserList",       label: "Overview",      href: "#overview"	},
@@ -37,7 +66,7 @@
 					{ icon: "Textbox",        label: "Custom Fields", href: "#custom"	}
 				]}
 			/>
-			<Stack class="max-w-5xl w-full">
+			<Container size="2xl" class="py-12">
 
 				<PageHeading class="mb-12 text-neutral-softest"
 					title="Location Settings"
@@ -66,40 +95,50 @@
 					<Heading is="h3" as="h5">Custom Fields</Heading>
 					<p class="mb-3">These custom fields will apply to all locations in this project. If you want to add custom fields to all projects, visit your <Link href={route('user.settings')}>App Settings</Link> page.</p>
 
-					{#if customFields?.length > 0}
-						<Stack>
-							<Flex align="center">
-								<Inline class="font-style-label w-32">Name</Inline>
-								<Inline class="font-style-label w-16">Type</Inline>
-								<Inline class="font-style-label">Field</Inline>
-							</Flex>
-							{#each customFields as field}
-								<Flex align="center" class="my-1">
-									<Inline class="shrink-0 text-sm min-w-32">{field.label}</Inline>
-									<Inline class="shrink-0 text-sm min-w-16 capitalize">{field.type}</Inline>
-									<Input {...field} id={undefined} label={undefined} class="mr-2 w-full" />
-									<Button class="ml-auto rounded-full"
-										style="soft" theme="accent"
-										icon="PencilSimple" iconSize="sm"
-										onclick={() => modalActions.open('customField', { field })}
+					{#if $customFieldForm.customFields?.length > 0}
+
+						<Reorder.List bind:items={$customFieldForm.customFields} class="place-self-start w-96">
+							{#snippet children({item,index})}
+								<Flex align="center" gap={1.5} class="bg-slate-50 group p-md rounded">
+									<Reorder.Handle {index} />
+									<span class="w-32 flex-none">{item.label}</span>
+									<Inline class="w-40 flex-1 text-sm text-neutral-soft" gap={1.5}>
+										<Icon name={customFieldIcons[item.type]} size="sm" />
+										<span>{item.type.charAt(0).toUpperCase() + item.type.slice(1)}</span>
+										<span class="text-xs ml-auto">
+											{#if item.min && item.max}
+												({item.min}-{item.max})
+											{/if}
+											{#if item.options.length > 0}
+												({item.options.length} options)
+											{/if}
+										</span>
+									</Inline>
+									<Button class="opacity-0 group-hover:opacity-100"
+										size="sm" style="plain" theme="accent"
+										icon="GearFine" onclick={() => locations.openModal('customField', { field: item })}
 									/>
 								</Flex>
-								<Separator class="opacity-50" />
-								<!-- {#if field.options}
-									<Flex>
-										{#each field.options as option}
-											<Inline>{option.label}</Inline>
-										{/each}
-									</Flex>
-								{/if} -->
-							{/each}
-						</Stack>
+							{/snippet}
+						</Reorder.List>
+						<Flex justify="between" class="w-96">
+							<Button class="place-self-start" style="soft" theme="accent"
+								icon="Plus" iconWeight="light" 
+								onclick={() => locations.openModal('customField', { endpoint: route('customFields.store'), patch: 'post' })}
+							/>
+							<Button class="place-self-start" style="soft" theme="accent"
+								text="Save"
+								onclick={submitCustomFields}
+							/>
+						</Flex>
 					{:else}
 						<span class="mx-auto text-neutral-softest">There are no custom fields yet.</span>
 					{/if}
 				</Section>
 
-			</Stack>
+				<Separator class="my-12" />
+
+			</Container>
 		</Flex>
 	{/snippet}
 </AuthenticatedLayout>

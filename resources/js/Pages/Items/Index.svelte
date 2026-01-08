@@ -9,7 +9,6 @@
 	import ControlBar			from '@/Components/UI/ControlBar.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import Entity				from '@/Components/UI/Entity.svelte'
-	import PageHeader			from '@/Components/UI/PageHeader.svelte'
 	import PageHeading			from '@/Components/UI/PageHeading.svelte'
 	import ItemTable			from '@/Components/Features/Item/ItemTable.svelte'
 	import ProjectObject 		from '@/services/ProjectObject'
@@ -47,12 +46,9 @@
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
-		query: 		urlParams.get('q')		|| '',
-		filter: 	urlParams.get('filter') || '',
-		sort: 		urlParams.get('sort')	|| 'name',
-		direction: 	urlParams.get('dir')	|| 'desc',
-		size: 		urlParams.get('size')	|| 6,
-		layout: 	urlParams.get('layout')	|| 'grid',
+		sort: 		urlParams.get('sort')	  || 'name',
+		size: 		urlParams.get('size')	  || 5,
+		layout: 	urlParams.get('layout')	  || 'grid',
 		selected: 	urlParams.get('selected') || ''
 	})
 
@@ -60,7 +56,7 @@
 	 * Derived grid columns calculation based on size parameter
 	 * @type {number}
 	 */
-	let gridCols = $derived(12-parameters.size)
+	let gridCols = $derived(10-parameters.size)
 
 	/**
 	 * Derived filtered/sorted results
@@ -76,12 +72,9 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			query: 		urlParams.get('q') 		|| '',
-			filter: 	urlParams.get('filter') || '',
-			sort: 		urlParams.get('sort') 	|| 'name',
-			direction: 	urlParams.get('dir') 	|| 'desc',
-			size: 		urlParams.get('size') 	|| 6,
-			layout: 	urlParams.get('layout') || 'grid',
+			sort: 		urlParams.get('sort') 	  || 'name',
+			size: 		urlParams.get('size') 	  || 5,
+			layout: 	urlParams.get('layout')   || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};
 	});
@@ -119,11 +112,15 @@
 			// case 'faction':
 			// 	return item.factions?.items?.[0]?.name || '--'
 			case 'created_at':
-				return new Date(item.meta?.createdAt).toLocaleString() || '--'
+				return item.meta.created.ago || '--'
 			case 'updated_at':
-				return new Date(item.meta?.updatedAt).toLocaleString() || '--'
+				return item.meta.updated.ago || '--'
 			default:
-				return item.customFieldValues.find(v => v.name === parameters.sort)?.displayValue || item.alias
+				if (parameters.sort?.includes('cf.')) {
+					return item.customFieldValues.find(v => v.name === parameters.sort.split('.')[1])?.displayValue || '--'
+				} else {
+					return item.type || '--'
+				}
 		}
 	}
 
@@ -132,11 +129,11 @@
 	 * @param {ItemObject} item | An ItemObject class instance
 	 * @return {void}
 	 */
-	function selectItem(item) {
-		const url = new URL(window.location);
-		url.searchParams.set('selected', item?.slug)
-		parameters.selected = parameters.selected === item.slug ? null : item.slug
-	}
+	// function selectItem(item) {
+	// 	const url = new URL(window.location);
+	// 	url.searchParams.set('selected', item?.slug)
+	// 	parameters.selected = parameters.selected === item.slug ? null : item.slug
+	// }
 
 </script>
 
@@ -160,10 +157,13 @@
 			/>
 
 			<ControlBar class="py-3"
-				data={items} bind:results bind:layout={parameters.layout}
+				data={items} bind:results
+				bind:layout={parameters.layout} bind:sort={parameters.sort} bind:size={parameters.size}
 				filterOptions={activeProject.getOptions('items', 'filter')}
 				sortOptions={activeProject.getOptions('items', 'sort')}
 				layoutOptions={activeProject.getOptions('items', 'layout')}
+				sizeOptions={{ min: 3, max: 7 }}
+				resizeable={parameters.layout === 'grid'}
 			/>
 
 			{#if activeProject && items?.items.length > 0}
@@ -172,12 +172,13 @@
 
 					<!-- Grid -->
 
-					<Grid class="max-w-7xl w-full" cols={gridCols} gap={3}>
+					<Grid class="py-3 w-full" cols={gridCols} gap={3}>
 						{#if results.length > 0}
 							{#each results as item}
 								<Entity
 									active={parameters.selected === item.slug}
 									entity={item}
+									subtitle={getSubtitle(item)}
 									href={item.routes.show}
 								/>
 							{/each}

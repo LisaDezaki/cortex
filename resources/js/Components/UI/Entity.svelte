@@ -3,6 +3,8 @@
 	import Flex   from '@/Components/Core/Flex.svelte'
 	import Inline from '@/Components/Core/Inline.svelte'
 	import Stack  from '@/Components/Core/Stack.svelte'
+	import Button from '@/Components/UI/Button.svelte'
+	import Dropdown from '@/Components/UI/Dropdown.svelte'
 	import Icon   from '@/Components/UI/Icon.svelte'
 	import Thumbnail   from '@/Components/UI/Thumbnail.svelte'
 
@@ -14,6 +16,7 @@
 		entity,
 		href,
 		layout = "stack",
+		menu = null,
 		onclick,
 		size = "auto",
 		subtitle
@@ -61,10 +64,17 @@
 
 {#snippet content()}
 	<Thumbnail active class="{cx.thumbnail.base} {cx.thumbnail[size]}" src={entity.image?.url} />
-	<Stack class="{cx.text.base} {cx.text[size]}">
-		<p class={cx.line.primary}>{entity.name}</p>
-		<p class={cx.line.secondary}>{subtitle || entity.type || entity.alias}</p>
-	</Stack>
+	<Flex>
+		<Stack class="{cx.text.base} {cx.text[size]}">
+			<p class={cx.line.primary}>{entity.name}</p>
+			<p class={cx.line.secondary}>{subtitle || entity.type || entity.alias}</p>
+		</Stack>
+		{#if menu}
+			<Dropdown class="ml-auto z-10" options={entity.getActions()}>
+				<Button class="rounded-full opacity-0 group-hover:opacity-100" icon="DotsThreeVertical" style="plain" theme="neutral" />
+			</Dropdown>
+		{/if}
+	</Flex>
 	{#if href}
 		<Link class="absolute inset-0 text-transparent" href={href}>View</Link>
 	{/if}

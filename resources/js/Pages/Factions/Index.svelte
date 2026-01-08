@@ -58,7 +58,7 @@
 	 * Derived filtered/sorted results
 	 * @type {Array<CharacterObject>}
 	 */
-	let results = $derived(factions.items)
+	let results = $derived(factions?.items || [])
 
 
 	/**

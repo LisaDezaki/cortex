@@ -9,12 +9,9 @@
 	import ControlBar   	from '@/Components/UI/ControlBar.svelte'
 	import Empty   	  		from '@/Components/UI/Empty.svelte'
 	import Entity			from '@/Components/UI/Entity.svelte'
-	import PageHeader 		from '@/Components/UI/PageHeader.svelte'
 	import PageHeading 		from '@/Components/UI/PageHeading.svelte'
 	import LocationTable	from '@/Components/Features/Location/LocationTable.svelte'
 	import ProjectObject 	from '@/services/ProjectObject'
-	import LocationList 	from '@/services/LocationList'
-	import LocationObject 	from '@/services/LocationObject'
 
 
 	/**
@@ -49,8 +46,9 @@
 	 * @type {AppParameters}
 	 */
 	let parameters = $state({
-		size: 		urlParams.get('size') 	|| 3,
-		layout: 	urlParams.get('layout') || 'grid',
+		sort:		urlParams.get('sort')	  || 'name',
+		size: 		urlParams.get('size') 	  || 5,
+		layout: 	urlParams.get('layout')   || 'grid',
 		selected: 	urlParams.get('selected') || ''
 	})
 
@@ -74,8 +72,9 @@
 	onMount(() => {
 		urlParams = new URLSearchParams(window.location.search);
 		parameters = {
-			size: 		urlParams.get('size') 	|| 3,
-			layout: 	urlParams.get('layout') || 'grid',
+			sort:		urlParams.get('sort')	  || 'name',
+			size: 		urlParams.get('size') 	  || 5,
+			layout: 	urlParams.get('layout')   || 'grid',
 			selected: 	urlParams.get('selected') || ''
 		};
 	});
@@ -108,11 +107,15 @@
 	function getSubtitle(location) {
 		switch (parameters.sort) {
 			case 'created_at':
-				return new Date(location.meta?.createdAt).toLocaleString() || '--'
+				return location.meta.created.ago || '--'
 			case 'updated_at':
-				return new Date(location.meta?.updatedAt).toLocaleString() || '--'
+				return location.meta.updated.ago || '--'
 			default:
-				return location.type || '--'
+				if (parameters.sort?.includes('cf.')) {
+					return location.customFieldValues.find(v => v.name === parameters.sort.split('.')[1])?.displayValue || '--'
+				} else {
+					return location.type || '--'
+				}
 		}
 	}
 
@@ -121,11 +124,11 @@
 	 * @param {LocationObject} location | A LocationObject class instance
 	 * @return {void}
 	 */
-	function selectLocation(location) {
-		const url = new URL(window.location);
-		url.searchParams.set('selected', location?.slug)
-		parameters.selected = parameters.selected === location?.slug ? null : location.slug
-	}
+	// function selectLocation(location) {
+	// 	const url = new URL(window.location);
+	// 	url.searchParams.set('selected', location?.slug)
+	// 	parameters.selected = parameters.selected === location?.slug ? null : location.slug
+	// }
 
 </script>
 
@@ -149,10 +152,13 @@
 			/>
 
 			<ControlBar class="py-3"
-				data={locations} bind:results bind:layout={parameters.layout}
+				data={locations} bind:results
+				bind:layout={parameters.layout}  bind:sort={parameters.sort} bind:size={parameters.size}
 				filterOptions={activeProject.getOptions('locations', 'filter')}
 				sortOptions={activeProject.getOptions('locations', 'sort')}
 				layoutOptions={activeProject.getOptions('locations', 'layout')}
+				sizeOptions={{ min: 3, max: 7 }}
+				resizeable={parameters.layout === 'grid'}
 			/>
 
 			{#if activeProject && locations.items.length > 0}
@@ -165,11 +171,10 @@
 						{#if results.length > 0}
 							{#each results as location}
 								<Entity
-									active={parameters.selected === location.slug}
 									aspect="aspect-video"
+									active={parameters.selected === location.slug}
 									entity={location}
-									layout="stack"
-									size="auto"
+									subtitle={getSubtitle(location)}
 									href={location.routes.show}
 								/>
 							{/each}

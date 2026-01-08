@@ -67,6 +67,11 @@ export default class ItemList {
 				modalActions.open('createEntity', { ...storeProps,
 					title: 'Create item:',
 				...props }); break;
+			case 'customField':
+				modalActions.open('customField', {
+					reloadPageProps: ['customFields', 'activeProject.items.customFields'],
+					field: { ...props?.field, fieldableType: this.laravelClass },
+				...props }); break;
 			default:
 				console.log('ItemList.openModal', modalName, props)
 		}

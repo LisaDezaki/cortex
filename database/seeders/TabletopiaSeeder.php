@@ -150,6 +150,7 @@ class TabletopiaSeeder extends Seeder
 				'description'	=> $item['desc'] ?? null,
 				'cost'			=> $item['cost'] ?? null,
 				'weight'		=> $item['weight'] ?? null,
+				'unique'		=> $item['unique'] ?? false,
 			]);
 		}
 		

@@ -8,6 +8,7 @@
 	import Separator from '@/Components/UI/Separator.svelte'
 
 	let {
+		children,
         class: className,
 		icon,
 		label,
@@ -25,7 +26,9 @@
 	let filteredSuboptions 	= $derived(suboptions?.filter(s => `${s.value} ${s.label}`.toLowerCase().includes(suboptionQuery.toLowerCase()) ))
 
 	function selectItem(option) {
-		if (option.options) {
+		if (option.onclick) {
+			option.onclick()
+		} else if (option.options) {
 			suboptions = option.options
 		} else {
 			value = option.value
@@ -48,9 +51,15 @@
 
 <Popover.Root bind:open={isOpen}>
 
-	<Popover.Trigger class="input p-{size} text-{size} {className}">
-		<Input.Option item={selected} {placeholder} hideCount />
-	</Popover.Trigger>
+	{#if children}
+		<Popover.Trigger class={className}>
+			{@render children()}
+		</Popover.Trigger>
+	{:else}
+		<Popover.Trigger class="input p-{size} text-{size} {className}">
+			<Input.Option item={selected} {placeholder} hideCount />
+		</Popover.Trigger>
+	{/if}
 
 	<Popover.Portal>
 		<Popover.Content

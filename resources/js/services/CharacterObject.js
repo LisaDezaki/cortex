@@ -63,8 +63,26 @@ export default class CharacterObject {
 			 */
 			relationships: characterData.relationships ? new CharacterList(characterData.relationships) : null,
 
+			actions: {
+				rename:			() => this.openModal('rename'),
+				uploadPortrait:	() => this.openModal('setMedia'),
+				delete:			() => this.openModal('delete')
+			},
+
 		})
     }
+
+	getAction(name) {
+		return this.actions[name]
+	}
+
+	getActions() {
+		return [
+			{ label: 'Rename',			onclick: this.actions.rename },
+			{ label: 'Upload portrait',	onclick: this.actions.uploadPortrait },
+			{ label: 'Delete',			onclick: this.actions.delete }
+		]
+	}
 
 
 	/**

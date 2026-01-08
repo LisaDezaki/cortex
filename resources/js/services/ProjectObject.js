@@ -312,13 +312,13 @@ export default class ProjectObject {
 			switch (optionSet) {
 				case 'filter':
 					return [
-						{ label: 'All items', 		value: '*',		  				filterFunction: (item) => { return item } },
-						{ label: 'Starred', 		value: 'starred', 				filterFunction: (item) => { return item.starred } },
-						{ label: 'Unique', 			value: 'unique', 				filterFunction: (item) => { return item.unique } },
+						{ label: 'All items', 		value: '*',		  				filterFunction: (i) => { return i } },
+						{ label: 'Starred', 		value: 'starred', 				filterFunction: (i) => { return i.starred } },
+						{ label: 'Unique', 			value: 'unique', 				filterFunction: (i) => { return i.unique } },
 						{ 	separator: true },
-						{ label: 'Type',			value: 'type',					options: this.items.items.map(item => ({
-							label: item.type,		value: 'type'+item.type,		filterFunction: (i) => i.type === item.type
-						})) },
+						{ label: 'Type',			value: 'type',					options: this.items.items.reduce((items,item) => items.find((i) => i.label === item.type) ? items : [...items, {
+							label: item.type,		value: 'type.'+item.type,		filterFunction: (i) => { return i.type === item.type }
+						}], []).sort((a,b) => a.label > b.label ? 1 : -1) },
 						{	separator: true,		if: this.customFields?.getByFieldable('item').length > 0 },
 						...this.customFields?.getByFieldable('item').map(cf => ({
 							label: cf.label,			value: cf.name,						options: cf.options ? cf.options.map(opt => ({
@@ -327,16 +327,16 @@ export default class ProjectObject {
 						})),
 						{ separator: true },
 						{ label: 'Created',				value: 'created',					options: [
-							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => new Date(ent.meta.created.at) <= new Date(new Date().getTime() - 24 * 60 * 60 * 1000) },
-							{   label: 'This Week',		value: 'created.week',				filterFunction: (ent) => new Date(ent.meta.created.at) <= new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000) },
-							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => new Date(ent.meta.created.at) <= new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000) },
-							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => new Date(ent.meta.created.at) <= new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000) },
+							{   label: 'Today',			value: 'created.today',				filterFunction: (ent) => new Date(ent.meta.created.at) >= new Date(new Date().getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This Week',		value: 'created.week',				filterFunction: (ent) => new Date(ent.meta.created.at) >= new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'created.month',				filterFunction: (ent) => new Date(ent.meta.created.at) >= new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'created.year',				filterFunction: (ent) => new Date(ent.meta.created.at) >= new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]},
 						{ label: 'Updated',				value: 'updated',					options: [
-							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => new Date(ent.meta.updated.at) <= new Date(new Date().getTime() - 24 * 60 * 60 * 1000) },
-							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => new Date(ent.meta.updated.at) <= new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000) },
-							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => new Date(ent.meta.updated.at) <= new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000) },
-							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => new Date(ent.meta.updated.at) <= new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000) },
+							{   label: 'Today',			value: 'updated.today',				filterFunction: (ent) => new Date(ent.meta.updated.at) >= new Date(new Date().getTime() - 24 * 60 * 60 * 1000) },
+							{   label: 'This week',		value: 'updated.week',				filterFunction: (ent) => new Date(ent.meta.updated.at) >= new Date(new Date().getTime() - 7 * 24 * 60 * 60 * 1000) },
+							{   label: 'This month',	value: 'updated.month',				filterFunction: (ent) => new Date(ent.meta.updated.at) >= new Date(new Date().getTime() - 30 * 24 * 60 * 60 * 1000) },
+							{   label: 'This year',		value: 'updated.year',				filterFunction: (ent) => new Date(ent.meta.updated.at) >= new Date(new Date().getTime() - 365 * 24 * 60 * 60 * 1000) },
 						]}
 					]
 				case 'sort':
@@ -347,12 +347,14 @@ export default class ProjectObject {
 						{ label: "By weight",			value: 'weight',					sortFunction: (a,b) => a.weight < b.weight	? -1 : 1 },
 						{	separator: true, if: this.customFields?.getByFieldable('item').length > 0 },
 						...this.customFields?.getByFieldable('item').map(cf => ({
-							label: `By ${cf.label.toLowerCase()}`,	value: cf.name,			sortFunction: (a,b) => {
-								// a = a.customFieldValues.find(v => v.name === cf.name)?.value
-								// b = b.customFieldValues.find(v => v.name === cf.name)?.value
-								// return !isNaN(a) && !isNaN(b)
-								// 	? (Number(a) < Number(b) ? -1 : 1)
-								// 	: (a < b ? -1 : 1)
+							label: `By ${cf.label.toLowerCase()}`,	value: 'cf.'+cf.name,			sortFunction: (a,b) => {
+								a = a.customFieldValues?.find(v => v.name === cf.name)?.displayValue
+								b = b.customFieldValues?.find(v => v.name === cf.name)?.displayValue
+								if (!a) { return  1 }
+								if (!b) { return -1 }
+								return !isNaN(a) && !isNaN(b)
+									? (Number(a) < Number(b) ? -1 : 1)
+									: (a < b ? -1 : 1)
 							}
 						})),
 						{ 	separator: true },

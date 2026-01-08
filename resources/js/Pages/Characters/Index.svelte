@@ -9,7 +9,6 @@
 	import ControlBar			from '@/Components/UI/ControlBar.svelte'
 	import Empty				from '@/Components/UI/Empty.svelte'
 	import Entity				from '@/Components/UI/Entity.svelte'
-	import PageHeader			from '@/Components/UI/PageHeader.svelte'
 	import PageHeading			from '@/Components/UI/PageHeading.svelte'
 	import CharacterTable		from '@/Components/Features/Character/CharacterTable.svelte'
 	import ProjectObject 		from '@/services/ProjectObject'
@@ -19,8 +18,8 @@
 	 * Active project instance
 	 * @type {ProjectObject}
 	 */
-	const activeProject	  = new ProjectObject($page.props.activeProject.data)
-	const characters      = activeProject?.characters
+	const activeProject	  = $state(new ProjectObject($page.props.activeProject.data))
+	const characters      = $state(activeProject?.characters)
 
 
 	/**
@@ -58,7 +57,7 @@
 	 * Derived filtered/sorted results
 	 * @type {Array<CharacterObject>}
 	 */
-	let results  = $derived(characters.items)
+	let results  = $derived(characters?.items || [])
 
 
 	/**
@@ -171,6 +170,7 @@
 									entity={character}
 									subtitle={getSubtitle(character)}
 									href={character.routes.show}
+									menu={character.actions}
 								/>
 							{/each}
 						{:else}

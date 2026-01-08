@@ -59,9 +59,6 @@
 <AuthenticatedLayout>
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="overflow-y-auto px-20">
-
-			<!-- Page Menu -->
-
 			<PageMenu class="py-12"
 				back={{ text: 'Character List', href: route('characters') }}
 				items={[

@@ -1,5 +1,5 @@
 <script>
-	import { Link, page } from '@inertiajs/svelte'
+	import { Link, page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
@@ -9,11 +9,10 @@
 	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
-	import Card       	 from '@/Components/UI/Card.svelte'
-	import CardNew       from '@/Components/UI/CardNew.svelte'
 	import Collapsible   from '@/Components/UI/Collapsible.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
+	import Input    	 from '@/Components/UI/Input'
 	import Media     	 from '@/Components/UI/Media.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
 	import Section    	 from '@/Components/UI/Section.svelte'
@@ -21,7 +20,6 @@
 	import Tag     		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
 	import ItemObject from '@/services/ItemObject';
-	import url from '@/stores/urlStore'
 
 	/**
 	 * Active item instance
@@ -29,6 +27,17 @@
 	 */
 	const item    = new ItemObject($page.props.item?.data)
 	const customFields = $page.props.customFields?.data
+
+	let customFieldForm = useForm({
+		customFields: customFields?.map((field) => ({
+			id: field.id,
+			value: character.customFieldValues?.find(cfv => cfv.fieldId === field.id)?.value || null
+		}))
+	})
+
+	function submitCustomFields() {
+		$customFieldForm.patch(character.routes.update, {})
+	}
 
 </script>
 
@@ -41,9 +50,6 @@
 <AuthenticatedLayout>
 	{#snippet article()}
 		<Flex justify="center" gap={12} class="overflow-y-auto px-20 py-12">
-
-			<!-- Page Menu -->
-
 			<PageMenu
 				back={{ text: 'Item List', href: route('items') }}
 				items={[
@@ -79,11 +85,14 @@
 							/>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => item.openModal('rename')} />
 						</Inline>
-						<Inline class="z-10">{item.type}
+						<Inline class="z-10">
+							<span class={item.getMedia('banner') ? 'opacity-75 text-white' : ''}>{item.type}</span>
 							<Button class="ml-1.5 rounded-full text-accent" size="xs" style="plain" theme="accent" icon="PencilSimple" onclick={() => item.openModal('type')} />
 						</Inline>
 					</ArticleBanner>
 				</Section>
+
+				<!-- Details -->
 
 				<Section id="details">
 					<Stack class="max-w-[64ch] mx-6 mt-12">
@@ -117,6 +126,28 @@
 							<Button icon="Plus" size="xs" style="plain" theme="accent" class="rounded-full h-7 my-1 w-7" />
 						</Flex> -->
 						
+						<!-- <Input.Switch
+							label="Unique"
+							checked={true}
+						/> -->
+
+						<Stack gap={1.5} class="mt-6">
+							<Flex align="center" gap={3}>
+								<span class="font-semibold w-32">Cost:</span>
+								<Input.Number size="sm" class="w-32" value={item.cost} />
+							</Flex>
+	
+							<Flex align="center" gap={3}>
+								<span class="font-semibold w-32">Weight:</span>
+								<Input.Number size="sm" class="w-32" value={item.weight} />
+							</Flex>
+	
+							<Flex align="center" gap={3}>
+								<span class="font-semibold w-32">Unique:</span>
+								<Input.Switch checked={item.unique} />
+							</Flex>
+						</Stack>
+						
 					</Stack>
 				</Section>
 
@@ -128,15 +159,22 @@
 				<Section id="custom" class="p-6">
 					<Heading is="h3" as="h4" class="mb-6">Custom Fields</Heading>
 					{#if customFields && customFields.length > 0}
-						{#each customFields as field, i}
-							<Flex gap={3} class="max-w-[64ch] py-1.5">
-								<span class="font-semibold w-32">{field.label}:</span>
-								<span class="line-clamp-1 {item.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{item.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span>
-							</Flex>
-						{/each}
-						<Flex class="pt-3">
+						<Stack class="flex flex-col gap-1.5" gap={1.5}>
+							{#each customFields as field, i}
+								<Flex align="center" gap={3}>
+									<span class="font-semibold w-32">{field.label}:</span>
+									<!-- <span class="line-clamp-1 {item.customFieldValues.find(cfv => cfv.name === field.name) ? '' : 'text-neutral-softest italic'}">{item.customFieldValues.find(cfv => cfv.name === field.name)?.displayValue || "None"}</span> -->
+									<Input class="w-64" {...field} bind:value={$customFieldForm.customFields[i].value} />
+								</Flex>
+							{/each}
+							<Button type="submit" class="min-w-32 mt-3 place-self-start"
+								text="Save" onclick={submitCustomFields}
+								size="md" style="hard" theme="accent"
+							/>
+						</Stack>
+						<!-- <Flex class="pt-3">
 							<Button size="md" style="soft" theme="accent" icon="Plus" iconSize="sm" iconWeight="regular" label="New custom field" onclick={() => {}} />
-						</Flex>
+						</Flex> -->
 					{:else}
 						<p class="italic text-neutral-softest">There are no custom fields for Items yet.</p>
 					{/if}
