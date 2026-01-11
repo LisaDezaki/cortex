@@ -12,6 +12,7 @@
     let {
 		isOpen = false,
 		project,
+		title,
 		...restProps
 	} = $props()
 
@@ -23,19 +24,18 @@
 
 
 
-<ModalForm title="Delete Project" size="sm"
+<ModalForm title={title || "Delete Project"} size="sm"
 	endpoint={route('projects.destroy', { project: project.id })}
 	form={form}
 	method="delete"
 	reloadPageProps={['projects']}
-	submitProps={{ label: 'Yes, Delete', theme: 'danger' }}
+	submitProps={{ text: 'Yes, Delete ' + project.name, theme: 'danger' }}
 {...restProps}>
 
 	<Stack gap={3} class="px-4 pb-3">
 
 		<Media
-			aspect="aspect-[7/3]"
-			class="bg-neutral-softest rounded-md w-full"
+			class="aspect-[7/3] bg-neutral-softest rounded-md w-full"
 			icon="GlobeStand"
 			media={project.image}
 		/>

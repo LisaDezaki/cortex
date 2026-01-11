@@ -65,7 +65,12 @@ export default class CharacterObject {
 
 			actions: {
 				rename:			() => this.openModal('rename'),
-				uploadPortrait:	() => this.openModal('setMedia'),
+				alias:			() => this.openModal('alias'),
+				description:	() => this.openModal('description'),
+				uploadPortrait:	() => this.openModal('setMedia', { type: 'portrait', aspect: 'aspect-[1/1]' }),
+				location:		() => this.openModal('location'),
+				faction:		() => this.openModal('faction'),
+				relationship:	() => this.openModal('relationship'),
 				delete:			() => this.openModal('delete')
 			},
 
@@ -78,9 +83,15 @@ export default class CharacterObject {
 
 	getActions() {
 		return [
-			{ label: 'Rename',			onclick: this.actions.rename },
-			{ label: 'Upload portrait',	onclick: this.actions.uploadPortrait },
-			{ label: 'Delete',			onclick: this.actions.delete }
+			{ icon: 'Textbox',			label: 'Rename',			onclick: this.actions.rename },
+			{ icon: 'TextAlignLeft',	label: 'Description',		onclick: this.actions.description },
+			// { label: 'Alias',			onclick: this.actions.alias },
+			{ icon: 'UploadSimple',		label: 'Upload portrait',	onclick: this.actions.uploadPortrait },
+			{ icon: 'MapPin',			label: 'Location',			onclick: this.actions.location },
+			{ icon: 'FlagBannerFold',	label: 'Faction',			onclick: this.actions.faction },
+			{ icon: 'Users',			label: 'Relationship',		onclick: this.actions.relationship },
+			{	separator: true },
+			{ icon: 'Trash',			label: 'Delete',			onclick: this.actions.delete, theme: 'danger' }
 		]
 	}
 
@@ -125,39 +136,15 @@ export default class CharacterObject {
 				modalActions.open('linkEntities', { ...updateProps,
 					entityList: 'factions',
 					field: 'factions',
+					title: 'Link faction: ' + this.name,
 				...props }); break;
-			// case 'faction':
-			// 	modalActions.open('selectOne', { ...updateProps,
-			// 		field: 'factions',
-			// 		reloadPageProps: ['character.factions'],
-			// 		selected: this.factions.items?.map(f => f.id) || [],
-			// 		title: "Set faction: " + this.name,
-			// 	...props }); break;
-			// case 'factions':
-			// 	modalActions.open('selectMany', { ...updateProps,
-			// 		field: 'factions',
-			// 		reloadPageProps: ['character.factions'],
-			// 		selected: this.factions.items?.map(f => f.id) || [],
-			// 		title: "Set factions: " + this.name,
-			// 	...props }); break;
 			case 'relationship':
 				modalActions.open('linkEntities', { ...updateProps,
 					entityList: 'characters',
 					field: 'relationships',
+					size: '3xl',
+					title: 'Link character: ' + this.name,
 				...props }); break;
-				// modalActions.open('setCharacterRelationship', { ...updateProps,
-				// 	character: this,
-				// 	reloadPageProps: ['character.relationships'],
-				// 	selected: this.relationships.items?.map(r => r.id) || [],
-				// 	title: "Set relationship: " + this.name,
-				// ...props }); break;
-			// case 'relationships':
-			// 	modalActions.open('selectMany', { ...updateProps,
-			// 		field: 'relationships',
-			// 		reloadPageProps: ['character.relationships'],
-			// 		selected: this.relationships.items?.map(r => r.id) || [],
-			// 		title: "Set relationships: " + this.name,
-			// 	...props }); break;
 			case 'setMedia':
 				modalActions.open('uploadMedia', { ...updateProps,
 					aspect: 'aspect-square',

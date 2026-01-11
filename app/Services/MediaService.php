@@ -59,13 +59,16 @@ class MediaService
 		try {
 			if (!$this->fileExists($tempPath)) {
 				throw new \Exception("There was no file to move at $tempPath.");
+				Session::flash('error', "There was no file to move at $tempPath.");
 			}
 			$moved = Storage::disk('public')->move($tempPath, $newPath);
 			if (!$moved) {
 				throw new \Exception("Failed to move file from $tempPath to $newPath.");
+				Session::flash('error', "Failed to move file from $tempPath to $newPath.");
 			}
 			if (!$this->fileExists($newPath)) {
 				throw new \Exception("The file didn't make it to $newPath for some reason.");
+				Session::flash('error', "The file didn't make it to $newPath for some reason.");
 			}
 
 			return [

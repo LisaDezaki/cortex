@@ -21,16 +21,19 @@
 		options,
 		placeholder,
 		size = 'md',
+		theme = 'neutral',
 		value
     } = $props()
 
 	let cx = {
-		option: clsx('input-option flex items-center w-full', {
-			'active': active || checked
+		option: clsx('input-option flex items-center w-full', theme, {
+			'active': active || checked,
+			// 'hover:bg-neutral-softest text-neutral': theme === 'neutral',
+			// 'hover:bg-danger-softest text-danger': theme === 'danger',
 		}, className),
 		icon:	clsx('input-icon'),
 		text:	clsx('break-all line-clamp-1 px-1.5 text-left w-full', `text-${size}`),
-		value:	clsx('text-neutral'),
+		// value:	clsx('text-neutral'),
 		placeholder: clsx('text-neutral-softer italic')
 	}
 

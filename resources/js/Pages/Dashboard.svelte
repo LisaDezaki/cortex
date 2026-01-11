@@ -37,6 +37,7 @@
 
 	let results			= $state(projects      ? new ProjectList(projects)		 : [])
 	let layout			= $state('grid')
+	let size			= $state(3)
 
 </script>
 
@@ -233,7 +234,8 @@
 					/>
 
 					<ControlBar
-						class="mb-3" data={projectList} bind:results bind:layout
+						class="mb-3" data={projectList} bind:results
+						bind:layout bind:size={size}
 						filterOptions={[
 							{ label: 'All Projects',	value: '*',			filterFunction: (proj) => proj },
 							{ label: 'Starred',			value: 'starred',	filterFunction: (proj) => proj.starred },
@@ -242,22 +244,23 @@
 							{ label: 'By name',			value: 'name',		sortFunction: (a,b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1 }
 						]}
 						layoutOptions={[
-							{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
-							{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+							{ label: 'As Grid',  		value: 'grid',			icon: 'GridFour'	},
+							{ label: 'As Table', 		value: 'table', 		icon: 'Table'	  	}
 						]}
+						sizeOptions={{ min: 1, max: 5 }}
+						resizeable={layout === 'grid'}
 					/>
 
 					<!-- <pre>{JSON.stringify(results,null,3)}</pre> -->
 	
 					{#if projects && layout === 'grid'}
-						<Grid gap={3} class="xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
+						<Grid cols={6-size} gap={3}>
 							{#each results as project}
 								<Entity
 									aspect="aspect-video"
 									entity={project}
-									layout="stack"
-									size="auto"
 									onclick={() => project.activate()}
+									menu={project.getActions()}
 								/>
 							{/each}
 						</Grid>

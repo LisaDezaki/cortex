@@ -32,6 +32,11 @@
 		}],
 	})
 
+	let query  = $state('')
+	let layout = $state('grid')
+
+	let filteredOptions = $derived(active[entityList]?.items?.filter(opt => opt.name.toLowerCase().includes(query.toLowerCase())))
+
 	function selectOption(option) {
 		$form[field][0].id = option && selected !== option.id ? option.id : null
 		selected = option && selected !== option.id ? option.id : null
@@ -46,16 +51,41 @@
 	method="patch"
 	reloadPageProps={['characters']}
 {...restProps}>
+
+
 	{#if selected == null}
 
-		<Grid cols={5} class="px-4 pt-0 pb-4">
-			{#each active[entityList]?.items?.filter(opt => opt.id !== entity.id) as option}
-				<Entity
-					entity={option}
-					onclick={() => selectOption(option)}
-				/>
-			{/each}
-		</Grid>
+		<Stack class="max-h-[75vh] overflow-hidden">
+			<Flex gap={3} class="flex-none px-4 pb-1.5">
+				<Input.Text 	bind:value={query}  class="w-32" icon="MagnifyingGlass" placeholder="Search..."	size="sm" />
+				<Input.Select 	bind:value={layout} class="w-32" icon="Shapes" 			placeholder="Layout..." size="sm" options={[
+					{ label: 'Grid', value: 'grid' },
+					{ label: 'List', value: 'list' },
+				]} />
+			</Flex>
+
+			{#if layout === 'grid'}
+				<Grid cols={5} gap={3} class="flex-1 overflow-y-auto px-4 pt-1.5 pb-4">
+					{#each active[entityList]?.items?.filter(opt => opt.id !== entity.id && opt.name.toLowerCase().includes(query.toLowerCase())) as option}
+						<Entity
+							entity={option}
+							onclick={() => selectOption(option)}
+						/>
+					{/each}
+				</Grid>
+			{:else}
+				<Stack gap={1.5} class="flex-1 overflow-y-auto px-4 pt-1.5 pb-4">
+					{#each active[entityList]?.items?.filter(opt => opt.id !== entity.id && opt.name.toLowerCase().includes(query.toLowerCase())) as option}
+						<Entity
+							entity={option}
+							layout="inline"
+							size="sm"
+							onclick={() => selectOption(option)}
+						/>
+					{/each}
+				</Stack>
+			{/if}
+		</Stack>
 
 	{:else}
 
@@ -81,9 +111,6 @@
 			<Input.Text bind:value={$form[field][0].label} placeholder="Context label"
 				class="w-48"
 			/>
-			<!-- <Input.Text bind:value={$form.relationships[0].related_option_role} placeholder="Label (e.g, Child)"
-				class="w-48"
-			/> -->
 		</Flex>
 
 	{/if}

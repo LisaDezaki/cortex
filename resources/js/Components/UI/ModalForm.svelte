@@ -1,7 +1,7 @@
 <script>
 	import { modalActions } from '@/stores/modalStore';
 
-	import { Flex, Form, Grid } from '@/Components/Core'
+	import { Box, Flex, Form, Grid } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Modal  from '@/Components/UI/Modal.svelte'
 
@@ -26,17 +26,18 @@
 
 
 <Modal title={title} maxWidth={size}>
-	<Form class="relative"
+	<Form class="relative flex flex-col max-h-full overflow-hidden"
 		enctype="multipart/form-data"
 		form={form}
 		processing={$form.processing}
 		recentlySuccessful={$form.recentlySuccessful}
 		onFinish={modalActions.close}
 	{...restProps}>
+		<Box class="content flex-1 max-h-[75vh] overflow-y-auto">
+			{@render children?.()}
+		</Box>
 
-		{@render children?.()}
-
-		<Flex align="center" justify="between" gap={1.5} class="flex-0 p-lg">
+		<Flex justify="between" class="flex-none p-2">
 			<Button style="plain" theme="neutral"
 				type="button"
 				text="Cancel"

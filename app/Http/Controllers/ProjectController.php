@@ -33,6 +33,18 @@ class ProjectController extends Controller
 	 * included in this list.
 	 */
 
+	protected $validationRules = [
+		'name' 		  	=> ['sometimes', 'string', 'max:255'],
+		'type' 		  	=> ['nullable',  'string'],
+		'description' 	=> ['nullable',  'string'],
+
+		'media'			=> ['sometimes', 'array'],
+		'media.*.name'	=> ['nullable',	 'string'],
+		'media.*.path'	=> ['nullable',  'string'],
+		'media.*.type'	=> ['required',  'string', 'in:banner,gallery,map'],
+		'media.*.url'	=> ['nullable',  'string']
+	];
+
 	public function validate(Request $request)
 	{
 		$rules = [
@@ -71,7 +83,16 @@ class ProjectController extends Controller
 	public function create() {}
 	public function store(Request $request): RedirectResponse
     {
-        $validatedData = $this->validate($request);
+		//	Attempt to validated the $request
+		//	Flash an error if validation fails
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Validation failed: ".$e);
+        	return Redirect::back();
+		}
+
+        // $validatedData = $this->validate($request);
 		$project = Auth::user()->projects()->create($validatedData);
 		$project->save();
 		Session::flash('success', "$request->name created successfully.");
@@ -102,7 +123,15 @@ class ProjectController extends Controller
 	public function edit(Project $project) {}
     public function update(Request $request, Project $project)
     {
-		$validatedData = $this->validate($request);
+		//	Attempt to validated the $request
+		//	Flash an error if validation fails
+		try {
+			$validatedData = $request->validate($this->validationRules);
+		} catch (\Exception $e) {
+			Session::flash('error', "Validation failed: ".$e);
+        	return Redirect::back();
+		}
+		// $validatedData = $this->validate($request);
 
 		if ($request->has('media')) {
 			foreach ($request['media'] as $media) {

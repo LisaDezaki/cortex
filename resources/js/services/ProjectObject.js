@@ -78,6 +78,16 @@ export default class ProjectObject {
 			 */
 			customFields: projectData.customFields ? new CustomFieldList(projectData.customFields) : null,
 
+			/**
+			 * Actions
+			 */
+			actions: {
+				rename:			() => this.openModal('rename'),
+				type:			() => this.openModal('type'),
+				description:	() => this.openModal('description'),
+				uploadBanner:	() => this.openModal('setMedia', { type: 'banner', aspect: 'aspect-video' }),
+				delete:			() => this.openModal('delete')
+			},
 			
 			/**
 			 * API routes for project operations
@@ -96,6 +106,22 @@ export default class ProjectObject {
 				destroy:	route('projects.destroy',	{ project: projectData.id })
 			}
 		})
+	}
+
+
+	getAction(name) {
+		return this.actions[name]
+	}
+
+	getActions() {
+		return [
+			{ icon: 'Textbox',			label: 'Rename',			onclick: this.actions.rename },
+			{ icon: 'Textbox',			label: 'Type',				onclick: this.actions.type },
+			{ icon: 'TextAlignLeft',	label: 'Description',		onclick: this.actions.description },
+			{ icon: 'UploadSimple',		label: 'Upload banner',		onclick: this.actions.uploadBanner },
+			{	separator: true },
+			{ icon: 'Trash',			label: 'Delete',			onclick: this.actions.delete, theme: 'danger' }
+		]
 	}
 
 
@@ -140,7 +166,10 @@ export default class ProjectObject {
 					type: props.type,
 				...props }); break;
 			case 'delete':
-				modalActions.open('deleteProject', { project: this }); break;
+				modalActions.open('deleteProject', { ...destroyProps,
+					project: this,
+					title: 'Delete project: ' + this.name,
+				...props }); break;
 			default:
 				console.log('ProjectObject.openModal', modalName, props)
 		}

@@ -70,22 +70,23 @@
 			<p class={cx.line.secondary}>{subtitle || entity.type || entity.alias}</p>
 		</Stack>
 		{#if menu}
-			<Dropdown class="ml-auto z-10" options={entity.getActions()}>
-				<Button class="rounded-full opacity-0 group-hover:opacity-100" icon="DotsThreeVertical" style="plain" theme="neutral" />
+			<Dropdown size="sm" options={entity.getActions()} contentProps={{ align: 'end', side: 'top', sideOffset: 2 }}
+				class="h-7 w-7 ml-auto rounded opacity-0 group-hover:opacity-100 hover:bg-neutral-softest z-10 [&[data-state='open']]:bg-accent-softer [&[data-state='open']]:text-accent [&[data-state='open']]:opacity-100">
+				<Icon name="DotsThreeVertical" size="sm" />
 			</Dropdown>
 		{/if}
 	</Flex>
-	{#if href}
-		<Link class="absolute inset-0 text-transparent" href={href}>View</Link>
+	{#if href || onclick}
+		<Link class="absolute inset-0 text-transparent" href={href} onclick={onclick}>View</Link>
 	{/if}
 {/snippet}
 
 {#if layout === "inline"}
-	<Inline class={cx.card} gap={0.5} onclick={onclick}>
+	<Inline class={cx.card} gap={0.5}>
 		{@render content()}
 	</Inline>
 {:else if layout === "stack"}
-	<Stack class={cx.card} gap={0.5} onclick={onclick}>
+	<Stack class={cx.card} gap={0.5}>
 		{@render content()}
 	</Stack>
 {/if}

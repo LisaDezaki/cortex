@@ -49,6 +49,7 @@ export default class ProjectList {
 			 * @property {string} store | Route for storing new projects
 			 */
 			routes: {
+				store:  route('projects.store'),
 				create:	route('projects.create'),
 				deactivate: route('projects.deactivate'),
 			}
@@ -65,6 +66,7 @@ export default class ProjectList {
 		switch(modalName) {
 			case 'create':
 				modalActions.open('createEntity', { ...storeProps,
+					reloadPageProps: ['projects'],
 					title: 'Create project:',
 				...props }); break;
 			default:

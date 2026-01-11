@@ -219,6 +219,14 @@
 				color: var(--text-accent);
 			}
 		}
+
+		:global(.input-option.danger) {
+			color: var(--text-danger);
+			&:hover,
+			&[data-highlighted] {
+				background-color: var(--bg-danger-softest);
+			}
+		}
 	}
 
 </style>

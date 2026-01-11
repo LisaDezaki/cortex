@@ -6,6 +6,7 @@
     import { Flex, Stack } from '@/Components/Core'
 	import Button from '@/Components/UI/Button.svelte'
 	import Heading from '@/Components/UI/Heading.svelte'
+	import Input from '@/Components/UI/Input'
     import clsx from 'clsx'
 
     let {
@@ -41,9 +42,9 @@
 		wrap:    clsx('fixed inset-0 transform transition-all animate-[blur-in_500ms_forwards]'),
 		overlay: clsx('absolute inset-0 bg-black/40 animate-[blur-in_500ms_forwards]'),
 		modal:   clsx('modal flex flex-col items-stretch bg-surface font-body max-h-full mb-6 overflow-hidden rounded-lg transform shadow-xl text-neutral transition-all sm:mx-auto w-full', maxWidthClass, className),
-		head:    clsx('modal-head sticky top-0 shrink-0 p-2 pl-4 z-10', 'bg-surface'),
-		body:	 clsx('modal-body grow overflow-y-auto'),
-		foot:	 clsx('modal-foot border-t flex items-center justify-center gap-3 p-3 shrink-0'),
+		head:    clsx('modal-head sticky top-0 flex-none p-2 pl-4 z-10', 'bg-surface'),
+		body:	 clsx('modal-body flex-1 max-h-[80vh] overflow-y-auto'),
+		foot:	 clsx('modal-foot flex items-center justify-center gap-3 p-lg flex-none'),
 	})
 
     onDestroy(() => (document.body.style.overflow = 'visible'))
@@ -81,9 +82,9 @@
 				{@render children()}
 			</div>
 			{#if actions}
-				<Stack class={cx.foot}>
+				<Flex justify="between" class={cx.foot}>
 					{@render actions()}
-				</Stack>
+				</Flex>
 			{/if}
 		</div>
 	</Stack>

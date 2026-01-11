@@ -125,6 +125,7 @@
 	import TagSimple from "phosphor-svelte/lib/TagSimple"
 	import Tent from "phosphor-svelte/lib/Tent"
 	import TextAa from "phosphor-svelte/lib/TextAa"
+	import TextAlignLeft from "phosphor-svelte/lib/TextAlignLeft"
 	import Textbox from "phosphor-svelte/lib/Textbox"
 	import ToggleRight from "phosphor-svelte/lib/ToggleRight"
 	import Trash from "phosphor-svelte/lib/Trash"
@@ -135,6 +136,7 @@
 	import UserCircle from "phosphor-svelte/lib/UserCircle"
 	import UserList from "phosphor-svelte/lib/UserList"
 	import UserPlus from "phosphor-svelte/lib/UserPlus"
+	import Users from "phosphor-svelte/lib/Users"
 	import UsersFour from "phosphor-svelte/lib/UsersFour"
 	import UsersThree from "phosphor-svelte/lib/UsersThree"
 	import Warning from "phosphor-svelte/lib/Warning"
@@ -271,6 +273,7 @@
 		'TagSimple': TagSimple,
 		'Tent': Tent,
 		'TextAa': TextAa,
+		'TextAlignLeft': TextAlignLeft,
 		'Textbox': Textbox,
 		'ToggleRight': ToggleRight,
 		'Trash': Trash,
@@ -281,6 +284,7 @@
 		'UserCircle': UserCircle,
 		'UserList': UserList,
 		'UserPlus': UserPlus,
+		'Users': Users,
 		'UsersFour': UsersFour,
 		'UsersThree': UsersThree,
 		'Warning': Warning,

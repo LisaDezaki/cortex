@@ -10,6 +10,7 @@
 	let {
 		children,
         class: className,
+		contentProps = {},
 		icon,
 		label,
 		isOpen = $bindable(false),
@@ -33,9 +34,10 @@
 		} else {
 			value = option.value
 			selected = option
-			isOpen = false
+			// isOpen = false
 			onUpdate(option)
 		}
+		isOpen = false
 	}
 
 	function back() {
@@ -64,7 +66,7 @@
 	<Popover.Portal>
 		<Popover.Content
 			class="input-content overflow-hidden"
-			align="start" sideOffset={-1}
+			align="start" sideOffset={-1} {...contentProps}
 		>
 			<Grid cols={2} gap={0} class="h-full w-[200%] {suboptions ? 'translate-x-[-50%]' : ''} transition-transform">
 				<Stack class="p-0.5">
