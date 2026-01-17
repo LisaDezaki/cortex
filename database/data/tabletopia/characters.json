@@ -24,7 +24,7 @@
 		"wealth": "low",
 		"appearance": ["Brawny"],
 		"personality": ["Defender"],
-		"desc": "A huge goliath who is always pushed to fight but only wants to protect his friends."
+		"desc": "A huge goliath who is always pushed to fight but only wants to protect his friends. He is gentle and kind-hearted, but his size and strength make others wary of him. He often has to prove that he is not a threat."
 	},
 
 	"bak": {
@@ -135,7 +135,7 @@
 		"class": "Rogue",
 		"species": "warforged",
 		"personality": ["Perceptive"],
-		"desc": "Standing firm near the bar, quietly searching for potential clients.",
+		"desc": "Standing firm near the bar, quietly searching for potential clients. A warforged assassin built for stealth and precision, Cog is a master of infiltration and elimination. Its sleek, clockwork body is designed for silent movement, with joints that glide without a sound and eyes that can adjust to any light level. Cog's programming includes advanced combat algorithms, allowing it to analyze threats and strike with deadly efficiency. It is a professional, taking contracts from those who can afford its services, and it operates with a cold, calculating detachment that makes it both effective and feared in the underworld of New Miniport.",
 		"mapdata": {
 			"location": "tavern"
 		}
@@ -163,7 +163,7 @@
 		"species": "goblin",
 		"appearance": ["Short"],
 		"personality": ["Aggressive", "Belligerent", "Condescending", "Crass", "Insecure", "Misogynistic", "Narcissistic", "Obnoxious", "Patronizing", "Rude"],
-		"desc": "This guy HATES women. He constantly makes rude comments to female patrons and brags about his own strength and prowess. He is obsessed with being the biggest and strongest goblin in the gym, and will challenge anyone who he perceives as a threat to his ego.\n\nHe is extremely insecure about his short stature (even for a goblin).",
+		"desc": "This guy HATES women. He constantly makes rude comments to female patrons and brags about his own strength and prowess. He is obsessed with being the biggest and strongest goblin in the gym, and will challenge anyone who he perceives as a threat to his ego.\n\nHe is extremely insecure about his short stature (even for a goblin). He compensates by working out obsessively and trying to prove his dominance over others. He has a chip on his shoulder and is quick to anger if he feels disrespected or belittled.\n\nDespite his abrasive personality, Drew is actually quite lonely. He struggles to form meaningful connections with others due to his hostile attitude, and often vents his frustrations inappropriately. Deep down, he craves acceptance and validation, but his toxic behavior only serves to push people away.",
 		"mapdata": {
 			"location": "gym"
 		}
@@ -202,7 +202,7 @@
 		"class": "Rogue",
 		"species": "foxfolk",
 		"personality": ["Naive"],
-		"desc": "",
+		"desc": "Fennick is a young foxfolk rogue, known for his playful nature and quick wit. Despite his small stature, he is incredibly agile and stealthy, making him a formidable opponent in close combat. His naivety often leads him into trouble, but his natural charm and cunning help him escape most predicaments.",
 		"mapdata": {
 			"location": "cabin"
 		}
@@ -254,7 +254,7 @@
 		"class": "Monk",
 		"species": "bearfolk",
 		"personality": ["Naive", "Polite"],
-		"desc": "Barry's son Grizz is a wrestling star at school.",
+		"desc": "Barry's son Grizz is a wrestling star at school. He is friendly and polite, but somewhat naive about the world outside of his sport. He looks up to his father and wants to follow in his footsteps as a strong and dependable figure in the community.\n\nDespite his large size and strength, Grizz has a gentle demeanor. He is more interested in making friends and learning new techniques than in dominating his opponents. He often tries to mediate conflicts among his teammates and is known for his sportsmanship.\n\nGrizz dreams of one day becoming a professional wrestler, but for now he is content to hone his skills and enjoy the camaraderie of his school wrestling team.",
 		"mapdata": {
 			"location": "school"
 		}
@@ -267,7 +267,7 @@
 		"class": "Fighter",
 		"species": "elf",
 		"personality": ["Self-serving"],
-		"desc": "A straight-up mercenary."
+		"desc": "A straight-up mercenary. He'll take any job as long as the pay is good enough. He's not particularly loyal to anyone, and will switch sides if it benefits him. He's skilled in combat, but doesn't have much of a moral compass."
 	},
 
 	"hamfast": {
@@ -368,7 +368,7 @@
 		"class": "Fighter",
 		"species": "tortle",
 		"personality": ["Lonely"],
-		"desc": "Leon is a tortle fighter.",
+		"desc": "Leon is a tortle fighter who lives in the underground tunnels beneath New Miniport. He is a solitary figure, rarely seen by the townsfolk above, and is known for his exceptional combat skills and knowledge of the subterranean labyrinth.\n\nLeon has a deep connection to the underground world, having spent most of his life navigating its twists and turns. He is fiercely protective of his territory and is wary of outsiders, but those who earn his trust find a loyal ally and a formidable warrior.\n\nDespite his gruff exterior, Leon harbors a longing for companionship and often watches the bustling life of New Miniport from afar, dreaming of one day being part of it.",
 		"mapdata": {
 			"location": "dojo"
 		}
@@ -381,7 +381,7 @@
 		"class": "Barbarian",
 		"species": "leonin",
 		"personality": ["Unpredictable"],
-		"desc": "Leona is a drug-addicted arena fighter."
+		"desc": "Leona is a drug-addicted arena fighter. She is known for her unpredictable fighting style and her willingness to take on any opponent, no matter how dangerous.\n\nLeona's addiction to a powerful stimulant called \"Lion's Roar\" fuels her ferocity in the arena, but it also makes her erratic and difficult to control. She is a wild card, capable of both incredible feats of strength and sudden, uncontrollable outbursts.\n\nDespite her flaws, Leona has a loyal following among the arena's spectators, who admire her tenacity and raw power. She fights not just for glory, but to feed her addiction and survive another day in the brutal world of underground combat."
 	},
 
 	"lucas": {
@@ -391,7 +391,7 @@
 		"class": "Warlock",
 		"species": "tiefling",
 		"personality": ["Misogynistic"],
-		"desc": "Lucas is a pick-up artist who uses a combination of close-up magic and enchantment magic to seduce vulnerable young women."
+		"desc": "Lucas is a pick-up artist who uses a combination of close-up magic and enchantment magic to seduce vulnerable young women. He is manipulative and predatory, preying on the insecurities of his targets to make them more susceptible to his charms.\n\nLucas is a regular at the local tavern, where he can often be found practicing his magic tricks and honing his seduction techniques. He is charming and charismatic, but beneath his suave exterior lies a dark and dangerous individual who will stop at nothing to get what he wants."
 	},
 
 	"mae": {
@@ -400,7 +400,7 @@
 		"level": 5,
 		"class": "Bard",
 		"species": "harengon",
-		"desc": "Mae is a bard student at the school, and performs violin music in the tavern every Saturday night.",
+		"desc": "Mae is a bard student at the school, and performs violin music in the tavern every Saturday night. She is known for her beautiful and haunting melodies, which captivate the audience and create a magical atmosphere.\n\nMae is a dedicated musician, spending hours practicing her craft and perfecting her technique. She is passionate about music and sees it as a way to connect with others and express her emotions.\n\nDespite her talent, Mae is humble and down-to-earth, often shying away from the spotlight. She values the joy of performing and sharing her music with others more than fame or recognition.",
 		"mapdata": {
 			"location": "school"
 		}
@@ -438,7 +438,7 @@
 		"level": 15,
 		"class": "Barbarian",
 		"species": "insectoid",
-		"desc": "Mawloq is the Queen of the insectoids.",
+		"desc": "Mawloq is the Queen of the insectoids. She is a massive creature, towering over most humanoids, with a chitinous exoskeleton and razor-sharp mandibles. Her presence is both awe-inspiring and terrifying, as she commands a legion of loyal insectoid followers.\n\nMawloq is fiercely protective of her hive and will stop at nothing to defend it from perceived threats. She is a formidable warrior, using her immense strength and agility to overwhelm her enemies in battle. Despite her fearsome reputation, Mawloq is also known for her strategic mind and ability to lead her forces with precision and efficiency.",
 		"mapdata": {
 			"location": "ruins"
 		}
@@ -459,7 +459,7 @@
 		"level": 10,
 		"class": "Druid",
 		"species": "firbolg",
-		"desc": "Moss is one of the forest's protectors.",
+		"desc": "Moss is one of the forest's protectors. He is a firbolg druid who has dedicated his life to preserving the natural balance of the Spectral Forest. With a deep connection to the land and its creatures, Moss uses his druidic powers to defend the forest from those who would exploit or harm it.\n\nMoss is a solitary figure, often seen wandering the forest trails or communing with the ancient trees. He is fiercely protective of his home and will go to great lengths to ensure its safety, whether that means confronting loggers, rescuing injured wildlife, or negotiating with the spirits that dwell within the woods.",
 		"mapdata": {
 			"location": "forest"
 		}

@@ -63,7 +63,12 @@ export default class CharacterObject {
 			 */
 			relationships: characterData.relationships ? new CharacterList(characterData.relationships) : null,
 
+			/**
+			 * Available menu actions for this Character
+			 * @type {Object}
+			 */
 			actions: {
+				star:			() => this.star(),
 				rename:			() => this.openModal('rename'),
 				alias:			() => this.openModal('alias'),
 				description:	() => this.openModal('description'),

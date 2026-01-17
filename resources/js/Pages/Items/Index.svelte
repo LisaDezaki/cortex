@@ -180,6 +180,7 @@
 									entity={item}
 									subtitle={getSubtitle(item)}
 									href={item.routes.show}
+									menu={item.actions}
 								/>
 							{/each}
 						{:else}

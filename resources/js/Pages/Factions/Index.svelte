@@ -156,10 +156,10 @@
 
 			{#if activeProject && factions.items.length > 0}
 
-
-				<!-- Grid -->
-
 				{#if parameters.layout == 'grid'}
+
+					<!-- Grid -->
+
 					<Grid class="py-3 w-full" cols={gridCols} gap={3}>
 						{#if results.length > 0}
 							{#each results as faction}
@@ -168,6 +168,7 @@
 									entity={faction}
 									subtitle={getSubtitle(faction)}
 									href={faction.routes.show}
+									menu={faction.actions}
 								/>
 							{/each}
 						{:else}

@@ -7,6 +7,7 @@
 	import Stack	from '@/Components/Core/Stack.svelte'
     import Button	from '@/Components/UI/Button.svelte'
     import Field	from '@/Components/UI/Field.svelte'
+    import Icon		from '@/Components/UI/Icon.svelte'
 
 	let registerForm = useForm({
         name: '',
@@ -25,6 +26,12 @@
 	method="post"
 >
 	<Stack class="px-6 py-3" gap={3}>
+
+		<Flex align="center" justify="center" class="aspect-square bg-accent-softest min-h-24 place-self-center p-3 relative rounded-full">
+			<Icon name="UserList" size={32} weight="thin" class="text-accent" />
+			<Flex align="center" justify="center" class="absolute inset-0 border-accent rounded-full {$registerForm.processing ? 'animate-spin border-t border-r' : ''}"></Flex>
+		</Flex>
+
 		<Field name="name"
 			type="text"
 			label="Name"
@@ -36,17 +43,15 @@
 	
 		<Field name="email"
 			type="email"
-			label="Email"
-			icon="At"
+			icon="At" label="Email"
 			autocomplete="email"
 			required
 		/>
 	
 		<Field name="password"
 			type="password"
-			label="Password"
-			icon="Password"
-			autocomplete="current-password"
+			icon="Password" label="Password"
+			placeholder="Password"
 			required
 		/>
 	
@@ -54,7 +59,6 @@
 			type="password"
 			label="Confirm password"
 			icon="Password"
-			autocomplete="new-password"
 			required
 		/>
 	</Stack>
@@ -64,7 +68,7 @@
 		<Button style="hard" theme="accent"
 			size="lg"
 			type="submit" 
-			text="Log in"
+			text="Register"
 		/>
 
 		<Flex justify="center" gap={6} class="w-full">

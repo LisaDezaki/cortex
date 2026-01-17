@@ -41,7 +41,7 @@ export default class ItemObject {
 			 * @type {string}
 			 * @readonly
 			 */
-			laravelClass: "App\Models\Item",
+			laravelClass: "App\\Models\\Item",
 
 			/**
 			 * A FactionList instance
@@ -64,8 +64,43 @@ export default class ItemObject {
 			 */
 			// relationships: characterData.relationships ? new ItemList(characterData.relationships) : null,
 
+			/**
+			 * Available menu actions for this Character
+			 * @type {Object}
+			 */
+			actions: {
+				star:			() => this.star(),
+				rename:			() => this.openModal('rename'),
+				type:			() => this.openModal('type'),
+				description:	() => this.openModal('description'),
+				uploadIcon:		() => this.openModal('setMedia', { type: 'icon', aspect: 'aspect-[1/1]' }),
+				location:		() => this.openModal('location'),
+				// faction:		() => this.openModal('faction'),
+				// relationship:	() => this.openModal('relationship'),
+				delete:			() => this.openModal('delete')
+			},
+
 		})
     }
+
+	getAction(name) {
+		return this.actions[name]
+	}
+
+	getActions() {
+		return [
+			{ icon: 'Textbox',			label: 'Rename',			onclick: this.actions.rename },
+			{ icon: 'Textbox',			label: 'Type',				onclick: this.actions.type },
+			{ icon: 'TextAlignLeft',	label: 'Description',		onclick: this.actions.description },
+			// { label: 'Alias',			onclick: this.actions.alias },
+			{ icon: 'UploadSimple',		label: 'Upload icon',		onclick: this.actions.uploadIcon },
+			{ icon: 'MapPin',			label: 'Location',			onclick: this.actions.location },
+			// { icon: 'FlagBannerFold',	label: 'Faction',			onclick: this.actions.faction },
+			// { icon: 'Users',			label: 'Relationship',		onclick: this.actions.relationship },
+			{	separator: true },
+			{ icon: 'Trash',			label: 'Delete',			onclick: this.actions.delete, theme: 'danger' }
+		]
+	}
 
 
 	/**

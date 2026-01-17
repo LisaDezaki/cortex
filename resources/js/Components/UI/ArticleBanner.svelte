@@ -14,7 +14,7 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		banner: clsx('relative aspect-[3/1] bg-neutral-softer px-6 py-6 rounded-lg w-full', className)
+		banner: clsx('relative aspect-[21/9] bg-neutral-softer px-6 py-6 rounded-lg w-full', className)
 	})
 
 </script>

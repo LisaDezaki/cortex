@@ -36,8 +36,9 @@ export default class FactionObject {
 			/**
 			 * Laravel's Model location as printed by Faction::class
 			 * @type {string}
+			 * @readonly
 			 */
-			laravelClass:	"App\Models\Faction",
+			laravelClass:	"App\\Models\\Faction",
 
 			/**
 			 * A LocationObject instance
@@ -52,7 +53,42 @@ export default class FactionObject {
 			 * @readonly
 			 */
 			members: factionData.members ? new CharacterList(factionData.members) : null,
+
+			/**
+			 * Available menu actions for this Faction
+			 * @type {Object}
+			 */
+			actions: {
+				star:			() => this.star(),
+				rename:			() => this.openModal('rename'),
+				type:			() => this.openModal('type'),
+				description:	() => this.openModal('description'),
+				uploadEmblem:	() => this.openModal('setMedia', { type: 'emblem', aspect: 'aspect-[1/1]' }),
+				ideology:		() => this.openModal('ideology'),
+				headquarters:	() => this.openModal('headquarters'),
+				member:			() => this.openModal('member'),
+				delete:			() => this.openModal('delete'),
+			}
+
 		})
+	}
+
+	getAction(name) {
+		return this.actions[name]
+	}
+
+	getActions() {
+		return [
+			{ icon: 'Textbox',			label: 'Rename',			onclick: this.actions.rename },
+			{ icon: 'TextAlignLeft',	label: 'Description',		onclick: this.actions.description },
+			// { label: 'Alias',			onclick: this.actions.alias },
+			{ icon: 'UploadSimple',		label: 'Upload emblem',		onclick: this.actions.uploadEmblem },
+			{ icon: 'MapPin',			label: 'Headquarters',		onclick: this.actions.headquarters },
+			// { icon: 'FlagBannerFold',	label: 'Faction',			onclick: this.actions.faction },
+			{ icon: 'Users',			label: 'Member',			onclick: this.actions.member },
+			{	separator: true },
+			{ icon: 'Trash',			label: 'Delete',			onclick: this.actions.delete, theme: 'danger' }
+		]
 	}
 
 

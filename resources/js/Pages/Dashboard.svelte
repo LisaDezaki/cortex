@@ -244,8 +244,8 @@
 							{ label: 'By name',			value: 'name',		sortFunction: (a,b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1 }
 						]}
 						layoutOptions={[
-							{ label: 'As Grid',  		value: 'grid',			icon: 'GridFour'	},
-							{ label: 'As Table', 		value: 'table', 		icon: 'Table'	  	}
+							{ label: 'As Grid',  		value: 'grid',		icon: 'GridFour'	},
+							{ label: 'As List', 		value: 'list', 		icon: 'Rows'	  	}
 						]}
 						sizeOptions={{ min: 1, max: 5 }}
 						resizeable={layout === 'grid'}
@@ -264,7 +264,7 @@
 								/>
 							{/each}
 						</Grid>
-					{:else if projects && layout === 'table'}
+					{:else if projects && layout === 'list'}
 						<Stack>
 							{#each results as project}
 								<Flex align="center" justify="start" class="border-b border-neutral-softest group p-1.5">

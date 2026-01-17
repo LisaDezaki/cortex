@@ -107,6 +107,7 @@
 	import Plus from "phosphor-svelte/lib/Plus"
 	import Question from "phosphor-svelte/lib/Question"
 	import Resize from "phosphor-svelte/lib/Resize"
+	import Rows from "phosphor-svelte/lib/Rows"
 	import RowsPlusBottom from "phosphor-svelte/lib/RowsPlusBottom"
 	import Sailboat from "phosphor-svelte/lib/Sailboat"
 	import Shapes from "phosphor-svelte/lib/Shapes"
@@ -255,6 +256,7 @@
 		'Plus': Plus,
 		'Question': Question,
 		'Resize': Resize,
+		'Rows': Rows,
 		'RowsPlusBottom': RowsPlusBottom,
 		'Sailboat': Sailboat,
 		'Shapes': Shapes,

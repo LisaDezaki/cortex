@@ -71,7 +71,7 @@
 				<Section id="header">
 					<ArticleBanner>
 						<Media
-							class="absolute inset-0 aspect-[3/1] bg-slate-200 rounded-lg overflow-hidden"
+							class="absolute inset-0 aspect-[21/9] bg-slate-200 rounded-lg overflow-hidden"
 							media={character.getMedia('banner')}
 							onclick={() => character.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]' })}
 						/>

@@ -1,0 +1,12 @@
+{
+	"ruby": {
+		"name": "Ruby",
+		"alias": "The Mechanic",
+		"desc": "A skilled mechanic and scavenger, Ruby is known for her resourcefulness and quick thinking. She has a knack for finding valuable parts in the most unlikely places and can often be found tinkering with old machinery to make it work again. She is a talented hardware engineer, specializing in repairing and upgrading robots and other electronic devices. She is cold and hardened by her experiences in the wasteland. Her right arm and left leg have been replaced with cybernetic prosthetics, following an encounter with some particularly sadistic super mutants. Despite her tough exterior, Ruby has a strong sense of loyalty to those she cares about and will go to great lengths to protect them."
+	},
+	"sapphire": {
+		"name": "Sapphire",
+		"alias": "The Coder",
+		"desc": "Sarah was a vault-dweller with a strong background in software engineering. Having worked for RobCo before the Great War, she possesses extensive knowledge of programming and robotics. One day, while undergoing a routine brain scan, she is suddenly transported to the future, occupying a body that is not her own. A synthetic body that's biologically identical to humans, and built by a mysterious organization known as 'The Institute'. Now, in this new body, she must navigate a world vastly different from the one she knew, using her skills to survive and uncover the truth behind her transformation.\n\nShe comes to discover that her brain scan was found in her Vault many decades after her original self lived and died. That brain scan was uploaded to this synthetic body, creating the illusion of continuity of self. Struggling with the knowledge that she is not truly Sarah, she grapples with questions of identity and purpose in a world that is both familiar and alien."
+	}
+}

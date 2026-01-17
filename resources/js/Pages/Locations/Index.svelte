@@ -176,6 +176,7 @@
 									entity={location}
 									subtitle={getSubtitle(location)}
 									href={location.routes.show}
+									menu={location.actions}
 								/>
 							{/each}
 						{:else}

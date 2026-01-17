@@ -1,0 +1,13 @@
+{
+	"nuka-cherry": {
+		"name": "Nuka-Cherry",
+		"type": "Aid",
+		"description": "A cherry-flavored variant of Nuka-Cola, known for its sweet and tangy taste.",
+		"effects": {
+			"health": 10,
+			"radiation": -5
+		},
+		"rarity": "common",
+		"value": 15
+	}
+}

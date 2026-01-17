@@ -26,21 +26,22 @@
 >
 	<Stack class="px-6 py-3" gap={3}>
 
-		<Flex align="center" justify="center" class="aspect-square bg-accent-softest mb-6 min-h-24 place-self-center p-3 relative rounded-full">
+		<Flex align="center" justify="center" class="aspect-square bg-accent-softest min-h-24 place-self-center p-3 relative rounded-full">
 			<Icon name="LockKey" size={32} weight="thin" class="text-accent" />
 			<Flex align="center" justify="center" class="absolute inset-0 border-accent rounded-full {$loginForm.processing ? 'animate-spin border-t border-r' : ''}"></Flex>
 		</Flex>
 
 		<Field name="email" type="email"
-			label="Email" labelIcon="At"
+			icon="At" label="Email"
 			placeholder="Email"
 			autocomplete="email"
 			autofocus
 			required
 		/>
 
-		<Field name="password" type="password"
-			label="Password" labelIcon="Password"
+		<Field name="password"
+			type="password"
+			icon="Password" label="Password"
 			placeholder="Password"
 			autocomplete="current-password"
 			required

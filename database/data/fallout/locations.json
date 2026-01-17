@@ -1,0 +1,22 @@
+{
+	"corvega": {
+		"name": "Corvega",
+		"type": "Factory",
+		"description": "An abandoned automobile factory that has been converted into a makeshift settlement for one of the biggest raider gangs in the Commonwealth."
+	},
+	"goodneighbor": {
+		"name": "Goodneighbor",
+		"type": "Settlement",
+		"description": "A lawless settlement known for its tolerance of all kinds of people, including criminals and outcasts."
+	},
+	"red-rocket": {
+		"name": "Red Rocket",
+		"type": "Gas Station",
+		"description": "A gas station and service center that has been repurposed as a settlement hub for survivors."
+	},
+	"vault-99": {
+		"name": "Vault 99",
+		"type": "Vault",
+		"description": "Vault 99 was designed to study various social experiments on its inhabitants, while taking full neural scans of their brains once per week."
+	}
+}
