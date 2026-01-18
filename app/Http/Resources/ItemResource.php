@@ -31,16 +31,17 @@ class ItemResource extends JsonResource
 			'media'		  => MediaResource::collection($this->whenLoaded('media')),
 
 			'factions'    => FactionResource::collection($this->whenLoaded('factions')),
+
+			'recipes'	  => ItemRecipeResource::collection($this->whenLoaded('recipes')),
 			
 			'customFieldValues' => CustomFieldValueResource::collection($this->whenLoaded('customFieldValues')),
 
-			// 'location' => new LocationResource($this->whenLoaded('mapData.location')),
-
-			// 'mapData' => $this->whenLoaded('mapData') ? [
-			// 	'x' => $this->whenLoaded('mapData.x'),
-			// 	'y' => $this->whenLoaded('mapData.y'),
-			// 	'location' => new LocationResource($this->whenLoaded('mapData.location'))
-			// ] : null,
+			'consumable' => json_decode($this->consumable, true),
+			'craftable'  => json_decode($this->craftable, true),
+			'equippable' => json_decode($this->equippable, true),
+			'scrappable' => json_decode($this->scrappable, true),
+			'throwable'  => json_decode($this->throwable, true),
+			'weaponable' => json_decode($this->weaponable, true),
 
 			'meta' => [
 				'projectId' => $this->project_id,

@@ -33,9 +33,10 @@
 	import CheckFat from "phosphor-svelte/lib/CheckFat"
 	import CircleHalfTilt from "phosphor-svelte/lib/CircleHalfTilt"
 	import CircleNotch from "phosphor-svelte/lib/CircleNotch"
+	import Code from "phosphor-svelte/lib/Code"
+	import Coins from "phosphor-svelte/lib/Coins"
 	import Compass from "phosphor-svelte/lib/Compass"
 	import CompassRose from "phosphor-svelte/lib/CompassRose"
-	import Coins from "phosphor-svelte/lib/Coins"
 	import Crane from "phosphor-svelte/lib/Crane"
 	import DiamondsFour from "phosphor-svelte/lib/DiamondsFour"
 	import DotsSixVertical from "phosphor-svelte/lib/DotsSixVertical"
@@ -70,6 +71,7 @@
 	import Graph from "phosphor-svelte/lib/Graph"
 	import GridFour from "phosphor-svelte/lib/GridFour"
 	import Hamburger from "phosphor-svelte/lib/Hamburger"
+	import Hammer from "phosphor-svelte/lib/Hammer"
 	import Handshake from "phosphor-svelte/lib/Handshake"
 	import Hash from "phosphor-svelte/lib/Hash"
 	import HouseLine from "phosphor-svelte/lib/HouseLine"
@@ -86,6 +88,7 @@
 	import Link from "phosphor-svelte/lib/Link"
 	import List from "phosphor-svelte/lib/List"
 	import ListBullets from "phosphor-svelte/lib/ListBullets"
+	import ListNumbers from "phosphor-svelte/lib/ListNumbers"
 	import LockKey from "phosphor-svelte/lib/LockKey"
 	import MagnifyingGlass from "phosphor-svelte/lib/MagnifyingGlass"
 	import MagnifyingGlassMinus from "phosphor-svelte/lib/MagnifyingGlassMinus"
@@ -106,6 +109,7 @@
 	import PipeWrench from "phosphor-svelte/lib/PipeWrench"
 	import Plus from "phosphor-svelte/lib/Plus"
 	import Question from "phosphor-svelte/lib/Question"
+	import Quotes from "phosphor-svelte/lib/Quotes"
 	import Resize from "phosphor-svelte/lib/Resize"
 	import Rows from "phosphor-svelte/lib/Rows"
 	import RowsPlusBottom from "phosphor-svelte/lib/RowsPlusBottom"
@@ -126,8 +130,16 @@
 	import TagSimple from "phosphor-svelte/lib/TagSimple"
 	import Tent from "phosphor-svelte/lib/Tent"
 	import TextAa from "phosphor-svelte/lib/TextAa"
+	import TextAlignCenter from "phosphor-svelte/lib/TextAlignCenter"
+	import TextAlignJustify from "phosphor-svelte/lib/TextAlignJustify"
 	import TextAlignLeft from "phosphor-svelte/lib/TextAlignLeft"
+	import TextAlignRight from "phosphor-svelte/lib/TextAlignRight"
+	import TextAUnderline from "phosphor-svelte/lib/TextAUnderline"
+	import TextB from "phosphor-svelte/lib/TextB"
 	import Textbox from "phosphor-svelte/lib/Textbox"
+	import TextItalic from "phosphor-svelte/lib/TextItalic"
+	import TextStrikethrough from "phosphor-svelte/lib/TextStrikethrough"
+	import TextUnderline from "phosphor-svelte/lib/TextUnderline"
 	import ToggleRight from "phosphor-svelte/lib/ToggleRight"
 	import Trash from "phosphor-svelte/lib/Trash"
 	import TreeEvergreen from "phosphor-svelte/lib/TreeEvergreen"
@@ -183,6 +195,7 @@
 		'CircleHalfTilt': CircleHalfTilt,
 		'CircleNotch': CircleNotch,
 		'Crane': Crane,
+		'Code': Code,
 		'Coins': Coins,
 		'Compass': Compass,
 		'CompassRose': CompassRose,
@@ -219,6 +232,7 @@
 		'Graph': Graph,
 		'GridFour': GridFour,
 		'Hamburger': Hamburger,
+		'Hammer': Hammer,
 		'Handshake': Handshake,
 		'Hash': Hash,
 		'HouseLine': HouseLine,
@@ -235,6 +249,7 @@
 		'Link': Link,
 		'List': List,
 		'ListBullets': ListBullets,
+		'ListNumbers': ListNumbers,
 		'LockKey': LockKey,
 		'MagnifyingGlass': MagnifyingGlass,
 		'MagnifyingGlassMinus': MagnifyingGlassMinus,
@@ -255,6 +270,7 @@
 		'PipeWrench': PipeWrench,
 		'Plus': Plus,
 		'Question': Question,
+		'Quotes': Quotes,
 		'Resize': Resize,
 		'Rows': Rows,
 		'RowsPlusBottom': RowsPlusBottom,
@@ -275,8 +291,17 @@
 		'TagSimple': TagSimple,
 		'Tent': Tent,
 		'TextAa': TextAa,
+		'TextAlignCenter': TextAlignCenter,
+		'TextAlignJustify': TextAlignJustify,
 		'TextAlignLeft': TextAlignLeft,
+		'TextAlignRight': TextAlignRight,
+		'TextAlignLeft': TextAlignLeft,
+		'TextAUnderline': TextAUnderline,
+		'TextB': TextB,
 		'Textbox': Textbox,
+		'TextItalic': TextItalic,
+		'TextStrikethrough': TextStrikethrough,
+		'TextUnderline': TextUnderline,
 		'ToggleRight': ToggleRight,
 		'Trash': Trash,
 		'TreeEvergreen': TreeEvergreen,

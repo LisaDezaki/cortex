@@ -14,18 +14,13 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-class Item extends Model
+class ItemRecipe extends Model
 {
-	use HasUuids, HasFactory, Sluggable, SoftDeletes;
+	use HasUuids, Sluggable;
 
 	protected $fillable = [
-		'name',
-		'slug',
 		'type',
-		'description',
-		'starred',
-		'cost',
-		'weight'
+		'components'
 	];
 
 	protected $guarded = [
@@ -44,15 +39,12 @@ class Item extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
 
-	public function project(): BelongsTo
+	public function for(): BelongsTo
 	{
-		return $this->belongsTo(Project::class);
+		return $this->belongsTo(Item::class);
 	}
 
-	public function recipes(): HasMany
-	{
-		return $this->hasMany(ItemRecipe::class, 'item_id');
-	}
+	
 
 	// public function relationships(): BelongsToMany
 	// {
@@ -86,15 +78,15 @@ class Item extends Model
     //     )->where('collection_items.collectionable_type', 'App\Models\Character');
     // }
 
-	public function customFields()
-	{
-		return $this->morphMany(CustomField::class, 'fieldable');
-	}
+	// public function customFields()
+	// {
+	// 	return $this->morphMany(CustomField::class, 'fieldable');
+	// }
 
-	public function customFieldValues(): HasMany
-	{
-		return $this->hasMany(CustomFieldValue::class, 'fieldable_id');
-	}
+	// public function customFieldValues(): HasMany
+	// {
+	// 	return $this->hasMany(CustomFieldValue::class, 'fieldable_id');
+	// }
 
 	// public function factions(): BelongsToMany
 	// {
@@ -106,19 +98,19 @@ class Item extends Model
 	// 	return $this->hasOne(Location::class)
 	// }
 
-	public function mapData()
-	{
-		return $this->morphOne(MapItem::class, 'mappable');
-	}
+	// public function mapData()
+	// {
+	// 	return $this->morphOne(MapItem::class, 'mappable');
+	// }
 	
-	public function location()
-	{
-		return $this->hasOneThrough(
-			Location::class,
-			MapItem::class,
-			'mappable_id', 'id', 'id', 'location_id'
-		)->where('mappable_type', static::class);
-	}
+	// public function location()
+	// {
+	// 	return $this->hasOneThrough(
+	// 		Location::class,
+	// 		MapItem::class,
+	// 		'mappable_id', 'id', 'id', 'location_id'
+	// 	)->where('mappable_type', static::class);
+	// }
 
 
 
@@ -127,26 +119,26 @@ class Item extends Model
 	 * @return \Illuminate\Database\Eloquent\Relations\Relation
 	 */
 
-	public function image()
-	{
-		return $this->main();
-	}
-	public function media(): MorphMany
-	{
-		return $this->morphMany(Media::class, 'mediable');
-	}
-	public function main(): MorphOne
-	{
-		return $this->morphOne(Media::class, 'mediable')->where('type', 'main');
-	}
-	public function banner(): MorphOne
-	{
-		return $this->morphOne(Media::class, 'mediable')->where('type', 'banner');
-	}
-	public function gallery(): MorphMany
-	{
-		return $this->morphMany(Media::class, 'mediable')->where('type', 'gallery');
-	}
+	// public function image()
+	// {
+	// 	return $this->main();
+	// }
+	// public function media(): MorphMany
+	// {
+	// 	return $this->morphMany(Media::class, 'mediable');
+	// }
+	// public function main(): MorphOne
+	// {
+	// 	return $this->morphOne(Media::class, 'mediable')->where('type', 'main');
+	// }
+	// public function banner(): MorphOne
+	// {
+	// 	return $this->morphOne(Media::class, 'mediable')->where('type', 'banner');
+	// }
+	// public function gallery(): MorphMany
+	// {
+	// 	return $this->morphMany(Media::class, 'mediable')->where('type', 'gallery');
+	// }
 	
 
 

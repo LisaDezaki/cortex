@@ -1,0 +1,51 @@
+{
+	"lisa": {
+		"name": "Lisa LaRoux",
+		"alias": "Musical Genius",
+		"desc": "Lisa is a talented musician and performer, known for her ability to create beautiful melodies and harmonies. She is passionate about music and has a deep understanding of various instruments. She is also a skilled songwriter, with a talent for crafting lyrics that resonate with people.",
+		"personality": "Music lover, Creative, Outgoing",
+		"skills": "Guitar, Mixology, Drums, Piano, Violin"
+	},
+	"saffron": {
+		"name": "Saffron DuBois",
+		"alias": "Master Chef",
+		"desc": "Saffron is a culinary expert with a passion for cooking and baking. She is skilled in various cooking techniques and has an extensive knowledge of ingredients and flavor combinations. Saffron is also known for her ability to create delicious and visually appealing dishes.",
+		"personality": "Foodie, Cheerful, Neat",
+		"skills": "Baking, Cooking, Gourmet Cooking, Mixology"
+	},
+	"amelia": {
+		"name": "Amelia Hart",
+		"alias": "Artist Extraordinaire",
+		"desc": "Amelia is a gifted artist with a passion for painting and visual arts. She has a keen eye for detail and a unique ability to capture the essence of her subjects on canvas. Amelia is known for her vibrant use of color and her ability to evoke emotion through her artwork.",
+		"personality": "Painter, Romantic, Noncommittal, Erratic",
+		"skills": "Herbalism, Painting, Wellness, Yoga"
+	},
+	"eve": {
+		"name": "Eve ",
+		"alias": "Green Thumb",
+		"desc": "Eve is a nature enthusiast with a deep love for plants and gardening. She has a natural talent for nurturing and cultivating a wide variety of flora, from vibrant flowers to lush vegetables. Eve is also knowledgeable about sustainable gardening practices and enjoys sharing her expertise with others.",
+		"personality": "Green Thumb",
+		"skills": "Gardening, Repair, Fitness"
+	},
+	"neko": {
+		"name": "Neko Tanaka",
+		"alias": "Streamer",
+		"desc": "Neko is a tech enthusiast with a passion for all things digital. She is skilled in various aspects of technology, from coding and programming to hardware repair and troubleshooting. Neko enjoys staying up-to-date with the latest tech trends and innovations, and she loves sharing her knowledge with others.",
+		"personality": "Autistic, Gamer, Nerdy",
+		"skills": "Gaming, Science"
+	},
+	"luna": {
+		"name": "Luna Raven",
+		"alias": "Writer",
+		"desc": "Luna is a talented writer with a passion for storytelling and literature. She has a vivid imagination and is skilled in crafting compelling narratives that captivate readers. Luna is also known for her ability to express complex emotions through her writing.",
+		"personality": "Bookworm, Goth, Nerd",
+		"skills": "Writing"
+	},
+	"rose": {
+		"name": "Rose Montgomery",
+		"alias": "Model/Influencer",
+		"desc": "Rose is a charismatic model and influencer with a strong presence on social media. She is known for her vibrant personality, stylish fashion sense, and ability to connect with her audience. Rose is also a talented dancer and has a passion for fitness.",
+		"personality": "Bubbly, Friendly, Flirty",
+		"skills": "Fashion, Modelling"
+	}
+}

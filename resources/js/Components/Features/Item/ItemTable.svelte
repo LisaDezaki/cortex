@@ -20,7 +20,7 @@
 		selectionMode
 	} = $props()
 
-	let columns = $state(['name', 'type', 'cost', 'weight', 'unique'])
+	let columns = $state(['name', 'type', 'cost', 'craftable', 'consumable', 'weaponable', 'wearable', 'weight', 'unique'])
 
 	function selectAll() {
 		// if (selected.length == characters.length) {
@@ -52,6 +52,18 @@
 	{#if columns.includes('type')}
 		<Table.Head sortable>Type</Table.Head>
 	{/if}
+	<!-- {#if columns.includes('consumable')}
+		<Table.Head sortable>Consumable</Table.Head>
+	{/if}
+	{#if columns.includes('craftable')}
+		<Table.Head sortable>Craftable</Table.Head>
+	{/if}
+	{#if columns.includes('weaponable')}
+		<Table.Head sortable>Weaponable</Table.Head>
+	{/if}
+	{#if columns.includes('wearable')}
+		<Table.Head sortable>Wearable</Table.Head>
+	{/if} -->
 	{#if columns.includes('cost')}
 		<Table.Head sortable class="max-w-24">Cost</Table.Head>
 	{/if}
@@ -88,24 +100,53 @@
 			<Inline>{item.type}</Inline>
 		</Table.Cell>
 	{/if}
+	<!-- {#if columns.includes('consumable')}
+		<Table.Cell class="flex items-center gap-1.5 py-0.5">
+			<Inline>
+				<Icon class={item.consumable ? "text-accent" : "text-danger"} name={item.consumable ? "CheckCircle" : "XCircle"} weight="fill" />
+			</Inline>
+		</Table.Cell>
+	{/if}
+	{#if columns.includes('craftable')}
+		<Table.Cell class="flex items-center gap-1.5 py-0.5">
+			<Inline>
+				<Icon class={item.craftable ? "text-accent" : "text-danger"} name={item.craftable ? "CheckCircle" : "XCircle"} weight="fill" />
+			</Inline>
+		</Table.Cell>
+	{/if}
+	{#if columns.includes('weaponable')}
+		<Table.Cell class="flex items-center gap-1.5 py-0.5">
+			<Inline>
+				<Icon class={item.weaponable ? "text-accent" : "text-danger"} name={item.weaponable ? "CheckCircle" : "XCircle"} weight="fill" />
+			</Inline>
+		</Table.Cell>
+	{/if}
+	{#if columns.includes('wearable')}
+		<Table.Cell class="flex items-center gap-1.5 py-0.5">
+			<Inline>
+				<Icon class={item.wearable ? "text-accent" : "text-danger"} name={item.wearable ? "CheckCircle" : "XCircle"} weight="fill" />
+			</Inline>
+		</Table.Cell>
+	{/if} -->
 	{#if columns.includes('cost')}
 		<Table.Cell class="flex items-center gap-1.5 py-0.5 max-w-24">
-			<Inline>{item.cost}</Inline>
+			<Inline><Icon name="Coins" size="xs" class="mr-1.5 text-neutral-soft" />{item.cost}</Inline>
 		</Table.Cell>
 	{/if}
 	{#if columns.includes('weight')}
 		<Table.Cell class="flex items-center gap-1.5 py-0.5 max-w-24">
-			<Inline>{item.weight}</Inline>
+			<Inline><Icon name="Feather" size="xs" class="mr-1.5 text-neutral-soft" />{item.weight}</Inline>
 		</Table.Cell>
 	{/if}
 	{#if columns.includes('unique')}
 		<Table.Cell class="flex items-center gap-1.5 py-0.5 max-w-24">
 			<Inline>
-				{#if item.unique}
+				<Icon size="sm" class={item.unique ? "text-accent" : "text-danger"} name={item.unique ? "CheckCircle" : "XCircle"} weight="fill" />
+				<!-- {#if item.unique}
 					<Icon class="text-accent" name="CheckCircle" weight="fill" />
 				{:else}
 					<Icon class="text-danger" name="XCircle" weight="fill" />
-				{/if}
+				{/if} -->
 			</Inline>
 		</Table.Cell>
 	{/if}

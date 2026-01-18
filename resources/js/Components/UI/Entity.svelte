@@ -32,10 +32,10 @@
 				'bg-neutral-softest': !active,
 			}),
 			xs:	  clsx('w-8'),
-			sm:	  clsx('w-12'),
-			md:	  clsx('w-24'),
-			lg:	  clsx('w-32'),
-			xl:	  clsx('w-40'),
+			sm:	  clsx('w-16'),
+			md:	  clsx('w-32'),
+			lg:	  clsx('w-48'),
+			xl:	  clsx('w-72'),
 			auto: clsx('w-full')
 		},
 

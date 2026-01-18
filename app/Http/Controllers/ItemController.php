@@ -124,6 +124,7 @@ class ItemController extends Controller
 	public function show(Item $item): Response
 	{
 		$item->load([
+			'recipes',
 			'customFieldValues.customField',
 		]);
 

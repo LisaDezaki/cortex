@@ -37,9 +37,10 @@
 		<Stack class="px-2">
 			<Nav.Item icon="UsersThree"     label="Characters" href={route('characters')} 	active={$page.url.startsWith('/characters')} badge={activeProject?.characters?.length} />
 			<!-- <Nav.Item icon="Chats"          label="Dialogue"   href="/dialogue"   			active={$page.url.startsWith('/dialogue')}   badge={activeProject?.dialogue?.length}  /> -->
+			<!-- <Nav.Item icon="Sparkle"        label="Effects"    href="/effects"   			active={$page.url.startsWith('/effects')}   badge={activeProject?.effects?.length}  /> -->
 			<!-- <Nav.Item icon="CalendarDots"   label="Events"     href="/events"     			active={$page.url.startsWith('/events')}     badge={activeProject?.events?.length}  /> -->
 			<Nav.Item icon="FlagBannerFold" label="Factions"   href={route('factions')}   	active={$page.url.startsWith('/factions')}   badge={activeProject?.factions?.length} />
-			<Nav.Item icon="Backpack"       label="Items"      href="/items"      			active={$page.url.startsWith('/items')}      badge={activeProject?.items?.length}  />
+			<Nav.Item icon="Backpack"       label="Items"      href={route('items')}		active={$page.url.startsWith('/items')}      badge={activeProject?.items?.length}  />
 			<Nav.Item icon="MapPinArea"     label="Locations"  href={route('locations')}  	active={$page.url.startsWith('/locations')}  badge={activeProject?.locations?.length}  />
 			<!-- <Nav.Item icon="Wrench"         label="Mechanics"  href="/mechanics"  			active={$page.url.startsWith('/mechanics')}  badge={activeProject?.mechanics?.length}  /> -->
 			<!-- <Nav.Item icon="Trophy"         label="Quests"     href="/quests"     			active={$page.url.startsWith('/quests')}     badge={activeProject?.quests?.length}  /> -->

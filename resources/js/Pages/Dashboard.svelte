@@ -163,10 +163,8 @@
 								<Flex justify="start" gap={2} class="pb-3 overflow-visible w-full">
 									{#each active.characters.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as character}
 										<Entity
-											aspect="aspect-square"
 											entity={character}
 											subtitle={character.meta.updatedAt}
-											layout="stack"
 											size="lg"
 											href={route('characters.show', {character: character.slug})}
 										/>
@@ -183,10 +181,8 @@
 								<Flex justify="start" gap={2} class="pb-3 overflow-visible w-full">
 									{#each active.factions.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as faction}
 										<Entity
-											aspect="aspect-square"
 											entity={faction}
 											subtitle={faction.meta.updatedAt}
-											layout="stack"
 											size="lg"
 											href={route('factions.show', {faction: faction.slug})}
 										/>
@@ -206,7 +202,6 @@
 											aspect="aspect-video"
 											entity={location}
 											subtitle={location.meta.updatedAt}
-											layout="stack"
 											size="xl"
 											href={route('locations.show', {location: location.slug})}
 										/>
@@ -234,7 +229,7 @@
 					/>
 
 					<ControlBar
-						class="mb-3" data={projectList} bind:results
+						class="my-3" data={projectList} bind:results
 						bind:layout bind:size={size}
 						filterOptions={[
 							{ label: 'All Projects',	value: '*',			filterFunction: (proj) => proj },
@@ -244,17 +239,18 @@
 							{ label: 'By name',			value: 'name',		sortFunction: (a,b) => a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1 }
 						]}
 						layoutOptions={[
-							{ label: 'As Grid',  		value: 'grid',		icon: 'GridFour'	},
-							{ label: 'As List', 		value: 'list', 		icon: 'Rows'	  	}
+							{ label: 'As grid',  		value: 'grid',		icon: 'GridFour'	},
+							{ label: 'As list', 		value: 'list', 		icon: 'Rows'	  	}
 						]}
 						sizeOptions={{ min: 1, max: 5 }}
 						resizeable={layout === 'grid'}
 					/>
 
-					<!-- <pre>{JSON.stringify(results,null,3)}</pre> -->
-	
 					{#if projects && layout === 'grid'}
-						<Grid cols={6-size} gap={3}>
+
+						<!-- Grid -->
+
+						<Grid cols={6-size} gap={3} class="my-3">
 							{#each results as project}
 								<Entity
 									aspect="aspect-video"
@@ -264,7 +260,11 @@
 								/>
 							{/each}
 						</Grid>
+
 					{:else if projects && layout === 'list'}
+
+						<!-- List -->
+
 						<Stack>
 							{#each results as project}
 								<Flex align="center" justify="start" class="border-b border-neutral-softest group p-1.5">
@@ -282,6 +282,7 @@
 								</Flex>
 							{/each}
 						</Stack>
+
 					{:else}
 						No projects
 					{/if}

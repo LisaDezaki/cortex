@@ -8,8 +8,9 @@
 	import Stack   	  from '@/Components/Core/Stack.svelte'
 	import Button  	  from '@/Components/UI/Button.svelte'
 	import Container  from '@/Components/UI/Container.svelte'
-	import Heading    from '@/Components/UI/Heading.svelte'
+	import Heading		from '@/Components/UI/Heading.svelte'
 	import Icon			from '@/Components/UI/Icon.svelte'
+	import Input		from '@/Components/UI/Input'
 	import PageHeading from '@/Components/UI/PageHeading.svelte'
 	import PageMenu   from '@/Components/UI/PageMenu.svelte'
 	import Section    from '@/Components/UI/Section.svelte'
@@ -27,14 +28,27 @@
 	const settings     = $page.props.settings?.items?.data
 
 	let customFieldForm = useForm({
-		customFields: customFields
+		customFields: customFields,
+	})
+
+	let currencyForm = useForm({
+		currency_enabled: settings?.currency_enabled || true,
+	})
+
+	let craftingForm = useForm({
+		crafting_enabled:  settings?.crafting_enabled  || true,
+		scrapping_enabled: settings?.scrapping_enabled || false,
+	})
+
+	let weaponsForm = useForm({
+		weapons_enabled:  settings?.weapons_enabled  || true,
+		throwing_enabled: settings?.throwing_enabled || false,
 	})
 
 	function submitCustomFields() {
 		$customFieldForm.patch(route('customFields.updateOrder', {
 
 		}))
-
 	}
 
 	const customFieldIcons = {
@@ -62,7 +76,9 @@
 				back={{ text: 'Item List', href: route('items') }}
 				items={[
 					{ icon: "UserList",		label: "Overview",		href: "#overview"	},
+					{ icon: "Hammer",		label: "Crafting",		href: "#crafting"	},
 					{ icon: "Coins",		label: "Currencies",	href: "#currencies"	},
+					{ icon: "Sword",		label: "Weapons",		href: "#weapons"	},
 					{ icon: "ImagesSquare",	label: "Media",			href: "#media"		},
 					{ icon: "Textbox",		label: "Custom Fields",	href: "#custom"		},
 				]}
@@ -82,16 +98,49 @@
 
 				<Separator class="my-12" />
 
-				<Section id="currencies" gap={6}>
-					<Heading is="h4" as="h5">Currencies</Heading>
-					<!-- <ItemSettingsForm /> -->
+				<Section id="crafting" gap={6}>
+					<Heading is="h4" as="h5">Crafting</Heading>
+					<Input.Switch
+						bind:checked={$craftingForm.crafting_enabled}
+						label="Enable Crafting System"
+						helpText="Allow users to craft items using resources."
+					/>
+					{#if $craftingForm.crafting_enabled}
+						<Input.Switch
+							bind:checked={$craftingForm.scrapping_enabled}
+							label="Enable Scrapping System"
+							helpText="Allow users to scrap items for resources."
+						/>
+					{/if}
 				</Section>
 
 				<Separator class="my-12" />
 
-				<Section id="crafting" gap={6}>
-					<Heading is="h4" as="h5">Crafting</Heading>
-					<!-- <ItemSettingsForm /> -->
+				<Section id="currencies" gap={6}>
+					<Heading is="h4" as="h5">Currencies</Heading>
+					<Input.Switch
+						bind:checked={$currencyForm.currency_enabled}
+						label="Enable Currency System"
+						helpText="Items can be given a currency value for buying and selling."
+					/>
+				</Section>
+
+				<Separator class="my-12" />
+
+				<Section id="weapons" gap={6}>
+					<Heading is="h4" as="h5">Weapons</Heading>
+					<Input.Switch
+						bind:checked={$weaponsForm.weapons_enabled}
+						label="Enable Weapons System"
+						helpText="Allow users to use items as weapons."
+					/>
+					{#if $weaponsForm.weapons_enabled}
+						<Input.Switch
+							bind:checked={$weaponsForm.throwing_enabled}
+							label="Enable Throwing System"
+							helpText="Allow weapons to be thrown from a distance."
+						/>
+					{/if}
 				</Section>
 
 				<Separator class="my-12" />

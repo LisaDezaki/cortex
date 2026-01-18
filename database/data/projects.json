@@ -15,13 +15,13 @@
 
 	"fallout": {
 		"name": "Fallout: Last Kiss",
-		"type": "Fanfiction",
+		"type": "Horny Fanfiction",
 		"description": "A horny lesbian fanfic between Sapphire, a vault-dweller's mind in the body of a synth, and Ruby, a mechanic with a robot dog and a robot arm and a robot leg.",
 		"owner": "Bethesda"
 	},
 
 	"fantasy-high": {
-		"name": "Fantasy High",
+		"name": "Fantasy High: Summer Break",
 		"type": "Tabletop RPG",
 		"description": "At the beginning of a new school year at the Aguefort Adventuring Academy, the premiere training ground for heroes and adventurers, six freshmen prepare for their first day. For their own reasons, these six teens all get detention on the first day, resulting in them being the only ones at the school when a strange magical summoning occurs. After fighting off the threat, the Academy's principal Arthur Aguefort kills himself to raise the fallen members of the group, proclaiming that only the group can save everyone. Afterwards, the group becomes an official adventuring party and pledges to find out what is happening at the school.",
 		"owner": "Dropout / Dimension 20"
@@ -38,6 +38,13 @@
 		"type": "Superhero Universe",
 		"description": "Just tracking Marvel characters to test the app.",
 		"owner": "Disney"
+	},
+
+	"sims": {
+		"name": "The Sims: Rainbow House",
+		"type": "Lesbian Polycule Simulator",
+		"description": "Seven beautiful lesbians share a house. They are all in love with each other, and they all want to be with each other.",
+		"owner": "EA"
 	},
 
 	"tabletopia": {

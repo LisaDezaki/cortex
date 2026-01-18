@@ -8,6 +8,7 @@ use App\Models\CustomFieldOption;
 use App\Models\CustomFieldValue;
 use App\Models\Faction;
 use App\Models\Item;
+use App\Models\ItemRecipe;
 use App\Models\Location;
 use App\Models\MapItem;
 use Illuminate\Database\Seeder;
@@ -148,11 +149,37 @@ class TabletopiaSeeder extends Seeder
 				'name'			=> $item['name'],
 				'type'			=> $item['type'],
 				'description'	=> $item['desc'] ?? null,
+				'rarity'		=> $item['rarity'] ?? null,
+				'starred'		=> $item['starred'] ?? false,
+				'unique'		=> $item['unique'] ?? false,
 				'cost'			=> $item['cost'] ?? null,
 				'weight'		=> $item['weight'] ?? null,
-				'unique'		=> $item['unique'] ?? false,
+				'consumable'	=> isset($item['consumable'])	? json_encode($item['consumable'])	: null,
+				'craftable'		=> isset($item['craftable'])	? json_encode($item['craftable'])	: null,
+				'containerable'	=> isset($item['containerable'])? json_encode($item['containerable']): null,
+				'equippable'	=> isset($item['equippable'])	? json_encode($item['equippable'])	: null,
+				'scrappable'	=> isset($item['scrappable'])	? json_encode($item['scrappable'])	: null,
+				'throwable'		=> isset($item['throwable'])	? json_encode($item['throwable'])	: null,
+				'weaponable'	=> isset($item['weaponable'])	? json_encode($item['weaponable'])	: null,
 			]);
 		}
+
+		// foreach ($json_items as $slug => $item) {
+		// 	if (isset($item['craftable'])) {
+		// 		$recipe[$slug] = ItemRecipe::create([
+		// 			'item_id' => $items[$slug]->id,
+		// 			'type'    => "crafting",
+		// 			'components' => json_encode($item['craftable'])
+		// 		]);
+		// 	}
+		// 	if (isset($item['scrappable'])) {
+		// 		$recipe[$slug] = ItemRecipe::create([
+		// 			'item_id' => $items[$slug]->id,
+		// 			'type'    => "scrapping",
+		// 			'components' => json_encode($item['scrappable'])
+		// 		]);
+		// 	}
+		// }
 		
 
 

@@ -2,16 +2,19 @@
 	import { Link, page, useForm } from '@inertiajs/svelte'
 	import { route } from 'momentum-trail'
 	import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.svelte'
+	import Box 		 	 from '@/Components/Core/Box.svelte'
 	import Flex 		 from '@/Components/Core/Flex.svelte'
 	import Grid 		 from '@/Components/Core/Grid.svelte'
 	import Inline 		 from '@/Components/Core/Inline.svelte'
 	import Map			 from '@/Components/Core/Map'
 	import Stack 		 from '@/Components/Core/Stack.svelte'
 	import ArticleBanner from '@/Components/UI/ArticleBanner.svelte'
+	import Badge         from '@/Components/UI/Badge.svelte'
 	import Button        from '@/Components/UI/Button.svelte'
 	import Collapsible   from '@/Components/UI/Collapsible.svelte'
 	import Container  	 from '@/Components/UI/Container.svelte'
 	import Heading    	 from '@/Components/UI/Heading.svelte'
+	import Icon    	 	 from '@/Components/UI/Icon.svelte'
 	import Input    	 from '@/Components/UI/Input'
 	import Media     	 from '@/Components/UI/Media.svelte'
 	import PageMenu   	 from '@/Components/UI/PageMenu.svelte'
@@ -19,14 +22,25 @@
 	import Separator     from '@/Components/UI/Separator.svelte'
 	import Tag     		 from '@/Components/UI/Tag.svelte'
 	import Thumbnail     from '@/Components/UI/Thumbnail.svelte'
-	import ItemObject from '@/services/ItemObject';
+	import ItemObject	 from '@/services/ItemObject';
+	import ProjectObject from '@/services/ProjectObject';
 
 	/**
 	 * Active item instance
 	 * @type {ItemObject}
 	 */
+	const active  = new ProjectObject($page.props.activeProject?.data)
 	const item    = new ItemObject($page.props.item?.data)
 	const customFields = $page.props.customFields?.data
+
+	let isConsumable = $derived(item.consumable || false)
+	let isCraftable  = $derived(item.craftable  || false)
+	let isEquippable = $derived(item.equippable || false)
+	let isScrappable = $derived(item.scrappable || false)
+	let isWeaponable = $derived(item.weaponable || false)
+	let isMeleeable  = $derived(item.weaponable?.melee || false)
+	let isThrownable = $derived(item.weaponable?.thrown || false)
+	let isRangedable = $derived(item.weaponable?.ranged || false)
 
 	let customFieldForm = useForm({
 		customFields: customFields?.map((field) => ({
@@ -68,7 +82,7 @@
 				<Section id="header">
 					<ArticleBanner>
 						<Media
-							class="absolute inset-0 aspect-[3/1] bg-slate-200 rounded-lg overflow-hidden"
+							class="absolute inset-0 aspect-[21/9] bg-slate-200 rounded-lg overflow-hidden"
 							media={item.getMedia('banner')}
 							onclick={() => item.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]' })}
 						/>
@@ -91,6 +105,25 @@
 						</Inline>
 					</ArticleBanner>
 				</Section>
+
+				<!-- <Flex gap={6} class="px-3">
+					<Input.Checkbox
+						bind:checked={item.consumable}
+						labelText="Consumable"
+					/>
+					<Input.Checkbox
+						bind:checked={item.craftable}
+						labelText="Craftable"
+					/>
+					<Input.Checkbox
+						bind:checked={item.equippable}
+						labelText="Equippable"
+					/>
+					<Input.Checkbox
+						bind:checked={item.weaponable}
+						labelText="Weapon"
+					/>
+				</Flex> -->
 
 				<!-- Details -->
 
@@ -147,11 +180,276 @@
 								<Input.Switch checked={item.unique} />
 							</Flex>
 						</Stack>
+
+
+						<Stack gap={1.5} class="mt-6">
+							
+						</Stack>
 						
 					</Stack>
 				</Section>
 
 				<Separator class="my-12" />
+
+
+				<!-- Crafting & Scrapping -->
+
+				<Section id="crafting">
+					<Grid cols={2} gap={6}>
+						<Stack class="mx-6 mb-6">
+							<Flex align="end" class="mt-9 mb-6">
+								<Heading is="h3" as="h4">Craftable</Heading>
+								<Input.Switch
+									bind:checked={isCraftable}
+									class="ml-6 my-0.5"
+								/>
+							</Flex>
+							{#if isCraftable}
+								<Heading is="h6" as="p" class="font-semibold mb-3">Materials required for crafting</Heading>
+								<Grid cols={3} gap={1.5}>
+									{#each new Array(6) as craftItem, i}
+										<Stack>
+											<Box class="relative">
+												<Thumbnail aspect="square"
+													class="aspect-square bg-neutral-softest rounded hover:inner-shadow-sm transition-all"
+													src={active.items.items.find(it => it.slug === item.craftable.components[i]?.item)?.getMedia('icon')?.url}
+												/>
+												{#if Object.keys(item.craftable)[i]}
+													<Badge class="absolute bottom-1.5 right-1.5 p-1 text-lg" style="hard" theme="neutral"
+														text="x{item.craftable.components[i]?.quantity}"
+													/>
+												{/if}
+											</Box>
+											{#if item.craftable.components[i]}
+												<Inline class="text-sm">{ active.items.items?.find(it => it.slug === item.craftable.components[i]?.item).name }</Inline>
+											{/if}
+										</Stack>
+									{/each}
+								</Grid>
+							{:else}
+								<p class="italic text-neutral-softest">This item is not craftable.</p>
+							{/if}
+						</Stack>
+						<Stack class="mx-6 mb-6">
+							<Flex align="end" class="mt-9 mb-6">
+								<Heading is="h3" as="h4">Scrappable</Heading>
+								<Input.Switch
+									bind:checked={isScrappable}
+									class="ml-6 my-0.5"
+								/>
+							</Flex>
+							{#if isScrappable}
+								<Heading is="h6" as="p" class="font-semibold mb-3">Materials produced from scrapping</Heading>
+								<Grid cols={3} gap={1.5}>
+									{#each new Array(6) as scrapItem, i}
+										<Stack>
+											<Box class="relative">
+												<Thumbnail aspect="square"
+													class="aspect-square bg-neutral-softest rounded hover:inner-shadow-sm transition-all"
+													src={active.items.items.find(it => it.slug === Object.keys(item.scrappable || {})?.[i] )?.getMedia('icon')?.url}
+												/>
+												{#if Object.keys(item.scrappable || {})[i]}
+													<Badge class="absolute bottom-1.5 right-1.5 p-1 text-lg" style="hard" theme="neutral"
+														text="x{item.scrappable[Object.keys(item.scrappable || {})[i]]}"
+													/>
+												{/if}
+											</Box>
+											{#if Object.keys(item.scrappable || {})[i]}
+												<Inline class="text-md">{ active.items.items.find(it => it.slug === Object.keys(item.scrappable || {})[i]).name }</Inline>
+											{/if}
+										</Stack>
+									{/each}
+								</Grid>
+							{:else}
+								<p class="italic text-neutral-softest">This item is not scrappable.</p>
+							{/if}
+						</Stack>
+					</Grid>
+				</Section>
+
+				<Separator class="my-12" />
+
+				<!-- Consumable -->
+
+				<Section id="consumable">
+					<Stack class="mx-6">
+						<Flex align="end" class="mt-9 mb-6">
+							<Heading is="h3" as="h4">Consumable</Heading>
+							<Input.Switch
+								bind:checked={isConsumable}
+								class="ml-6 my-0.5"
+							/>
+						</Flex>
+						{#if isConsumable}
+							<Heading is="h4" as="h6" class="mb-3">Effects</Heading>
+							<Grid cols={3} gap={1.5}>
+								{#each new Array(3) as effect, i}
+									{#if item.consumable}
+										<Stack class="aspect-video bg-neutral-softest p-3 rounded" gap={1.5}>
+											<Heading is="h5" as="h6" class="mb-2">Effect {i + 1}</Heading>
+											<Input.Text placeholder="Effect Name" bind:value={item.consumable.effect} />
+											<Input.Number placeholder="Effect Magnitude" bind:value={item.consumable.magnitude} />
+											{#if item.consumable.effect === 'deal_damage'}
+												<Flex align="center" justify="between">
+													<span class="text-sm">Dmg type:</span>
+													<Input.Select class="w-32" bind:value={item.consumable.damage_type}
+														options={[
+															{ label: 'Acid',		value: 'acid'		 },
+															{ label: 'Bludgeoning',	value: 'bludgeoning' },
+															{ label: 'Cold',		value: 'cold'		 },
+															{ label: 'Electric',	value: 'electric'	 },
+															{ label: 'Fire',		value: 'fire'		 },
+															{ label: 'Force',		value: 'force'		 },
+															{ label: 'Healing',		value: 'healing'	 },
+															{ label: 'Lightning',	value: 'lightning'	 },
+															{ label: 'Necrotic',	value: 'necrotic'	 },
+															{ label: 'Piercing',	value: 'piercing'	 },
+															{ label: 'Poison',		value: 'poison'		 },
+															{ label: 'Psychic',		value: 'psychic'	 },
+															{ label: 'Radiant',		value: 'radiant'	 },
+															{ label: 'Slashing',	value: 'slashing'	 },
+															{ label: 'Thunder',		value: 'thunder'	 }
+														]}
+													/>
+												</Flex>
+											{/if}
+										</Stack>
+									{/if}
+								{/each}
+							</Grid>
+						{:else}
+							<p class="italic text-neutral-softest">This item is not consumable.</p>
+						{/if}
+					</Stack>
+				</Section>
+
+				<Separator class="my-12" />
+
+				<!-- Wearable -->
+
+				<Section id="equippable">
+					<Stack class="mx-6">
+						<Flex align="end" class="mt-9 mb-6">
+							<Heading is="h3" as="h4">Equippable</Heading>
+							<Input.Switch
+								bind:checked={isEquippable}
+								class="ml-6 my-0.5"
+							/>
+						</Flex>
+						{#if isEquippable}
+							<Heading is="h6" as="p" class="font-semibold mb-3">Equip Slot:</Heading>
+							<Inline align="center" gap={1.5}>
+								<Input.Select class="w-48"
+									bind:value={item.wearable_slot}
+									options={[
+										{ label: 'Head',	value: 'head'	},
+										{ label: 'Earring',	value: 'ears'	},
+										{ label: 'Face',	value: 'face'	},
+										{ label: 'Neck',	value: 'neck'	},
+										{ separator: true },
+										{ label: 'Arms',	value: 'arms'	},
+										{ label: 'Wrist',	value: 'wrist'	},
+										{ label: 'Finger',	value: 'finger'	},
+										{ separator: true },
+										{ label: 'Torso',	value: 'torso'	},
+										{ label: 'Back',	value: 'back'	},
+										{ label: 'Waist',	value: 'waist'	},
+										{ separator: true },
+										{ label: 'Legs',	value: 'legs'	},
+										{ label: 'Feet',	value: 'feet'	},
+									]}
+								/>
+								<Button style="soft" theme="accent" icon="Plus" />
+							</Inline>
+						{:else}
+							<p class="italic text-neutral-softest">This item is not equippable.</p>
+						{/if}
+					</Stack>
+				</Section>
+
+				<Separator class="my-12" />
+
+				<!-- Weapon -->
+
+				<Section id="weapon">
+					<Stack class="mx-6">
+						<Flex align="end" class="mt-9 mb-6">
+							<Heading is="h3" as="h4">Weapon</Heading>
+							<Input.Switch
+								bind:checked={isWeaponable}
+								class="ml-6 my-0.5"
+							/>
+						</Flex>
+						{#if item.weaponable}
+							<Grid cols={3} gap={3}>
+								{#each ['Melee', 'Thrown', 'Ranged'] as attackType}
+									<Stack>
+										<Flex align="center" justify="between">
+											<Heading is="h4" as="h6" class="mb-3">{attackType}</Heading>
+											{#if attackType === 'Melee'}
+												<Input.Switch size="sm" bind:checked={isMeleeable} />
+											{:else if attackType === 'Thrown'}
+												<Input.Switch size="sm" bind:checked={isThrownable} />
+											{:else if attackType === 'Ranged'}
+												<Input.Switch size="sm" bind:checked={isRangedable} />
+											{/if}
+										</Flex>
+										<Stack class="aspect-video bg-neutral-softest p-3 rounded text-sm w-full">
+											{#if item.weaponable[attackType.toLowerCase()]}
+												<Inline>
+													<span class="mr-auto">Hands:</span>
+													<span>{item.weaponable?.[attackType.toLowerCase()]?.hands}</span>
+												</Inline>
+												<Inline>
+													<span class="mr-auto">Range:</span>
+													<span>{item.weaponable?.[attackType.toLowerCase()]?.range}</span>
+												</Inline>
+												<Inline>
+													<span class="mr-auto">Effect:</span>
+													<span>{item.weaponable?.[attackType.toLowerCase()]?.effect}</span>
+												</Inline>
+												<Inline>
+													<span class="mr-auto">Magnitude:</span>
+													<span>{item.weaponable?.[attackType.toLowerCase()]?.magnitude}</span>
+												</Inline>
+												{#if item.weaponable?.[attackType.toLowerCase()]?.damage_type}
+													<Inline>
+														<span class="mr-auto">Damage type:</span>
+														<span>{item.weaponable?.[attackType.toLowerCase()]?.damage_type}</span>
+													</Inline>
+												{/if}
+											{/if}
+										</Stack>
+									</Stack>
+								{/each}
+								<!-- <Stack>
+									<Flex align="center" justify="between">
+										<Heading is="h4" as="h6" class="mb-3">Thrown</Heading>
+										<Input.Switch size="sm" />
+									</Flex>
+									<Thumbnail aspect="square"
+										class="aspect-video bg-neutral-softest rounded-none hover:inner-shadow-sm transition-all w-full"
+									/>
+								</Stack>
+								<Stack>
+									<Flex align="center" justify="between">
+										<Heading is="h4" as="h6" class="mb-3">Ranged</Heading>
+										<Input.Switch size="sm" />
+									</Flex>
+									<Thumbnail aspect="square"
+										class="aspect-video bg-neutral-softest rounded-none hover:inner-shadow-sm transition-all w-full"
+									/>
+								</Stack> -->
+							</Grid>
+						{:else}
+							<p class="italic text-neutral-softest">This item is not weaponable.</p>
+						{/if}
+					</Stack>
+				</Section>
+
+				<Separator class="my-12" />
+
+				
 
 
 				<!-- Custom Fields -->

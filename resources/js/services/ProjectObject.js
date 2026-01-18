@@ -249,9 +249,9 @@ export default class ProjectObject {
 					]
 				case 'layout':
 					return [
-						{ label: "As Graph",		value: "graph", 		icon: "Graph"	  	},
-						{ label: "As Grid",			value: "grid",			icon: "GridFour"	},
-						{ label: "As Table",		value: "table", 		icon: "Table"	  	}
+						{ label: "As graph",		value: "graph", 		icon: "Graph"	  	},
+						{ label: "As grid",			value: "grid",			icon: "GridFour"	},
+						{ label: "As table",		value: "table", 		icon: "Table"	  	}
 					]
 				default:
 					return this.characters?.items?.map(c => ({
@@ -323,8 +323,8 @@ export default class ProjectObject {
 					]
 				case 'layout':
 					return [
-						{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
-						{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+						{ label: "As grid",  		value: "grid",			icon: "GridFour"	},
+						{ label: "As table", 		value: "table", 		icon: "Table"	  	}
 					]
 				default:
 					return this.factions?.items?.map(f => ({
@@ -393,8 +393,8 @@ export default class ProjectObject {
 					]
 				case 'layout':
 					return [
-						{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
-						{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+						{ label: "As grid",  		value: "grid",			icon: "GridFour"	},
+						{ label: "As table", 		value: "table", 		icon: "Table"	  	}
 					]
 				default:
 
@@ -454,9 +454,9 @@ export default class ProjectObject {
 					]
 				case 'layout':
 					return [
-						{ label: "As Map",  			value: "map",			icon: "Compass"		},
-						{ label: "As Grid",  			value: "grid",			icon: "GridFour"	},
-						{ label: "As Table", 			value: "table", 		icon: "Table"	  	}
+						{ label: "As map",  			value: "map",			icon: "Compass"		},
+						{ label: "As grid",  			value: "grid",			icon: "GridFour"	},
+						{ label: "As table", 			value: "table", 		icon: "Table"	  	}
 					]
 				default:
 					return this.locations?.items?.map(l => ({

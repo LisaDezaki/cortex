@@ -167,7 +167,7 @@
 
 
 
-<Flex align="center" cols={6} gap={3} class={cx.bar} {...restProps}>
+<Flex align="center" cols={6} gap={1.5} class={cx.bar} {...restProps}>
 	
 
 	<!-- Search -->

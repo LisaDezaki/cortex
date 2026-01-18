@@ -516,22 +516,28 @@ select:focus {
 /*	Padding  */
 
 .p-xs { @apply px-1   py-0.5;   }
-.p-sm { @apply px-1.5 py-1; }
+.p-sm { @apply px-1.5 py-1; 	}
 .p-md { @apply px-2   py-1.5;   }
-.p-lg { @apply px-6   py-2;	  }
-.p-xl { @apply px-6   py-4;   }
+.p-lg { @apply px-3   py-2;	  	}
+.p-xl { @apply px-6   py-4;   	}
 
-.px-xs { @apply px-1; }
+.px-xs { @apply px-1; 	}
 .px-sm { @apply px-1.5; }
-.px-md { @apply px-2; }
-.px-lg { @apply px-3; }
-.px-xl { @apply px-6; }
+.px-md { @apply px-2; 	}
+.px-lg { @apply px-3; 	}
+.px-xl { @apply px-6; 	}
 
-.py-xs { @apply py-0; }
+.py-xs { @apply py-0; 	}
 .py-sm { @apply py-0.5; }
-.py-md { @apply py-1; }
-.py-lg { @apply py-2; }
-.py-xl { @apply py-4; }
+.py-md { @apply py-1; 	}
+.py-lg { @apply py-2; 	}
+.py-xl { @apply py-4; 	}
+
+.pz-xs { @apply p-0.5; 	}
+.pz-sm { @apply p-1; 	}
+.pz-md { @apply p-1.5; 	}
+.pz-lg { @apply p-2; 	}
+.pz-xl { @apply p-4; 	}
 
 .shadow-accent-strong	{ box-shadow: inset 0 -1px var(--border-accent-strong);   }
 .shadow-accent-softest	{ box-shadow: inset 0 -1px var(--border-accent-softest);  }

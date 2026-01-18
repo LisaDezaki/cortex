@@ -208,6 +208,20 @@ export default class ItemObject {
 
 
 	/**
+	 * Get Recipe for crafting or scrapping
+	 * @param {*} type 
+	 * @returns 
+	 */
+	getRecipe(type) {
+		return this.recipes?.find(r => r.type === type) || null
+	}
+
+	hasRecipe(type) {
+		return Boolean(this.recipes?.find(r => r.type === type))
+	}
+
+
+	/**
 	 * Star
 	 * Toggle this Character's "starred" field in the database
 	 * @returns {void}

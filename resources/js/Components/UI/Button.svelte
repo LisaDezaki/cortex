@@ -26,7 +26,7 @@
 	let thisIcon = $derived(icon)
 
 	const cx = $derived({
-		button: clsx('button inline-flex items-center justify-center shrink-0', `p-${size} text-${size}`, {
+		button: clsx('button inline-flex items-center justify-center shrink-0', children || text ? `p-${size}` : `pz-${size}`, `text-${size}`, {
 
 			'cursor-not-allowed opacity-50': 	disabled,
 			'rounded': 							!className?.includes('rounded-'),

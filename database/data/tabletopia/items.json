@@ -1,12 +1,393 @@
 {
+	"acid-flask": {
+		"name": "Acid Flask",
+		"type": "Potion",
+		"desc": "A flask of acid that deals damage when thrown.",
+		"cost": 25,
+		"rarity": "Uncommon",
+		"tags": "Utility",
+		"weight": 1,
+		"consumable": {
+			"effects": [
+				{
+					"effect": "deal_damage",
+					"magnitude": 30,
+					"damage_type": "acid"
+				}
+			]
+		},
+		"craftable": {
+			"components": [
+				{ "item": "glass", "quantity": 2 },
+				{ "item": "chemicals", "quantity": 3 }
+			],
+			"requirements": ["alchemy-station"]
+		},
+		"weaponable": {
+			"thrown": {
+				"range": "medium",
+				"hands": 1,
+				"effect": "aoe_damage",
+				"magnitude": 30,
+				"damage_type": "acid"
+			}
+		}
+	},
+
+	"amulet": {
+		"name": "Amulet",
+		"type": "Accessory",
+		"desc": "",
+		"cost": 100,
+		"rarity": "Rare",
+		"tags": "Accessory, Enchantable",
+		"weight": 1,
+		"craftable": {
+			"components": [
+				{ "item": "gemstoned", "quantity": 3 },
+				{ "item": "silver", "quantity": 5 }
+			],
+			"requirements": ["jewelry-station"]
+		},
+		"equippable": {
+			"slot": "neck"
+		},
+		"scrappable": {
+			"silver": 2,
+			"gemstones": 1
+		}
+	},
+
+	"antitoxin": {
+		"name": "Antitoxin",
+		"type": "Potion",
+		"desc": "Cures poison when consumed.",
+		"cost": 75,
+		"weight": 0.5,
+		"consumable": {
+			"effect": "cure_poison"
+		},
+		"craftable": {
+			"components": [
+				{ "item": "chemicals", "quantity": 4 },
+				{ "item": "herbs", "quantity": 2 }
+			],
+			"requirements": ["alchemy-station"]
+		},
+		"scrappable": {
+			"herbs": 2,
+			"chemicals": 1
+		}
+	},
+
+	"arrow": {
+		"name": "Arrow",
+		"type": "Ammunition",
+		"desc": "",
+		"cost": 2,
+		"weight": 0,
+		"craftable": {
+			"bundle": 5,
+			"components": [
+				{ "item": "feathers", "quantity": 1 },
+				{ "item": "wood", "quantity": 1 }
+			],
+			"requirements": ["woodshop"]
+		}
+	},
+
+	"axe": {
+		"name": "Axe",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 30,
+		"rarity": "Common",
+		"weight": 30,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 3 },
+				{ "item": "wood", "quantity": 3 }
+			],
+			"requirements": ["forge"]
+		},
+		"scrappable": {
+			"wood": 2,
+			"metal": 1
+		},
+		"weaponable": {
+			"melee": {
+				"range": "short",
+				"hands": 1,
+				"damage": 35,
+				"damage_type": "slashing"
+			},
+			"thrown": {
+				"range": "short",
+				"hands": 1,
+				"damage": 20,
+				"damage_type": "slashing"
+			}
+		}
+	},
+
 	"backpack": {
 		"name": "Backpack",
 		"type": "Container",
 		"desc": "",
 		"cost": 50,
 		"rarity": "Common",
-		"weight": 10,
-		"isContainer": true
+		"weight": 5,
+		"containerable": {
+			"capacity": 50
+		},
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 5 },
+				{ "item": "leather", "quantity": 2 }
+			],
+			"requirements": ["alchemy-station"]
+		},
+		"equippable": {
+			"slot": "back"
+		},
+		"scrappable": {
+			"fabric": 2,
+			"leather": 1
+		}
+	},
+
+	"ball-bearing": {
+		"name": "Ball Bearing",
+		"type": "Ammunition",
+		"desc": "",
+		"cost": 5,
+		"weight": 0
+	},
+
+	"bandana": {
+		"name": "Bandana",
+		"type": "Accessory",
+		"desc": "",
+		"cost": 25,
+		"rarity": "Common",
+		"weight": 1,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 3 }
+			],
+			"requirements": ["sewing-machine"]
+		},
+		"equippable": {
+			"slot": "head|neck"
+		},
+		"scrappable": {
+			"fabric": 1
+		}
+	},
+
+	"battleaxe": {
+		"name": "Battleaxe",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 60,
+		"rarity": "Uncommon",
+		"weight": 35,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 5 },
+				{ "item": "wood", "quantity": 7 }
+			],
+			"requirements": ["forge"]
+		},
+		"scrappable": {
+			"wood": 3,
+			"metal": 2
+		},
+		"weaponable": {
+			"melee": {
+				"range": "long",
+				"hands": 2,
+				"damage": 50,
+				"damage_type": "slashing"
+			},
+			"thrown": {
+				"range": "short",
+				"hands": 1,
+				"damage": 30,
+				"damage_type": "slashing"
+			}
+		}
+	},
+
+	"bolt": {
+		"name": "Bolt",
+		"type": "Ammunition",
+		"desc": "",
+		"cost": 3,
+		"weight": 0
+	},
+
+	"bomb": {
+		"name": "Bomb",
+		"type": "Explosive",
+		"desc": "An explosive device that deals area damage when thrown.",
+		"cost": 50,
+		"rarity": "Uncommon",
+		"tags": "Utility",
+		"weight": 1,
+		"consumable": {
+			"effect": "deal_damage",
+			"magnitude": 30,
+			"damage_type": "explosive"
+		},
+		"craftable": {
+			"components": [
+				{ "item": "chemicals", "quantity": 5 },
+				{ "item": "mechanisms", "quantity": 1 },
+				{ "item": "container", "quantity": 1 }
+			],
+			"requirements": ["explosives-station"]
+		},
+		"weaponable": {
+			"thrown": {
+				"range": "short",
+				"hands": 1,
+				"damage": 30,
+				"damage_type": "explosive"
+			}
+		}
+	},
+
+	"book": {
+		"name": "Book",
+		"type": "Book",
+		"desc": "A book that can be read for knowledge.",
+		"cost": 25,
+		"weight": 1,
+		"scrappable": {
+			"paper": 5,
+			"leather": 1
+		}
+	},
+
+	"boots": {
+		"name": "Boots",
+		"type": "Armor",
+		"desc": "",
+		"cost": 75,
+		"rarity": "Uncommon",
+		"tags": "Armor, Enchantable",
+		"weight": 5,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 2 },
+				{ "item": "leather", "quantity": 5 }
+			],
+			"requirements": ["forge"]
+		},
+		"equippable": {
+			"slot": "feet"
+		},
+		"scrappable": {
+			"leather": 2,
+			"fabric": 1
+		}
+	},
+
+	"bottle-glass": {
+		"name": "Bottle, Glass",
+		"type": "Scrap",
+		"desc": "",
+		"cost": 15,
+		"rarity": "Common",
+		"weight": 1,
+		"capacity": 5,
+		"scrappable": {
+			"glass": 3
+		}
+	},
+
+	"bracelet": {
+		"name": "Bracelet",
+		"type": "Accessory",
+		"desc": "",
+		"cost": 50,
+		"rarity": "Uncommon",
+		"weight": 1,
+		"craftable": {
+			"components": [
+				{ "item": "gemstones", "quantity": 1 },
+				{ "item": "silver", "quantity": 3 }
+			],
+			"requirements": ["jewelry-station"]
+		},
+		"equippable": {
+			"slot": "wrist"
+		}
+	},
+
+	"breastplate": {
+		"name": "Breastplate",
+		"type": "Armor",
+		"desc": "",
+		"cost": 300,
+		"rarity": "Epic",
+		"tags": "Armor, Enchantable",
+		"weight": 40,
+		"craftable": {
+			"components": [
+				{ "item": "leather", "quantity": 5 },
+				{ "item": "metal", "quantity": 10 }
+			],
+			"requirements": ["armor-station"]
+		},
+		"equippable": {
+			"slot": "torso"
+		},
+		"scrappable": {
+			"metal": 4,
+			"leather": 2
+		}
+	},
+
+	"cannonball": {
+		"name": "Cannonball",
+		"type": "Ammunition",
+		"desc": "",
+		"cost": 50,
+		"weight": 2
+	},
+
+	"ceramic": {
+		"name": "Ceramic",
+		"type": "Resource",
+		"desc": "",
+		"cost": 15,
+		"weight": 5
+	},
+
+	"chainmail": {
+		"name": "Chainmail",
+		"type": "Armor",
+		"desc": "",
+		"cost": 200,
+		"rarity": "Uncommon",
+		"tags": "Armor, Enchantable",
+		"weight": 25,
+		"craftable": {
+			"components": [
+				{ "item": "leather", "quantity": 3 },
+				{ "item": "metal", "quantity": 7 }
+			],
+			"requirements": ["armor-station"]
+		},
+		"equippable": {
+			"slot": "torso"
+		},
+		"scrappable": {
+			"metal": 3,
+			"leather": 1
+		}
 	},
 
 	"chainsaw": {
@@ -15,7 +396,34 @@
 		"desc": "",
 		"cost": 75,
 		"rarity": "Uncommon",
-		"weight": 40
+		"weight": 40,
+		"craftable": {
+			"components": [
+				{ "item": "mechanisms", "quantity": 4 },
+				{ "item": "metal", "quantity": 5 }
+			],
+			"requirements": ["workbench"]
+		},
+		"scrappable": {
+			"metal": 2,
+			"mechanisms": 2
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 60,
+				"damage_type": "slashing",
+				"range": "melee",
+				"hands": 2
+			}
+		}
+	},
+
+	"chemicals": {
+		"name": "Chemicals",
+		"type": "Resource",
+		"desc": "",
+		"cost": 30,
+		"weight": 5
 	},
 
 	"cleaver": {
@@ -24,7 +432,113 @@
 		"desc": "",
 		"cost": 25,
 		"rarity": "Uncommon",
-		"weight": 10
+		"weight": 10,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 4 },
+				{ "item": "wood", "quantity": 2 }
+			],
+			"requirements": ["workbench"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 40,
+				"damage_type": "slashing",
+				"range": "melee",
+				"hands": 1
+			}
+		}
+	},
+
+	"clothing-common": {
+		"name": "Common Clothes",
+		"type": "Apparel",
+		"desc": "",
+		"cost": 20,
+		"rarity": "Common",
+		"tags": "Apparel, Enchantable",
+		"weight": 10,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 5 },
+				{ "item": "leather", "quantity": 2 }
+			],
+			"requirements": ["sewing-machine"]
+		},
+		"equippable": {
+			"slot": "torso+legs"
+		},
+		"scrappable": {
+			"fabric": 2,
+			"leather": 1
+		}
+	},
+
+	"clothing-fine": {
+		"name": "Fine Clothes",
+		"type": "Apparel",
+		"desc": "",
+		"cost": 100,
+		"rarity": "Rare",
+		"tags": "Apparel, Enchantable",
+		"weight": 8,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 10 },
+				{ "item": "leather", "quantity": 5 },
+				{ "item": "gemstones", "quantity": 2 }
+			],
+			"requirements": ["sewing-machine-2"]
+		},
+		"equippable": {
+			"slot": "torso+legs"
+		},
+		"scrappable": {
+			"fabric": 4,
+			"leather": 2,
+			"gemstones": 1
+		}
+	},
+
+	"club":	{
+		"name": "Club",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 10,
+		"weight": 15,
+		"craftable": {
+			"components": [
+				{ "item": "wood", "quantity": 4 }
+			],
+			"requirements": ["workbench"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 20,
+				"damage_type": "bludgeoning",
+				"range": "melee",
+				"hands": 1
+			}
+		}
+	},
+
+	"collar": {
+		"name": "Collar",
+		"type": "Accessory",
+		"desc": "",
+		"cost": 30,
+		"rarity": "Common",
+		"weight": 1,
+		"craftable": {
+			"components": [
+				{ "item": "leather", "quantity": 3 },
+				{ "item": "metal", "quantity": 1 }
+			],
+			"requirements": ["sewing-machine-2"]
+		},
+		"equippable": {
+			"slot": "neck"
+		}
 	},
 
 	"compass": {
@@ -34,13 +548,139 @@
 		"cost": 50,
 		"rarity": "Common",
 		"weight": 10,
-		"craft": {
-			"metal": 3,
-			"mechanisms": 2
+		"craftable": {
+			"components": [
+				{ "item": "mechanisms", "quantity": 2 },
+				{ "item": "metal", "quantity": 3 }
+			],
+			"requirements": ["workbench-2"]
 		},
-		"scrap": {
+		"scrappable": {
 			"metal": 1,
 			"mechanisms": 1
+		}
+	},
+
+	"crossbow": {
+		"name": "Crossbow",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 150,
+		"weight": 20,
+		"craftable": {
+			"components": [
+				{ "item": "mechanisms", "quantity": 3 },
+				{ "item": "metal", "quantity": 4 },
+				{ "item": "wood", "quantity": 6 }
+			],
+			"requirements": ["workbench-2"]
+		},
+		"weaponable": {
+			"ranged": {
+				"damage": 55,
+				"damage_type": "piercing",
+				"range": "medium",
+				"hands": 2,
+				"ammo_type": "bolt"
+			}
+		}
+	},
+
+	"crowbar": {
+		"name": "Crowbar",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 20,
+		"weight": 15,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 4 }
+			],
+			"requirements": ["forge"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 30,
+				"damage_type": "bludgeoning",
+				"range": "melee",
+				"hands": 1
+			}
+		}
+	},
+
+	"cuirass": {
+		"name": "Cuirass",
+		"type": "Armor",
+		"desc": "",
+		"cost": 250,
+		"rarity": "Rare",
+		"tags": "Armor, Enchantable",
+		"weight": 30,
+		"craftable": {
+			"components": [
+				{ "item": "leather", "quantity": 4 },
+				{ "item": "metal", "quantity": 8 }
+			],
+			"requirements": ["forge"]
+		},
+		"equippable": {
+			"slot": "torso"
+		},
+		"scrappable": {
+			"metal": 3,
+			"leather": 2
+		}
+	},
+
+	"dagger": {
+		"name": "Dagger",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 15,
+		"weight": 5,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 3 }
+			],
+			"requirements": ["forge"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 25,
+				"damage_type": "piercing",
+				"range": "melee",
+				"hands": 1
+			}
+		}
+	},
+
+	"dynamite": {
+		"name": "Dynamite",
+		"type": "Explosive",
+		"desc": "A stick of dynamite that deals area damage when thrown.",
+		"cost": 75,
+		"rarity": "Rare",
+		"tags": "Utility",
+		"weight": 2,
+		"consumable": {
+			"effect": "deal_damage",
+			"magnitude": 50,
+			"damage_type": "explosive"
+		},
+		"craftable": {
+			"components": [
+				{ "item": "chemicals", "quantity": 5 },
+				{ "item": "metal", "quantity": 3 }
+			],
+			"requirements": ["explosives-station"]
+		},
+		"weaponable": {
+			"thrown": {
+				"damage": 50,
+				"damage_type": "explosive",
+				"range": "short",
+				"hands": 1
+			}
 		}
 	},
 
@@ -52,12 +692,191 @@
 		"weight": 10
 	},
 
-	"flintlock": {
+	"firebomb": {
+		"name": "Firebomb",
+		"type": "Explosive",
+		"desc": "A bomb that deals fire damage when thrown.",
+		"cost": 60,
+		"rarity": "Uncommon",
+		"tags": "Utility",
+		"weight": 1,
+		"consumable": {
+			"effect": "deal_damage",
+			"magnitude": 40,
+			"damage_type": "fire"
+		},
+		"craftable": {
+			"components": [
+				{ "item": "chemicals", "quantity": 4 },
+				{ "item": "glass", "quantity": 2 }
+			],
+			"requirements": ["explosives-station"]
+		},
+		"weaponable": {
+			"thrown": {
+				"damage": 40,
+				"damage_type": "fire",
+				"range": "short",
+				"hands": 1
+			}
+		}
+	},
+
+	"flail": {
+		"name": "Flail",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 40,
+		"weight": 20,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 5 },
+				{ "item": "wood", "quantity": 3 }
+			],
+			"requirements": ["workbench"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 45,
+				"damage_type": "bludgeoning",
+				"range": "melee",
+				"hands": 2
+			}
+		}
+	},
+
+	"flintlock-pistol": {
 		"name": "Flintlock Pistol",
 		"type": "Weapon",
 		"desc": "",
 		"cost": 125,
-		"weight": 15
+		"weight": 15,
+		"craftable": {
+			"components": [
+				{ "item": "mechanisms", "quantity": 2 },
+				{ "item": "metal", "quantity": 5 },
+				{ "item": "wood", "quantity": 3 }
+			],
+			"requirements": ["workbench-2"]
+		},
+		"weaponable": {
+			"ranged": {
+				"damage": 45,
+				"damage_type": "piercing",
+				"range": "short",
+				"hands": 1,
+				"ammo_type": "ball-bearing"
+			}
+		}
+	},
+
+	"gemstones": {
+		"name": "Gemstones",
+		"type": "Resource",
+		"desc": "",
+		"cost": 100,
+		"weight": 2
+	},
+
+	"glaive": {
+		"name": "Glaive",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 55,
+		"weight": 30,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 6 },
+				{ "item": "wood", "quantity": 4 }
+			],
+			"requirements": ["workbench-2"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 55,
+				"damage_type": "slashing",
+				"reach": "long",
+				"hands": 2
+			}
+		}
+	},
+
+	"glass": {
+		"name": "Glass",
+		"type": "Resource",
+		"desc": "",
+		"cost": 20,
+		"weight": 5
+	},
+
+	"gloves": {
+		"name": "Gloves",
+		"type": "Accessory",
+		"desc": "",
+		"cost": 40,
+		"rarity": "Common",
+		"weight": 1,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 2 },
+				{ "item": "leather", "quantity": 4 }
+			],
+			"requirements": ["sewing-machine"]
+		},
+		"equippable": {
+			"slot": "hands"
+		}
+	},
+
+	"hat": {
+		"name": "Hat",
+		"type": "Accessory",
+		"desc": "",
+		"cost": 50,
+		"rarity": "Common",
+		"weight": 3,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 4 },
+				{ "item": "leather", "quantity": 2 }
+			],
+			"requirements": ["sewing-machine"]
+		},
+		"equippable": {
+			"slot": "head"
+		}
+	},
+
+	"helmet": {
+		"name": "Helmet",
+		"type": "Armor",
+		"desc": "",
+		"cost": 100,
+		"rarity": "Rare",
+		"tags": "Armor, Enchantable",
+		"weight": 8,
+		"craftable": {
+			"components": [
+				{ "item": "leather", "quantity": 3 },
+				{ "item": "metal", "quantity": 5 }
+			],
+			"requirements": ["forge"]
+		},
+		"equippable": {
+			"slot": "head"
+		},
+		"scrappable": {
+			"metal": 2,
+			"leather": 1
+		}
+	},
+
+	"herbs": {
+		"name": "Herbs",
+		"type": "Resource",
+		"desc": "",
+		"cost": 15,
+		"weight": 5
 	},
 
 	"iron-knuckles": {
@@ -65,7 +884,72 @@
 		"type": "Weapon",
 		"desc": "",
 		"cost": 25,
+		"weight": 10,
+		"craftable": {
+			"components": [
+				{ "item": "leather", "quantity": 2 },
+				{ "item": "metal", "quantity": 4 }
+			],
+			"requirements": ["forge"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 25,
+				"damage_type": "bludgeoning",
+				"range": "melee",
+				"hands": 1
+			}
+		}
+	},
+
+	"jerkin": {
+		"name": "Jerkin",
+		"type": "Armor",
+		"desc": "",
+		"cost": 150,
+		"rarity": "Rare",
+		"tags": "Armor, Enchantable",
+		"weight": 15,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 2 },
+				{ "item": "leather", "quantity": 7 },
+				{ "item": "metal", "quantity": 2 }
+			],
+			"requirements": ["armor-station"]
+		},
+		"equippable": {
+			"slot": "torso"
+		},
+		"scrappable": {
+			"leather": 3,
+			"metal": 1,
+			"fabric": 1
+		}
+	},
+
+	"leather": {
+		"name": "Leather",
+		"type": "Resource",
+		"desc": "",
+		"cost": 10,
 		"weight": 10
+	},
+
+	"mana-cell": {
+		"name": "Mana Cell",
+		"type": "Ammunition",
+		"desc": "",
+		"cost": 100,
+		"weight": 0
+	},
+
+	"map": {
+		"name": "Map",
+		"type": "Document",
+		"desc": "A map of a location.",
+		"cost": 100,
+		"weight": 0
 	},
 
 	"mechanisms": {
@@ -84,13 +968,97 @@
 		"weight": 20
 	},
 
-	"metzkers-map": {
-		"name": "Metzker's Map",
-		"type": "Map",
-		"desc": "The only known map of the Ancient Ruins in existence.",
-		"cost": 100,
+	"paper": {
+		"name": "Paper",
+		"type": "Resource",
+		"desc": "",
+		"cost": 5,
+		"weight": 5
+	},
+
+	"potion-healing-1": {
+		"name": "Minor Healing Potion",
+		"type": "Potion",
+		"desc": "Restores a small amount of health when consumed.",
+		"cost": 50,
+		"weight": 0.2,
+		"consumable": {
+			"effect": "restore_health",
+			"magnitude": 20
+		}
+	},
+
+	"potion-healing-2": {
+		"name": "Medium Healing Potion",
+		"type": "Potion",
+		"desc": "Restores a medium amount of health when consumed.",
+		"cost": 200,
+		"weight": 0.5,
+		"consumable": {
+			"effect": "restore_health",
+			"magnitude": 50
+		}
+	},
+
+	"potion-healing-3": {
+		"name": "Major Healing Potion",
+		"type": "Potion",
+		"desc": "Restores a large amount of health when consumed.",
+		"cost": 800,
 		"weight": 1,
-		"unique": true
+		"consumable": {
+			"effect": "restore_health",
+			"magnitude": 250
+		}
+	},
+
+	"rapier": {
+		"name": "Rapier",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 50,
+		"weight": 15,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 8 }
+			],
+			"requirements": ["forge-2"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 45,
+				"damage_type": "piercing",
+				"range": "melee",
+				"hands": 1
+			}
+		}
+	},
+
+	"ring": {
+		"name": "Ring",
+		"type": "Accessory",
+		"desc": "",
+		"cost": 75,
+		"rarity": "Uncommon",
+		"weight": 1,
+		"craftable": {
+			"components": [
+				{ "item": "gemstones", "quantity": 1 },
+				{ "item": "silver", "quantity": 1 }
+			],
+			"requirements": ["jewelry-station"]
+		},
+		"equippable": {
+			"slot": "finger"
+		}
+	},
+
+	"rubber": {
+		"name": "Rubber",
+		"type": "Resource",
+		"desc": "",
+		"cost": 10,
+		"weight": 10
 	},
 
 	"sextant": {
@@ -99,13 +1067,54 @@
 		"desc": "",
 		"cost": 75,
 		"weight": 5,
-		"craft": {
-			"metal": 3,
-			"mechanisms": 2
+		"craftable": {
+			"components": [
+				{ "item": "mechanisms", "quantity": 2 },
+				{ "item": "metal", "quantity": 3 }
+			],
+			"requirements": ["workbench-2"]
 		},
-		"scrap": {
+		"scrappable": {
 			"metal": 1,
 			"mechanisms": 1
+		}
+	},
+
+	"shoes-common": {
+		"name": "Common Shoes",
+		"type": "Apparel",
+		"desc": "",
+		"cost": 35,
+		"rarity": "Common",
+		"weight": 3,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 2 },
+				{ "item": "leather", "quantity": 4 }
+			],
+			"requirements": ["sewing-machine"]
+		},
+		"equippable": {
+			"slot": "feet"
+		}
+	},
+
+	"shoes-fine": {
+		"name": "Fine Shoes",
+		"type": "Apparel",
+		"desc": "",
+		"cost": 75,
+		"rarity": "Uncommon",
+		"weight": 3,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 4 },
+				{ "item": "leather", "quantity": 6 }
+			],
+			"requirements": ["sewing-machine-2"]
+		},
+		"equippable": {
+			"slot": "feet"
 		}
 	},
 
@@ -114,7 +1123,23 @@
 		"type": "Weapon",
 		"desc": "",
 		"cost": 20,
-		"weight": 15
+		"weight": 15,
+		"craftable": {
+			"components": [
+				{ "item": "fabric", "quantity": 2 },
+				{ "item": "wood", "quantity": 5 }
+			],
+			"requirements": ["workbench"]
+		},
+		"weaponable": {
+			"ranged": {
+				"damage": 30,
+				"damage_type": "piercing",
+				"range": "medium",
+				"hands": 2,
+				"ammo_type": "arrow"
+			}
+		}
 	},
 
 	"shortsword": {
@@ -122,7 +1147,22 @@
 		"type": "Weapon",
 		"desc": "",
 		"cost": 25,
-		"weight": 25
+		"weight": 25,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 5 },
+				{ "item": "wood", "quantity": 2 }
+			],
+			"requirements": ["workbench"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 40,
+				"damage_type": "slashing",
+				"range": "melee",
+				"hands": 1
+			}
+		}
 	},
 
 	"shotgun": {
@@ -130,7 +1170,63 @@
 		"type": "Weapon",
 		"desc": "",
 		"cost": 175,
-		"weight": 25
+		"weight": 25,
+		"craftable": {
+			"components": [
+				{ "item": "mechanisms", "quantity": 4 },
+				{ "item": "metal", "quantity": 6 },
+				{ "item": "wood", "quantity": 4 }
+			],
+			"requirements": ["workbench-2"]
+		},
+		"weaponable": {
+			"ranged": {
+				"damage": 70,
+				"damage_type": "piercing",
+				"range": "short",
+				"hands": 2,
+				"ammo_type": "shotgun-shell"
+			}
+		}
+	},
+
+	"shotgun-shell": {
+		"name": "Shotgun Shell",
+		"type": "Ammunition",
+		"desc": "",
+		"cost": 10,
+		"weight": 0
+	},
+
+	"silver": {
+		"name": "Silver",
+		"type": "Resource",
+		"desc": "",
+		"cost": 150,
+		"weight": 10
+	},
+
+	"spear": {
+		"name": "Spear",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 20,
+		"weight": 20,
+		"craftable": {
+			"components": [
+				{ "item": "metal", "quantity": 2 },
+				{ "item": "wood", "quantity": 6 }
+			],
+			"requirements": ["workbench"]
+		},
+		"weaponable": {
+			"melee": {
+				"damage": 35,
+				"damage_type": "piercing",
+				"range": "melee",
+				"hands": 2
+			}
+		}
 	},
 
 	"spraypaint": {
@@ -138,7 +1234,21 @@
 		"type": "Weapon",
 		"desc": "",
 		"cost": 500,
-		"weight": 5
+		"weight": 5,
+		"weaponable": {
+			"melee": {
+				"damage": 20,
+				"damage_type": "magic",
+				"range": "short",
+				"hands": 1
+			},
+			"thrown": {
+				"damage": 40,
+				"damage_type": "magic",
+				"range": "medium",
+				"hands": 1
+			}
+		}
 	},
 
 	"telescope": {
@@ -147,11 +1257,14 @@
 		"desc": "",
 		"cost": 75,
 		"weight": 5,
-		"craft": {
-			"metal": 3,
-			"glass": 2
+		"craftable": {
+			"components": [
+				{ "item": "glass", "quantity": 2 },
+				{ "item": "metal", "quantity": 3 }
+			],
+			"requirements": ["workbench-2"]
 		},
-		"scrap": {
+		"scrappable": {
 			"metal": 1,
 			"glass": 1
 		}
@@ -163,6 +1276,19 @@
 		"desc": "",
 		"cost": 5,
 		"weight": 10
-	}
+	},
 
+
+
+
+
+	"metzkers-map": {
+		"name": "Metzker's Map",
+		"type": "Document",
+		"base": "map",
+		"desc": "The only known map of the Ancient Ruins in existence.",
+		"cost": 100,
+		"unique": true
+	}
+	
 }
