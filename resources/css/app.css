@@ -19,6 +19,18 @@
 	body {
 		--nav-width:		'96px';
 		--content-width:	'672px';
+
+		--gap-content-xs:	1.5;
+		--gap-content-sm:	3;
+		--gap-content-md:	6;
+		--gap-content-lg:	9;
+		--gap-content-xl:	12;
+
+		--px-content-xs:	1.5;
+		--px-content-sm:	3;
+		--px-content-md:	6;
+		--px-content-lg:	9;
+		--px-content-xl:	12;
 	}
 
 	/* --font-sans: Archivo, Figtree, ui-sans-serif, system-ui, sans-serif; */

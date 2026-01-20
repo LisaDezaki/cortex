@@ -36,6 +36,9 @@ class CharacterResource extends JsonResource
 			// 'portrait'    => new MediaResource($this->whenLoaded('portrait')),
 			// 'location'    => new LocationResource($this->whenLoaded('location')),
 			'factions'    => FactionResource::collection($this->whenLoaded('factions')),
+
+			'inventory'		=> $this->whenLoaded('inventory'),
+
 			'relationships' => CharacterRelationshipResource::collection($this->whenLoaded('relationships', function() {
 				return $this->relationships->merge($this->inverseRelationships)->sortBy('name');
 			})),

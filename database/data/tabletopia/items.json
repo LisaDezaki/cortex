@@ -11,8 +11,10 @@
             "effects": [
                 {
                     "effect": "deal_damage",
+					"target": "self",
                     "magnitude": 30,
-                    "damage_type": "acid"
+                    "damage_type": "acid",
+					"duration": "5s"
                 }
             ]
         },
@@ -67,7 +69,9 @@
         "cost": 75,
         "weight": 0.5,
         "consumable": {
-            "effect": "cure_poison"
+            "effect": "cure_poison",
+			"target": "self",
+			"duration": "instant"
         },
         "craftable": {
             "components": [
@@ -77,10 +81,28 @@
             "requirements": ["alchemy-station"]
         },
         "scrappable": {
-            "herbs": 2,
-            "chemicals": 1
+			"components": [
+                { "item": "chemicals", "quantity": 2 }
+            ]
         }
     },
+
+	"apple": {
+		"name": "Apple",
+		"type": "Food",
+		"desc": "",
+		"cost": 5,
+		"weight": 1,
+		"consumable": {
+			"effects": [{
+				"effect": "reduce_hunger",
+				"magnitude": 5
+			}, {
+				"effect": "heal",
+				"magnitude": 5
+			}]
+		}
+	},
 
     "arrow": {
         "name": "Arrow",
@@ -244,13 +266,13 @@
         "consumable": {
             "effect": "deal_damage",
             "magnitude": 30,
+			"target": "target",
             "damage_type": "explosive"
         },
         "craftable": {
             "components": [
                 { "item": "chemicals", "quantity": 5 },
-                { "item": "mechanisms", "quantity": 1 },
-                { "item": "container", "quantity": 1 }
+                { "item": "mechanisms", "quantity": 1 }
             ],
             "requirements": ["explosives-station"]
         },
@@ -272,8 +294,7 @@
         "weight": 1,
         "scrappable": {
             "components": [
-                { "item": "leather", "quantity": 1 },
-                { "item": "paper", "quantity": 5 }
+                { "item": "leather", "quantity": 1 }
             ]
         }
     },
@@ -301,19 +322,6 @@
                 { "item": "fabric", "quantity": 1 },
                 { "item": "leather", "quantity": 2 }
             ]
-        }
-    },
-
-    "bottle-glass": {
-        "name": "Bottle, Glass",
-        "type": "Scrap",
-        "desc": "",
-        "cost": 15,
-        "rarity": "Common",
-        "weight": 1,
-        "capacity": 5,
-        "scrappable": {
-            "glass": 3
         }
     },
 
@@ -368,14 +376,6 @@
         "desc": "",
         "cost": 50,
         "weight": 2
-    },
-
-    "ceramic": {
-        "name": "Ceramic",
-        "type": "Resource",
-        "desc": "",
-        "cost": 15,
-        "weight": 5
     },
 
     "chainmail": {
@@ -671,6 +671,24 @@
         }
     },
 
+	"dreamleaf": {
+        "name": "Dreamleaf",
+        "type": "Drug",
+        "desc": "",
+        "cost": 15,
+		"tags": ["herb"],
+        "weight": 5,
+        "consumable": {
+            "effects": [
+				{
+					"effect": "dreamleaf",
+					"magnitude": 25,
+					"target": "self"
+				}
+			]
+        }
+    },
+
     "dynamite": {
         "name": "Dynamite",
         "type": "Explosive",
@@ -698,6 +716,32 @@
                 "range": "short",
                 "hands": 1
             }
+        }
+    },
+
+	"empty-bottle": {
+        "name": "Empty Bottle",
+        "type": "Scrap",
+        "desc": "",
+        "cost": 15,
+        "rarity": "Common",
+        "weight": 1,
+        "capacity": 5,
+        "scrappable": {
+            "glass": 3
+        }
+    },
+
+	"empty-flask": {
+        "name": "Empty Flask",
+        "type": "Scrap",
+        "desc": "",
+        "cost": 15,
+        "rarity": "Common",
+        "weight": 1,
+        "capacity": 5,
+        "scrappable": {
+            "glass": 3
         }
     },
 
@@ -853,6 +897,28 @@
         }
     },
 
+	"hammer": {
+		"name": "Hammer",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 30,
+		"rarity": "Common",
+		"weight": 8,
+		"craftable": {
+			"components": [
+				{ "quantity": 4, "item": "metal" },
+				{ "quantity": 2, "item": "wood" }
+			],
+			"requirements": ["forge"]
+		},
+		"scrappable": {
+			"components": [
+				{ "quantity": 2, "item": "metal" },
+				{ "quantity": 1, "item": "wood" }
+			]
+		}
+	},
+
     "hat": {
         "name": "Hat",
         "type": "Accessory",
@@ -957,6 +1023,16 @@
         }
     },
 
+	"lantern": {
+		"name": "Lantern",
+		"type": "Tool",
+		"desc": "",
+		"cost": 35,
+		"rarity": "Common",
+		"tags": "Tool",
+		"weight": 5
+	},
+
     "leather": {
         "name": "Leather",
         "type": "Resource",
@@ -964,6 +1040,23 @@
         "cost": 10,
         "weight": 10
     },
+
+	"longbow": {
+		"name": "Longbow",
+		"type": "Weapon",
+		"desc": "",
+		"cost": 85,
+		"weight": 15,
+		"weaponable": {
+			"ranged": {
+                "damage": 40,
+                "damage_type": "piercing",
+                "range": "long",
+                "hands": 2,
+                "ammo_type": "arrow"
+            }
+		}
+	},
 
     "mana-cell": {
         "name": "Mana Cell",
@@ -997,13 +1090,22 @@
         "weight": 20
     },
 
-    "paper": {
-        "name": "Paper",
-        "type": "Resource",
-        "desc": "",
-        "cost": 5,
-        "weight": 5
-    },
+	"poison-vial": {
+		"name": "Poison Vial",
+		"type": "Potion",
+		"desc": "",
+		"cost": 50,
+		"weight": 1,
+		"consumable": {
+			"effects": [
+				{
+					"effect": "poison_target",
+					"target": "self",
+					"duration": 90
+				}
+			]
+		}
+	},
 
     "potion-healing-1": {
         "name": "Minor Healing Potion",
@@ -1025,7 +1127,7 @@
         "weight": 0.5,
         "consumable": {
             "effect": "restore_health",
-            "magnitude": 50
+            "magnitude": 100
         }
     },
 
@@ -1041,11 +1143,23 @@
         }
     },
 
+	"quiver": {
+		"name": "Quiver",
+		"type": "Apparel",
+		"desc": "",
+		"cost": 200,
+		"weight": 5,
+		"equippable": {
+			"slot": "back"
+		}
+	},
+
     "rapier": {
         "name": "Rapier",
         "type": "Weapon",
         "desc": "",
         "cost": 50,
+		"rarity": "Uncommon",
         "weight": 15,
         "craftable": {
             "components": [{ "item": "metal", "quantity": 8 }],
@@ -1108,6 +1222,17 @@
             ]
         }
     },
+
+	"shield": {
+		"name": "Shield",
+		"type": "Armor",
+		"desc": "",
+		"cost": 65,
+		"weight": 15,
+		"equippable": {
+			"slot": ""
+		}
+	},
 
     "shoes-common": {
         "name": "Common Shoes",
@@ -1226,6 +1351,28 @@
         "cost": 10,
         "weight": 0
     },
+
+	"shovel": {
+		"name": "Shovel",
+		"type": "Tool",
+		"desc": "",
+		"cost": 10,
+		"weight": 5,
+		"weaponable": {
+			"melee": {
+				"damage": 15,
+				"damage_type": "bludgeoning",
+				"reach": "medium",
+				"hands": 2
+			},
+			"thrown": {
+				"damage": 10,
+				"damage_type": "bludgeoning",
+				"range": "short",
+				"hands": 1
+			}
+		}
+	},
 
     "silver": {
         "name": "Silver",

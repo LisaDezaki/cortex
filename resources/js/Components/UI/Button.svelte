@@ -9,6 +9,7 @@
         class: className,
 		disabled,
 		icon = null,
+		iconClass,
 		iconSize = 20,
 		iconWeight = 'regular',
 		iconAfter = null,
@@ -77,7 +78,7 @@
 	{:else}
 
 		{#if thisIcon}
-			<Icon name={thisIcon} size={size} weight={iconWeight} />
+			<Icon name={thisIcon} size={size} weight={iconWeight} class={iconClass} />
 		{/if}
 
 		{#if text}

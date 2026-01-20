@@ -75,7 +75,7 @@
 	<Table.Cell class="max-w-32">
 		<Link class="flex items-center gap-1.5 py-0.5 hover:text-emerald-500" href={route('characters.show', {character: character.slug})}>
 			<Thumbnail
-				class="bg-neutral-softest h-6 w-6"
+				class="bg-neutral-softest h-6 rounded w-6"
 				src={character.image?.url}
 			/>
 			<Inline>{character.name}</Inline>

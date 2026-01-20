@@ -31,7 +31,7 @@
 	{#if actions?.length > 0}
 		<Inline gap={3}>
 			{#each actions as action}
-				<Button class="rounded-full" size="lg" style="soft" theme="accent" {...action} />
+				<Button size={action.size || 'lg'} style="soft" theme="accent" {...action} class="{action.class} rounded-full" />
 			{/each}
 		</Inline>
 	{/if}

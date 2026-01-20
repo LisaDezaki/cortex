@@ -146,8 +146,8 @@
 				title="Locations List"
 				subtitle="Index page"
 				actions={[
-					{ icon: "GearFine", theme: "neutral", href: route('locations.settings') },
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => locations.openModal('create') },
+					{ size: "xl", icon: "GearFine", theme: "neutral", class: "group", iconClass: "group-hover:rotate-[60deg] transition-all", href: route('locations.settings') },
+					{ size: "xl", icon: "Plus", text: "New", theme: "accent", onclick: () => locations.openModal('create') },
 				]}
 			/>
 

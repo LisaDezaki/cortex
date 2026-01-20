@@ -223,6 +223,15 @@ class TabletopiaSeeder extends Seeder
 					'value'           => $character['species'],
 				]);
 			}
+			if (isset($character['inventory'])) {
+				foreach ($character['inventory'] as $item) {
+					DB::table('character_inventories')->insert([
+						'character_id' => $characters[$slug]->id,
+						'item_id' => $items[$item['item']]->id,
+						'quantity' => $item['quantity']
+					]);
+				}
+			}
 			if (isset($character['mapdata'])) {
 				$mapdata[$slug] = MapItem::create([
 					'location_id'	=> $locations[$character['mapdata']['location']]['id'] ?? null,

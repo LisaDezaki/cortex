@@ -151,8 +151,8 @@
 				title="Item List"
 				subtitle="Index page"
 				actions={[
-					{ icon: "GearFine", theme: "neutral", href: route('items.settings') },
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => items.openModal('create') },
+					{ size: "xl", icon: "GearFine", theme: "neutral", class: "group", iconClass: "group-hover:rotate-[60deg] transition-all", href: route('items.settings') },
+					{ size: "xl", icon: "Plus", text: "New", theme: "accent", onclick: () => items.openModal('create') },
 				]}
 			/>
 

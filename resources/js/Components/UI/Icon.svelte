@@ -31,6 +31,7 @@
 	import Check from "phosphor-svelte/lib/Check"
 	import CheckCircle from "phosphor-svelte/lib/CheckCircle"
 	import CheckFat from "phosphor-svelte/lib/CheckFat"
+	import Circle from "phosphor-svelte/lib/Circle"
 	import CircleHalfTilt from "phosphor-svelte/lib/CircleHalfTilt"
 	import CircleNotch from "phosphor-svelte/lib/CircleNotch"
 	import Code from "phosphor-svelte/lib/Code"
@@ -74,6 +75,7 @@
 	import Hammer from "phosphor-svelte/lib/Hammer"
 	import Handshake from "phosphor-svelte/lib/Handshake"
 	import Hash from "phosphor-svelte/lib/Hash"
+	import Hourglass from "phosphor-svelte/lib/Hourglass"
 	import HouseLine from "phosphor-svelte/lib/HouseLine"
 	import Image from "phosphor-svelte/lib/Image"
 	import ImageSquare from "phosphor-svelte/lib/ImageSquare"
@@ -128,6 +130,7 @@
 	import Sword from "phosphor-svelte/lib/Sword"
 	import Table from "phosphor-svelte/lib/Table"
 	import TagSimple from "phosphor-svelte/lib/TagSimple"
+	import Target from "phosphor-svelte/lib/Target"
 	import Tent from "phosphor-svelte/lib/Tent"
 	import TextAa from "phosphor-svelte/lib/TextAa"
 	import TextAlignCenter from "phosphor-svelte/lib/TextAlignCenter"
@@ -140,6 +143,7 @@
 	import TextItalic from "phosphor-svelte/lib/TextItalic"
 	import TextStrikethrough from "phosphor-svelte/lib/TextStrikethrough"
 	import TextUnderline from "phosphor-svelte/lib/TextUnderline"
+	import Timer from "phosphor-svelte/lib/Timer"
 	import ToggleRight from "phosphor-svelte/lib/ToggleRight"
 	import Trash from "phosphor-svelte/lib/Trash"
 	import TreeEvergreen from "phosphor-svelte/lib/TreeEvergreen"
@@ -192,6 +196,7 @@
 		'Check': Check,
 		'CheckCircle': CheckCircle,
 		'CheckFat': CheckFat,
+		'Circle': Circle,
 		'CircleHalfTilt': CircleHalfTilt,
 		'CircleNotch': CircleNotch,
 		'Crane': Crane,
@@ -235,6 +240,7 @@
 		'Hammer': Hammer,
 		'Handshake': Handshake,
 		'Hash': Hash,
+		'Hourglass': Hourglass,
 		'HouseLine': HouseLine,
 		'Image': Image,
 		'ImageSquare': ImageSquare,
@@ -289,6 +295,7 @@
 		'Sword': Sword,
 		'Table': Table,
 		'TagSimple': TagSimple,
+		'Target': Target,
 		'Tent': Tent,
 		'TextAa': TextAa,
 		'TextAlignCenter': TextAlignCenter,
@@ -302,6 +309,7 @@
 		'TextItalic': TextItalic,
 		'TextStrikethrough': TextStrikethrough,
 		'TextUnderline': TextUnderline,
+		'Timer': Timer,
 		'ToggleRight': ToggleRight,
 		'Trash': Trash,
 		'TreeEvergreen': TreeEvergreen,

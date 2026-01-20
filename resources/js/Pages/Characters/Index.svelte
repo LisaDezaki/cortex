@@ -141,8 +141,8 @@
 				title="Character List"
 				subtitle="Index page"
 				actions={[
-					{ icon: "GearFine", theme: "neutral", href: route('characters.settings') },
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => characters.openModal('create') },
+					{ size: "xl", icon: "GearFine", 		 theme: "neutral", class: "group", iconClass: "group-hover:rotate-[60deg] transition-all", href: route('characters.settings') },
+					{ size: "xl", icon: "Plus", text: "New", theme: "accent",  onclick: () => characters.openModal('create') },
 				]}
 			/>
 			

@@ -25,6 +25,12 @@ return new class extends Migration
 			$table->softDeletes();
 		});
 
+		Schema::create('character_inventories', function (Blueprint $table) {
+			$table->foreignUuid('character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
+			$table->foreignUuid('item_id')->constrained('items')->cascadeOnUpdate()->cascadeOnDelete();
+			$table->unsignedInteger('quantity')->default(1);
+		});
+
 		Schema::create('character_relationships', function (Blueprint $table) {
 			$table->foreignUuid('character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
 			$table->foreignUuid('related_character_id')->constrained('characters')->cascadeOnUpdate()->cascadeOnDelete();
@@ -43,6 +49,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('characters');
+        Schema::dropIfExists('character_inventories');
         Schema::dropIfExists('character_relationships');
     }
 };

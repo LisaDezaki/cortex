@@ -39,21 +39,21 @@
     {#snippet header()}
 		<PageHeader
 			tabs={[
-				{ text: "Profile",		active: true },
+				{ text: "Profile",	active: true },
 				{ text: "Settings",	href: route('user.settings') },
 			]}
 		/>
 	{/snippet}
 
     {#snippet article()}
-		<Flex justify="center" class="py-12">
+		<Flex justify="center" class="pt-9 lg:pt-12">
 			<Media
 				class="relative aspect-square bg-neutral-softest rounded-full w-48"
 				media={user.getMedia('avatar')}
 				onclick={() => user.openModal('setAvatar')}
 			/>
 		</Flex>
-		<Flex justify="center" gap={12} class="py-12">
+		<Flex justify="center" class="gap-6 px-6 py-9 lg:gap-12 lg:px-12 lg:py-12">
 			<PageMenu items={[
 				{ icon: "UserList", label: "Profile Info",    href: "#profile",  active: $page.url.endsWith('#profile') },
 				{ icon: "Password", label: "Update Password", href: "#password", active: $page.url.endsWith('#password') },

@@ -42,6 +42,11 @@
     let isThrownable = $derived(item.weaponable?.thrown || false)
     let isRangedable = $derived(item.weaponable?.ranged || false)
 
+	let equipForm = useForm({
+		isEquippable: item.equippable || false,
+		slot: item.equippable?.slot || null
+	})
+
     let customFieldForm = useForm({
         customFields: customFields?.map((field) => ({
             id: field.id,
@@ -73,6 +78,7 @@
                 ]}
             />
             <Container size="5xl">
+
                 <!-- Header -->
 
                 <Section id="header">
@@ -84,8 +90,8 @@
                         />
                         <Media
                             class="absolute -bottom-16 right-12 aspect-square w-48 overflow-hidden rounded-lg border-2 border-slate-100 bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg"
-                            media={item.getMedia('portrait')}
-                            onclick={() => item.openModal('setMedia', { type: 'portrait', aspect: 'aspect-[1/1]' })}
+                            media={item.getMedia('main')}
+                            onclick={() => item.openModal('setMedia', { type: 'main', aspect: 'aspect-[1/1]' })}
                         />
                         <Inline align="start" justify="start" class="z-10">
                             <Heading
@@ -215,60 +221,42 @@
                                 <Heading is="h3" as="h4">Craftable</Heading>
                                 <Input.Switch bind:checked={isCraftable} class="my-0.5 ml-6" />
                             </Flex>
-                            <!-- <pre>{JSON.stringify(item.craftable, null, 2)}</pre> -->
                             {#if isCraftable}
                                 <Heading is="h6" as="p" class="mb-3 font-semibold">Materials required:</Heading>
                                 <Grid cols={3} gap={1.5}>
-                                    {#each new Array(6) as craftItem, i}
+                                    {#each new Array(6) as _, i}
                                         {@const component = item.craftable?.components?.[i]}
+										{@const itemObject = active.items.items.find(it => it.slug === component?.item)}
                                         <Stack
                                             align="center"
                                             justify="center"
-                                            gap={1.5}
-                                            class="bg-neutral-softest aspect-square w-full rounded p-1.5"
+                                            class="aspect-square bg-neutral-softest relative p-1.5 rounded w-full"
                                         >
                                             {#if component}
-                                                <Stack align="center" justify="center" gap={1.5}>
-                                                    <Icon name="Package" />
+                                                <Stack align="center" class="w-full">
+													{#if itemObject?.image?.url}
+														<Thumbnail src={itemObject?.image?.url} class="mix-blend-darken" />
+													{:else}
+														<Flex class="aspect-square w-full">
+															<Icon name="Package" />
+														</Flex>
+													{/if}
                                                     <Inline class="text-sm">
                                                         <span>{component.quantity}x</span>
                                                         <span
                                                             >{active.items.items.find(
                                                                 (it) => it.slug === component.item,
-                                                            )?.name}</span
+                                                            )?.name || component.item}</span
                                                         >
                                                     </Inline>
                                                 </Stack>
                                             {:else}
-                                                <Icon name="Package" class="text-neutral-softest opacity-50" />
+                                                <Flex class="aspect-square w-full">
+													<Icon name="Package" class="text-neutral-softest opacity-50" />
+												</Flex>
+												<Inline class="text-sm">&nbsp;</Inline>
                                             {/if}
                                         </Stack>
-                                        <!-- <Stack>
-                                            <Box class="relative">
-                                                <Thumbnail
-                                                    aspect="square"
-                                                    class="bg-neutral-softest hover:inner-shadow-sm aspect-square rounded transition-all"
-                                                    src={active.items.items
-                                                        .find((it) => it.slug === item.craftable.components[i]?.item)
-                                                        ?.getMedia('icon')?.url}
-                                                />
-                                                {#if Object.keys(item.craftable)[i]}
-                                                    <Badge
-                                                        class="absolute bottom-1.5 right-1.5 p-1 text-lg"
-                                                        style="hard"
-                                                        theme="neutral"
-                                                        text="x{item.craftable.components[i]?.quantity}"
-                                                    />
-                                                {/if}
-                                            </Box>
-                                            {#if item.craftable.components[i]}
-                                                <Inline class="text-sm"
-                                                    >{active.items.items?.find(
-                                                        (it) => it.slug === item.craftable.components[i]?.item,
-                                                    )?.name}</Inline
-                                                >
-                                            {/if}
-                                        </Stack> -->
                                     {/each}
                                 </Grid>
                                 <Heading is="h6" as="p" class="mb-3 mt-6 font-semibold">Stations required:</Heading>
@@ -279,7 +267,7 @@
                                     </Inline>
                                 {/each}
                             {:else}
-                                <p class="text-neutral-softest italic">This item is not craftable.</p>
+                                <p class="text-neutral-softest italic">Enable this to make this item craftable.</p>
                             {/if}
                         </Stack>
                         <Stack class="mx-6 mb-6">
@@ -290,34 +278,41 @@
                             {#if isScrappable}
                                 <Heading is="h6" as="p" class="mb-3 font-semibold">Materials produced:</Heading>
                                 <Grid cols={3} gap={1.5}>
-                                    {#each new Array(6) as scrapItem, i}
+                                    {#each new Array(6) as _, i}
                                         {@const component = item.scrappable?.components?.[i]}
+										{@const itemObject = active.items.items.find(it => it.slug === component?.item)}
                                         <Stack
                                             align="center"
                                             justify="center"
-                                            gap={1.5}
-                                            class="bg-neutral-softest aspect-square w-full rounded p-1.5"
+                                            class="aspect-square bg-neutral-softest relative p-1.5 rounded w-full"
                                         >
                                             {#if component}
-                                                <Stack align="center" justify="center" gap={1.5}>
-                                                    <Icon name="Package" />
+                                                <Stack align="center" justify="center">
+													{#if itemObject.image?.url}
+														<Thumbnail src={itemObject.image?.url} class="mix-blend-darken" />
+													{:else}
+														<Icon name="Package" />
+													{/if}
                                                     <Inline class="text-sm">
                                                         <span>{component.quantity}x</span>
                                                         <span
                                                             >{active.items.items.find(
                                                                 (it) => it.slug === component.item,
-                                                            ).name}</span
+                                                            ).name || component.item}</span
                                                         >
                                                     </Inline>
                                                 </Stack>
                                             {:else}
-                                                <Icon name="Package" class="text-neutral-softest opacity-50" />
+												<Flex class="aspect-square w-full">
+													<Icon name="Package" class="text-neutral-softest opacity-50" />
+												</Flex>
+												<Inline class="text-sm">&nbsp;</Inline>
                                             {/if}
                                         </Stack>
                                     {/each}
                                 </Grid>
                             {:else}
-                                <p class="text-neutral-softest italic">This item is not scrappable.</p>
+                                <p class="text-neutral-softest italic">Enable this to make this item scrappable.</p>
                             {/if}
                         </Stack>
                     </Grid>
@@ -336,7 +331,38 @@
                         {#if isConsumable}
                             <Heading is="h6" as="p" class="mb-3 font-semibold">Effects:</Heading>
                             <Grid cols={3} gap={1.5}>
-                                {#each new Array(3) as effect, i}
+								{#each item.consumable.effects as effect}
+									 <Stack class="bg-neutral-softest aspect-video rounded p-3">
+										<Flex align="baseline" justify="between" class="font-semibold mb-2">
+											<Heading is="h5" as="p" class="uppercase">{effect.effect}</Heading>
+											<span>{effect.magnitude}</span>
+										</Flex>
+										<Inline class="baseline border-t py-0.5" gap={3}>
+											<span class="text-sm w-28">Target:</span>
+											<Inline gap={1}>
+												<Icon name="Target" size="sm" class="text-neutral-soft" />
+												<span>{effect.target}</span>
+											</Inline>
+										</Inline>
+										<Inline class="baseline border-t py-0.5" gap={3}>
+											<span class="text-sm w-28">Damage Type:</span>
+											<Inline gap={1}>
+												<Icon name="Circle" size="sm" class="text-neutral-soft" />
+												<span>{effect.damage_type}</span>
+											</Inline>
+										</Inline>
+										<Inline class="baseline border-t py-0.5" gap={3}>
+											<span class="text-sm w-28">Duration:</span>
+											<Inline gap={1}>
+												<Icon name="Timer" size="sm" class="text-neutral-soft" />
+												<span>{effect.duration}</span>
+											</Inline>
+										</Inline>
+									</Stack>
+								{/each}
+
+
+                                <!-- {#each new Array(3) as _, i}
                                     {#if item.consumable}
                                         <Stack class="bg-neutral-softest aspect-video rounded p-3" gap={1.5}>
                                             <Heading is="h5" as="h6" class="mb-2">Effect {i + 1}</Heading>
@@ -373,10 +399,10 @@
                                             {/if}
                                         </Stack>
                                     {/if}
-                                {/each}
+                                {/each} -->
                             </Grid>
                         {:else}
-                            <p class="text-neutral-softest italic">This item is not consumable.</p>
+                            <p class="text-neutral-softest italic">Enable to make this item consumable.</p>
                         {/if}
                     </Stack>
                 </Section>
@@ -396,29 +422,30 @@
                             <Inline align="center" gap={1.5}>
                                 <Input.Select
                                     class="w-48"
-                                    bind:value={item.equippable.slot}
+                                    bind:value={$equipForm.slot}
                                     options={[
-                                        { label: 'Head', value: 'head' },
-                                        { label: 'Earring', value: 'ears' },
-                                        { label: 'Face', value: 'face' },
-                                        { label: 'Neck', value: 'neck' },
+										{ label: 'None',	value: ''	    },
+                                        { label: 'Head',	value: 'head'   },
+                                        { label: 'Earring', value: 'ears'   },
+                                        { label: 'Face',	value: 'face'   },
+                                        { label: 'Neck',	value: 'neck'   },
                                         { separator: true },
-                                        { label: 'Arms', value: 'arms' },
-                                        { label: 'Wrist', value: 'wrist' },
-                                        { label: 'Finger', value: 'finger' },
+                                        { label: 'Arms',	value: 'arms'   },
+                                        { label: 'Wrist',	value: 'wrist'  },
+                                        { label: 'Finger',	value: 'finger' },
                                         { separator: true },
-                                        { label: 'Torso', value: 'torso' },
-                                        { label: 'Back', value: 'back' },
-                                        { label: 'Waist', value: 'waist' },
+                                        { label: 'Torso',	value: 'torso'  },
+                                        { label: 'Back',	value: 'back'   },
+                                        { label: 'Waist',	value: 'waist'  },
                                         { separator: true },
-                                        { label: 'Legs', value: 'legs' },
-                                        { label: 'Feet', value: 'feet' },
+                                        { label: 'Legs',	value: 'legs'   },
+                                        { label: 'Feet',	value: 'feet'   },
                                     ]}
                                 />
                                 <Button style="soft" theme="accent" icon="Plus" />
                             </Inline>
                         {:else}
-                            <p class="text-neutral-softest italic">This item is not equippable.</p>
+                            <p class="text-neutral-softest italic">Enable to make this item equippable.</p>
                         {/if}
                     </Stack>
                 </Section>
@@ -433,7 +460,7 @@
                             <Heading is="h3" as="h4">Weapon</Heading>
                             <Input.Switch bind:checked={isWeaponable} class="my-0.5 ml-6" />
                         </Flex>
-                        {#if item.weaponable}
+                        {#if isWeaponable}
                             <Grid cols={3} gap={3}>
                                 {#each ['Melee', 'Thrown', 'Ranged'] as attackType}
                                     <Stack>
@@ -448,7 +475,7 @@
                                             {/if}
                                         </Flex>
                                         <Stack class="bg-neutral-softest aspect-video w-full rounded p-3 text-sm">
-                                            {#if item.weaponable[attackType.toLowerCase()]}
+                                            {#if item.weaponable?.[attackType.toLowerCase()]}
                                                 <Inline>
                                                     <span class="mr-auto">Hands:</span>
                                                     <span>{item.weaponable?.[attackType.toLowerCase()]?.hands}</span>
@@ -499,7 +526,7 @@
 								</Stack> -->
                             </Grid>
                         {:else}
-                            <p class="text-neutral-softest italic">This item is not weaponable.</p>
+                            <p class="text-neutral-softest italic">Enable to make this item useable as a weapon.</p>
                         {/if}
                     </Stack>
                 </Section>

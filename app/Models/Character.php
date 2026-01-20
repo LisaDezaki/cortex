@@ -54,6 +54,12 @@ class Character extends Model
 		return $this->belongsTo(Project::class);
 	}
 
+	public function inventory(): BelongsToMany
+	{
+		return $this->belongsToMany(Item::class, 'character_inventories', 'character_id', 'item_id')
+			->withPivot('quantity');
+	}
+
 	public function relationships(): BelongsToMany
 	{
 		return $this->belongsToMany(Character::class, 'character_relationships', 'character_id', 'related_character_id')

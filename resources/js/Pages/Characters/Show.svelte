@@ -76,7 +76,7 @@
 							onclick={() => character.openModal('setMedia', { type: 'banner', aspect: 'aspect-[7/3]' })}
 						/>
 						<Media
-							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border-2 border-slate-100 right-12 -bottom-16 rounded-lg overflow-hidden w-48"
+							class="absolute aspect-square bg-slate-200/50 backdrop-blur hover:backdrop-blur-lg border-2 border-slate-100 right-12 -bottom-16 rounded-lg overflow-hidden w-24 md:w-32 lg:w-36 xl:w-40"
 							media={character.getMedia('portrait')}
 							onclick={() => character.openModal('setMedia', { type: 'portrait', aspect: 'aspect-[1/1]' })}
 						/>
@@ -247,21 +247,34 @@
 
 
 				<!-- Inventory -->
-		
+
 				<Section id="items" class="p-6">
 					<Flex align="center" class="mb-6">
 						<Heading is="h3" as="h4">Inventory</Heading>
 					</Flex>
 					<Grid cols={6} gap={0.5} class="rounded overflow-hidden">
-						{#each new Array(12) as item, i}
-							<Thumbnail aspect="square"
-								class="aspect-square bg-neutral-softest"
-							/>
-						{/each}
-						{#each character.inventory as item, i}
-							<Entity
-								entity={item}
-							/>
+						{#each new Array(12) as _, i}
+							{@const item = character.inventory[i]}
+							<Stack class="bg-neutral-softest p-1 relative rounded-md">
+								{#if item}
+									<Entity
+										entity={item}
+										href={route('items.show', { item: item.slug })}
+									/>
+									<Inline class="absolute bottom-0.5 right-1.5 text-neutral-soft text-sm">
+										x{item.pivot?.quantity}
+									</Inline>
+								{:else}
+									<Thumbnail aspect="square"
+										class="aspect-square pt-7"
+										icon="Package"
+									/>
+									<Stack class="-space-y-1">
+										<span class="text-sm text-neutral-softest">&nbsp;</span>
+										<span class="text-xs text-neutral-softest">&nbsp;</span>
+									</Stack>
+								{/if}
+							</Stack>
 						{/each}
 					</Grid>
 				</Section>
@@ -276,7 +289,7 @@
 					<Grid cols={6} class="gap-[2px]">
 						{#each new Array(6) as item, i}
 							<Thumbnail aspect="square"
-								class="aspect-square bg-neutral-softest rounded-none hover:inner-shadow-sm transition-all"
+								class="aspect-square bg-neutral-softest rounded hover:inner-shadow-sm transition-all"
 							/>
 						{/each}
 					</Grid>

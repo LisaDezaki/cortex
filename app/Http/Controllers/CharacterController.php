@@ -128,6 +128,7 @@ class CharacterController extends Controller
 			'media',
 			'mapData.location.media',
 			'factions.image',
+			'inventory.image',
 			'relationships.image',
 			'inverseRelationships.image',
 			'customFieldValues.customField',

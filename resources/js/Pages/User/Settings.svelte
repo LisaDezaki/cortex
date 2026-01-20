@@ -30,7 +30,7 @@
 	{/snippet}
 
 	{#snippet article()}
-		<Flex justify="center" gap={12} class="py-12">
+		<Flex justify="center" class="gap-6 px-6 py-9 lg:gap-12 lg:px-12 lg:py-12">
 			<PageMenu
 				items={[
 					{ icon: "Info",       label: "Overview",      href: "#overview" },

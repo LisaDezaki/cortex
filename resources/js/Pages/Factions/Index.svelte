@@ -139,8 +139,8 @@
 				title="Faction List"
 				subtitle="Index page"
 				actions={[
-					{ icon: "GearFine", theme: "neutral", href: route('factions.settings') },
-					{ icon: "Plus", text: "New", theme: "accent", onclick: () => factions.openModal('create') },
+					{ size: "xl", icon: "GearFine", theme: "neutral", class: "group", iconClass: "group-hover:rotate-[60deg] transition-all", href: route('factions.settings') },
+					{ size: "xl", icon: "Plus", text: "New", theme: "accent", onclick: () => factions.openModal('create') },
 				]}
 			/>
 
