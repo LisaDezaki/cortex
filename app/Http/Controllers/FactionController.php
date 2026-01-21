@@ -65,6 +65,10 @@ class FactionController extends Controller
 
     public function index()
     {
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Faction::class
@@ -124,6 +128,10 @@ class FactionController extends Controller
 
     public function show(Faction $faction)
     {
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$faction->load([
 			'image',
 			'media',
@@ -224,8 +232,12 @@ class FactionController extends Controller
 
 
 
-	public function settings(Request $request): Response
+	public function settings(Request $request)
     {
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Faction::class

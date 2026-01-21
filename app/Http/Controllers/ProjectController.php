@@ -67,10 +67,10 @@ class ProjectController extends Controller
 	 * Show the list of Characters
 	 */
 
-	public function index(): Response
-    {
-        return Inertia::render('Projects/Index');
-    }
+	// public function index(): Response
+    // {
+    //     return Inertia::render('Projects/Index');
+    // }
 
 	/**
 	 * CREATE / STORE

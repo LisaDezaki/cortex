@@ -76,6 +76,10 @@ class ItemController extends Controller
 
 	public function index()
 	{
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Item::class
@@ -121,8 +125,12 @@ class ItemController extends Controller
 	 * Render the Character entity page for the requested Character.
 	 */
 
-	public function show(Item $item): Response
+	public function show(Item $item)
 	{
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$item->load([
 			'media',
 			'customFieldValues.customField',
@@ -213,8 +221,12 @@ class ItemController extends Controller
 
 
 
-	public function settings(Request $request): Response
+	public function settings(Request $request)
 	{
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Item::class

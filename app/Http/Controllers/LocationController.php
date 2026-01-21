@@ -65,6 +65,10 @@ class LocationController extends Controller
 	 */
     public function index()
     {
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$locationTypes = Location::where(
 			'project_id', Auth::user()->active_project
 		)->distinct()->orderBy('type')->pluck('type')->filter()->values()->all();
@@ -116,6 +120,10 @@ class LocationController extends Controller
 	 */
 	public function show(Location $location)
 	{
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$location->load([
 			'image',
 			'media',
@@ -229,8 +237,12 @@ class LocationController extends Controller
 		// ]);
     }
 
-	public function settings(Request $request): Response
+	public function settings(Request $request)
     {
+		if (!Auth::user()->active_project) {
+			return Redirect::route("dashboard");
+		}
+
 		$customFields = CustomField::where([
 			'project_id' => Auth::user()->active_project,
 			'fieldable_type' => Location::class
