@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -101,14 +102,30 @@ class MediaService
 	{
 		if ( Media::where('id', $filepath)->exists() ) { return; }
 
+		//	If $entity === User,
+		//	$userDir = "user_..."
+
+		//	If $entity === Project,
+		//	$projectDir = "project_..."
+
+		//	If $entity === Other
+		//	$entityName
+
 		$user = Auth::user();
-		$userDir    = "user_"   .substr($user->id, 0, 8);
-		$projectDir = "project_".substr($user->active_project, 0, 8);
+		$userDir    = "user_"   .substr($user->id, 24, 12);
+		$projectDir = "project_".substr($user->active_project, 24, 12);
 
 		$relationship = $entity->$type();
 		$entityName   = strtolower(class_basename($entity->getMorphClass()));
+		$entityDir    = $entityName."_".substr($entity->id, 24, 12);
 
-		$newpath      = "$userDir/$projectDir/$entityName";
+		if ($entityName === "user") {
+			$newpath = "$userDir";
+		} else if ($entityName === "project") {
+			$newpath = "$userDir/$projectDir";
+		} else if ($entityName) {
+			$newpath = "$userDir/$projectDir/$entityName/$entityDir";
+		}
 
 		if ($relationship) {
 			$this->deleteImage($relationship);
