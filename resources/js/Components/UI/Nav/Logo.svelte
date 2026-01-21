@@ -12,7 +12,7 @@
 		logo: clsx('nav-logo', className),
 		svg:  clsx('fill-emerald-400 stroke-emerald-400',
 					'hover:fill-white hover:stroke-white',
-					'h-9 w-9 mx-auto p-0.5 transition duration-150')
+					'min-h-9 min-w-9 mx-auto p-0.5 transition duration-150')
 	}
 
 </script>

@@ -2,7 +2,7 @@
 	import { Link, page } from '@inertiajs/svelte'
     import clsx from 'clsx'
 	
-	import { Inline, Stack } from '@/Components/Core'
+	import { Flex, Inline, Stack } from '@/Components/Core'
 	import Button      from '@/Components/UI/Button.svelte'
 	import Heading      from '@/Components/UI/Heading.svelte'
 	import Icon      from '@/Components/UI/Icon.svelte'
@@ -23,8 +23,13 @@
 	 * @type {Object}
 	 */
 	let cx = $derived({
-		menu: clsx('page-menu sticky top-0 flex-none min-w-48 w-48 max-w-48 rounded-lg overflow-y-auto pr-2', className),
-		back: clsx('border border-neutral-softest gap-1.5 mb-3 place-self-start rounded-full hover:border-accent hover:text-accent'),
+		menu: clsx('page-menu',
+			'relative sticky items-center gap-3 flex-none rounded-lg overflow-y-auto',
+			'   bg-surface        flex-row    top-0     px-3    py-1.5    w-full z-10',
+			'lg:bg-transparent lg:flex-col lg:top-12 lg:px-0 lg:py-0   lg:w-48',
+			className),
+		back: clsx('border border-neutral-softest gap-1.5 place-self-start rounded-full hover:border-accent hover:text-accent'),
+		list: clsx('page-menu-list flex-row lg:flex-col gap-3 lg:gap-0.5'),
 		item: clsx('page-menu-item flex items-center gap-3 min-h-9 p-md pl-3 rounded w-full'),
 		itemDefault: clsx('hover:bg-neutral-softest'),
 		itemDanger:  clsx('text-danger hover:bg-danger-softest'),
@@ -41,7 +46,7 @@
 
 
 
-<Stack class={cx.menu} {...restProps}>
+<Flex class={cx.menu} {...restProps}>
 
 	{#if back}
 		<Button class={cx.back} icon="ArrowElbowUpLeft" {...back} />
@@ -59,7 +64,7 @@
 		</div>
 	{/if}
 
-	<Stack as="ul" class="page-menu-list">
+	<Flex as="ul" class={cx.list}>
 		{#if children}
 			{@render children()}
 		{/if}
@@ -70,9 +75,9 @@
 				{@render menuItem(item)}
 			{/if}
 		{/each}
-	</Stack>
+	</Flex>
 
-</Stack>
+</Flex>
 
 
 

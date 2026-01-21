@@ -4,6 +4,7 @@
 
 	import Box from '@/Components/Core/Box.svelte'
 	import Button from '@/Components/UI/Button.svelte'
+    import clsx from 'clsx'
 
 	const projects = $page.props.projects.data
 	const form = useForm({
@@ -14,9 +15,16 @@
 		active
 	} = $props()
 
+	let cx = $derived({
+		select: clsx('project-select aspect-square  relative flex items-center justify-center gap-2 mx-auto overflow-hidden text-center w-full border border-emerald-500',
+			'md:aspect-video md:rounded-lg'
+		),
+
+	})
+
 </script>
 
-<Box class="project-select">
+<Box class={cx.select}>
 	{#if active}
 		<Link class="absolute inset-0 flex items-end justify-start" href="/">
 			{#if active.getMedia('banner')}
@@ -24,25 +32,26 @@
 			{/if}
 			<div class="project-details">
 				<div class="project-details-text text-left -space-y-1">
-					<div class="font-style-h6">{active.name}</div>
-					<div class="font-style-tiny">{active.type || 'Project'}</div>
+					<div class="hidden md:block font-style-h6">{active.name}</div>
+					<div class="hidden md:block font-style-tiny">{active.type || 'Project'}</div>
 				</div>
 			</div>
 		</Link>
 	{:else if projects.length >= 1}
-		<Link class="absolute inset-0 flex items-center justify-center text-sm" href={route('dashboard')}>
+		<Link class="hidden md:flex absolute inset-0 items-center justify-center text-sm" href={route('dashboard')}>
 			No project selected.<br/>
 			Activate one?
 		</Link>
 	{:else if projects.length == 0}
-		<Link class="absolute inset-0 flex items-center justify-center text-sm" href={route('projects.create')}>
+		<Link class="hidden md:flex absolute inset-0 items-center justify-center text-sm" href={route('projects.create')}>
 			No projects.<br/>
 			Create one?
 		</Link>
 	{/if}
 	{#if active}
 		<Button
-			class="absolute top-1 right-1 backdrop-blur-sm bg-danger-softest rounded-full text-danger z-10"
+			class="hidden md:inline absolute top-1.5 right-1.5 backdrop-blur-sm bg-danger-softest rounded-full z-10"
+			size="xs" style="hard" theme="danger"
 			icon="X" iconSize="sm"
 			onclick={() => active.deactivate()}
 		/>
@@ -62,8 +71,8 @@
 <style lang="postcss">
 
 	:global(.project-select) {
-		@apply relative flex items-center justify-center gap-2 mx-auto aspect-video overflow-hidden text-center w-full;
-		@apply border border-emerald-500 rounded-lg;
+		/* @apply relative flex items-center justify-center gap-2 mx-auto aspect-video overflow-hidden text-center w-full;
+		@apply border border-emerald-500 rounded-lg; */
 		background: repeating-linear-gradient(
 						-45deg,
 						rgba(0,0,0,0.1),

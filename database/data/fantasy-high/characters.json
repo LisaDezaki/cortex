@@ -1,0 +1,723 @@
+{
+	"adaine-abernant": {
+		"name": "Adaine Abernant",
+		"desc": "I'm Adaine Abernant. I'm the daughter of the Elvish Ambassador. I was at Hudol, but unfortunately, I failed the entrance exam to get into the upper school because I had a little bit of a panic attack but Aguefort's good too, Aguefort's- I'm happy to be at Aguefort, that's good. It's like actually, I'm better at the practical applications of magic anyway, and I'm good I, I, I- It's good. I'm excited to go.",
+		"player": "Siobhan Thompson",
+		"level": 14,
+		"class": "Wizard",
+		"race": "High Elf"
+	},
+
+	"aelwyn-abernant": {
+		"name": "Aelwyn Abernant",
+		"desc": "Aelwyn is described as being perfect, prim, and proper. She wears a Hudol uniform, as that's where she attends school.\n\nShe is very antagonistic towards her younger sister and they have a strong rivalry, as Aelwyn is the favorite child of the family. However, deep down, she feels bad that their parents treat her as bad as they do. She also feels a deep sense of guilt for watching it happen their entire childhoods, but was too afraid of their parents to do anything about it. She suffered indirectly through her parents expectations and her fear of them. She's driven by her parents' expectations of her, and comes to work for the Nightmare King along with her mother.\n\nOutside of school hours, she's a real party animal. The boys at Hudol who can't normally score women hire Aelwyn to come to their parties and provide drugs, liquor, and hot, sexy elemental cheerleaders for them to make out with.",
+		"class": "Wizard",
+		"race": "High Elf",
+		"occupation": "Teacher @ Oakshield Middle School"
+	},
+
+	"alston-hughes": {
+		"name": "Alston Hughes",
+		"desc": "Mr. Hughes is a human in a seedy suit who works at KVX Bank. In multiple episodes he is seen making discreet business deals with William Seacaster. He seems very dedicated to his business.",
+		"race": "Human",
+		"occupation": "Banker @ KVX Bank"
+	},
+
+	"angela-worrel": {
+		"name": "Angela Worrel",
+		"desc": "Angela is a stuck-up, angry half-elf woman who is not sympathetic towards the Aguefort Adventuring Academy. She holds a lot of contempt for the Elmville police department and is constantly angry about their shortcomings.",
+		"race": "Half-Elf",
+		"occupation": "Agent @ Council of Chosen"
+	},
+
+	"angwyn-abernant": {
+		"name": "Angwyn Abernant",
+		"desc": "",
+		"class": "Wizard (Enchantment)",
+		"race": "High Elf",
+		"occupation": "Elven Ambassador @ Fallinel"
+	},
+
+	"antiope-jones": {
+		"name": "Antiope Jones",
+		"desc": "Antiope is Black, dark skin, angular features. She's wearing like black athleisure but it's all like too short at the elbows and like ankles 'cause she went through her big growth spurt while in the crystal.",
+		"player": "Aabria Iyengar",
+		"level": 10,
+		"class": "Lvl 6 Fighter, Lvl 4 Ranger",
+		"race": "Human"
+	},
+
+	"arcturus-grix": {
+		"name": "Arcturus Grix",
+		"desc": "Grix is a golden Warforged spellcaster. Instead of feet he has an enormous wheeled stand.",
+		"race": "Warforged",
+		"occupation": "Interim Principal @ Aguefort"
+	},
+
+	"arianwen-abernant": {
+		"name": "Arianwen Abernant",
+		"desc": "Arianwen works as a professor at the distinguished magic academy, Hudol College. Like her husband, Angwyn, she is very partial to their eldest daughter, Aelwyn, and often criticizes their youngest daughter, Adaine, in defense of Aelwyn.\n\nTowards the end of Fantasy High, Arianwen seems to show a little regret for how she treated her daughter, Adaine, whereas Angwyn does not.",
+		"class": "Wizard",
+		"race": "High Elf"
+	},
+
+	"arthur-aguefort": {
+		"name": "Arthur Aguefort",
+		"desc": "Arthur is a human wizard with very dark skin and a long white beard that goes past his waist. He wears a purple corduroy suit and a monocle, and he carries an umbrella. He wears a watch fob on a chain.",
+		"player": "Brennan Lee Mulligan",
+		"class": "Wizard",
+		"race": "Human"
+	},
+
+	"ayda-aguefort": {
+		"name": "Ayda Aguefort",
+		"desc": "She is described as a resplendent and beautiful young woman, with a striking resemblance to Arthur Aguefort. From the knees down she has large, almost metallic golden talons, with digitigrade ankles. Her wings are deep red, turning orange, and as they reach yellow at the ends, flicker with little flames. She is noticeably not a harpy as she has has arms as well as wings. Her arms are tattooed with many orange runes. Her eyes are pupils set into roiling balls of flame. She has a short shock of fiery red hair at the top of her head.",
+		"class": "Wizard",
+		"race": "Half-Phoenix"
+	},
+
+	"basrar": {
+		"name": "Basrar",
+		"desc": "He acts very cheery and nice when in his store but it is said that he has a deep sadness about him which is presumably about his inability to use his magic for anything but ice cream related wishes.",
+		"race": "Ice Djinn",
+		"occupation": "Owner @ Basrar's Soda Fountain"
+	},
+
+	"bill-seacaster": {
+		"name": "William \"Old Bill\" Seacaster",
+		"desc": "He is the most pirate-y pirate to ever pirate. He wears a tricorn hat, an eye patch, and a long coat, with a saber at his side. Bill Seacaster is a very loud, intense, and volatile person. He takes pride in who he is and is not ashamed of the way he amassed his wealth. He is a pirate, and takes offense when people suggest otherwise, because of what he's done to get the title. He is extremely fond of his son and re-lives his adventuring days vicariously through him. He compliments him often, though this high praise tends to set very high expectations for him as well, which puts a strain on their otherwise very loving relationship.",
+		"player": "Brennan Lee Mulligan",
+		"race": "Human"
+	},
+
+	"biz-glitterdew": {
+		"name": "Biz Glitterdew",
+		"desc": "Biz is a chubby little pixie with butterfly wings. He has a spike of hair and long sideburns. He wears thick glasses, a graphic t-shirt with an 8-bit design on it, and Chuck Taylor/Converse style sneakers.",
+		"class": "Wizard",
+		"race": "Pixie"
+	},
+
+	"bobby-dawn": {
+		"name": "Bobby Dawn",
+		"desc": "Bobby has a shock of white hair and thick black eyebrows. He uses a cane and wears glasses. He has an incredibly hairy chest.",
+		"class": "Cleric",
+		"race": "Human",
+		"occupation": "Televangelist"
+	},
+
+	"bubble-glitterdew": {
+		"name": "Bubble Glitterdew",
+		"desc": "Bubble Glitterdew is the suburban and extremely tired mother of Biz Glitterdew.",
+		"race": "Pixie"
+	},
+
+	"bud-cubby": {
+		"name": "Bud Cubby",
+		"desc": "",
+		"occupation": "Postman",
+		"race": "Halfling"
+	},
+
+	"carie-zatrial": {
+		"name": "Carie Zatrial",
+		"desc": "",
+		"occupation": "Senior Student @ Aguefort",
+		"race": "Tiefling"
+	},
+
+	"carmine-wallace": {
+		"name": "Carmine Wallace",
+		"desc": "Carmine Wallace is Ostentatia Wallace's father.",
+		"occupation": "Retired Mithral Smith",
+		"race": "Dwarf"
+	},
+
+	"cathilda-ceili": {
+		"name": "Cathilda Ceíli",
+		"desc": "Cathilda is a halfling with dark brown eyes. She normally wears her maid uniform, as she's typically working whenever she's around Fabian and the audience is aware of her presence. Despite what Fabian may think, though, she does actually have other clothes that she wears.",
+		"class": "Fighter",
+		"race": "Halfling",
+		"occupation": "Maid @ Seacaster Manor"
+	},
+
+	"coach-daybreak": {
+		"name": "Coach Daybreak",
+		"desc": "Daybreak is a human fighter who wears sweatpants and a baseball cap, and a whistle around his neck. He carries a giant spear glowing with holy light.\n\nHe is very enthusiastic about bloodrush and thinks highly of his players, calling them his \"boys\" and appreciates team players, no matter how good at the sport someone may be. He is extremely religious and is very supportive of Kristen, though he reveals later that he's very homophobic and intolerant of non-believers. His faith is very conservative, like Kristen's parents, and believes she should cut people out her life who are condemned to hell, instead of sharing the word of Helio with them as Kristen might do.",
+		"class": "Fighter",
+		"race": "Human",
+		"occupation": "Coach @ Aguefort"
+	},
+
+	"corsica-jones": {
+		"name": "Corsica Jones",
+		"desc": "Ms. Jones wields a sword that she carries on her back, and wears a shield on her left arm. She wears Seven League Boots and looks as though she's just come back from ranging for a long time.",
+		"class": "Fighter",
+		"race": "Human",
+		"occupation": "Teacher @ Aguefort Adventuring Academy"
+	},
+
+	"daisy-cubby": {
+		"name": "Daisy Cubby",
+		"desc": "",
+		"occupation": "Waitress",
+		"race": "Halfling"
+	},
+
+	"danielle-barkstock": {
+		"name": "Danielle Barkstock",
+		"desc": "Danielle is a half-elf. In Fantasy High and Fantasy High: Sophomore Year, she has long, sandy brown/dark blonde hair with vines and flowers through it. She is tall and broad-shouldered and has a young grey fox as an animal companion. As of The Seven, she is Asian, with long black hair, and constantly covered in a ‘Pigpen’-esque cloud of spores and ferns.",
+		"player": "Erika Ishii",
+		"occupation": "Student, Activist",
+		"class": "Druid",
+		"race": "Half-Elf"
+	},
+
+	"dayne-blayde": {
+		"name": "Dayne Blayde",
+		"desc": "Dayne is a human paladin with blonde hair and a stereotypical jock look.\n\nHe spends much of the series simply being popular both in sports and in regular school. However, he has shown more intelligence than other jocks at the school like Ragh. He is dating Penelope Everpetal, and his best friend, Ragh Barkrock has a crush on him, though he does not reciprocate.",
+		"class": "Paladin",
+		"race": "Human"
+	},
+
+	"digby-thistlespring": {
+		"name": "Distle Thistlespring",
+		"desc": "",
+		"class": "Artificer",
+		"race": "Gnome"
+	},
+
+	"dj-brainzz": {
+		"name": "DJ Brainzz",
+		"desc": "",
+		"class": "Bard",
+		"race": "Zombie"
+	},
+
+	"donna-applebees": {
+		"name": "Donna Applebees",
+		"desc": "",
+		"class": "Paladin",
+		"race": "Human"
+	},
+
+	"doreen": {
+		"name": "Doreen",
+		"desc": "",
+		"class": "Warlock",
+		"race": "Human",
+		"occupation": "Lunch Lady @ Aguefort"
+	},
+
+	"dr-asha": {
+		"name": "Dr. Asha",
+		"desc": "Dr. Asha is a dreamy dwarven doctor at St. Owen's Memorial Hospital.",
+		"occupation": "Doctor",
+		"race": "Dwarf"
+	},
+
+	"dusty": {
+		"name": "Dusty",
+		"desc": "Dusty is an old-looking gnome who has a bit of a paunch and wears a trenchcoat. His eyes glow blue from something like a permanent Detect Magic. He smokes cigars. He's possibly thousands of years old, since the year 1112 is the last time he saw a phoenix egg.",
+		"race": "Gnome",
+		"occupation": "Detective @ Elmville Police Department"
+	},
+
+	"ebria-dwimmerwaithe": {
+		"name": "Ebria Dwimmerwaithe",
+		"desc": "Ebria Dwimmerwaithe is the theater director of the overall school for the Aguefort Adventuring Academy.",
+		"occupation": "Theater Director @ Aguefort"
+	},
+
+	"eleminthindriel": {
+		"name": "Eleminthindriel"
+	},
+
+	"ellarian-fallowglade": {
+		"name": "Ellarian Fallowglade",
+		"desc": "",
+		"class": "Druid",
+		"race": "Half-Elf"
+	},
+
+	"eugenia-shadow": {
+		"name": "Eugenia Shadow",
+		"desc": "Eugenia Shadow is the rogue teacher at Aguefort Adventuring Academy. She is incredibly well hidden and if a student finds her they automatically pass the school year.",
+		"class": "Rogue",
+		"race": "Halfling",
+		"occupation": "Rogue Teacher @ Aguefort"
+	},
+
+	"fabian-seacaster": {
+		"name": "Fabian Aramais Seacaster",
+		"desc": "Oh, of course, hello. I'm Fabian Aramais Seacaster. I'm a half-elf. I'm, of course, the son of the famous William Seacaster, the great adventurer who sailed the Celestine Sea, freeing slaves and raising up nations. I'm a fencer by trade, I also know how to glass blow and I'm quite good at calligraphy. And I'm absolutely thrilled to be here at the Aguefort Adventuring Academy. Very excited to kind of start on my adventure of becoming an adventurer much like my father, that I may too, one day, take up the mantle of the Seacaster name and sow my heroism across Spyre.",
+		"player": "Lou Wilson",
+		"level": 14,
+		"class": "Lvl 6 Fighter, Lvl 8 Bard",
+		"race": "Half-Elf (High Elf/Human)"
+	},
+
+	"fatima-al-aydaa": {
+		"name": "Fatima al-Aydaa",
+		"desc": "Fatima al-Aydaa is the nurse at the Aguefort Adventuring Academy.",
+		"race": "Gnome",
+		"occupation": "Nurse @ Aguefort Adventuring Academy"
+	},
+
+	"ficus": {
+		"name": "Ficus",
+		"desc": "Ficus is a student at the Aguefort Adventuring Academy. He always finds a way to call someone \"chill\". He is often seen hacking sack with his best friend and drug dealer Cody, the Kodiak Brown Bear.",
+		"player": "Griffin McElroy",
+		"class": "Druid",
+		"race": "Firbolg"
+	},
+
+	"fig": {
+		"name": "Figueroth \"Fig\" Faeth",
+		"desc": "Um, my name's Figueroth. You probably knew me last year as, like, that really bubbly girl who was, like, invited to every party, but all of a sudden, my horns started growing in, and I thought I was an Elf, but it turns out, my dad isn't my real dad, and I have a demon for a dad, but my mom won't tell me who he is, so pretty much I'm kinda like, fuck everyone and I'm just like- I'm just like, I've got a bass guitar. I've got some drumsticks. Like, I'm ready to start a bass driven band, and just like, yeah, just fuck everything, right, okay, that's it. That's me, also, my name is Figueroth. My last name is Faeth, but that's the name of someone who does not have anything to do with me because he's not my dad, so I'm just Fig now. Just Fig.",
+		"player": "Emily Axford",
+		"level": 14,
+		"class": "Lvl 10 Bard, Lvl 1 Warlock, Lvl 3 Paladin",
+		"race": "Tiefling (Wood Elf/Archdevil)"
+	},
+
+	"frank-dunford": {
+		"name": "Frank Dunford",
+		"desc": "Frank Dunford is the human owner of the Elm Valley Mall arcade.",
+		"race": "Human",
+		"occupation": "Owner @ Elm Valley Mall Arcade"
+	},
+
+	"gertie-bladeshield": {
+		"name": "Gertie Bladeshield",
+		"desc": "Gertie is a tall firbolg whose \"eyes take up all of her spectacles\".",
+		"class": "Ranger (Swarmkeeper)",
+		"race": "Firbolg"
+	},
+
+	"gilear-faeth": {
+		"name": "Gilear Faeth",
+		"desc": "Gilear is a wood elf who's lost some hair since his divorce and now wears it in a comb-over, which is a unique look on an elf. He's got a little bit of a paunch. He is often described as being sad and pitiable. He wears a short-sleeved king button up shirt which is often stained, usually with yogurt, but one time it was beans.",
+		"player": "Brennan Lee Mulligan",
+		"class": "Commoner",
+		"race": "Wood Elf"
+	},
+
+	"goldenhoard": {
+		"name": "Vice Principal Goldenhoard / Kalvaxus",
+		"desc": "He is a hulking dragonborn. He's a red-scaled anthropomorphic dragon with a long tail and big claws. He has big horns that sweep off of his head. He wears a full grey suit with a blue tie.",
+		"race": "Dragonborn"
+	},
+
+	"gorbag": {
+		"name": "Gorbag",
+		"desc": "Gorbag is the biological father of Gorgug Thistlespring. He and his human girlfriend, Roz, had Gorgug when they were about fourteen years of age.",
+		"race": "Orc"
+	},
+
+	"gorgug": {
+		"name": "Gorgug Thistlespring",
+		"desc": "Uh, yeah, I'm Gorgug. I'm 14. I'm six feet, four inches tall. I'm a lot bigger than this house that I'm in. I kinda don't have a lot of friends. I'm not really good, really, at talking to people. I like keeping to myself and just sort of drawing something or listening to music. I'm adopted, by the way, my parents are little gnomes, and I'm a lot bigger than them. Last night I broke my bed in my sleep. Again. I just like to keep to myself.",
+		"player": "Zac Oyama",
+		"level": 14,
+		"class": "Lvl 5 Barbarian, Lvl 9 Artificer",
+		"race": "Half-Orc"
+	},
+
+	"gorthalax": {
+		"name": "Gorthalax the Insatiable",
+		"desc": "Despite his monstrous appearance, Gorthalax is very kind and sweet to everyone, even making friends with Sandra Lynn Faeth's ex-husband Gilear Faeth and her current boyfriend Jawbone O'Shaughnessey. He is also very open and honest, like when he tells Fig about him and her mother having sex after their reunion.",
+		"player": "Brennan Lee Mulligan",
+		"class": "Bard",
+		"race": "Devil"
+	},
+
+	"hallariel-seacaster": {
+		"name": "Hallariel Seacaster",
+		"desc": "Hallariel is a beautiful high elf with long, flowing hair. She typically wears silk garments and kimonos decorated with flowers which are woven by dwarves. She looks to be in her early 20s, even though she's about 200 years old. She wields a whip-thin silver elven sword and uses daggers.\n\nShe loves her son and spoils him with affection. She appears to have a laid-back approach to parenting and greatly enjoyed the taste of wine, even at 9:30 in the morning, before she went sober. She used to spend a lot of time drunk on wine in her sensory deprivation egg in the basement of Seacaster Manor, until the death of her husband. Now, she pushes her son to improve his combat skills even more than her husband did.",
+		"race": "High Elf"
+	},
+
+	"halo-st-croix": {
+		"name": "Halo St. Croix",
+		"desc": "Halo is a very debonair man. He's a bit of a doofus.",
+		"class": "Paladin",
+		"occupation": "Paladin Teacher @ Aguefort"
+	},
+
+	"hargis": {
+		"name": "Hargis",
+		"desc": "Hargis is a goliath who wears a custom-ordered beret (they don't sell them in his size). Adaine describes him as a giant rock-boy who wears what looks like a girl scout vest, but decorated with patches he made himself. He carries a lucky four-by-four with him at all times, looking for someplace special to use it as part of a set. It has \"Lucky\" written on it in sharpie, and is decorated with flowers drawn in different colors.",
+		"player": "Brian David Gilbert",
+		"level": 8,
+		"class": "Fighter",
+		"race": "Goliath"
+	},
+
+	"henry-hopclap": {
+		"name": "Henry Hopclap",
+		"desc": "Henry is a small Gnomish fellow with goggles and a shock of sandy brown/blonde hair. He's a younger guy, probably fresh out of college. He wears a fireproof apron and has a robotic arm.",
+		"class": "Artificer",
+		"race": "Gnome",
+		"occupation": "Artificer Teacher @ Aguefort"
+	},
+
+	"herzon": {
+		"name": "Herzon",
+		"desc": "Herzon is Fabian Seacaster's fencing teacher and one of the two known staff members in Seacaster Manor.",
+		"race": "Human",
+		"occupation": "Fencing Teacher @ Seacaster Manor"
+	},
+
+	"ivy-embra": {
+		"name": "Ivy Embra",
+		"desc": "Ivy is an Elven girl who carries a bow.",
+		"class": "Ranger/Fighter",
+		"race": "Wood Elf"
+	},
+
+	"jace-stardiamond": {
+		"name": "Jace Stardiamond",
+		"desc": "Jace is a half-elf sorcerer. He wears semi-casual attire, has a blond head of hair, and wears a loose red scarf.\n\nHe is very chill and friendly (to an almost obnoxious degree) and seems to try and be positive to everyone and in every situation. He is not really a proper teacher because sorcery is an innate ability in people to cast magic, so a he's really just an older adult friend to hang out and talk-shop with for the most part.",
+		"class": "Sorcerer",
+		"race": "Half-Elf",
+		"occupation": "Sorcery Teacher @ Aguefort Adventuring Academy"
+	},
+
+	"jawbone": {
+		"name": "Jawbone O'Shaughnessey",
+		"desc": "Jawbone is a human with lycanthropy who chooses to live in a hybrid half-human, half-werewolf form as a political statement.",
+		"class": "Barbarian",
+		"race": "Human (Lycanthrope)",
+		"occupation": "Guidance Counselor / Drug Dealer"
+	},
+
+	"jem-peppercorn": {
+		"name": "Jem Peppercorn",
+		"desc": "His name is Jem Peppercorn and he is an earth elemental who only eats once a year and thus needs to get a years worth of food into a 20 minute interval."
+	},
+
+	"johnny-spells": {
+		"name": "Johnny Spells",
+		"desc": "Johnny is a tiefling warlock with big horns and swept back hair. He wears a black leather jacket over a white t-shirt and tight jeans. He rides an infernal motorcycle that can drive itself.\n\nJohnny acts as a \"bad boy\" character and uses 1950's greaser inspired lingo such as \"daddy-o\" and \"lil' mama\".",
+		"class": "Warlock",
+		"race": "Tiefling"
+	},
+
+	"kalina": {
+		"name": "Kalina",
+		"desc": "While some tabaxi resemble big cats like tigers or jaguars, Kalina has the appearance of a black domesticated house cat, with very fine, angular features. She appears with her face covered, showing only her feline eyes.",
+		"race": "Tabaxi"
+	},
+
+	"kasavian-the-wise": {
+		"name": "Kasavian the Wise",
+		"desc": "Kasavian the Wise is the custodian of the Aguefort Adventuring Academy."
+	},
+
+	"katja-cleaver": {
+		"name": "Katja Cleaver",
+		"desc": "Katja is a half orc battle master. It doesn't really matter when you wanna capture her, she's wearing her horse riding clothes. So she's got, you know, the riding pants, the riding boots. Some sort of oversize nondescript T-shirt to hide herself. A little riding helmet, long, curly, black frizzy braid. She's Asian too, let's go, South Asian.",
+		"player": "Rekha Shankar",
+		"level": 10,
+		"class": "Lvl 9 Fighter, Lvl 1 Barbarian",
+		"race": "Half-Orc"
+	},
+
+	"kipperlilly-copperkettle": {
+		"name": "Kipperlilly Copperkettle",
+		"desc": "Kipperlilly is a junior at the Aguefort Adventuring Academy. She wears black flats with knee-high white socks and has a tight blond ponytail. She wears a pin of two gears crushing a rat, representing her adventuring party the Rat Grinders.",
+		"class": "Rogue",
+		"race": "Halfling"
+	},
+	
+	"kristen-applebees": {
+		"name": "Kristen Applebees",
+		"desc": "Yeah, Kristen Applebees is always wearing a tie-dye shirt from a summer camp that she went to - like, a religious summer camp. She has red hair, freckles... she's like, made for camp. She walks around with her leather bible that has her name engraved on the cover. She's always holding it, and yeah, she's big into the corn God.",
+		"player": "Ally Beardsley",
+		"level": 14,
+		"class": "Cleric",
+		"race": "Variant Human"
+	},
+
+	"lucilla-lullaby": {
+		"name": "Lucilla Lullaby",
+		"desc": "She has long blue hair with one side shaved. She wears a long gown.",
+		"race": "Eladrin",
+		"class": "Bard",
+		"occupation": "Music Teacher @ Aguefort"
+	},
+
+	"lucy-frostblade": {
+		"name": "Lucy Frostblade",
+		"desc": "Lucy is a tall frost genasi descended from giants.",
+		"class": "Cleric",
+		"race": "Frost Genasi"
+	},
+
+	"mac-applebees": {
+		"name": "Mac Applebees",
+		"desc": "",
+		"class": "Paladin",
+		"race": "Human"
+	},
+
+	"madam-silvaine": {
+		"name": "Madam Silvaine",
+		"desc": "",
+		"race": "Half-Elf"
+	},
+
+	"mary-ann-skuttle": {
+		"name": "Mary Ann Skuttle",
+		"desc": "Mary Ann is a small kobold girl, about 2 feet tall, and generally pretty low energy. She has a big backpack with a plushie strawberry attached. She loves Quokki Pets, and despite being a member of the Rat Grinders, has always sort of just done her own thing.",
+		"race": "Kobold",
+		"class": "Barbarian (Berserker)"
+	},
+
+	"maugly-dimweather": {
+		"name": "Maugly Dimweather",
+		"desc": "",
+		"race": "Human",
+		"occupation": "Librarian @ Aguefort Adventuring Academy"
+	},
+
+	"max-durden": {
+		"name": "Max Durden",
+		"desc": "",
+		"race": "Drow",
+		"class": "Warlock"
+	},
+
+	"mazey-phaedra": {
+		"name": "Mazey Phaedra",
+		"desc": "",
+		"race": "Minotaur",
+		"class": "Bard"
+	},
+
+	"molman-holden": {
+		"name": "Molman Holden",
+		"desc": "Molman Holden is a student at the Aguefort Adventuring Academy and the president of the Aguefort Soil Club.",
+		"race": "Moleperson"
+	},
+
+	"naradriel": {
+		"name": "Princess Naradriel",
+		"desc": "",
+		"race": "High Elf"
+	},
+
+	"oisin-hakinvar": {
+		"name": "Oisin Hakinvar",
+		"desc": "",
+		"race": "Dragonborn",
+		"class": "Wizard"
+	},
+
+	"ostentatia-wallace": {
+		"name": "Ostentatia Wallace",
+		"desc": "Ostentatia is Jersey mansion trash, and she is absolutely decked to the nines in gems and jewels that she doesn't want anybody to know she made herself and did not come from, y’know, one of the fancy stores at the international airport. She's a forge cleric. She's stocky and stout and fucking fabulous.",
+		"player": "Isabella Roland",
+		"level": 10,
+		"class": "Cleric",
+		"race": "Hill Dwarf"
+	},
+
+	"pastor-amelia": {
+		"name": "Pastor Amelia",
+		"desc": "It is unknown whether or not she is actually a part of The Harvestmen because in Episode 9 she is seen as being the only one in the religious gathering who doesn't seem to take the church door being taken as a malicious attack.",
+		"class": "Cleric",
+		"race": "Human"
+	},
+
+	"penelope-everpetal": {
+		"name": "Penelope Everpetal",
+		"desc": "Penelope is a beautiful half-elf sorcerer. She wears a flower tied into her long, brunette hair.\n\nShe's considered exceedingly popular among the student body, as is her boyfriend, Dayne Blayde. She has been best friends with Sam Nightingale since childhood, and has a photo of them both in middle school tucked away in her locker. She is initially very friendly towards the Bad Kids, offering to show them around the school, but gets defensive when they begin to investigate Johnny Spells.",
+		"class": "Sorcerer",
+		"race": "Half-Elf"
+	},
+
+	"penny-luckstone": {
+		"name": "Penny Luckstone",
+		"desc": "Okay, I'm Penny Luckstone. Penny is three feet tall. She's a halfling, a lightfoot halfling, a rogue. She is pressed as much as she can be. I think she's been trapped here the longest, but like everything originally looked like it was very well ironed and she's trying really hard not to get it smudged. She's a little type A and yeah, I asked for my chains to be tightened 'cause I didn't like the slack, it was too loose.",
+		"player": "Becca Scott",
+		"level": 10,
+		"class": "Rogue (Arcane Trickster)",
+		"race": "Lightfoot Halfling"
+	},
+
+	"percival-nevelsvine": {
+		"name": "Percival Nevelsvine",
+		"desc": "Percival Nevelsvine is the quarterback of the Hudol Helions."
+	},
+
+	"pok-gukgak": {
+		"name": "Pok Gukgak",
+		"desc": "Pok was a goblin with a big, long face. He had sleek hair that was combed down and a pencil mustache. He is usually depicted as wearing a full tux. According to Kalina, his son, Riz, is the spitting image/perfect combination of both him and Sklonda. Kalina tells Riz that his dad was the suave and charismatic type.",
+		"race": "Goblin"
+	},
+
+	"porter-cliffbreaker": {
+		"name": "Porter Cliffbreaker",
+		"desc": "Porter is a rocky-looking earth genasi barbarian. He is able to grow to about 15 feet tall. He carries a war hammer. He is very stoic and seems very unfriendly and distanced for the most part, though shows pride in his students. Due to this stony disposition however, he often makes comments and observations that come off as very creepy and foreboding, contributing to Fig Faeth's suspicion of him. Riz Gukgak's initial investigation on him concluded he 'usually just goes to the gym and stuff'.",
+		"class": "Barbarian/Paladin",
+		"race": "Earth Genasi / Goliath"
+	},
+
+	"ragh-barkrock": {
+		"name": "Ragh Barkrock",
+		"desc": "Ragh is a huge, beefy-looking half-orc barbarian. While he was a member of the Owlbears, during the bad kids' freshman and sophomore years, he wore a red Aguefort letterman jacket, and jeans along with a pair of sneakers. After graduation, (as well as when he's not at school during his attendance, except on adventures) Ragh typically wears graphic tank-tops, which after the events of the shrimp party during sophomore year includes one with a crab king on it, and athletic bottoms like sweatpants and \"short board shorts\". At Zelda's rager, he's seen in a rainbow tank top, short shorts and \"bro\" glasses.",
+		"player": "Brennan Lee Mulligan",
+		"class": "Barbarian",
+		"race": "Half-Orc"
+	},
+
+	"riz-gukgak": {
+		"name": "Riz \"The Ball\" Gukgak",
+		"desc": "Yeah, so I'm Riz Gukgak. My nickname in middle school was 'Briefcase Kid.' I'm a goblin, and I don't have a lot of friends even though I'm pretty social, which is weird. My only real friend is this halfling named Penny Luckstone who - technically my babysitter. I had a babysitter until I was 13 but she recently went missing, and my mom is a detective and I'm a *coughs* licensed private investigator, so I am gonna find Penny myself.",
+		"player": "Brian Murphy",
+		"level": 14,
+		"class": "Rogue",
+		"race": "Goblin"
+	},
+
+	"ruben-hopclap": {
+		"name": "Ruben Hopclap",
+		"desc": "Ruben is a gnomish bard. His hair is in a full emo swoop. He wears a t-shirt over a striped long sleeved shirt. He is another rock star, which makes Fig jealous. He has a tattoo of a rat getting crushed by gears, representing his adventuring party, the Ratgrinders.",
+		"race": "Gnome",
+		"class": "Bard"
+	},
+
+	"sam-nightingale": {
+		"name": "Sam Nightingale",
+		"desc": "Sam Nightingale is a water genasi and at some point everything she was wearing was very well pressed, ironed and clearly designer. She wears a matching blue blazer and skirt set with a white vest and a white beret. Has long curly hair that goes from green to blue to white, like an ocean wave. Otherworldly beautiful. But just ripshit. Absolutely fucking ripshit.",
+		"player": "Persephone Valentine",
+		"level": 10,
+		"class": "Lvl 6 Sorcerer, Lvl 4 Bard",
+		"race": "Water Genasi"
+	},
+
+	"sandra-lynn": {
+		"name": "Sandra Lynn Faeth",
+		"desc": "Sandra Lynn is a wood-elf. She wears \"mom\" jeans and carries a bow and quiver over her shoulder. In her younger days, she dressed in rocker clothes, much like her daughter does now. She has a pet griffon named Baxter.",
+		"class": "Ranger",
+		"race": "Wood Elf"
+	},
+
+	"sheldon-turtleperson": {
+		"name": "Shellford Turtleperson",
+		"desc": "Shellford is a tortle, and basically just looks like an anthropomorphic turtle. He's the \"bad boy\" of the A.V. club, but speaks very slowly, which kind of diminishes the impact that anything he says might have had. Despite this tough exterior, Shellford is actually very sad, and it's because of this sadness, fear, and self-doubt that he acts so standoffish. Thankfully, he gets help from the school counselor, Jawbone, after the events of freshman year, and appears to come to terms with his identity as a member of the LGBT+ community.",
+		"race": "Tortle"
+	},
+
+	"simeon-du-vayne": {
+		"name": "Simeon du Vayne",
+		"desc": "Simeon looks like a fairy tale prankster goblin, and is much higher energy than Gilear was, which annoys the Bad Kids.",
+		"race": "Goblin",
+		"occupation": "Lunch Lad @ Aguefort"
+	},
+
+	"sklonda-gukgak": {
+		"name": "Sklonda Gukgak",
+		"desc": "Sklonda is very much a classic goblin. She has green skin, yellow eyes, and big ears that come out the sides of her head. She has a classic \"mom\" haircut. As a detective, she wears a white shirt and dress shoes, and has an under-arm holster for her arquebus. She also wears her badge hanging off her belt.",
+		"race": "Goblin"
+	},
+
+	"skrank-douglas": {
+		"name": "Skrank Douglas",
+		"desc": "Skrank is a very lanky aarakocra with wings and a long face. He is a very stereotypical, awkward nerd. He seems to be very popular among the Maidens after the events of Prompocalypse - except for Zelda.",
+		"race": "Aarokocra"
+	},
+
+	"sprak-lefevre": {
+		"name": "Sprak LeFevre",
+		"desc": "Sprak is a goblin who wears full aviation gear and speaks like a World War One pilot. Sprak uses amphetamines and repeatedly proposes that Gorgug and himself start a casino together.",
+		"race": "Goblin"
+	},
+
+	"sylvester": {
+		"name": "Sylvester",
+		"desc": "He is tall and rail-thin, with dark hair and a thin mustache. He has been constantly plagued by the annoyance of Zayn Darkshadow for a long period of time, as Zayn seemed to want Sylvester to appreciate the necromantic efforts he was moving towards. He was gifted a Pearl of Life by Zayn in order to know if and when Zayn died.",
+		"occupation": "Caretaker of Cravencroft Cemetery",
+		"race": "Human"
+	},
+
+	"telemaine-lomenelda": {
+		"name": "Telemaine Lomenelda",
+		"desc": "Telemaine is a tall high elf with long, platinum blonde white hair. He has a receding hairline in the shape of a widow's peak, and shimmering blue eyes. Even though he has the eternal youth of an elf, he shows signs of aging in the crinkle of his eyes in an Elrond kind of way. He has the appearance of a guy in his 40s or 50s who's really kept it tight.",
+		"race": "High Elf"
+	},
+
+	"terpsichore-skullcleaver": {
+		"name": "Terpsichore Skullcleaver",
+		"desc": "Terpsichore is the smallest half orc Fabian Seacaster has ever seen, coming in at about 5'3. She's incredibly old, but still very flexible, and an incredible choreographer. She's got big curly hair, big tusks and a loose tank top that exposes a lot of underarm.",
+		"race": "Half Orc",
+		"class": "Bard",
+		"occupation": "Dance Instructor @ Aguefort"
+	},
+
+	"tiberia-runestaff": {
+		"name": "Tiberia Runestaff",
+		"desc": "Tiberia is from the Mountains of Chaos, and is an elderly, stern wizard, dressed in exquisite blue robes, with short gray hair. She never smiles, and Adaine tries so hard to impress her.",
+		"class": "Wizard"
+	},
+
+	"torek-railgrinder": {
+		"name": "Torek Railgrinder",
+		"desc": "Torek is a young, scrawny dwarven girl with several tattoos, somehow. She has a full, blonde, braided beard. She wears a skater beanie.\n\nShe's very proud of her dwarven heritage and speaks often of the honor of her fathers, and her father's fathers.",
+		"class": "Cleric",
+		"race": "Dwarf"
+	},
+
+	"tracker-oshaughnessey": {
+		"name": "Tracker O'Shaughnessey",
+		"desc": "Tracker is a young woman with lycanthropy, a disease that allows her to turn into a werewolf; though she prefers to stay in human form. She has a unibrow and has an undercut on one side of her head. She is described as strong-looking, broad-shouldered and looks like a hiker.\n\nAt the Golden Gardens in Leviathan, Tracker got a tattoo on her neck of the name of her girlfriend at the time, Kristen.",
+		"class": "Cleric (Twilight Domain)",
+		"race": "Human (Lycanthrope)"
+	},
+
+	"unit": {
+		"name": "Unit",
+		"desc": "Unit is described as \"a bronze cube with a flesh being put into it, with a single eye in the middle of the cube that has tiny bronze artificial wings and little spindly robot arms and legs.\" While there is not character art for Unit for Fantasy High: Junior Year, Unit's description is similar to images of Modron from the Monster Manual. Zac specifies Unit is a Modron, though this is never mentioned by Brennan explicitly in main campaign episodes.",
+		"class": "Artificer",
+		"race": "Modron"
+	},
+
+	"wilma-thistlespring": {
+		"name": "Wilma Thistlespring",
+		"desc": "",
+		"class": "Artificer",
+		"race": "Gnome"
+	},
+
+	"yolanda-badgood": {
+		"name": "Yolanda Badgood",
+		"desc": "",
+		"class": "Cleric",
+		"race": "Air Genasi",
+		"occupation": "Cleric Teacher @ Aguefort"
+	},
+
+	"zara-sool": {
+		"name": "Zara Sool",
+		"desc": "",
+		"race": "Vampire",
+		"class": "Warlock",
+		"occupation": "Warlock Teacher @ Aguefort"
+	},
+
+	"zayn-darkshadow": {
+		"name": "Zayn Darkshadow",
+		"desc": "Zayn was a tall drow wizard with deathly pale skin. His dark hair hangs down in front of his face. He wears a mesh shirt with a belt-like strap around it and bondage pants. He also wears fingerless gloves with spiderweb designs. It's a very Hot Topic look. At the end of Fantasy High, he becomes a ghost.",
+		"class": "Wizard",
+		"race": "Drow"
+	},
+
+	"zelda-donovan": {
+		"name": "Zelda Donovan",
+		"desc": "Zelda has horns on her head and goat legs. Zelda is described as being very artsy based on her profile photo being her eye and some hair. She enjoys listening to various types of punk, emo, screamo and metal music. Zelda's parents want her to be more outgoing and experience life. They scold her when she comes home too early. Her entire family worships the god of wine and ecstasy (both the emotion and the drug).",
+		"level": 10,
+		"class": "Lvl 8 Barbarian, Lvl 2 Fighter",
+		"race": "Faunus"
+	}
+}

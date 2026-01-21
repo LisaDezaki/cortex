@@ -59,11 +59,11 @@
 						url={active.getMedia('banner')?.url}
 					/>
 				</Section>
-				<Flex align="start" justify="center" gap={6} class="bg-surface flex-1 px-20 py-12">
+				<Flex align="start" justify="center" gap={6} class="flex-col lg:flex-row bg-surface flex-1 gap-3 sm:gap-6 md:gap-9 lg:gap-12 px-3 sm:px-6 md:px-9 lg:px-12 py-3 sm:py-6 md:py-9 lg:py-12">
 
 					<!-- Page Menu -->
 
-					<PageMenu class="top-12"
+					<PageMenu
 						back={{ text: 'All Projects', onclick: () => active.deactivate() }}
 						items={[
 							{ icon: "GlobeStand",	label: "Overview",		href: "#overview" },
@@ -71,7 +71,7 @@
 							{ icon: "Trash",		label: "Delete",		onclick: () => active.openModal('delete'), theme: "danger" }
 						]}
 					/>
-					<Container size="2xl">
+					<Container class="px-3 sm:px-6 md:px-9 lg:px-0">
 						
 						<!-- Project Header -->
 			
@@ -158,7 +158,7 @@
 						<Separator class="my-12" />
 		
 						{#if active.characters?.items.length > 0}
-							<Section size="3xl" class="py-6 w-full">
+							<!-- <Section class="py-6">
 								<Heading is="h3" as="h5" class="mb-3 text-neutral-softer">Recently updated Characters</Heading>
 								<Flex justify="start" gap={2} class="pb-3 overflow-visible w-full">
 									{#each active.characters.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as character}
@@ -170,13 +170,13 @@
 										/>
 									{/each}
 								</Flex>
-							</Section>
+							</Section> -->
 						{/if}
 		
 						<Separator class="my-12" />
 			
 						{#if active.factions?.items.length > 0}
-							<Section size="3xl" class="py-6 w-full">
+							<!-- <Section class="py-6">
 								<Heading is="h3" as="h5" class="mb-3 text-neutral-softer">Recently updated Factions</Heading>
 								<Flex justify="start" gap={2} class="pb-3 overflow-visible w-full">
 									{#each active.factions.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as faction}
@@ -188,13 +188,13 @@
 										/>
 									{/each}
 								</Flex>
-							</Section>
+							</Section> -->
 						{/if}
 		
 						<Separator class="my-12" />
 			
 						{#if active.locations?.items.length > 0}
-							<Section size="3xl" class="py-6 w-full">
+							<!-- <Section class="py-6">
 								<Heading is="h3" as="h5" class="mb-3 text-neutral-softer">Recently updated Locations</Heading>
 								<Flex justify="start" gap={2} class="pb-3 overflow-visible w-full">
 									{#each active.locations.items.sort((a,b) => a.meta.updatedAt < b.meta.updatedAt ? 1 : -1) as location}
@@ -207,7 +207,7 @@
 										/>
 									{/each}
 								</Flex>
-							</Section>
+							</Section> -->
 						{/if}
 		
 						<Separator class="my-12" />

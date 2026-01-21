@@ -20,7 +20,7 @@
 		item: clsx('nav-item block leading-5 rounded text-sm hover:text-white',
 					'transition duration-150 ease-in-out',
 					{'active bg-accent-softest text-white':active}),
-		link: clsx('nav-link flex items-center gap-3 p-2 w-full', {active}, className),
+		link: clsx('nav-link flex items-center gap-4 md:gap-3 px-2.5 py-2 w-full', {active}, className),
 		badge: clsx('ml-auto bg-white/10 text-white rounded')
 	}
 

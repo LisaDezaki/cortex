@@ -218,7 +218,7 @@
 		"type": "Skill training",
 		"icon": "Student",
 		"tags": ["Crowded", "Ethically questionable"],
-		"desc": "The adventuring school in New Miniport, where aspiring adventurers learn the basics of combat, magic, and survival. The school is run by a retired adventurer named Master Eldrin.",
+		"desc": "The adventuring school in New Miniport, where aspiring adventurers learn the basics of combat, magic, and survival.\n\nAtticus offers Strength/Constitution training; Kero offers Dexterity/Agility training; Bak offers Wisdom training, Kem offers Alchemy training, Orlok offers Charisma/Performance training.",
 		"mapdata": {
 			"location": "downtown",
 			"x": "50", "y": "60"

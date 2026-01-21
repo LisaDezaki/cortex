@@ -1,0 +1,73 @@
+{
+	"apiarist-society": {
+		"name": "Apiarist Society",
+		"desc": "Club dedicated to tending and caring for bees.",
+		"members": ["gertie-bladeshield", "riz-gukgak", "fig-faeth"]
+	},
+
+	"av-club": {
+		"name": "A.V. Club",
+		"desc": "Club responsible for monitoring school \"dream crystals\".",
+		"members": ["biz-glitterdew", "skrank-douglas", "shellford-turtleperson", "riz-gukgak", "adaine-abernant", "gorgug-thistlespring"]
+	},
+
+	"aviation-league": {
+		"name": "Aviation League",
+		"desc": "Club dedicated to aviation. They meet 7:00 am on Mondays, Wednesdays, and Fridays, and midnight on Tuesdays and Thursdays.",
+		"members": ["sprak-lefevre", "riz-gukgak"]
+	},
+
+	"bad-kids": {
+		"name": "The Bad Kids",
+		"desc": "The Bad Kids are a group of six young adventurers of varying backgrounds, but they all get along very well. Towards the beginning of their career, they were very reckless and generally went into fights with the intention of killing everyone. After a discussion with Bill Seacaster, they began to work more collaboratively as a team \"for the gold\", or whatever end goal they had in mind. They are extremely trusting and loving towards one another, and see each other as family, partially due to several shared parent/guardian relationships. Overall, they are a kind, generous, and understanding group who believe in doing the right thing, though they often get into trouble and make a mess of things while doing it.",
+		"members": ["fabian-seacaster", "gorgug-thistlespring", "fig-faeth", "adaine-abernant", "riz-gukgak", "kristen-applebees", "ragh-barkrock", "tracker-oshaughanessey", "ayda-aguefort", "gilear-faeth"]
+	},
+
+	"harvestmen": {
+		"name": "The Harvestmen",
+		"desc": "The Harvestmen are a conservative, militant, religious cult. They are not demonic or infernal but deal in demonic and infernal magic because they want to bring about the apocalypse.\n\nThey are a large organization with followers all over the nation of Solace, but their roots are in Highcourt. Despite ranging across several socio-economic classes and social groups, their membership is kept secret.",
+		"members": ["coach-daybreak", "mac-applebees", "donna-applebees", "johnny-spells", "zayn-darkshadow", "dayne-blayde", "ragh-barkrock"]
+	},
+
+	"lgbt-alliance": {
+		"name": "LGBT+ Alliance",
+		"desc": "Club for queer students at Aguefort, founded by Ragh, Kristen, and Shellford.",
+		"members": ["ragh-barkrock", "kristen-applebees", "torek-railgrinder", "shellford-turtleperson"]
+	},
+
+	"maidens": {
+		"name": "The Maidens",
+		"desc": "The party is made of up seven girls of varying backgrounds and ages. They appear to get along very well together, as they spend a lot of time together and frequently attend parties at each others houses. However, the group is not without its own romance drama as several of the girls crush on Skrank Douglas.",
+		"members": ["penny-luckstone", "sam-nightingale", "ostentatia-wallace", "zelda-donovan", "antiope-jones", "katja-cleaver", "danielle-barkstock"]
+	},
+
+	"newspaper": {
+		"name": "Newspaper",
+		"desc": "Group responsible for putting together the school newspaper. They don't cover big things like shipwrecks.",
+		"members": ["riz-gukgak", "kipperlilly-copperkettle"]
+	},
+
+	"owlbears": {
+		"name": "Owlbears Team",
+		"desc": "Aguefort's Bloodrush team, the most popular sport at Aguefort.",
+		"members": ["dayne-blayde", "ragh-barkrock", "fabian-seacaster", "gorgug-thistlespring", "max-durden", "mary-ann-skuttle", "riz-gukgak"]
+	},
+
+	"rat-grinders": {
+		"name": "The Rat Grinders",
+		"desc": "The Rat Grinders, originally named The High 5 Heroes, are a party that formed in The Bad Kids' freshman year. For three hours after every day of school and for nine hours on Saturdays and Sundays, they gradually increase their prowess by defeating extremely low level enemies like rats, spiders, and twig gremlins. This is where the name Rat Grinders comes from. It is well known around school that they hate the Bad Kids.",
+		"members": ["kipperlilly-copperkettle", "ruben-hopclap", "mary-ann-skuttle", "ivy-embra", "oisin-hakinvar", "buddy-dawn", "lucy-frostblade"]
+	},
+
+	"student-government": {
+		"name": "Student Government",
+		"desc": "",
+		"members": ["mazey-phaedra", "kristen-applebees"]
+	},
+
+	"soil-club": {
+		"name": "Soil Club",
+		"desc": "Club dedicated to pedology and edaphology.",
+		"members": ["molman-holden", "riz-gukgak"]
+	}
+}

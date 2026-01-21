@@ -135,11 +135,10 @@
 
 <AuthenticatedLayout>
 	{#snippet article()}
-		<Stack class="overflow-y-auto px-20 py-12">
+		<Stack class="overflow-y-auto p-3 sm:p-6 md:p-6 lg:p-9 xl:p-12">
 
 			<PageHeading
 				title="Character List"
-				subtitle="Index page"
 				actions={[
 					{ size: "xl", icon: "GearFine", 		 theme: "neutral", class: "group", iconClass: "group-hover:rotate-[60deg] transition-all", href: route('characters.settings') },
 					{ size: "xl", icon: "Plus", text: "New", theme: "accent",  onclick: () => characters.openModal('create') },

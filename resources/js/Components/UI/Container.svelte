@@ -15,7 +15,7 @@
 	 */
 	let cx = $derived({
 		container: clsx({
-			'container w-full': true,
+			'container': true,
 			'max-w-2xl': size === '2xl',
 			'max-w-3xl': size === '3xl',
 			'max-w-4xl': size === '4xl',

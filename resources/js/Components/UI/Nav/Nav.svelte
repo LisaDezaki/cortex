@@ -12,8 +12,8 @@
     } = $props()
 
 	const cx = {
-		nav:  clsx('nav border-r h-full min-w-12 w-56 max-w-72 shrink-0',
-					'bg-accent-strong border-neutral-softest text-nav-link',
+		nav:  clsx('nav border-r h-full max-w-12 md:max-w-48 lg:max-w-56 xl:max-w-64 shrink-0 w-full',
+					'bg-accent-strong border-neutral-softest text-nav-link transition-all',
 					className),
 		list: clsx('nav-list py-2')
 	}
